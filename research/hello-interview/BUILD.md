@@ -12,6 +12,7 @@ comes from logged-in pages stays out of git.
 | Survey + fetch free pages | `python3 research/hello-interview/fetch.py` | 95 pages: 56 free, 39 premium (2026-11-01) |
 | Skeleton + readings | `uv run python research/hello-interview/gen_skeleton.py` | 95 leaves, 95 readings (no-archive) |
 | Cards | agents per `AGENT.md`, groups `group_H1..H6.txt` | in progress |
+| System Design merged in (2026-11-06) | `sdx/map.json` homes → `sdx/candidates.py` → agents per `sdx/SDX_AGENT.md`, 9 groups → `sdx/check_sdx.py --all` → `sdx/cross_dups.py` | 856 SD cards: 477 dup (Hello Interview, 八股, 支付, HFT, Kafka, LLD, Snowflake), 22 drop, 357 → 310 new cards under `<page>.more` leaves and the 05 补充 branch; ledgers and cards gitignored |
 
 Page text stays in `sources/local/hello-interview/` (gitignored; commercial site, public repo). Re-running `fetch.py`
 refreshes it; compare `pages.json` to see what changed.

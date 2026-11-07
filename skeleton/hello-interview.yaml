@@ -660,6 +660,9 @@ nodes:
       - id: qb.sd.key-value-store.points
         title: 要点 · 分布式键值存储
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
+      - id: qb.sd.key-value-store.more
+        title: 补充 · 分布式键值存储
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: qb.sd.nearby-restaurants-app
       title: 外卖平台（Uber Eats）
       summary: 外卖平台（Uber Eats）：完整解答。
@@ -2130,6 +2133,9 @@ nodes:
       - id: sd.problem-breakdowns.bitly.beyond
         title: 拓展 · 短链接服务（Bitly）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.bitly.more
+        title: 补充 · 短链接服务（Bitly）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.dropbox
       title: 文件存储（Dropbox）
       summary: Hello Interview：Design a File Storage Service Like Dropbox。
@@ -2425,6 +2431,9 @@ nodes:
       - id: sd.problem-breakdowns.distributed-cache.beyond
         title: 拓展 · 分布式缓存（Redis）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+      - id: sd.problem-breakdowns.distributed-cache.more
+        title: 补充 · 分布式缓存（Redis）
+        summary: 细节、故障场景和追问，补本页没讲到的。
     - id: sd.problem-breakdowns.online-auction
       title: 在线拍卖（eBay）
       summary: Hello Interview：Design an Online Auction Platform Like eBay。
@@ -2975,6 +2984,21 @@ nodes:
   title: 补充：题目与概念（More）
   summary: 本 deck 没有对应页面的题目和概念：服务架构、可靠性、安全、AI 系统等。
   children:
+  - id: more.unique-id-generator
+    title: 发号器（Unique ID Generator）
+    summary: 补充：发号器（Unique ID Generator）。
+  - id: more.cdn-design
+    title: 内容分发网络（CDN）设计
+    summary: 补充：内容分发网络（CDN）设计。
+  - id: more.pastebin
+    title: 文本分享（Pastebin）
+    summary: 补充：文本分享（Pastebin）。
+  - id: more.object-storage
+    title: 对象存储（S3）
+    summary: 补充：对象存储（S3）。
+  - id: more.auth-service
+    title: 认证与身份服务
+    summary: 补充：认证与身份服务。
   - id: more.reddit
     title: 论坛与楼中楼评论（Reddit）
     summary: 补充：论坛与楼中楼评论（Reddit）。
