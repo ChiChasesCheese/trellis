@@ -38,6 +38,9 @@ nodes:
   - id: sliding-window.longest-substring-without-repeating-characters
     title: LC 3 无重复字符的最长子串（Longest Substring Without Repeating Characters）
     summary: Medium；Hash Table, String, Sliding Window。
+  - id: sliding-window.count-zero-request-servers
+    title: LC 2747 统计没有收到请求的服务器数目（Count Zero Request Servers）
+    summary: Medium；Array, Hash Table, Sorting, Sliding Window。
   core: true
 - id: binary-search
   order: 4
