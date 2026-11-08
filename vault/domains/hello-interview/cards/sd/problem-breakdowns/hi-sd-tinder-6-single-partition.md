@@ -10,7 +10,7 @@ step: 6
 怎样在 Cassandra 里让互相滑动落在同一分区，从而原子检查匹配？这种做法有什么运维风险？
 
 ## A
-**做法。** 表的分区键用 user_pair，由两个用户 ID 排序后拼成（小 ID:大 ID），聚簇键为 from_user、to_user。这样 A 到 B 和 B 到 A 两条记录必然同分区，在一个批处理中写入并读取对方方向，就是单分区的原子操作。
+**做法。** 表的分区键用 user_pair，由两个用户 ID 排序后拼成（小 ID:大 ID），聚簇键为 from_user、to_user。这样 A 到 B 和 B 到 A 两条记录必然同分区，写入自己的滑动、读取对方方向都只访问这一个分区，避开了跨分区事务。注意 CQL 的 `BEGIN BATCH` 里不能放 SELECT，读要单独发：靠"先写后读，两人至少一方看得到对方"，再让创建匹配幂等；要严格原子地有条件写，用轻量级事务（LWT）。
 
 ```python
 def get_user_pair(a: str, b: str) -> str:
