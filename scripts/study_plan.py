@@ -164,6 +164,8 @@ def build_inputs(tree: Tree):
     for c in tree.project.cards:
         if c.node not in tree.node or tree.node[c.node].children:
             continue
+        if not tree.sk.deck_name(tree.node[c.node]).startswith(tree.sk.root_deck + "::"):
+            continue  # filed into another deck (low-level design): the system-design plan does not own it
         q = c.render(None)[0]
         cards.append(CardInfo(id=c.id, leaf=c.node, topic=tree.topic(c.node), order=c.step or 999,
                               level=card_level(q), core=c.node in tree.core))
@@ -400,6 +402,10 @@ def apply_exam_points(tree, cards, base, topics, agg, kinds, is_question, by_top
     if not pts.ready:
         return
     topic_of = {c.id: c.topic for c in cards}
+    # only this plan's cards and questions: low-level design has moved to its own deck
+    pts.card = {cid: ks for cid, ks in pts.card.items() if cid in topic_of}
+    pts.needs = {q: n for q, n in pts.needs.items() if q in topics}
+    pts.own = {q: o for q, o in pts.own.items() if q in topics}
     teach: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
     for cid, ks in pts.card.items():
         if cid in topic_of:

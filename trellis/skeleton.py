@@ -144,6 +144,7 @@ class Skeleton:
     # Anki decks go at most this many levels below the root; deeper nodes file into their ancestor's deck while
     # positions still follow the full tree. 0 = no limit.
     deck_depth: int = 0
+    deck_moves: dict[str, str] = field(default_factory=dict)  # node id -> the deck path its subtree files into instead
     # This domain's cards reach Anki only through the named domain, which includes them: pushing it would bring back
     # decks that were merged away.
     anki_via: str = ""
@@ -180,6 +181,10 @@ class Skeleton:
         """
         parts = [self.root_deck]
         path = node.path()
+        moved = next((i for i, n in enumerate(path) if n.id in self.deck_moves), None)
+        if moved is not None:  # this subtree lives in another deck; below the moved node, the same depth rule applies
+            tail = path[moved + 1:self.deck_depth] if self.deck_depth else path[moved + 1:]
+            return "::".join([self.deck_moves[path[moved].id], *(n.title for n in tail)])
         if self.deck_depth:
             path = path[: self.deck_depth]
         for n in path:
@@ -301,13 +306,17 @@ def load_skeleton(path: str | Path) -> Skeleton:
     if not isinstance(deck_depth, int) or deck_depth < 0:
         errors.append(f"invalid deck_depth: {deck_depth!r} (want a non-negative integer)")
         deck_depth = 0
+    deck_moves = data.get("deck_moves", {}) or {}
+    if not isinstance(deck_moves, dict):
+        errors.append(f"invalid deck_moves: {deck_moves!r} (want node id -> deck path)")
+        deck_moves = {}
     anki_via = data.get("anki_via", "") or ""
     if not isinstance(anki_via, str):
         errors.append(f"invalid anki_via: {anki_via!r}")
         anki_via = ""
 
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},
-                        include=list(include), deck_depth=deck_depth, anki_via=anki_via,
+                        include=list(include), deck_depth=deck_depth, deck_moves=deck_moves, anki_via=anki_via,
                         lang=lang, folder=folder, deck=deck, examples_from=examples_from, fold=bool(data.get("fold", False)), fold_code=int(data.get("fold_code", 0) or 0),
                         study=_parse_study(data.get("study"), errors))
     for node in skeleton.walk():

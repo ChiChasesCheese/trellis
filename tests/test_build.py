@@ -239,3 +239,17 @@ def test_include_loads_cards_from_other_folders(tmp_path):
         (d / f"{cid}.md").write_text(f"---\nid: {cid}\nnode: n\ntype: qa\n---\n## Q\nq\n\n## A\na\n", encoding="utf-8")
     project = load_project(tmp_path, "m")
     assert sorted(c.id for c in project.cards) == ["c1", "c2"]
+
+
+def test_deck_moves_file_a_subtree_into_another_deck():
+    from trellis.skeleton import Node, Skeleton
+    root = Node(id="s7", title="LLD", summary="")
+    kid = Node(id="s7.a", title="并发", summary="", parent=root)
+    leaf = Node(id="s7.a.b", title="锁", summary="", parent=kid)
+    root.children, kid.children = [kid], [leaf]
+    other = Node(id="s1", title="概念", summary="")
+    sk = Skeleton(domain="x", title="系统设计", roots=[other, root], deck_depth=2, deck_moves={"s7": "低层::11 HI"})
+    assert sk.deck_name(leaf) == "低层::11 HI::并发"
+    assert sk.deck_name(kid) == "低层::11 HI::并发"
+    assert sk.deck_name(root) == "低层::11 HI"
+    assert sk.deck_name(other).startswith("系统设计::")
