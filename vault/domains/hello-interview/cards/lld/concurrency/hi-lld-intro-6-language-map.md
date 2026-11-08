@@ -20,7 +20,7 @@ step: 6
 | 信号量 | `Semaphore` | `threading.Semaphore` | `x/sync/semaphore` |
 | 阻塞队列 | `LinkedBlockingQueue` | `queue.Queue` | 带缓冲的 channel |
 | 原子整数 | `AtomicInteger` | 无（用锁） | `sync/atomic` |
-| 并发 map | `ConcurrentHashMap` | 无（靠 GIL） | `sync.Map` |
+| 并发 map | `ConcurrentHashMap` | 无（用锁保护 dict） | `sync.Map` |
 
 **易错。** Python 的 GIL 使 CPU 密集代码不能从线程中获益，I/O 密集的才能；要 CPU 并行用 multiprocessing。Go 的惯用法是用 channel 代替阻塞队列和条件变量，拿不准就用 channel。C++ 常需要手工组合原语（`std::mutex`、`std::condition_variable`、`std::atomic<int>`），可考虑 Intel TBB 的高层抽象；C# 对应 `lock`、`SemaphoreSlim`、`BlockingCollection`、`Interlocked`、`ConcurrentDictionary`。
 
