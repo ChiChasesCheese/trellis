@@ -238,10 +238,12 @@ if(lead)show(lead.id);
  const at=k=>G.curve.find(c=>c.k===k)||{};
  const rows=cs.map((c,i)=>{acc+=c.share;const t=T[c.id]||{};const m=t.mastery||0;
   return `<li class="${i+1===G.n80?'cut':''}"><b>${i+1}</b><span>${esc(c.title)}</span><span class="sbar" title="掌握 ${pct(m)}"><i style="width:${c.share/mx*100}%;background:${t.seen?mix(m):'var(--blue)'}"></i></span><span class="num">${pct(acc)}</span></li>`}).join('');
- const reps=G.representatives.map((r,i)=>{const t=T[r.id]||{};return `<li><b>${i+1}</b><span>${esc(r.title)}<small>${r.concepts.map(c=>esc((T[c]||{}).title||c)).join(' · ')}</small></span><span class="num">${pct(r.practised)}</span></li>`}).join('');
+ const reps=G.representatives.map((r,i)=>`<li><b>${i+1}</b><span>${esc(r.title)}<small>${r.concepts.map(esc).join(' · ')}</small></span><span class="num">${pct(r.covered)}</span></li>`).join('');
+ const C=G.coverage,last=G.representatives.at(-1);
  el.innerHTML=`<div><h2>先学通用的</h2><p class="lead">题目有 ${G.questions} 道，但答案里的知识大多是共用的。按考频加权，前 ${G.n80} 个知识点就占了所有题解的 80%（虚线）。学会前 20 个，${pct(at(20).ready||0)} 的题（按考频）需要的知识就齐了：</p>
  <table><tr><th>学会前几个知识点</th>${G.curve.map(c=>`<td>${c.k}</td>`).join('')}</tr><tr><th>占题解</th>${G.curve.map(c=>`<td>${pct(c.share)}</td>`).join('')}</tr><tr><th>题目已就绪</th>${G.curve.map(c=>`<td>${pct(c.ready)}</td>`).join('')}</tr></table>
  <ol>${rows}</ol><p class="note">条的长度是这个知识点占题解的份额，颜色是你的掌握度（蓝色是还没学过）；右边是累计份额。「就绪」指学会的知识点覆盖了这道题 80% 的知识关联。</p></div>
- <div><h2>代表题</h2><p class="lead">整题练习只练这 ${G.representatives.length} 道：从最常考的 25 道设计题里依次挑，每道都尽量练到前面没练过的知识点。右边是累计练到的知识份额。</p><ol class="rep">${reps}</ol>
- <p class="note">今日计划里「题目与整轮」这一段只从这几道题里出卡，其余预算都给知识点。</p></div>`})();
+ <div><h2>代表题</h2><p class="lead">整题练习先练这 ${G.representatives.length} 道：从最常考的 25 道设计题里依次挑，每次选「新增考点权重 × 这道题的考频」最大的。右边是累计覆盖的考点权重。</p><ol class="rep">${reps}</ol>
+ <table><tr><th>练几道题</th>${C.curve.map(c=>`<td>${c.k}</td>`).join('')}<td>全部 ${C.questions}</td></tr><tr><th>覆盖考点权重</th>${C.curve.map(c=>`<td>${pct(c.covered)}</td>`).join('')}<td>${pct(C.all)}</td></tr></table>
+ <p class="note">这 ${G.representatives.length} 道题的答案用到 ${last.points} 个共用考点，占全部 ${C.shared} 个共用考点权重的 ${pct(last.covered)}，只算必讲的是 ${pct(last.must)}。用到一个考点也不等于掌握它，考点本身还要靠知识点卡片学。今日计划里「题目与整轮」这一段只从这几道题里出卡。</p></div>`})();
 </script></body></html>

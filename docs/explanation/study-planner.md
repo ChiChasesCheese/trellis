@@ -135,10 +135,12 @@ of what their answers need is shared. Two numbers make that visible:
 - **Readiness.** A question is ready once the learned concepts carry 80% of its edges. The dashboard shows how much of
   the question frequency is ready after the first 5, 10, 20 … concepts.
 
-**Representative questions** are picked greedily from the 25 most-asked design questions. Each next pick adds the most
-concept share not yet practised, plus half its own frequency. Only strong edges count, and the delivery framework and
-estimation are left out because every question uses them. A concept counts as practised once its summed edge strength
-reaches 1. Whole-question practice is dealt only from these picks, eight by default.
+**Representative questions** are picked greedily from the 25 most-asked design questions. Each next pick has the largest
+product of the exam-point weight it adds and its own frequency; weight alone favours whichever answer was annotated
+with the most points. Coverage is measured on points several questions share, as the share
+of their total weight that the picks' answers use; it is reported in any role and for must-cover points alone. A
+question's own tricks are left out because they transfer to nothing else. Using a point in one answer is not mastering
+it. Whole-question practice is dealt only from these picks, eight by default.
 
 ## 8. LeetCode
 

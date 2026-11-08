@@ -391,14 +391,53 @@ def question_topic(tree: Tree, t: str) -> bool:
 UNIVERSAL = {"t.sd-delivery", "t.numbers", "t.lld-delivery"}  # every question uses these; they say nothing about which to practise
 
 
+NOT_A_QUESTION = {"q.in-the-wild"}  # a collection of real-system case studies, not one question
+
+
+def representatives(tree: Tree, qs: dict[str, float], pool: list[str], k: int) -> tuple[list[dict], dict]:
+    """The few questions whose answers between them use the most exam-point weight, and what they really cover.
+
+    Measured on points shared by several questions (a question's own tricks transfer to nothing else). `covered` is the
+    share of all shared-point weight that the chosen questions' answers use in any role; `must` counts only points they
+    must cover. Picked greedily from the `pool` most-asked questions by the weight each adds times how often it is asked:
+    weight alone favours whichever answer was annotated with the most points. Using a point in one answer does not teach
+    the topic around it."""
+    pts, w = kp_state["points"], kp_state["weight"]
+    shared = {p: v for p, v in w.items() if pts.meta[p]["topic"] not in pts.needs and p not in plan_kp.META}
+    total = sum(shared.values()) or 1.0
+
+    def needs(q, roles=("必讲", "追问", "加分")):
+        return {n["kp"] for n in pts.needs.get(q, []) if n["role"] in roles and n["kp"] in shared}
+
+    def share(points):
+        return sum(shared[p] for p in points) / total
+
+    reps, seen, must = [], set(), set()
+    for _ in range(min(k, len(pool))):
+        best = max((q for q in pool if q not in {r["id"] for r in reps}), key=lambda q: share(needs(q) - seen) * qs[q])
+        seen |= needs(best)
+        must |= needs(best, ("必讲",))
+        top = sorted(needs(best), key=lambda p: -shared[p])[:5]
+        reps.append({"id": best, "title": tree.title(best), "freq": qs[best] / (sum(qs.values()) or 1.0), "covered": share(seen), "must": share(must),
+                     "points": len(seen), "concepts": [pts.meta[p]["title"] for p in top]})
+    every = [q for q in qs if q in pts.needs and q not in NOT_A_QUESTION]
+    curve, cur = [], set()
+    remaining = list(pool)
+    for n in range(1, len(pool) + 1):
+        best = max(remaining, key=lambda q: share(needs(q) - cur) * qs[q])
+        remaining.remove(best)
+        cur |= needs(best)
+        if n in (5, 8, 10, 15, 20, 25):
+            curve.append({"k": n, "covered": share(cur)})
+    return reps, {"curve": curve, "all": share(set().union(*(needs(q) for q in every))), "shared": len(shared), "questions": len(every)}
+
+
 def generality(tree: Tree, base: dict[str, float], edges: list[Edge], k: int = 8, pool: int = 25) -> dict:
     """How much of the answers' knowledge sits in shared concepts, and which few questions practise most of it.
 
     A question's answer leans on its concepts in proportion to edge strength; a concept's share is that, summed over
     questions weighted by how often each is asked. A question is ready once the learned concepts carry 80% of its edges.
-    Representatives are chosen greedily from the `pool` most-asked design questions: each next one adds the most concept
-    share not yet practised (strong edges only, a concept practised once its summed strength reaches 1) plus half its own
-    frequency."""
+    Representatives are chosen by the exam points their answers use: see representatives()."""
     qs = {t: w for t, w in base.items() if question_topic(tree, t) and w > 0}
     total = sum(qs.values()) or 1.0
     out: dict[str, dict[str, float]] = defaultdict(dict)
@@ -422,33 +461,10 @@ def generality(tree: Tree, base: dict[str, float], edges: list[Edge], k: int = 8
         learned = set(order[:n])
         ready = sum(w for q, w in qs.items() if out[q] and sum(v for c, v in out[q].items() if c in learned) >= 0.8 * sum(out[q].values()))
         curve.append({"k": n, "ready": ready / total, "share": sum(share[c] for c in order[:n])})
-    strong = {q: {c: v for c, v in out[q].items() if v >= 0.5 and c not in UNIVERSAL} for q in qs}
-    sshare = defaultdict(float)
-    for q, w in qs.items():
-        s = sum(strong[q].values())
-        for c, v in strong[q].items():
-            sshare[c] += w / total * v / s
-    z = sum(sshare.values()) or 1.0
-
-    def practised(pr):
-        return sum(sshare[c] / z * min(1.0, pr.get(c, 0.0)) for c in sshare)
-
-    pool_qs = [q for q in sorted(qs, key=lambda q: -qs[q]) if tree.top(q) in ("s05", "s08")][:pool]
-    prac: dict[str, float] = {}
-    reps = []
-    for _ in range(min(k, len(pool_qs))):
-        def gain(q):
-            pr = dict(prac)
-            for c, v in strong[q].items():
-                pr[c] = pr.get(c, 0.0) + v
-            return practised(pr) - practised(prac) + 0.5 * qs[q] / total
-        best = max((q for q in pool_qs if q not in {r["id"] for r in reps}), key=gain)
-        for c, v in strong[best].items():
-            prac[c] = prac.get(c, 0.0) + v
-        reps.append({"id": best, "title": tree.title(best), "freq": qs[best] / total, "practised": practised(prac),
-                     "concepts": sorted(strong[best], key=lambda c: -sshare[c])[:6]})
+    pool_qs = [q for q in sorted(qs, key=lambda q: -qs[q]) if tree.top(q) in ("s05", "s08") and q not in NOT_A_QUESTION][:pool]
+    reps, coverage = representatives(tree, qs, pool_qs, k)
     return {"concepts": [{"id": c, "title": tree.title(c), "share": share[c]} for c in order], "n80": n80,
-            "curve": curve, "representatives": reps, "questions": len(qs)}
+            "curve": curve, "representatives": reps, "coverage": coverage, "questions": len(qs)}
 
 
 def topic_boost(tree: Tree, topics: set[str], boost: dict[str, float]) -> dict[str, float]:
