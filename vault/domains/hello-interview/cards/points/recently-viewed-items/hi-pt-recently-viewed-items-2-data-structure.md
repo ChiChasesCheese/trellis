@@ -2,7 +2,7 @@
 id: hi-pt-recently-viewed-items-2-data-structure
 node: qb.lld.recently-viewed-items.points
 type: qa
-step: 3
+step: 2
 ---
 ## Q
 **"最近浏览"记录 · 数据结构选择**｜必会 · 出自："最近浏览"记录 › 深入 1

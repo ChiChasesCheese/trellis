@@ -2,7 +2,7 @@
 id: hi-pt-recently-viewed-items-3-view-method
 node: qb.lld.recently-viewed-items.points
 type: qa
-step: 2
+step: 3
 ---
 ## Q
 **"最近浏览"记录 · view 的关键方法**｜必会 · 出自："最近浏览"记录 › 核心实现
