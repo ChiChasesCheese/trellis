@@ -12,12 +12,11 @@
 ## Cases
 - [[qs-unify-the-declaration-fork-the-implementation|Unify the declaration, fork the implementation]] — `quant-stroller`
 
-## Cards (5)
-1. [[principles-yagni-in-round]]
-2. [[principles-speculative-generality]]
-3. [[principles-shallow-abstraction-test]]
-4. [[principles-dry-limit]]
-5. [[principles-unwinding-wrong-abstraction]]
+## Cards (4)
+1. [[principles-speculative-generality]]
+2. [[principles-shallow-abstraction-test]]
+3. [[principles-dry-limit]]
+4. [[principles-unwinding-wrong-abstraction]]
 %% trellis:end %%
 
 ## Notes

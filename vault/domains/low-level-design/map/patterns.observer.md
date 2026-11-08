@@ -22,13 +22,12 @@
 - [[design-pub-sub|Drill：发布订阅与事件总线（Pub-Sub）]]
 - [[design-social-network|Drill：社交网络（Social Network）]]
 
-## Cards (6)
+## Cards (5)
 1. [[patterns-observer-mechanism]]
-2. [[patterns-observer-weakref]]
-3. [[patterns-observer-notify-lock]]
-4. [[patterns-observer-partial-failure]]
-5. [[patterns-observer-mediator-pubsub]]
-6. [[patterns-observer-notification-service]]
+2. [[patterns-observer-notify-lock]]
+3. [[patterns-observer-partial-failure]]
+4. [[patterns-observer-mediator-pubsub]]
+5. [[patterns-observer-notification-service]]
 %% trellis:end %%
 
 ## Notes

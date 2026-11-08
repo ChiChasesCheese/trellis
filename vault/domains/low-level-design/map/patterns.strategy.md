@@ -31,13 +31,12 @@
 - [[design-snake-and-ladder|Drill：蛇梯棋（Snake and Ladder）]]
 - [[design-splitwise|Drill：分账（Splitwise）]]
 
-## Cards (6)
+## Cards (5)
 1. [[patterns-strategy-callable]]
 2. [[patterns-strategy-class-when]]
-3. [[patterns-strategy-vs-state]]
-4. [[patterns-strategy-vs-template-method]]
-5. [[patterns-strategy-parking-lot]]
-6. [[patterns-strategy-misuse]]
+3. [[patterns-strategy-vs-template-method]]
+4. [[patterns-strategy-parking-lot]]
+5. [[patterns-strategy-misuse]]
 %% trellis:end %%
 
 ## Notes

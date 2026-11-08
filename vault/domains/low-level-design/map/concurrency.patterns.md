@@ -20,14 +20,13 @@
 - [[design-task-scheduler|Drill：任务调度器（Task Scheduler）]]
 - [[design-thread-pool|Drill：线程池（Thread Pool）]]
 
-## Cards (7)
+## Cards (6)
 1. [[concurrency-producer-consumer-queue]]
 2. [[concurrency-bounded-queue-invariants]]
 3. [[concurrency-threadpool-future]]
 4. [[concurrency-thread-pool-backpressure]]
-5. [[concurrency-rwlock-when]]
-6. [[concurrency-double-checked-locking]]
-7. [[concurrency-single-condvar-lost-signal]]
+5. [[concurrency-double-checked-locking]]
+6. [[concurrency-single-condvar-lost-signal]]
 %% trellis:end %%
 
 ## Notes

@@ -11,9 +11,10 @@ step: 4
 适应度函数本身几乎从不失败——它平时安静地跑，只有真的出现违规 import 才会报错。这带来一个隐患：如果检查逻辑本身写错了（比如 `startswith` 拼错了包名、`rglob` 的路径模式没匹配到任何文件），这个测试会一直"通过"，但它其实什么都没在检查——团队会拿到一种虚假的安全感。
 
 ```python
-def test_import_direction_probe_can_actually_fail():
+def test_import_direction_probe_can_actually_fail(tmp_path):
     violating_code = "from infrastructure.db import Session\n"
     tmp = tmp_path / "domain" / "bad.py"
+    tmp.parent.mkdir()
     tmp.write_text(violating_code)
     with pytest.raises(AssertionError):
         check_domain_imports(tmp_path)

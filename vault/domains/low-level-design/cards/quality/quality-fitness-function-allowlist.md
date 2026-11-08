@@ -9,7 +9,7 @@ step: 3
 
 ## A
 ```python
-ALLOWED = {"scripts/debug_tool.py", "scripts/one_off_report.py"}  # 只许在这里删条目，不许新增
+KNOWN_LEGACY = {"scripts/debug_tool.py", "scripts/one_off_report.py"}  # 只许在这里删条目，不许新增
 
 def test_print_usage_does_not_grow():
     offenders = {
