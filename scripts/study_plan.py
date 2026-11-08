@@ -53,6 +53,46 @@ TOPIC_DEPTH = {"s08": 3}  # TikTok: one topic per question, not one per section
 EXTRA = {f"q.{m}" for m in ("cdn-design", "pastebin", "object-storage", "auth-service", "reddit", "social-graph", "email-service",
                              "video-conferencing", "google-maps", "calendar", "e-commerce", "in-the-wild", "uid")}
 cfg_global: dict = {}
+CONCEPT_SHARE = 0.3  # direct concept evidence counts this much against the question mass (which sums to about 1)
+EVIDENCE = ROOT / "sources/local/plan/evidence/bank.json"
+
+
+def load_evidence():
+    return json.loads(EVIDENCE.read_text(encoding="utf-8")) if EVIDENCE.exists() else None
+
+
+def concept_words() -> dict:
+    try:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from plan_evidence import CONCEPTS
+        return CONCEPTS
+    except Exception:  # noqa: BLE001 - the planner runs without the evidence module
+        return {}
+
+
+CONCEPT_WORDS = concept_words()
+STOP_TERMS = {"design", "system", "what", "when", "with", "this", "that", "from", "into", "your", "have", "does", "data", "time",
+              "user", "users", "service", "api", "the", "and", "for", "how", "why", "which"}
+
+
+def report_corpus() -> dict[str, float]:
+    """term -> share of system-design report descriptions that use it (lower-case substring), for terms cards use."""
+    bank = ROOT / "sources/local/hello-interview/premium/questions.json"
+    if not bank.exists():
+        return {}
+    descs = [(r.get("description") or "").lower() for q in json.loads(bank.read_text(encoding="utf-8"))
+             if q["defaultInterviewType"] in ("SYSTEM_DESIGN", "OBJECT_ORIENTED_DESIGN") for r in q["upvotes"] if r.get("description")]
+    descs += [(q["title"] or "").lower() for q in json.loads(bank.read_text(encoding="utf-8"))]
+
+    class Lazy(dict):
+        def __missing__(self, term):
+            v = sum(1 for d in descs if term in d) / max(1, len(descs))
+            self[term] = v
+            return v
+
+        def get(self, term, default=0.0):
+            return self[term]
+    return Lazy()
 LLD_FOUNDATIONS = {"t.lld-delivery", "t.lld-concurrency", "t.lld-cross"}
 TOP10 = {"q.bitly", "q.dropbox", "q.ticketmaster", "q.news-feed", "q.chat", "q.leetcode", "q.uber", "q.web-crawler",
          "q.ad-click", "q.fb-post-search"}  # Hello Interview's ten most common problems
@@ -135,7 +175,9 @@ def build_inputs(tree: Tree):
     cards = [c for c in cards if not c.topic.startswith(skip) and not c.leaf.startswith(skip)]
     topics = {c.topic for c in cards}
 
-    # base weight: how often a question is reported
+    # base weight. With evidence (scripts/plan_evidence.py): a question's company-normalised, target-mixed frequency,
+    # and a concept's direct share of what reports name; without it, the bank counts in the skeleton's summaries.
+    ev = load_evidence()
     reports = defaultdict(float)
     for n in tree.sk.walk():
         m = re.search(r"报告\s*(\d+)\s*次", n.summary or "")
@@ -143,22 +185,66 @@ def build_inputs(tree: Tree):
             reports[tree.topic(n.id)] += math.log1p(int(m.group(1)))
     med = median(reports.values()) if reports else 1.0
     base = {}
-    for t in topics:
-        top = tree.top(t)
-        if t in reports:
-            base[t] = reports[t]
-        elif t in EXTRA:
-            base[t] = med * 0.3  # 补充 pages: questions no bank reports, kept for breadth
-        elif top in ("s05", "s08") or (top == "s07" and t not in LLD_FOUNDATIONS):  # a question with no bank count
-            base[t] = med * (1.4 if t in TOP10 else 0.7)
-        elif top == "s06":
-            base[t] = med * 0.6  # payments chapters, a curriculum rather than a question
-        elif top == "s00":
-            base[t] = med  # weak spots found in a real mock
-        else:
-            base[t] = 0.0  # concepts earn their weight from the questions that need them
-        if t in TOP10 and t in reports:
-            base[t] *= 1.4
+    if ev:
+        qf = {t: v["freq"] for t, v in ev["questions"].items() if t in topics}
+        cf = ev.get("concepts", {})
+        qmed = median(qf.values()) if qf else 0.01
+        for t in topics:
+            top = tree.top(t)
+            if t in qf:
+                base[t] = qf[t]
+            elif t in EXTRA:
+                base[t] = qmed * 0.3
+            elif top in ("s05", "s08") or (top == "s07" and t not in LLD_FOUNDATIONS):
+                base[t] = qmed * 0.5  # a question no source reports: kept, but below the median reported one
+            elif top == "s06":
+                base[t] = qmed * 0.6 + CONCEPT_SHARE * cf.get(t, 0.0)
+            elif top == "s00":
+                base[t] = qmed * 2  # weak spots found in a real mock
+            else:
+                base[t] = CONCEPT_SHARE * cf.get(t, 0.0)  # what reports name directly; the rest flows in from questions
+    else:
+        for t in topics:
+            top = tree.top(t)
+            if t in reports:
+                base[t] = reports[t] * (1.4 if t in TOP10 else 1.0)
+            elif t in EXTRA:
+                base[t] = med * 0.3
+            elif top in ("s05", "s08") or (top == "s07" and t not in LLD_FOUNDATIONS):
+                base[t] = med * (1.4 if t in TOP10 else 0.7)
+            elif top == "s06":
+                base[t] = med * 0.6
+            elif top == "s00":
+                base[t] = med
+            else:
+                base[t] = 0.0
+
+    # card level: how often its point is asked (the concepts it touches, by what reports name), and how hard it is
+    cf = (ev or {}).get("concepts", {})
+    texts = {c.id: c.render(None) for c in tree.project.cards}
+    lengths = sorted(len(re.sub(r"```.*?```", "", texts[c.id][1], flags=re.S)) for c in cards)
+    by_topic = defaultdict(list)
+    reports_text = report_corpus()
+    for c in cards:
+        q, a = texts[c.id]
+        body = re.sub(r"```svg.*?```", "", (q + a), flags=re.S).lower()
+        # concepts beyond the card's own topic that it ties in, weighted by how often reports name them
+        c._rel = sum(v for k, v in cf.items() if k != c.topic and any(w in body for w in CONCEPT_WORDS.get(k, [])))
+        # the card's own technical terms (the English in its title and question), by how many report descriptions use them
+        terms = {t for t in re.findall(r"[a-z][a-z0-9+\-/ ]{2,30}[a-z0-9]", q.lower().split("\n", 1)[0] + " " + q.lower()[:300])
+                 if len(t) >= 4 and t not in STOP_TERMS}
+        c._hits = max((reports_text.get(t, 0.0) for t in terms), default=0.0)
+        plain = len(re.sub(r"```.*?```", "", a, flags=re.S))
+        pct = sum(1 for x in lengths if x <= plain) / max(1, len(lengths))
+        c.difficulty = min(1.0, 0.5 * pct + {"加分": 0.3, "追问": 0.15}.get(c.level, 0.0) + (0.2 if "```" in a and "```svg" not in a else 0.0))
+        by_topic[c.topic].append(c)
+    for cs in by_topic.values():
+        mean_rel = sum(c._rel for c in cs) / len(cs)
+        mean_hit = sum(c._hits for c in cs) / len(cs)
+        for c in cs:
+            rel = 0.85 + 0.3 * min(2.0, c._rel / mean_rel) / 2 if mean_rel > 0 else 1.0  # 0.85 .. 1.15: ties to other asked concepts
+            hit = 0.8 + 0.6 * min(2.0, c._hits / mean_hit) / 2 if mean_hit > 0 else 1.0  # 0.8 .. 1.4: its own terms in reports
+            c.freq = rel * hit
 
     # edges: question -> what it needs
     agg = defaultdict(float)
@@ -419,6 +505,11 @@ daily_activity: list[dict] = []
 
 
 def dashboard(tree, p, cards, titles, edges, history) -> str:
+    ev = load_evidence() or {}
+    ev_q = {k: {"freq": v["freq"], "reports": v["reports"], "bytedance": v["bytedance"], "last": v["last"]}
+            for k, v in ev.get("questions", {}).items()}
+    for k, v in ev.get("concepts", {}).items():
+        ev_q.setdefault(k, {})["named"] = v
     leaves = defaultdict(list)
     for c in cards:
         leaves[c.topic].append(c)
@@ -433,12 +524,17 @@ def dashboard(tree, p, cards, titles, edges, history) -> str:
             "cards": s.cards, "seen": s.seen,
             "leaves": [{"id": l, "title": tree.title(l), "cards": len(cs),
                         "mastery": sum(p.card_mastery[c.id] for c in cs) / len(cs),
-                        "value": sum(p.card_value[c.id] for c in cs)} for l, cs in ls.items()],
+                        "value": sum(p.card_value[c.id] for c in cs),
+                        "freq": sum(c.freq for c in cs) / len(cs), "difficulty": sum(c.difficulty for c in cs) / len(cs)}
+                       for l, cs in ls.items()],
+            "evidence": (ev_q.get(t) or {}),
         })
     data = {"topics": topics, "edges": [{"src": e.src, "dst": e.dst, "s": e.strength, "kind": e.kind} for e in edges],
             "pareto": p.pareto, "held": p.held, "history": history, "activity": daily_activity, "brief": brief,
             "picked": [{"id": cid, "title": titles.get(cid, cid)} for cid in p.picked],
-            "pickedTopics": sorted({c.topic for c in cards if c.id in set(p.picked)})}
+            "pickedTopics": sorted({c.topic for c in cards if c.id in set(p.picked)}),
+            "method": {"coverage": ev.get("coverage"), "bank_reports": ev.get("method", {}).get("bank_reports"),
+                       "external_reports": ev.get("method", {}).get("external_reports")}}
     tpl = (ROOT / "scripts/study_plan.html").read_text(encoding="utf-8")
     return tpl.replace("/*DATA*/null", json.dumps(data, ensure_ascii=False))
 
@@ -548,8 +644,22 @@ def run(apply_to_anki: bool) -> None:
     if apply_to_anki:
         call("sync")
     traces, anki, logs = anki_state({c.id for c in cards})
+    for c in cards:  # once studied, the learner's own record says how hard a card is
+        t, log = traces.get(c.id), logs.get(c.id, [])
+        if t and t.reps >= 2:
+            hard = sum(1 for r in log if r["ease"] == 2)
+            personal = min(1.0, (t.lapses + sum(1 for r in log if r["ease"] == 1) * 0.5 + hard * 0.3) / t.reps * 2)
+            personal = min(1.0, personal + (0.2 if t.ease and t.ease < 2.3 else 0.0))
+            c.difficulty = 0.5 * c.difficulty + 0.5 * personal
     budget = int(cfg.get("daily_new", 35)) * int(cfg.get("buffer_days", 2))
-    p = plan(cards, traces, base, edges, topic_boost(tree, {c.topic for c in cards}, cfg.get("boost", {})), now_ms, budget)
+    boosts = topic_boost(tree, {c.topic for c in cards}, cfg.get("boost", {}))
+    share = float(cfg.get("question_share", 0.2))
+    p = plan(cards, traces, base, edges, boosts, now_ms, budget - int(budget * share))
+    question_cards = [c for c in cards if STAGES.get(tree.top(c.leaf)) == "3 题目与整轮"]
+    already = {i for i in p.picked if STAGES.get(tree.top(anki_leaf[i])) == "3 题目与整轮"}
+    q_plan = plan(question_cards, traces, {t: base.get(t, 0) for t in {c.topic for c in question_cards}}, edges, boosts, now_ms,
+                  int(budget * share), exclude=set(p.picked))
+    p.picked += [i for i in q_plan.picked if i not in already][: budget - len(p.picked)]
     stages = defaultdict(list)
     for i in p.picked:
         stages[STAGES.get(tree.top(anki_leaf[i]), STAGE_DEFAULT)].append(i)

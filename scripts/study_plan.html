@@ -114,7 +114,9 @@ if(lead){
  parts.push(`它在面试权重里排第 ${lead.rank}`);if(lead.users)parts.push(`${lead.users} 道题要用到它`);parts.push(`你现在掌握了 ${pct(lead.mastery)}`);
  document.getElementById('why').textContent=parts.join('，')+'。';
 }
-document.getElementById('standing').textContent=`你已经握住了 ${(D.held*100).toFixed(1)}% 的面试权重。按这个顺序学，前 ${pct(x80)} 的卡就能覆盖 80%。`;
+const M=D.method||{};
+document.getElementById('standing').textContent=`你已经握住了 ${(D.held*100).toFixed(1)}% 的面试权重。按这个顺序学，前 ${pct(x80)} 的卡就能覆盖 80%。`+
+ (M.coverage?`权重来自 ${M.bank_reports} 份真实面试报告${M.external_reports?`和 ${M.external_reports} 份外部公开面经`:''}，deck 覆盖了其中 ${pct(M.coverage)} 的考频。`:'');
 
 // route: three stages, in order
 const st=B.stages||{};const stageText={'弱项补强':'模拟面试暴露的缺口和背后的模式','概念与技术':'很多题都要用到的概念、技术和支付正确性','题目与整轮':'整道题和整轮模拟'};
@@ -161,10 +163,19 @@ function show(id){const t=T[id];if(!t)return;current=id;mark(id);
  const leaves=t.leaves.slice().sort((a,b)=>b.value-a.value);
  document.getElementById('detail').innerHTML=`<h3>${esc(t.title)}</h3>
   <p>在「${esc(t.topTitle.replace(/[（(].*/,''))}」里，面试权重排第 ${rank}，占 ${(t.weight*100).toFixed(2)}%。共 ${t.cards} 张，你见过 ${t.seen} 张，掌握 ${pct(t.mastery)}。${t.readiness<.8?'它要用到的概念还没学稳，所以排得靠后。':''}</p>
+  ${evid(t)}
   ${users.length?`<p>要用到它的题和主题（${users.length}）</p><div class="chips">${users.slice(0,30).map(chip).join('')}</div>`:''}
   ${needs.length?`<p>它要先用到</p><div class="chips">${needs.map(chip).join('')}</div>`:''}
-  <table><thead><tr><th>叶子</th><th class="num">卡片</th><th>掌握度</th></tr></thead><tbody>${leaves.map(l=>`<tr><td>${esc(l.title)}</td><td class="num">${l.cards}</td>
-  <td><div class="meter"><i style="width:${Math.max(2,l.mastery*100)}%;background:${mix(l.mastery)}"></i></div></td></tr>`).join('')}</tbody></table>`}
+  <table><thead><tr><th>叶子</th><th class="num">卡片</th><th class="num">考频</th><th class="num">难度</th><th>掌握度</th></tr></thead><tbody>${leaves.map(l=>`<tr><td>${esc(l.title)}</td><td class="num">${l.cards}</td>
+  <td class="num">${l.freq.toFixed(2)}×</td><td class="num">${level(l.difficulty)}</td>
+  <td><div class="meter"><i style="width:${Math.max(2,l.mastery*100)}%;background:${mix(l.mastery)}"></i></div></td></tr>`).join('')}</tbody></table>
+  <p class="note">考频：这一叶的卡涉及的点在真实面试报告里被提到的频率，相对本主题平均（1× 为平均）。难度：没学过时按篇幅、层级和代码估计，学过后混入你的忘记和「困难」记录。</p>`}
+const level=d=>d<.3?'易':d<.55?'中':'难';
+function evid(t){const e=t.evidence||{};const out=[];
+ if(e.reports)out.push(`真实面试报告里出现 ${e.reports} 次${e.bytedance?`，其中字节 / TikTok ${e.bytedance} 次`:''}，最近一次在 ${e.last}`);
+ if(e.freq)out.push(`按公司归一化、目标混合后占全部考频的 ${(e.freq*100).toFixed(2)}%`);
+ if(e.named)out.push(`报告里直接点名它的占概念提及的 ${(e.named*100).toFixed(1)}%`);
+ return out.length?`<p>依据：${out.join('；')}。</p>`:`<p class="note">没有直接的报告数据，权重全部来自依赖它的题目。</p>`}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-id]');if(!b)return;show(b.dataset.id);
  if(!b.classList.contains('tile'))document.getElementById('detail').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'})});
 drawMap();addEventListener('resize',()=>{clearTimeout(window._r);window._r=setTimeout(drawMap,150)});

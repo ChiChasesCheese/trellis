@@ -39,13 +39,20 @@ class CardInfo:
     level: str = ""  # 必会 / 追问 / 加分, or empty
     core: bool = False
     rank: int = 0  # position in its topic's teaching order (0 = first)
+    freq: float = 1.0  # how often interviews probe what this card covers, relative to its topic's other cards
+    difficulty: float = 0.3  # 0 easy .. 1 hard: intrinsic before study, blended with the learner's record after
 
     @property
     def weight(self) -> float:
-        """Its share of the topic: by level, and front-loaded. A topic's first cards (the summary, the main chain)
-        carry most of what an interviewer probes; the tail is detail."""
+        """Its share of the topic: by level, by how often its point is asked, and front-loaded. A topic's first
+        cards (the summary, the main chain) carry most of what an interviewer probes; the tail is detail."""
         position = (1 + self.rank / 8) ** -0.8
-        return LEVEL_WEIGHT.get(self.level, DEFAULT_LEVEL) * (1.3 if self.core else 1.0) * position
+        return LEVEL_WEIGHT.get(self.level, DEFAULT_LEVEL) * (1.3 if self.core else 1.0) * position * self.freq
+
+    @property
+    def cost(self) -> float:
+        """Relative time to learn: a hard card is worth as much but takes longer, so it pays less per minute."""
+        return 1.0 + 0.6 * self.difficulty
 
 
 @dataclass
@@ -156,7 +163,7 @@ def plan(cards: list[CardInfo], traces: dict[str, Trace], base: dict[str, float]
     for t, cs in by_topic.items():
         wsum = sum(c.weight for c in cs) or 1.0
         for c in cs:
-            card_value[c.id] = topics[t].weight * c.weight / wsum * (1 - mastery[c.id]) * topics[t].readiness
+            card_value[c.id] = topics[t].weight * c.weight / wsum * (1 - mastery[c.id]) * topics[t].readiness / c.cost
 
     picked = pick(cards, traces, card_value, prereqs, budget, exclude)
     total_w = sum(s.weight for s in topics.values()) or 1.0
