@@ -16,4 +16,4 @@ Redis 锁方案在座位图显示、Redis 故障、支付中 TTL 过期上分别
 
 **支付期间 TTL 到期。** 数据库事务只会让一人成功，另一人自动退款；TTL 设宽裕，支付发起时延长锁。
 
-**流程。** 选座后加锁、写 in-progress 订单、跳支付页；前端用 Stripe.js 令牌化卡号，服务端不碰卡号；Stripe 的 webhook 触发数据库事务，票改 sold、订单改 confirmed。处理器必须幂等（bookingId 作幂等键，先查状态再更新）。
+**流程。** 选座后加锁、写 in-progress 订单、跳支付页；前端用 Stripe.js 令牌化卡号，服务端不碰卡号；Stripe 的 webhook 触发数据库事务，票改 booked、订单改 confirmed。处理器必须幂等（bookingId 作幂等键，先查状态再更新）。
