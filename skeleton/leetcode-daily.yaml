@@ -20,6 +20,9 @@ nodes:
   - id: hashing.minimum-area-rectangle
     title: LC 939 最小面积矩形（Minimum Area Rectangle）
     summary: Medium；Geometry, Array, Hash Table, Math。
+  - id: hashing.count-servers-that-communicate
+    title: LC 1267 统计参与通信的服务器（Count Servers that Communicate）
+    summary: Medium；Depth-First Search, Breadth-First Search, Union Find, Array。
   core: true
 - id: prefix-sum
   order: 2
