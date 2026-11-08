@@ -112,4 +112,4 @@ flowchart TD
 
 **先修概念。** [[hi-system-design-deep-dives-time-series-databases|时序数据库]]、[[hi-system-design-deep-dives-kafka|Kafka]]、[[hi-system-design-core-concepts-sharding|分片（Sharding）]]、[[hi-system-design-patterns-scaling-writes|扩展写]]、[[hi-system-design-deep-dives-flink|Flink]]、[[hi-system-design-core-concepts-data-modeling|数据建模]]
 
-**同类题。** [[hi-system-design-problem-breakdowns-metrics-monitoring|指标监控（Datadog 拆解）]]、[[solution-metrics-monitoring|指标监控（本库解答）]]、[[hi-system-design-problem-breakdowns-ad-click-aggregator|广告点击聚合]]、[[hi-system-design-problem-breakdowns-notification-system|通知系统]]
+**同类题。** [[hi-system-design-problem-breakdowns-metrics-monitoring|指标监控（Datadog 拆解）]]、[[solution-metrics-monitoring|指标监控解答]]、[[hi-system-design-problem-breakdowns-ad-click-aggregator|广告点击聚合]]、[[hi-system-design-problem-breakdowns-notification-system|通知系统]]

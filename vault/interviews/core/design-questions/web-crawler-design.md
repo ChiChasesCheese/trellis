@@ -133,4 +133,4 @@ kind: system-design
 
 **先修概念。** [[hi-system-design-core-concepts-sharding|分片（Sharding）]]、[[hi-system-design-core-concepts-consistent-hashing|一致性哈希]]、[[hi-system-design-core-concepts-networking-essentials|网络基础]]、[[hi-system-design-deep-dives-kafka|Kafka]]、[[hi-system-design-deep-dives-dynamodb|DynamoDB]]、[[hi-system-design-deep-dives-data-structures-for-big-data|大数据数据结构]]
 
-**同类题。** [[solution-web-crawler]]（本库完整题解）、[[hi-system-design-problem-breakdowns-web-crawler|网络爬虫]]、[[solution-search-engine]]、[[solution-news-aggregator]]
+**同类题。** [[solution-web-crawler]]（完整题解）、[[hi-system-design-problem-breakdowns-web-crawler|网络爬虫]]、[[solution-search-engine]]、[[solution-news-aggregator]]

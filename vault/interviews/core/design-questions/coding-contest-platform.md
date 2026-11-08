@@ -131,4 +131,4 @@ kind: system-design
 
 **先修概念。** [[hi-system-design-deep-dives-redis|Redis]]、[[hi-system-design-core-concepts-api-design|API 设计]]、[[hi-system-design-core-concepts-data-modeling|数据建模]]、[[hi-system-design-core-concepts-caching|缓存]]、[[hi-system-design-patterns-long-running-tasks|长时间运行的任务]]、[[hi-system-design-core-concepts-cap-theorem|CAP 定理]]
 
-**同类题。** [[solution-online-judge]]（本库完整题解）、[[hi-system-design-problem-breakdowns-leetcode|在线判题平台（LeetCode）]]、[[solution-leaderboard]]、[[solution-top-k]]
+**同类题。** [[solution-online-judge]]（完整题解）、[[hi-system-design-problem-breakdowns-leetcode|在线判题平台（LeetCode）]]、[[solution-leaderboard]]、[[solution-top-k]]

@@ -111,6 +111,6 @@ flowchart TB
 
 **同类题。**
 - [[hi-system-design-problem-breakdowns-whatsapp|即时通讯（WhatsApp）]]：同一系统的标准拆解
-- [[solution-chat-messaging|设计题解：聊天与即时通讯]]：本库里的完整题解
+- [[solution-chat-messaging|设计题解：聊天与即时通讯]]：完整题解
 - [[hi-system-design-problem-breakdowns-fb-live-comments|Facebook 直播评论]]：同样是长连接扇出，但读者远多于写者
 - [[hi-system-design-problem-breakdowns-notification-system|通知系统]]：离线唤醒与推送通道

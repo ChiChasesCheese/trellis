@@ -32,7 +32,7 @@ kind: system-design
   - 新鲜度：事件发生后 1 分钟内要反映在榜单里。
   - 延迟：查询返回在几十毫秒内，所以必须预计算。
   - 精确性：先假设精确，再讨论近似是否可接受。
-  - 规模：70 亿 / 天 ÷ 10 万秒（取整估算）≈ 70 万事件每秒；若按 86400 秒精确算约 81 万。视频 36 亿个，朴素的"对象 ID 8 字节加计数 8 字节"全表约 64 GB，这个数字要记住：每多维护一份全量计数就多 64 GB。
+  - 规模：700 亿 / 天 ÷ 10 万秒（取整估算）≈ 70 万事件每秒；若按 86400 秒精确算约 81 万。视频 40 亿个，朴素的"对象 ID 8 字节加计数 8 字节"全表约 64 GB，这个数字要记住：每多维护一份全量计数就多 64 GB。
 
 **核心实体与接口。**
 - 实体：对象（Video）、事件（View，含对象 ID、时间戳、可选维度）、时间窗口（Window）。
@@ -125,4 +125,4 @@ kind: system-design
 
 **先修概念。** [[hi-system-design-core-concepts-sharding|分片（Sharding）]]、[[hi-system-design-core-concepts-caching|缓存]]、[[hi-system-design-deep-dives-kafka|Kafka]]、[[hi-system-design-deep-dives-redis|Redis]]、[[hi-system-design-deep-dives-flink|Flink]]、[[hi-system-design-deep-dives-data-structures-for-big-data|大数据数据结构]]
 
-**同类题。** [[solution-top-k]]（本库完整题解）、[[hi-system-design-problem-breakdowns-top-k|YouTube 热门 Top K]]、[[solution-leaderboard]]、[[solution-ad-click-aggregation]]、[[solution-metrics-monitoring]]
+**同类题。** [[solution-top-k]]（完整题解）、[[hi-system-design-problem-breakdowns-top-k|YouTube 热门 Top K]]、[[solution-leaderboard]]、[[solution-ad-click-aggregation]]、[[solution-metrics-monitoring]]

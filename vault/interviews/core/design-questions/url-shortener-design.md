@@ -10,13 +10,13 @@ kind: system-design
 给出完整解答：需求、核心实体与接口、整体设计、深入问题、取舍、不同级别的期望。
 
 ## A
-**一句话。** 这是一个读写比极端悬殊（约 1000 比 1）的"键到值"查找问题：难点集中在三处——短码如何在多台写入机器上不冲突地生成、跳转读路径如何靠缓存做到极低延迟、以及规模增长时每一层怎样水平扩展。
+**一句话。** 这是一个读写比极端悬殊（约 500 到 1000 比 1）的"键到值"查找问题：难点集中在三处——短码如何在多台写入机器上不冲突地生成、跳转读路径如何靠缓存做到极低延迟、以及规模增长时每一层怎样水平扩展。
 
 **60 分钟路线。**
 
 | 时间 | 做什么 |
 |---|---|
-| 0–5 分 | 要求和估算：读写比约 1000 比 1，瓶颈是读 QPS |
+| 0–5 分 | 要求和估算：读写比约 500 到 1000 比 1，瓶颈是读 QPS |
 | 5–10 分 | 实体和接口，别名冲突返回 409 |
 | 10–25 分 | 整体设计：读服务、写服务、缓存、计数器、键值库 |
 | 25–50 分 | 深入：短码唯一性、跳转加速与 301/302、扩展 |
@@ -106,4 +106,4 @@ flowchart TD
 
 **先修概念。** [[hi-system-design-core-concepts-caching|缓存]]、[[hi-system-design-patterns-scaling-reads|扩展读]]、[[hi-system-design-core-concepts-sharding|分片（Sharding）]]、[[hi-system-design-core-concepts-api-design|API 设计]]、[[hi-system-design-deep-dives-redis|Redis]]、[[hi-system-design-core-concepts-consistent-hashing|一致性哈希]]
 
-**同类题。** [[hi-system-design-problem-breakdowns-bitly|短链接服务（Bitly 拆解）]]、[[solution-url-shortener|短链接服务（本库解答）]]、[[hi-system-design-problem-breakdowns-top-k|YouTube 热门 Top K]]、[[hi-system-design-problem-breakdowns-distributed-rate-limiter|分布式限流器]]
+**同类题。** [[hi-system-design-problem-breakdowns-bitly|短链接服务（Bitly 拆解）]]、[[solution-url-shortener|短链接服务解答]]、[[hi-system-design-problem-breakdowns-top-k|YouTube 热门 Top K]]、[[hi-system-design-problem-breakdowns-distributed-rate-limiter|分布式限流器]]

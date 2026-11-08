@@ -153,4 +153,4 @@ kind: system-design
 
 **先修概念。** [[hi-system-design-deep-dives-kafka|Kafka]]、[[hi-system-design-deep-dives-redis|Redis]]、[[hi-system-design-core-concepts-api-design|API 设计]]、[[hi-system-design-core-concepts-data-modeling|数据建模]]、[[hi-system-design-patterns-scaling-writes|扩展写]]、[[hi-system-design-deep-dives-cassandra|Cassandra]]
 
-**同类题。** [[solution-notification-system]]（本库完整题解）、[[hi-system-design-problem-breakdowns-notification-system|通知系统]]、[[solution-notification-service]]（低层设计版）、[[solution-message-queue]]
+**同类题。** [[solution-notification-system]]（完整题解）、[[hi-system-design-problem-breakdowns-notification-system|通知系统]]、[[solution-notification-service]]（低层设计版）、[[solution-message-queue]]

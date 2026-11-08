@@ -86,7 +86,7 @@ kind: system-design
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="318" font-size="11">CAS 保证同一次触发只分发一次</text></g>
 </g></svg>
 ```
-图中从上到下：API 层写入任务定义和第一个待定 Run；调度器分片每分钟按索引范围扫描"未来几分钟内到期"的 Run，装进内存里的时间堆；到点后用比较并交换（Compare And Swap，CAS）把状态从 SCHEDULED 改为 QUEUED 并投进工作队列；worker 拉取、领租约、执行、心跳；终态写回并同步到历史库。
+图中从上到下：API 层写入任务定义和第一个待定 Run；调度器分片每 30 秒左右按索引范围扫描"未来几分钟内到期"的 Run，装进内存里的时间堆；到点后用比较并交换（Compare And Swap，CAS）把状态从 SCHEDULED 改为 QUEUED 并投进工作队列；worker 拉取、领租约、执行、心跳；终态写回并同步到历史库。
 
 1. 写入路径。API 层校验 cron 表达式，计算出第一个触发时间，同事务写入 Job 与一条 SCHEDULED 状态的 Run。cron 任务永远只物化"下一次"这一条 Run：它被分发的同一个事务里再算出再下一次并插入。这样 5 百万个 cron 任务也只占 5 百万行，而不是把未来一年的触发点全部展开。
 2. 发现到期任务。Run 表按 job_id 哈希分成多个分片（例如 32 个），每个分片有一个索引 `(shard, scheduled_at)`。分片的"属主调度器"每 30 秒左右执行一次范围扫描，取出未来 60 秒内到期、状态为 SCHEDULED 的行，放进本地的最小堆。粗粒度走数据库，精粒度走内存堆，数据库查询频率因此是每分片每半分钟一次，与任务总量无关。
@@ -124,7 +124,7 @@ kind: system-design
 - 追问"调度延迟太大怎么排查"：监控 `dispatch_time - scheduled_at` 的分位数、各分片堆长度、队列积压、worker 空闲率，积压在哪一层就扩哪一层。
 - 追问"某租户一次提交 100 万个任务"：入口限流加每租户配额，队列层按租户做加权公平调度，防止一家挤占全体。
 - 追问"优先级会不会饿死低优先级"：为低优先级任务按等待时间逐步提升有效优先级（老化，aging）。
-- 追问"每秒 1 万是峰值还是平均，写放大多少"：一次执行至少 4 次状态写（创建、入队、运行、终态），峰值约 4 万写每秒，分 16 个分片则每片约 2500 写每秒，单机可承受。
+- 追问"每秒 1 万是峰值还是平均，写放大多少"：一次执行至少 4 次状态写（创建、入队、运行、终态），峰值约 4 万写每秒，分 32 个分片则每片约 1250 写每秒，单机可承受。
 
 **级别期望。**
 - 中级：画出任务表、定时扫描、队列、worker、重试与 DLQ，能解释为什么不能每秒全表扫描。
@@ -133,4 +133,4 @@ kind: system-design
 
 **先修概念。** [[hi-system-design-core-concepts-sharding|分片（Sharding）]]、[[hi-system-design-core-concepts-data-modeling|数据建模]]、[[hi-system-design-deep-dives-kafka|Kafka]]、[[hi-system-design-deep-dives-redis|Redis]]、[[hi-system-design-deep-dives-temporal|Temporal]]、[[hi-system-design-patterns-long-running-tasks|长时间运行的任务]]
 
-**同类题。** [[solution-job-scheduler]]（本库完整题解）、[[hi-system-design-problem-breakdowns-job-scheduler|分布式任务调度（Airflow）]]、[[solution-task-scheduler]]（低层设计版）、[[solution-message-queue]]
+**同类题。** [[solution-job-scheduler]]（完整题解）、[[hi-system-design-problem-breakdowns-job-scheduler|分布式任务调度（Airflow）]]、[[solution-task-scheduler]]（低层设计版）、[[solution-message-queue]]
