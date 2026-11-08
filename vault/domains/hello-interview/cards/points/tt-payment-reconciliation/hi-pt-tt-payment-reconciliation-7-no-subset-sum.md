@@ -2,7 +2,7 @@
 id: hi-pt-tt-payment-reconciliation-7-no-subset-sum
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 5
+step: 7
 ---
 ## Q
 **支付对账系统 · 不做子集和**｜必会 · 出自：支付对账系统 › 深入 1

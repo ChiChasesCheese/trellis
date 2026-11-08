@@ -2,7 +2,7 @@
 id: hi-pt-stock-price-alerts-3-threshold-structure
 node: qb.sd.stock-price-alerts.points
 type: qa
-step: 4
+step: 3
 ---
 ## Q
 **股票价格提醒系统 · 阈值有序结构**｜必会 · 出自：股票价格提醒系统 › 深入 1

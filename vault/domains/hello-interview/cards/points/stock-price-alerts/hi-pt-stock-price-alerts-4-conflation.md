@@ -2,7 +2,7 @@
 id: hi-pt-stock-price-alerts-4-conflation
 node: qb.sd.stock-price-alerts.points
 type: qa
-step: 3
+step: 4
 ---
 ## Q
 **股票价格提醒系统 · 合并与分区**｜必会 · 出自：股票价格提醒系统 › 整体设计

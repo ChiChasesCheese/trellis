@@ -2,7 +2,7 @@
 id: hi-pt-tt-payment-reconciliation-6-layered-match
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 4
+step: 6
 ---
 ## Q
 **支付对账系统 · 分层匹配与消耗式**｜必会 · 出自：支付对账系统 › 深入 1

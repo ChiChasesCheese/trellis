@@ -2,7 +2,7 @@
 id: hi-pt-tt-payment-reconciliation-9-break-workflow
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 6
+step: 8
 ---
 ## Q
 **支付对账系统 · 差异分类与案例聚合**｜必会 · 出自：支付对账系统 › 深入 2

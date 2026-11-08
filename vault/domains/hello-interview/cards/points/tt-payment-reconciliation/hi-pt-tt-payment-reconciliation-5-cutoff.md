@@ -2,7 +2,7 @@
 id: hi-pt-tt-payment-reconciliation-5-cutoff
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 8
+step: 5
 ---
 ## Q
 **支付对账系统 · 截止点对齐**｜必会 · 出自：支付对账系统 › 深入 3

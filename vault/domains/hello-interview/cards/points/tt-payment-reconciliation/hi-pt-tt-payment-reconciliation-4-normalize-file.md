@@ -2,7 +2,7 @@
 id: hi-pt-tt-payment-reconciliation-4-normalize-file
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 7
+step: 4
 ---
 ## Q
 **支付对账系统 · 规范化与文件幂等**｜必会 · 出自：支付对账系统 › 深入 3

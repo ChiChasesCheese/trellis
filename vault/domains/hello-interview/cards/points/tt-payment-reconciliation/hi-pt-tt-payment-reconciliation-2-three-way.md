@@ -2,7 +2,7 @@
 id: hi-pt-tt-payment-reconciliation-2-three-way
 node: tt.sd.tt-payment-reconciliation.points
 type: qa
-step: 3
+step: 2
 ---
 ## Q
 **支付对账系统 · 为什么三方**｜必会 · 出自：支付对账系统 › 整体设计
