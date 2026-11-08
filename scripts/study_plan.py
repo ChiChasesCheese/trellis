@@ -39,7 +39,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 import daily_extra  # noqa: E402
 import plan_kp  # noqa: E402
-from trellis.plan import CardInfo, Edge, plan  # noqa: E402
+from trellis.plan import CardInfo, Edge, card_mastery, plan  # noqa: E402
 from trellis.project import load_project  # noqa: E402
 from trellis.sequence import core_leaves  # noqa: E402
 from trellis.traces import Trace  # noqa: E402
@@ -328,7 +328,7 @@ def exam_point_rows(tree, p) -> dict | None:
             by_topic[t].append(k)
     for ks in by_topic.values():
         ks.sort(key=lambda k: -rows[k]["w"])
-    order = sorted(rows, key=lambda k: -rows[k]["w"])
+    order = sorted((k for k in rows if not rows[k]["own"]), key=lambda k: -rows[k]["w"])  # points that several questions share
     acc, n80 = 0.0, len(order)
     z = sum(rows[k]["w"] for k in order) or 1.0
     for i, k in enumerate(order):
@@ -336,8 +336,8 @@ def exam_point_rows(tree, p) -> dict | None:
         if acc >= 0.8:
             n80 = i + 1
             break
-    top = sorted((k for k in rows if not rows[k]["own"]), key=lambda k: -rows[k]["p"])[:40]
-    return {"rows": rows, "byTopic": dict(by_topic), "top": top, "n80": n80, "n": len(rows),
+    top = sorted((k for k in rows if not rows[k]["own"] and k not in plan_kp.META), key=lambda k: -rows[k]["p"])[:40]
+    return {"rows": rows, "byTopic": dict(by_topic), "top": top, "n80": n80, "n": len(order),
             "questions": len(pts.needs), "cards": sum(1 for ks in pts.card.values() if ks)}
 
 
@@ -779,6 +779,25 @@ def preset(cfg):
     call("saveDeckConfig", config=current)
 
 
+def points_report(p, cards) -> str:
+    """The exam points today's new cards teach, heaviest first, with how interviews use them."""
+    if not kp_state:
+        return ""
+    pts, w = kp_state["points"], kp_state["weight"]
+    req = plan_kp.required_by(pts)
+    picked = set(p.picked)
+    points = sorted({c.point for c in cards if c.id in picked and c.point and c.point in w and c.point not in plan_kp.META}, key=lambda k: -w[k])
+    if not points:
+        return ""
+    out = ["<p><b>今天学的考点</b></p><ul>"]
+    for k in points[:8]:
+        n = Counter(r[1] for r in req.get(k, []))
+        how = "，".join(f"{v} 题{role}" for role, v in n.most_common(2))
+        out.append(f"<li>{html.escape(pts.meta[k]['title'])}{'（' + how + '）' if how else ''}</li>")
+    out.append("</ul>")
+    return "".join(out)
+
+
 def extra_report(ex) -> str:
     out = ["<p><b>算法</b></p><ul>"]
     for x in ex.lc_similar:
@@ -842,6 +861,12 @@ def run(apply_to_anki: bool) -> None:
             personal = min(1.0, (t.lapses + sum(1 for r in log if r["ease"] == 1) * 0.5 + hard * 0.3) / t.reps * 2)
             personal = min(1.0, personal + (0.2 if t.ease and t.ease < 2.3 else 0.0))
             c.difficulty = 0.5 * c.difficulty + 0.5 * personal
+    if kp_state:  # a point already held makes another card on it worth less
+        card_m = {c.id: card_mastery(traces.get(c.id), now_ms) for c in cards}
+        point_m = plan_kp.mastery(kp_state["points"], card_m)
+        for c in cards:
+            if c.point:
+                c.freq *= 1 - 0.6 * point_m.get(c.point, 0.0)
     budget = int(cfg.get("daily_new", 35)) * int(cfg.get("buffer_days", 2))
     boosts = topic_boost(tree, {c.topic for c in cards}, cfg.get("boost", {}))
     share = float(cfg.get("question_share", 0.2))
@@ -871,7 +896,7 @@ def run(apply_to_anki: bool) -> None:
         import lc_analysis
         lc_analysis.main()
     extra = daily_extra.prepare(cfg, sd_value)
-    body += extra_report(extra)
+    body += points_report(p, cards) + extra_report(extra)
     summary["extra"] = {"lc_new": len(extra.lc_new), "lc_similar": len(extra.lc_similar), "reviews": len(extra.reviews),
                         "backlog": extra.backlog}
     OUT.mkdir(parents=True, exist_ok=True)

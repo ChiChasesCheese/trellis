@@ -12,7 +12,7 @@ A concept topic's directly reported frequency (reports that name the topic) is s
 counting double. Every point keeps a small floor so an unasked point is ranked, not erased.
 
 Value of a card: the sum, over the points it teaches, of the point's weight divided by how many cards teach it (a
-card's primary point counts fully, the others half). Mastery of a point: the share-weighted mastery of its cards.
+card's primary point counts fully, the others half). Mastery of a point: the mean of its three best-held cards.
 """
 from __future__ import annotations
 
@@ -25,6 +25,9 @@ ROOT = Path(__file__).resolve().parents[1]
 KP = ROOT / "sources/local/plan/kp"
 ROLE = {"必讲": 1.0, "追问": 0.6, "加分": 0.3}
 SECONDARY = 0.5
+HELD_CARDS = 3  # a point is held once about this many of its cards are; a point taught by ten cards does not need all ten
+META = {"dlv.level-expectations", "dlv.prep-plan", "dlv.prep-practice", "dlv.problem-catalog", "dlv.variant-recognition",
+        "dlv.oral-playbook", "dlv.rubric", "ld.scoring-dimensions"}  # about the interview itself, not something an answer states
 
 
 @dataclass
@@ -63,7 +66,8 @@ def load() -> Points:
     for f in sorted((KP / "questions").glob("*.json")) if (KP / "questions").exists() else []:
         d = json.loads(f.read_text(encoding="utf-8"))
         q = d["topic"]
-        pts.needs[q] = [{**n, "kp": pts.canon(n["kp"])} for n in d.get("needs", []) if pts.canon(n["kp"]) in pts.meta]
+        pts.needs[q] = [{**n, "kp": pts.canon(n["kp"])} for n in d.get("needs", [])
+                        if pts.canon(n["kp"]) in pts.meta and pts.canon(n["kp"]) not in META]
         pts.own[q] = d.get("own", [])
         for o in pts.own[q]:
             pts.meta.setdefault(o["id"], {**o, "topic": q, "kind": "design", "core": o.get("role") == "必讲", "members": [o["id"]]})
@@ -110,13 +114,12 @@ def card_values(pts: Points, kp_w: dict[str, float]) -> dict[str, float]:
 
 
 def mastery(pts: Points, card_mastery: dict[str, float]) -> dict[str, float]:
-    num, den = defaultdict(float), defaultdict(float)
+    """Point -> mastery: the mean of its best `HELD_CARDS` cards, so an unseen extra card does not count against it."""
+    held = defaultdict(list)
     for cid, ks in pts.card.items():
-        for i, k in enumerate(ks):
-            s = 1.0 if i == 0 else SECONDARY
-            num[k] += s * card_mastery.get(cid, 0.0)
-            den[k] += s
-    return {k: num[k] / den[k] for k in den}
+        for k in ks:
+            held[k].append(card_mastery.get(cid, 0.0))
+    return {k: sum(sorted(v, reverse=True)[:HELD_CARDS]) / min(HELD_CARDS, len(v)) for k, v in held.items()}
 
 
 def required_by(pts: Points) -> dict[str, list[tuple[str, str, str]]]:

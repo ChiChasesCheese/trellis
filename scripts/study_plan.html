@@ -188,11 +188,11 @@ function show(id){const t=T[id];if(!t)return;current=id;mark(id);
   <table><thead><tr><th>叶子</th><th class="num">卡片</th><th class="num">考频</th><th class="num">难度</th><th>掌握度</th></tr></thead><tbody>${leaves.map(l=>`<tr><td>${esc(l.title)}</td><td class="num">${l.cards}</td>
   <td class="num">${l.freq.toFixed(2)}×</td><td class="num">${level(l.difficulty)}</td>
   <td><div class="meter"><i style="width:${Math.max(2,l.mastery*100)}%;background:${mix(l.mastery)}"></i></div></td></tr>`).join('')}</tbody></table>
-  <p class="note">考频：这一叶的卡涉及的点在真实面试报告里被提到的频率，相对本主题平均（1× 为平均）。难度：没学过时按篇幅、层级和代码估计，学过后混入你的忘记和「困难」记录。</p>`}
+  <p class="note">考频：这一叶的卡所教考点的权重，相对本主题平均（1× 为平均）。难度：没学过时按篇幅、层级和代码估计，学过后混入你的忘记和「困难」记录。</p>`}
 const P=D.points;
-function roles(r){const [a,b,c]=r.n;return [a?`必讲 ${a}`:'',b?`追问 ${b}`:'',c?`加分 ${c}`:''].filter(Boolean).join(' · ')||'没有题点名'}
+function roles(r){const [a,b,c]=r.n;return [a?`必讲 ${a}`:'',b?`追问 ${b}`:'',c?`加分 ${c}`:''].filter(Boolean).join(' · ')||'设计题未用到'}
 function pointRow(r,tr){const q=r.q.map(x=>`<li><button data-id="${x[0]}">${esc(x[1])}</button> <em class="${x[2]==='必讲'?'must':''}">${x[2]}</em>${x[3]?` ${esc(x[3])}`:''}</li>`).join('');
- return `<details class="kp"><summary><span class="kt">${esc(r.title)}${r.core?'<b>核心</b>':''}</span><span class="kr">${roles(r)}</span><span class="meter"><i style="width:${Math.max(2,r.m*100)}%;background:${mix(r.m)}"></i></span></summary>${q?`<ul>${q}</ul>`:'<p class="note">还没有题目标注需要它，权重来自主题本身被点名的频率。</p>'}</details>`}
+ return `<details class="kp"><summary><span class="kt">${esc(r.title)}${r.core?'<b>核心</b>':''}</span><span class="kr">${roles(r)}</span><span class="meter"><i style="width:${Math.max(2,r.m*100)}%;background:${mix(r.m)}"></i></span></summary>${q?`<ul>${q}</ul>`:'<p class="note">设计题的答案没有用到它，可能只在八股问答里考。权重只来自主题本身被点名的频率。</p>'}</details>`}
 function pointTable(id){if(!P||!P.byTopic[id])return'';const ks=P.byTopic[id].map(k=>P.rows[k]);
  return `<h4 class="kph">这个主题的考点（${ks.length}）</h4><p class="note" style="margin:0 0 6px">按权重从高到低。点开看哪些题要用它、怎么用。</p>${ks.map(r=>pointRow(r)).join('')}`}
 const level=d=>d<.3?'易':d<.55?'中':'难';
@@ -231,7 +231,7 @@ if(lead)show(lead.id);
   `<text x="${p-6}" y="${Y(max)+4}" font-size="12" text-anchor="end" fill="${ink2}">${max}</text>`+
   a.map((d,i)=>i%Math.ceil(n/7)===0||i===n-1?`<text x="${X(i)}" y="${h-14}" font-size="12" text-anchor="middle" fill="${ink2}">${+d.date.slice(5,7)}/${+d.date.slice(8)}</text>`:'').join('')})();
 (function(){if(!P)return;const rs=P.top.map(k=>P.rows[k]);
- document.getElementById('tops').innerHTML=`<h2>现在最该补的考点</h2><p class="lead">${P.n} 个考点里，权重最高的 ${P.n80} 个占了 80%。这里按「权重 × 没掌握的部分」排序，已标注 ${P.questions} 道题需要哪些考点。点开看哪些题必讲、哪些题追问。</p>${rs.map(r=>pointRow(r)).join('')}`})();
+ document.getElementById('tops').innerHTML=`<h2>现在最该补的考点</h2><p class="lead">多道题共用的考点有 ${P.n} 个，权重最高的 ${P.n80} 个占了它们权重的 80%。这里按「权重 × 没掌握的部分」排序，权重来自 ${P.questions} 道题逐题标注的「必讲 / 追问 / 加分」。点开看每道题怎么用它。</p>${rs.map(r=>pointRow(r)).join('')}`})();
 // generality: shared concepts first, a few representative questions for whole answers
 (function(){const G=D.generality;if(!G)return;const el=document.getElementById('gen');
  const cs=G.concepts.slice(0,Math.max(20,G.n80)),mx=cs[0].share;let acc=0;

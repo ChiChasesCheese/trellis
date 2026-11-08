@@ -177,6 +177,7 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   reviews: `deleteNotes` then re-import the apkg — positions follow the package's Sequence order.
 - `anki-push` moves a domain's decks onto their own preset `Trellis · <title>` (cloned, deals new cards by position) and
   repositions only cards Anki still calls new. Never write to the shared `Default` preset or to a reviewed card's `due`.
+- A new system-design card or LeetCode problem must be annotated, or the daily planner gives it no weight: exam points for cards, technique and pitfall tags for problems. `scripts/plan_maintain.py` lists what is missing.
 - A leaf is weak only on cards with a verdict (taken / slipped); young cards are not evidence, and a weak leaf whose grown
   cards are unreviewed is *settling* and is not a `grow` target (ADR 0009).
 

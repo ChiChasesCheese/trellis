@@ -69,6 +69,25 @@ A topic's weight is shared among its cards by the product of four factors.
   percentile, its level and whether it carries code. After two reviews it is blended half and half with the learner's
   record: forgets, Hard presses and ease. A hard card is worth as much but takes longer, so it pays less per minute.
 
+Where exam points exist they replace the frequency term above.
+
+- **An exam point** is what an answer cites in one breath or a follow-up probes in one question. Each concept topic is cut
+  into points, each card is mapped to one to three points, and the same idea under several topics is merged.
+- **Each design question** lists the points its answer needs, with a role: must cover (1.0), common follow-up (0.6) or
+  bonus (0.3). It also lists its own points, the tricks no other question shares.
+- **A point's weight:** a question passes `spread` of its frequency to the shared points it needs, by role. The rest
+  stays with its own points. A topic's directly reported frequency is shared among its points, core points double.
+- **A card's value** sums what its points are worth, divided by how many cards teach each. The primary point counts
+  fully, the others half.
+- **A held point lowers the rest.** A point's mastery is the mean of its three best-held cards, and a further card on a
+  held point is worth up to 60% less.
+- **Question edges** come from the same needs instead of links in the card text.
+- **In one day** a second card on the same point is worth 40% less, so a day covers more points.
+
+Points about the interview itself (levels, prep plans, scoring rubrics) are kept out of the weights.
+
+New cards must be annotated too: `scripts/plan_maintain.py` lists cards with no points and problems with no tags.
+
 ## 4. What is already held, and what is ready
 
 - **Mastery** of a card is its Hold (the scheduler's interval, normalised against a 21-day mature card and discounted
@@ -93,7 +112,19 @@ Cards are taken greedily by value, under three rules:
 The picks are then ordered so that prerequisite topics come first, and they are dealt in three stages: weak spots,
 concepts and technologies, whole questions.
 
-## 6. Shared knowledge first
+## 6. One deck for the day
+
+`scripts/daily_extra.py` extends the daily deck beyond system design, so the learner opens one deck.
+
+- **LeetCode:** problems just solved, new problems by importance, and similar problems after a forget. A similar problem
+  is one the failed problem's solution lists, or one sharing its techniques, patterns and pitfalls.
+- **Reviews:** every deck's due cards, ranked by `deck weight × (0.3 + value percentile in its deck) × urgency`, where
+  `urgency = 1 + min(2, days overdue / interval)`. A daily budget takes the top; the rest wait in their decks. One copy
+  of a LeetCode problem is reviewed at a time.
+
+Moved cards record their home deck and go back on the next run. The decks the plan owns deal no new cards themselves.
+
+## 7. Shared knowledge first
 
 Eighty percent of reported interviews spread over dozens of distinct questions, too many to practise one by one. Most
 of what their answers need is shared. Two numbers make that visible:
@@ -109,7 +140,7 @@ concept share not yet practised, plus half its own frequency. Only strong edges 
 estimation are left out because every question uses them. A concept counts as practised once its summed edge strength
 reaches 1. Whole-question practice is dealt only from these picks, eight by default.
 
-## 7. LeetCode
+## 8. LeetCode
 
 Coding problems have a better source: the GitHub company-wise lists (LeetCode Premium frequency per company and per
 window, for several hundred companies). `scripts/lc_analysis.py` uses them alone:
@@ -146,7 +177,7 @@ The code keeps processing apart from analysis.
 - `scripts/lc_lists.py` shapes the deck from the fixed inputs only. It tags one card per listed problem,
   `榜单::<list>`, always the whole answer in the problem's module deck, so each list can be studied as a filtered deck.
 
-## 8. Known weaknesses
+## 9. Known weaknesses
 
 - **The bank is self-reported and English-speaking.** Some groups are thin. ByteDance has nine system-design rows in
   the bank used here, which is why its share is shrunk and why public reports matter.
@@ -157,4 +188,7 @@ The code keeps processing apart from analysis.
   after inspection (for example, `file` and `push` were removed), but this remains the noisiest input.
 - **Several weights are judgement, not measurement.** These are the 0.5 spread, the 0.3 concept share, the level
   weights and the position decay. They are stated here so they can be changed and compared, not hidden.
+- **Exam-point roles are read from the deck's own answers.** They say what a good answer covers, not what interviewers
+  were counted asking. Frequency stays at question level. Points asked only in oral fundamentals rounds have no question
+  behind them, so they are underweighted.
 - **Readiness uses only `requires` edges.** Looser ties (mentions, patterns) carry weight but do not gate.
