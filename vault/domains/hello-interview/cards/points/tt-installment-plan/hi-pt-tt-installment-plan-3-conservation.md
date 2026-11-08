@@ -2,7 +2,7 @@
 id: hi-pt-tt-installment-plan-3-conservation
 node: tt.lld.tt-installment-plan.points
 type: qa
-step: 5
+step: 3
 ---
 ## Q
 **分期计划生成器 · 守恒分摊**｜必会 · 出自：分期计划生成器 › 深入 2

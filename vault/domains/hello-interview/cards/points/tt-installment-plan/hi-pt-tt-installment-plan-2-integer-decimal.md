@@ -2,7 +2,7 @@
 id: hi-pt-tt-installment-plan-2-integer-decimal
 node: tt.lld.tt-installment-plan.points
 type: qa
-step: 4
+step: 2
 ---
 ## Q
 **分期计划生成器 · 整数加 Decimal**｜必会 · 出自：分期计划生成器 › 深入 1

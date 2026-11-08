@@ -14,4 +14,4 @@ step: 3
 
 改成一个枚举 `GameState { IN_PROGRESS, WON, DRAW }`：「不可能同时赢和平」直接由结构保证（让非法状态无法表示，make invalid states unrepresentable）。调用方写 `state == WON` 意图清楚，将来加 PAUSED 也只多一个枚举值。
 
-**取舍。** 还留一个漏洞：`winner` 字段仍可能与 `state` 不一致。理想做法是让 WON 携带获胜者，Rust、Swift、Kotlin 的 sealed class、TypeScript 的可辨识联合都支持；Java、Python 不方便，面试里用「枚举加可空 winner」即可，提一句理想形态展示深度，不必硬做。
+**取舍。** 还留一个漏洞：`winner` 字段仍可能与 `state` 不一致。理想做法是让 WON 携带获胜者（带数据的联合类型，sum type）：Rust、Swift、Kotlin 的 sealed class、TypeScript 的可辨识联合原生支持；Java 17 以上用 sealed interface 加 record、Python 3.10 以上用 dataclass 联合加 `match` 也能写，只是比枚举啰嗦。面试里用「枚举加可空 winner」即可，提一句理想形态展示深度，不必硬做。

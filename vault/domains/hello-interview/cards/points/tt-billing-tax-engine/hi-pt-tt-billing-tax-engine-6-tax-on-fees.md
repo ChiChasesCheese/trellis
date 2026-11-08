@@ -2,7 +2,7 @@
 id: hi-pt-tt-billing-tax-engine-6-tax-on-fees
 node: tt.lld.tt-billing-tax-engine.points
 type: qa
-step: 4
+step: 6
 ---
 ## Q
 **计费与计税引擎 · 税建在费用之上**｜必会 · 出自：计费与计税引擎 › 整体设计
@@ -16,5 +16,5 @@ step: 4
 fees = sum(l.amount for l in prior if l.kind == "fee")
 return Decimal(fees) * self.bps / 10_000
 ```
-**数字。** 10000 分、2.9% 加 30 分：费用 320，税 32，合计 352。
+**数字。** 交易 10000 分，费用 2.9% 加 30 分 = 320；税率 10%（bps = 1000）按费用计，税 32，合计 352。
 **易错。** 按规则名字猜种类，应该用 kind 字段。
