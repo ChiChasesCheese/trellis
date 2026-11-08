@@ -144,7 +144,8 @@ of what their answers need is shared. Two numbers make that visible:
 **Representative questions** are picked greedily from the 25 most-asked design questions. Each next pick has the largest
 product of the exam-point weight it adds and its own frequency; weight alone favours whichever answer was annotated
 with the most points. Coverage is measured on points several questions share, as the share
-of their total weight that the picks' answers use; it is reported in any role and for must-cover points alone. A
+of their total weight that the picks' answers use; it is reported in any role and for must-cover points alone. A second figure weights by question: draw a question by how
+often it is asked, and take the average share of the shared points its answer needs (by role) that the picks use. A
 question's own tricks are left out because they transfer to nothing else. Using a point in one answer is not mastering
 it. Whole-question practice is dealt only from these picks, eight by default.
 

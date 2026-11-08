@@ -452,7 +452,8 @@ def representatives(tree: Tree, qs: dict[str, float], pool: list[str], k: int) -
 
     Measured on points shared by several questions (a question's own tricks transfer to nothing else). `covered` is the
     share of all shared-point weight that the chosen questions' answers use in any role; `must` counts only points they
-    must cover. Picked greedily from the `pool` most-asked questions by the weight each adds times how often it is asked:
+    must cover. `by_freq` asks it per question: draw a question by how often it is asked; on average what share of the
+    shared points its answer needs (by role) do the chosen questions use? Picked greedily from the `pool` most-asked questions by the weight each adds times how often it is asked:
     weight alone favours whichever answer was annotated with the most points. Using a point in one answer does not teach
     the topic around it."""
     pts, w = kp_state["points"], kp_state["weight"]
@@ -465,13 +466,20 @@ def representatives(tree: Tree, qs: dict[str, float], pool: list[str], k: int) -
     def share(points):
         return sum(shared[p] for p in points) / total
 
+    asked = [(q, qs[q]) for q in qs if needs(q) and q not in NOT_A_QUESTION]
+    role_of = {q: [(n["kp"], plan_kp.ROLE.get(n["role"], 0.6)) for n in pts.needs[q] if n["kp"] in shared] for q, _ in asked}
+    asked_total = sum(f for _, f in asked) or 1.0
+
+    def by_freq(points):
+        return sum(f * sum(r for p, r in role_of[q] if p in points) / sum(r for _, r in role_of[q]) for q, f in asked) / asked_total
+
     reps, seen, must = [], set(), set()
     for _ in range(min(k, len(pool))):
         best = max((q for q in pool if q not in {r["id"] for r in reps}), key=lambda q: share(needs(q) - seen) * qs[q])
         seen |= needs(best)
         must |= needs(best, ("必讲",))
         top = sorted(needs(best), key=lambda p: -shared[p])[:5]
-        reps.append({"id": best, "title": tree.title(best), "freq": qs[best] / (sum(qs.values()) or 1.0), "covered": share(seen), "must": share(must),
+        reps.append({"id": best, "title": tree.title(best), "freq": qs[best] / (sum(qs.values()) or 1.0), "covered": share(seen), "by_freq": by_freq(seen), "must": share(must),
                      "points": len(seen), "concepts": [pts.meta[p]["title"] for p in top]})
     every = [q for q in qs if q in pts.needs and q not in NOT_A_QUESTION]
     curve, cur = [], set()
@@ -481,7 +489,7 @@ def representatives(tree: Tree, qs: dict[str, float], pool: list[str], k: int) -
         remaining.remove(best)
         cur |= needs(best)
         if n in (5, 8, 10, 15, 20, 25):
-            curve.append({"k": n, "covered": share(cur)})
+            curve.append({"k": n, "covered": share(cur), "by_freq": by_freq(cur)})
     return reps, {"curve": curve, "all": share(set().union(*(needs(q) for q in every))), "shared": len(shared), "questions": len(every)}
 
 
