@@ -60,3 +60,8 @@ vault/interviews/core/low-level-design/PROGRESS.md
 skeleton/bagu.yaml
 vault/domains/bagu/
 research/domains/bagu/
+
+# merged system-design view: includes the local-only bagu domain (Chi, 2026-11-07)
+skeleton/sysdesign.yaml
+research/sysdesign/
+vault/domains/sysdesign/

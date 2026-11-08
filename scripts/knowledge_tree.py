@@ -2,6 +2,7 @@
 
     uv run python scripts/knowledge_tree.py                 # every domain with a skeleton
     uv run python scripts/knowledge_tree.py hello-interview  # some domains
+    uv run python scripts/knowledge_tree.py --depth 2 sysdesign   # only the top levels (the merged view holds local-only maps)
 
 The skeleton is the tree; this only draws it, so the map never drifts from the Anki decks. Each node shows its card
 count (cards under it, its subtree included). The note goes to `vault/<skeleton folder>/<title> 知识树.md`; regenerate it
@@ -34,12 +35,14 @@ def card_nodes(folder: Path) -> Counter:
     return per
 
 
-def write(domain: str) -> Path | None:
+def write(domain: str, max_depth: int = 0) -> Path | None:
     sk = load_skeleton(ROOT / "skeleton" / f"{domain}.yaml")
     vault = ROOT / "vault" / sk.folder
     if not vault.is_dir():
         return None
     direct = card_nodes(vault)
+    for extra in sk.include:  # a merged view counts the folders it owns too
+        direct.update(card_nodes(ROOT / "vault" / extra))
     total: dict[str, int] = {}
 
     def count(n) -> int:
@@ -49,9 +52,10 @@ def write(domain: str) -> Path | None:
     lines = [f"# {sk.title}", ""]
 
     def emit(n, depth: int) -> None:
-        if total[n.id] == 0:
+        if total[n.id] == 0 or (max_depth and depth >= max_depth):
             return
-        fold = FOLD if depth >= FOLD_FROM and any(total[k.id] for k in n.children) else ""
+        deeper = any(total[k.id] for k in n.children) and not (max_depth and depth + 1 >= max_depth)
+        fold = FOLD if depth >= FOLD_FROM and deeper else ""
         lines.append("  " * depth + f"- {n.title} · {total[n.id]}{fold}")
         for k in n.children:
             emit(k, depth + 1)
@@ -66,10 +70,16 @@ def write(domain: str) -> Path | None:
 
 
 def main() -> int:
-    domains = sys.argv[1:] or sorted(p.stem for p in (ROOT / "skeleton").glob("*.yaml"))
+    args = sys.argv[1:]
+    depth = 0
+    if "--depth" in args:
+        i = args.index("--depth")
+        depth = int(args[i + 1])
+        del args[i:i + 2]
+    domains = args or sorted(p.stem for p in (ROOT / "skeleton").glob("*.yaml"))
     for d in domains:
         try:
-            out = write(d)
+            out = write(d, depth)
         except Exception as e:  # noqa: BLE001 - one bad skeleton must not stop the rest
             print(f"{d}: skipped ({e})")
             continue

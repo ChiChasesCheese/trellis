@@ -92,6 +92,10 @@ def add_subset(folder: Path, nids: list[int]) -> None:
 
 
 def refresh(domain: str, dry: bool, add: str | None = None) -> None:
+    from trellis.skeleton import load_skeleton
+    via = load_skeleton(ROOT / "skeleton" / f"{domain}.yaml").anki_via
+    if via:
+        raise RuntimeError(f"reaches Anki through {via}; refresh that domain instead")
     folder = Path(tempfile.mkdtemp(prefix="anki-refresh-"))
     try:
         built = built_notes(domain, folder)

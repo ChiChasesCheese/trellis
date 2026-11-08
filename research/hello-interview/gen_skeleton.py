@@ -281,7 +281,9 @@ def main() -> None:
     if extra:
         nodes.append({"id": "more", "order": 5, "title": "补充：题目与概念（More）",
                       "summary": "本 deck 没有对应页面的题目和概念：服务架构、可靠性、安全、AI 系统等。", "children": extra})
+    # Chi (2026-11-07): Anki gets this deck only through the merged 系统设计 view (research/sysdesign/, local)
     sk = {"domain": "hello-interview", "title": "Hello Interview", "deck": "Hello Interview", "lang": "zh", "fold": True, "fold_code": 25,
+          "anki_via": "sysdesign",
           "vault": "domains/hello-interview", "study": {"order": "core-first", "mix": "new-first", "new_per_day": 15, "reviews_per_day": 200},
           "nodes": nodes}
     (ROOT / "skeleton/hello-interview.yaml").write_text(

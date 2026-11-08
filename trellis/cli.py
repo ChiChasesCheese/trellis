@@ -316,6 +316,9 @@ def cmd_anki_push(args, project: Project) -> int:
     """Build is a file; push is that file reaching the phone."""
     from .anki import AnkiConnectError, push
 
+    if project.skeleton.anki_via:
+        _fail(f"{project.skeleton.domain} reaches Anki through {project.skeleton.anki_via}; push or align that domain instead")
+
     if args.apkg:
         apkg = args.apkg
         if not Path(apkg).exists():
@@ -355,6 +358,8 @@ def cmd_anki_align(args, project: Project) -> int:
     """Converge the collection on the vault without importing anything:
     decks, then the Sequence, then the options that deal by it."""
     from .anki import AnkiConnectError, PositionsLocked, align, apply_study, sequence_new
+    if project.skeleton.anki_via:
+        _fail(f"{project.skeleton.domain} reaches Anki through {project.skeleton.anki_via}; push or align that domain instead")
     call = _anki_client(args.anki_url)
     study = project.skeleton.study
     try:

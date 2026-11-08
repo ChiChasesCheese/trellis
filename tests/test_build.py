@@ -216,3 +216,26 @@ def test_bold_is_never_split_by_its_own_comma():
     h = _html("**深入。**\n- **深入一，位置存储（必讲）**\n  - 1000 万司机每 5 秒上报\n  - 用 Redis 地理类型\n", fold=True)
     assert "**" not in h and "<summary>深入一，位置存储（必讲）</summary>" in h
 
+
+
+def test_deck_depth_files_deep_nodes_into_their_ancestor(tmp_path):
+    from trellis.skeleton import load_skeleton
+    y = tmp_path / "d.yaml"
+    y.write_text("domain: d\ntitle: D\ndeck_depth: 2\nnodes:\n- id: a\n  title: A\n  children:\n  - id: a.b\n    title: B\n"
+                 "    children:\n    - id: a.b.c\n      title: C\n", encoding="utf-8")
+    sk = load_skeleton(y)
+    assert sk.deck_name(sk.by_id["a.b.c"]) == "D::01 A::B"
+    assert sk.deck_name(sk.by_id["a"]) == "D::01 A"
+
+
+def test_include_loads_cards_from_other_folders(tmp_path):
+    from trellis.project import load_project
+    (tmp_path / "skeleton").mkdir()
+    (tmp_path / "skeleton" / "m.yaml").write_text(
+        "domain: m\ntitle: M\nvault: domains/m\ninclude: [domains/x]\nanki_via: ''\nnodes:\n- id: n\n  title: N\n", encoding="utf-8")
+    for folder, cid in (("m", "c1"), ("x", "c2")):
+        d = tmp_path / "vault" / "domains" / folder / "cards"
+        d.mkdir(parents=True)
+        (d / f"{cid}.md").write_text(f"---\nid: {cid}\nnode: n\ntype: qa\n---\n## Q\nq\n\n## A\na\n", encoding="utf-8")
+    project = load_project(tmp_path, "m")
+    assert sorted(c.id for c in project.cards) == ["c1", "c2"]

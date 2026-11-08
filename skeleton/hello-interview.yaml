@@ -6,6 +6,7 @@ deck: Hello Interview
 lang: zh
 fold: true
 fold_code: 25
+anki_via: sysdesign
 vault: domains/hello-interview
 study:
   order: core-first

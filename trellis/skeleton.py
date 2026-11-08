@@ -138,6 +138,15 @@ class Skeleton:
     examples_from: str = ""
     fold: bool = False  # answers render as a foldable outline (sections, then bullets)
     fold_code: int = 0  # code blocks longer than this many lines open on a tap; 0 keeps them open
+    # More vault folders whose cards and readings this domain also owns: a merged view over other domains' content
+    # (their node ids reappear in this skeleton, placed by topic).
+    include: list[str] = field(default_factory=list)
+    # Anki decks go at most this many levels below the root; deeper nodes file into their ancestor's deck while
+    # positions still follow the full tree. 0 = no limit.
+    deck_depth: int = 0
+    # This domain's cards reach Anki only through the named domain, which includes them: pushing it would bring back
+    # decks that were merged away.
+    anki_via: str = ""
 
     @property
     def root_deck(self) -> str:
@@ -170,7 +179,10 @@ class Skeleton:
         deck list follows study order.
         """
         parts = [self.root_deck]
-        for n in node.path():
+        path = node.path()
+        if self.deck_depth:
+            path = path[: self.deck_depth]
+        for n in path:
             if n.parent is None:
                 # explicit order pins the deck name across future branch
                 # insertions — deck names are identities in Anki
@@ -181,7 +193,8 @@ class Skeleton:
         return "::".join(parts)
 
 
-def _parse_node(raw: object, parent: Node | None, errors: list[str]) -> Node | None:
+def _parse_node(raw: object, parent: Node | None, errors: list[str], free_ids: bool = False) -> Node | None:
+    """free_ids: a merged view (a skeleton with `include`) re-hangs other domains' nodes, whose ids keep their old prefix."""
     if not isinstance(raw, dict):
         errors.append(f"node must be a mapping, got: {raw!r}")
         return None
@@ -190,7 +203,7 @@ def _parse_node(raw: object, parent: Node | None, errors: list[str]) -> Node | N
     if not isinstance(node_id, str) or not _ID_RE.match(node_id):
         errors.append(f"invalid node id: {node_id!r} (want dotted lowercase, e.g. storage.replication)")
         return None
-    if parent is not None and not node_id.startswith(parent.id + "."):
+    if parent is not None and not free_ids and not node_id.startswith(parent.id + "."):
         errors.append(f"node {node_id!r} must be prefixed by its parent id {parent.id!r}")
     if not isinstance(title, str) or not title.strip():
         errors.append(f"node {node_id!r}: missing title")
@@ -220,7 +233,7 @@ def _parse_node(raw: object, parent: Node | None, errors: list[str]) -> Node | N
         core=core,
     )
     for raw_child in raw.get("children", []) or []:
-        child = _parse_node(raw_child, node, errors)
+        child = _parse_node(raw_child, node, errors, free_ids)
         if child is not None:
             node.children.append(child)
     return node
@@ -246,7 +259,7 @@ def load_skeleton(path: str | Path) -> Skeleton:
 
     roots: list[Node] = []
     for raw in data.get("nodes", []) or []:
-        node = _parse_node(raw, None, errors)
+        node = _parse_node(raw, None, errors, bool(data.get("include")))
         if node is not None:
             roots.append(node)
     if not roots:
@@ -279,7 +292,22 @@ def load_skeleton(path: str | Path) -> Skeleton:
         errors.append(f"invalid examples_from: {examples_from!r} (want relative paths inside vault/, comma-separated)")
         examples_from = ""
 
+    folder_re = r"^[a-z0-9_-]+(/[a-z0-9_-]+)*$"
+    include = data.get("include", []) or []
+    if not isinstance(include, list) or not all(isinstance(x, str) and re.match(folder_re, x) for x in include):
+        errors.append(f"invalid include: {include!r} (want a list of folders inside vault/)")
+        include = []
+    deck_depth = data.get("deck_depth", 0) or 0
+    if not isinstance(deck_depth, int) or deck_depth < 0:
+        errors.append(f"invalid deck_depth: {deck_depth!r} (want a non-negative integer)")
+        deck_depth = 0
+    anki_via = data.get("anki_via", "") or ""
+    if not isinstance(anki_via, str):
+        errors.append(f"invalid anki_via: {anki_via!r}")
+        anki_via = ""
+
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},
+                        include=list(include), deck_depth=deck_depth, anki_via=anki_via,
                         lang=lang, folder=folder, deck=deck, examples_from=examples_from, fold=bool(data.get("fold", False)), fold_code=int(data.get("fold_code", 0) or 0),
                         study=_parse_study(data.get("study"), errors))
     for node in skeleton.walk():

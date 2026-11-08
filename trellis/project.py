@@ -67,6 +67,16 @@ def load_project(root: Path, domain: str) -> Project:
     if (vault / "readings").exists():
         project.readings, project.reading_errors = load_readings(
             vault / "readings", CORPUS_KEYS)
+    for extra in project.skeleton.include:  # a merged view also owns these folders' cards and readings
+        folder = root / "vault" / extra
+        if (folder / "cards").exists():
+            cards, errors = load_cards(folder / "cards")
+            project.cards += cards
+            project.card_errors += errors
+        if (folder / "readings").exists():
+            readings, errors = load_readings(folder / "readings", CORPUS_KEYS)
+            project.readings += readings
+            project.reading_errors += errors
     if (vault / "drills").exists():
         project.drills, project.drill_errors = load_drills(vault / "drills")
     if (vault / CASES_DIRNAME).exists():

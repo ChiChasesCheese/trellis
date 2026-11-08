@@ -4,6 +4,7 @@ domain: payments
 title: 支付系统核心
 lang: zh
 vault: domains/payments
+anki_via: sysdesign  # reaches Anki through the merged 系统设计 deck (2026-11-07)
 study:
   order: core-first
   mix: new-first
