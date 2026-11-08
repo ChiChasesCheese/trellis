@@ -115,6 +115,16 @@ importance × (1 − mastery) × clip(1 + 0.5 · (slip / overall slip − 1), 1,
 - Slip counts Again as 1 and Hard as 0.5, smoothed with 15 pseudo-reviews at the learner's overall rate.
 - A weakness can raise priority by at most half; it never outranks how often a dimension is asked.
 
+A problem has several cards that open the same solution, one per deck it sits in (a company deck, a module deck). Its
+mastery is that of its best card, so learning it anywhere counts everywhere.
+
+Fixed problem sets are tracked as progress views. These are the classic lists (Blind 75, NeetCode 150, Hot 100, Top
+Interview 150), each target company's last six months, and each module. They do not enter importance. A view's history
+is rebuilt from the review logs, which give each card's interval as it stood at any past date.
+
+`scripts/lc_lists.py` tags one card per listed problem, `榜单::<list>`, so each list can also be studied as a filtered
+deck. It picks the problem's most-reviewed whole-answer card.
+
 ## 7. Known weaknesses
 
 - **The bank is self-reported and English-speaking.** Some groups are thin. ByteDance has nine system-design rows in

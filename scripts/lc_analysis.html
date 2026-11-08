@@ -38,10 +38,22 @@ tr.basic td{color:var(--ink-2)}
 .plist b{font-weight:600}.plist small{display:block;color:var(--ink-2);font-size:12.5px}
 .tag{display:inline-block;font-size:11.5px;padding:0 6px;border-radius:999px;border:1px solid var(--rule);margin-left:4px;color:var(--ink-2)}
 .tag.red{border-color:var(--red);color:var(--red)}
+.prog{margin:34px 0 0}.prog .grp{color:var(--ink-2);font-size:12.5px;margin:16px 0 4px;letter-spacing:.04em}
+.pr{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,1fr) 96px 64px;gap:14px;align-items:center;padding:8px 0;border-bottom:1px solid var(--rule)}
+.pr .nm{font:400 18px/1.25 var(--hand)}.pr .nm small{display:block;font:12px/1.4 var(--text);color:var(--ink-2)}
+.track{position:relative;height:12px;border-radius:6px;background:var(--rule);overflow:hidden}
+.track .s{position:absolute;inset:0 auto 0 0;background:color-mix(in srgb,var(--blue) 26%,transparent)}
+.track .h{position:absolute;inset:0 auto 0 0;background:var(--green)}
+.pr .fig{font-size:12.5px;color:var(--ink-2);margin-top:3px}
+.spark{width:96px;height:26px}.spark path{fill:none;stroke:var(--blue);stroke-width:1.8}.spark circle{fill:var(--blue)}
+.delta{text-align:right;font-weight:600;font-size:13px}.delta.up{color:var(--green)}.delta.down{color:var(--red)}
+details.mods summary{cursor:pointer;color:var(--ink-2);font-size:13px;margin-top:12px}
+@media (max-width:900px){.pr{grid-template-columns:1fr 70px;gap:6px 10px}.pr .nm{grid-column:1/-1}.pr .spark{display:none}}
 .note{color:var(--ink-2);font-size:13px;margin-top:40px;padding-top:18px;border-top:1px solid var(--rule);max-width:90ch}
 @media (max-width:900px){.page{padding:22px 16px 48px}.layout{grid-template-columns:1fr}.bar{width:56px}.hide-s{display:none}}
 </style></head><body><div class="page">
 <p class="date" id="date"></p><h1 id="hero"></h1><p class="why" id="why"></p><p class="standing" id="standing"></p>
+<section class="prog" id="prog" aria-label="榜单进度"></section>
 <div class="tabs" role="tablist" id="tabs"></div>
 <p class="lead" id="lead"></p>
 <div class="layout"><div><table id="tbl"></table></div><aside id="side" aria-live="polite"></aside></div>
@@ -86,5 +98,19 @@ function show(r){cur=r.id;document.querySelectorAll('tr.row').forEach(t=>t.class
  <ul class="plist">${ps.slice(0,40).map(p=>`<li><b>${esc(p.title)}</b>${p.again?`<span class="tag red">忘过 ${p.again} 次</span>`:''}${p.seen?'':'<span class="tag">没学过</span>'}
   <small>${p.insight?esc(p.insight)+'。':''}考频 ${(p.importance).toFixed(2)}${p.tiktok?`，字节 / TikTok 频率 ${Math.round(p.tiktok*100)}`:''}，${p.companies||0} 家公司考过${p.seen?`，掌握 ${pct(p.mastery)}`:''}</small></li>`).join('')}</ul>`}
 render();
-document.getElementById('note').textContent=`考频 = 0.50 × TikTok/字节公司标签频率（近半年出现 ×1.2）+ 0.15 × Amazon 频率 + 0.25 × 全公司热度 + 0.10 × 经典题单收录数，数据来自 LeetCode Premium 公司标签的两个公开整理仓库。掌握度来自 Anki 的复习间隔，失手率按「忘记」1、「困难」0.5 计，并向你的整体水平收缩，避免两三次复习就下结论。思路和易错点由题解的「一句话 / 识别 / 易错点」按 ${(A.dims.techniques||[]).length} 个思路、${(A.dims.pitfalls||[]).length} 类易错点分类，语法从题解代码解析。`;
+function spark(h){const v=h.map(x=>x.mastery),mx=Math.max(.05,...v),w=96,ht=26;
+ const pts=v.map((y,i)=>[i/(v.length-1)*(w-4)+2,ht-3-y/mx*(ht-6)]);
+ return `<svg class="spark" viewBox="0 0 ${w} ${ht}" aria-hidden="true"><path d="M${pts.map(p=>p.map(n=>n.toFixed(1)).join(' ')).join(' L')}"/><circle cx="${pts.at(-1)[0]}" cy="${pts.at(-1)[1]}" r="2.6"/></svg>`}
+function prow(v){const h=v.hist,d=h.at(-1).mastery-h.at(-2).mastery,dh=h.at(-1).held-h.at(-2).held;
+ const cls=d>0.005?'up':d<-0.005?'down':'';
+ return `<div class="pr"><div class="nm">${esc(v.name)}<small>${v.n} 道${v.in_deck<v.n?`，题库里有 ${v.in_deck} 道`:''}${v.note?' · '+esc(v.note):''}</small></div>
+ <div><div class="track"><i class="s" style="width:${v.seen/v.n*100}%"></i><i class="h" style="width:${v.held/v.n*100}%"></i></div>
+ <div class="fig">学过 ${v.seen}/${v.n} · 记牢 ${v.held} · 平均掌握 ${pct(v.mastery)}</div></div>
+ ${spark(h)}<div class="delta ${cls}" title="和 7 天前比">${d>=0?'+':''}${Math.round(d*100)}%${dh?`<br><small style="color:var(${dh>0?'--green':'--red'})">${dh>0?'+':''}${dh} 题</small>`:''}</div></div>`}
+if(A.views){const V=A.views;
+ document.getElementById('prog').innerHTML=`<h2>榜单进度</h2><p class="lead" style="margin-top:0">一道题在哪个牌组学会（TikTok、Amazon、模块）都算数。浅蓝是学过，绿色是记牢（最好那张卡的掌握度过 50%，约 4 天以上的间隔）；小折线是近 8 周的平均掌握，右边是和 7 天前比。</p>
+ <div class="grp">经典榜单</div>${V.lists.map(prow).join('')}
+ <div class="grp">目标公司</div>${V.companies.map(prow).join('')}
+ <details class="mods"><summary>按模块（${V.modules.length} 个）</summary>${V.modules.map(prow).join('')}</details>`}
+document.getElementById('note').textContent=`考频 = 0.6 × 字节 / TikTok 题频（全部与近半年各半）+ 0.4 × 全公司广度（${A.bank.companies} 家公司题频之和），数据来自 GitHub 上整理的 LeetCode Premium 公司题频。榜单只用来看进度，不参与考频。一道题的掌握度取它最好的那张卡，掌握度来自 Anki 的复习间隔，失手率按「忘记」1、「困难」0.5 计，并向你的整体水平收缩，避免两三次复习就下结论。思路和易错点由题解的「一句话 / 识别 / 易错点」按 ${(A.dims.techniques||[]).length} 个思路、${(A.dims.pitfalls||[]).length} 类易错点分类，语法从题解代码解析。`;
 </script></body></html>

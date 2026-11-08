@@ -47,6 +47,7 @@ DECKS = ["LeetCode Tops", "LeetCode"]
 GH = OUT / "github/leetcode-company-wise-problems"
 GH_URL = "https://github.com/liquidslr/leetcode-company-wise-problems.git"
 TARGETS = ("TikTok", "ByteDance")
+OTHER = ROOT / "research/companies/tiktok/catalog/other_lists.json"  # classic lists by problem number (neetcode-gh, LeetCode study plans)
 RECENT = ("1. Thirty Days", "2. Three Months", "3. Six Months")
 DEFAULT = {"w_target": 0.6, "w_breadth": 0.4}
 
@@ -295,7 +296,7 @@ def record(slugs_of: dict[str, str], known: set[str] = frozenset()):
             tags[n["noteId"]] = n["tags"]
     seen = [c["cardId"] for c in info if c["reps"]]
     revs = call("getReviewsOfCards", cards=seen) if seen else {}
-    per = defaultdict(lambda: {"cards": 0, "seen": 0, "mastery": [], "reviews": 0, "again": 0, "hard": 0, "last": 0})
+    per = defaultdict(lambda: {"cards": 0, "seen": 0, "mastery": [], "reviews": 0, "again": 0, "hard": 0, "last": 0, "logs": []})
     for c in info:
         ident = next((t[4:] for t in tags.get(c["note"], []) if t.startswith("id::")), None)
         slug, idiom = resolve(ident, slugs_of, known)
@@ -314,7 +315,62 @@ def record(slugs_of: dict[str, str], known: set[str] = frozenset()):
         s["again"] += sum(1 for r in log if r["ease"] == 1)
         s["hard"] += sum(1 for r in log if r["ease"] == 2)
         s["last"] = max(s["last"], tr.last_review)
+        if log:
+            s["logs"].append(sorted(log, key=lambda r: r["id"]))
     return per
+
+
+def mastery_at(log: list[dict], t: int) -> float:
+    """A card's mastery as it stood at time t, rebuilt from its review log."""
+    past = [r for r in log if r["id"] < t]
+    if not past:
+        return 0.0
+    last = past[-1]
+    tr = Trace(card_id="", reps=len(past), lapses=sum(1 for r in past if r["ease"] == 1 and r["type"] == 1),
+               interval=max(last["ivl"], 0), type=2 if last["ivl"] > 0 else 1, last_review=last["id"])
+    return card_mastery(tr, t)
+
+
+WEEK = 7 * 86_400_000
+HELD = 0.5  # a problem counts as held once its best card is past this mastery (about a 4-day interval)
+
+
+def views(rows: dict[str, dict], per: dict, names: dict[str, str]) -> dict[str, list[dict]]:
+    """Progress over fixed problem sets: the classic lists, each target company's last six months, each module. A
+    problem's mastery is its best card, so learning it in any deck (TikTok, Amazon, a module) counts everywhere."""
+    now = int(time.time() * 1000)
+    points = [now - k * WEEK for k in range(8, -1, -1)]
+    hist = {slug: [max((mastery_at(log, t) for log in s["logs"]), default=0.0) for t in points] for slug, s in per.items()}
+    by_num = {p["num"]: slug for slug, p in rows.items() if p["num"]}
+    other = json.loads(OTHER.read_text(encoding="utf-8"))
+
+    def recent(company: str) -> list[str]:
+        out = set()
+        for w in RECENT:
+            f = GH / company / f"{w}.csv"
+            if f.exists():
+                out |= {r["Link"].rstrip("/").split("/problems/")[-1] for r in csv.DictReader(f.open(encoding="utf-8"))}
+        return sorted(out)
+
+    def view(name: str, members: list[str], note: str = "") -> dict:
+        n = len(members)
+        h = [sum(hist.get(m, [0.0] * len(points))[i] for m in members) / n if n else 0.0 for i in range(len(points))]
+        seen = [sum(1 for m in members if hist.get(m) and hist[m][i] > 0) for i in range(len(points))]
+        held = [sum(1 for m in members if hist.get(m) and hist[m][i] >= HELD) for i in range(len(points))]
+        return {"name": name, "note": note, "n": n, "in_deck": sum(1 for m in members if m in rows),
+                "mastery": h[-1], "seen": seen[-1], "held": held[-1],
+                "hist": [{"t": t, "mastery": a, "seen": b, "held": c} for t, a, b, c in zip(points, h, seen, held)],
+                "missing": [m for m in members if m not in rows]}
+
+    lists = [view(label, [by_num.get(x, f"#{x}") for x in other[key]])
+             for label, key in (("Blind 75", "Blind 75"), ("NeetCode 150", "NeetCode 150"), ("LeetCode Hot 100", "LeetCode Hot 100"),
+                                ("Top Interview 150", "Top Interview 150"))]
+    tiktok = sorted(set(recent("TikTok")) | set(recent("ByteDance")))
+    companies = [view("TikTok / 字节 近半年", tiktok, "GitHub 公司题频里近 6 个月出现过的题"),
+                 view("Amazon 近半年", recent("Amazon"), "GitHub 公司题频里近 6 个月出现过的题")]
+    modules = [view(names.get(pat, pat), sorted(slug for slug, p in rows.items() if p["patterns"] and p["patterns"][0] == pat))
+               for pat in sorted(names)]
+    return {"lists": lists, "companies": companies, "modules": [m for m in modules if m["n"]]}
 
 
 # ---------------------------------------------------------------- aggregate
@@ -333,7 +389,7 @@ def analyse() -> dict:
         p["importance"] = importance(p, cfg)
         p["in_anki"] = bool(s)
         p["seen"] = bool(s and s["seen"])
-        p["mastery"] = sum(s["mastery"]) / len(s["mastery"]) if s and s["mastery"] else 0.0
+        p["mastery"] = max(s["mastery"]) if s and s["mastery"] else 0.0  # the problem's best card: copies share one body
         p["reviews"], p["again"], p["hard"] = (s["reviews"], s["again"], s["hard"]) if s else (0, 0, 0)
     names = {"patterns": {f.stem: re.sub(r"^# ", "", f.read_text(encoding="utf-8").splitlines()[0])
                           for f in (LC / "knowledge-map").glob("[0-9][0-9]-*.md")},
@@ -395,7 +451,7 @@ def analyse() -> dict:
             n80 = i + 1
             break
     return {"generated": datetime.now().strftime("%Y-%m-%d %H:%M"), "global_slip": g, "reviews": tot_rev, "config": cfg,
-            "problems": rows, "dims": dims, "pareto_n80": n80, "n": len(rows), "bank": bank_stats,
+            "views": views(rows, per, names["patterns"]), "problems": rows, "dims": dims, "pareto_n80": n80, "n": len(rows), "bank": bank_stats,
             "held": sum(p["importance"] * p["mastery"] for p in rows.values()) / total_imp,
             "covered": sum(p["importance"] * p["seen"] for p in rows.values()) / total_imp,
             "tagged": sum(1 for p in rows.values() if p["techniques"])}
@@ -416,6 +472,10 @@ def main() -> int:
     print(f"GitHub: {b['companies']} companies, {b['problems']} problems · deck covers {b['coverage']:.0%} of frequency · "
           f"80% of it in top {b['n80']} (deck has {b['deck_in_top_n80']}) · top 300 in deck {b['top300_in_deck']}")
     print("  missing from top 300:", ", ".join(m["slug"] for m in b["missing_top300"][:25]))
+    for v in a["views"]["lists"] + a["views"]["companies"]:
+        h = v["hist"]
+        print(f"  {v['name']}: {v['n']} problems, {v['in_deck']} in deck · seen {v['seen']} · held {v['held']} · mastery {v['mastery']:.0%}"
+              f" (8 weeks ago {h[0]['mastery']:.0%}, last week {h[-2]['mastery']:.0%})")
     for d, v in top.items():
         print(f"  {d}: {', '.join(v)}")
     return 0
