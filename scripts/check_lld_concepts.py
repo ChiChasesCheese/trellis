@@ -5,6 +5,7 @@
 
 A branch is done when every leaf has 4–8 cards and every card is Chinese-native (no translation
 sections), has a `step` unique within its leaf, carries no Java, and every ```python block in it parses.
+The coding-craft framework's branches (PLANNED_ROOTS) and PLANNED_LEAVES may hold leaves with no cards yet; a leaf that has cards meets the same bar.
 """
 
 from __future__ import annotations
@@ -24,9 +25,12 @@ JAVA = re.compile(r"```java|\bpublic (?:class|static|void|interface)\b|\bprivate
                   r"\bsynchronized\b|System\.out|\bnew [A-Z]\w*\(|\bvolatile\b|\bextends\b")
 FENCE = re.compile(r"```(\w*)\n(.*?)```", re.S)
 MIN_CARDS, MAX_CARDS = 4, 8
+PLANNED_ROOTS = {"rounds", "fluency", "languages", "data", "api", "fsm", "concurrency-depth", "errors", "testing", "parsing-io", "reading", "debugging",
+                 "refactoring", "review", "performance", "ai", "bank"}
+PLANNED_LEAVES = {"python.metaprogramming", "principles.responsibility", "patterns.frameworks"}  # framework leaves added to existing roots
 
 
-def check_card(card) -> list[str]:
+def check_card(card, python_only: bool = True) -> list[str]:
     out = []
     text = "\n".join([card.question, card.answer, card.text])
     if not CJK.search(card.question or card.text):
@@ -37,7 +41,7 @@ def check_card(card) -> list[str]:
         out.append("carries a translation section; this domain is Chinese-native")
     if card.step is None:
         out.append("no step")
-    m = JAVA.search(text)
+    m = JAVA.search(text) if python_only else None
     if m:
         out.append(f"Java in the card ({m.group(0)!r}); this deck is Python")
     for lang, code in FENCE.findall(text):
@@ -71,10 +75,12 @@ def main(argv: list[str]) -> int:
                 continue
             cards = by_leaf.get(leaf.id, [])
             n_cards += len(cards)
+            if not cards and (branch in PLANNED_ROOTS or leaf.id in PLANNED_LEAVES):
+                continue
             if not MIN_CARDS <= len(cards) <= MAX_CARDS:
                 problems.append(f"{leaf.id}: {len(cards)} card(s), want {MIN_CARDS}–{MAX_CARDS}")
             for c in cards:
-                problems += [f"{c.id}: {p}" for p in check_card(c)]
+                problems += [f"{c.id}: {p}" for p in check_card(c, python_only=branch != "languages")]
         print(f"{'FAIL' if problems else 'ok  '} {branch} ({n_cards} cards)" + "".join(f"\n       - {p}" for p in problems[:40])
               + (f"\n       … and {len(problems) - 40} more" if len(problems) > 40 else ""))
         failed += bool(problems)

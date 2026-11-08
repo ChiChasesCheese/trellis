@@ -153,3 +153,14 @@
 - **跑某一道题的测试**：`IMPL=solution uv run --with pytest python -m pytest vault/domains/low-level-design/problems/<slug> -q`。
   注意：多个题目文件夹不能在同一次 pytest 调用里跑（模块名 `solution` 冲突），验收脚本是逐个文件夹跑的。
 - **改了 `solution.py` 之后**：跑 `uv run python scripts/lld_embed_code.py <slug>`，否则题解里的代码会和被测代码不一致（`--check` 可只校验）。
+
+## 9. 编码能力框架（2026-11-08）
+
+把这个域从 OOD 扩成完整的编码能力框架。真实报告的频率证据只留在本地（`sources/local/lld/evidence/`），设计和依据见 `docs/explanation/coding-craft-framework.md`。
+
+- 大纲调研：`research/domains/low-level-design/FIELD_OUTLINES.md`，15 个能力面，每个 3–7 份独立大纲（大学课程、官方文档、标准书目），只记录实际读到的标题。
+- 覆盖核对：`research/domains/low-level-design/OUTLINE_MAP.md`，272 个主题和面试考点逐条对应到叶子；发现的 22 个缺口已处理（12 个新增叶子、5 个并入现有叶子、4 个明确不做）。
+- 骨架：新增 17 个根分支，现有分支的顺序和叶子 id 不变；`python`、`principles`、`patterns` 末尾各加 1 个叶子。新叶子暂时没有卡片。
+- 门禁：`check_lld_concepts.py` 只放行新分支和 `PLANNED_LEAVES` 的空叶子；有卡片的叶子照旧要求 4–8 张。`amazon` 分支本来就不符合 4–8，它走 `check_lld_problems.py --branch amazon`。
+- 未完成：拆分与合并（等 7 天冲刺之后）、卡片形式试点、逐叶填充。
+

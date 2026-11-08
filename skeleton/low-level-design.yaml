@@ -64,6 +64,9 @@ nodes:
       - id: python.modules
         title: "模块、包与依赖方向"
         summary: "模块即单例、循环导入的成因与解法、`__init__` 里的公共接口、依赖只许朝一个方向流。"
+      - id: python.metaprogramming
+        title: "描述符、属性与元编程（Descriptors & Metaprogramming）"
+        summary: "property、描述符、__init_subclass__、元类各解决什么问题，以及面试里多数情况为什么不该用。"
   - id: oop
     order: 3
     title: "对象建模（Object Modeling）"
@@ -104,6 +107,9 @@ nodes:
       - id: principles.simplicity
         title: "DRY、KISS、YAGNI"
         summary: "简单性原则及其失败模式——过早抽象与臆想的通用性。"
+      - id: principles.responsibility
+        title: "职责分配（Responsibility Assignment）"
+        summary: "一个行为该放在哪个类里：信息专家、高内聚、告诉而不是询问，以及职责放错的典型症状。"
   - id: patterns
     order: 5
     title: "设计模式（Design Patterns）"
@@ -139,6 +145,9 @@ nodes:
         title: "选择与拒绝模式"
         summary: "从问题气味映射到模式、容易混淆的模式对，以及过度设计这个经典失败。"
         requires: [principles.simplicity]
+      - id: patterns.frameworks
+        title: "框架与类库（Frameworks vs Libraries）"
+        summary: "类库由你调用，框架调用你：控制反转、扩展点和模板方法钩子。"
   - id: quality
     order: 6
     title: "代码质量（Code Quality）"
@@ -527,3 +536,726 @@ nodes:
         title: "视频目录与续播（Video Catalogue）（low priority）"
         summary: "影片目录、分类浏览、暂停时记录观看位置并跨设备续播。"
         requires: [problems.social.music-streaming]
+
+  # ---- Coding-craft framework (2026-11): the abilities a craft round tests beyond OOD. Empty leaves mark what to fill.
+  # Design and reasoning: docs/explanation/coding-craft-framework.md. Field outlines: research/domains/low-level-design/FIELD_OUTLINES.md.
+  - id: rounds
+    order: 11
+    title: "轮次打法（Round Playbooks）"
+    summary: "各种代码轮的形式、评分点、时间分配和常见失败方式；同一道题放在不同轮次里，要拿的分不一样。"
+    children:
+      - id: rounds.machine-coding
+        title: "机器编码轮（Machine Coding）"
+        summary: "60–120 分钟写出可运行的代码：先定骨架和内存存储，保证演示能跑，再加扩展点。"
+        requires: [method.delivery]
+      - id: rounds.practical
+        title: "集成实战轮（Practical / Integration）"
+        summary: "调真实接口、读真实文件、需求逐段加码；评分看推进速度、读文档能力和错误处理。"
+        requires: [method.delivery]
+      - id: rounds.progressive-oa
+        title: "分级机考（Progressive OA）"
+        summary: "CodeSignal 式四级递进题：第一级的数据结构决定后面三级要不要重写，时间按级别分配。"
+      - id: rounds.concurrency
+        title: "并发编码轮（Concurrency Round）"
+        summary: "先写单线程正确版，再说清共享状态和不变量，最后加锁；面试官看的是推理过程。"
+        requires: [concurrency.hazards]
+      - id: rounds.bug-bash
+        title: "排错轮（Bug Bash）"
+        summary: "在陌生代码里按失败测试定位多个缺陷：先跑测试、按失败分组、一次修一个、说清根因。"
+      - id: rounds.code-review
+        title: "代码评审轮（Code Review Round）"
+        summary: "读一段 PR 给反馈：先正确性和并发，再设计，最后风格；反馈要分级、可执行。"
+      - id: rounds.refactoring
+        title: "重构轮（Refactoring Round）"
+        summary: "行为不变地改善代码：先补保护测试，小步提交，每一步说出改动名称和理由。"
+      - id: rounds.extend-code
+        title: "扩展现有代码轮（Extend Existing Code）"
+        summary: "读懂陌生仓库再加功能：找入口、顺调用链、按现有风格做最小改动。"
+      - id: rounds.ai-assisted
+        title: "AI 辅助编码轮（AI-Assisted Round）"
+        summary: "允许或要求用 AI：评分从“写出来”转向拆任务、给约束、验证输出和解释取舍。"
+      - id: rounds.api-design
+        title: "代码级接口设计轮（API Design Round）"
+        summary: "设计 SDK 或类库的公开接口：讲清调用方视角、错误契约和演进方式。"
+      - id: rounds.language
+        title: "语言专项考察（Language Deep-Dive）"
+        summary: "把语言内部机制当一轮来问：内存模型、GC、泛型、惯用法，以及如何从现象答到机制。"
+
+  - id: fluency
+    order: 12
+    title: "语言手感（Python Fluency）"
+    summary: "写得快、写得对、一眼看出不地道的地方：Python 里最常丢分的语义和习惯。"
+    children:
+      - id: fluency.mutability
+        title: "可变性与别名（Mutability & Aliasing）"
+        summary: "变量是名字不是盒子：可变默认参数、浅拷贝、闭包晚绑定，以及共享引用造成的隐蔽 bug。"
+      - id: fluency.collections
+        title: "容器的选择与惯用法（Collections Idioms）"
+        summary: "list、dict、set、deque、heapq、Counter、defaultdict 的成本与适用场景，一行写对的常见操作。"
+      - id: fluency.iteration
+        title: "迭代写法（Iteration Style）"
+        summary: "推导式、enumerate、zip、any/all、itertools，以及什么时候该退回普通循环。"
+        requires: [python.context-iterators]
+      - id: fluency.functions
+        title: "函数签名与参数（Function Signatures）"
+        summary: "仅关键字参数、默认值、*args/**kwargs、解包；让调用点自解释。"
+      - id: fluency.strings-bytes
+        title: "字符串与字节（Strings & Bytes）"
+        summary: "str 与 bytes 的边界、编码错误、切片、join 与格式化，以及字符串处理的成本。"
+      - id: fluency.time-numbers
+        title: "时间与数字（Time & Numbers）"
+        summary: "时区感知的 datetime、单调时钟、Decimal 与整数分、浮点比较：业务代码里最常出错的值。"
+      - id: fluency.idiomatic-rewrite
+        title: "改写成地道代码（Idiomatic Rewrite）"
+        summary: "把下标循环、isinstance 链和手写样板改写成 Python 的写法，并说出每处改动的好处。"
+        requires: [fluency.iteration]
+      - id: fluency.style
+        title: "命名与风格规范（Naming, Style & Linters）"
+        summary: "命名惯例、PEP 8、格式化器和 linter：把风格争论交给工具，以及什么时候破例。"
+
+  - id: languages
+    order: 13
+    title: "跨语言对照（Language Contrast）"
+    summary: "同一个设计问题在不同语言里的答案，以及面试切换语言时需要补的那部分。"
+    children:
+      - id: languages.models
+        title: "错误、接口与并发模型对照（Error, Interface, Concurrency Models）"
+        summary: "异常与错误值、名义与结构子类型、线程与 goroutine：各自的代价和适用场景。"
+      - id: languages.java-modern
+        title: "现代 Java（Java 21）"
+        summary: "record、sealed、模式匹配、虚拟线程：它们替代了哪些旧写法，面试里怎么用。"
+      - id: languages.java-collections
+        title: "Java 集合与泛型（Collections & Generics）"
+        summary: "HashMap 内部结构、并发集合、类型擦除与通配符，equals/hashCode 契约。"
+      - id: languages.go-idioms
+        title: "Go 惯用法（Go Idioms）"
+        summary: "接口由使用方定义、显式错误、defer、切片的共享底层数组、channel 与 mutex 的选择。"
+      - id: languages.cpp-raii
+        title: "C++ 资源管理（RAII）"
+        summary: "RAII、智能指针、移动语义和异常安全保证：被问到时要答出的核心。"
+
+  - id: data
+    order: 14
+    title: "代码里的数据建模（Data Modelling in Code）"
+    summary: "用类型把错误状态变得写不出来：值与实体、不变量、和类型，以及字段变化时的演进。"
+    children:
+      - id: data.value-entity
+        title: "值对象与实体（Value vs Entity）"
+        summary: "按身份还是按内容判等，什么该不可变，以及这个选择如何决定哈希和共享。"
+        requires: [python.dataclasses-enums]
+      - id: data.invariants
+        title: "不变量与封装（Invariants）"
+        summary: "写出类的表示不变量（rep invariant）和抽象函数（abstraction function），在哪里建立和检查，换实现时调用方为什么不受影响。"
+        requires: [data.value-entity]
+      - id: data.defensive-copy
+        title: "防御性拷贝（Defensive Copying）"
+        summary: "返回内部列表等于交出不变量：拷贝、只读视图和不可变结构的取舍。"
+        requires: [data.invariants, fluency.mutability]
+      - id: data.primitive-obsession
+        title: "用小类型代替裸值（Primitive Obsession）"
+        summary: "把 tuple、dict 和字符串 ID 换成有名字的类型，换来的校验和可读性。"
+      - id: data.sum-types
+        title: "和类型与穷尽匹配（Sum Types）"
+        summary: "“几种形状之一”的表示：Enum、联合类型、match 和穷尽检查，替代类型码字段。"
+      - id: data.optional
+        title: "缺失值的表示（Optional & Null）"
+        summary: "None、空容器、哨兵对象、异常：调用方视角下该选哪个。"
+      - id: data.record-choice
+        title: "记录类型的选择（Record Choice）"
+        summary: "dataclass、NamedTuple、TypedDict、普通类各自适合什么场景。"
+      - id: data.evolution
+        title: "字段演进（Schema Evolution in Code）"
+        summary: "加字段、改含义、持久化旧数据时，代码怎样保持向前和向后兼容。"
+
+  - id: api
+    order: 15
+    title: "接口与函数设计（API & Interface Design）"
+    summary: "站在调用方的角度：规格、参数、返回值、错误和演进，让接口难以用错。"
+    children:
+      - id: api.specs
+        title: "规格与契约（Specifications）"
+        summary: "前置条件、后置条件、强规格与弱规格；谁负责检查什么。"
+      - id: api.parameters
+        title: "参数设计（Parameters）"
+        summary: "布尔标志的问题、仅关键字参数、参数对象，默认值应该偏向哪边。"
+        requires: [fluency.functions]
+      - id: api.returns
+        title: "返回值设计（Return Values）"
+        summary: "特殊值、结果对象、异常如何选择；不要让调用方靠猜。"
+        requires: [data.optional]
+      - id: api.error-contract
+        title: "接口的错误契约（Error Contract）"
+        summary: "暴露哪些错误类型、根异常如何隔离内部实现、哪些错误可重试。"
+      - id: api.hard-to-misuse
+        title: "难以用错的接口（Hard to Misuse）"
+        summary: "用类型和构造顺序排除错误调用：把运行时错误提前到写代码时。"
+      - id: api.naming
+        title: "命名与一致性（Naming & Consistency）"
+        summary: "同一件事用同一个词，一组方法的形状保持一致；命名暴露抽象是否清楚。"
+      - id: api.paging-iteration
+        title: "大结果集接口（Pagination & Iteration）"
+        summary: "分页令牌、迭代器、流式返回，以及结果在遍历期间变化时的语义。"
+      - id: api.evolution
+        title: "接口演进（API Evolution）"
+        summary: "新增而不破坏：弃用警告、版本策略、哪些变化算破坏性变更。"
+      - id: api.library-design
+        title: "类库与 SDK 设计（Library & SDK Design）"
+        summary: "最小公开面、依赖方向、配置入口，重试和幂等放在哪一层。"
+        requires: [api.error-contract]
+
+  - id: fsm
+    order: 16
+    title: "状态机（State Machines）"
+    summary: "把布尔标志的组合换成显式状态：用转移表表达规则，拒绝非法转移，可穷尽测试。"
+    children:
+      - id: fsm.transition-table
+        title: "转移表（Transition Table）"
+        summary: "状态、事件、转移的最小实现，为什么数据驱动比 if 分支好维护。"
+      - id: fsm.illegal-transitions
+        title: "非法转移与幂等（Illegal Transitions）"
+        summary: "重复事件、乱序事件怎么处理：拒绝、忽略还是报错，边界在哪里。"
+        requires: [fsm.transition-table]
+      - id: fsm.flags-to-states
+        title: "把标志位改成状态（Flags to States）"
+        summary: "识别互斥的布尔字段，重构成显式状态，消除不可能的组合。"
+        requires: [fsm.transition-table]
+      - id: fsm.table-vs-pattern
+        title: "转移表与状态模式（Table vs State Pattern）"
+        summary: "每个状态行为差异大时用类，规则主要是转移时用表；两种写法的扩展代价。"
+        requires: [patterns.state]
+      - id: fsm.guards-actions
+        title: "守卫、动作和进出钩子（Guards, Actions, Hooks）"
+        summary: "转移条件和副作用放在哪里，进入和退出状态时的统一处理。"
+        requires: [fsm.transition-table]
+      - id: fsm.hierarchical
+        title: "层次状态（Hierarchical States）"
+        summary: "嵌套状态、并行状态、历史状态和状态栈：状态数量爆炸时怎么控制。"
+        requires: [fsm.guards-actions]
+      - id: fsm.persistence
+        title: "持久化与恢复（Persistence & Resume）"
+        summary: "落盘当前状态还是事件历史，进程崩溃后如何继续、如何避免重复副作用。"
+        requires: [fsm.illegal-transitions]
+      - id: fsm.testing
+        title: "状态机的穷尽测试（Exhaustive Testing）"
+        summary: "枚举全部（状态，事件）组合，断言合法转移和拒绝行为。"
+        requires: [fsm.transition-table]
+
+  - id: concurrency-depth
+    order: 17
+    title: "并发进阶（Concurrency Depth）"
+    summary: "基础之上的部分：可见性、复合操作、关闭与取消、测试，以及如何写出能被信任的线程安全代码。"
+    children:
+      - id: concurrency-depth.memory-model
+        title: "内存模型与可见性（Memory Model）"
+        summary: "happens-before、数据竞争，双重检查锁为什么会错，GIL 能保证什么、不能保证什么。"
+        requires: [concurrency.model]
+      - id: concurrency-depth.compound-actions
+        title: "复合操作（Compound Actions）"
+        summary: "检查再执行、读改写：单个操作原子，不等于组合起来原子；锁的范围怎么定。"
+        requires: [concurrency.primitives]
+      - id: concurrency-depth.conditions
+        title: "条件变量（Condition Variables）"
+        summary: "等待必须放在循环里、虚假唤醒、notify 与 notify_all 的选择，写对有界队列。"
+        requires: [concurrency.primitives]
+      - id: concurrency-depth.confinement
+        title: "不靠锁的线程安全（Immutability & Confinement）"
+        summary: "不可变对象、线程封闭、消息传递：优先去掉共享，而不是保护共享。"
+      - id: concurrency-depth.atomics
+        title: "原子操作与无锁（Atomics & Lock-Free）"
+        summary: "CAS、ABA、LongAdder 式分段计数，什么时候值得用。"
+        requires: [concurrency-depth.memory-model]
+      - id: concurrency-depth.cancel-shutdown
+        title: "取消、超时与关闭（Cancellation & Shutdown）"
+        summary: "协作式取消、超时传播、优雅关闭：任务停在哪里、队列里的工作怎么办。"
+      - id: concurrency-depth.selection
+        title: "线程、进程与协程的选择（Choosing a Model）"
+        summary: "CPU 密集还是 I/O 密集，用什么模型，以及混用时的边界。"
+        requires: [concurrency.asyncio]
+      - id: concurrency-depth.safe-structures
+        title: "线程安全结构的写法（Thread-Safe Structures）"
+        summary: "线程安全的缓存、计数器、限流器、连接池：不变量、锁粒度和读写分离。"
+        requires: [concurrency-depth.compound-actions]
+      - id: concurrency-depth.testing
+        title: "测试并发代码（Testing Concurrency）"
+        summary: "用屏障放大竞争、确定性调度、压力测试，以及测试通过不能证明什么。"
+      - id: concurrency-depth.parallel-scaling
+        title: "并行加速与锁竞争（Parallel Speedup & Contention）"
+        summary: "分块并行、阿姆达尔定律，以及锁竞争如何吃掉加速比。"
+        requires: [concurrency-depth.compound-actions]
+
+  - id: errors
+    order: 18
+    title: "错误处理（Error Handling）"
+    summary: "把失败当成设计的一部分：区分缺陷和预期失败，保留原因，保证清理，决定谁来恢复。"
+    children:
+      - id: errors.bug-vs-failure
+        title: "缺陷与预期失败（Bugs vs Failures）"
+        summary: "断言抓程序员的错，异常处理外部世界的错；两者处理方式完全不同。"
+      - id: errors.exceptions-vs-values
+        title: "异常与错误值（Exceptions vs Values）"
+        summary: "两种风格的控制流和成本，什么时候返回结果对象更好。"
+      - id: errors.taxonomy
+        title: "错误类型体系（Error Taxonomy）"
+        summary: "设计自定义异常层次，调用方需要区分什么，就暴露什么。"
+      - id: errors.chaining
+        title: "保留原因（Wrapping & Chaining）"
+        summary: "raise from、add_note、包装时带上上下文，用异常组（ExceptionGroup）汇总并发失败，跨层时不丢失根因。"
+      - id: errors.narrow-catch
+        title: "捕获的范围（Narrow Catch）"
+        summary: "try 块尽量短，不吞异常，不捕获过宽的类型；在能决定怎么办的地方处理。"
+      - id: errors.cleanup
+        title: "所有路径上的清理（Cleanup on Every Path）"
+        summary: "with、finally、defer：异常路径上资源和状态如何回到一致。"
+      - id: errors.retry
+        title: "重试与退避（Retry & Backoff）"
+        summary: "哪些错误可重试、指数退避加抖动、重试预算，以及重试对幂等的要求。"
+        requires: [errors.taxonomy]
+      - id: errors.boundary-validation
+        title: "边界校验（Validate at the Boundary）"
+        summary: "外部输入在边界校验并转换成可信类型，内部用断言保护不变量。"
+      - id: errors.unrecoverable
+        title: "不可恢复错误与顶层处理（Crash vs Recover）"
+        summary: "什么错误应当让进程崩溃，什么值得恢复，顶层处理器记录什么。"
+
+  - id: testing
+    order: 19
+    title: "测试（Testing）"
+    summary: "选对用例、隔离依赖、让代码可测：面试里当场写测试和改造不可测代码的能力。"
+    children:
+      - id: testing.partitioning
+        title: "用例选择（Partitioning & Boundaries）"
+        summary: "按规格划分等价类和边界（黑盒），再按分支补用例（白盒），用最少的用例覆盖最多的情况。"
+      - id: testing.test-levels
+        title: "测试层级（Unit, Integration, Larger）"
+        summary: "各层测什么、成本多少，什么时候集成测试比单元测试更值。"
+      - id: testing.doubles
+        title: "测试替身（Test Doubles）"
+        summary: "mock、stub、fake 的区别，为什么优先用真实对象和 fake，过度 mock 的代价。"
+      - id: testing.pytest-tools
+        title: "pytest 的常用工具（pytest Toolkit）"
+        summary: "fixture、parametrize、monkeypatch、临时目录，让测试短而隔离。"
+      - id: testing.testable-design
+        title: "可测的设计（Design for Testability）"
+        summary: "注入时钟、随机数、网络：把不确定性放到边界，把核心写成纯函数。"
+      - id: testing.test-first
+        title: "先写失败的测试（Test First）"
+        summary: "从 bug 报告或需求写出第一个失败测试，用测试驱动下一步。"
+      - id: testing.flaky
+        title: "不稳定测试（Flaky Tests）"
+        summary: "时间、顺序、共享状态、网络：定位不稳定的根因，而不是加重试。"
+      - id: testing.coverage-limits
+        title: "覆盖率的边界（Coverage Limits）"
+        summary: "覆盖率说明没测到什么，不说明测对了什么；性质测试和变异测试能补什么。"
+
+  - id: parsing-io
+    order: 20
+    title: "解析与 I/O（Parsing & I/O）"
+    summary: "实战轮和机考最常出现的底层功夫：把脏数据读进来、处理干净、稳定地写出去。"
+    children:
+      - id: parsing-io.tokenizer
+        title: "词法分析（Tokenizer）"
+        summary: "把字符流切成 token，处理空白、转义和位置信息。"
+      - id: parsing-io.recursive-descent
+        title: "递归下降解析（Recursive Descent）"
+        summary: "语法到函数的映射，表达式优先级，左递归怎么处理。"
+        requires: [parsing-io.tokenizer]
+      - id: parsing-io.ast-eval
+        title: "语法树与求值（AST & Evaluation）"
+        summary: "用树表示语义，带环境求值，支持变量和作用域。"
+        requires: [parsing-io.recursive-descent]
+      - id: parsing-io.parse-errors
+        title: "解析错误（Parse Errors）"
+        summary: "报告行号和原因，遇错恢复继续，还是立刻失败。"
+        requires: [parsing-io.tokenizer]
+      - id: parsing-io.regex
+        title: "正则表达式（Regular Expressions）"
+        summary: "常用语法、贪婪与回溯灾难，什么时候不该用正则。"
+      - id: parsing-io.formats
+        title: "CSV 与 JSON 的稳健读写（CSV & JSON）"
+        summary: "引号与换行、坏行处理、大数和日期、schema 校验：用标准库而不是 split。"
+        requires: [fluency.strings-bytes]
+      - id: parsing-io.streams
+        title: "流式处理大文件（Streaming Large Files）"
+        summary: "生成器逐行处理、内存有界、缓冲区，以及外部排序的思路。"
+      - id: parsing-io.binary
+        title: "二进制与长度前缀格式（Binary Formats）"
+        summary: "struct、字节序、长度前缀帧、半包粘包，RLE 和位打包。"
+      - id: parsing-io.http-client
+        title: "写一个可靠的 HTTP 客户端（HTTP Client）"
+        summary: "超时、分页、限流响应、重试和幂等键：集成实战轮的基本功。"
+        requires: [errors.retry]
+      - id: parsing-io.diagnostics
+        title: "日志与诊断输出（Logging）"
+        summary: "级别、结构化字段、类库里的日志规范，既能排查问题又不泄露敏感信息。"
+      - id: parsing-io.pattern-matcher
+        title: "手写通配与正则匹配（Glob & Regex Matcher）"
+        summary: "用回溯或动态规划实现 *、? 和基本正则，避免回溯爆炸。"
+        requires: [parsing-io.regex]
+
+  - id: reading
+    order: 21
+    title: "读懂和扩展陌生代码（Reading Unfamiliar Code）"
+    summary: "在没读完代码的情况下做出安全的改动：定位、理解、保护、最小修改。"
+    children:
+      - id: reading.entry-points
+        title: "找入口和主干（Entry Points）"
+        summary: "从 main、路由、测试入手，先画主干，不要从第一个文件读到最后一个。"
+      - id: reading.code-search
+        title: "代码搜索与导航（Code Search）"
+        summary: "用错误字符串、符号引用、调用层级，以及类型检查器和死代码报告，从现象反查实现。"
+      - id: reading.trace-flow
+        title: "追踪数据流（Tracing Data Flow）"
+        summary: "跟一个请求或对象穿过模块，记下谁创建、谁修改、谁读取。"
+        requires: [reading.entry-points]
+      - id: reading.questions
+        title: "修改前先问的问题（Questions Before Changing）"
+        summary: "谁依赖这里、有什么隐含约定、失败时会怎样、怎么验证没有改坏。"
+      - id: reading.characterization
+        title: "特征测试（Characterization Tests）"
+        summary: "先把现有行为钉住，哪怕它不对，再动手修改。"
+      - id: reading.seams
+        title: "接缝与解依赖（Seams）"
+        summary: "在不改调用方的情况下替换依赖，让难测的类能进测试。"
+        requires: [reading.characterization]
+      - id: reading.minimal-diff
+        title: "最小改动（Minimal Diff）"
+        summary: "沿用现有风格和抽象，新功能放在哪里最不打扰，什么时候才值得先重构。"
+      - id: reading.predict-behaviour
+        title: "预测输出与副作用（Predicting Behaviour）"
+        summary: "不运行就推演一段纠缠的代码：别名、隐藏状态、求值顺序和默认参数如何改变结果。"
+
+  - id: debugging
+    order: 22
+    title: "调试（Debugging）"
+    summary: "系统地找到根因：复现、假设、实验，而不是靠改到测试变绿。"
+    children:
+      - id: debugging.reproduce
+        title: "稳定复现（Reproduce）"
+        summary: "把偶发变成必现：固定输入、环境、时间和随机数。"
+      - id: debugging.hypothesis
+        title: "假设驱动（Hypothesis-Driven）"
+        summary: "观察、假设、设计能证伪的实验，一次只改一处，并留下记录。"
+        requires: [debugging.reproduce]
+      - id: debugging.minimize
+        title: "缩小失败输入（Delta Debugging）"
+        summary: "二分输入，把大用例缩到最小，让原因显露出来。"
+      - id: debugging.bisect
+        title: "二分定位改动（Bisect）"
+        summary: "git bisect 的前提和用法，定位引入问题的提交。"
+      - id: debugging.tools
+        title: "调试工具的选择（print, logging, pdb）"
+        summary: "什么时候打印、什么时候断点、什么时候写测试，事后调试怎么用。"
+      - id: debugging.heisenbugs
+        title: "时序与共享状态的 bug（Heisenbugs）"
+        summary: "观察会让问题消失的 bug：竞争、未初始化、时间依赖的排查办法。"
+        requires: [debugging.hypothesis]
+      - id: debugging.memory
+        title: "内存问题（Memory Leaks）"
+        summary: "tracemalloc、引用保留、缓存无上界；在 Python 里泄漏长什么样。"
+      - id: debugging.prevent
+        title: "防止复发（Prevent Recurrence）"
+        summary: "根因修复后加回归测试、断言或类型，并检查同类问题还有没有。"
+        requires: [debugging.hypothesis]
+      - id: debugging.failure-origins
+        title: "追踪失败源头（Tracking Failure Origins）"
+        summary: "从错误的值往回找第一个出错的状态：感染链、反向切片和观察点的位置。"
+        requires: [debugging.hypothesis]
+
+  - id: refactoring
+    order: 23
+    title: "重构（Refactoring）"
+    summary: "具名的、小步的、行为不变的改动：知道怎么做，也知道什么时候不该做。"
+    children:
+      - id: refactoring.composing
+        title: "拆分与内联（Extract & Inline）"
+        summary: "提取函数、拆分阶段、内联过度抽象：最常用的一组手法。"
+        requires: [quality.smells]
+      - id: refactoring.conditionals
+        title: "简化条件（Simplifying Conditionals）"
+        summary: "卫语句、分解条件、用多态或查表替换条件链。"
+      - id: refactoring.signatures
+        title: "改函数签名（Changing Signatures）"
+        summary: "引入参数对象、去掉标志参数，安全地迁移所有调用点。"
+      - id: refactoring.moving
+        title: "搬移职责（Moving Features）"
+        summary: "搬移函数和字段、提炼类、拆上帝类，让数据和操作在一起。"
+      - id: refactoring.hierarchy
+        title: "调整继承关系（Reshaping Hierarchies）"
+        summary: "上移下移、以委托代替继承，什么时候把继承层次拆掉。"
+      - id: refactoring.small-steps
+        title: "小步与测试保护（Small Safe Steps）"
+        summary: "每一步都可运行、可提交；重构和改行为分开提交。"
+      - id: refactoring.over-abstraction
+        title: "过度抽象（Over-Abstraction）"
+        summary: "重复三次再抽象；错误的抽象比重复更贵，怎么把它拆回去。"
+      - id: refactoring.when-not
+        title: "什么时候不重构（When Not To）"
+        summary: "没有测试、时间窗口短、代码快废弃时的判断，以及如何向别人说明。"
+      - id: refactoring.rename
+        title: "重命名与澄清（Rename & Clarify）"
+        summary: "重命名、拆分变量、用查询替换临时变量：只改可读性的最小重构。"
+
+  - id: review
+    order: 24
+    title: "代码评审（Code Review）"
+    summary: "看出真正要紧的问题，并把反馈写到对方能照着做。"
+    children:
+      - id: review.priorities
+        title: "评审的优先级（What to Look For）"
+        summary: "先正确性和设计，再测试和复杂度，风格交给工具；按严重程度排序。"
+      - id: review.reading-a-diff
+        title: "怎么读一个 diff（Reading a Diff）"
+        summary: "先看描述和测试，再看主改动，最后看周边，不要从上往下逐行读。"
+      - id: review.risk-patterns
+        title: "diff 里的高风险信号（Risk Patterns）"
+        summary: "并发、错误路径、兼容性、资源释放、边界条件上的典型问题。"
+        requires: [review.reading-a-diff]
+      - id: review.comments
+        title: "写评审意见（Writing Comments）"
+        summary: "说清问题、原因和建议，区分必须改和建议改，针对代码不针对人。"
+      - id: review.approval-bar
+        title: "批准的标准（Approval Bar）"
+        summary: "改善代码健康度就该批准，不追求完美；什么情况必须拦下。"
+      - id: review.small-changes
+        title: "小改动和好描述（Small CLs）"
+        summary: "拆分大改动，写清楚为什么改、怎么验证。"
+      - id: review.ai-code
+        title: "评审 AI 生成的代码（Reviewing AI Code）"
+        summary: "虚构的 API、漏掉的边界条件、多余的抽象、测试只验证实现本身。"
+      - id: review.pushback
+        title: "回应评审与处理分歧（Handling Pushback）"
+        summary: "作者如何回应意见，评审人如何守住底线又不僵持，何时升级。"
+
+  - id: performance
+    order: 25
+    title: "性能（Performance）"
+    summary: "先测量，再优化：从复杂度到常数，从 CPU 到内存，找到真正的瓶颈。"
+    children:
+      - id: performance.measure-first
+        title: "先测量（Measure First）"
+        summary: "明确目标和负载，避免凭感觉优化和乱试一通。"
+      - id: performance.profiling
+        title: "读懂剖析结果（Reading Profiles）"
+        summary: "cProfile 的自身时间和累计时间、火焰图，CPU 时间和等待时间。"
+        requires: [performance.measure-first]
+      - id: performance.benchmarks
+        title: "写对微基准（Micro-Benchmarks）"
+        summary: "timeit、预热、方差、被优化掉的代码，常见的错误结论。"
+      - id: performance.complexity-constants
+        title: "复杂度与常数（Complexity vs Constants）"
+        summary: "规模小时常数决定一切；哪些操作隐含 O(n)，真实瓶颈通常在 I/O 和分配。"
+      - id: performance.data-structures
+        title: "按访问模式选结构（Choosing Structures）"
+        summary: "读写比例、规模和有序需求决定结构，缓存局部性的影响。"
+        requires: [fluency.collections]
+      - id: performance.memory
+        title: "减少分配（Reducing Allocation）"
+        summary: "生成器、__slots__、memoryview、预分配：内存和速度一起省。"
+      - id: performance.caching
+        title: "缓存与记忆化（Caching & Memoization）"
+        summary: "lru_cache 的适用边界、失效条件、无界缓存带来的泄漏。"
+      - id: performance.when-not
+        title: "什么时候不优化（When Not To）"
+        summary: "可读性的代价、优化的回报，够用就停。"
+
+  - id: ai
+    order: 26
+    title: "与 AI 工具协作（Working with AI Tools）"
+    summary: "把 AI 当作需要明确指令和严格验收的协作者：拆任务、给约束、验证结果。"
+    children:
+      - id: ai.specs
+        title: "写清任务（Specifying the Task）"
+        summary: "目标、约束、上下文、验收标准；含糊的指令换来含糊的代码。"
+      - id: ai.decomposition
+        title: "拆成可验证的小步（Decomposition）"
+        summary: "先规划后实现，每一步都有可运行的检查。"
+      - id: ai.verification
+        title: "验证输出（Verification）"
+        summary: "测试、类型检查、亲自读改动：不把“看起来对”当作对。"
+      - id: ai.failure-modes
+        title: "AI 的典型错误（Failure Modes）"
+        summary: "虚构 API、改测试迁就代码、漏边界条件、悄悄扩大改动范围。"
+      - id: ai.delegation
+        title: "该交给 AI 还是自己写（When to Delegate）"
+        summary: "按风险和可验证程度分工；什么情况自己写更快。"
+      - id: ai.project-context
+        title: "项目指令与上下文管理（Project Context）"
+        summary: "项目指令文件、可复用流程、长会话的上下文和成本控制。"
+      - id: ai.risks
+        title: "风险与权限（Risks & Guardrails）"
+        summary: "密钥泄露、权限过宽、未经审查的依赖，沙箱和权限的基本做法。"
+
+      - id: ai.tools-automation
+        title: "接入工具与自动化（Tools & Automation）"
+        summary: "MCP 等外部工具该接什么、权限给多大；脚本化和并行运行时任务怎样隔离、结果怎样核对。"
+  # Problems the evidence reports and the deck has no leaf for, grouped by the round they mostly appear in. Classic OOD problems stay under `problems`.
+  - id: bank
+    order: 27
+    title: "题库：按轮次（Problem Bank by Round）"
+    summary: "真实面试报告里出现、经典 OOD 题库之外的题，按它们最常出现的轮次分组。"
+    children:
+      - id: bank.practical
+        title: "集成实战题（Practical）"
+        summary: "调接口、读文件、需求逐步增加的题。"
+        children:
+          - id: bank.practical.parser-toolkit
+            title: "解析器题（JSON、CSV、表达式）"
+            summary: "手写 JSON 或 CSV 解析、表达式计算，需求逐级加码。"
+            requires: [parsing-io.recursive-descent]
+          - id: bank.practical.rest-integration
+            title: "REST 接口集成（REST Integration）"
+            summary: "调真实接口：分页、错误、幂等，把结果处理后输出。"
+            requires: [parsing-io.http-client]
+          - id: bank.practical.log-processing
+            title: "日志处理与聚合（Log Processing）"
+            summary: "读日志文件，解析、聚合、按时间窗口统计，处理坏行。"
+            requires: [parsing-io.streams]
+          - id: bank.practical.data-pipeline
+            title: "数据或图片转换管道（Transform Pipeline）"
+            summary: "可组合的处理步骤，加入新转换不改已有代码。"
+          - id: bank.practical.geo-integration
+            title: "地理数据集成（BikeMap / GeoJSON）"
+            summary: "读 GeoJSON，调外部地图接口，计算距离并生成结果。"
+          - id: bank.practical.http-router
+            title: "路由匹配与 HTTP 框架（Route Matching）"
+            summary: "路径参数和通配符匹配、中间件链。"
+          - id: bank.practical.variable-templates
+            title: "变量存储与模板替换（Variable Store）"
+            summary: "嵌套引用、循环依赖检测和级联更新。"
+          - id: bank.practical.permissions
+            title: "鉴权与权限（Auth & Permissions）"
+            summary: "授予、撤销和层级继承的权限检查。"
+          - id: bank.practical.circuit-breaker
+            title: "熔断与重试（Circuit Breaker）"
+            summary: "状态切换、半开探测和重试策略的代码实现。"
+            requires: [errors.retry, fsm.transition-table]
+      - id: bank.progressive-oa
+        title: "分级机考题（Progressive OA）"
+        summary: "四级递进题，数据结构要为后面的级别留余地。"
+        children:
+          - id: bank.progressive-oa.in-memory-db
+            title: "内存数据库（In-Memory DB）"
+            summary: "增删改查、过滤、TTL、事务和回滚，分级增加。"
+          - id: bank.progressive-oa.file-storage
+            title: "文件存储与去重（File Storage）"
+            summary: "配额、压缩、查重，按大小和前缀查询。"
+          - id: bank.progressive-oa.credit-ledger
+            title: "带过期的额度账本（Credit Ledger）"
+            summary: "授予和扣减、优先花最早过期的额度、乱序操作。"
+          - id: bank.progressive-oa.working-hours
+            title: "工时与人事记录（Working Hours）"
+            summary: "打卡、薪资、晋升历史，按时间区间查询。"
+          - id: bank.progressive-oa.records
+            title: "记录型机考（Recipe, Parcel, Revenue）"
+            summary: "食谱、包裹、客户收入这类增删查加排序的分级题。"
+          - id: bank.progressive-oa.proximity-routing
+            title: "就近路由与机房注册（Proximity Routing）"
+            summary: "按距离选择服务，健康状态变化时切换。"
+      - id: bank.ai-assisted
+        title: "AI 辅助题（AI-Assisted）"
+        summary: "允许用 AI 的编码题，题目本身是载体。"
+        children:
+          - id: bank.ai-assisted.algorithm-build
+            title: "带 AI 的算法实现（Algorithm Build）"
+            summary: "迷宫、卡牌等多级题，用 AI 推进并自己验证。"
+          - id: bank.ai-assisted.open-build
+            title: "开放式构建（Open Build）"
+            summary: "需求不断追加的小应用，比拼拆解和验收。"
+          - id: bank.ai-assisted.order-validator
+            title: "订单校验器（Order Validator）"
+            summary: "规则依赖图、校验顺序和错误汇总。"
+          - id: bank.ai-assisted.ml-coding
+            title: "机器学习编码（ML Coding）"
+            summary: "手写 k-means、注意力等，用 NumPy 或 PyTorch。"
+      - id: bank.concurrency
+        title: "并发题（Concurrency）"
+        summary: "线程安全结构和并发任务。"
+        children:
+          - id: bank.concurrency.thread-safe-account
+            title: "线程安全账户与计数器（Thread-Safe Account）"
+            summary: "转账的锁顺序、计数器和抽奖的并发更新。"
+            requires: [concurrency-depth.compound-actions]
+          - id: bank.concurrency.crawler
+            title: "并发爬虫（Concurrent Crawler）"
+            summary: "去重、限制并发和结束判定。"
+          - id: bank.concurrency.task-executor
+            title: "任务执行器与批处理器（Task Executor）"
+            summary: "按键保序、有界队列和批量提交。"
+          - id: bank.concurrency.durable-writer
+            title: "预写日志写入器（Write-Ahead Log）"
+            summary: "并发追加、批量落盘、崩溃后恢复。"
+          - id: bank.concurrency.singleton
+            title: "单例与手写模式（Singleton, Handwritten Patterns）"
+            summary: "双重检查锁为什么要 volatile，手写常见模式。"
+            requires: [concurrency-depth.memory-model]
+      - id: bank.bug-bash
+        title: "排错题（Bug Bash）"
+        summary: "在给定代码里定位和修复缺陷。"
+        children:
+          - id: bank.bug-bash.broken-service
+            title: "修复出错的服务（Broken Service）"
+            summary: "一组失败的测试，修复多个缺陷。"
+          - id: bank.bug-bash.load-balancer
+            title: "负载均衡器排错（Load Balancer）"
+            summary: "轮询和权重算法中的缺陷。"
+      - id: bank.code-review
+        title: "代码评审题（Code Review）"
+        summary: "给一段代码或 PR 写评审。"
+        children:
+          - id: bank.code-review.service-review
+            title: "评审一个服务的 PR（Service PR）"
+            summary: "并发、错误处理、设计问题同时存在的改动。"
+      - id: bank.refactoring
+        title: "重构题（Refactoring）"
+        summary: "在给定代码上重构。"
+        children:
+          - id: bank.refactoring.messy-program
+            title: "重构一段混乱的程序（Messy Program）"
+            summary: "补保护测试，然后分步改善。"
+      - id: bank.machine-coding
+        title: "机器编码题（Machine Coding）"
+        summary: "限时写出可运行系统的题。"
+        children:
+          - id: bank.machine-coding.order-management
+            title: "订单与库存管理（Order Management）"
+            summary: "下单、库存预留、状态流转。"
+          - id: bank.machine-coding.billing-engine
+            title: "计费与优惠引擎（Billing Engine）"
+            summary: "可叠加的优惠规则、精度和顺序。"
+          - id: bank.machine-coding.rule-engine
+            title: "规则引擎（Rule Engine）"
+            summary: "规则的表示、组合和按顺序求值。"
+          - id: bank.machine-coding.spreadsheet
+            title: "电子表格（Spreadsheet）"
+            summary: "公式求值、依赖更新和循环检测。"
+          - id: bank.machine-coding.metrics
+            title: "排行榜与滚动统计（Leaderboard, Rolling Metrics）"
+            summary: "Top-K、百分位和滑动窗口的计数。"
+          - id: bank.machine-coding.game-engine
+            title: "小游戏引擎（2048、Tetris、扫雷）"
+            summary: "棋盘状态、规则和回合。"
+          - id: bank.machine-coding.cli-tool
+            title: "命令行工具（CLI Tools）"
+            summary: "参数解析、tail、cp 这类工具的实现。"
+      - id: bank.structures
+        title: "数据结构设计题（Data-Structure Design）"
+        summary: "设计一个类，比复杂度也比接口。"
+        children:
+          - id: bank.structures.linear
+            title: "栈、队列、Trie 及变体（Linear & Trie）"
+            summary: "最大栈、环形队列、倒排索引、稀疏结构。"
+          - id: bank.structures.iterators
+            title: "迭代器设计（Iterator Design）"
+            summary: "扁平化、过滤和窥视迭代器，以及可恢复遍历。"
+          - id: bank.structures.memory-allocator
+            title: "内存分配器（Memory Allocator）"
+            summary: "连续分配、释放和碎片合并。"
+          - id: bank.structures.configurable-cache
+            title: "可配置缓存（Configurable Cache）"
+            summary: "淘汰策略可插拔，统计命中率。"
+          - id: bank.structures.autocomplete
+            title: "自动补全与本地搜索（Autocomplete）"
+            summary: "Trie 加排序，增量更新。"
+          - id: bank.structures.dependency-resolver
+            title: "依赖解析与包管理（Dependency Resolver）"
+            summary: "拓扑排序、版本选择和循环报告。"

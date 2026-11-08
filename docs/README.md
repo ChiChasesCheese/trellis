@@ -20,6 +20,7 @@ overview: [../README.md](../README.md). Agent rules and repository map: [../AGEN
 ## Explanation (why it is built this way)
 
 - [Architecture](explanation/architecture.md): skeleton to cards to Anki, vault vs research, sync
+- [Coding-craft framework](explanation/coding-craft-framework.md): what the low-level-design domain covers beyond OOD, and the evidence for its shape
 
 ## Decisions (ADRs)
 
