@@ -476,9 +476,9 @@ def representatives(tree: Tree, qs: dict[str, float], pool: list[str], k: int) -
     reps, seen, must = [], set(), set()
     for _ in range(min(k, len(pool))):
         best = max((q for q in pool if q not in {r["id"] for r in reps}), key=lambda q: share(needs(q) - seen) * qs[q])
+        top = sorted(needs(best) - seen, key=lambda p: -shared[p])[:5]  # what this question adds, not what every question uses
         seen |= needs(best)
         must |= needs(best, ("必讲",))
-        top = sorted(needs(best), key=lambda p: -shared[p])[:5]
         reps.append({"id": best, "title": tree.title(best), "freq": qs[best] / (sum(qs.values()) or 1.0), "covered": share(seen), "by_freq": by_freq(seen), "must": share(must),
                      "points": len(seen), "concepts": [pts.meta[p]["title"] for p in top]})
     every = [q for q in qs if q in pts.needs and q not in NOT_A_QUESTION]
