@@ -186,7 +186,22 @@ The code keeps processing apart from analysis.
 - `scripts/lc_lists.py` shapes the deck from the fixed inputs only. It tags one card per listed problem,
   `榜单::<list>`, always the whole answer in the problem's module deck, so each list can be studied as a filtered deck.
 
-## 9. Known weaknesses
+## 9. A fixed study sprint
+
+`sprint` in the local config runs a fixed number of days at a fixed new-card rate (`scripts/plan_sprint.py`), for a learner who wants the most common
+ideas in a short time. Picking is `trellis.plan.coverage_order`: greedily take the card that adds most exam-point coverage, each leaf in its teaching
+order, so the gain of a card shrinks as its point fills up and stops at zero once the point has enough cards. Personal boosts do not enter this
+pick. The cards are then laid out over the days by topic, prerequisites first, so a day has a theme; each practice day adds the cards of one
+representative question, and the last day is a timed full mock of the next representative. The curriculum is rebuilt on every run before the first
+day and frozen from the first day on, so projected coverage stays comparable with what happened. Each morning deals the first unseen cards of the
+whole sequence, so a missed day comes first the next day. Budgets return to normal after the last day, with nothing to switch off.
+
+The projection assumes every dealt card is learned that day and passes on schedule, so it is an upper bound on what the plan buys.
+
+Each card's Anki back also carries a short index built from the annotations (`trellis/kp_footer.py`): its points, the questions that ask them in
+order of role times frequency, and neighbouring cards that teach the same point in another leaf.
+
+## 10. Known weaknesses
 
 - **The bank is self-reported and English-speaking.** Some groups are thin. ByteDance has nine system-design rows in
   the bank used here, which is why its share is shrunk and why public reports matter.
@@ -201,3 +216,36 @@ The code keeps processing apart from analysis.
   were counted asking. Frequency stays at question level. Points asked only in oral fundamentals rounds have no question
   behind them, so they are underweighted.
 - **Readiness uses only `requires` edges.** Looser ties (mentions, patterns) carry weight but do not gate.
+- **Mastery measures the schedule, not recall.** Hold is read from the interval the scheduler gave, and the scheduler only sees the button pressed. A
+  learner who recognises the answer instead of recalling it gets long intervals and a high coverage figure. The dashboard warns when the forget rate
+  is implausibly low; the score itself is not corrected.
+- **Oral rounds are counted thinly.** Points asked only in fundamentals rounds have no question behind them, so `oral.json` counts them from 201 public
+  oral-round posts (a campus post counts half) and gives them 5% of the question mass. The posts lean to campus Java and agent roles, so a larger share
+  displaces design material: at 15%, 11% of a 7-day sprint changes and agent and runtime cards replace data-modelling ones.
+- **A question asked under several names.** Their own points were split across duplicate question topics; same-trick points are merged in `merge.json`.
+
+**How stable the judgement constants are.** Each was perturbed alone, and the plan recomputed. The table gives the overlap of the top 100 points by weight
+(with their Spearman rank correlation), of one day's picks, of a 560-card sprint, and of 100 reviews.
+
+| Constant | Values tried | Top 100 (rank corr.) | Day | Sprint | Reviews |
+|---|---|---|---|---|---|
+| role weights 1/0.6/0.3 | 1/0.8/0.5, 1/0.4/0.1 | 0.96 (0.98) | 0.93 | 0.96 | 0.99 |
+| `spread` 0.7 | 0.5, 0.9 | 0.79, 0.95 (0.94, 0.96) | 0.94+ | 0.92, 0.94 | 0.99 |
+| `HELD_CARDS` 3 | 2, 4, 5 | 1.00 | 0.91+ | 0.82 to 0.89 | 0.99 |
+| secondary point 0.5 | 0.25, 0.75 | 1.00 | 0.83, 0.90 | 0.92 | 1.00 |
+| `DIMINISH` 0.8 | 0.6, 1.0 | 1.00 | 0.81, 0.84 | 1.00 | 1.00 |
+| `DIMINISH_POINT` 0.6 | 0.4, 0.8 | 1.00 | 0.97, 0.86 | 1.00 | 1.00 |
+| `LOOKAHEAD` 3 | 1, 5 | 1.00 | 0.57, 0.84 | 0.68, 0.81 | 1.00 |
+| `LEARNED` 0.58 | 0.4, 0.75 | 1.00 | 1.00 | 0.99+ | 1.00 |
+| question share 20% | 10%, 30% | 1.00 | 0.90 | 1.00 | 1.00 |
+| urgency cap 2 | 1, 4 | 1.00 | 1.00 | 1.00 | 0.85, 0.64 |
+| value floor 0.3 | 0.1, 0.6 | 1.00 | 1.00 | 1.00 | 0.99, 0.96 |
+
+What this says:
+- **Point weights are stable.** They depend only on roles and spread; rank correlation stays at 0.94 or above. A spread of 0.5 changes a fifth of the top 100.
+- **`LOOKAHEAD` moves picks but not the objective.** The cards are close substitutes: the projected coverage after the sprint is 29.9% with 1 or 3 and 29.7%
+  with 5. It is kept at 3 so a leaf's cheap introduction does not hide a valuable card behind it.
+- **`HELD_CARDS` is a real choice.** It decides how many cards a point gets, so it changes 11% to 18% of a sprint. Coverage is defined by it, so its effect on
+  coverage cannot be compared; 3 is a judgement.
+- **The review urgency cap changes which reviews are taken** (a cap of 4 swaps a third of them). No outcome data can calibrate it yet: it only orders a daily
+  budget, and a card it passes over stays due.
