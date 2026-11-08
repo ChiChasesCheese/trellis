@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LC = ROOT / "vault/interviews/core/leetcode"
 OUT = ROOT / "sources/local/lc"
 DECKS = ["LeetCode Tops", "LeetCode"]
+PLAN_DECK = "今日计划"
 GH = OUT / "github/leetcode-company-wise-problems"
 GH_URL = "https://github.com/liquidslr/leetcode-company-wise-problems.git"
 TARGETS = ("TikTok", "ByteDance")

@@ -1,5 +1,11 @@
+import sys
+from pathlib import Path
+
 from trellis.plan import CardInfo, Edge, card_mastery, plan, topic_weights
 from trellis.traces import Trace
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+import plan_kp  # noqa: E402
 
 DAY = 86_400_000
 
@@ -39,3 +45,24 @@ def test_studied_cards_are_not_picked_and_held_counts_them():
     p = plan(cards, traces, {"t": 1.0}, [], {}, now_ms=DAY, budget=5)
     assert p.picked == ["b"]
     assert 0 < p.held < 1
+
+
+def test_a_second_card_on_one_exam_point_waits_behind_a_different_point():
+    a = [CardInfo(f"a{i}", f"l{i}", "t", 1, "必会", graded=True, point="same") for i in range(2)]
+    b = CardInfo("b", "l9", "t", 1, "必会", graded=True, point="other", freq=0.8)
+    p = plan([*a, b], {}, {"t": 1.0}, [], {}, now_ms=0, budget=2)
+    assert "b" in p.picked  # a second card on "same" loses to a slightly lighter card on a new point
+
+
+def test_exam_point_weight_follows_role_and_question_frequency():
+    pts = plan_kp.Points(
+        meta={k: {"id": k, "title": k, "topic": "t", "core": False} for k in ("must", "probe", "bonus", "never")},
+        card={"c1": ["must"], "c2": ["must", "probe"], "c3": ["bonus"]},
+        needs={"q": [{"kp": "must", "role": "必讲"}, {"kp": "probe", "role": "追问"}, {"kp": "bonus", "role": "加分"}]},
+        own={"q": []})
+    w = plan_kp.weights(pts, {"q": 1.0}, {}, spread=0.7)
+    assert w["must"] > w["probe"] > w["bonus"] > w["never"] > 0
+    v = plan_kp.card_values(pts, w)
+    assert v["c1"] > v["c3"]  # shared by two cards, "must" is still worth more per card than "bonus"
+    m = plan_kp.mastery(pts, {"c1": 1.0, "c2": 0.0})
+    assert abs(m["must"] - 0.5) < 1e-9

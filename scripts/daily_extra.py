@@ -6,8 +6,8 @@ study_plan.py calls this; on its own it prints what it would do:
 
 LeetCode (deck stage `4 算法`):
 - **Similar problems.** A problem pressed 「忘记」 in the last `similar_days` days brings up to `similar_per_fail` problems
-  not held yet, ranked by similarity plus asked-frequency. Similarity = 3 x same main technique + 1.5 x shared techniques
-  + shared patterns + 0.5 x shared pitfalls; at least 4 to count. A similar problem never
+  not held yet, ranked by similarity plus asked-frequency. Similarity = 4 if the failed problem's solution lists it under
+  同模式 + 3 x same main technique + 1.5 x shared techniques + shared patterns + 0.5 x shared pitfalls; at least 4 to count. A similar problem never
   seen is dealt as new; one seen but not held is made due today (Anki's own Set Due Date).
 - **New problems.** `lc_new` unseen problems a day, by importance, raised by how often the learner slips on the main
   technique (the same boost as the LeetCode analysis, at most 1.5).
@@ -63,7 +63,7 @@ def _cards(query: str) -> list[dict]:
     cids = call("findCards", query=query)
     out = []
     for i in range(0, len(cids), 500):
-        out += call("cardsInfo", cards=cids[i:i + 500])
+        out += [c for c in call("cardsInfo", cards=cids[i:i + 500]) if c.get("note")]  # a card deleted meanwhile comes back empty
     return out
 
 
@@ -119,13 +119,16 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None) ->
 
     today = anki_today()
     taken = set(failed)
+    same_file = ROOT / "sources/local/lc/same.json"  # the problems each solution itself lists under 同模式
+    same = json.loads(same_file.read_text(encoding="utf-8")) if same_file.exists() else {}
     per_fail, cap = int(cfg.get("similar_per_fail", 2)), int(cfg.get("similar_max", 10))
     for slug, f in sorted(failed.items(), key=lambda kv: -kv[1]["importance"]):
         if not f["techniques"]:
             continue
         def sim(p, f=f):
-            return (3.0 * (p["techniques"][:1] == f["techniques"][:1]) + 1.5 * len(set(p["techniques"]) & set(f["techniques"]))
-                    + len(set(p["patterns"]) & set(f["patterns"])) + 0.5 * len(set(p["pitfalls"]) & set(f["pitfalls"])))
+            return (4.0 * (p["num"] in same.get(f["slug"], ())) + 3.0 * (p["techniques"][:1] == f["techniques"][:1])
+                    + 1.5 * len(set(p["techniques"]) & set(f["techniques"])) + len(set(p["patterns"]) & set(f["patterns"]))
+                    + 0.5 * len(set(p["pitfalls"]) & set(f["pitfalls"])))
         imp_top = max(p["importance"] for p in probs.values()) or 1.0
         cands = [p for s, p in probs.items() if s not in taken and p["mastery"] < 0.5 and p["techniques"] and sim(p) >= 4.0]
         cands.sort(key=lambda p: -(sim(p) + 2 * p["importance"] / imp_top))

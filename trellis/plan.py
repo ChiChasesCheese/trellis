@@ -28,6 +28,7 @@ LEVEL_WEIGHT = {"必会": 1.0, "追问": 0.6, "加分": 0.3}
 DEFAULT_LEVEL = 0.8
 READY_AT = 0.4  # prerequisite mastery at which a dependant counts as fully ready
 DIMINISH = 0.8  # each further card from the same topic in one round is worth this much less
+DIMINISH_POINT = 0.6  # and from the same exam point, much less: a second card on a point adds little the same day
 
 
 @dataclass
@@ -41,12 +42,15 @@ class CardInfo:
     rank: int = 0  # position in its topic's teaching order (0 = first)
     freq: float = 1.0  # how often interviews probe what this card covers, relative to its topic's other cards
     difficulty: float = 0.3  # 0 easy .. 1 hard: intrinsic before study, blended with the learner's record after
+    graded: bool = False  # freq was computed from the exam points the card teaches
+    point: str = ""  # the card's primary exam point, when graded
 
     @property
     def weight(self) -> float:
         """Its share of the topic: by level, by how often its point is asked, and front-loaded. A topic's first
         cards (the summary, the main chain) carry most of what an interviewer probes; the tail is detail."""
-        position = (1 + self.rank / 8) ** -0.8
+        # graded cards already carry their importance in freq, so position only nudges toward the teaching order
+        position = (1 + self.rank / 20) ** -0.4 if self.graded else (1 + self.rank / 8) ** -0.8
         return LEVEL_WEIGHT.get(self.level, DEFAULT_LEVEL) * (1.3 if self.core else 1.0) * position * self.freq
 
     @property
@@ -191,6 +195,7 @@ def pick(cards: list[CardInfo], traces: dict[str, Trace], value: dict[str, float
         cs.sort(key=lambda c: c.order)
     heads = {leaf: 0 for leaf in leaves}
     taken: dict[str, int] = defaultdict(int)  # cards already taken from each topic this round
+    taken_point: dict[str, int] = defaultdict(int)  # and from each exam point
     out: list[CardInfo] = []
     while len(out) < budget:
         best, best_v = None, -1.0
@@ -198,6 +203,8 @@ def pick(cards: list[CardInfo], traces: dict[str, Trace], value: dict[str, float
             cs = leaves[leaf]
             if i < len(cs):
                 v = value[cs[i].id] * DIMINISH ** taken[cs[i].topic]  # one topic eight times a day teaches less than eight topics
+                if cs[i].point:
+                    v *= DIMINISH_POINT ** taken_point[cs[i].point]
                 if v > best_v:
                     best, best_v = leaf, v
         if best is None:
@@ -205,6 +212,8 @@ def pick(cards: list[CardInfo], traces: dict[str, Trace], value: dict[str, float
         c = leaves[best][heads[best]]
         out.append(c)
         taken[c.topic] += 1
+        if c.point:
+            taken_point[c.point] += 1
         heads[best] += 1
     depth = {}
 

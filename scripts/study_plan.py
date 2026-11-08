@@ -29,14 +29,16 @@ import tempfile
 import time
 import urllib.request
 import zipfile
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import datetime, timedelta
 from pathlib import Path
 from statistics import median
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "scripts"))
 import daily_extra  # noqa: E402
+import plan_kp  # noqa: E402
 from trellis.plan import CardInfo, Edge, plan  # noqa: E402
 from trellis.project import load_project  # noqa: E402
 from trellis.sequence import core_leaves  # noqa: E402
@@ -292,8 +294,93 @@ def build_inputs(tree: Tree):
         elif is_question(t) and "t.lld-delivery" in topics:
             agg[(t, "t.lld-delivery")] += 0.15
             kinds.setdefault((t, "t.lld-delivery"), "asks")
-    edges = [Edge(a, b, min(s, 2.0), kinds[(a, b)]) for (a, b), s in agg.items()]
+    apply_exam_points(tree, cards, base, topics, agg, kinds, is_question, by_topic)
+    edges = [Edge(a, b, min(s, 6.0), kinds[(a, b)]) for (a, b), s in agg.items()]
     return cards, titles, base, edges
+
+
+kp_state: dict = {}  # exam points of this run, for the dashboard and the report
+
+
+def exam_point_rows(tree, p) -> dict | None:
+    """Per point: its weight, the learner's mastery, which questions need it and in what role."""
+    if not kp_state:
+        return None
+    pts, w, teach = kp_state["points"], kp_state["weight"], kp_state["teach"]
+    held = plan_kp.mastery(pts, p.card_mastery)
+    req = plan_kp.required_by(pts)
+    total = sum(w.values()) or 1.0
+    q_weight = lambda q: p.topics[q].weight if q in p.topics else 0.0
+    rows = {}
+    for k, meta in pts.meta.items():
+        if k not in held or k not in teach:
+            continue
+        qs = sorted(req.get(k, []), key=lambda r: -q_weight(r[0]))
+        n = Counter(r[1] for r in qs)
+        share = w[k] / total
+        rows[k] = {"id": k, "title": meta["title"], "kind": meta.get("kind", ""), "core": bool(meta.get("core")), "own": meta["topic"] in pts.needs,
+                   "w": share, "m": held[k], "p": share * (1 - held[k]), "n": [n["必讲"], n["追问"], n["加分"]],
+                   "q": [[q, tree.title(q) if q in tree.node else q, role, why] for q, role, why in qs[:6]],
+                   "cards": round(sum(teach[k].values()))}
+    by_topic = defaultdict(list)
+    for k in rows:
+        for t in teach[k]:
+            by_topic[t].append(k)
+    for ks in by_topic.values():
+        ks.sort(key=lambda k: -rows[k]["w"])
+    order = sorted(rows, key=lambda k: -rows[k]["w"])
+    acc, n80 = 0.0, len(order)
+    z = sum(rows[k]["w"] for k in order) or 1.0
+    for i, k in enumerate(order):
+        acc += rows[k]["w"] / z
+        if acc >= 0.8:
+            n80 = i + 1
+            break
+    top = sorted((k for k in rows if not rows[k]["own"]), key=lambda k: -rows[k]["p"])[:40]
+    return {"rows": rows, "byTopic": dict(by_topic), "top": top, "n80": n80, "n": len(rows),
+            "questions": len(pts.needs), "cards": sum(1 for ks in pts.card.values() if ks)}
+
+
+def apply_exam_points(tree, cards, base, topics, agg, kinds, is_question, by_topic) -> None:
+    """Where exam points exist, they replace the coarse signals: a question's edges come from the points its answer
+    needs, and a card's freq from what the points it teaches are worth."""
+    pts = plan_kp.load()
+    if not pts.ready:
+        return
+    topic_of = {c.id: c.topic for c in cards}
+    teach: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
+    for cid, ks in pts.card.items():
+        if cid in topic_of:
+            for i, k in enumerate(ks):
+                teach[k][topic_of[cid]] += 1.0 if i == 0 else plan_kp.SECONDARY
+    for q, needs in pts.needs.items():
+        if q not in topics:
+            continue
+        for key in [k for k in agg if k[0] == q and kinds.get(k) != "requires" and k[1] not in UNIVERSAL]:
+            del agg[key]
+            kinds.pop(key, None)
+        for n in needs:
+            where = {t: v for t, v in teach[n["kp"]].items() if not is_question(t)}
+            z = sum(where.values())
+            for t, v in where.items():
+                agg[(q, t)] += plan_kp.ROLE.get(n["role"], 0.6) * v / z
+                kinds.setdefault((q, t), "asks")
+    spread = float(cfg_global.get("spread", 0.5))
+    q_freq = {t: base.get(t, 0.0) for t in topics if is_question(t)}
+    direct = {t: base.get(t, 0.0) for t in topics if not is_question(t)}
+    kp_w = plan_kp.weights(pts, q_freq, direct, spread)
+    vals = plan_kp.card_values(pts, kp_w)
+    for cs in by_topic.values():
+        graded = [c for c in cs if pts.card.get(c.id)]
+        if not graded:
+            continue
+        mean = sum(vals[c.id] for c in graded) / len(graded) or 1.0
+        for c in cs:
+            if pts.card.get(c.id):
+                c.freq, c.graded, c.point = max(0.3, min(3.0, vals[c.id] / mean)), True, pts.card[c.id][0]
+            elif c.id in pts.card:  # an intro or navigation card teaches no point
+                c.freq, c.graded = 0.3, True
+    kp_state.update(points=pts, weight=kp_w, teach=teach)
 
 
 def question_topic(tree: Tree, t: str) -> bool:
@@ -598,7 +685,7 @@ def dashboard(tree, p, cards, titles, edges, history, gen=None) -> str:
             "evidence": (ev_q.get(t) or {}),
         })
     data = {"topics": topics, "edges": [{"src": e.src, "dst": e.dst, "s": e.strength, "kind": e.kind} for e in edges],
-            "pareto": p.pareto, "held": p.held, "generality": gen, "history": history, "activity": daily_activity, "brief": brief,
+            "pareto": p.pareto, "held": p.held, "generality": gen, "points": exam_point_rows(tree, p), "history": history, "activity": daily_activity, "brief": brief,
             "picked": [{"id": cid, "title": titles.get(cid, cid)} for cid in p.picked],
             "pickedTopics": sorted({c.topic for c in cards if c.id in set(p.picked)}),
             "method": {"coverage": ev.get("coverage"), "bank_reports": ev.get("method", {}).get("bank_reports"),

@@ -38,7 +38,7 @@ sys.path.insert(0, str(ROOT))
 from trellis.plan import card_mastery  # noqa: E402
 from trellis.traces import Trace  # noqa: E402
 sys.path.insert(0, str(ROOT / "scripts"))
-from lc_data import DECKS, GH, LC, OUT, call, classic_lists, github_frequency, recent_slugs  # noqa: E402
+from lc_data import DECKS, GH, LC, OUT, PLAN_DECK, call, classic_lists, github_frequency, recent_slugs  # noqa: E402
 
 DEFAULT = {"w_target": 0.6, "w_breadth": 0.4}
 
@@ -227,7 +227,7 @@ def resolve(ident: str, slugs_of: dict[str, str], known: set[str]) -> tuple[str 
 
 def record(slugs_of: dict[str, str], known: set[str] = frozenset()):
     now = int(time.time() * 1000)
-    q = " OR ".join(f'"deck:{d}"' for d in DECKS)
+    q = " OR ".join(f'"deck:{d}"' for d in DECKS + [PLAN_DECK])  # the daily plan borrows cards from these decks
     cids = call("findCards", query=q)
     info = []
     for i in range(0, len(cids), 500):
@@ -242,6 +242,8 @@ def record(slugs_of: dict[str, str], known: set[str] = frozenset()):
     per = defaultdict(lambda: {"cards": 0, "seen": 0, "mastery": [], "reviews": 0, "again": 0, "hard": 0, "last": 0, "logs": []})
     for c in info:
         ident = next((t[4:] for t in tags.get(c["note"], []) if t.startswith("id::")), None)
+        if c["deckName"].startswith(PLAN_DECK) and not (ident or "").startswith(PREFIXES):
+            continue  # a system-design card in the plan
         slug, idiom = resolve(ident, slugs_of, known)
         key = slug or (f"idiom:{idiom}" if idiom else None)
         if not key:
