@@ -39,7 +39,7 @@ kind: system-design
 - 审计数据量：每条视频约 2KB 的审核记录，500 万条/天约 10GB/天。
 
 **核心实体与接口。**
-实体：`Video(id, authorId, uploadedAt, mediaRef, status)`；`ModelScore(videoId, model, version, score, ts)`；`Rule(id, version, expression, action, state[draft|shadow|active], author)`；`Decision(videoId, ruleVersions, verdict, scores snapshot, ts)`；`Action(videoId, type, state, attempts, idempotencyKey)`。
+实体：`Video(id, authorId, uploadedAt, mediaRef, status)`；`ModelScore(videoId, model, version, score, ts)`；`Rule(id, version, expression, action, state[draft|shadow|canary|active], author)`；`Decision(videoId, ruleVersions, verdict, scores snapshot, ts)`；`Action(videoId, type, state, attempts, idempotencyKey)`。
 接口：
 - 视频服务发布事件：`VideoPublished {videoId, mediaRef, authorId, ts}` 到消息队列（接入点）。
 - 规则管理：`PUT /rules/{id}`（创建新版本，初始为草稿）、`POST /rules/{id}/promote {shadow|canary|active}`、`POST /rules/{id}/backtest`。

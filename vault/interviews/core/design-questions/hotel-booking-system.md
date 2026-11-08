@@ -40,7 +40,7 @@ kind: system-design
 - 实体：
   - 酒店（Hotel）：位置、设施、评分、时区。房型（RoomType）：酒店下的类型、容量、总间数。
   - 库存（Inventory）：主键 `(hotel_id, room_type_id, date)`，字段 `total`、`reserved`（含未过期的保留），`price`、`version`。这是预订的核心表。
-  - 预订（Reservation）：reservation_id、user_id、hotel_id、room_type_id、入住与退房日期、状态（HELD、PENDING_SUPPLIER、CONFIRMED、CANCELLED、EXPIRED）、保留到期时间、支付引用、幂等键、总价快照。
+  - 预订（Reservation）：reservation_id、user_id、hotel_id、room_type_id、入住与退房日期、状态（HELD、PAID、PENDING_SUPPLIER、CONFIRMED、CANCELLED、EXPIRED）、保留到期时间、支付引用、幂等键、总价快照。
   - 酒店的"每个房间一行"的 Room 表只在需要分配具体房号（会议室、分房）时使用。
 - 接口：
   - `GET /search?city=&checkin=&checkout=&guests=&cursor=` 返回酒店摘要及最低价。
