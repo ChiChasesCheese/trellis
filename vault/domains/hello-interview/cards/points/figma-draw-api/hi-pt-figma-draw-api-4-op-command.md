@@ -14,7 +14,9 @@ step: 2
 **关键方法。** 
 ```python
 def apply(self, op):
-    old = node.get(op.prop); node[op.prop] = op.value
-    return Op(op.node_id, op.prop, old)  # 逆操作
+    node = self.nodes[op.node_id]        # 按 id 找到节点（属性字典）
+    old = node.get(op.prop)              # 先记下旧值
+    node[op.prop] = op.value             # 再赋新值
+    return Op(op.node_id, op.prop, old)  # 逆操作：把旧值赋回去
 ```
 **用途。** 返回旧值构成的逆操作，供撤销回放（命令模式）。
