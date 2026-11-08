@@ -2,6 +2,7 @@
 # subject — see ADR 0006. Leaves the source does not cover are the
 # reading list, not a defect.
 domain: leetcode
+anki_via: leetcode-tops  # retired 2026-11-08: its Anki deck was deleted; LeetCode Tops is the only LeetCode deck
 title: LeetCode
 lang: zh
 vault: interviews/rounds/leetcode

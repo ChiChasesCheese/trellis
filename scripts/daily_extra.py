@@ -41,10 +41,10 @@ HOMES = OUT / "homes.json"
 DECK = "今日计划"
 LC_STAGE, REVIEW_STAGE = "4 算法", "5 到期复习"
 DAY_MS = 86_400_000
-LC_ROOTS = ("LeetCode Tops", "LeetCode")
+LC_ROOTS = ("LeetCode Tops",)
 SOLVED_DECK = "LeetCode Tops::28 Daily"
 PREFER = ("tlc-tops-{s}-0-whole", "tlc-{s}-0-whole", "tlc-core-{s}", "lca-{s}", "tlc-daily-{s}-0-whole")
-DEFAULT_DECKS = {"系统设计": 1.0, "LeetCode Tops": 1.0, "LeetCode": 1.0, "低层设计（LLD）": 0.6, "Kafka": 0.5, "Python": 0.5,
+DEFAULT_DECKS = {"系统设计": 1.0, "LeetCode Tops": 1.0, "低层设计（LLD）": 0.6, "Kafka": 0.5, "Python": 0.5,
                  "Code Core": 0.5, "Narrative Round": 0.4, "编程语言原理：Go · Java · Rust · Python · C++": 0.3,
                  "Snowflake 原理": 0.3, "HFT 低延迟交易系统": 0.2, "CDN Content": 0.2, "Stripe": 0.2, "篮球（Basketball）": 0.2,
                  "Headlands": 0.1, "Markets & Factors": 0.1, "Quant Infrastructure": 0.1}
