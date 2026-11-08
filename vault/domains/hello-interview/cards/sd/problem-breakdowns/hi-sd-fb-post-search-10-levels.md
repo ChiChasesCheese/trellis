@@ -2,7 +2,7 @@
 id: hi-sd-fb-post-search-10-levels
 node: sd.problem-breakdowns.fb-post-search.exam
 type: qa
-step: 10
+step: 13
 ---
 ## Q
 **帖子搜索各级别的期望**｜系统设计 · 题目拆解
