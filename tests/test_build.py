@@ -241,15 +241,12 @@ def test_include_loads_cards_from_other_folders(tmp_path):
     assert sorted(c.id for c in project.cards) == ["c1", "c2"]
 
 
-def test_deck_moves_file_a_subtree_into_another_deck():
-    from trellis.skeleton import Node, Skeleton
-    root = Node(id="s7", title="LLD", summary="")
-    kid = Node(id="s7.a", title="并发", summary="", parent=root)
-    leaf = Node(id="s7.a.b", title="锁", summary="", parent=kid)
-    root.children, kid.children = [kid], [leaf]
-    other = Node(id="s1", title="概念", summary="")
-    sk = Skeleton(domain="x", title="系统设计", roots=[other, root], deck_depth=2, deck_moves={"s7": "低层::11 HI"})
-    assert sk.deck_name(leaf) == "低层::11 HI::并发"
-    assert sk.deck_name(kid) == "低层::11 HI::并发"
-    assert sk.deck_name(root) == "低层::11 HI"
-    assert sk.deck_name(other).startswith("系统设计::")
+def test_deck_moves_file_a_subtree_into_another_deck(tmp_path):
+    from trellis.skeleton import load_skeleton
+    y = tmp_path / "d.yaml"
+    y.write_text("domain: d\ntitle: D\ndeck_depth: 2\ndeck_moves:\n  a: E::11 HI\nnodes:\n- id: a\n  title: A\n  children:\n  - id: a.b\n    title: B\n"
+                 "    children:\n    - id: a.b.c\n      title: C\n- id: z\n  title: Z\n", encoding="utf-8")
+    sk = load_skeleton(y)
+    assert sk.deck_name(sk.by_id["a.b.c"]) == "E::11 HI::B"
+    assert sk.deck_name(sk.by_id["a"]) == "E::11 HI"
+    assert sk.deck_name(sk.by_id["z"]) == "D::02 Z"
