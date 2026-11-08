@@ -18,8 +18,8 @@ Company frequencies come from the generated lists in vault/interviews/core/leetc
 liquidslr/leetcode-company-wise-problems and snehasishroy/leetcode-companywise-interview-questions).
 
 Mastery of a problem: the mean card mastery (trellis/plan.card_mastery) over the Anki cards that open its solution.
-Slip rate of a dimension: (Again + 0.5 x Hard + prior) / (reviews + prior / global rate), i.e. smoothed toward the
-learner's overall rate so two reviews cannot make a dimension look terrible. Priority of a dimension:
+Slip rate of a dimension: (Again + 0.5 x Hard + 15 x global rate) / (reviews + 15), i.e. smoothed toward the
+learner's overall rate with 15 pseudo-reviews, so one forget cannot make a dimension look terrible. Priority of a dimension:
     importance x (1 - mastery) x clip(1 + 0.5 x (slip / global slip - 1), 1, 1.5)
 so a weakness raises priority but never outweighs how much the dimension is asked.
 """
