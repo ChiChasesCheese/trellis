@@ -1,0 +1,270 @@
+"""The parts of the daily plan beyond system design: LeetCode practice and the review queue of every deck.
+
+study_plan.py calls this; on its own it prints what it would do:
+
+    uv run python scripts/daily_extra.py            # dry run
+
+LeetCode (deck stage `4 算法`):
+- **Similar problems.** A problem pressed 「忘记」 in the last `similar_days` days brings up to `similar_per_fail` problems
+  not held yet, ranked by similarity plus asked-frequency. Similarity = 3 x same main technique + 1.5 x shared techniques
+  + shared patterns + 0.5 x shared pitfalls; at least 4 to count. A similar problem never
+  seen is dealt as new; one seen but not held is made due today (Anki's own Set Due Date).
+- **New problems.** `lc_new` unseen problems a day, by importance, raised by how often the learner slips on the main
+  technique (the same boost as the LeetCode analysis, at most 1.5).
+- **Just solved.** New cards in the daily deck (one per problem solved on LeetCode) are dealt first, up to `solved_max`.
+- The card dealt for a problem is fixed by the deck layout: its whole answer in the module deck, as in lc_lists.py.
+
+Reviews (deck stage `5 到期复习`): every due card in every deck, ranked by
+    deck weight x (0.3 + value) x urgency,   urgency = 1 + min(2, days overdue / interval)
+where value is the percentile, inside its deck, of the card's planner value (system design) or its problem's importance
+(LeetCode); cards with no value measure sit at 0.5. The
+first `review_budget` come into the plan; one card per LeetCode problem. The rest wait in their decks.
+
+Every card moved into 今日计划 is recorded with its home deck in sources/local/plan/homes.json and goes back there at the
+next run unless it is picked again.
+"""
+from __future__ import annotations
+
+import json
+import sys
+import time
+from collections import defaultdict
+from dataclasses import dataclass, field
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from lc_data import call  # noqa: E402
+
+OUT = ROOT / "sources/local/plan"
+HOMES = OUT / "homes.json"
+DECK = "今日计划"
+LC_STAGE, REVIEW_STAGE = "4 算法", "5 到期复习"
+DAY_MS = 86_400_000
+LC_ROOTS = ("LeetCode Tops", "LeetCode")
+SOLVED_DECK = "LeetCode Tops::28 Daily"
+PREFER = ("tlc-tops-{s}-0-whole", "tlc-{s}-0-whole", "tlc-core-{s}", "lca-{s}", "tlc-daily-{s}-0-whole")
+DEFAULT_DECKS = {"系统设计": 1.0, "LeetCode Tops": 1.0, "LeetCode": 1.0, "低层设计（LLD）": 0.6, "Kafka": 0.5, "Python": 0.5,
+                 "Code Core": 0.5, "Narrative Round": 0.4, "编程语言原理：Go · Java · Rust · Python · C++": 0.3,
+                 "Snowflake 原理": 0.3, "HFT 低延迟交易系统": 0.2, "CDN Content": 0.2, "Stripe": 0.2, "篮球（Basketball）": 0.2,
+                 "Headlands": 0.1, "Markets & Factors": 0.1, "Quant Infrastructure": 0.1}
+
+
+@dataclass
+class Extra:
+    lc_new: list[dict] = field(default_factory=list)       # {card, slug, title, why}
+    lc_similar: list[dict] = field(default_factory=list)   # {card, slug, title, why, due_now}
+    reviews: list[dict] = field(default_factory=list)      # {card, home, score}
+    backlog: int = 0                                       # due cards left in their decks
+    by_deck: dict = field(default_factory=dict)            # root deck -> reviews taken
+
+
+def _cards(query: str) -> list[dict]:
+    cids = call("findCards", query=query)
+    out = []
+    for i in range(0, len(cids), 500):
+        out += call("cardsInfo", cards=cids[i:i + 500])
+    return out
+
+
+def _idents(cards: list[dict]) -> dict[int, str]:
+    nids = sorted({c["note"] for c in cards})
+    by_note = {}
+    for i in range(0, len(nids), 500):
+        for n in call("notesInfo", notes=nids[i:i + 500]):
+            by_note[n["noteId"]] = next((t[4:] for t in n["tags"] if t.startswith("id::")), "")
+    return {c["cardId"]: by_note.get(c["note"], "") for c in cards}
+
+
+def anki_today() -> int:
+    """Today as Anki counts review due dates (days since the collection was created), read off a card due near today."""
+    for k in [0] + [d for i in range(1, 60) for d in (-i, i)]:
+        found = call("findCards", query=f"prop:due={k} is:review")
+        if found:
+            return call("cardsInfo", cards=found[:1])[0]["due"] - k
+    raise RuntimeError("no review card due within 60 days of today")
+
+
+def homes() -> dict[str, str]:
+    return json.loads(HOMES.read_text(encoding="utf-8")) if HOMES.exists() else {}
+
+
+def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None) -> Extra:
+    """Pick today's LeetCode problems and reviews. Reads Anki, writes nothing."""
+    import lc_analysis as lca
+    now_ms = now_ms or int(time.time() * 1000)
+    ex = Extra()
+    weights = {**DEFAULT_DECKS, **cfg.get("decks", {})}
+    home = homes()
+
+    # ---- LeetCode
+    analysis = json.loads((ROOT / "sources/local/lc/analysis.json").read_text(encoding="utf-8"))
+    probs = analysis["problems"]
+    boost = {t["id"]: min(1.5, max(1.0, 1 + 0.5 * (t["slip_ratio"] - 1))) for t in analysis["dims"]["techniques"]}
+    lc_cards = _cards(" OR ".join(f'"deck:{d}"' for d in LC_ROOTS) + ' OR "deck:今日计划"')
+    ident = _idents(lc_cards)
+    slugs_of, known = lca.card_slugs(), set(probs)
+    by_ident = {ident[c["cardId"]]: c for c in lc_cards if ident.get(c["cardId"])}
+    seen_cards = [c["cardId"] for c in lc_cards if c["reps"]]
+    revs = call("getReviewsOfCards", cards=seen_cards) if seen_cards else {}
+    failed = {}
+    for c in lc_cards:
+        slug, _ = lca.resolve(ident.get(c["cardId"], ""), slugs_of, known)
+        if slug and any(r["ease"] == 1 and r["id"] > now_ms - int(cfg.get("similar_days", 7)) * DAY_MS
+                        for r in revs.get(str(c["cardId"]), [])):
+            failed[slug] = probs[slug]
+
+    def card_for(slug: str) -> dict | None:
+        return next((by_ident[p.format(s=slug)] for p in PREFER if p.format(s=slug) in by_ident), None)
+
+    today = anki_today()
+    taken = set(failed)
+    per_fail, cap = int(cfg.get("similar_per_fail", 2)), int(cfg.get("similar_max", 10))
+    for slug, f in sorted(failed.items(), key=lambda kv: -kv[1]["importance"]):
+        if not f["techniques"]:
+            continue
+        def sim(p, f=f):
+            return (3.0 * (p["techniques"][:1] == f["techniques"][:1]) + 1.5 * len(set(p["techniques"]) & set(f["techniques"]))
+                    + len(set(p["patterns"]) & set(f["patterns"])) + 0.5 * len(set(p["pitfalls"]) & set(f["pitfalls"])))
+        imp_top = max(p["importance"] for p in probs.values()) or 1.0
+        cands = [p for s, p in probs.items() if s not in taken and p["mastery"] < 0.5 and p["techniques"] and sim(p) >= 4.0]
+        cands.sort(key=lambda p: -(sim(p) + 2 * p["importance"] / imp_top))
+        for p in cands[:per_fail]:
+            card = card_for(p["slug"])
+            if card is None or len(ex.lc_similar) >= cap:
+                continue
+            taken.add(p["slug"])
+            ex.lc_similar.append({"card": card["cardId"], "slug": p["slug"], "title": p["title"],
+                                  "why": f"和你刚忘的「{f['title']}」同一个思路", "due_now": card["queue"] == 2 and card["due"] > today})
+    # problems just solved on LeetCode (the daily deck writes one card each): deal them while the solve is fresh
+    for c in lc_cards:
+        if c["queue"] == 0 and c["deckName"].startswith(SOLVED_DECK) and len(ex.lc_new) < int(cfg.get("solved_max", 10)):
+            slug, _ = lca.resolve(ident.get(c["cardId"], ""), slugs_of, known)
+            ex.lc_new.append({"card": c["cardId"], "slug": slug or "", "title": probs[slug]["title"] if slug else ident.get(c["cardId"], ""),
+                              "why": "你刚在 LeetCode 上做过"})
+            taken.add(slug)
+    solved = len(ex.lc_new)
+    fresh = [p for s, p in probs.items() if s not in taken and not p["seen"] and p["techniques"]]
+    fresh.sort(key=lambda p: -p["importance"] * boost.get(p["techniques"][0], 1.0))
+    for p in fresh:
+        if len(ex.lc_new) - solved >= int(cfg.get("lc_new", 8)):
+            break
+        card = card_for(p["slug"])
+        if card and card["queue"] == 0:
+            ex.lc_new.append({"card": card["cardId"], "slug": p["slug"], "title": p["title"], "why": "没学过，考频靠前"})
+            taken.add(p["slug"])
+
+    # ---- reviews, every deck
+    due = _cards("is:due -is:suspended")
+    due_ident = _idents(due)
+    raw = []
+    for c in due:
+        h = home.get(str(c["cardId"]), c["deckName"])
+        if h.startswith(DECK):  # dealt by the system-design plan today; it is already in the deck
+            continue
+        root = h.split("::")[0]
+        idn = due_ident.get(c["cardId"], "")
+        slug = None
+        if root in LC_ROOTS:
+            slug, _ = lca.resolve(idn, slugs_of, known)
+            value = probs[slug]["importance"] if slug else 0.0
+        else:
+            value = sd_value.get(idn, 0.0)
+        raw.append((c, h, root, slug, value))
+    # value as a percentile inside its deck: decks measure value on different scales
+    ranks: dict[str, list[float]] = defaultdict(list)
+    for _, _, root, _, v in raw:
+        ranks[root].append(v)
+    for v in ranks.values():
+        v.sort()
+
+    def pct(root, v):
+        vals = ranks[root]
+        if len(vals) < 2 or vals[0] == vals[-1]:
+            return 0.5
+        import bisect
+        return bisect.bisect_left(vals, v) / (len(vals) - 1)
+
+    scored, one_per_problem = [], {}
+    for c, h, root, slug, v in raw:
+        value = pct(root, v)
+        if c["queue"] == 2:
+            overdue = max(0, today - c["due"])
+            urgency = 1 + min(2.0, overdue / max(1, c["interval"]))
+        else:
+            urgency = 3.0  # in its learning steps: finish it today
+        score = weights.get(root, 0.2) * (0.3 + value) * urgency
+        if slug:  # copies of one problem: review the strongest-scored copy only
+            prev = one_per_problem.get(slug)
+            if prev and prev["score"] >= score:
+                continue
+            one_per_problem[slug] = {"card": c["cardId"], "home": h, "score": score, "root": root}
+            continue
+        scored.append({"card": c["cardId"], "home": h, "score": score, "root": root})
+    scored += list(one_per_problem.values())
+    scored = [s for s in scored if s["card"] not in {x["card"] for x in ex.lc_similar + ex.lc_new}]
+    scored.sort(key=lambda s: -s["score"])
+    budget = int(cfg.get("review_budget", 150))
+    ex.reviews = scored[:budget]
+    ex.backlog = len(scored) - len(ex.reviews)
+    counts = defaultdict(int)
+    for s in ex.reviews:
+        counts[s["root"]] += 1
+    ex.by_deck = dict(sorted(counts.items(), key=lambda kv: -kv[1]))
+    return ex
+
+
+def release(keep: set[int]) -> int:
+    """Cards this module moved into 今日计划 go home unless picked again. Returns how many moved."""
+    home = homes()
+    if not home:
+        return 0
+    inside = {c["cardId"]: c for c in _cards(f'"deck:{DECK}"')}
+    back = defaultdict(list)
+    for cid, deck in list(home.items()):
+        cid_i = int(cid)
+        if cid_i in keep:
+            continue
+        if cid_i in inside:
+            back[deck].append(cid_i)
+        del home[cid]
+    for deck, ids in back.items():
+        call("changeDeck", cards=ids, deck=deck)
+    HOMES.write_text(json.dumps(home, ensure_ascii=False, indent=0), encoding="utf-8")
+    return sum(len(v) for v in back.values())
+
+
+def deal(ex: Extra) -> None:
+    home = homes()
+    info = {c["cardId"]: c for c in call("cardsInfo", cards=[x["card"] for x in ex.lc_new + ex.lc_similar + ex.reviews])}
+    for stage, items in ((LC_STAGE, ex.lc_new + ex.lc_similar), (REVIEW_STAGE, ex.reviews)):
+        ids = [x["card"] for x in items if x["card"] in info]
+        for i in ids:
+            if not info[i]["deckName"].startswith(DECK):
+                home[str(i)] = info[i]["deckName"]
+        if ids:
+            call("changeDeck", cards=ids, deck=f"{DECK}::{stage}")
+    now_due = [x["card"] for x in ex.lc_similar if x["due_now"]]
+    if now_due:
+        call("setDueDate", cards=now_due, days="0")
+    HOMES.write_text(json.dumps(home, ensure_ascii=False, indent=0), encoding="utf-8")
+
+
+def keep_ids(ex: Extra) -> set[int]:
+    return {x["card"] for x in ex.lc_new + ex.lc_similar + ex.reviews}
+
+
+def main() -> int:
+    cfg = json.loads((OUT / "config.json").read_text(encoding="utf-8"))
+    ex = prepare(cfg, {})
+    print(f"LeetCode: {len(ex.lc_new)} new, {len(ex.lc_similar)} similar")
+    for x in ex.lc_similar:
+        print(f"  similar {x['title']}  ({x['why']}){'  [due now]' if x['due_now'] else ''}")
+    for x in ex.lc_new:
+        print(f"  new {x['title']}")
+    print(f"reviews: {len(ex.reviews)} taken, {ex.backlog} left in their decks · {ex.by_deck}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -29,13 +29,14 @@ import tempfile
 import time
 import urllib.request
 import zipfile
-from collections import Counter, defaultdict
+from collections import defaultdict
 from datetime import datetime, timedelta
 from pathlib import Path
 from statistics import median
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+import daily_extra  # noqa: E402
 from trellis.plan import CardInfo, Edge, plan  # noqa: E402
 from trellis.project import load_project  # noqa: E402
 from trellis.sequence import core_leaves  # noqa: E402
@@ -683,10 +684,46 @@ def preset(cfg):
         current = call("getDeckConfig", deck=DECK)
     else:
         call("setDeckConfigId", decks=names, configId=current["id"])
-    current["new"]["perDay"] = int(cfg.get("daily_new", 35)) + 1  # + the report card
+    # system design + LeetCode new + similar + just solved + the report card
+    current["new"]["perDay"] = int(cfg.get("daily_new", 35)) + int(cfg.get("lc_new", 8)) + int(cfg.get("similar_max", 10)) + int(cfg.get("solved_max", 10)) + 1
+    current["rev"]["perDay"] = 9999
     current["newGatherPriority"] = 0  # deck order: report, weak spots, concepts, questions
     current["newSortOrder"] = 0
     call("saveDeckConfig", config=current)
+
+
+def extra_report(ex) -> str:
+    out = ["<p><b>算法</b></p><ul>"]
+    for x in ex.lc_similar:
+        out.append(f"<li>相似题：{html.escape(x['title'])}（{html.escape(x['why'])}）</li>")
+    if ex.lc_new:
+        out.append(f"<li>新题 {len(ex.lc_new)} 道：" + "、".join(html.escape(x["title"]) for x in ex.lc_new[:4])
+                   + ("等" if len(ex.lc_new) > 4 else "") + "</li>")
+    out.append("</ul><p><b>到期复习</b></p><ul>")
+    out.append(f"<li>今天拿进来 {len(ex.reviews)} 张：" + "，".join(f"{k} {v}" for k, v in ex.by_deck.items()) + "。</li>")
+    if ex.backlog:
+        out.append(f"<li>还有 {ex.backlog} 张价值较低的到期卡留在原牌组排队，不用管，计划会按价值一批批拿进来。</li>")
+    out.append("</ul>")
+    return "".join(out)
+
+
+OWNED = ("系统设计", "LeetCode Tops", "LeetCode")  # new cards in these decks come only through the plan
+
+
+def exclusive_presets(cfg) -> None:
+    """The plan deals every new card of the decks it owns, so their own presets deal none. Originals are kept once in
+    sources/local/plan/preset_backup.json; restore by copying perDay back."""
+    backup_file = OUT / "preset_backup.json"
+    backup = json.loads(backup_file.read_text(encoding="utf-8")) if backup_file.exists() else {}
+    for deck in cfg.get("owned_decks", OWNED):
+        conf = call("getDeckConfig", deck=deck)
+        if conf["name"] == DECK:
+            continue
+        backup.setdefault(conf["name"], {"deck": deck, "new_per_day": conf["new"]["perDay"]})
+        if conf["new"]["perDay"]:
+            conf["new"]["perDay"] = 0
+            call("saveDeckConfig", config=conf)
+    backup_file.write_text(json.dumps(backup, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
 def drop_old_deck():
@@ -737,6 +774,19 @@ def run(apply_to_anki: bool) -> None:
         stages[STAGES.get(tree.top(anki_leaf[i]), STAGE_DEFAULT)].append(i)
     daily_activity[:] = per_day(logs)
     head, body, summary = render_report(tree, p, cards, titles, base, edges, traces, logs, stages, now)
+    # beyond system design: LeetCode practice and the review queue of every deck
+    tw = {t: s.weight for t, s in p.topics.items()}
+    topic_sum = defaultdict(float)
+    for c in cards:
+        topic_sum[c.topic] += c.weight
+    sd_value = {c.id: tw.get(c.topic, 0.0) * c.weight / (topic_sum[c.topic] or 1.0) for c in cards}
+    if apply_to_anki:  # today's LeetCode analysis: mastery, slips and similar problems read from fresh numbers
+        import lc_analysis
+        lc_analysis.main()
+    extra = daily_extra.prepare(cfg, sd_value)
+    body += extra_report(extra)
+    summary["extra"] = {"lc_new": len(extra.lc_new), "lc_similar": len(extra.lc_similar), "reviews": len(extra.reviews),
+                        "backlog": extra.backlog}
     OUT.mkdir(parents=True, exist_ok=True)
     hist_file = OUT / "history.jsonl"
     history = [json.loads(x) for x in hist_file.read_text().splitlines()] if hist_file.exists() else []
@@ -750,9 +800,14 @@ def run(apply_to_anki: bool) -> None:
     (OUT / "index.html").write_text(dashboard(tree, p, cards, titles, edges, history, gen), encoding="utf-8")
     print(f"held {p.held * 100:.1f}% · seen {summary['seen']}/{len(cards)} · picked {len(p.picked)} "
           f"({', '.join(f'{k} {len(v)}' for k, v in sorted(stages.items()))}) · topics {len(p.topics)} · edges {len(edges)}")
+    print(f"LeetCode {len(extra.lc_new)} new + {len(extra.lc_similar)} similar · reviews {len(extra.reviews)} taken, "
+          f"{extra.backlog} waiting · {extra.by_deck}")
     if apply_to_anki:
         release(p, anki)
         deal(stages, anki)
+        daily_extra.release(daily_extra.keep_ids(extra))
+        daily_extra.deal(extra)
+        exclusive_presets(cfg)
         report_card(head, body)
         preset(cfg)
         drop_old_deck()
