@@ -62,7 +62,7 @@ def main() -> int:
                     n_points += 1
         qs = [t for t in groups[g] if t in pts.needs and t not in S.NOT_A_QUESTION]
         if qs:
-            questions.append(f"- {clean(tree.title(g))}")
+            questions.append(f"- {clean(tree.title(g))} · {len(qs)}{FOLD}")  # 100+ questions: open a group on tap
             for q in sorted(qs, key=lambda q: -base.get(q, 0.0)):
                 questions.append(f"  - {clean(tree.title(q))}{FOLD}")
                 n_questions += 1
