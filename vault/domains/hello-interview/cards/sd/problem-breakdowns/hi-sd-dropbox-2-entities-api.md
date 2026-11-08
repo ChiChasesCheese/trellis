@@ -16,7 +16,7 @@ Dropbox 的核心实体和上传、下载、分享、同步四个接口怎么定
 - 上传：先写成 `POST /files`（带文件和元数据），后面会演化
 - 下载：`GET /files/{fileId}`
 - 分享：`POST /files/{fileId}/share`，请求体是被分享的用户列表
-- 同步：`GET /files/changes?since={timestamp}`，返回 ChangeEvent 列表（fileId、变更类型 created / updated / deleted、新元数据），客户端只拉上次同步之后的变更
+- 同步：`GET /files/changes?since={timestamp}`，返回 ChangeEvent 列表（fileId、变更类型 created / updated / deleted、新元数据），客户端只拉上次同步之后的变更（时间戳受服务器时钟偏差影响，可能漏变更；更稳的是服务端单调递增的序号游标）
 
 **易错。** 不要用请求体或请求头里的 userId 识别调用者，客户端可以伪造。应校验会话令牌或 JWT 得到当前用户，再检查他对目标文件的权限。
 

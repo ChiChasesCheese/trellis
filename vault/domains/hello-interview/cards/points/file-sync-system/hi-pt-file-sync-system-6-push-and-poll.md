@@ -2,7 +2,7 @@
 id: hi-pt-file-sync-system-6-push-and-poll
 node: qb.sd.file-sync-system.points
 type: qa
-step: 5
+step: 6
 ---
 ## Q
 **云盘与文件同步系统 · 推送了为什么还要轮询**｜必会 · 出自：云盘与文件同步系统 › 取舍与追问

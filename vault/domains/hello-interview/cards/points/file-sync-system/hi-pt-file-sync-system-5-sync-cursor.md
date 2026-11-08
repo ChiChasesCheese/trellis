@@ -2,7 +2,7 @@
 id: hi-pt-file-sync-system-5-sync-cursor
 node: qb.sd.file-sync-system.points
 type: qa
-step: 4
+step: 5
 ---
 ## Q
 **云盘与文件同步系统 · 变更日志与游标同步**｜必会 · 出自：云盘与文件同步系统 › 整体设计
