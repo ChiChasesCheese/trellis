@@ -42,7 +42,8 @@ A concept earns weight in two ways.
 
 - **Directly.** The same frequency index is computed over the reports whose descriptions name the concept, using
   bilingual keyword lists. This counts 30% against the question mass.
-- **By inheritance.** Each question passes half its weight to what it needs, split by edge strength. The flow repeats
+- **By inheritance.** Each question passes a share of its weight to what it needs, split by edge strength. The share
+  is the `spread` setting: 0.5 by default, 0.7 for a learner who wants shared knowledge first. The flow repeats
   down chains of prerequisites. The edges come from:
   - explicit prerequisites (`requires`);
   - the fundamentals a question's map card links to;
@@ -86,12 +87,29 @@ topic weight × card share × (1 − mastery) × readiness / cost
 Cards are taken greedily by value, under three rules:
 - each leaf's own order is kept;
 - a topic's further cards lose 20% each (diminishing returns), so a day covers several topics;
-- 20% of the budget is reserved for whole questions, so practice on full answers starts early.
+- 20% of the budget is reserved for whole questions, so practice on full answers starts early. That share is dealt
+  only from a few representative questions (next section).
 
 The picks are then ordered so that prerequisite topics come first, and they are dealt in three stages: weak spots,
 concepts and technologies, whole questions.
 
-## 6. LeetCode
+## 6. Shared knowledge first
+
+Eighty percent of reported interviews spread over dozens of distinct questions, too many to practise one by one. Most
+of what their answers need is shared. Two numbers make that visible:
+
+- **A concept's share of the answers.** Each question's answer leans on its concepts in proportion to edge strength.
+  Summing over questions, weighted by frequency, gives each concept's share. The dashboard shows how few concepts carry
+  80%.
+- **Readiness.** A question is ready once the learned concepts carry 80% of its edges. The dashboard shows how much of
+  the question frequency is ready after the first 5, 10, 20 … concepts.
+
+**Representative questions** are picked greedily from the 25 most-asked design questions. Each next pick adds the most
+concept share not yet practised, plus half its own frequency. Only strong edges count, and the delivery framework and
+estimation are left out because every question uses them. A concept counts as practised once its summed edge strength
+reaches 1. Whole-question practice is dealt only from these picks, eight by default.
+
+## 7. LeetCode
 
 Coding problems have a better source: the GitHub company-wise lists (LeetCode Premium frequency per company and per
 window, for several hundred companies). `scripts/lc_analysis.py` uses them alone:
@@ -122,10 +140,13 @@ Fixed problem sets are tracked as progress views. These are the classic lists (B
 Interview 150), each target company's last six months, and each module. They do not enter importance. A view's history
 is rebuilt from the review logs, which give each card's interval as it stood at any past date.
 
-`scripts/lc_lists.py` tags one card per listed problem, `榜单::<list>`, so each list can also be studied as a filtered
-deck. It picks the problem's most-reviewed whole-answer card.
+The code keeps processing apart from analysis.
+- `scripts/lc_data.py` holds the fixed inputs: frequency statistics, the lists and the Anki client.
+- `scripts/lc_analysis.py` reads the reviews and computes everything personal.
+- `scripts/lc_lists.py` shapes the deck from the fixed inputs only. It tags one card per listed problem,
+  `榜单::<list>`, always the whole answer in the problem's module deck, so each list can be studied as a filtered deck.
 
-## 7. Known weaknesses
+## 8. Known weaknesses
 
 - **The bank is self-reported and English-speaking.** Some groups are thin. ByteDance has nine system-design rows in
   the bank used here, which is why its share is shrunk and why public reports matter.

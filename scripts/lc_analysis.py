@@ -26,13 +26,10 @@ from __future__ import annotations
 
 import ast
 import json
-import csv
 import re
-import subprocess
 import sys
 import time
-import urllib.request
-from collections import Counter, defaultdict
+from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 
@@ -40,15 +37,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from trellis.plan import card_mastery  # noqa: E402
 from trellis.traces import Trace  # noqa: E402
+sys.path.insert(0, str(ROOT / "scripts"))
+from lc_data import DECKS, GH, LC, OUT, call, classic_lists, github_frequency, recent_slugs  # noqa: E402
 
-LC = ROOT / "vault/interviews/core/leetcode"
-OUT = ROOT / "sources/local/lc"
-DECKS = ["LeetCode Tops", "LeetCode"]
-GH = OUT / "github/leetcode-company-wise-problems"
-GH_URL = "https://github.com/liquidslr/leetcode-company-wise-problems.git"
-TARGETS = ("TikTok", "ByteDance")
-OTHER = ROOT / "research/companies/tiktok/catalog/other_lists.json"  # classic lists by problem number (neetcode-gh, LeetCode study plans)
-RECENT = ("1. Thirty Days", "2. Three Months", "3. Six Months")
 DEFAULT = {"w_target": 0.6, "w_breadth": 0.4}
 
 IDIOMS = {  # id -> (Chinese name, matcher over (module, attr) calls / names / node types)
@@ -71,20 +62,6 @@ CALLS = {("heapq", None): "heapq", ("bisect", None): "bisect", ("collections", "
          ("functools", "reduce"): "reduce", ("reduce", None): "reduce", ("sys", "setrecursionlimit"): "recursion-limit",
          ("divmod", None): "divmod", ("ord", None): "ord-chr", ("chr", None): "ord-chr", ("enumerate", None): "enumerate-zip",
          ("zip", None): "enumerate-zip", ("math", None): "math", ("dataclass", None): "class-node"}
-
-
-def call(action, **params):
-    body = json.dumps({"action": action, "version": 6, "params": params}).encode()
-    for _ in range(60):
-        with urllib.request.urlopen(urllib.request.Request("http://127.0.0.1:8765", body), timeout=600) as r:
-            out = json.load(r)
-        if out["error"] and "lifecycle" in out["error"]:
-            time.sleep(3)
-            continue
-        if out["error"]:
-            raise RuntimeError(f"{action}: {out['error']}")
-        return out["result"]
-    raise RuntimeError("Anki stayed busy")
 
 
 # ---------------------------------------------------------------- problems and their dimensions
@@ -193,40 +170,6 @@ def idioms(slug: str) -> list[str]:
                 found.add("inf")
     found.discard(None)
     return sorted(found)
-
-
-def github_frequency() -> dict[str, dict]:
-    """Per problem slug: target-company frequency (with whether it is recent) and cross-company breadth."""
-    if not GH.exists():
-        GH.parent.mkdir(parents=True, exist_ok=True)
-        subprocess.run(["git", "clone", "-q", "--depth", "1", GH_URL, str(GH)], check=True)
-
-    def read(path: Path) -> dict[str, float]:
-        if not path.exists():
-            return {}
-        return {r["Link"].rstrip("/").split("/problems/")[-1]: float(r["Frequency"] or 0) / 100
-                for r in csv.DictReader(path.open(encoding="utf-8"))}
-
-    out: dict[str, dict] = defaultdict(lambda: {"tiktok": 0.0, "tiktok_recent": False, "breadth": 0.0, "companies": 0})
-    for d in sorted(x for x in GH.iterdir() if x.is_dir() and not x.name.startswith(".")):
-        every = read(d / "5. All.csv")
-        for slug, f in every.items():
-            out[slug]["breadth"] += f
-            out[slug]["companies"] += 1
-        if d.name in TARGETS:
-            recent: dict[str, float] = defaultdict(float)
-            for w in RECENT:
-                for slug, f in read(d / f"{w}.csv").items():
-                    recent[slug] = max(recent[slug], f)
-            for slug in set(every) | set(recent):
-                t = 0.5 * every.get(slug, 0.0) + 0.5 * recent.get(slug, 0.0)
-                o = out[slug]
-                o["tiktok"] = max(o["tiktok"], t)
-                o["tiktok_recent"] = o["tiktok_recent"] or slug in recent
-    top = max(o["breadth"] for o in out.values()) or 1.0
-    for o in out.values():
-        o["breadth"] /= top
-    return dict(out)
 
 
 def importance(p: dict, cfg: dict) -> float:
@@ -342,15 +285,7 @@ def views(rows: dict[str, dict], per: dict, names: dict[str, str]) -> dict[str, 
     points = [now - k * WEEK for k in range(8, -1, -1)]
     hist = {slug: [max((mastery_at(log, t) for log in s["logs"]), default=0.0) for t in points] for slug, s in per.items()}
     by_num = {p["num"]: slug for slug, p in rows.items() if p["num"]}
-    other = json.loads(OTHER.read_text(encoding="utf-8"))
-
-    def recent(company: str) -> list[str]:
-        out = set()
-        for w in RECENT:
-            f = GH / company / f"{w}.csv"
-            if f.exists():
-                out |= {r["Link"].rstrip("/").split("/problems/")[-1] for r in csv.DictReader(f.open(encoding="utf-8"))}
-        return sorted(out)
+    other = classic_lists()
 
     def view(name: str, members: list[str], note: str = "") -> dict:
         n = len(members)
@@ -364,10 +299,10 @@ def views(rows: dict[str, dict], per: dict, names: dict[str, str]) -> dict[str, 
 
     lists = [view(label, [by_num.get(x, f"#{x}") for x in other[key]])
              for label, key in (("Blind 75", "Blind 75"), ("NeetCode 150", "NeetCode 150"), ("LeetCode Hot 100", "LeetCode Hot 100"),
-                                ("Top Interview 150", "Top Interview 150"))]
-    tiktok = sorted(set(recent("TikTok")) | set(recent("ByteDance")))
+                                ("Top Interview 150", "Top Interview 150"))]  # progress only; lists never enter importance
+    tiktok = sorted(set(recent_slugs("TikTok")) | set(recent_slugs("ByteDance")))
     companies = [view("TikTok / 字节 近半年", tiktok, "GitHub 公司题频里近 6 个月出现过的题"),
-                 view("Amazon 近半年", recent("Amazon"), "GitHub 公司题频里近 6 个月出现过的题")]
+                 view("Amazon 近半年", recent_slugs("Amazon"), "GitHub 公司题频里近 6 个月出现过的题")]
     modules = [view(names.get(pat, pat), sorted(slug for slug, p in rows.items() if p["patterns"] and p["patterns"][0] == pat))
                for pat in sorted(names)]
     return {"lists": lists, "companies": companies, "modules": [m for m in modules if m["n"]]}
@@ -444,7 +379,7 @@ def analyse() -> dict:
                   "top300_in_deck": sum(1 for x in bank_rank[:300] if x in in_deck), "missing_top300": missing,
                   "deck_in_top_n80": sum(1 for x in bank_rank[:bank_n80] if x in in_deck)}
     ranked = sorted(rows.values(), key=lambda p: -p["importance"])
-    cum, n80, cards80 = 0.0, 0, 0
+    cum, n80 = 0.0, 0
     for i, p in enumerate(ranked):
         cum += p["importance"]
         if cum >= 0.8 * total_imp:

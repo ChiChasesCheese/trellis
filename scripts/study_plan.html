@@ -39,6 +39,15 @@ aside section+section{margin-top:34px;padding-top:22px;border-top:1px solid var(
   font:600 13px/20px var(--text);text-align:center;color:var(--blue)}
 .route b{font-weight:600}.route span.d{display:block;color:var(--ink-2);font-size:13px}
 .note{color:var(--ink-2);font-size:13px;margin:12px 0 0}
+.gen{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;margin-top:44px;align-items:start}
+.gen p.lead{margin:0 0 12px;max-width:62ch}.gen ol{list-style:none;margin:0;padding:0}
+.gen li{display:grid;grid-template-columns:1.6em minmax(0,1fr) 120px 46px;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--rule);font-size:14px}
+.gen li b{font-weight:400;color:var(--ink-2);text-align:right}.gen li.cut{border-bottom:2px dashed var(--blue)}
+.gen .sbar{height:8px;border-radius:4px;background:var(--rule);overflow:hidden}.gen .sbar i{display:block;height:100%}
+.gen .num{text-align:right;color:var(--ink-2);font-size:12.5px}
+.gen .rep li{grid-template-columns:1.6em minmax(0,1fr) 64px}.gen .rep small{display:block;color:var(--ink-2);font-size:12px}
+.gen table{border-collapse:collapse;font-size:13px;margin:6px 0 14px}.gen td,.gen th{padding:4px 10px 4px 0;text-align:left;font-weight:400}.gen th{color:var(--ink-2)}
+@media (max-width:900px){.gen{grid-template-columns:1fr;gap:28px}}
 .next{list-style:none;margin:0;padding:0}.next li{padding:6px 0;border-bottom:1px solid var(--rule)}
 .next button{all:unset;cursor:pointer;color:var(--ink);font-weight:600;border-bottom:1px solid transparent}
 .next button:hover,.next button:focus-visible{border-bottom-color:var(--blue);outline:none}
@@ -91,6 +100,7 @@ svg text{font-family:var(--text)}
  <div><h2>二八曲线</h2><svg id="pareto" viewBox="0 0 520 220" role="img" aria-label="二八曲线"></svg><p id="paretoNote"></p></div>
  <div><h2>近 30 天</h2><svg id="trend" viewBox="0 0 520 220" role="img" aria-label="近 30 天复习"></svg><p>柱子是每天复习的次数，红色部分是按了「忘记」的次数。</p></div>
 </div>
+<div class="gen" id="gen"></div>
 </div>
 <script>
 const D=/*DATA*/null;
@@ -205,4 +215,16 @@ if(lead)show(lead.id);
    (d.again?`<rect x="${X(i)-bw/2}" y="${Y(d.again)}" width="${bw}" height="${h-p-Y(d.again)}" fill="${red}"/>`:'')).join('')+
   `<text x="${p-6}" y="${Y(max)+4}" font-size="12" text-anchor="end" fill="${ink2}">${max}</text>`+
   a.map((d,i)=>i%Math.ceil(n/7)===0||i===n-1?`<text x="${X(i)}" y="${h-14}" font-size="12" text-anchor="middle" fill="${ink2}">${+d.date.slice(5,7)}/${+d.date.slice(8)}</text>`:'').join('')})();
+// generality: shared concepts first, a few representative questions for whole answers
+(function(){const G=D.generality;if(!G)return;const el=document.getElementById('gen');
+ const cs=G.concepts.slice(0,Math.max(20,G.n80)),mx=cs[0].share;let acc=0;
+ const at=k=>G.curve.find(c=>c.k===k)||{};
+ const rows=cs.map((c,i)=>{acc+=c.share;const t=T[c.id]||{};const m=t.mastery||0;
+  return `<li class="${i+1===G.n80?'cut':''}"><b>${i+1}</b><span>${esc(c.title)}</span><span class="sbar" title="掌握 ${pct(m)}"><i style="width:${c.share/mx*100}%;background:${t.seen?mix(m):'var(--blue)'}"></i></span><span class="num">${pct(acc)}</span></li>`}).join('');
+ const reps=G.representatives.map((r,i)=>{const t=T[r.id]||{};return `<li><b>${i+1}</b><span>${esc(r.title)}<small>${r.concepts.map(c=>esc((T[c]||{}).title||c)).join(' · ')}</small></span><span class="num">${pct(r.practised)}</span></li>`}).join('');
+ el.innerHTML=`<div><h2>先学通用的</h2><p class="lead">题目有 ${G.questions} 道，但答案里的知识大多是共用的。按考频加权，前 ${G.n80} 个知识点就占了所有题解的 80%（虚线）。学会前 20 个，${pct(at(20).ready||0)} 的题（按考频）需要的知识就齐了：</p>
+ <table><tr><th>学会前几个知识点</th>${G.curve.map(c=>`<td>${c.k}</td>`).join('')}</tr><tr><th>占题解</th>${G.curve.map(c=>`<td>${pct(c.share)}</td>`).join('')}</tr><tr><th>题目已就绪</th>${G.curve.map(c=>`<td>${pct(c.ready)}</td>`).join('')}</tr></table>
+ <ol>${rows}</ol><p class="note">条的长度是这个知识点占题解的份额，颜色是你的掌握度（蓝色是还没学过）；右边是累计份额。「就绪」指学会的知识点覆盖了这道题 80% 的知识关联。</p></div>
+ <div><h2>代表题</h2><p class="lead">整题练习只练这 ${G.representatives.length} 道：从最常考的 25 道设计题里依次挑，每道都尽量练到前面没练过的知识点。右边是累计练到的知识份额。</p><ol class="rep">${reps}</ol>
+ <p class="note">今日计划里「题目与整轮」这一段只从这几道题里出卡，其余预算都给知识点。</p></div>`})();
 </script></body></html>

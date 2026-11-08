@@ -130,13 +130,13 @@ def topic_weights(base: dict[str, float], edges: list[Edge], boost: dict[str, fl
 
 
 def plan(cards: list[CardInfo], traces: dict[str, Trace], base: dict[str, float], edges: list[Edge],
-         boost: dict[str, float], now_ms: int, budget: int, exclude: set[str] = frozenset()) -> Plan:
+         boost: dict[str, float], now_ms: int, budget: int, exclude: set[str] = frozenset(), spread: float = 0.5) -> Plan:
     by_topic: dict[str, list[CardInfo]] = defaultdict(list)
     for c in cards:
         by_topic[c.topic].append(c)
     # every topic gets a floor so a topic no question names still counts a little
     floor = {t: 0.1 * (sum(base.values()) / max(len(base), 1)) for t in by_topic}
-    weights = topic_weights({t: base.get(t, 0.0) + floor[t] for t in by_topic}, edges, boost)
+    weights = topic_weights({t: base.get(t, 0.0) + floor[t] for t in by_topic}, edges, boost, spread)
 
     mastery = {c.id: card_mastery(traces.get(c.id), now_ms) for c in cards}
     topics: dict[str, TopicScore] = {}

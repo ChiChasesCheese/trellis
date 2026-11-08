@@ -251,8 +251,7 @@ def build_inputs(tree: Tree):
     kinds = {}
 
     def is_question(t):
-        top = tree.top(t)
-        return top in ("s05", "s08") or (top == "s07" and t not in LLD_FOUNDATIONS)
+        return question_topic(tree, t)
 
     def add(src_leaf, dst_leaf, s, kind):
         if src_leaf not in tree.node or dst_leaf not in tree.node:
@@ -294,6 +293,74 @@ def build_inputs(tree: Tree):
             kinds.setdefault((t, "t.lld-delivery"), "asks")
     edges = [Edge(a, b, min(s, 2.0), kinds[(a, b)]) for (a, b), s in agg.items()]
     return cards, titles, base, edges
+
+
+def question_topic(tree: Tree, t: str) -> bool:
+    top = tree.top(t)
+    return top in ("s05", "s08") or (top == "s07" and t not in LLD_FOUNDATIONS)
+
+
+UNIVERSAL = {"t.sd-delivery", "t.numbers", "t.lld-delivery"}  # every question uses these; they say nothing about which to practise
+
+
+def generality(tree: Tree, base: dict[str, float], edges: list[Edge], k: int = 8, pool: int = 25) -> dict:
+    """How much of the answers' knowledge sits in shared concepts, and which few questions practise most of it.
+
+    A question's answer leans on its concepts in proportion to edge strength; a concept's share is that, summed over
+    questions weighted by how often each is asked. A question is ready once the learned concepts carry 80% of its edges.
+    Representatives are chosen greedily from the `pool` most-asked design questions: each next one adds the most concept
+    share not yet practised (strong edges only, a concept practised once its summed strength reaches 1) plus half its own
+    frequency."""
+    qs = {t: w for t, w in base.items() if question_topic(tree, t) and w > 0}
+    total = sum(qs.values()) or 1.0
+    out: dict[str, dict[str, float]] = defaultdict(dict)
+    for e in edges:
+        if e.src in qs and not question_topic(tree, e.dst):
+            out[e.src][e.dst] = out[e.src].get(e.dst, 0.0) + e.strength
+    share = defaultdict(float)
+    for q, w in qs.items():
+        s = sum(out[q].values())
+        for c, v in out[q].items():
+            share[c] += w / total * v / s
+    order = sorted(share, key=lambda c: -share[c])
+    acc, n80 = 0.0, len(order)
+    for i, c in enumerate(order):
+        acc += share[c]
+        if acc >= 0.8:
+            n80 = i + 1
+            break
+    curve = []
+    for n in (5, 10, 15, 20, 25, 30, 40):
+        learned = set(order[:n])
+        ready = sum(w for q, w in qs.items() if out[q] and sum(v for c, v in out[q].items() if c in learned) >= 0.8 * sum(out[q].values()))
+        curve.append({"k": n, "ready": ready / total, "share": sum(share[c] for c in order[:n])})
+    strong = {q: {c: v for c, v in out[q].items() if v >= 0.5 and c not in UNIVERSAL} for q in qs}
+    sshare = defaultdict(float)
+    for q, w in qs.items():
+        s = sum(strong[q].values())
+        for c, v in strong[q].items():
+            sshare[c] += w / total * v / s
+    z = sum(sshare.values()) or 1.0
+
+    def practised(pr):
+        return sum(sshare[c] / z * min(1.0, pr.get(c, 0.0)) for c in sshare)
+
+    pool_qs = [q for q in sorted(qs, key=lambda q: -qs[q]) if tree.top(q) in ("s05", "s08")][:pool]
+    prac: dict[str, float] = {}
+    reps = []
+    for _ in range(min(k, len(pool_qs))):
+        def gain(q):
+            pr = dict(prac)
+            for c, v in strong[q].items():
+                pr[c] = pr.get(c, 0.0) + v
+            return practised(pr) - practised(prac) + 0.5 * qs[q] / total
+        best = max((q for q in pool_qs if q not in {r["id"] for r in reps}), key=gain)
+        for c, v in strong[best].items():
+            prac[c] = prac.get(c, 0.0) + v
+        reps.append({"id": best, "title": tree.title(best), "freq": qs[best] / total, "practised": practised(prac),
+                     "concepts": sorted(strong[best], key=lambda c: -sshare[c])[:6]})
+    return {"concepts": [{"id": c, "title": tree.title(c), "share": share[c]} for c in order], "n80": n80,
+            "curve": curve, "representatives": reps, "questions": len(qs)}
 
 
 def topic_boost(tree: Tree, topics: set[str], boost: dict[str, float]) -> dict[str, float]:
@@ -504,7 +571,7 @@ def per_day(logs: dict, days: int = 30) -> list[dict]:
 daily_activity: list[dict] = []
 
 
-def dashboard(tree, p, cards, titles, edges, history) -> str:
+def dashboard(tree, p, cards, titles, edges, history, gen=None) -> str:
     ev = load_evidence() or {}
     ev_q = {k: {"freq": v["freq"], "reports": v["reports"], "bytedance": v["bytedance"], "last": v["last"]}
             for k, v in ev.get("questions", {}).items()}
@@ -530,7 +597,7 @@ def dashboard(tree, p, cards, titles, edges, history) -> str:
             "evidence": (ev_q.get(t) or {}),
         })
     data = {"topics": topics, "edges": [{"src": e.src, "dst": e.dst, "s": e.strength, "kind": e.kind} for e in edges],
-            "pareto": p.pareto, "held": p.held, "history": history, "activity": daily_activity, "brief": brief,
+            "pareto": p.pareto, "held": p.held, "generality": gen, "history": history, "activity": daily_activity, "brief": brief,
             "picked": [{"id": cid, "title": titles.get(cid, cid)} for cid in p.picked],
             "pickedTopics": sorted({c.topic for c in cards if c.id in set(p.picked)}),
             "method": {"coverage": ev.get("coverage"), "bank_reports": ev.get("method", {}).get("bank_reports"),
@@ -654,11 +721,16 @@ def run(apply_to_anki: bool) -> None:
     budget = int(cfg.get("daily_new", 35)) * int(cfg.get("buffer_days", 2))
     boosts = topic_boost(tree, {c.topic for c in cards}, cfg.get("boost", {}))
     share = float(cfg.get("question_share", 0.2))
-    p = plan(cards, traces, base, edges, boosts, now_ms, budget - int(budget * share))
+    spread = float(cfg.get("spread", 0.5))
+    gen = generality(tree, base, edges, int(cfg.get("representatives", 8)))
+    reps = {r["id"] for r in gen["representatives"]}
+    p = plan(cards, traces, base, edges, boosts, now_ms, budget - int(budget * share), spread=spread)
     question_cards = [c for c in cards if STAGES.get(tree.top(c.leaf)) == "3 题目与整轮"]
+    # whole questions are practised on a few representatives that between them exercise most shared concepts
+    question_cards = [c for c in question_cards if c.topic in reps] or question_cards
     already = {i for i in p.picked if STAGES.get(tree.top(anki_leaf[i])) == "3 题目与整轮"}
     q_plan = plan(question_cards, traces, {t: base.get(t, 0) for t in {c.topic for c in question_cards}}, edges, boosts, now_ms,
-                  int(budget * share), exclude=set(p.picked))
+                  int(budget * share), exclude=set(p.picked), spread=spread)
     p.picked += [i for i in q_plan.picked if i not in already][: budget - len(p.picked)]
     stages = defaultdict(list)
     for i in p.picked:
@@ -675,7 +747,7 @@ def run(apply_to_anki: bool) -> None:
     (OUT / "state.json").write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
     style = '<style>body{font-family:-apple-system,sans-serif;background:#111;color:#ddd;max-width:420px;margin:auto;padding:12px}</style>'
     (OUT / "report.html").write_text(f"<meta charset='utf-8'>{style}<p>{head}</p><hr>{body}", encoding="utf-8")
-    (OUT / "index.html").write_text(dashboard(tree, p, cards, titles, edges, history), encoding="utf-8")
+    (OUT / "index.html").write_text(dashboard(tree, p, cards, titles, edges, history, gen), encoding="utf-8")
     print(f"held {p.held * 100:.1f}% · seen {summary['seen']}/{len(cards)} · picked {len(p.picked)} "
           f"({', '.join(f'{k} {len(v)}' for k, v in sorted(stages.items()))}) · topics {len(p.topics)} · edges {len(edges)}")
     if apply_to_anki:
