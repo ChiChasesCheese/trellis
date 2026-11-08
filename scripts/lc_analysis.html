@@ -59,7 +59,7 @@ document.getElementById('date').textContent=A.generated.replace(/^(\d+)-(\d+)-(\
 const lead=A.dims.techniques[0]||A.dims.patterns[0];
 document.getElementById('hero').innerHTML=`算法这块，先补<span class="topic">「${esc(lead.name)}」<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M1 7 C 25 3, 55 9, 99 4"/></svg></span>`;
 document.getElementById('why').textContent=`它占全部考频的 ${(lead.importance*100).toFixed(1)}%，用在 ${lead.problems.length} 道题里；你目前掌握了 ${pct(lead.mastery)}`+(lead.slip_ratio>1.15?`，而且这里的失手率是你平均水平的 ${lead.slip_ratio.toFixed(1)} 倍。`:'。');
-document.getElementById('standing').textContent=`按考频加权，这 ${A.n} 道题你见过的覆盖 ${pct(A.covered)}，记牢的占 ${(A.held*100).toFixed(1)}%；前 ${A.pareto_n80} 道题占 80% 的考频。你在 ${A.reviews} 次复习里平均失手率 ${(A.global_slip*100).toFixed(1)}%（按「忘记」计 1、「困难」计 0.5）。`;
+document.getElementById('standing').textContent=`考频只看 GitHub 公司题频统计（${A.bank.companies} 家公司、${A.bank.problems} 道题；字节 / TikTok 占 0.6，全公司广度占 0.4）：全部考频的 80% 落在前 ${A.bank.n80} 道题，你的题库收了其中 ${A.bank.deck_in_top_n80} 道，总共覆盖 ${pct(A.bank.coverage)} 的考频。按考频加权，这 ${A.n} 道题你见过的覆盖 ${pct(A.covered)}，记牢的占 ${(A.held*100).toFixed(1)}%；前 ${A.pareto_n80} 道题占 80% 的考频。你在 ${A.reviews} 次复习里平均失手率 ${(A.global_slip*100).toFixed(1)}%（按「忘记」计 1、「困难」计 0.5）。`;
 
 const tabs=document.getElementById('tabs');
 tabs.innerHTML=Object.entries(DIMS).map(([k,[n]])=>`<button role="tab" data-d="${k}" aria-selected="${k===dim}">${n}</button>`).join('');
@@ -84,7 +84,7 @@ function show(r){cur=r.id;document.querySelectorAll('tr.row').forEach(t=>t.class
  document.getElementById('side').innerHTML=`<h3>${esc(r.name)}</h3>
  <p>${ps.length} 道题用到它，你见过 ${ps.length-unseen} 道${slipped?`，其中 ${slipped} 道按过「忘记」`:''}。${r.reviews?`这里的失手率是你平均水平的 ${r.slip_ratio.toFixed(1)} 倍。`:'还没有复习记录。'}</p>
  <ul class="plist">${ps.slice(0,40).map(p=>`<li><b>${esc(p.title)}</b>${p.again?`<span class="tag red">忘过 ${p.again} 次</span>`:''}${p.seen?'':'<span class="tag">没学过</span>'}
-  <small>${p.insight?esc(p.insight)+'。':''}考频 ${(p.importance).toFixed(2)}${p.tiktok?`，TikTok 频率 ${Math.round(p.tiktok*100)}`:''}${p.seen?`，掌握 ${pct(p.mastery)}`:''}</small></li>`).join('')}</ul>`}
+  <small>${p.insight?esc(p.insight)+'。':''}考频 ${(p.importance).toFixed(2)}${p.tiktok?`，字节 / TikTok 频率 ${Math.round(p.tiktok*100)}`:''}，${p.companies||0} 家公司考过${p.seen?`，掌握 ${pct(p.mastery)}`:''}</small></li>`).join('')}</ul>`}
 render();
 document.getElementById('note').textContent=`考频 = 0.50 × TikTok/字节公司标签频率（近半年出现 ×1.2）+ 0.15 × Amazon 频率 + 0.25 × 全公司热度 + 0.10 × 经典题单收录数，数据来自 LeetCode Premium 公司标签的两个公开整理仓库。掌握度来自 Anki 的复习间隔，失手率按「忘记」1、「困难」0.5 计，并向你的整体水平收缩，避免两三次复习就下结论。思路和易错点由题解的「一句话 / 识别 / 易错点」按 ${(A.dims.techniques||[]).length} 个思路、${(A.dims.pitfalls||[]).length} 类易错点分类，语法从题解代码解析。`;
 </script></body></html>

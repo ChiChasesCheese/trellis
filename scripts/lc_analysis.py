@@ -9,13 +9,12 @@ Dimensions of a problem:
   agents reading each solution's 一句话 / 识别 / 易错点 sections (research/lc-analysis/CLASSIFY_AGENT.md).
 - 语法 (idiom): parsed from the solution's Python with `ast`: the library calls and constructs it relies on.
 
-Importance of a problem (config in sources/local/lc/config.json, defaults below), every input traceable:
-    0.50 x TikTok/ByteDance company-tag frequency (LeetCode Premium 0-100, /100; x1.2 if asked in the last 6 months)
-  + 0.15 x Amazon company-tag frequency
-  + 0.25 x all-company popularity, 1 / (1 + rank / 50)
-  + 0.10 x share of the four classic lists it is on (Blind 75, NeetCode 150, Hot 100, Top Interview 150)
-Company frequencies come from the generated lists in vault/interviews/core/leetcode/companies/ (sources:
-liquidslr/leetcode-company-wise-problems and snehasishroy/leetcode-companywise-interview-questions).
+Importance of a problem: GitHub company-wise frequency only (liquidslr/leetcode-company-wise-problems: 470 companies,
+LeetCode Premium frequency 0-100 per company and window, cloned to sources/local/lc/github/):
+    0.6 x target   max over TikTok, ByteDance of 0.5 x All + 0.5 x max(30 days, 3 months, 6 months), /100
+  + 0.4 x breadth  sum over all companies of All / 100, divided by the largest such sum (Two Sum)
+Weights in sources/local/lc/config.json. The same score over every problem in the repository gives the deck's coverage
+of what is asked (bank_coverage) and the 80/20 line.
 
 Mastery of a problem: the mean card mastery (trellis/plan.card_mastery) over the Anki cards that open its solution.
 Slip rate of a dimension: (Again + 0.5 x Hard + 15 x global rate) / (reviews + 15), i.e. smoothed toward the
@@ -27,7 +26,9 @@ from __future__ import annotations
 
 import ast
 import json
+import csv
 import re
+import subprocess
 import sys
 import time
 import urllib.request
@@ -43,8 +44,11 @@ from trellis.traces import Trace  # noqa: E402
 LC = ROOT / "vault/interviews/core/leetcode"
 OUT = ROOT / "sources/local/lc"
 DECKS = ["LeetCode Tops", "LeetCode"]
-LISTS = ["Blind 75", "NeetCode 150", "LeetCode Hot 100", "Top Interview 150"]
-DEFAULT = {"w_tiktok": 0.50, "w_amazon": 0.15, "w_popularity": 0.25, "w_lists": 0.10, "recent_bonus": 1.2}
+GH = OUT / "github/leetcode-company-wise-problems"
+GH_URL = "https://github.com/liquidslr/leetcode-company-wise-problems.git"
+TARGETS = ("TikTok", "ByteDance")
+RECENT = ("1. Thirty Days", "2. Three Months", "3. Six Months")
+DEFAULT = {"w_target": 0.6, "w_breadth": 0.4}
 
 IDIOMS = {  # id -> (Chinese name, matcher over (module, attr) calls / names / node types)
     "heapq": "heapq 堆操作", "bisect": "bisect 二分插入", "deque": "deque 双端队列", "defaultdict": "defaultdict",
@@ -92,7 +96,7 @@ def problems() -> dict[str, dict]:
         m = re.match(r"LC (\d+)\s*(.*)", r["title"])
         rows[r["slug"]] = {"slug": r["slug"], "title": r["title"], "num": int(m.group(1)) if m else None,
                            "patterns": [], "techniques": [], "pitfalls": [], "idioms": [], "insight": "",
-                           "tiktok": 0.0, "tiktok_recent": False, "amazon": 0.0, "rank": None, "lists": 0}
+                           "tiktok": 0.0, "tiktok_recent": False, "breadth": 0.0, "companies": 0}
     for f in sorted((LC / "knowledge-map").glob("[0-9][0-9]-*.md")):
         for line in f.read_text(encoding="utf-8").splitlines():
             m = re.search(r"\[\[tlc-([a-z0-9-]+?)-0-whole\|", line)
@@ -100,28 +104,10 @@ def problems() -> dict[str, dict]:
                 p = rows[m.group(1)]
                 if f.stem not in p["patterns"]:
                     p["patterns"].append(f.stem)
-                p["lists"] = max(p["lists"], sum(1 for x in LISTS if x in line))
-    for co, key in (("tiktok", "tiktok"), ("bytedance", "tiktok"), ("amazon", "amazon")):
-        f = LC / "companies" / f"{co}.md"
-        if not f.exists():
-            continue
-        for line in f.read_text(encoding="utf-8").splitlines():
-            m = re.match(r"\|\s*(\d+)\s*\|\s*\[[^\]]+\]\(https://leetcode\.com/problems/([a-z0-9-]+)/\)\s*\|[^|]*\|\s*(\d+)\s*\|\s*(✓?)\s*\|", line)
-            if m and m.group(2) in rows:
-                p = rows[m.group(2)]
-                freq = int(m.group(3)) / 100
-                if freq > p[key]:
-                    p[key] = freq
-                if key == "tiktok" and m.group(4):
-                    p["tiktok_recent"] = True
+    gh = github_frequency()
+    for slug, p in rows.items():
+        p.update(gh.get(slug, {}))
     sk = (ROOT / "skeleton/leetcode-tops.yaml").read_text(encoding="utf-8")
-    for m in re.finditer(r"- id: [a-z0-9-]+\.([a-z0-9-]+)\n\s+title: [^\n]*\n\s+summary: ([^\n]*)", sk):
-        slug, summary = m.group(1), m.group(2)
-        r = re.search(r"热度第 (\d+) 名", summary)
-        if slug in rows and r:
-            rows[slug]["rank"] = int(r.group(1))
-        if slug in rows:
-            rows[slug]["lists"] = max(rows[slug]["lists"], sum(1 for x in LISTS if x in summary))
     branch_pattern = {"arrays-hashing": "01-hashing", "prefix-sum": "02-prefix-sum", "two-pointers": "03-two-pointers",
                       "sliding-window": "04-sliding-window", "stack": "05-monotonic-stack", "monotonic-stack": "05-monotonic-stack",
                       "binary-search": "06-binary-search", "heap": "07-heap", "intervals": "08-intervals", "linked-list": "09-linked-list",
@@ -208,10 +194,42 @@ def idioms(slug: str) -> list[str]:
     return sorted(found)
 
 
+def github_frequency() -> dict[str, dict]:
+    """Per problem slug: target-company frequency (with whether it is recent) and cross-company breadth."""
+    if not GH.exists():
+        GH.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run(["git", "clone", "-q", "--depth", "1", GH_URL, str(GH)], check=True)
+
+    def read(path: Path) -> dict[str, float]:
+        if not path.exists():
+            return {}
+        return {r["Link"].rstrip("/").split("/problems/")[-1]: float(r["Frequency"] or 0) / 100
+                for r in csv.DictReader(path.open(encoding="utf-8"))}
+
+    out: dict[str, dict] = defaultdict(lambda: {"tiktok": 0.0, "tiktok_recent": False, "breadth": 0.0, "companies": 0})
+    for d in sorted(x for x in GH.iterdir() if x.is_dir() and not x.name.startswith(".")):
+        every = read(d / "5. All.csv")
+        for slug, f in every.items():
+            out[slug]["breadth"] += f
+            out[slug]["companies"] += 1
+        if d.name in TARGETS:
+            recent: dict[str, float] = defaultdict(float)
+            for w in RECENT:
+                for slug, f in read(d / f"{w}.csv").items():
+                    recent[slug] = max(recent[slug], f)
+            for slug in set(every) | set(recent):
+                t = 0.5 * every.get(slug, 0.0) + 0.5 * recent.get(slug, 0.0)
+                o = out[slug]
+                o["tiktok"] = max(o["tiktok"], t)
+                o["tiktok_recent"] = o["tiktok_recent"] or slug in recent
+    top = max(o["breadth"] for o in out.values()) or 1.0
+    for o in out.values():
+        o["breadth"] /= top
+    return dict(out)
+
+
 def importance(p: dict, cfg: dict) -> float:
-    tiktok = p["tiktok"] * (cfg["recent_bonus"] if p["tiktok_recent"] else 1.0)
-    pop = 1 / (1 + p["rank"] / 50) if p["rank"] else 0.0
-    return cfg["w_tiktok"] * tiktok + cfg["w_amazon"] * p["amazon"] + cfg["w_popularity"] * pop + cfg["w_lists"] * p["lists"] / 4
+    return cfg["w_target"] * p["tiktok"] + cfg["w_breadth"] * p["breadth"]
 
 
 # ---------------------------------------------------------------- the learner's record
@@ -354,6 +372,21 @@ def analyse() -> dict:
                         "priority": 0.0 if (dim == "idioms" and v in BASIC_IDIOMS) else a["imp"] / total_imp * (1 - mastery) * boost,
                         "basic": dim == "idioms" and v in BASIC_IDIOMS, "problems": a["problems"]})
         dims[dim] = sorted(out, key=lambda x: -x["priority"])
+    bank = {slug: importance(o, cfg) for slug, o in github_frequency().items()}
+    bank_total = sum(bank.values()) or 1.0
+    bank_rank = sorted(bank, key=lambda x: -bank[x])
+    acc, bank_n80 = 0.0, 0
+    for i, slug in enumerate(bank_rank):
+        acc += bank[slug]
+        if acc >= 0.8 * bank_total:
+            bank_n80 = i + 1
+            break
+    in_deck = set(rows)
+    missing = [{"slug": x, "importance": bank[x]} for x in bank_rank[:300] if x not in in_deck]
+    bank_stats = {"problems": len(bank), "companies": sum(1 for x in GH.iterdir() if x.is_dir() and not x.name.startswith(".")),
+                  "coverage": sum(v for k, v in bank.items() if k in in_deck) / bank_total, "n80": bank_n80,
+                  "top300_in_deck": sum(1 for x in bank_rank[:300] if x in in_deck), "missing_top300": missing,
+                  "deck_in_top_n80": sum(1 for x in bank_rank[:bank_n80] if x in in_deck)}
     ranked = sorted(rows.values(), key=lambda p: -p["importance"])
     cum, n80, cards80 = 0.0, 0, 0
     for i, p in enumerate(ranked):
@@ -362,7 +395,7 @@ def analyse() -> dict:
             n80 = i + 1
             break
     return {"generated": datetime.now().strftime("%Y-%m-%d %H:%M"), "global_slip": g, "reviews": tot_rev, "config": cfg,
-            "problems": rows, "dims": dims, "pareto_n80": n80, "n": len(rows),
+            "problems": rows, "dims": dims, "pareto_n80": n80, "n": len(rows), "bank": bank_stats,
             "held": sum(p["importance"] * p["mastery"] for p in rows.values()) / total_imp,
             "covered": sum(p["importance"] * p["seen"] for p in rows.values()) / total_imp,
             "tagged": sum(1 for p in rows.values() if p["techniques"])}
@@ -379,6 +412,10 @@ def main() -> int:
     top = {d: [x["name"] for x in v[:5]] for d, v in a["dims"].items()}
     print(f"{a['n']} problems, {a['tagged']} tagged · covered {a['covered']:.0%} · held {a['held']:.1%} · "
           f"top {a['pareto_n80']} = 80% · slip {a['global_slip']:.1%} over {a['reviews']} reviews")
+    b = a["bank"]
+    print(f"GitHub: {b['companies']} companies, {b['problems']} problems · deck covers {b['coverage']:.0%} of frequency · "
+          f"80% of it in top {b['n80']} (deck has {b['deck_in_top_n80']}) · top 300 in deck {b['top300_in_deck']}")
+    print("  missing from top 300:", ", ".join(m["slug"] for m in b["missing_top300"][:25]))
     for d, v in top.items():
         print(f"  {d}: {', '.join(v)}")
     return 0
