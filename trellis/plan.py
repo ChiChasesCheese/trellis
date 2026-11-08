@@ -29,6 +29,9 @@ DEFAULT_LEVEL = 0.8
 READY_AT = 0.4  # prerequisite mastery at which a dependant counts as fully ready
 DIMINISH = 0.8  # each further card from the same topic in one round is worth this much less
 DIMINISH_POINT = 0.6  # and from the same exam point, much less: a second card on a point adds little the same day
+HELD_CARDS = 3  # a point is held once about this many of its cards are; a point taught by ten cards does not need all ten
+LOOKAHEAD = 3  # a leaf is taken in order, but its next cards count: a valuable card must not wait behind a cheap intro
+SECONDARY_POINT = 0.5  # a card's points after its primary one count this much
 
 
 @dataclass
@@ -57,6 +60,46 @@ class CardInfo:
     def cost(self) -> float:
         """Relative time to learn: a hard card is worth as much but takes longer, so it pays less per minute."""
         return 1.0 + 0.6 * self.difficulty
+
+
+@dataclass
+class PointModel:
+    """Exam points: what each is worth, and which cards teach it (primary first). With this the plan measures coverage
+    on points, not topics: a point is covered when it is held, however many other cards its topic has."""
+    weight: dict[str, float]
+    cards: dict[str, list[str]]
+
+    def teaching(self) -> dict[str, float]:
+        out: dict[str, float] = defaultdict(float)
+        for ks in self.cards.values():
+            for i, k in enumerate(ks):
+                out[k] += 1.0 if i == 0 else SECONDARY_POINT
+        return out
+
+    def mastery(self, card_mastery: dict[str, float]) -> dict[str, float]:
+        """Point -> the mean of its best `HELD_CARDS` cards, so an unseen extra card does not count against it."""
+        held: dict[str, list[float]] = defaultdict(list)
+        for cid, ks in self.cards.items():
+            for k in ks:
+                held[k].append(card_mastery.get(cid, 0.0))
+        return {k: sum(sorted(v, reverse=True)[:HELD_CARDS]) / min(HELD_CARDS, len(v)) for k, v in held.items()}
+
+    def coverage(self, card_mastery: dict[str, float]) -> float:
+        """The share of all point weight that is held."""
+        held = self.mastery(card_mastery)
+        total = sum(self.weight.get(k, 0.0) for k in held) or 1.0
+        return sum(self.weight.get(k, 0.0) * m for k, m in held.items()) / total
+
+    def card_value(self, cid: str) -> float:
+        """What learning this card is worth with nothing held: its points' weight, shared among the cards needed."""
+        n = self.teaching_cached()
+        return sum(self.weight.get(k, 0.0) * (1.0 if i == 0 else SECONDARY_POINT) / max(1.0, min(HELD_CARDS, n[k]))
+                   for i, k in enumerate(self.cards.get(cid, [])))
+
+    def teaching_cached(self) -> dict[str, float]:
+        if not hasattr(self, "_teaching"):
+            self._teaching = self.teaching()
+        return self._teaching
 
 
 @dataclass
@@ -134,7 +177,8 @@ def topic_weights(base: dict[str, float], edges: list[Edge], boost: dict[str, fl
 
 
 def plan(cards: list[CardInfo], traces: dict[str, Trace], base: dict[str, float], edges: list[Edge],
-         boost: dict[str, float], now_ms: int, budget: int, exclude: set[str] = frozenset(), spread: float = 0.5) -> Plan:
+         boost: dict[str, float], now_ms: int, budget: int, exclude: set[str] = frozenset(), spread: float = 0.5,
+         points: PointModel | None = None) -> Plan:
     by_topic: dict[str, list[CardInfo]] = defaultdict(list)
     for c in cards:
         by_topic[c.topic].append(c)
@@ -151,6 +195,28 @@ def plan(cards: list[CardInfo], traces: dict[str, Trace], base: dict[str, float]
                                mastery=sum(c.weight * mastery[c.id] for c in cs) / wsum if wsum else 0.0)
         topics[t].progress = topics[t].seen / len(cs)
 
+    point_held: dict[str, float] = {}
+    if points:  # weight and mastery of a topic are what its exam points add up to
+        point_held = points.mastery(mastery)
+        topic_of = {c.id: c.topic for c in cards}
+        where: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
+        for cid, ks in points.cards.items():
+            if cid in topic_of:
+                for i, k in enumerate(ks):
+                    where[k][topic_of[cid]] += 1.0 if i == 0 else SECONDARY_POINT
+        raw, held_w = defaultdict(float), defaultdict(float)
+        for k, by in where.items():
+            z = sum(by.values())
+            for t, v in by.items():
+                w = points.weight.get(k, 0.0) * v / z
+                raw[t] += w * boost.get(t, 1.0)
+                held_w[t] += w * point_held.get(k, 0.0)
+        norm = sum(raw.values()) or 1.0
+        for t, s in topics.items():
+            plain = raw[t] / (boost.get(t, 1.0) or 1.0)
+            s.weight = raw[t] / norm
+            s.mastery = held_w[t] / plain if plain else 0.0
+
     prereqs = defaultdict(list)
     for e in edges:
         if e.kind == "requires" and e.src in topics and e.dst in topics:
@@ -164,12 +230,37 @@ def plan(cards: list[CardInfo], traces: dict[str, Trace], base: dict[str, float]
 
     # a card's value: its share of its topic's weight, what is not held, the topic's readiness
     card_value = {}
-    for t, cs in by_topic.items():
-        wsum = sum(c.weight for c in cs) or 1.0
-        for c in cs:
-            card_value[c.id] = topics[t].weight * c.weight / wsum * (1 - mastery[c.id]) * topics[t].readiness / c.cost
+    if points:
+        n = points.teaching_cached()
+        known = [points.card_value(c.id) for c in cards if points.cards.get(c.id)]
+        typical = sorted(known)[len(known) // 2] if known else 0.0
+        for c in cards:
+            ks = points.cards.get(c.id)
+            if ks is None:  # not annotated yet: still learnable, at a typical value
+                worth = typical
+            else:  # what it adds: each point's weight, shared among the cards needed, on what is not held
+                worth = sum(points.weight.get(k, 0.0) * (1.0 if i == 0 else SECONDARY_POINT) / max(1.0, min(HELD_CARDS, n[k]))
+                            * (1 - point_held.get(k, 0.0)) for i, k in enumerate(ks))
+            card_value[c.id] = worth * boost.get(c.topic, 1.0) * (1 - mastery[c.id]) * topics[c.topic].readiness / c.cost
+    else:
+        for t, cs in by_topic.items():
+            wsum = sum(c.weight for c in cs) or 1.0
+            for c in cs:
+                card_value[c.id] = topics[t].weight * c.weight / wsum * (1 - mastery[c.id]) * topics[t].readiness / c.cost
 
     picked = pick(cards, traces, card_value, prereqs, budget, exclude)
+    if points:
+        held = points.coverage(mastery)
+        n = points.teaching_cached()
+        ranked_points = sorted(n, key=lambda k: -points.weight.get(k, 0.0) / max(1.0, min(HELD_CARDS, n[k])))
+        total_w = sum(points.weight.get(k, 0.0) for k in ranked_points) or 1.0
+        n_cards = sum(min(HELD_CARDS, n[k]) for k in ranked_points) or 1
+        curve, cc, cw = [], 0.0, 0.0
+        for k in ranked_points:  # learning the cards a point needs, most valuable point first
+            cc += min(HELD_CARDS, n[k])
+            cw += points.weight.get(k, 0.0)
+            curve.append((cc / n_cards, cw / total_w))
+        return Plan(topics=topics, card_value=card_value, card_mastery=mastery, picked=picked, held=held, pareto=curve)
     total_w = sum(s.weight for s in topics.values()) or 1.0
     held = sum(s.weight * s.mastery for s in topics.values()) / total_w
     ranked = sorted(topics.values(), key=lambda s: -s.weight / max(s.cards, 1))
@@ -202,7 +293,7 @@ def pick(cards: list[CardInfo], traces: dict[str, Trace], value: dict[str, float
         for leaf, i in heads.items():
             cs = leaves[leaf]
             if i < len(cs):
-                v = value[cs[i].id] * DIMINISH ** taken[cs[i].topic]  # one topic eight times a day teaches less than eight topics
+                v = max(value[x.id] for x in cs[i:i + LOOKAHEAD]) * DIMINISH ** taken[cs[i].topic]  # one topic eight times a day teaches less than eight topics
                 if cs[i].point:
                     v *= DIMINISH_POINT ** taken_point[cs[i].point]
                 if v > best_v:

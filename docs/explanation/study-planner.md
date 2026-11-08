@@ -79,12 +79,18 @@ Where exam points exist they replace the frequency term above.
   stays with its own points. A topic's directly reported frequency is shared among its points, core points double.
 - **A card's value** sums what its points are worth, divided by how many cards teach each. The primary point counts
   fully, the others half.
-- **A held point lowers the rest.** A point's mastery is the mean of its three best-held cards, and a further card on a
-  held point is worth up to 60% less.
+- **Coverage is measured on points.** A point's mastery is the mean of its three best-held cards. Overall coverage is
+  the weight-averaged mastery of all points, and a topic's weight and mastery are what its points add up to.
+- **A card's value is what it adds:** its points' weight, shared among the three cards a point needs, on the part of the
+  point not yet held, multiplied by personal boosts and readiness and divided by cost. Whole questions are excluded from
+  this budget and keep their own reserved share.
 - **Question edges** come from the same needs instead of links in the card text.
 - **In one day** a second card on the same point is worth 40% less, so a day covers more points.
 
 Points about the interview itself (levels, prep plans, scoring rubrics) are kept out of the weights.
+
+The map itself is drawn into two Obsidian notes by `scripts/knowledge_points.py`: titles and counts only, nothing about the
+learner.
 
 New cards must be annotated too: `scripts/plan_maintain.py` lists cards with no points and problems with no tags.
 

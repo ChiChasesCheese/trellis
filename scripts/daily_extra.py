@@ -9,8 +9,8 @@ LeetCode (deck stage `4 算法`):
   not held yet, ranked by similarity plus asked-frequency. Similarity = 4 if the failed problem's solution lists it under
   同模式 + 3 x same main technique + 1.5 x shared techniques + shared patterns + 0.5 x shared pitfalls; at least 4 to count. A similar problem never
   seen is dealt as new; one seen but not held is made due today (Anki's own Set Due Date).
-- **New problems.** `lc_new` unseen problems a day, by importance, raised by how often the learner slips on the main
-  technique (the same boost as the LeetCode analysis, at most 1.5).
+- **New problems.** `lc_new` unseen problems a day, by what each adds: importance x the slip boost of its main technique
+  (at most 1.5) x how much of that technique is not held, less for each pick on the same technique that day.
 - **Just solved.** New cards in the daily deck (one per problem solved on LeetCode) are dealt first, up to `solved_max`.
 - The card dealt for a problem is fixed by the deck layout: its whole answer in the module deck, as in lc_lists.py.
 
@@ -148,14 +148,20 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None) ->
             taken.add(slug)
     solved = len(ex.lc_new)
     fresh = [p for s, p in probs.items() if s not in taken and not p["seen"] and p["techniques"]]
-    fresh.sort(key=lambda p: -p["importance"] * boost.get(p["techniques"][0], 1.0))
-    for p in fresh:
-        if len(ex.lc_new) - solved >= int(cfg.get("lc_new", 8)):
-            break
+    # what a new problem adds: its frequency, on a technique not held yet, less again for each pick on that technique today
+    held = {t["id"]: t["mastery"] for t in analysis["dims"]["techniques"]}
+    picks_on: dict[str, int] = defaultdict(int)
+    while len(ex.lc_new) - solved < int(cfg.get("lc_new", 8)) and fresh:
+        def worth(p):
+            t = p["techniques"][0]
+            return p["importance"] * boost.get(t, 1.0) * (1 - held.get(t, 0.0)) * 0.6 ** picks_on[t]
+        p = max(fresh, key=worth)
+        fresh.remove(p)
         card = card_for(p["slug"])
         if card and card["queue"] == 0:
-            ex.lc_new.append({"card": card["cardId"], "slug": p["slug"], "title": p["title"], "why": "没学过，考频靠前"})
+            ex.lc_new.append({"card": card["cardId"], "slug": p["slug"], "title": p["title"], "why": "考频高，这个思路还没掌握"})
             taken.add(p["slug"])
+            picks_on[p["techniques"][0]] += 1
 
     # ---- reviews, every deck
     due = _cards("is:due -is:suspended")

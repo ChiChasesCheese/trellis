@@ -39,7 +39,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 import daily_extra  # noqa: E402
 import plan_kp  # noqa: E402
-from trellis.plan import CardInfo, Edge, card_mastery, plan  # noqa: E402
+from trellis.plan import HELD_CARDS, CardInfo, Edge, PointModel, plan  # noqa: E402
 from trellis.project import load_project  # noqa: E402
 from trellis.sequence import core_leaves  # noqa: E402
 from trellis.traces import Trace  # noqa: E402
@@ -302,6 +302,57 @@ def build_inputs(tree: Tree):
 kp_state: dict = {}  # exam points of this run, for the dashboard and the report
 
 
+def coverage_metrics(tree, p, gen, cfg) -> dict | None:
+    """The numbers the dashboard leads with, all measured on exam points."""
+    if not kp_state:
+        return None
+    pts, model, q_freq = kp_state["points"], kp_state["model"], kp_state["q_freq"]
+    m = p.card_mastery
+    held = model.mastery(m)
+    total = sum(model.weight.get(k, 0.0) for k in held) or 1.0
+    touched = {k for cid, ks in pts.card.items() if m.get(cid, 0.0) > 0 for k in ks}
+    after = dict(m)
+    for cid in kp_state.get("today", p.picked):
+        after[cid] = max(after.get(cid, 0.0), LEARNED)
+    n = model.teaching_cached()
+    # the cheapest way to 80%: points by what they would add per card still to learn
+    rest = []
+    for k, v in held.items():
+        w = model.weight.get(k, 0.0)
+        cost = max(1, round((1 - v) * min(HELD_CARDS, n[k])))
+        rest.append((w * (1 - v) / cost, w * (1 - v), cost))
+    rest.sort(key=lambda r: -r[0])
+    cov, need = p.held, 0
+    for _, gain, cost in rest:
+        if cov >= 0.8:
+            break
+        cov += gain / total
+        need += cost
+    rows = []
+    for q, f in q_freq.items():
+        needs, own = pts.needs.get(q, []), pts.own.get(q, [])
+        items = [(n_["kp"], plan_kp.ROLE.get(n_["role"], 0.6), n_["role"]) for n_ in needs] + \
+                [(o["id"], plan_kp.ROLE.get(o.get("role"), 0.6), o.get("role")) for o in own]
+        z = sum(r for _, r, _ in items)
+        if not z or not f or q in NOT_A_QUESTION:
+            continue
+        ready = sum(r * held.get(k, 0.0) for k, r, _ in items) / z
+        missing = sorted((k for k, _, role in items if role == "必讲" and held.get(k, 0.0) < 0.5 and k in pts.meta and k not in plan_kp.META),
+                         key=lambda k: -model.weight.get(k, 0.0))
+        rows.append({"id": q, "title": tree.title(q), "f": f, "ready": ready, "miss": [pts.meta[k]["title"] for k in missing[:3]],
+                     "n_miss": len(missing), "n_must": sum(1 for _, _, role in items if role == "必讲")})
+    rows.sort(key=lambda r: -r["f"])
+    fz = sum(r["f"] for r in rows) or 1.0
+    daily = int(cfg.get("daily_new", 35))
+    return {"covered": p.held, "touched": sum(model.weight.get(k, 0.0) for k in touched) / total,
+            "after_today": model.coverage(after), "to80_cards": need, "to80_days": math.ceil(need / max(1, daily)), "daily_new": daily,
+            "ready": sum(r["f"] * r["ready"] for r in rows) / fz, "ready_n": sum(1 for r in rows if r["ready"] >= 0.6), "ready_total": len(rows),
+            "representatives": (gen["representatives"][-1] if gen and gen.get("representatives") else None), "questions": rows[:30]}
+
+
+LEARNED = 0.58  # mastery of a card just learned and past its first few-day interval
+
+
 def exam_point_rows(tree, p) -> dict | None:
     """Per point: its weight, the learner's mastery, which questions need it and in what role."""
     if not kp_state:
@@ -380,7 +431,9 @@ def apply_exam_points(tree, cards, base, topics, agg, kinds, is_question, by_top
                 c.freq, c.graded, c.point = max(0.3, min(3.0, vals[c.id] / mean)), True, pts.card[c.id][0]
             elif c.id in pts.card:  # an intro or navigation card teaches no point
                 c.freq, c.graded = 0.3, True
-    kp_state.update(points=pts, weight=kp_w, teach=teach)
+    # interview-process points stay visible on the map but count for nothing
+    model = PointModel({k: v for k, v in kp_w.items() if k not in plan_kp.META}, pts.card)
+    kp_state.update(points=pts, weight=kp_w, teach=teach, model=model, q_freq=q_freq)
 
 
 def question_topic(tree: Tree, t: str) -> bool:
@@ -607,7 +660,7 @@ def render_report(tree, p, cards, titles, base, edges, traces, logs, picks_by_st
     stage_counts = {k: len(v) for k, v in picks_by_stage.items()}
     due = len(call("findCards", query=f'("deck:系统设计" OR "deck:{DECK}") is:due')) if picks_by_stage is not None else 0
 
-    head = (f"<b>今日计划 · {now:%m-%d}</b><br>面试权重已掌握 <b>{p.held * 100:.1f}%</b> · 已见 {seen_all}/{len(cards)} 张"
+    head = (f"<b>今日计划 · {now:%m-%d}</b><br>考点覆盖 <b>{p.held * 100:.1f}%</b> · 已见 {seen_all}/{len(cards)} 张"
             f" · 连续 {st} 天")
     body = [f"<p><b>昨天：</b>复习 {a1['reviews']} 次，新学 {a1['new']} 张，按「忘记」{a1['again']} 次，约 {a1['minutes']} 分钟。"
             f"近 7 天复习 {a7['reviews']} 次，忘记率 {a7['again'] / max(1, a7['reviews']) * 100:.0f}%。</p>",
@@ -701,11 +754,11 @@ def dashboard(tree, p, cards, titles, edges, history, gen=None) -> str:
             "evidence": (ev_q.get(t) or {}),
         })
     data = {"topics": topics, "edges": [{"src": e.src, "dst": e.dst, "s": e.strength, "kind": e.kind} for e in edges],
-            "pareto": p.pareto, "held": p.held, "generality": gen, "points": exam_point_rows(tree, p), "history": history, "activity": daily_activity, "brief": brief,
+            "pareto": p.pareto, "held": p.held, "generality": gen, "points": exam_point_rows(tree, p), "metrics": coverage_metrics(tree, p, gen, cfg_global), "history": history, "activity": daily_activity, "brief": brief,
             "picked": [{"id": cid, "title": titles.get(cid, cid)} for cid in p.picked],
             "pickedTopics": sorted({c.topic for c in cards if c.id in set(p.picked)}),
             "method": {"coverage": ev.get("coverage"), "bank_reports": ev.get("method", {}).get("bank_reports"),
-                       "external_reports": ev.get("method", {}).get("external_reports")}}
+                       "external_reports": ev.get("method", {}).get("external_reports"), "agreement": ev.get("method", {}).get("agreement")}}
     tpl = (ROOT / "scripts/study_plan.html").read_text(encoding="utf-8")
     return tpl.replace("/*DATA*/null", json.dumps(data, ensure_ascii=False))
 
@@ -877,37 +930,39 @@ def run(apply_to_anki: bool) -> None:
             personal = min(1.0, (t.lapses + sum(1 for r in log if r["ease"] == 1) * 0.5 + hard * 0.3) / t.reps * 2)
             personal = min(1.0, personal + (0.2 if t.ease and t.ease < 2.3 else 0.0))
             c.difficulty = 0.5 * c.difficulty + 0.5 * personal
-    if kp_state:  # a point already held makes another card on it worth less
-        card_m = {c.id: card_mastery(traces.get(c.id), now_ms) for c in cards}
-        point_m = plan_kp.mastery(kp_state["points"], card_m)
-        for c in cards:
-            if c.point:
-                c.freq *= 1 - 0.6 * point_m.get(c.point, 0.0)
     budget = int(cfg.get("daily_new", 35)) * int(cfg.get("buffer_days", 2))
     boosts = topic_boost(tree, {c.topic for c in cards}, cfg.get("boost", {}))
     share = float(cfg.get("question_share", 0.2))
     spread = float(cfg.get("spread", 0.5))
     gen = generality(tree, base, edges, int(cfg.get("representatives", 8)))
     reps = {r["id"] for r in gen["representatives"]}
-    p = plan(cards, traces, base, edges, boosts, now_ms, budget - int(budget * share), spread=spread)
+    model = kp_state.get("model")
+    # shared knowledge takes the main budget; whole questions only get their own reserved share, from the representatives
+    only_questions = {c.id for c in cards if question_topic(tree, c.topic)}
+    p = plan(cards, traces, base, edges, boosts, now_ms, budget - int(budget * share), exclude=only_questions, spread=spread, points=model)
     question_cards = [c for c in cards if STAGES.get(tree.top(c.leaf)) == "3 题目与整轮"]
     # whole questions are practised on a few representatives that between them exercise most shared concepts
     question_cards = [c for c in question_cards if c.topic in reps] or question_cards
     already = {i for i in p.picked if STAGES.get(tree.top(anki_leaf[i])) == "3 题目与整轮"}
     q_plan = plan(question_cards, traces, {t: base.get(t, 0) for t in {c.topic for c in question_cards}}, edges, boosts, now_ms,
-                  int(budget * share), exclude=set(p.picked), spread=spread)
+                  int(budget * share), exclude=set(p.picked), spread=spread, points=model)
     p.picked += [i for i in q_plan.picked if i not in already][: budget - len(p.picked)]
     stages = defaultdict(list)
     for i in p.picked:
         stages[STAGES.get(tree.top(anki_leaf[i]), STAGE_DEFAULT)].append(i)
+    if kp_state:  # what Anki deals today: the stages in deck order, up to the daily limit
+        kp_state["today"] = [i for _, ids in sorted(stages.items()) for i in ids][:int(cfg.get("daily_new", 35))]
     daily_activity[:] = per_day(logs)
     head, body, summary = render_report(tree, p, cards, titles, base, edges, traces, logs, stages, now)
     # beyond system design: LeetCode practice and the review queue of every deck
-    tw = {t: s.weight for t, s in p.topics.items()}
-    topic_sum = defaultdict(float)
-    for c in cards:
-        topic_sum[c.topic] += c.weight
-    sd_value = {c.id: tw.get(c.topic, 0.0) * c.weight / (topic_sum[c.topic] or 1.0) for c in cards}
+    if model:
+        sd_value = {c.id: model.card_value(c.id) for c in cards}
+    else:
+        tw = {t: s.weight for t, s in p.topics.items()}
+        topic_sum = defaultdict(float)
+        for c in cards:
+            topic_sum[c.topic] += c.weight
+        sd_value = {c.id: tw.get(c.topic, 0.0) * c.weight / (topic_sum[c.topic] or 1.0) for c in cards}
     if apply_to_anki:  # today's LeetCode analysis: mastery, slips and similar problems read from fresh numbers
         import lc_analysis
         lc_analysis.main()

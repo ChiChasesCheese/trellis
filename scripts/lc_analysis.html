@@ -38,6 +38,8 @@ tr.basic td{color:var(--ink-2)}
 .plist b{font-weight:600}.plist small{display:block;color:var(--ink-2);font-size:12.5px}
 .tag{display:inline-block;font-size:11.5px;padding:0 6px;border-radius:999px;border:1px solid var(--rule);margin-left:4px;color:var(--ink-2)}
 .tag.red{border-color:var(--red);color:var(--red)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0 28px;margin:26px 0 0;border-top:2px solid var(--ink)}
+.kpi{padding:12px 0 14px;border-bottom:1px solid var(--rule)}.kpi b{display:block;font:400 34px/1.1 var(--hand)}.kpi span{display:block;font-size:13.5px;margin-top:2px}.kpi small{display:block;color:var(--ink-2);font-size:12.5px;line-height:1.45;margin-top:3px}
 .prog{margin:34px 0 0}.prog .grp{color:var(--ink-2);font-size:12.5px;margin:16px 0 4px;letter-spacing:.04em}
 .pr{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,1fr) 96px 64px;gap:14px;align-items:center;padding:8px 0;border-bottom:1px solid var(--rule)}
 .pr .nm{font:400 18px/1.25 var(--hand)}.pr .nm small{display:block;font:12px/1.4 var(--text);color:var(--ink-2)}
@@ -53,6 +55,7 @@ details.mods summary{cursor:pointer;color:var(--ink-2);font-size:13px;margin-top
 @media (max-width:900px){.page{padding:22px 16px 48px}.layout{grid-template-columns:1fr}.bar{width:56px}.hide-s{display:none}}
 </style></head><body><div class="page">
 <p class="date" id="date"></p><h1 id="hero"></h1><p class="why" id="why"></p><p class="standing" id="standing"></p>
+<section class="kpis" id="kpis" aria-label="关键指标"></section>
 <section class="prog" id="prog" aria-label="榜单进度"></section>
 <div class="tabs" role="tablist" id="tabs"></div>
 <p class="lead" id="lead"></p>
@@ -73,6 +76,8 @@ document.getElementById('hero').innerHTML=`算法这块，先补<span class="top
 document.getElementById('why').textContent=`它占全部考频的 ${(lead.importance*100).toFixed(1)}%，用在 ${lead.problems.length} 道题里；你目前掌握了 ${pct(lead.mastery)}`+(lead.slip_ratio>1.15?`，而且这里的失手率是你平均水平的 ${lead.slip_ratio.toFixed(1)} 倍。`:'。');
 document.getElementById('standing').textContent=`考频只看 GitHub 公司题频统计（${A.bank.companies} 家公司、${A.bank.problems} 道题；字节 / TikTok 占 0.6，全公司广度占 0.4）：全部考频的 80% 落在前 ${A.bank.n80} 道题，你的题库收了其中 ${A.bank.deck_in_top_n80} 道，总共覆盖 ${pct(A.bank.coverage)} 的考频。按考频加权，这 ${A.n} 道题你见过的覆盖 ${pct(A.covered)}，记牢的占 ${(A.held*100).toFixed(1)}%；前 ${A.pareto_n80} 道题占 80% 的考频。你在 ${A.reviews} 次复习里平均失手率 ${(A.global_slip*100).toFixed(1)}%（按「忘记」计 1、「困难」计 0.5）。`;
 
+(function(){const tile=(v,t,c)=>`<div class="kpi"><b>${v}</b><span>${t}</span><small>${c}</small></div>`,b=A.bank;
+ document.getElementById('kpis').innerHTML=tile((A.held*100).toFixed(1)+'%','考频加权的记牢度','每道题取最好那张卡，按考频加权')+tile(pct(A.covered),'见过的考频','学过至少一张卡的题，占题库考频的比例')+tile(pct(b.coverage),'题库覆盖的考频',`GitHub 上 ${b.companies} 家公司的题频，题库收了这么多`)+tile(`${b.deck_in_top_n80}/${b.n80}`,'最高频题已收录','全部考频的 80% 落在这些题上')+tile((A.global_slip*100).toFixed(1)+'%','失手率',`${A.reviews} 次复习里「忘记」计 1、「困难」计 0.5`)})();
 const tabs=document.getElementById('tabs');
 tabs.innerHTML=Object.entries(DIMS).map(([k,[n]])=>`<button role="tab" data-d="${k}" aria-selected="${k===dim}">${n}</button>`).join('');
 tabs.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;dim=b.dataset.d;cur=null;

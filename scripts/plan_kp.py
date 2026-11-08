@@ -12,20 +12,24 @@ A concept topic's directly reported frequency (reports that name the topic) is s
 counting double. Every point keeps a small floor so an unasked point is ranked, not erased.
 
 Value of a card: the sum, over the points it teaches, of the point's weight divided by how many cards teach it (a
-card's primary point counts fully, the others half). Mastery of a point: the mean of its three best-held cards.
+card's primary point counts fully, the others half), capped at the three cards a point needs. Mastery of a point: the
+mean of its three best-held cards.
 """
 from __future__ import annotations
 
 import json
+import sys
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from trellis.plan import PointModel  # noqa: E402
+
 KP = ROOT / "sources/local/plan/kp"
 ROLE = {"必讲": 1.0, "追问": 0.6, "加分": 0.3}
 SECONDARY = 0.5
-HELD_CARDS = 3  # a point is held once about this many of its cards are; a point taught by ten cards does not need all ten
 META = {"dlv.level-expectations", "dlv.prep-plan", "dlv.prep-practice", "dlv.problem-catalog", "dlv.variant-recognition",
         "dlv.oral-playbook", "dlv.rubric", "ld.scoring-dimensions"}  # about the interview itself, not something an answer states
 
@@ -103,23 +107,12 @@ def weights(pts: Points, question_freq: dict[str, float], concept_direct: dict[s
 
 
 def card_values(pts: Points, kp_w: dict[str, float]) -> dict[str, float]:
-    teach = defaultdict(float)
-    for ks in pts.card.values():
-        for i, k in enumerate(ks):
-            teach[k] += 1.0 if i == 0 else SECONDARY
-    out = {}
-    for cid, ks in pts.card.items():
-        out[cid] = sum(kp_w.get(k, 0.0) * (1.0 if i == 0 else SECONDARY) / teach[k] for i, k in enumerate(ks))
-    return out
+    model = PointModel(kp_w, pts.card)
+    return {cid: model.card_value(cid) for cid in pts.card}
 
 
 def mastery(pts: Points, card_mastery: dict[str, float]) -> dict[str, float]:
-    """Point -> mastery: the mean of its best `HELD_CARDS` cards, so an unseen extra card does not count against it."""
-    held = defaultdict(list)
-    for cid, ks in pts.card.items():
-        for k in ks:
-            held[k].append(card_mastery.get(cid, 0.0))
-    return {k: sum(sorted(v, reverse=True)[:HELD_CARDS]) / min(HELD_CARDS, len(v)) for k, v in held.items()}
+    return PointModel({}, pts.card).mastery(card_mastery)
 
 
 def required_by(pts: Points) -> dict[str, list[tuple[str, str, str]]]:

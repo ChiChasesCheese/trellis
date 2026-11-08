@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 
-from trellis.plan import CardInfo, Edge, card_mastery, plan, topic_weights
+from trellis.plan import CardInfo, Edge, PointModel, card_mastery, plan, topic_weights
 from trellis.traces import Trace
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
@@ -66,3 +66,12 @@ def test_exam_point_weight_follows_role_and_question_frequency():
     assert v["c1"] > v["c3"]  # shared by two cards, "must" is still worth more per card than "bonus"
     m = plan_kp.mastery(pts, {"c1": 1.0, "c2": 0.0})
     assert abs(m["must"] - 0.5) < 1e-9
+
+
+def test_coverage_is_measured_on_points_and_a_card_adds_only_what_is_not_held():
+    cards = [CardInfo(c, "l", "t", i, "必会") for i, c in enumerate(("a1", "a2", "a3", "a4", "b1"))]
+    model = PointModel({"big": 3.0, "small": 1.0}, {"a1": ["big"], "a2": ["big"], "a3": ["big"], "a4": ["big"], "b1": ["small"]})
+    held = {c: Trace(c, reps=9, interval=30, type=2, last_review=DAY) for c in ("a1", "a2", "a3")}
+    p = plan(cards, held, {"t": 1.0}, [], {}, now_ms=2 * DAY, budget=1, points=model)
+    assert abs(p.held - 0.75) < 0.01  # three held cards hold "big"; a fourth unseen card does not count against it
+    assert p.card_value["a4"] < p.card_value["b1"]  # another card on a held point adds less than the first on a new one
