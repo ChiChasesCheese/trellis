@@ -199,14 +199,14 @@ class LFUPolicy(EvictionPolicy):
         return None
 ```
 
-2. 【追问再讲】TTL 淘汰策略：淘汰最快过期的键，小根堆加惰性删除。`set` 要在写入过期时间后通知策略，所以 `EvictionPolicy` 加一个默认空方法，`KVStore.set` 末尾加两行。
+2. 【追问再讲】TTL 淘汰策略：淘汰最快过期的键，小根堆加惰性删除。`set` 要在写入过期时间后通知策略，所以 `EvictionPolicy` 加一个默认空方法，`KVStore.set` 末尾加一行。
 
 ```python
 import heapq
 
 
 # EvictionPolicy 新增一个默认空方法，只有 TTL 策略关心
-def on_expire_set(self, key: str, expire_at: float) -> None: ...
+def on_expire_set(self, key: str, expire_at: Optional[float]) -> None: ...
 
 
 class TTLPolicy(EvictionPolicy):
@@ -230,9 +230,8 @@ class TTLPolicy(EvictionPolicy):
 ```
 
 ```python
-# KVStore.set 的最后加两行：写入过期时间后通知策略
-            if exp is not None:
-                self._policy.on_expire_set(key, exp)
+# KVStore.set 的最后加一行。exp 为 None 也要通知：覆盖写去掉 TTL 时，策略才会清掉旧的过期时间
+            self._policy.on_expire_set(key, exp)
 ```
 
 3. 【追问再讲】数据结构层：列表和有序集合，以及统一流程 `_fetch`（加类型检查）。新增一种结构只需新增值类型和命令，淘汰策略与过期逻辑不动，因为它们只认 key。`get` 同样可以改成 `_fetch(key, str, create=False)`。

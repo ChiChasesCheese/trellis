@@ -39,7 +39,7 @@ kind: low-level-design
 **核心实体与接口。**
 - 实体：
   - `Event`：活动。`TicketType`：票型，字段 `total`、`sold`、`held`、`price_cents`、`sale_start`、`sale_end`。可售数 = `total - sold - held`。
-  - `Reservation`：保留记录，状态 `HELD → CONFIRMED / EXPIRED / CANCELLED`，字段 `qty`、`expires_at`、`idempotency_key`。
+  - `Reservation`：保留记录，状态 `HELD → PAYING → CONFIRMED`，或 `HELD → EXPIRED / CANCELLED`，字段 `qty`、`expires_at`、`idempotency_key`。
   - `Booking`：购买完成后的订单，含 `payment_status`（PENDING、PAID、FAILED、REFUNDED），保存下单时的价格快照。`Refund`：退款记录。
 - 接口：
   - `POST /events`、`PUT /events/{id}`、`GET /events/{id}`（含各票型可售数量）。
@@ -85,8 +85,8 @@ kind: low-level-design
 </g></svg>
 ```
 - 保留：事务内执行下面的条件更新并插入 `reservation`（HELD，带过期时间）。受影响行数为 0 就是售罄或未开售。
-- 购买：事务一读取并锁定 `reservation` 行，确认 HELD 且未过期；提交后调用支付网关（带预订号作幂等键）；事务二把 `held` 转为 `sold`，保留改为 CONFIRMED，插入 `booking`。付款与确认之间崩溃时，用付款幂等键查询支付状态对账。
-- 过期：`HoldSweeper` 每几十秒扫描 `HELD` 且过期的记录，用条件更新改为 EXPIRED，成功才释放 `held`。
+- 购买：事务一用条件更新把保留从 HELD 改成 PAYING（要求未过期），改成功才继续；提交后调用支付网关（带预订号作幂等键）；事务二把 `held` 转为 `sold`，保留改为 CONFIRMED，插入 `booking`。付款失败改回 HELD。付款途中或确认之前崩溃，保留停在 PAYING，由对账任务用幂等键查询支付状态：成功就确认，失败就改回 HELD。
+- 过期：`HoldSweeper` 每几十秒扫描 `HELD` 且过期的记录，用条件更新改为 EXPIRED，成功才释放 `held`。它不碰 PAYING，所以不会出现钱扣了票却被收回。
 
 ```sql
 UPDATE ticket_type
@@ -97,7 +97,7 @@ WHERE id = :id
 -- 受影响行数 = 1 才继续插入 reservation；同一个事务内完成
 ```
 
-**核心实现。** 约 90 行，下面的内存版和上面的数据库版一一对应。并发正确性集中在 `TicketType` 一个类里，其余代码只调它的原子方法，容易审查也容易压测。用到的模式：状态机（保留的生命周期）、服务与仓储分层、支付网关接口（可替换，便于测试注入失败）。
+**核心实现。** 约 100 行，下面的内存版和上面的数据库版一一对应。并发正确性集中在 `TicketType` 一个类里，其余代码只调它的原子方法，容易审查也容易压测。用到的模式：状态机（保留的生命周期）、服务与仓储分层、支付网关接口（可替换，便于测试注入失败）。
 
 ```python
 from dataclasses import dataclass, field
@@ -108,11 +108,12 @@ import time, uuid
 
 
 class RStatus(Enum):
-    HELD = 1; CONFIRMED = 2; EXPIRED = 3; CANCELLED = 4
+    HELD = 1; PAYING = 2; CONFIRMED = 3; EXPIRED = 4; CANCELLED = 5
 
 
 class SoldOut(Exception): ...
 class HoldExpired(Exception): ...
+class PaymentInFlight(Exception): ...
 class NotOnSale(Exception): ...
 
 
@@ -174,12 +175,17 @@ class BookingService:
     def purchase(self, rid: str, token: str, price_cents: int, now: float | None = None) -> bool:
         now = time.time() if now is None else now
         r = self.reservations[rid]
-        if r.status is RStatus.CONFIRMED:
-            return True  # 重复请求直接返回成功
-        if r.status is not RStatus.HELD or now > r.expires_at:
-            raise HoldExpired()
+        with r.tt._lock:  # 数据库版：UPDATE ... SET status='PAYING' WHERE status='HELD' AND expires_at >= now
+            if r.status is RStatus.CONFIRMED:
+                return True  # 重复请求直接返回成功
+            if r.status is RStatus.PAYING:
+                raise PaymentInFlight()  # 同一笔正在付款，不再扣一次
+            if r.status is not RStatus.HELD or now > r.expires_at:
+                raise HoldExpired()
+            r.status = RStatus.PAYING  # 清理任务只动 HELD，付款途中保留不会被收回
         # 外部付款不放进数据库事务里：不要拿着行锁等第三方
         if not self.pay.charge(token, price_cents * r.qty, idem_key=rid):
+            r.status = RStatus.HELD
             return False  # 付款失败：保留仍然有效，用户可以换卡重试
         r.tt.confirm(r.qty)
         r.status = RStatus.CONFIRMED
@@ -188,10 +194,12 @@ class BookingService:
     def sweep_expired(self, now: float | None = None) -> None:
         now = time.time() if now is None else now
         for r in list(self.reservations.values()):
-            if r.status is RStatus.HELD and r.expires_at < now:
+            with r.tt._lock:
+                if r.status is not RStatus.HELD or r.expires_at >= now:
+                    continue
                 # 只有状态确实从 HELD 变成 EXPIRED 才归还库存，防止重复释放
                 r.status = RStatus.EXPIRED  # 数据库版：UPDATE ... WHERE status='HELD'，看影响行数
-                r.tt.release_hold(r.qty)
+            r.tt.release_hold(r.qty)
 ```
 
 **运行。**
@@ -259,7 +267,7 @@ def cancel(self, rid):  # BookingService
    - 付款是外部调用，无法纳入事务，所以拆成两个短事务：「保留 + 计数」和「确认 + 出票」，中间用状态和幂等键衔接。
    - 付款结果不明（超时）：不要贸然释放库存，进入待核实状态，用幂等键向支付方查询；确认失败再释放，确认成功补全订单。
 3. 【必讲】状态机与过期释放。
-   - 保留的状态迁移只允许 HELD → CONFIRMED / EXPIRED / CANCELLED；每次迁移用条件更新并检查影响行数。
+   - 保留的状态迁移只允许 HELD → PAYING → CONFIRMED、PAYING → HELD（付款失败）、HELD → EXPIRED / CANCELLED；每次迁移用条件更新并检查影响行数。
    - 过期任务和购买请求同时到达时，只有一个能改成功，另一个得到明确的错误（410 保留过期）；只有状态确实变化才归还库存，避免同一份库存被释放两次。
    - 读可售数量时可以把过期保留当作已释放，减少用户看到「已售罄」的时间。
 4. 【追问再讲】接口错误码：409 售罄、410 保留过期、422 未开售、429 限流。付款失败时保留仍有效。
