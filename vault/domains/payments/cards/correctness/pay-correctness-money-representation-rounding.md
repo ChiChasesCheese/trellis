@@ -18,8 +18,8 @@ from decimal import Decimal, ROUND_HALF_EVEN, ROUND_HALF_UP
 print(0.1 + 0.2, Decimal("0.1") + Decimal("0.2"))
 for s in ("0.125", "0.135", "2.5"):
     d = Decimal(s)
-    q = Decimal("0.01") if s != "2.5" else Decimal("1")
-    print(s, d.quantize(q, ROUND_HALF_EVEN), d.quantize(q, ROUND_HALF_UP))
+    q = Decimal("0.01") if s != "2.5" else Decimal("1")   # 前两个取到分，2.5 取到整数
+    print(s, d.quantize(q, ROUND_HALF_EVEN), d.quantize(q, ROUND_HALF_UP))   # 银行家舍入 / 四舍五入
 ```
 
 实际输出：

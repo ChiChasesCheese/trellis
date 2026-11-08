@@ -16,11 +16,11 @@ db = sqlite3.connect(":memory:")
 db.execute("create table pay(id int primary key, state text)"); db.execute("insert into pay values (1,'AUTHORIZED')")
 LEGAL = {"AUTHORIZED": {"CAPTURED", "VOIDED"}, "CAPTURED": {"REFUNDED"}}
 def move(pid: int, src: str, dst: str) -> bool:
-    if dst not in LEGAL.get(src, set()): return False
-    return db.execute("update pay set state=? where id=? and state=?", (dst, pid, src)).rowcount == 1
-print(move(1, "AUTHORIZED", "CAPTURED"))   # first writer wins
-print(move(1, "AUTHORIZED", "VOIDED"))     # late/concurrent writer: state already moved
-print(move(1, "CAPTURED", "AUTHORIZED"))   # illegal backward move
+    if dst not in LEGAL.get(src, set()): return False   # 先查转移表
+    return db.execute("update pay set state=? where id=? and state=?", (dst, pid, src)).rowcount == 1   # 影响 1 行才算成功
+print(move(1, "AUTHORIZED", "CAPTURED"))   # 先到者成功
+print(move(1, "AUTHORIZED", "VOIDED"))     # 晚到或并发者：状态已变，条件不成立
+print(move(1, "CAPTURED", "AUTHORIZED"))   # 非法回退，转移表拒绝
 print(db.execute("select state from pay").fetchone())
 ```
 

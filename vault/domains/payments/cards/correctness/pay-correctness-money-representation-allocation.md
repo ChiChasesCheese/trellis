@@ -17,10 +17,10 @@ step: 4
 
 ```python
 def split(total: int, weights: list[int]) -> list[int]:
-    s = sum(weights); base = [total * w // s for w in weights]
-    rem = total - sum(base)
-    order = sorted(range(len(weights)), key=lambda i: -(total * weights[i] % s))
-    for i in order[:rem]: base[i] += 1
+    s = sum(weights); base = [total * w // s for w in weights]   # 每份先向下取整
+    rem = total - sum(base)   # 剩下几分没分出去
+    order = sorted(range(len(weights)), key=lambda i: -(total * weights[i] % s))   # 余数大的优先；平局按下标，结果确定
+    for i in order[:rem]: base[i] += 1   # 每份多给 1 分，直到分完
     return base
 print(split(10000, [1, 1, 1]), sum(split(10000, [1, 1, 1])))
 print(split(1000, [50, 30, 20]))

@@ -16,14 +16,14 @@ db = sqlite3.connect(":memory:")
 db.execute("create table idem(k text primary key, req_hash text, resp text)")
 def charge(key: str, req_hash: str, amount: int) -> dict:
     try:
-        with db:
-            db.execute("insert into idem(k, req_hash) values (?,?)", (key, req_hash))
-            resp = {"payment": "p_1", "amount": amount}      # business write, same transaction
+        with db:   # 一个事务：要么全成功，要么回滚
+            db.execute("insert into idem(k, req_hash) values (?,?)", (key, req_hash))   # 撞主键即重复请求
+            resp = {"payment": "p_1", "amount": amount}      # 业务写入，与幂等键同一个事务
             db.execute("update idem set resp=? where k=?", (json.dumps(resp), key))
         return resp
-    except sqlite3.IntegrityError:
+    except sqlite3.IntegrityError:   # 重复：读出第一次保存的指纹和结果
         h, r = db.execute("select req_hash, resp from idem where k=?", (key,)).fetchone()
-        return {"error": 422} if h != req_hash else json.loads(r)
+        return {"error": 422} if h != req_hash else json.loads(r)   # 指纹不同拒绝，相同则回放
 print(charge("k1", "h1", 5000)); print(charge("k1", "h1", 5000)); print(charge("k1", "h2", 9000))
 ```
 
