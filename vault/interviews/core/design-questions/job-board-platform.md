@@ -246,6 +246,9 @@ class EventBus:
 3. 【追问再讲】倒排索引：关键词先查「词 → 职位集合」求交集，再套规格。
 
 ```python
+import re
+
+
 def tokens(text: str) -> set[str]:
     return set(re.findall(r"[a-z0-9+#]+", text.lower()))
 
