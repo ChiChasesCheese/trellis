@@ -2,7 +2,7 @@
 id: hi-pt-crowdfunding-share-purchase-4-idempotency
 node: qb.sd.crowdfunding-share-purchase.points
 type: qa
-step: 3
+step: 4
 ---
 ## Q
 **限时众筹购股系统 · 购买幂等**｜必会 · 出自：限时众筹购股系统 › 整体设计

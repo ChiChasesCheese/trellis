@@ -2,7 +2,7 @@
 id: hi-pt-crowdfunding-share-purchase-2-reserve-then-pay
 node: qb.sd.crowdfunding-share-purchase.points
 type: qa
-step: 4
+step: 2
 ---
 ## Q
 **限时众筹购股系统 · 先预留后扣款**｜必会 · 出自：限时众筹购股系统 › 深入 1
