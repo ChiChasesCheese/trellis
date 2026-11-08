@@ -9,7 +9,7 @@ step: 2
 
 ## A
 **持卡人数据（CHD，cardholder data）**
-- 主账号（PAN，Primary Account Number）：卡号，通常 16 位。
+- 主账号（PAN，Primary Account Number）：卡号，长度 13 到 19 位，最常见 16 位。
 - 持卡人姓名。
 - 有效期。
 - 服务代码。
