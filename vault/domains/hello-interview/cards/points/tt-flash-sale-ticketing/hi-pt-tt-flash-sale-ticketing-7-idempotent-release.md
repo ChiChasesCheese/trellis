@@ -10,6 +10,7 @@ step: 7
 秒杀抢票的占位超时或付款失败要把票回补。怎样保证重复或并发释放只回补一次？
 
 ## A
+**数据结构。** 占位记在有序集合 holds（成员 hold_id），已买用户记在集合 bought，剩余库存是计数 stock。
 **要点。** 只有 ZREM 真的删掉了成员，才 INCR stock 并 SREM bought。
 **为什么。** 回补两次会让库存虚增，随后超卖。
 **状态转移。** 数据库里每个转移是比较并交换：UPDATE hold SET state='paid' WHERE hold_id=? AND state IN ('held','ordered')，看影响行数。
