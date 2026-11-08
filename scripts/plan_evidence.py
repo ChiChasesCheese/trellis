@@ -84,6 +84,19 @@ def report_weight(r: dict, half_life: float) -> float:
     return w * (1.2 if r.get("level") in SENIOR else 1.0)
 
 
+def source_agreement(a: dict[str, float], b: dict[str, float]) -> dict:
+    """Spearman rank correlation of two frequency indexes over the covered topics both contain, plus top-20 overlap."""
+    keys = [k for k in a if k in b and not k.startswith("uncovered:")]
+    if len(keys) < 3:
+        return {"n": len(keys), "rho": 0.0, "top20_overlap": 0}
+    ra = {k: i for i, k in enumerate(sorted(keys, key=lambda k: -a[k]))}
+    rb = {k: i for i, k in enumerate(sorted(keys, key=lambda k: -b[k]))}
+    n = len(keys)
+    rho = 1 - 6 * sum((ra[k] - rb[k]) ** 2 for k in keys) / (n * (n * n - 1))
+    top = lambda d: {k for k in sorted((k for k in d if not k.startswith("uncovered:")), key=lambda k: -d[k])[:20]}
+    return {"n": n, "rho": rho, "top20_overlap": len(top(a) & top(b))}
+
+
 def group_of(company: str, targets: dict) -> str:
     for g, spec in targets.items():
         if company in spec.get("companies", []):
@@ -178,25 +191,43 @@ def main() -> int:
                 external.append(json.loads(line))
             except json.JSONDecodeError:
                 pass
+        external = [e for e in external if e.get("primary", True)]  # cross-vendor duplicates are merged into one primary row
+        q_bank = {c: dict(v) for c, v in q_company.items()}
+        q_ext: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
         for e in external:  # each public report counts once for its company, like a bank report
             company = e.get("company") or "unknown"
-            r = {"approxAskedOn": (e.get("date") or "") + "-01" if e.get("date") else "", "level": "SENIOR"}
+            level = (e.get("level") or "").lower()
+            r = {"approxAskedOn": (e.get("date") or "") + "-01" if e.get("date") else "",
+                 "level": "SENIOR" if any(k in level for k in ("senior", "staff", "principal", "资深", "高级")) else ""}
             w = report_weight(r, half) * {"high": 1.0, "medium": 0.7, "low": 0.4}.get(e.get("confidence"), 0.5)
-            for t in e.get("topics", []):
-                q_company[company][t] += w
+            if e.get("campus") or any(k in level for k in ("intern", "实习", "校招", "new grad")):
+                w *= 0.5  # campus and intern loops ask less design
+            topics = e.get("topics_union") or e.get("topics") or []
+            q = re.sub(r"\s+", " ", (e.get("question") or "").lower()).strip()
+            if not topics and re.match(r"(system design: )?design\b", q) and not re.search(r"hidden|not given|not stated|not named", q):
+                topics = ["uncovered:ext:" + q[:80]]  # a named design prompt we have no topic for still counts
+            for t in topics:  # one report is one unit, shared by the topics it names
+                q_company[company][t] += w / len(topics)
+                q_ext[company][t] += w / len(topics)
                 meta.setdefault(t, {"titles": set(), "reports": 0, "bytedance": 0, "last": ""})
+                if t.startswith("uncovered:"):
+                    meta[t]["titles"].add(e.get("question") or "")
                 meta[t]["reports"] += 1
                 meta[t]["bytedance"] += company in ("TikTok", "ByteDance")
-            for t in e.get("concepts", []):
+                meta[t]["last"] = max(meta[t]["last"], e.get("date") or "")
+            for t in e.get("concepts_union") or e.get("concepts") or []:
                 c_company[company][t] += w
+    else:
+        q_bank, q_ext = q_company, {}
     qfreq, used = mixed_index(q_company, targets)
+    agreement = source_agreement(mixed_index(q_bank, targets)[0], mixed_index(q_ext, targets)[0]) if q_ext else None
     cfreq, _ = mixed_index(c_company, targets)
     total = sum(qfreq.values()) or 1.0
     covered = sum(v for k, v in qfreq.items() if not k.startswith("uncovered:"))
     out = {
         "method": {"targets": targets, "half_life_months": half, "senior_weight": 1.2, "groups_used": used,
                    "bank_reports": sum(len(q["upvotes"]) for q in bank if q["defaultInterviewType"] in sd_types),
-                   "external_reports": len(external)},
+                   "external_reports": len(external), "agreement": agreement},
         "coverage": covered / total,
         "questions": {k: {"freq": v / total, "reports": meta[k]["reports"], "bytedance": meta[k]["bytedance"], "last": meta[k]["last"],
                           "titles": sorted(meta[k]["titles"])[:3]} for k, v in sorted(qfreq.items(), key=lambda kv: -kv[1])},
@@ -212,7 +243,9 @@ def main() -> int:
             n80 = i + 1
             break
     lines = ["# 系统设计考频证据", "",
-             f"题库系统设计与面向对象设计报告 {out['method']['bank_reports']} 条，外部公开报告 {len(external)} 条。",
+             f"题库系统设计与面向对象设计报告 {out['method']['bank_reports']} 条，外部公开报告 {len(external)} 条（跨站重复已合并）。",
+             *([f"**两路数据是否一致：** 两边都出现的 {agreement['n']} 个主题，排名的 Spearman 相关 {agreement['rho']:.2f}；"
+                f"题库前 20 里有 {agreement['top20_overlap']} 个也在外部前 20。"] if agreement else []),
              f"按公司归一化后按目标混合：" + "，".join(f"{g} {s['weight']:.0%}（{used.get(g, {}).get('companies', 0)} 家公司有数据）" for g, s in targets.items()) + "。",
              f"时间半衰期 {half:.0f} 个月，Senior 及以上报告权重 1.2；每家公司的分布向整体分布收缩（经验贝叶斯，伪计数 {SHRINK:.0f}）。", "",
              f"**覆盖率：** 按这个口径，deck 里已有主题的题目占全部面试考频的 {out['coverage']:.1%}。",

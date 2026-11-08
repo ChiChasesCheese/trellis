@@ -18,12 +18,20 @@ reports (in the bank used here one company files about 40% of all rows). So the 
    This is empirical-Bayes shrinkage: `share(q, c) = (n_qc + 30 · p_q) / (n_c + 30)`.
 3. **Mix by target.** Combine the shares by the learner's target groups, for example ByteDance/TikTok, large US tech
    and others. Each group gets a weight, and companies inside a group are averaged.
-4. **Add public reports.** Reports collected from public pages (1point3acres, LeetCode Discuss, Glassdoor, GitHub
-   compilations, each recorded with URL and date) enter the same way. Each is scaled by its confidence.
+4. **Add public reports.** Reports collected from public pages enter the same way. The sources are 1point3acres,
+   LeetCode Discuss, Blind, Nowcoder and GitHub mirrors of question vendors, each recorded with URL and date.
+   - The same interview seen on several sites (same company, month and prompt) is merged into one report.
+   - Each report is scaled by its confidence (high 1.0, medium 0.7, low 0.4). It counts as senior only if it says so.
+     Campus and intern loops count half.
+   - One report is one unit: a report naming two topics gives each half.
+   - A named design prompt with no topic of ours still counts, as an uncovered question. A report with no named prompt
+     only feeds concept mentions.
 
 Two numbers fall out of this and are reported, not assumed:
 - **Coverage:** the share of the mixed frequency that falls on questions the deck has a topic for.
 - **The 80/20 line:** how many of the most-asked questions carry 80% of it.
+- **Agreement between the two sources:** the Spearman rank correlation of the bank-only and public-only indexes over the
+  topics both contain, and the overlap of their top 20.
 
 Bank questions that are the same problem under another name are mapped by hand in a reviewed alias file. A neighbour
 problem is never aliased.
@@ -83,10 +91,37 @@ Cards are taken greedily by value, under three rules:
 The picks are then ordered so that prerequisite topics come first, and they are dealt in three stages: weak spots,
 concepts and technologies, whole questions.
 
-## 6. Known weaknesses
+## 6. LeetCode
+
+Coding problems have a better source: the GitHub company-wise lists (LeetCode Premium frequency per company and per
+window, for several hundred companies). `scripts/lc_analysis.py` uses them alone:
+
+```
+importance = 0.6 × target frequency + 0.4 × breadth
+```
+
+- **Target frequency** is the higher of TikTok and ByteDance. Each is half all-time frequency and half the highest
+  recent window (30 days, 3 months, 6 months), as a value from 0 to 1.
+- **Breadth** is the sum of all-time frequency over every company, divided by the largest such sum.
+
+The same score over every problem in the repository says how much of what is asked the deck covers.
+
+Each problem is tagged by pattern, technique, pitfall and Python idiom. A dimension's priority is:
+
+```
+importance × (1 − mastery) × clip(1 + 0.5 · (slip / overall slip − 1), 1, 1.5)
+```
+
+- Slip counts Again as 1 and Hard as 0.5, smoothed with 15 pseudo-reviews at the learner's overall rate.
+- A weakness can raise priority by at most half; it never outranks how often a dimension is asked.
+
+## 7. Known weaknesses
 
 - **The bank is self-reported and English-speaking.** Some groups are thin. ByteDance has nine system-design rows in
   the bank used here, which is why its share is shrunk and why public reports matter.
+- **Public reports are thin and skewed too.** Forum thread bodies sit behind logins, and vendor catalogues over-represent
+  the companies they sell to. Most public reports state no level. The two sources agree only moderately (a rank
+  correlation near 0.4), so neither alone should set the weights.
 - **Keyword matching is coarse.** Concept mentions in descriptions over-count broad words. The lists were tightened
   after inspection (for example, `file` and `push` were removed), but this remains the noisiest input.
 - **Several weights are judgement, not measurement.** These are the 0.5 spread, the 0.3 concept share, the level
