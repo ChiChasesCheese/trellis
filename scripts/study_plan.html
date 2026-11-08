@@ -1,103 +1,197 @@
 <!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>学习规划看板</title>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>今日计划</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css">
 <style>
-:root{--bg:#0f1115;--fg:#e6e6e6;--dim:#8a8f98;--card:#181b22;--line:#2a2f3a;--accent:#4f8cff}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,"PingFang SC",sans-serif;background:var(--bg);color:var(--fg)}
-header{padding:14px 18px;border-bottom:1px solid var(--line)}h1{font-size:18px;margin:0 0 4px}.dim{color:var(--dim);font-size:12px}
-main{display:grid;grid-template-columns:minmax(0,2fr) minmax(300px,1fr);gap:14px;padding:14px}
-@media(max-width:900px){main{grid-template-columns:1fr}}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
-.panel h2{font-size:14px;margin:0 0 8px}.kpis{display:flex;gap:18px;flex-wrap:wrap}.kpi b{font-size:22px;display:block}
-#treemap{position:relative;width:100%;height:520px}
-.tile{position:absolute;overflow:hidden;border:1px solid var(--bg);cursor:pointer;font-size:11px;padding:3px;color:#fff;line-height:1.25}
-.tile:hover{outline:2px solid #fff;z-index:2}.group{position:absolute;border:2px solid var(--bg);pointer-events:none}
-.group span{position:absolute;left:4px;top:2px;font-size:12px;font-weight:600;color:#fff;text-shadow:0 0 3px #000}
-table{width:100%;border-collapse:collapse;font-size:12px}td,th{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left}
-th{color:var(--dim);font-weight:500}.bar{height:6px;background:#2a2f3a;border-radius:3px}.bar i{display:block;height:6px;border-radius:3px;background:var(--accent)}
-.legend{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--dim);margin-top:6px}.legend .grad{width:120px;height:8px;background:linear-gradient(90deg,#c0392b,#e0a030,#2e9e5b);border-radius:4px}
-ol{padding-left:20px;font-size:12px;margin:0}li{margin:2px 0}.chip{display:inline-block;padding:1px 6px;border-radius:8px;background:#232836;color:var(--dim);font-size:11px;margin:1px}
-</style></head><body>
-<header><h1>学习规划看板</h1><div class="dim" id="sub"></div></header>
-<main>
- <section>
-  <div class="panel"><div class="kpis" id="kpis"></div></div>
-  <div class="panel" style="margin-top:14px"><h2>知识地图：面积 = 面试权重，颜色 = 掌握度（点开看叶子）</h2><div id="treemap"></div>
-   <div class="legend">掌握度 0%<span class="grad"></span>100%</div></div>
-  <div class="panel" style="margin-top:14px"><h2 id="dtitle">点一个主题看详情</h2><div id="detail" class="dim">叶子、掌握度、它依赖谁、谁依赖它。</div></div>
- </section>
+/* Whiteboard by day, chalkboard by night: the board Chi practises on. */
+:root{
+  --board:#F5F6F3; --grid:rgba(30,36,51,.045); --ink:#1E2433; --ink-2:#5B6273; --rule:#D9DDD8;
+  --blue:#2558C9; --red:#C8323C; --amber:#D9971A; --green:#2F8A55; --tile-ink:#1E2433;
+  --hand:"LXGW WenKai","Kaiti SC","STKaiti","KaiTi",serif;
+  --text:-apple-system,"PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --board:#1D2622; --grid:rgba(233,234,227,.04); --ink:#E9EAE3; --ink-2:#A3AAA4; --rule:#34403A;
+  --blue:#8DB1FF; --red:#FF8A8A; --amber:#F2C35B; --green:#7FD39C; --tile-ink:#10150F;
+}}
+*{box-sizing:border-box}
+html{background:var(--board)}
+body{margin:0;color:var(--ink);font:15px/1.65 var(--text);font-variant-numeric:tabular-nums;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.page{max-width:1240px;margin:0 auto;padding:36px 32px 64px}
+.date{color:var(--ink-2);font-size:13px;margin:0 0 6px}
+h1{font:400 clamp(30px,4.6vw,52px)/1.2 var(--hand);margin:0 0 14px;letter-spacing:.01em}
+h1 .topic{position:relative;white-space:nowrap}
+h1 .topic svg{position:absolute;left:-2%;bottom:-.18em;width:104%;height:.42em;overflow:visible}
+h1 .topic path{fill:none;stroke:var(--blue);stroke-width:5;stroke-linecap:round;stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.1s .25s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){h1 .topic path{animation:none;stroke-dashoffset:0}}
+.why{max-width:62ch;margin:0 0 6px;font-size:17px}
+.standing{max-width:62ch;margin:0;color:var(--ink-2)}
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:40px;margin-top:40px;align-items:start}
+h2{font:400 22px/1.3 var(--hand);margin:0 0 12px}
+aside section+section{margin-top:34px;padding-top:22px;border-top:1px solid var(--rule)}
+.route{list-style:none;margin:0;padding:0;position:relative}
+.route:before{content:"";position:absolute;left:11px;top:14px;bottom:14px;border-left:2px dashed var(--rule)}
+.route li{position:relative;padding:0 0 18px 36px}
+.route li:last-child{padding-bottom:0}
+.route .n{position:absolute;left:0;top:2px;width:24px;height:24px;border-radius:50%;border:2px solid var(--blue);background:var(--board);
+  font:600 13px/20px var(--text);text-align:center;color:var(--blue)}
+.route b{font-weight:600}.route span.d{display:block;color:var(--ink-2);font-size:13px}
+.note{color:var(--ink-2);font-size:13px;margin:12px 0 0}
+.next{list-style:none;margin:0;padding:0}.next li{padding:6px 0;border-bottom:1px solid var(--rule)}
+.next button{all:unset;cursor:pointer;color:var(--ink);font-weight:600;border-bottom:1px solid transparent}
+.next button:hover,.next button:focus-visible{border-bottom-color:var(--blue);outline:none}
+.next small{display:block;color:var(--ink-2);font-size:12.5px}
+.watch{margin:0;padding-left:18px}.watch li{margin:6px 0}.watch .rate{color:var(--red)}
+.coach{margin:14px 0 0;padding:10px 12px;border-left:3px solid var(--amber);font-size:14px}
+.mapwrap h2{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.key{font:13px var(--text);color:var(--ink-2);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.key i{display:inline-block;width:110px;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--red),var(--amber),var(--green))}
+.key em{font-style:normal;display:inline-flex;align-items:center;gap:4px}.key em:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--blue)}
+#map{position:relative;height:560px;border:2px solid var(--ink);border-radius:6px;overflow:hidden;background:var(--board)}
+.grp{position:absolute;border:2px solid var(--ink);pointer-events:none}
+.grp span{position:absolute;left:6px;top:0;max-width:calc(100% - 10px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:400 15px/22px var(--hand);color:var(--ink);background:var(--board);padding:0 6px 0 2px;border-bottom-right-radius:6px}
+.tile{position:absolute;border:1px solid var(--board);padding:3px 5px;font:12px/1.3 var(--text);color:var(--tile-ink);overflow:hidden;cursor:pointer;text-align:left}
+.tile.blank{background:transparent;color:var(--ink-2);border-color:var(--rule)}
+.tile:focus-visible,.tile.on{outline:3px solid var(--blue);outline-offset:-3px;z-index:2}
+.tile .dot{position:absolute;right:5px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 2px var(--board)}
+#detail{margin-top:26px}
+#detail h3{font:400 24px/1.3 var(--hand);margin:0 0 6px}
+#detail p{margin:6px 0;max-width:80ch}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 2px}
+.chips button{all:unset;cursor:pointer;font-size:12.5px;padding:2px 9px;border:1px solid var(--rule);border-radius:999px}
+.chips button:hover,.chips button:focus-visible{border-color:var(--blue);color:var(--blue)}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px}
+th{text-align:left;font-weight:400;color:var(--ink-2);padding:6px 8px;border-bottom:2px solid var(--ink)}
+td{padding:6px 8px;border-bottom:1px solid var(--rule);vertical-align:middle}.num{text-align:right;white-space:nowrap}
+.meter{width:120px;height:7px;border-radius:4px;background:var(--rule);overflow:hidden}.meter i{display:block;height:100%}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:48px;padding-top:26px;border-top:1px solid var(--rule)}
+.charts p{color:var(--ink-2);font-size:13px;margin:6px 0 0;max-width:60ch}
+svg text{font-family:var(--text)}
+@media (max-width:900px){.page{padding:22px 16px 48px}.layout{grid-template-columns:1fr;gap:28px}.charts{grid-template-columns:1fr}#map{height:440px}}
+</style></head><body><div class="page">
+<p class="date" id="date"></p>
+<h1 id="hero"></h1>
+<p class="why" id="why"></p>
+<p class="standing" id="standing"></p>
+<div class="layout">
  <aside>
-  <div class="panel"><h2>二八曲线</h2><svg id="pareto" viewBox="0 0 320 180" style="width:100%"></svg>
-   <div class="dim">横轴：按「每张卡的权重」从高到低累计卡片；纵轴：累计面试权重。橙线：现在已掌握的权重。</div></div>
-  <div class="panel" style="margin-top:14px"><h2>每日趋势</h2><svg id="trend" viewBox="0 0 320 140" style="width:100%"></svg></div>
-  <div class="panel" style="margin-top:14px"><h2>现在最值得学</h2><ol id="next"></ol></div>
-  <div class="panel" style="margin-top:14px"><h2>今日计划里的新卡</h2><ol id="picked"></ol></div>
+  <section><h2>今日路线</h2><ol class="route" id="route"></ol><p class="note" id="routeNote"></p></section>
+  <section><h2>接下来</h2><ul class="next" id="next"></ul></section>
+  <section><h2>需要留意的</h2><ul class="watch" id="watch"></ul><p class="coach" id="coach" hidden></p></section>
  </aside>
-</main>
+ <main>
+  <div class="mapwrap"><h2>知识地图 <span class="key">面积是面试权重。空白是还没学过，学过的按记牢程度着色 <span>刚学</span><i></i><span>牢</span><em>今日计划里</em></span></h2>
+   <div id="map" role="group" aria-label="知识地图"></div></div>
+  <div id="detail" aria-live="polite"></div>
+ </main>
+</div>
+<div class="charts">
+ <div><h2>二八曲线</h2><svg id="pareto" viewBox="0 0 520 220" role="img" aria-label="二八曲线"></svg><p id="paretoNote"></p></div>
+ <div><h2>近 30 天</h2><svg id="trend" viewBox="0 0 520 220" role="img" aria-label="近 30 天复习"></svg><p>柱子是每天复习的次数，红色部分是按了「忘记」的次数。</p></div>
+</div>
+</div>
 <script>
 const D=/*DATA*/null;
-const pct=x=>(x*100).toFixed(0)+'%';
-const color=m=>{const a=[192,57,43],b=[224,160,48],c=[46,158,91];const t=Math.max(0,Math.min(1,m));
- const [p,q,u]=t<.5?[a,b,t*2]:[b,c,(t-.5)*2];return `rgb(${p.map((v,i)=>Math.round(v+(q[i]-v)*u)).join(',')})`};
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const pct=x=>Math.round(x*100)+'%';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hex=h=>{h=h.replace('#','');return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16))};
+function mix(m){const [r,a,g]=[hex(css('--red')),hex(css('--amber')),hex(css('--green'))];const t=Math.max(0,Math.min(1,m));
+ const [p,q,u]=t<.5?[r,a,t*2]:[a,g,(t-.5)*2];return `rgb(${p.map((v,i)=>Math.round(v+(q[i]-v)*u)).join(',')})`}
 const T=Object.fromEntries(D.topics.map(t=>[t.id,t]));
+const B=D.brief||{};const x80=(D.pareto.find(([,y])=>y>=.8)||[1])[0];
+const pickedTopics=new Set(D.pickedTopics||[]);
 const last=D.history[D.history.length-1]||{};
-document.getElementById('sub').textContent=`${last.date||''} · ${D.topics.length} 个主题 · ${D.edges.length} 条依赖`;
-document.getElementById('kpis').innerHTML=[
- ['面试权重已掌握',pct(D.held)],['已见卡片',`${last.seen}/${last.cards}`],['昨天复习',last.reviews_1d],['昨天忘记',last.again_1d],['连续天数',last.streak]
-].map(([k,v])=>`<div class="kpi"><b>${v}</b><span class="dim">${k}</span></div>`).join('');
 
-// squarified treemap
-function squarify(items,x,y,w,h){const out=[];let rest=items.slice();const total=rest.reduce((s,i)=>s+i.v,0)||1;
- const scale=w*h/total;rest=rest.map(i=>({...i,a:i.v*scale}));
- while(rest.length){const short=Math.min(w,h);let row=[],best=Infinity;
-  for(const it of rest){const r=[...row,it];const s=r.reduce((a,b)=>a+b.a,0);const mx=Math.max(...r.map(z=>z.a)),mn=Math.min(...r.map(z=>z.a));
-   const worst=Math.max(short*short*mx/(s*s),(s*s)/(short*short*mn));if(worst>best)break;best=worst;row=r}
-  const s=row.reduce((a,b)=>a+b.a,0);const thick=s/short;let off=0;
-  for(const it of row){const len=it.a/thick;if(w>=h)out.push({...it,x,y:y+off,w:thick,h:len});else out.push({...it,x:x+off,y,w:len,h:thick});off+=len}
-  if(w>=h){x+=thick;w-=thick}else{y+=thick;h-=thick}rest=rest.slice(row.length)}
+// header: the one recommendation, then why, then where things stand
+document.getElementById('date').textContent=(last.date||'').replace(/^(\d+)-(\d+)-(\d+)$/,(m,a,b,c)=>`${a} 年 ${+b} 月 ${+c} 日`);
+const lead=B.lead||(B.next||[])[0];
+if(lead){
+ document.getElementById('hero').innerHTML=`今天先补<span class="topic">「${esc(lead.title)}」<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M1 7 C 25 3, 55 9, 99 4"/></svg></span>`;
+ const parts=[];if(lead.boosted)parts.push('这是 GoFundMe 模拟面试里被扣分的地方');
+ parts.push(`它在面试权重里排第 ${lead.rank}`);if(lead.users)parts.push(`${lead.users} 道题要用到它`);parts.push(`你现在掌握了 ${pct(lead.mastery)}`);
+ document.getElementById('why').textContent=parts.join('，')+'。';
+}
+document.getElementById('standing').textContent=`你已经握住了 ${(D.held*100).toFixed(1)}% 的面试权重。按这个顺序学，前 ${pct(x80)} 的卡就能覆盖 80%。`;
+
+// route: three stages, in order
+const st=B.stages||{};const stageText={'弱项补强':'模拟面试暴露的缺口和背后的模式','概念与技术':'很多题都要用到的概念、技术和支付正确性','题目与整轮':'整道题和整轮模拟'};
+document.getElementById('route').innerHTML=Object.entries(st).map(([k,v],i)=>`<li><span class="n">${i+1}</span><b>${esc(k)}，${v} 张</b><span class="d">${stageText[k]||''}</span></li>`).join('');
+const y=B.yesterday||{};
+document.getElementById('routeNote').textContent=`每天发 ${B.daily_new||35} 张新卡，按这个顺序。今天另有约 ${B.due||0} 张到期复习。昨天复习 ${y.reviews||0} 次，新学 ${y.new||0} 张，已经连续学了 ${B.streak||0} 天。`;
+
+document.getElementById('next').innerHTML=(B.next||[]).filter(n=>!lead||n.id!==lead.id).slice(0,5).map(n=>`<li><button data-id="${n.id}">${esc(n.title)}</button>
+ <small>${esc(n.group)}，权重第 ${n.rank}${n.users?`，${n.users} 道题要用到`:''}，掌握 ${pct(n.mastery)}</small></li>`).join('');
+const w=B.weak||[];
+document.getElementById('watch').innerHTML=w.length?w.map(x=>x.kind==='forgot'?`<li>最近忘过「${esc(x.title)}」</li>`:
+ `<li class="rate">「${esc(x.title)}」近两周 ${x.n} 次复习里忘了 ${x.a} 次</li>`).join(''):'<li>近 7 天没有按过「忘记」。</li>';
+if(B.recognising){const c=document.getElementById('coach');c.hidden=false;
+ c.textContent=`近 7 天复习 ${B.week.reviews} 次，只忘了 ${B.week.again} 次。这么低的忘记率，更可能是在认答案而不是在回忆。先出声说出答案再翻面，说不完整就按「忘记」。`}
+
+// knowledge map: squarified treemap, groups then topics
+function squarify(items,x,y,w,h){const out=[];const total=items.reduce((s,i)=>s+i.v,0)||1;let rest=items.map(i=>({...i,a:i.v*w*h/total}));
+ while(rest.length&&w>0&&h>0){const sh=Math.min(w,h);let row=[],best=Infinity;
+  for(const it of rest){const r=[...row,it],s=r.reduce((a,b)=>a+b.a,0),mx=Math.max(...r.map(z=>z.a)),mn=Math.min(...r.map(z=>z.a));
+   const worst=Math.max(sh*sh*mx/(s*s),(s*s)/(sh*sh*mn));if(worst>best)break;best=worst;row=r}
+  const s=row.reduce((a,b)=>a+b.a,0),th=s/sh;let off=0;
+  for(const it of row){const len=it.a/th;out.push(w>=h?{...it,x,y:y+off,w:th,h:len}:{...it,x:x+off,y,w:len,h:th});off+=len}
+  if(w>=h){x+=th;w-=th}else{y+=th;h-=th}rest=rest.slice(row.length)}
  return out}
-const tm=document.getElementById('treemap');const W=tm.clientWidth,H=tm.clientHeight;
-const groups={};D.topics.forEach(t=>{(groups[t.top]=groups[t.top]||{id:t.top,title:t.topTitle,items:[]}).items.push(t)});
-const gl=squarify(Object.values(groups).map(g=>({...g,v:g.items.reduce((s,t)=>s+t.weight,0)})),0,0,W,H);
-for(const g of gl){const tiles=squarify(g.items.map(t=>({...t,v:t.weight})).sort((a,b)=>b.v-a.v),g.x+2,g.y+18,Math.max(0,g.w-4),Math.max(0,g.h-20));
- for(const t of tiles){const d=document.createElement('div');d.className='tile';Object.assign(d.style,{left:t.x+'px',top:t.y+'px',width:t.w+'px',height:t.h+'px',background:color(t.mastery)});
-  d.title=`${t.title}\n权重 ${(t.weight*100).toFixed(2)}% · 掌握 ${pct(t.mastery)} · 已见 ${t.seen}/${t.cards}`;
-  if(t.w>46&&t.h>22)d.textContent=t.title;d.onclick=()=>show(t.id);tm.appendChild(d)}
- const gd=document.createElement('div');gd.className='group';Object.assign(gd.style,{left:g.x+'px',top:g.y+'px',width:g.w+'px',height:g.h+'px'});
- gd.innerHTML=`<span>${g.title}</span>`;tm.appendChild(gd)}
-
-function show(id){const t=T[id];document.getElementById('dtitle').textContent=`${t.topTitle} › ${t.title}`;
- const deps=D.edges.filter(e=>e.src===id).sort((a,b)=>b.s-a.s),users=D.edges.filter(e=>e.dst===id).sort((a,b)=>b.s-a.s);
- const kind={requires:'先修',asks:'八股追问',pattern:'模式'};
- const link=(e,k)=>`<span class="chip" onclick="show('${e[k]}')" style="cursor:pointer">${T[e[k]]?T[e[k]].title:e[k]} · ${kind[e.kind]||e.kind}</span>`;
- document.getElementById('detail').innerHTML=
-  `<p>权重 <b>${(t.weight*100).toFixed(2)}%</b>（第 ${D.topics.slice().sort((a,b)=>b.weight-a.weight).findIndex(x=>x.id===id)+1} 名）· 掌握 <b>${pct(t.mastery)}</b> · 已见 ${t.seen}/${t.cards} · 就绪度 ${pct(t.readiness)}</p>`+
-  `<p>它依赖：${deps.map(e=>link(e,'dst')).join('')||'—'}</p><p>依赖它的：${users.slice(0,24).map(e=>link(e,'src')).join('')||'—'}</p>`+
-  `<table><tr><th>叶子</th><th>卡</th><th>掌握度</th><th>待学价值</th></tr>`+
-  t.leaves.sort((a,b)=>b.value-a.value).map(l=>`<tr><td>${l.title}</td><td>${l.cards}</td><td><div class="bar"><i style="width:${pct(l.mastery)}"></i></div></td><td>${(l.value*1000).toFixed(2)}</td></tr>`).join('')+`</table>`}
+const map=document.getElementById('map');let current=null;
+function drawMap(){map.innerHTML='';const W=map.clientWidth,H=map.clientHeight;const groups={};
+ D.topics.forEach(t=>{(groups[t.top]=groups[t.top]||{id:t.top,title:t.topTitle.replace(/[（(].*/,''),items:[]}).items.push(t)});
+ for(const g of squarify(Object.values(groups).map(g=>({...g,v:g.items.reduce((s,t)=>s+t.weight,0)})).sort((a,b)=>b.v-a.v),0,0,W,H)){
+  for(const t of squarify(g.items.map(t=>({...t,v:t.weight})).sort((a,b)=>b.v-a.v),g.x+2,g.y+24,Math.max(0,g.w-4),Math.max(0,g.h-26))){
+   const b=document.createElement('button');b.className='tile';b.dataset.id=t.id;
+   Object.assign(b.style,{left:t.x+'px',top:t.y+'px',width:t.w+'px',height:t.h+'px'});if(t.seen){b.style.background=mix(t.mastery)}else{b.classList.add('blank')}
+   const label=`${t.title}，权重 ${(t.weight*100).toFixed(2)}%，掌握 ${pct(t.mastery)}`;b.setAttribute('aria-label',label);b.title=label;
+   if(t.w>52&&t.h>24)b.textContent=t.title.replace(/[（(].*$/,'');
+   if(pickedTopics.has(t.id)){const d=document.createElement('i');d.className='dot';b.appendChild(d)}
+   map.appendChild(b)}
+  const gd=document.createElement('div');gd.className='grp';Object.assign(gd.style,{left:g.x+'px',top:g.y+'px',width:g.w+'px',height:g.h+'px'});
+  if(g.w>70)gd.innerHTML=`<span>${esc(g.title)}</span>`;map.appendChild(gd)}
+ if(current)mark(current)}
+function mark(id){map.querySelectorAll('.tile.on').forEach(e=>e.classList.remove('on'));const e=map.querySelector(`.tile[data-id="${id}"]`);if(e)e.classList.add('on')}
+function show(id){const t=T[id];if(!t)return;current=id;mark(id);
+ const rank=D.topics.slice().sort((a,b)=>b.weight-a.weight).findIndex(x=>x.id===id)+1;
+ const users=[...new Set(D.edges.filter(e=>e.dst===id).map(e=>e.src))],needs=[...new Set(D.edges.filter(e=>e.src===id).map(e=>e.dst))];
+ const chip=i=>T[i]?`<button data-id="${i}">${esc(T[i].title)}</button>`:'';
+ const leaves=t.leaves.slice().sort((a,b)=>b.value-a.value);
+ document.getElementById('detail').innerHTML=`<h3>${esc(t.title)}</h3>
+  <p>在「${esc(t.topTitle.replace(/[（(].*/,''))}」里，面试权重排第 ${rank}，占 ${(t.weight*100).toFixed(2)}%。共 ${t.cards} 张，你见过 ${t.seen} 张，掌握 ${pct(t.mastery)}。${t.readiness<.8?'它要用到的概念还没学稳，所以排得靠后。':''}</p>
+  ${users.length?`<p>要用到它的题和主题（${users.length}）</p><div class="chips">${users.slice(0,30).map(chip).join('')}</div>`:''}
+  ${needs.length?`<p>它要先用到</p><div class="chips">${needs.map(chip).join('')}</div>`:''}
+  <table><thead><tr><th>叶子</th><th class="num">卡片</th><th>掌握度</th></tr></thead><tbody>${leaves.map(l=>`<tr><td>${esc(l.title)}</td><td class="num">${l.cards}</td>
+  <td><div class="meter"><i style="width:${Math.max(2,l.mastery*100)}%;background:${mix(l.mastery)}"></i></div></td></tr>`).join('')}</tbody></table>`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-id]');if(!b)return;show(b.dataset.id);
+ if(!b.classList.contains('tile'))document.getElementById('detail').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'})});
+drawMap();addEventListener('resize',()=>{clearTimeout(window._r);window._r=setTimeout(drawMap,150)});
+matchMedia('(prefers-color-scheme:dark)').addEventListener('change',()=>{drawMap();if(current)show(current)});
+if(lead)show(lead.id);
 
 // pareto
-(function(){const s=document.getElementById('pareto'),w=320,h=180,p=28;const X=x=>p+x*(w-p-8),Y=y=>h-p-y*(h-p-8);
- const pts=[[0,0],...D.pareto].map(([x,y])=>`${X(x).toFixed(1)},${Y(y).toFixed(1)}`).join(' ');
- const x80=(D.pareto.find(([,y])=>y>=.8)||[1])[0];
- s.innerHTML=`<line x1="${p}" y1="${h-p}" x2="${w-8}" y2="${h-p}" stroke="#555"/><line x1="${p}" y1="8" x2="${p}" y2="${h-p}" stroke="#555"/>`+
- `<polyline points="${pts}" fill="none" stroke="var(--accent)" stroke-width="2"/>`+
- `<line x1="${p}" y1="${Y(.8)}" x2="${X(x80)}" y2="${Y(.8)}" stroke="#888" stroke-dasharray="3 3"/><line x1="${X(x80)}" y1="${Y(.8)}" x2="${X(x80)}" y2="${h-p}" stroke="#888" stroke-dasharray="3 3"/>`+
- `<line x1="${p}" y1="${Y(D.held)}" x2="${w-8}" y2="${Y(D.held)}" stroke="#e0a030" stroke-width="1.5"/>`+
- `<text x="${X(x80)+4}" y="${Y(.8)-4}" font-size="10" fill="#ccc">${pct(x80)} 的卡 → 80% 权重</text>`+
- `<text x="${w-10}" y="${Y(D.held)-4}" font-size="10" text-anchor="end" fill="#e0a030">已掌握 ${pct(D.held)}</text>`})();
+(function(){const s=document.getElementById('pareto'),w=520,h=220,p=40;const X=x=>p+x*(w-p-10),Y=v=>h-p-v*(h-p-14);
+ const ink=css('--ink'),ink2=css('--ink-2'),blue=css('--blue'),amber=css('--amber');
+ const pts=[[0,0],...D.pareto].map(([x,v])=>`${X(x).toFixed(1)},${Y(v).toFixed(1)}`).join(' ');
+ s.innerHTML=`<line x1="${p}" y1="${h-p}" x2="${w-10}" y2="${h-p}" stroke="${ink}" stroke-width="1.5"/><line x1="${p}" y1="14" x2="${p}" y2="${h-p}" stroke="${ink}" stroke-width="1.5"/>`+
+ `<polyline points="${pts}" fill="none" stroke="${blue}" stroke-width="3" stroke-linejoin="round"/>`+
+ `<path d="M${p} ${Y(.8)} H${X(x80)} V${h-p}" fill="none" stroke="${ink2}" stroke-dasharray="4 4"/>`+
+ `<line x1="${p}" y1="${Y(D.held)}" x2="${w-10}" y2="${Y(D.held)}" stroke="${amber}" stroke-width="2.5"/>`+
+ `<text x="${X(x80)+6}" y="${Y(.8)+18}" font-size="13" fill="${ink}">前 ${pct(x80)} 的卡覆盖 80% 的权重</text>`+
+ `<text x="${w-12}" y="${Y(D.held)-8}" font-size="13" text-anchor="end" fill="${amber}">你现在握住 ${(D.held*100).toFixed(1)}%</text>`+
+ `<text x="${p}" y="${h-14}" font-size="12" fill="${ink2}">0</text><text x="${w-10}" y="${h-14}" font-size="12" text-anchor="end" fill="${ink2}">全部卡片</text>`+
+ `<text x="${p-6}" y="${Y(1)+4}" font-size="12" text-anchor="end" fill="${ink2}">100%</text><text x="${p-6}" y="${Y(.8)+4}" font-size="12" text-anchor="end" fill="${ink2}">80%</text>`;
+ document.getElementById('paretoNote').textContent='把卡片按「每张卡值多少面试权重」从高到低排开，蓝线是累计覆盖的权重，橙线是你已经掌握的部分。'})();
 
-// trend: bars = reviews per day from the review log, line = interview weight held (one point per planner run)
-(function(){const s=document.getElementById('trend'),a=D.activity||[],h=D.history,w=320,H=140,p=26;if(!a.length)return;
- const X=i=>p+(a.length===1?0:i*(w-p-8)/(a.length-1)),maxR=Math.max(1,...a.map(d=>d.reviews));const Yr=v=>H-p-v/maxR*(H-p-18);
- const bars=a.map((d,i)=>`<rect x="${X(i)-3}" y="${Yr(d.reviews)}" width="6" height="${H-p-Yr(d.reviews)}" fill="#2f4a7a"><title>${d.date} 复习 ${d.reviews}，忘记 ${d.again}，新学 ${d.new}</title></rect>`+
-  (d.again?`<rect x="${X(i)-3}" y="${Yr(d.again)}" width="6" height="${H-p-Yr(d.again)}" fill="#c0392b"/>`:'')).join('');
- const idx=Object.fromEntries(a.map((d,i)=>[d.date,i])),maxH=Math.max(.05,...h.map(d=>d.held))*1.15;const pts=h.filter(d=>d.date in idx).map(d=>`${X(idx[d.date])},${H-p-d.held/maxH*(H-p-18)}`);
- s.innerHTML=bars+(pts.length>1?`<polyline points="${pts.join(' ')}" fill="none" stroke="#e0a030" stroke-width="2"/>`:'')+
-  `<text x="${p}" y="12" font-size="10" fill="#ccc">柱：每天复习（红：忘记），最高 ${maxR}　线：已掌握权重</text>`+
-  a.map((d,i)=>i%Math.ceil(a.length/6)===0?`<text x="${X(i)}" y="${H-8}" font-size="9" text-anchor="middle" fill="#888">${d.date.slice(5)}</text>`:'').join('')})();
-
-document.getElementById('next').innerHTML=D.topics.slice().sort((a,b)=>b.value-a.value).slice(0,12)
- .map(t=>`<li><a href="#" onclick="show('${t.id}');return false" style="color:var(--fg)">${t.title}</a> <span class="dim">${t.topTitle} · 掌握 ${pct(t.mastery)}</span></li>`).join('');
-document.getElementById('picked').innerHTML=D.picked.slice(0,80).map(c=>`<li>${c.title}</li>`).join('');
+// last 30 days
+(function(){const s=document.getElementById('trend'),a=D.activity||[],w=520,h=220,p=40;if(!a.length){s.outerHTML='<p>还没有复习记录。</p>';return}
+ const ink=css('--ink'),ink2=css('--ink-2'),blue=css('--blue'),red=css('--red');const n=a.length,bw=Math.max(4,(w-p-10)/n*.62);
+ const X=i=>p+(i+.5)*(w-p-10)/n,max=Math.max(1,...a.map(d=>d.reviews)),Y=v=>h-p-v/max*(h-p-14);
+ s.innerHTML=`<line x1="${p}" y1="${h-p}" x2="${w-10}" y2="${h-p}" stroke="${ink}" stroke-width="1.5"/>`+
+  a.map((d,i)=>`<rect x="${X(i)-bw/2}" y="${Y(d.reviews)}" width="${bw}" height="${h-p-Y(d.reviews)}" fill="${blue}" opacity=".85"><title>${d.date}：复习 ${d.reviews} 次，忘记 ${d.again} 次，新学 ${d.new} 张</title></rect>`+
+   (d.again?`<rect x="${X(i)-bw/2}" y="${Y(d.again)}" width="${bw}" height="${h-p-Y(d.again)}" fill="${red}"/>`:'')).join('')+
+  `<text x="${p-6}" y="${Y(max)+4}" font-size="12" text-anchor="end" fill="${ink2}">${max}</text>`+
+  a.map((d,i)=>i%Math.ceil(n/7)===0||i===n-1?`<text x="${X(i)}" y="${h-14}" font-size="12" text-anchor="middle" fill="${ink2}">${+d.date.slice(5,7)}/${+d.date.slice(8)}</text>`:'').join('')})();
 </script></body></html>

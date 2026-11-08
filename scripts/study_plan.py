@@ -375,7 +375,28 @@ def render_report(tree, p, cards, titles, base, edges, traces, logs, picks_by_st
     summary = {"date": now.strftime("%Y-%m-%d"), "held": round(p.held, 4), "seen": seen_all, "cards": len(cards),
                "reviews_1d": a1["reviews"], "again_1d": a1["again"], "new_1d": a1["new"], "minutes_1d": a1["minutes"],
                "streak": st, "picked": sum(stage_counts.values())}
+    # the same facts, structured, for the dashboard
+    first = [i for k in sorted(picks_by_stage) for i in picks_by_stage[k]][:1]
+    lead_topic = next((c.topic for c in cards if first and c.id == first[0]), nxt[0].topic if nxt else None)
+    lead = p.topics.get(lead_topic)
+    brief.clear()
+    brief.update({
+        "lead": {"id": lead.topic, "title": tree.title(lead.topic), "rank": rank[lead.topic], "users": len(set(ins[lead.topic])),
+                 "mastery": lead.mastery, "boosted": tree.top(lead.topic) == "s00"} if lead else None,
+        "next": [{"id": s.topic, "title": tree.title(s.topic), "group": re.sub(r"[（(].*", "", tree.title(tree.top(s.topic))),
+                  "rank": rank[s.topic], "users": len(set(ins[s.topic])), "mastery": s.mastery, "readiness": s.readiness,
+                  "boosted": tree.top(s.topic) == "s00"} for s in nxt],
+        "stages": {k[2:]: v for k, v in sorted(stage_counts.items())},
+        "weak": [{"kind": "forgot", "title": titles.get(cid, cid)} for cid in weak_cards]
+                + [{"kind": "rate", "title": tree.title(t), "n": n, "a": a} for t, n, a in weak_topics],
+        "recognising": a7["reviews"] >= 100 and a7["again"] / max(1, a7["reviews"]) < 0.03,
+        "yesterday": a1, "week": {k: a7[k] for k in ("reviews", "again", "new", "minutes")}, "streak": st, "due": due,
+        "daily_new": cfg_global.get("daily_new", 35),
+    })
     return head, "".join(body), summary
+
+
+brief: dict = {}
 
 
 # ---------------------------------------------------------------- dashboard
@@ -415,8 +436,9 @@ def dashboard(tree, p, cards, titles, edges, history) -> str:
                         "value": sum(p.card_value[c.id] for c in cs)} for l, cs in ls.items()],
         })
     data = {"topics": topics, "edges": [{"src": e.src, "dst": e.dst, "s": e.strength, "kind": e.kind} for e in edges],
-            "pareto": p.pareto, "held": p.held, "history": history, "activity": daily_activity,
-            "picked": [{"id": cid, "title": titles.get(cid, cid)} for cid in p.picked]}
+            "pareto": p.pareto, "held": p.held, "history": history, "activity": daily_activity, "brief": brief,
+            "picked": [{"id": cid, "title": titles.get(cid, cid)} for cid in p.picked],
+            "pickedTopics": sorted({c.topic for c in cards if c.id in set(p.picked)})}
     tpl = (ROOT / "scripts/study_plan.html").read_text(encoding="utf-8")
     return tpl.replace("/*DATA*/null", json.dumps(data, ensure_ascii=False))
 
