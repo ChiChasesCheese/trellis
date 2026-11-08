@@ -92,7 +92,7 @@ class Elevator:
 
     def eta(self, floor: int, d: Dir) -> int:
         """调度器用的代价估计：同向顺路最便宜，否则要先跑完当前方向的最远一站再折返。"""
-        if self.dir is Dir.IDLE:
+        if self.dir is Dir.IDLE or not self.targets():            # 刚开完最后一站、方向还没复位时也算空闲
             return abs(floor - self.floor)
         on_the_way = (floor - self.floor) * self.dir.value >= 0
         if on_the_way and d is self.dir:

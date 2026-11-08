@@ -295,11 +295,15 @@ def zrange(self, key: str, start: int, stop: int) -> list[str]:
 4. 【追问再讲】主动过期：后台线程周期调用，抽样删除没人再读的过期键。
 
 ```python
+import random
+
+
 def sweep_expired(self, sample: int = 20) -> int:
-    """后台线程周期调用：抽样删过期 key，防止没人再读的过期 key 占内存。"""
+    """后台线程周期调用：随机抽样删过期 key，防止没人再读的过期 key 占内存。"""
     with self._lock:
         now, n = self._clock(), 0
-        for k in list(self._data)[:sample]:
+        keys = list(self._data)
+        for k in random.sample(keys, min(sample, len(keys))):  # 随机抽，不能总看前 20 个
             e = self._data[k]
             if e.expire_at is not None and e.expire_at <= now:
                 self._remove(k)

@@ -165,14 +165,14 @@ class BookingService:
         self.reservations: dict[str, Reservation] = {}
 
     def reserve(self, tt: TicketType, qty: int, now: float | None = None) -> Reservation:
-        now = now or time.time()
+        now = time.time() if now is None else now
         tt.try_hold(qty, now)
         r = Reservation(uuid.uuid4().hex, tt, qty, now + self.HOLD_SECONDS)
         self.reservations[r.rid] = r
         return r
 
     def purchase(self, rid: str, token: str, price_cents: int, now: float | None = None) -> bool:
-        now = now or time.time()
+        now = time.time() if now is None else now
         r = self.reservations[rid]
         if r.status is RStatus.CONFIRMED:
             return True  # 重复请求直接返回成功
@@ -186,7 +186,7 @@ class BookingService:
         return True
 
     def sweep_expired(self, now: float | None = None) -> None:
-        now = now or time.time()
+        now = time.time() if now is None else now
         for r in list(self.reservations.values()):
             if r.status is RStatus.HELD and r.expires_at < now:
                 # 只有状态确实从 HELD 变成 EXPIRED 才归还库存，防止重复释放
@@ -220,7 +220,7 @@ svc = BookingService(Pay())
 ```python
 # __init__ 里加：self.by_idem = {}; self._lock = Lock()
 def reserve(self, tt, qty, idem_key, now=None):
-    now = now or time.time()
+    now = time.time() if now is None else now
     with self._lock:  # 整段在锁内：同一个键的两个并发请求只有一个会真的占库存
         if idem_key in self.by_idem:
             return self.reservations[self.by_idem[idem_key]]
