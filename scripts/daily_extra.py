@@ -41,6 +41,8 @@ HOMES = OUT / "homes.json"
 DECK = "今日计划"
 LC_STAGE, REVIEW_STAGE = "4 算法", "5 到期复习"
 DAY_MS = 86_400_000
+URGENCY_CAP = 2.0  # how far overdue-ness can raise a review: urgency is 1 + min(cap, days overdue / interval)
+VALUE_FLOOR = 0.3  # a review of the least valuable card in a deck still counts this much
 LC_ROOTS = ("LeetCode Tops",)
 SOLVED_DECK = "LeetCode Tops::28 Daily"
 PREFER = ("tlc-tops-{s}-0-whole", "tlc-{s}-0-whole", "tlc-core-{s}", "lca-{s}", "tlc-daily-{s}-0-whole")
@@ -199,10 +201,10 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None) ->
         value = pct(root, v)
         if c["queue"] == 2:
             overdue = max(0, today - c["due"])
-            urgency = 1 + min(2.0, overdue / max(1, c["interval"]))
+            urgency = 1 + min(URGENCY_CAP, overdue / max(1, c["interval"]))
         else:
-            urgency = 3.0  # in its learning steps: finish it today
-        score = weights.get(root, 0.2) * (0.3 + value) * urgency
+            urgency = 1 + URGENCY_CAP  # in its learning steps: finish it today
+        score = weights.get(root, 0.2) * (VALUE_FLOOR + value) * urgency
         if slug:  # copies of one problem: review the strongest-scored copy only
             prev = one_per_problem.get(slug)
             if prev and prev["score"] >= score:
@@ -212,7 +214,12 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None) ->
         scored.append({"card": c["cardId"], "home": h, "score": score, "root": root})
     scored += list(one_per_problem.values())
     scored = [s for s in scored if s["card"] not in {x["card"] for x in ex.lc_similar + ex.lc_new}]
-    scored.sort(key=lambda s: -s["score"])
+    only = cfg.get("review_only")  # a sprint reviews these decks, in this order; the others wait
+    if only:
+        scored = [s for s in scored if s["root"] in only]
+        scored.sort(key=lambda s: (only.index(s["root"]), -s["score"]))
+    else:
+        scored.sort(key=lambda s: -s["score"])
     budget = int(cfg.get("review_budget", 150))
     ex.reviews = scored[:budget]
     ex.backlog = len(scored) - len(ex.reviews)

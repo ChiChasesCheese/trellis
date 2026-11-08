@@ -75,3 +75,10 @@ def test_coverage_is_measured_on_points_and_a_card_adds_only_what_is_not_held():
     p = plan(cards, held, {"t": 1.0}, [], {}, now_ms=2 * DAY, budget=1, points=model)
     assert abs(p.held - 0.75) < 0.01  # three held cards hold "big"; a fourth unseen card does not count against it
     assert p.card_value["a4"] < p.card_value["b1"]  # another card on a held point adds less than the first on a new one
+
+
+def test_oral_counts_add_weight_to_points_no_question_needs():
+    pts = plan_kp.Points(meta={"a": {"topic": "t"}, "b": {"topic": "t"}}, oral={"a": 3.0})
+    w = plan_kp.weights(pts, {"q": 1.0}, {}, 0.7)
+    assert w["a"] > w["b"]
+    assert abs(w["a"] - w["b"] - plan_kp.ORAL_SHARE) < 1e-9

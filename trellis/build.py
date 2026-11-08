@@ -19,6 +19,7 @@ import genanki
 import markdown
 
 from .cards import Card
+from .kp_footer import footers as kp_footers
 from .links import go_deeper
 from .readings import Reading
 from .sequence import CORE_FIRST, CORE_TAG, core_leaves, sequence
@@ -324,6 +325,9 @@ td, th { border: 1px solid var(--rule); padding: 5px 10px; }
 }
 .sources a { color: var(--accent); text-decoration: none; }
 .sources a.web { color: var(--dim); font-size: 12px; }
+.kpidx { margin-top: 18px; padding-top: 8px; border-top: 1px solid var(--rule); font-size: 13px; line-height: 1.55; color: var(--dim); }
+.kpidx p { margin: 3px 0; }
+.kpidx b { font-weight: 600; margin-right: 6px; color: var(--ink); }
 
 .fig { margin: 12px 0; text-align: center; }
 .fig svg { max-width: 100%; height: auto; color: var(--ink); }
@@ -845,6 +849,7 @@ def build_package(
     # collection that already has the card keeps its old position through an
     # import, which is why `anki-push` sets it again afterwards (ADR 0010).
     links = _link_index(skeleton, cards, readings, lang) if skeleton.fold else {}
+    index = kp_footers(skeleton, cards)
     for position, card in enumerate(sequence(skeleton, cards, order), start=1):
         node = skeleton.by_id[card.node]
         crumb = " › ".join(n.title for n in node.path())
@@ -864,7 +869,7 @@ def build_package(
         if card.type == "qa":
             note = genanki.Note(
                 model=qa_model,
-                fields=[_html(question), _html(answer, related, own, fold=skeleton.fold, fold_code=skeleton.fold_code, links=links, node=card.node) + footer, crumb],
+                fields=[_html(question), _html(answer, related, own, fold=skeleton.fold, fold_code=skeleton.fold_code, links=links, node=card.node) + index.get(card.id, "") + footer, crumb],
                 guid=genanki.guid_for(f"trellis:{card.id}"),
                 tags=tags,
                 due=position,

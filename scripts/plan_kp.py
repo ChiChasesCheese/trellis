@@ -11,6 +11,9 @@ Weight of a point. Each question q, asked with frequency w_q, splits its weight:
 A concept topic's directly reported frequency (reports that name the topic) is shared among its points, core points
 counting double. Every point keeps a small floor so an unasked point is ranked, not erased.
 
+Points asked only in oral fundamentals rounds have no question behind them, so `kp/oral.json` (real Nowcoder question lists, counted per
+point) adds `ORAL_SHARE` of the question mass among the points those lists ask.
+
 Value of a card: the sum, over the points it teaches, of the point's weight divided by how many cards teach it (a
 card's primary point counts fully, the others half), capped at the three cards a point needs. Mastery of a point: the
 mean of its three best-held cards.
@@ -30,6 +33,7 @@ from trellis.plan import PointModel  # noqa: E402
 KP = ROOT / "sources/local/plan/kp"
 ROLE = {"必讲": 1.0, "追问": 0.6, "加分": 0.3}
 SECONDARY = 0.5
+ORAL_SHARE = 0.05  # the weight of points asked in oral rounds, against the question mass (which sums to about 1)
 META = {"dlv.level-expectations", "dlv.prep-plan", "dlv.prep-practice", "dlv.problem-catalog", "dlv.variant-recognition",
         "dlv.oral-playbook", "dlv.rubric", "ld.scoring-dimensions"}  # about the interview itself, not something an answer states
 
@@ -41,6 +45,7 @@ class Points:
     needs: dict[str, list[dict]] = field(default_factory=dict)        # question -> [{kp, role, why}]
     own: dict[str, list[dict]] = field(default_factory=dict)          # question -> own points [{id, title, role}]
     alias: dict[str, str] = field(default_factory=dict)
+    oral: dict[str, float] = field(default_factory=dict)              # point -> how many oral-round posts ask it
 
     def canon(self, k: str) -> str:
         return self.alias.get(k, k)
@@ -72,11 +77,21 @@ def load() -> Points:
         q = d["topic"]
         pts.needs[q] = [{**n, "kp": pts.canon(n["kp"])} for n in d.get("needs", [])
                         if pts.canon(n["kp"]) in pts.meta and pts.canon(n["kp"]) not in META]
-        pts.own[q] = d.get("own", [])
-        for o in pts.own[q]:
-            pts.meta.setdefault(o["id"], {**o, "topic": q, "kind": "design", "core": o.get("role") == "必讲", "members": [o["id"]]})
+        own: dict[str, dict] = {}  # the same trick under another name of one problem is one point, so its frequency adds up
+        for o in d.get("own", []):
+            c = pts.canon(o["id"])
+            if c not in own or ROLE.get(o.get("role"), 0.6) > ROLE.get(own[c].get("role"), 0.6):
+                own[c] = {**o, "id": c}
+            if c == o["id"] or c not in pts.meta:  # the canonical point's own title wins over a merged member's
+                pts.meta[c] = {**o, "id": c, "topic": q, "kind": "design", "core": o.get("role") == "必讲", "members": [o["id"]]}
+        pts.own[q] = list(own.values())
         for cid, ks in d.get("cards", {}).items():
             pts.card[cid] = list(dict.fromkeys(pts.canon(k) for k in ks if pts.canon(k) in pts.meta))
+    oral = KP / "oral.json"
+    if oral.exists():
+        for k, v in json.loads(oral.read_text(encoding="utf-8"))["counts"].items():
+            if pts.canon(k) in pts.meta:
+                pts.oral[pts.canon(k)] = pts.oral.get(pts.canon(k), 0.0) + v.get("weight", v["posts"])
     return pts
 
 
@@ -101,6 +116,9 @@ def weights(pts: Points, question_freq: dict[str, float], concept_direct: dict[s
         z = sum(2.0 if pts.meta[k].get("core") else 1.0 for k in ks)
         for k in ks:
             w[k] += f * (2.0 if pts.meta[k].get("core") else 1.0) / z
+    mass = sum(pts.oral.values())
+    for k, n in pts.oral.items():  # a fundamentals round asks points no design question needs; counted from real oral question lists
+        w[k] += ORAL_SHARE * sum(question_freq.values()) * n / mass
     total = sum(w.values()) or 1.0
     floor = 0.05 * total / max(len(pts.meta), 1)
     return {k: w.get(k, 0.0) + floor for k in pts.meta}

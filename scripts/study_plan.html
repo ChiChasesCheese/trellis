@@ -90,12 +90,18 @@ td{padding:6px 8px;border-bottom:1px solid var(--rule);vertical-align:middle}.nu
 .charts{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:48px;padding-top:26px;border-top:1px solid var(--rule)}
 .charts p{color:var(--ink-2);font-size:13px;margin:6px 0 0;max-width:60ch}
 svg text{font-family:var(--text)}
+.sprint{margin:26px 0 0;padding:14px 16px 16px;border:2px solid var(--ink);border-radius:6px}
+.sprint h2{margin:0 0 4px}.sprint .theme{margin:0 0 8px;font-size:17px}.sprint .behind{margin:0 0 8px;color:var(--red)}
+.sprint ul{margin:0 0 10px;padding-left:18px}.sprint li{margin:2px 0}.sprint .q{margin:0 0 12px;padding:8px 10px;border-left:3px solid var(--blue)}
+.sprint table{margin-top:6px}.sprint small{display:block;color:var(--ink-2);font-size:12.5px;line-height:1.4}.sprint tr.now td{font-weight:600}
+.sprint td.num small{font-weight:400}
 @media (max-width:900px){.page{padding:22px 16px 48px}.layout{grid-template-columns:1fr;gap:28px}.charts{grid-template-columns:1fr}#map{height:440px}}
 </style></head><body><div class="page">
 <p class="date" id="date"></p>
 <h1 id="hero"></h1>
 <p class="why" id="why"></p>
 <p class="standing" id="standing"></p>
+<section class="sprint" id="sprint" hidden aria-label="七天冲刺"></section>
 <section class="kpis" id="kpis" aria-label="关键指标"></section>
 <div class="layout">
  <aside>
@@ -138,6 +144,22 @@ if(lead){
  const parts=[];if(lead.boosted)parts.push('这是 GoFundMe 模拟面试里被扣分的地方');
  parts.push(`它在面试权重里排第 ${lead.rank}`);if(lead.users)parts.push(`${lead.users} 道题要用到它`);parts.push(`你现在掌握了 ${pct(lead.mastery)}`);
  document.getElementById('why').textContent=parts.join('，')+'。';
+}
+const S=B.sprint;
+if(S){const d=S.today,el=document.getElementById('sprint'),q=d.question,started=S.n>=1;el.hidden=false;
+ const span=a=>a==null?'—':pct(a);
+ const ask=!q?'':q.mock?`今天整题模拟：<b>${esc(q.title)}</b>。计时 60 分钟，不看卡，白板写完再对答案。`:`今天练这道题：<b>${esc(q.title)}</b>。学完今天的卡，先计时 35 分钟自己讲一遍，再翻这道题的卡对答案。`;
+ el.innerHTML=`<h2>${started?`七天冲刺 · 第 ${S.n}/${S.days} 天`:`七天冲刺 · ${S.start} 开始`}</h2>
+  <p class="theme">${started?'今天':'第 1 天'}：${esc(d.theme.join('、'))}，${S.new_per_day} 张新卡。</p>
+  ${S.behind?`<p class="behind">前几天还剩 ${S.behind} 张没学，今天先发这些。</p>`:''}
+  ${d.points.length?`<ul>${d.points.slice(0,6).map(p=>`<li>${esc(p)}</li>`).join('')}</ul>`:''}
+  ${ask?`<p class="q">${ask}</p>`:''}
+  <table><thead><tr><th>天</th><th>主题与练习题</th><th class="num">覆盖度<small>预计 / 实际</small></th><th class="num">答题就绪<small>预计 / 实际</small></th></tr></thead><tbody>
+  ${S.rows.map(r=>`<tr class="${r.n===S.n?'now':''}"><td>${r.n}</td><td>${esc(r.theme.join('、'))}<small>${r.date.slice(5)}${r.question?` · ${r.question.mock?'模拟：':'练：'}${esc(r.question.title)}`:''}${r.left&&r.n<=S.n?` · 还剩 ${r.left} 张`:''}</small></td>
+   <td class="num">${pct(r.proj_covered)} / ${span(r.covered)}</td><td class="num">${pct(r.proj_ready)} / ${span(r.ready)}</td></tr>`).join('')}
+  </tbody></table>
+  <p class="note">起点：覆盖度 ${pct(S.baseline.covered)}，答题就绪 ${pct(S.baseline.ready)}。预计值假设每天发的卡当天学完、之后按时复习都通过；实际值是第二天早上量的。</p>`;
+ if(started){document.getElementById('hero').textContent=`第 ${S.n}/${S.days} 天：${d.theme.join('、')}`;document.getElementById('why').textContent=q?`今天 ${S.new_per_day} 张新卡，练「${q.title}」。`:`今天 ${S.new_per_day} 张新卡。`}
 }
 const M=D.method||{};
 document.getElementById('standing').textContent=`考点覆盖度 ${(D.held*100).toFixed(1)}%。按这个顺序学，前 ${pct(x80)} 的卡就能覆盖 80% 的考点权重。`+

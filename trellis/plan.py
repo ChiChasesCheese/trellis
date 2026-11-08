@@ -273,6 +273,57 @@ def plan(cards: list[CardInfo], traces: dict[str, Trace], base: dict[str, float]
     return Plan(topics=topics, card_value=card_value, card_mastery=mastery, picked=picked, held=held, pareto=curve)
 
 
+def coverage_order(cards: list[CardInfo], mastery: dict[str, float], points: PointModel, budget: int,
+                   learned: float = 0.58) -> tuple[list[str], dict[str, float]]:
+    """The `budget` cards that add the most exam-point coverage, chosen one at a time, each leaf in its teaching order.
+
+    A point is held by its best `HELD_CARDS` cards, so the gain of a card shrinks as a point fills up and is zero once the
+    point has enough. Returns the ids in the order chosen and each one's gain."""
+    top: dict[str, list[float]] = {}
+    counts: dict[str, int] = defaultdict(int)
+    for cid, ks in points.cards.items():
+        for k in ks:
+            counts[k] += 1
+            top.setdefault(k, []).append(mastery.get(cid, 0.0))
+    for k in top:
+        top[k] = sorted(top[k], reverse=True)[:HELD_CARDS]
+
+    def gain(c: CardInfo) -> float:
+        total = 0.0
+        for i, k in enumerate(points.cards.get(c.id, [])):
+            value = learned * (1.0 if i == 0 else SECONDARY_POINT)
+            have = top.get(k, [])
+            if value > mastery.get(c.id, 0.0):
+                better = sorted(have + [value], reverse=True)[:HELD_CARDS]
+                total += points.weight.get(k, 0.0) * (sum(better) - sum(have)) / min(HELD_CARDS, counts[k])
+        return total
+
+    leaves: dict[str, list[CardInfo]] = defaultdict(list)
+    for c in cards:
+        leaves[c.leaf].append(c)
+    for cs in leaves.values():
+        cs.sort(key=lambda c: c.order)
+    heads = {leaf: 0 for leaf in leaves}
+    order: list[str] = []
+    gains: dict[str, float] = {}
+    while len(order) < budget:
+        best, best_v = None, 0.0
+        for leaf, i in heads.items():
+            v = max((gain(x) for x in leaves[leaf][i:i + LOOKAHEAD]), default=0.0)
+            if v > best_v:
+                best, best_v = leaf, v
+        if best is None:
+            break
+        c = leaves[best][heads[best]]
+        order.append(c.id)
+        gains[c.id] = gain(c)
+        for i, k in enumerate(points.cards.get(c.id, [])):
+            value = learned * (1.0 if i == 0 else SECONDARY_POINT)
+            top[k] = sorted(top.get(k, []) + [value], reverse=True)[:HELD_CARDS]
+        heads[best] += 1
+    return order, gains
+
+
 def pick(cards: list[CardInfo], traces: dict[str, Trace], value: dict[str, float], prereqs: dict[str, list[str]],
          budget: int, exclude: set[str]) -> list[str]:
     """The `budget` most valuable unseen cards, taken in each leaf's teaching order (a leaf's third card never comes

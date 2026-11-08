@@ -39,6 +39,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 import daily_extra  # noqa: E402
 import plan_kp  # noqa: E402
+import plan_sprint  # noqa: E402
 from trellis.plan import HELD_CARDS, CardInfo, Edge, PointModel, plan  # noqa: E402
 from trellis.project import load_project  # noqa: E402
 from trellis.sequence import core_leaves  # noqa: E402
@@ -921,8 +922,9 @@ def drop_old_deck():
 
 def run(apply_to_anki: bool) -> None:
     cfg = config()
-    cfg_global.update(cfg)
     now = datetime.now()
+    sprint_day = plan_sprint.apply(cfg, now.date())
+    cfg_global.update(cfg)
     now_ms = int(now.timestamp() * 1000)
     tree = Tree()
     cards, titles, base, edges = build_inputs(tree)
@@ -955,6 +957,10 @@ def run(apply_to_anki: bool) -> None:
     q_plan = plan(question_cards, traces, {t: base.get(t, 0) for t in {c.topic for c in question_cards}}, edges, boosts, now_ms,
                   int(budget * share), exclude=set(p.picked), spread=spread, points=model)
     p.picked += [i for i in q_plan.picked if i not in already][: budget - len(p.picked)]
+    sprint = sprint_plan(cfg, tree, cards, p, traces, edges, gen, sprint_day, now)
+    seen = {i for i, t in traces.items() if t.reps}
+    if sprint_day >= 1 and sprint:  # the sprint's own sequence replaces the day's picks
+        p.picked = [i for i in plan_sprint.deal_today(sprint, seen, int(cfg["daily_new"])) if i in anki]
     stages = defaultdict(list)
     for i in p.picked:
         stages[STAGES.get(tree.top(anki_leaf[i]), STAGE_DEFAULT)].append(i)
@@ -962,6 +968,17 @@ def run(apply_to_anki: bool) -> None:
         kp_state["today"] = [i for _, ids in sorted(stages.items()) for i in ids][:int(cfg.get("daily_new", 35))]
     daily_activity[:] = per_day(logs)
     head, body, summary = render_report(tree, p, cards, titles, base, edges, traces, logs, stages, now)
+    metrics = coverage_metrics(tree, p, gen, cfg)
+    if metrics:
+        summary["ready"] = round(metrics["ready"], 4)
+    hist_file = OUT / "history.jsonl"
+    history = [json.loads(x) for x in hist_file.read_text().splitlines()] if hist_file.exists() else []
+    history = [h for h in history if h["date"] != summary["date"]] + [summary]
+    sprint_view = plan_sprint.view(sprint, sprint_day, history, seen, now.date()) if sprint and sprint_day >= 0 else None
+    brief["sprint"] = sprint_view
+    if sprint_view and sprint_day >= 1:
+        head = f"<b>第 {sprint_day}/{sprint_view['days']} 天</b> · " + head
+        body = plan_sprint.report_html(sprint_view, html.escape) + body
     # beyond system design: LeetCode practice and the review queue of every deck
     if model:
         sd_value = {c.id: model.card_value(c.id) for c in cards}
@@ -979,9 +996,6 @@ def run(apply_to_anki: bool) -> None:
     summary["extra"] = {"lc_new": len(extra.lc_new), "lc_similar": len(extra.lc_similar), "reviews": len(extra.reviews),
                         "backlog": extra.backlog}
     OUT.mkdir(parents=True, exist_ok=True)
-    hist_file = OUT / "history.jsonl"
-    history = [json.loads(x) for x in hist_file.read_text().splitlines()] if hist_file.exists() else []
-    history = [h for h in history if h["date"] != summary["date"]] + [summary]
     hist_file.write_text("".join(json.dumps(h, ensure_ascii=False) + "\n" for h in history), encoding="utf-8")
     state = {"date": summary["date"], "held": p.held, "picked": p.picked,
              "topics": {t: vars(s) for t, s in p.topics.items()}}
@@ -1004,6 +1018,24 @@ def run(apply_to_anki: bool) -> None:
         drop_old_deck()
         call("sync")
         print("Anki: 今日计划 rebuilt")
+
+
+def sprint_plan(cfg, tree, cards, p, traces, edges, gen, sprint_day, now) -> dict | None:
+    """The sprint's curriculum: rebuilt before the first day, frozen once it has started."""
+    if sprint_day < 0 or not kp_state:
+        return None
+    saved = plan_sprint.load()
+    if sprint_day >= 1 and saved and saved["start"] == cfg["sprint"]["start"]:
+        return saved
+    prereqs = defaultdict(list)
+    for e in edges:
+        if e.kind == "requires":
+            prereqs[e.src].append(e.dst)
+    unseen = {c.id for c in cards if not (traces.get(c.id) and traces[c.id].reps)}
+    sprint = plan_sprint.build(cfg, cards, p.card_mastery, unseen, kp_state["model"], kp_state["points"], prereqs, gen["representatives"],
+                               kp_state["q_freq"], tree.title, lambda t: question_topic(tree, t), NOT_A_QUESTION, now.isoformat(timespec="minutes"))
+    plan_sprint.save(sprint)
+    return sprint
 
 
 def serve(host: str, minutes: int) -> None:
