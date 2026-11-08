@@ -12,7 +12,7 @@ step: 5
 from decimal import Decimal, ROUND_HALF_EVEN
 
 def usd_charge(eur_minor: int, mid: Decimal, markup_bps: int) -> tuple[Decimal, int]:
-    """Price is in EUR; the customer's card is charged in USD (USD per 1 EUR)."""
+    # 商品以 EUR 标价，用户的卡以 USD 扣款；mid 是 1 EUR 兑多少 USD
     rate = mid * (Decimal(10000) + markup_bps) / Decimal(10000)   # worse for the customer
     usd = (Decimal(eur_minor) * rate).quantize(Decimal(1), rounding=ROUND_HALF_EVEN)
     return rate, int(usd)

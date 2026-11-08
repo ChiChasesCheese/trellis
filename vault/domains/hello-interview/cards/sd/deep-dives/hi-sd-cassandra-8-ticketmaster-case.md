@@ -14,7 +14,7 @@ step: 8
 
 初版 `PRIMARY KEY (event_id, seat_id)`：一个活动一个分区，万级座位的活动要现场汇总总数与价格，热门活动会被反复算。
 
-改进：按场馆分区查看的体验，把 `section_id` 加进分区键：`PRIMARY KEY ((event_id, section_id), seat_id)`。每个区一个分区，活动分散在多个节点，分区更小，也正好对应「点进某区看座位」。
+改进：用户先看各区概要、再点进某区看座位，分区键应贴合这个访问方式，所以把 `section_id` 加进分区键：`PRIMARY KEY ((event_id, section_id), seat_id)`。每个区一个分区，活动分散在多个节点，分区更小，也正好对应「点进某区看座位」。
 
 再建汇总表 `event_sections (event_id, section_id, num_tickets, price_floor)`，分区键 `event_id`。区的数量通常不到 100，单分区就能读完，用预先算好的区余票、起步价展示整张场馆图。
 
