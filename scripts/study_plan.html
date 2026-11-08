@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>学习规划看板</title>
+<style>
+:root{--bg:#0f1115;--fg:#e6e6e6;--dim:#8a8f98;--card:#181b22;--line:#2a2f3a;--accent:#4f8cff}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,"PingFang SC",sans-serif;background:var(--bg);color:var(--fg)}
+header{padding:14px 18px;border-bottom:1px solid var(--line)}h1{font-size:18px;margin:0 0 4px}.dim{color:var(--dim);font-size:12px}
+main{display:grid;grid-template-columns:minmax(0,2fr) minmax(300px,1fr);gap:14px;padding:14px}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+.panel h2{font-size:14px;margin:0 0 8px}.kpis{display:flex;gap:18px;flex-wrap:wrap}.kpi b{font-size:22px;display:block}
+#treemap{position:relative;width:100%;height:520px}
+.tile{position:absolute;overflow:hidden;border:1px solid var(--bg);cursor:pointer;font-size:11px;padding:3px;color:#fff;line-height:1.25}
+.tile:hover{outline:2px solid #fff;z-index:2}.group{position:absolute;border:2px solid var(--bg);pointer-events:none}
+.group span{position:absolute;left:4px;top:2px;font-size:12px;font-weight:600;color:#fff;text-shadow:0 0 3px #000}
+table{width:100%;border-collapse:collapse;font-size:12px}td,th{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--dim);font-weight:500}.bar{height:6px;background:#2a2f3a;border-radius:3px}.bar i{display:block;height:6px;border-radius:3px;background:var(--accent)}
+.legend{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--dim);margin-top:6px}.legend .grad{width:120px;height:8px;background:linear-gradient(90deg,#c0392b,#e0a030,#2e9e5b);border-radius:4px}
+ol{padding-left:20px;font-size:12px;margin:0}li{margin:2px 0}.chip{display:inline-block;padding:1px 6px;border-radius:8px;background:#232836;color:var(--dim);font-size:11px;margin:1px}
+</style></head><body>
+<header><h1>学习规划看板</h1><div class="dim" id="sub"></div></header>
+<main>
+ <section>
+  <div class="panel"><div class="kpis" id="kpis"></div></div>
+  <div class="panel" style="margin-top:14px"><h2>知识地图：面积 = 面试权重，颜色 = 掌握度（点开看叶子）</h2><div id="treemap"></div>
+   <div class="legend">掌握度 0%<span class="grad"></span>100%</div></div>
+  <div class="panel" style="margin-top:14px"><h2 id="dtitle">点一个主题看详情</h2><div id="detail" class="dim">叶子、掌握度、它依赖谁、谁依赖它。</div></div>
+ </section>
+ <aside>
+  <div class="panel"><h2>二八曲线</h2><svg id="pareto" viewBox="0 0 320 180" style="width:100%"></svg>
+   <div class="dim">横轴：按「每张卡的权重」从高到低累计卡片；纵轴：累计面试权重。橙线：现在已掌握的权重。</div></div>
+  <div class="panel" style="margin-top:14px"><h2>每日趋势</h2><svg id="trend" viewBox="0 0 320 140" style="width:100%"></svg></div>
+  <div class="panel" style="margin-top:14px"><h2>现在最值得学</h2><ol id="next"></ol></div>
+  <div class="panel" style="margin-top:14px"><h2>今日计划里的新卡</h2><ol id="picked"></ol></div>
+ </aside>
+</main>
+<script>
+const D=/*DATA*/null;
+const pct=x=>(x*100).toFixed(0)+'%';
+const color=m=>{const a=[192,57,43],b=[224,160,48],c=[46,158,91];const t=Math.max(0,Math.min(1,m));
+ const [p,q,u]=t<.5?[a,b,t*2]:[b,c,(t-.5)*2];return `rgb(${p.map((v,i)=>Math.round(v+(q[i]-v)*u)).join(',')})`};
+const T=Object.fromEntries(D.topics.map(t=>[t.id,t]));
+const last=D.history[D.history.length-1]||{};
+document.getElementById('sub').textContent=`${last.date||''} · ${D.topics.length} 个主题 · ${D.edges.length} 条依赖`;
+document.getElementById('kpis').innerHTML=[
+ ['面试权重已掌握',pct(D.held)],['已见卡片',`${last.seen}/${last.cards}`],['昨天复习',last.reviews_1d],['昨天忘记',last.again_1d],['连续天数',last.streak]
+].map(([k,v])=>`<div class="kpi"><b>${v}</b><span class="dim">${k}</span></div>`).join('');
+
+// squarified treemap
+function squarify(items,x,y,w,h){const out=[];let rest=items.slice();const total=rest.reduce((s,i)=>s+i.v,0)||1;
+ const scale=w*h/total;rest=rest.map(i=>({...i,a:i.v*scale}));
+ while(rest.length){const short=Math.min(w,h);let row=[],best=Infinity;
+  for(const it of rest){const r=[...row,it];const s=r.reduce((a,b)=>a+b.a,0);const mx=Math.max(...r.map(z=>z.a)),mn=Math.min(...r.map(z=>z.a));
+   const worst=Math.max(short*short*mx/(s*s),(s*s)/(short*short*mn));if(worst>best)break;best=worst;row=r}
+  const s=row.reduce((a,b)=>a+b.a,0);const thick=s/short;let off=0;
+  for(const it of row){const len=it.a/thick;if(w>=h)out.push({...it,x,y:y+off,w:thick,h:len});else out.push({...it,x:x+off,y,w:len,h:thick});off+=len}
+  if(w>=h){x+=thick;w-=thick}else{y+=thick;h-=thick}rest=rest.slice(row.length)}
+ return out}
+const tm=document.getElementById('treemap');const W=tm.clientWidth,H=tm.clientHeight;
+const groups={};D.topics.forEach(t=>{(groups[t.top]=groups[t.top]||{id:t.top,title:t.topTitle,items:[]}).items.push(t)});
+const gl=squarify(Object.values(groups).map(g=>({...g,v:g.items.reduce((s,t)=>s+t.weight,0)})),0,0,W,H);
+for(const g of gl){const tiles=squarify(g.items.map(t=>({...t,v:t.weight})).sort((a,b)=>b.v-a.v),g.x+2,g.y+18,Math.max(0,g.w-4),Math.max(0,g.h-20));
+ for(const t of tiles){const d=document.createElement('div');d.className='tile';Object.assign(d.style,{left:t.x+'px',top:t.y+'px',width:t.w+'px',height:t.h+'px',background:color(t.mastery)});
+  d.title=`${t.title}\n权重 ${(t.weight*100).toFixed(2)}% · 掌握 ${pct(t.mastery)} · 已见 ${t.seen}/${t.cards}`;
+  if(t.w>46&&t.h>22)d.textContent=t.title;d.onclick=()=>show(t.id);tm.appendChild(d)}
+ const gd=document.createElement('div');gd.className='group';Object.assign(gd.style,{left:g.x+'px',top:g.y+'px',width:g.w+'px',height:g.h+'px'});
+ gd.innerHTML=`<span>${g.title}</span>`;tm.appendChild(gd)}
+
+function show(id){const t=T[id];document.getElementById('dtitle').textContent=`${t.topTitle} › ${t.title}`;
+ const deps=D.edges.filter(e=>e.src===id).sort((a,b)=>b.s-a.s),users=D.edges.filter(e=>e.dst===id).sort((a,b)=>b.s-a.s);
+ const kind={requires:'先修',asks:'八股追问',pattern:'模式'};
+ const link=(e,k)=>`<span class="chip" onclick="show('${e[k]}')" style="cursor:pointer">${T[e[k]]?T[e[k]].title:e[k]} · ${kind[e.kind]||e.kind}</span>`;
+ document.getElementById('detail').innerHTML=
+  `<p>权重 <b>${(t.weight*100).toFixed(2)}%</b>（第 ${D.topics.slice().sort((a,b)=>b.weight-a.weight).findIndex(x=>x.id===id)+1} 名）· 掌握 <b>${pct(t.mastery)}</b> · 已见 ${t.seen}/${t.cards} · 就绪度 ${pct(t.readiness)}</p>`+
+  `<p>它依赖：${deps.map(e=>link(e,'dst')).join('')||'—'}</p><p>依赖它的：${users.slice(0,24).map(e=>link(e,'src')).join('')||'—'}</p>`+
+  `<table><tr><th>叶子</th><th>卡</th><th>掌握度</th><th>待学价值</th></tr>`+
+  t.leaves.sort((a,b)=>b.value-a.value).map(l=>`<tr><td>${l.title}</td><td>${l.cards}</td><td><div class="bar"><i style="width:${pct(l.mastery)}"></i></div></td><td>${(l.value*1000).toFixed(2)}</td></tr>`).join('')+`</table>`}
+
+// pareto
+(function(){const s=document.getElementById('pareto'),w=320,h=180,p=28;const X=x=>p+x*(w-p-8),Y=y=>h-p-y*(h-p-8);
+ const pts=[[0,0],...D.pareto].map(([x,y])=>`${X(x).toFixed(1)},${Y(y).toFixed(1)}`).join(' ');
+ const x80=(D.pareto.find(([,y])=>y>=.8)||[1])[0];
+ s.innerHTML=`<line x1="${p}" y1="${h-p}" x2="${w-8}" y2="${h-p}" stroke="#555"/><line x1="${p}" y1="8" x2="${p}" y2="${h-p}" stroke="#555"/>`+
+ `<polyline points="${pts}" fill="none" stroke="var(--accent)" stroke-width="2"/>`+
+ `<line x1="${p}" y1="${Y(.8)}" x2="${X(x80)}" y2="${Y(.8)}" stroke="#888" stroke-dasharray="3 3"/><line x1="${X(x80)}" y1="${Y(.8)}" x2="${X(x80)}" y2="${h-p}" stroke="#888" stroke-dasharray="3 3"/>`+
+ `<line x1="${p}" y1="${Y(D.held)}" x2="${w-8}" y2="${Y(D.held)}" stroke="#e0a030" stroke-width="1.5"/>`+
+ `<text x="${X(x80)+4}" y="${Y(.8)-4}" font-size="10" fill="#ccc">${pct(x80)} 的卡 → 80% 权重</text>`+
+ `<text x="${w-10}" y="${Y(D.held)-4}" font-size="10" text-anchor="end" fill="#e0a030">已掌握 ${pct(D.held)}</text>`})();
+
+// trend: bars = reviews per day from the review log, line = interview weight held (one point per planner run)
+(function(){const s=document.getElementById('trend'),a=D.activity||[],h=D.history,w=320,H=140,p=26;if(!a.length)return;
+ const X=i=>p+(a.length===1?0:i*(w-p-8)/(a.length-1)),maxR=Math.max(1,...a.map(d=>d.reviews));const Yr=v=>H-p-v/maxR*(H-p-18);
+ const bars=a.map((d,i)=>`<rect x="${X(i)-3}" y="${Yr(d.reviews)}" width="6" height="${H-p-Yr(d.reviews)}" fill="#2f4a7a"><title>${d.date} 复习 ${d.reviews}，忘记 ${d.again}，新学 ${d.new}</title></rect>`+
+  (d.again?`<rect x="${X(i)-3}" y="${Yr(d.again)}" width="6" height="${H-p-Yr(d.again)}" fill="#c0392b"/>`:'')).join('');
+ const idx=Object.fromEntries(a.map((d,i)=>[d.date,i])),maxH=Math.max(.05,...h.map(d=>d.held))*1.15;const pts=h.filter(d=>d.date in idx).map(d=>`${X(idx[d.date])},${H-p-d.held/maxH*(H-p-18)}`);
+ s.innerHTML=bars+(pts.length>1?`<polyline points="${pts.join(' ')}" fill="none" stroke="#e0a030" stroke-width="2"/>`:'')+
+  `<text x="${p}" y="12" font-size="10" fill="#ccc">柱：每天复习（红：忘记），最高 ${maxR}　线：已掌握权重</text>`+
+  a.map((d,i)=>i%Math.ceil(a.length/6)===0?`<text x="${X(i)}" y="${H-8}" font-size="9" text-anchor="middle" fill="#888">${d.date.slice(5)}</text>`:'').join('')})();
+
+document.getElementById('next').innerHTML=D.topics.slice().sort((a,b)=>b.value-a.value).slice(0,12)
+ .map(t=>`<li><a href="#" onclick="show('${t.id}');return false" style="color:var(--fg)">${t.title}</a> <span class="dim">${t.topTitle} · 掌握 ${pct(t.mastery)}</span></li>`).join('');
+document.getElementById('picked').innerHTML=D.picked.slice(0,80).map(c=>`<li>${c.title}</li>`).join('');
+</script></body></html>
