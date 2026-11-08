@@ -20,6 +20,6 @@ step: 3
 
 **长任务（Managing Long Running Tasks）。** Slack 的作业队列。
 
-**技术反查。** Redis：Slack、Shopify；Kafka：Slack；Cassandra：Discord；DynamoDB：Spotify；PostgreSQL：Shopify。
+**技术反查。** Redis：Slack、Shopify；Kafka：Slack；Cassandra / ScyllaDB：Discord；Parquet 加对象存储：Spotify；MySQL：Shopify；ZippyDB：Meta。
 
 **用法。** 一个案例往往同时对应多个模式，如 Shopify 同时涉及竞争和写扩展，说明真实问题很少只落在一个模式里。
