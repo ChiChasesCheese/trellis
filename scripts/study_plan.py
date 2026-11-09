@@ -985,8 +985,7 @@ def run(apply_to_anki: bool) -> None:
     cards, titles, base, edges = build_inputs(tree)
     for c in cards:
         anki_leaf[c.id] = c.leaf
-    if apply_to_anki:
-        call("sync")
+    call("sync")  # always: reviews done on the phone are only here after a sync
     traces, anki, logs = anki_state({c.id for c in cards})
     for c in cards:  # once studied, the learner's own record says how hard a card is
         t, log = traces.get(c.id), logs.get(c.id, [])

@@ -395,6 +395,7 @@ def analyse() -> dict:
 
 
 def main() -> int:
+    call("sync")  # reviews done on the phone are only here after a sync
     a = analyse()
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "analysis.json").write_text(json.dumps(a, ensure_ascii=False, indent=1), encoding="utf-8")
