@@ -909,8 +909,9 @@ def preset(cfg):
         cid = call("cloneDeckConfigId", name=DECK, cloneFrom=call("getDeckConfig", deck="系统设计")["id"])
         call("setDeckConfigId", decks=names, configId=cid)
         current = call("getDeckConfig", deck=DECK)
-    else:
-        call("setDeckConfigId", decks=names, configId=current["id"])
+    parts = [f"{DECK}::{p}" for p in daily_extra.SUBJECT_DECK.values()]
+    # only what is outside the subject parts: resetting those too would lose their own limits and clone a new preset on every run
+    call("setDeckConfigId", decks=[d for d in names if not any(d == x or d.startswith(x + "::") for x in parts)], configId=current["id"])
     # each subject has its own limit; the top deck only adds them up
     for root, part, n in ((daily_extra.SD_ROOT, daily_extra.SUBJECT_DECK[daily_extra.SD_ROOT], cfg.get("daily_new", 100)),
                           (daily_extra.LLD_ROOT, daily_extra.SUBJECT_DECK[daily_extra.LLD_ROOT], cfg.get("lld_new", 100)),
