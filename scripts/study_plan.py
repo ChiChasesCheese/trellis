@@ -915,9 +915,7 @@ def preset(cfg):
     # each subject has its own limit; the top deck only adds them up
     presets_file = OUT / "presets.json"
     known = json.loads(presets_file.read_text(encoding="utf-8")) if presets_file.exists() else {}
-    for root, part, n in ((daily_extra.SD_ROOT, daily_extra.SUBJECT_DECK[daily_extra.SD_ROOT], cfg.get("daily_new", 100)),
-                          (daily_extra.LLD_ROOT, daily_extra.SUBJECT_DECK[daily_extra.LLD_ROOT], cfg.get("lld_new", 100)),
-                          ("LeetCode Tops", daily_extra.SUBJECT_DECK["LeetCode Tops"], cfg.get("lc_new", 20))):
+    for part in daily_extra.SUBJECT_DECK.values():
         title, prefix = f"{part[2:]}每日", f"{DECK}::{part}"
         decks = [d for d in names if d == prefix or d.startswith(prefix + "::")]
         if not decks:
@@ -930,10 +928,11 @@ def preset(cfg):
         presets_file.write_text(json.dumps(known, ensure_ascii=False), encoding="utf-8")
         call("setDeckConfigId", decks=decks, configId=cid)
         conf = call("getDeckConfig", deck=prefix)
-        conf["new"]["perDay"], conf["rev"]["perDay"] = int(n), 9999
+        # the deck holds exactly the day's budget, so Anki's own limit must never bite: a rebuild during the day deals a full set again
+        conf["new"]["perDay"], conf["rev"]["perDay"] = 9999, 9999
         conf["newGatherPriority"], conf["newSortOrder"] = 0, 0
         call("saveDeckConfig", config=conf)
-    current["new"]["perDay"] = int(cfg.get("daily_new", 100)) + int(cfg.get("lld_new", 100)) + int(cfg.get("lc_new", 20)) + 1  # + the report card
+    current["new"]["perDay"] = 9999  # the budgets are enforced by what is dealt, not by Anki
     current["rev"]["perDay"] = 9999
     current["newGatherPriority"] = 0  # deck order: report, weak spots, concepts, questions
     current["newSortOrder"] = 0
