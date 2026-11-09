@@ -40,7 +40,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import daily_extra  # noqa: E402
 import plan_kp  # noqa: E402
 import plan_sprint  # noqa: E402
-from trellis.plan import FIRST_PASS_MAX, HELD_CARDS, READ_UNIT, CardInfo, Edge, PointModel, coverage_order, plan  # noqa: E402
+from trellis.plan import FIRST_PASS_MAX, HELD_CARDS, READ_UNIT, CardInfo, Edge, PointModel, coverage_by_domain, coverage_order, plan  # noqa: E402
 from trellis.project import load_project  # noqa: E402
 from trellis.sequence import core_leaves  # noqa: E402
 from trellis.traces import Trace  # noqa: E402
@@ -364,16 +364,10 @@ def card_worth(cards, titles, p, picked: set[str], n: int = 40) -> list[dict] | 
     briefly, comes first."""
     if not kp_state:
         return None
-    pts, model, q_freq = kp_state["points"], kp_state["model"], kp_state["q_freq"]
+    pts, model = kp_state["points"], kp_state["model"]
     held = model.mastery(p.card_mastery)
     teaching = model.teaching_cached()
-    need: dict[str, dict[str, float]] = defaultdict(dict)
-    for q, f in q_freq.items():
-        for x in pts.needs.get(q, []):
-            need[x["kp"]][q] = f * plan_kp.ROLE.get(x["role"], 0.6)
-    def spread(k: str) -> float:
-        z = sum(need[k].values())
-        return -sum(v / z * math.log2(v / z) for v in need[k].values() if v > 0) if z else 0.0
+    spread, need = kp_state["bits"], kp_state["need"]
     rows, total = [], sum(model.weight.values()) or 1.0
     for c in cards:
         ks = [k for k in pts.card.get(c.id, []) if k not in plan_kp.META]
@@ -485,6 +479,19 @@ def apply_exam_points(tree, cards, base, topics, agg, kinds, is_question, by_top
     # interview-process points stay visible on the map but count for nothing
     model = PointModel({k: v for k, v in kp_w.items() if k not in plan_kp.META}, pts.card)
     kp_state.update(points=pts, weight=kp_w, teach=teach, model=model, q_freq=q_freq)
+    need: dict[str, dict[str, float]] = defaultdict(dict)
+    for q, f in q_freq.items():
+        for x in pts.needs.get(q, []):
+            need[x["kp"]][q] = f * plan_kp.ROLE.get(x["role"], 0.6)
+    def bits(k: str) -> float:
+        z = sum(need[k].values())
+        return -sum(v / z * math.log2(v / z) for v in need[k].values() if v > 0) if z else 0.0
+    kp_state.update(bits=bits, need=need)
+    for c in cards:  # how evenly frequent questions share what the card teaches, weighted by what its points are worth
+        ks = pts.card.get(c.id, [])
+        shares = [model.weight.get(k, 0.0) * (1.0 if i == 0 else 0.5) for i, k in enumerate(ks)]
+        if sum(shares):
+            c.spread = sum(s * bits(k) for s, k in zip(shares, ks)) / sum(shares)
 
 
 def question_topic(tree: Tree, t: str) -> bool:
@@ -1072,7 +1079,8 @@ def run(apply_to_anki: bool) -> None:
     if cfg.get("pure_coverage") and model:  # no personal boosts: the cards that add the most exam-point coverage, whole questions in their share
         unseen = [c for c in cards if c.id not in was_dealt and not (traces.get(c.id) and traces[c.id].reps)]
         # asks for more than the budget: a capped family's surplus gives way to the next-best cards
-        concept, _ = coverage_order([c for c in unseen if c.id not in only_questions], p.card_mastery, model, budget - int(budget * share) + 60)
+        concept, _ = coverage_by_domain([c for c in unseen if c.id not in only_questions], p.card_mastery, model, budget - int(budget * share) + 60,
+                                        lambda c: tree.top(c.topic))
         ids = {c.id for c in question_cards}
         whole, _ = coverage_order([c for c in unseen if c.id in ids], p.card_mastery, model, int(budget * share))
         keep = capped(concept, cfg.get("family_caps", {}), {c.id: c.topic for c in cards})[: budget - int(budget * share)]
@@ -1164,7 +1172,8 @@ def sprint_plan(cfg, tree, cards, p, traces, edges, gen, sprint_day, now) -> dic
             prereqs[e.src].append(e.dst)
     unseen = {c.id for c in cards if not (traces.get(c.id) and traces[c.id].reps)}
     sprint = plan_sprint.build(cfg, cards, p.card_mastery, unseen, kp_state["model"], kp_state["points"], prereqs, gen["representatives"],
-                               kp_state["q_freq"], tree.title, lambda t: question_topic(tree, t), NOT_A_QUESTION, now.isoformat(timespec="minutes"))
+                               kp_state["q_freq"], tree.title, lambda t: question_topic(tree, t), NOT_A_QUESTION, now.isoformat(timespec="minutes"),
+                               domain_of=lambda c: tree.top(c.topic))
     plan_sprint.save(sprint)
     return sprint
 

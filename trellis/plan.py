@@ -18,6 +18,7 @@ Pure functions over plain data, like hold.py: nothing here talks to Anki or read
 """
 from __future__ import annotations
 
+import math
 from collections import defaultdict
 from dataclasses import dataclass, field
 
@@ -50,6 +51,7 @@ class CardInfo:
     graded: bool = False  # freq was computed from the exam points the card teaches
     point: str = ""  # the card's primary exam point, when graded
     length: int = 0  # characters of answer text; 0 when unknown
+    spread: float = 0.0  # bits: how evenly frequent questions share what this card teaches
 
     @property
     def weight(self) -> float:
@@ -281,8 +283,8 @@ def coverage_order(cards: list[CardInfo], mastery: dict[str, float], points: Poi
     """The `budget` cards that add the most exam-point coverage, chosen one at a time, each leaf in its teaching order.
 
     A point is held by its best `HELD_CARDS` cards, so the gain of a card shrinks as a point fills up and is zero once the
-    point has enough. Cards are compared by gain per unit of reading, so a short sharp card comes before a long one that
-    adds the same, and cards longer than `FIRST_PASS_MAX` wait. Returns the ids in the order chosen and each one's gain."""
+    point has enough. Cards are compared by gain per unit of reading times one plus their spread, so a short card that many
+    questions share comes first, and cards longer than `FIRST_PASS_MAX` wait. Returns the ids in the order chosen and each one's gain."""
     top: dict[str, list[float]] = {}
     counts: dict[str, int] = defaultdict(int)
     for cid, ks in points.cards.items():
@@ -311,7 +313,7 @@ def coverage_order(cards: list[CardInfo], mastery: dict[str, float], points: Poi
     heads = {leaf: 0 for leaf in leaves}
 
     def per_reading(c: CardInfo) -> float:
-        return gain(c) / (1 + c.length / READ_UNIT)
+        return gain(c) / (1 + c.length / READ_UNIT) * (1 + c.spread)
 
     order: list[str] = []
     gains: dict[str, float] = {}
@@ -379,3 +381,35 @@ def pick(cards: list[CardInfo], traces: dict[str, Trace], value: dict[str, float
     order = {id(c): i for i, c in enumerate(out)}
     out.sort(key=lambda c: (level(c.topic), c.topic, c.order, order[id(c)]))
     return [c.id for c in out]
+
+
+def coverage_by_domain(cards: list[CardInfo], mastery: dict[str, float], points: PointModel, budget: int,
+                       domain_of) -> tuple[list[str], dict[str, float]]:
+    """`coverage_order` run inside each domain, so the most valuable cards of every area get in, not only of the area every
+    question needs. A domain's share of the budget follows the square root of the coverage it can still add."""
+    pools: dict[str, list[CardInfo]] = defaultdict(list)
+    for c in cards:
+        pools[domain_of(c)].append(c)
+    ranked, gains = {}, {}
+    for d, cs in pools.items():
+        ranked[d], g = coverage_order(cs, mastery, points, budget)
+        gains.update(g)
+    if not ranked:
+        return [], {}
+    worth = {d: math.sqrt(sum(gains[i] for i in ids)) for d, ids in ranked.items()}
+    total = sum(worth.values()) or 1.0
+    floor = 1 if budget >= len(ranked) else 0  # every area gets a card, when there is room for that
+    quota = {d: floor + int((budget - floor * len(ranked)) * w / total) for d, w in worth.items()}
+    for d in sorted(worth, key=lambda d: -worth[d])[: budget - sum(quota.values())]:
+        quota[d] += 1
+    spare = 0
+    for d, ids in ranked.items():  # what a small domain cannot use passes to the others
+        spare += max(0, quota[d] - len(ids))
+        quota[d] = min(quota[d], len(ids))
+    for d in sorted(ranked, key=lambda d: -worth[d]):
+        extra = min(spare, len(ranked[d]) - quota[d])
+        quota[d] += extra
+        spare -= extra
+    order = [i for d in ranked for i in ranked[d][:quota[d]]]
+    order.sort(key=lambda i: -gains[i])
+    return order, {i: gains[i] for i in order}

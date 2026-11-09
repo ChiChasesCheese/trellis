@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from trellis.hold import MATURE_DAYS  # noqa: E402
-from trellis.plan import PointModel, coverage_order  # noqa: E402
+from trellis.plan import PointModel, coverage_by_domain, coverage_order  # noqa: E402
 
 FILE = ROOT / "sources/local/plan/sprint.json"
 ROLE = {"必讲": 1.0, "追问": 0.6, "加分": 0.3}
@@ -103,14 +103,14 @@ def plain_title(title: str) -> str:
 
 
 def build(cfg: dict, cards: list, mastery: dict[str, float], unseen: set[str], model: PointModel, pts, prereqs: dict[str, list[str]],
-          reps: list[dict], q_freq: dict[str, float], title, is_question, skip: set[str], generated: str) -> dict:
+          reps: list[dict], q_freq: dict[str, float], title, is_question, skip: set[str], generated: str, domain_of=lambda c: "") -> dict:
     s = cfg["sprint"]
     n_days, per_day = int(s["days"]), int(s["new_per_day"])
     practice = reps[:n_days - 1]
     mock = reps[n_days - 1] if len(reps) >= n_days else None
     concept = [c for c in cards if not is_question(c.topic) and c.id in unseen]
     capacity = [per_day - (QUESTION_CARDS if i < len(practice) else 0) for i in range(n_days)]
-    picked, gain = coverage_order(concept, mastery, model, sum(capacity))
+    picked, gain = coverage_by_domain(concept, mastery, model, sum(capacity), domain_of)
     by_id = {c.id: c for c in cards}
     days_concept = layout(picked, by_id, prereqs, gain, capacity)
     days = []

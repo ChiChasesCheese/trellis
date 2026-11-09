@@ -61,3 +61,12 @@ def test_coverage_order_prefers_a_short_card_and_leaves_very_long_ones():
     cards = [CardInfo("long", "l1", "t", 1, length=1600), CardInfo("short", "l2", "t", 1, length=200), CardInfo("huge", "l3", "t", 1, length=4000)]
     order, _ = coverage_order(cards, {}, model, 3)
     assert order == ["short", "long"]
+
+
+def test_every_domain_gets_a_share_of_the_day():
+    from trellis.plan import coverage_by_domain
+    model = PointModel({"big": 100.0, "b2": 90.0, "b3": 80.0, "b4": 70.0, "s1": 1.0, "s2": 1.0},
+                       {"a": ["big"], "b": ["b2"], "c": ["b3"], "d": ["b4"], "x": ["s1"], "y": ["s2"]})
+    cards = [CardInfo(i, "l" + i, "big" if i in "abcd" else "small", 1) for i in ("a", "b", "c", "d", "x", "y")]
+    order, _ = coverage_by_domain(cards, {}, model, 4, lambda c: c.topic)
+    assert len(order) == 4 and {"x", "y"} & set(order)  # the small domain is not crowded out
