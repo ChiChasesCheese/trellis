@@ -27,6 +27,7 @@ def test_related_prefers_other_leaves_and_excludes_the_card():
 
 
 def test_render_omits_empty_rows_and_escapes():
-    out = render(["a<b"], [], [])
-    assert "常考于" not in out and "a&lt;b" in out
-    assert render([], [], []) == ""
+    html = kp_footer.render([("a<b", "p/t/k")], [], [("c", "c/x")])
+    assert "a&lt;b" in html and "常考于" not in html and "<a " not in html  # no site configured: plain text
+    linked = kp_footer.render([("a", "p/t/k")], [("q", "t/q", "必讲")], [], "http://h/m")
+    assert '<a href="http://h/m#p/t/k">a</a>' in linked and '<a href="http://h/m#t/q">q</a>（必讲）' in linked
