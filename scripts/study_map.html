@@ -24,7 +24,7 @@ nav .sel>summary{background:color-mix(in srgb,var(--bl) 13%,transparent)}.dot{fl
 .pre{margin:0 0 4px;font-size:13px;color:var(--i2)}.kp{border-top:1px solid var(--r);padding:16px 0 8px;scroll-margin-top:66px}.kp h3{font:400 20px/1.35 var(--hand);margin:0 0 4px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}.kp h3 b{font-weight:400;font-size:11px;color:var(--bl);border:1px solid var(--bl);border-radius:999px;padding:0 6px}.kp h3 .ro{font-size:12.5px;color:var(--i2);font-family:var(--text)}.kp p.sum{margin:2px 0 8px;font-size:14px}
 .meter{height:6px;width:90px;border-radius:3px;background:var(--r);overflow:hidden;display:inline-block;vertical-align:middle}.meter i{display:block;height:100%}
 details.use{font-size:13px;margin:4px 0 8px;color:var(--i2)}details.use summary{cursor:pointer}details.use ul{margin:4px 0 0;padding-left:16px}details.use em{font-style:normal;color:var(--re);margin:0 4px}details.use a{color:var(--bl);text-decoration:none}
-details.cd{border:1px solid var(--r);border-radius:9px;margin:7px 0;background:var(--pa)}details.cd>summary{cursor:pointer;list-style:none;padding:9px 12px;font-size:14px;display:flex;gap:8px;align-items:baseline}details.cd>summary::-webkit-details-marker{display:none}details.cd>summary .lv{font-size:11px;color:var(--i2);white-space:nowrap}details.cd .card{max-width:none;margin:0;padding:6px 14px 16px;font-size:15.5px;background:transparent}mark.cl{background:color-mix(in srgb,var(--am) 32%,transparent);color:inherit;border-radius:3px;padding:0 2px}.card hr{margin:12px 0}
+details.cd{border:1px solid var(--r);border-radius:9px;margin:7px 0;background:var(--pa)}details.cd>summary{cursor:pointer;list-style:none;padding:9px 12px;font-size:14px;display:flex;gap:8px;align-items:baseline}details.cd>summary::-webkit-details-marker{display:none}details.cd>summary .lv{font-size:11px;color:var(--i2);white-space:nowrap}details.cd .card{max-width:none;margin:0;padding:6px 14px 16px;font-size:15.5px;background:transparent}mark.cl{background:color-mix(in srgb,var(--am) 32%,transparent);color:inherit;border-radius:3px;padding:0 2px}.card hr{margin:12px 0}.kpidx a{color:var(--bl);text-decoration:none}.kpidx a:hover{text-decoration:underline}
 .empty{color:var(--i2)}#mm{display:none;height:calc(100vh - 54px)}#mm svg{width:100%;height:100%}body.mm main{display:none}body.mm #mm{display:block}
 #scrim{display:none}
 @media (max-width:860px){main{grid-template-columns:1fr}#menu{display:inline-block}nav{position:fixed;left:0;top:54px;bottom:0;width:86vw;max-width:340px;background:var(--b);z-index:15;transform:translateX(-102%);transition:transform .18s;border-right:2px solid var(--i)}body.open nav{transform:none}body.open #scrim{display:block;position:fixed;inset:54px 0 0;background:rgba(0,0,0,.25);z-index:14}#art{padding:18px 16px 70px}#q{width:110px}header .st{display:none}}
@@ -47,13 +47,14 @@ function drawNav(f){f=(f||'').trim().toLowerCase();const hit=x=>!f||x.toLowerCas
 drawNav();document.getElementById('q').addEventListener('input',e=>drawNav(e.target.value));
 const cache={};async function load(t){if(!cache[t]){const r=await fetch(`data/${encodeURIComponent(t)}.json`);cache[t]=await r.json()}return cache[t]}
 const link=k=>P[k]?`<a href="#p/${P[k].home}/${k}">${esc(P[k].t)}</a>`:'';
-function cardHtml(c){const open=false;return `<details class="cd"${open?' open':''}><summary><span class="dot" style="margin-top:7px;background:${col(c.m,c.seen)}"></span><span style="flex:1;min-width:0">${esc(c.t||c.leaf)}</span><span class="lv">${esc(c.lv)}</span></summary><div class="card">${c.q}${c.a?'<hr id="answer">'+c.a:''}</div></details>`}
+function cardHtml(c){return `<details class="cd" id="c-${esc(c.id)}"><summary><span class="dot" style="margin-top:7px;background:${col(c.m,c.seen)}"></span><span style="flex:1;min-width:0">${esc(c.t||c.leaf)}</span><span class="lv">${esc(c.lv)}</span></summary><div class="card">${c.q}${c.a?'<hr id="answer">'+c.a:''}</div></details>`}
 function pointBlock(k,cards){const p=P[k];if(!p)return '';const ro=[['必讲',0],['追问',1],['加分',2]].filter(([,i])=>p.n[i]).map(([n,i])=>`${n} ${p.n[i]}`).join(' · ');
  return `<section class="kp" id="k-${k}"><h3>${esc(p.t)}${p.core?'<b>核心</b>':''}<span class="ro">${ro||'设计题未用到'} ${meter(p.m)}</span></h3>${p.s?`<p class="sum">${esc(p.s)}</p>`:''}
  ${p.pre.length?`<p class="pre">先学</p><div class="chips">${p.pre.map(link).join('')}</div>`:''}${p.post.length?`<p class="pre">学完可以接</p><div class="chips">${p.post.slice(0,8).map(link).join('')}</div>`:''}
  ${p.q.length?`<details class="use"><summary>哪些题用到（${p.q.length}）</summary><ul>${p.q.map(([q,t,r,w])=>`<li><a href="#t/${q}">${esc(t)}</a><em>${r}</em>${esc(w)}</li>`).join('')}</ul></details>`:''}
  ${cards.map(cardHtml).join('')}</section>`}
-async function show(t,kp){const T=TOP[t];const art=document.getElementById('art');if(!T){art.innerHTML='<p class="empty">选择左边的主题开始。</p>';return}
+function openCard(id){const el=document.getElementById('c-'+id);if(el){el.open=true;el.scrollIntoView()}}
+async function show(t,kp,card){const T=TOP[t];const art=document.getElementById('art');if(!T){art.innerHTML='<p class="empty">选择左边的主题开始。</p>';return}
  document.querySelectorAll('nav details').forEach(d=>{const on=d.dataset.t===t;d.classList.toggle('sel',on);if(on)d.open=true});
  art.innerHTML='<p class="empty">加载中…</p>';const data=await load(t);const byK={},loose=[];
  data.cards.forEach(c=>{const k=c.k[0];if(k){(byK[k]=byK[k]||[]).push(c)}else loose.push(c)});
@@ -64,8 +65,9 @@ async function show(t,kp){const T=TOP[t];const art=document.getElementById('art'
   body+=`<section class="kp"><h3>答案卡片（${data.cards.length}）</h3>${data.cards.map(cardHtml).join('')}</section>`}
  else{const order=T.p.filter(k=>byK[k]);body=order.map(k=>pointBlock(k,byK[k])).join('');if(loose.length)body+=`<section class="kp"><h3>其他</h3>${loose.map(cardHtml).join('')}</section>`}
  art.innerHTML=`<h2 class="tt">${esc(T.t)}</h2><p class="meta">${esc(T.g.t)} · ${T.q?'设计题':'知识主题'} · ${T.n} 张卡，学过 ${T.seen} 张 · 占考点权重 ${(T.w*100).toFixed(1)}% · 掌握 ${pct(T.m)}</p>${body||'<p class="empty">这个主题没有卡。</p>'}`;
- if(kp){const el=document.getElementById('k-'+kp);if(el)el.scrollIntoView()}else window.scrollTo(0,0)}
-function route(){document.body.classList.remove('open');setView(false);const m=location.hash.match(/^#([tp])\/([^/]+)(?:\/(.+))?$/);if(m)show(m[2],m[1]==='p'?decodeURIComponent(m[3]):null);else{const first=D.tree[1]?.topics[0]||D.tree[0].topics[0];show(first.id)}}
+ if(card)openCard(card);else if(kp){const el=document.getElementById('k-'+kp);if(el)el.scrollIntoView()}else window.scrollTo(0,0)}
+function route(){document.body.classList.remove('open');setView(false);const c=location.hash.match(/^#c\/(.+)$/);if(c){const id=decodeURIComponent(c[1]);show(D.home[id],null,id);return}
+ const m=location.hash.match(/^#([tp])\/([^/]+)(?:\/(.+))?$/);if(m)show(m[2],m[1]==='p'?decodeURIComponent(m[3]):null);else{const first=D.tree[1]?.topics[0]||D.tree[0].topics[0];show(first.id)}}
 addEventListener('hashchange',route);document.getElementById('menu').onclick=()=>document.body.classList.toggle('open');document.getElementById('scrim').onclick=()=>document.body.classList.remove('open');
 let mmDone=false;function setView(m){document.body.classList.toggle('mm',m);document.getElementById('v1').setAttribute('aria-pressed',!m);document.getElementById('v2').setAttribute('aria-pressed',m);if(m&&!mmDone)drawMM()}
 document.getElementById('v1').onclick=()=>setView(false);document.getElementById('v2').onclick=()=>setView(true);

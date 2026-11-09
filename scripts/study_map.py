@@ -83,6 +83,16 @@ def main() -> int:
         for x in ps:
             post[x].append(k)
     title_of = lambda t: tree.title(t) if t in tree.node else t  # noqa: E731
+    home = {c.id: c.topic for c in cards}
+    base = re.escape(json.loads((ROOT / "sources/local/plan/config.json").read_text(encoding="utf-8")).get("map_url", "") or "\0")
+
+    def local_links(text: str) -> str:
+        """Footer links point at this site; one to a card that is not here (filed in another deck) becomes plain text."""
+        def fix(m: re.Match) -> str:
+            kind, rest, label = m.group(1), m.group(2), m.group(3)
+            return label if kind == "c" and rest not in home else f'<a href="#{kind}/{rest}">{label}</a>'
+        return re.sub(rf'<a href="{base}#([tpc])/([^"]+)">(.*?)</a>', fix, text)
+
     points = {}
     for k, meta in pts.meta.items():
         if k not in teach or k in plan_kp.META:
@@ -113,7 +123,7 @@ def main() -> int:
             ks = [k for k in pts.card.get(c.id, []) if k in points]
             topic_points += ks
             out_cards.append({"id": c.id, "t": titles.get(c.id, ""), "leaf": tree.title(c.leaf), "lv": c.level, "m": round(m[c.id], 2), "seen": bool(traces.get(c.id) and traces[c.id].reps),
-                              "k": ks, "q": cloze(f[0]) if is_cloze else f[0], "a": "" if is_cloze else f[1], "len": c.length})
+                              "k": ks, "q": local_links(cloze(f[0]) if is_cloze else f[0]), "a": "" if is_cloze else local_links(f[1]), "len": c.length})
         (data_dir / f"{t}.json").write_text(json.dumps({"id": t, "cards": out_cards}, ensure_ascii=False), encoding="utf-8")
         wsum = sum(model.weight.get(k, 0.0) for k in dict.fromkeys(topic_points))
         g = tree.top(t)
@@ -124,7 +134,7 @@ def main() -> int:
     tree_out = [{"id": r.id, "t": r.title, "topics": sorted(groups[r.id], key=lambda x: x["pos"])} for r in roots if r.id in groups]
     needs = {q: [[n["kp"], n["role"], n.get("why", "")] for n in ns if n["kp"] in points] for q, ns in pts.needs.items()}
     own = {q: [[o["id"], o.get("role", ""), o["title"]] for o in os] for q, os in pts.own.items()}
-    index = {"tree": tree_out, "points": points, "needs": needs, "own": own, "covered": model.coverage(m), "dag": bool(pre), "cards": sum(t["n"] for g in tree_out for t in g["topics"]),
+    index = {"home": home, "tree": tree_out, "points": points, "needs": needs, "own": own, "covered": model.coverage(m), "dag": bool(pre), "cards": sum(t["n"] for g in tree_out for t in g["topics"]),
              "seen": sum(t["seen"] for g in tree_out for t in g["topics"]), "generated": time.strftime("%Y-%m-%d %H:%M")}
     tpl = (ROOT / "scripts/study_map.html").read_text(encoding="utf-8")
     (OUT / "index.html").write_text(tpl.replace("/*CARD_CSS*/", CSS).replace("/*DATA*/null", json.dumps(index, ensure_ascii=False)), encoding="utf-8")

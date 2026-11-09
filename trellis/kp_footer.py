@@ -56,9 +56,17 @@ def related(cid: str, primary: str, by_primary: dict[str, list[str]], leaf: dict
     return sorted(others, key=lambda c: leaf[c] == leaf[cid])[:MAX_RELATED]
 
 
-def render(points: Iterable[str], questions: list[tuple[str, str]], cards: Iterable[str]) -> str:
-    rows = [("考点", "；".join(points)), ("常考于", "、".join(f"{q}（{r}）" for q, r in questions)), ("相关卡", "；".join(cards))]
-    body = "".join(f"<p><b>{k}</b>{html.escape(v)}</p>" for k, v in rows if v)
+def _link(text: str, base: str, target: str) -> str:
+    """`text` as a link into the map site, or plain when no site is configured."""
+    return f'<a href="{html.escape(base)}#{html.escape(target)}">{html.escape(text)}</a>' if base else html.escape(text)
+
+
+def render(points: Iterable[tuple[str, str]], questions: list[tuple[str, str, str]], cards: Iterable[tuple[str, str]], base: str = "") -> str:
+    """Each item is (text, map target); `questions` also carries the role."""
+    rows = [("考点", "；".join(_link(t, base, x) for t, x in points)),
+            ("常考于", "、".join(f"{_link(q, base, x)}（{html.escape(r)}）" for q, x, r in questions)),
+            ("相关卡", "；".join(_link(t, base, x) for t, x in cards))]
+    body = "".join(f"<p><b>{k}</b>{v}</p>" for k, v in rows if v)
     return f'<div class="kpidx">{body}</div>' if body else ""
 
 
@@ -79,11 +87,14 @@ def footers(skeleton, cards: list) -> dict[str, str]:
         if ks and cid in leaf:
             by_primary.setdefault(ks[0], []).append(cid)
     known = lambda q: q in skeleton.by_id  # noqa: E731
+    config = ROOT / "sources/local/plan/config.json"
+    base = json.loads(config.read_text(encoding="utf-8")).get("map_url", "") if config.exists() else ""  # kept out of the repo: a private address
     out = {}
     for c in cards:
         ks = [k for k in pts.card.get(c.id, []) if k in pts.meta and k not in plan_kp.META]
         if not ks:
             continue
-        qs = [(plain(skeleton.by_id[q].title), role) for q, role in asked_in(ks, pts.needs, pts.own, freq, known)]
-        out[c.id] = render([plain(pts.meta[k]["title"]) for k in ks], qs, [titles[x] for x in related(c.id, ks[0], by_primary, leaf)])
+        qs = [(plain(skeleton.by_id[q].title), f"t/{q}", role) for q, role in asked_in(ks, pts.needs, pts.own, freq, known)]
+        out[c.id] = render([(plain(pts.meta[k]["title"]), f"p/{pts.meta[k]['topic']}/{k}") for k in ks], qs,
+                           [(titles[x], f"c/{x}") for x in related(c.id, ks[0], by_primary, leaf)], base)
     return out
