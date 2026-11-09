@@ -96,5 +96,5 @@ def test_low_level_design_deals_foundations_before_problems():
 def test_a_day_is_interleaved_and_a_family_is_capped():
     import study_plan
     topic = {"a1": "x", "a2": "x", "a3": "x", "b1": "y", "c1": "z"}
-    assert study_plan.interleave(["a1", "a2", "a3", "b1", "c1"], topic, 3) == [["a1", "b1", "c1"], ["a2", "a3"]]
+    assert study_plan.interleave(["a1", "a2", "a3", "b1", "c1"], topic, 3, run=2) == [["a1", "a2", "b1"], ["c1", "a3"]]  # runs stay whole
     assert study_plan.capped(["a1", "a2", "b1"], {"f": {"topics": ["x"], "max": 1}}, topic) == ["a1", "b1"]

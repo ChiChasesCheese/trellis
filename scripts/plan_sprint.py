@@ -3,7 +3,7 @@
 The curriculum is stored in sources/local/plan/sprint.json. It is rebuilt on every run before the first day, so it follows the
 deck, and frozen from the first day on, so the projection stays comparable with what actually happens.
 
-- Concept cards are picked purely by the exam-point coverage they add (`trellis.plan.coverage_order`), then laid out over the
+- Concept cards are picked by the exam-point coverage they add per unit of reading (`trellis.plan.coverage_order`), then laid out over the
   days by topic, prerequisites first, so a day has a theme instead of 40 scattered topics.
 - Each practice day adds the cards of one representative question, in the order the questions add coverage. The last day is a
   full mock of the next representative question, which is deliberately left unstudied.

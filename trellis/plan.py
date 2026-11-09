@@ -30,6 +30,8 @@ READY_AT = 0.4  # prerequisite mastery at which a dependant counts as fully read
 DIMINISH = 0.8  # each further card from the same topic in one round is worth this much less
 DIMINISH_POINT = 0.6  # and from the same exam point, much less: a second card on a point adds little the same day
 HELD_CARDS = 3  # a point is held once about this many of its cards are; a point taught by ten cards does not need all ten
+READ_UNIT = 400  # characters: a card this long costs twice the attention of a very short one
+FIRST_PASS_MAX = 2000  # characters: a card longer than this waits until it has been split or the basics are held
 LOOKAHEAD = 3  # a leaf is taken in order, but its next cards count: a valuable card must not wait behind a cheap intro
 SECONDARY_POINT = 0.5  # a card's points after its primary one count this much
 
@@ -47,6 +49,7 @@ class CardInfo:
     difficulty: float = 0.3  # 0 easy .. 1 hard: intrinsic before study, blended with the learner's record after
     graded: bool = False  # freq was computed from the exam points the card teaches
     point: str = ""  # the card's primary exam point, when graded
+    length: int = 0  # characters of answer text; 0 when unknown
 
     @property
     def weight(self) -> float:
@@ -278,7 +281,8 @@ def coverage_order(cards: list[CardInfo], mastery: dict[str, float], points: Poi
     """The `budget` cards that add the most exam-point coverage, chosen one at a time, each leaf in its teaching order.
 
     A point is held by its best `HELD_CARDS` cards, so the gain of a card shrinks as a point fills up and is zero once the
-    point has enough. Returns the ids in the order chosen and each one's gain."""
+    point has enough. Cards are compared by gain per unit of reading, so a short sharp card comes before a long one that
+    adds the same, and cards longer than `FIRST_PASS_MAX` wait. Returns the ids in the order chosen and each one's gain."""
     top: dict[str, list[float]] = {}
     counts: dict[str, int] = defaultdict(int)
     for cid, ks in points.cards.items():
@@ -300,16 +304,21 @@ def coverage_order(cards: list[CardInfo], mastery: dict[str, float], points: Poi
 
     leaves: dict[str, list[CardInfo]] = defaultdict(list)
     for c in cards:
-        leaves[c.leaf].append(c)
+        if c.length <= FIRST_PASS_MAX:
+            leaves[c.leaf].append(c)
     for cs in leaves.values():
         cs.sort(key=lambda c: c.order)
     heads = {leaf: 0 for leaf in leaves}
+
+    def per_reading(c: CardInfo) -> float:
+        return gain(c) / (1 + c.length / READ_UNIT)
+
     order: list[str] = []
     gains: dict[str, float] = {}
     while len(order) < budget:
         best, best_v = None, 0.0
         for leaf, i in heads.items():
-            v = max((gain(x) for x in leaves[leaf][i:i + LOOKAHEAD]), default=0.0)
+            v = max((per_reading(x) for x in leaves[leaf][i:i + LOOKAHEAD]), default=0.0)
             if v > best_v:
                 best, best_v = leaf, v
         if best is None:

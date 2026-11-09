@@ -243,6 +243,7 @@ def build_inputs(tree: Tree):
         c._hits = max((reports_text.get(t, 0.0) for t in terms), default=0.0)
         plain = len(re.sub(r"```.*?```", "", a, flags=re.S))
         pct = sum(1 for x in lengths if x <= plain) / max(1, len(lengths))
+        c.length = len(re.sub(r"\s+", "", re.sub(r"<[^>]+>", "", re.sub(r"```svg.*?```", "", a, flags=re.S))))
         c.difficulty = min(1.0, 0.5 * pct + {"加分": 0.3, "追问": 0.15}.get(c.level, 0.0) + (0.2 if "```" in a and "```svg" not in a else 0.0))
         by_topic[c.topic].append(c)
     for cs in by_topic.values():
@@ -917,18 +918,28 @@ def capped(ids: list[str], caps: dict[str, dict], topic_of: dict[str, str]) -> l
     return out
 
 
-def interleave(ids: list[str], topic_of: dict[str, str], size: int) -> list[list[str]]:
-    """Round-robin over the topics, each in its own order, then cut into groups: variety within a sitting, order within a topic."""
+def interleave(ids: list[str], topic_of: dict[str, str], size: int, point_of: dict[str, str] | None = None, run: int = 5) -> list[list[str]]:
+    """Short runs of related cards, then a change of subject: each topic's cards, those on one exam point together, are cut into
+    runs of `run`; the runs rotate across topics and are packed into groups of about `size`, never splitting a run."""
+    point_of = point_of or {}
     by_topic: dict[str, list[str]] = defaultdict(list)
     for i in ids:
         by_topic[topic_of[i]].append(i)
-    queues = sorted(by_topic.values(), key=len, reverse=True)
-    mixed = []
+    queues = []
+    for cards in sorted(by_topic.values(), key=len, reverse=True):
+        order = {p: k for k, p in enumerate(dict.fromkeys(point_of.get(i, "") or i for i in cards))}
+        cards = sorted(cards, key=lambda i: order[point_of.get(i, "") or i])  # stable: cards of one point stay in teaching order
+        queues.append([cards[k:k + run] for k in range(0, len(cards), run)])
+    groups, current = [], []
     while any(queues):
         for q in queues:
             if q:
-                mixed.append(q.pop(0))
-    return [mixed[k:k + size] for k in range(0, len(mixed), size)]
+                chunk = q.pop(0)
+                if current and len(current) + len(chunk) > size:
+                    groups.append(current)
+                    current = []
+                current += chunk
+    return groups + ([current] if current else [])
 
 
 def extra_report(ex) -> str:
@@ -1028,14 +1039,16 @@ def run(apply_to_anki: bool) -> None:
     sprint = sprint_plan(cfg, tree, cards, p, traces, edges, gen, sprint_day, now)
     seen = {i for i, t in traces.items() if t.reps}
     if sprint_day >= 1 and sprint:  # the sprint's own sequence replaces the day's picks
-        p.picked = [i for i in plan_sprint.deal_today(sprint, seen, int(cfg["daily_new"])) if i in anki]
+        ahead = [i for i in plan_sprint.deal_today(sprint, seen, int(cfg["daily_new"]) + 60) if i in anki]
+        p.picked = capped(ahead, cfg.get("family_caps", {}), {c.id: c.topic for c in cards})[:int(cfg["daily_new"])]
         carried = [i for i in carried if i in set(p.picked)]  # the sequence already puts what is left first; nothing is added on top
     stages = defaultdict(list)
     topic_of = {c.id: c.topic for c in cards}
     if carried:
         stages[daily_extra.CARRIED] = list(carried)
     fresh = [i for i in p.picked if i not in set(carried)]
-    for n, group in enumerate(interleave(fresh, topic_of, int(cfg.get("round_size", 20))), 1):  # a few topics at a time, never one block
+    point_of = {c.id: c.point for c in cards}
+    for n, group in enumerate(interleave(fresh, topic_of, int(cfg.get("round_size", 20)), point_of), 1):  # short runs of related cards, then a change of subject
         stages[f"{n:02d} 第 {n} 组"] = group
     if kp_state:  # what Anki deals today: the stages in deck order, up to the daily limit
         kp_state["today"] = [i for _, ids in sorted(stages.items()) for i in ids][:int(cfg.get("daily_new", 35))]

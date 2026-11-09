@@ -54,3 +54,10 @@ def test_coverage_order_stops_paying_for_a_point_that_is_full():
     assert order[HELD_CARDS] == "b0"  # then the light point, not a fourth card on a full one
     assert gain["b0"] > 0
     assert len(order) == HELD_CARDS + 1  # nothing left that adds coverage
+
+
+def test_coverage_order_prefers_a_short_card_and_leaves_very_long_ones():
+    model = PointModel({"a": 1.0, "b": 1.0, "c": 1.0}, {"long": ["a"], "short": ["b"], "huge": ["c"]})
+    cards = [CardInfo("long", "l1", "t", 1, length=1600), CardInfo("short", "l2", "t", 1, length=200), CardInfo("huge", "l3", "t", 1, length=4000)]
+    order, _ = coverage_order(cards, {}, model, 3)
+    assert order == ["short", "long"]
