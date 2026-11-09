@@ -371,7 +371,7 @@ def card_worth(cards, titles, p, picked: set[str], n: int = 40) -> list[dict] | 
     rows, total = [], sum(model.weight.values()) or 1.0
     for c in cards:
         ks = [k for k in pts.card.get(c.id, []) if k not in plan_kp.META]
-        if not ks or p.card_mastery.get(c.id, 0.0) > 0 or c.length > FIRST_PASS_MAX:
+        if not ks or p.card_mastery.get(c.id, 0.0) > 0 or c.length > FIRST_PASS_MAX or c.id not in kp_state.get("pool", {c.id}):
             continue
         share = [1.0 if i == 0 else 0.5 for i in range(len(ks))]
         parts = [model.weight.get(k, 0.0) * s / max(1.0, min(HELD_CARDS, teaching[k])) * (1 - held.get(k, 0.0)) for k, s in zip(ks, share)]
@@ -1102,6 +1102,7 @@ def run(apply_to_anki: bool) -> None:
         stages[f"{n:02d} 第 {n} 组"] = group
     if kp_state:
         kp_state["in_deck"] = {i for i, c in anki.items() if c["deckName"].startswith(DECK)}
+        kp_state["pool"] = {c.id for c in cards if not question_topic(tree, c.topic) or c.topic in reps}  # what the plan can deal
     if kp_state:  # what Anki deals today: the stages in deck order, up to the daily limit
         kp_state["today"] = [i for _, ids in sorted(stages.items()) for i in ids][:int(cfg.get("daily_new", 35))]
     daily_activity[:] = per_day(logs)

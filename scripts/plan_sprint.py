@@ -3,8 +3,8 @@
 The curriculum is stored in sources/local/plan/sprint.json. It is rebuilt on every run before the first day, so it follows the
 deck, and frozen from the first day on, so the projection stays comparable with what actually happens.
 
-- Concept cards are picked by the exam-point coverage they add per unit of reading (`trellis.plan.coverage_order`), then laid out over the
-  days by topic, prerequisites first, so a day has a theme instead of 40 scattered topics.
+- Concept cards are picked by the exam-point coverage they add per unit of reading (`trellis.plan.coverage_order`), woven across the domains, so each
+  day holds some of every area, most valuable first.
 - Each practice day adds the cards of one representative question, in the order the questions add coverage. The last day is a
   full mock of the next representative question, which is deliberately left unstudied.
 - Today's deal is the first `new_per_day` unseen cards of the whole sequence, so whatever was not finished comes first.
@@ -16,7 +16,7 @@ import json
 import math
 import re
 import sys
-from collections import Counter, defaultdict
+from collections import Counter
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -72,32 +72,6 @@ def readiness(pts, q_freq: dict[str, float], held: dict[str, float], skip: set[s
     return num / den if den else 0.0
 
 
-def layout(picked: list[str], cards_by_id: dict, prereqs: dict[str, list[str]], gain: dict[str, float],
-           capacity: list[int]) -> list[list[str]]:
-    """Lay picked concept cards over the days: prerequisite topics first, then the topics worth most; a leaf stays in order."""
-    depth: dict[str, int] = {}
-
-    def level(t, seen=()):
-        if t in depth:
-            return depth[t]
-        if t in seen:
-            return 0
-        depth[t] = 1 + max((level(p, seen + (t,)) for p in prereqs.get(t, [])), default=-1)
-        return depth[t]
-
-    worth: dict[str, float] = defaultdict(float)
-    for i in picked:
-        worth[cards_by_id[i].topic] += gain[i]
-    index = {i: n for n, i in enumerate(picked)}
-    ordered = sorted(picked, key=lambda i: (level(cards_by_id[i].topic), -worth[cards_by_id[i].topic], cards_by_id[i].topic,
-                                            cards_by_id[i].leaf, cards_by_id[i].order, index[i]))
-    days, at = [], 0
-    for c in capacity:
-        days.append(ordered[at:at + c])
-        at += c
-    return days
-
-
 def plain_title(title: str) -> str:
     return re.sub(r"[（(].*", "", title).strip()
 
@@ -112,7 +86,10 @@ def build(cfg: dict, cards: list, mastery: dict[str, float], unseen: set[str], m
     capacity = [per_day - (QUESTION_CARDS if i < len(practice) else 0) for i in range(n_days)]
     picked, gain = coverage_by_domain(concept, mastery, model, sum(capacity), domain_of)
     by_id = {c.id: c for c in cards}
-    days_concept = layout(picked, by_id, prereqs, gain, capacity)
+    days_concept, at = [], 0  # the list is woven across domains, so each day holds some of every area, most valuable first
+    for size in capacity:
+        days_concept.append(picked[at:at + size])
+        at += size
     days = []
     start = date.fromisoformat(s["start"])
     point_weight = lambda k: model.weight.get(k, 0.0)  # noqa: E731

@@ -410,6 +410,11 @@ def coverage_by_domain(cards: list[CardInfo], mastery: dict[str, float], points:
         extra = min(spare, len(ranked[d]) - quota[d])
         quota[d] += extra
         spare -= extra
-    order = [i for d in ranked for i in ranked[d][:quota[d]]]
-    order.sort(key=lambda i: -gains[i])
+    # woven in proportion to the quotas, so any first part of the list is balanced across the domains
+    taken = defaultdict(int)
+    order: list[str] = []
+    while len(order) < sum(quota.values()):
+        d = min((x for x in ranked if taken[x] < quota[x]), key=lambda x: (taken[x] + 1) / quota[x])
+        order.append(ranked[d][taken[d]])
+        taken[d] += 1
     return order, {i: gains[i] for i in order}

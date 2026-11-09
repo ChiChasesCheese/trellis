@@ -39,12 +39,6 @@ def test_age_hold_grows_with_age_and_stays_below_one():
     assert 0 < holds[0] < holds[-1] <= 1
 
 
-def test_layout_puts_prerequisite_topics_first_and_fills_each_day():
-    cards = {f"{t}{i}": CardInfo(f"{t}{i}", t, t, i) for t in "ab" for i in range(2)}
-    days = plan_sprint.layout(list(cards), cards, {"a": ["b"]}, {i: 1.0 for i in cards}, [2, 2])
-    assert days == [["b0", "b1"], ["a0", "a1"]]
-
-
 def test_coverage_order_stops_paying_for_a_point_that_is_full():
     n = HELD_CARDS + 3
     cards = [CardInfo(f"a{i}", "a", "a", i) for i in range(n)] + [CardInfo("b0", "b", "b", 0)]
