@@ -40,7 +40,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import daily_extra  # noqa: E402
 import plan_kp  # noqa: E402
 import plan_sprint  # noqa: E402
-from trellis.plan import HELD_CARDS, CardInfo, Edge, PointModel, coverage_order, plan  # noqa: E402
+from trellis.plan import FIRST_PASS_MAX, HELD_CARDS, READ_UNIT, CardInfo, Edge, PointModel, coverage_order, plan  # noqa: E402
 from trellis.project import load_project  # noqa: E402
 from trellis.sequence import core_leaves  # noqa: E402
 from trellis.traces import Trace  # noqa: E402
@@ -353,6 +353,48 @@ def coverage_metrics(tree, p, gen, cfg) -> dict | None:
             "after_today": model.coverage(after), "to80_cards": need, "to80_days": math.ceil(need / max(1, daily)), "daily_new": daily,
             "ready": sum(r["f"] * r["ready"] for r in rows) / fz, "ready_n": sum(1 for r in rows if r["ready"] >= 0.6), "ready_total": len(rows),
             "representatives": (gen["representatives"][-1] if gen and gen.get("representatives") else None), "questions": rows[:30]}
+
+
+def card_worth(cards, titles, p, picked: set[str], n: int = 40) -> list[dict] | None:
+    """The cards worth most to learn next, in information terms.
+
+    A point's spread is the Shannon entropy, in bits, of the questions that need it, weighted by how often each is asked: 0 when
+    one question needs it, higher the more evenly many frequent questions lean on it. A card's spread is the weighted mean over
+    its points. Worth = coverage added per unit of reading x (1 + spread): a card that teaches something many questions share,
+    briefly, comes first."""
+    if not kp_state:
+        return None
+    pts, model, q_freq = kp_state["points"], kp_state["model"], kp_state["q_freq"]
+    held = model.mastery(p.card_mastery)
+    teaching = model.teaching_cached()
+    need: dict[str, dict[str, float]] = defaultdict(dict)
+    for q, f in q_freq.items():
+        for x in pts.needs.get(q, []):
+            need[x["kp"]][q] = f * plan_kp.ROLE.get(x["role"], 0.6)
+    def spread(k: str) -> float:
+        z = sum(need[k].values())
+        return -sum(v / z * math.log2(v / z) for v in need[k].values() if v > 0) if z else 0.0
+    rows, total = [], sum(model.weight.values()) or 1.0
+    for c in cards:
+        ks = [k for k in pts.card.get(c.id, []) if k not in plan_kp.META]
+        if not ks or p.card_mastery.get(c.id, 0.0) > 0 or c.length > FIRST_PASS_MAX:
+            continue
+        share = [1.0 if i == 0 else 0.5 for i in range(len(ks))]
+        parts = [model.weight.get(k, 0.0) * s / max(1.0, min(HELD_CARDS, teaching[k])) * (1 - held.get(k, 0.0)) for k, s in zip(ks, share)]
+        gain = sum(parts) / total
+        if gain <= 0:
+            continue
+        bits = sum(g * spread(k) for g, k in zip(parts, ks)) / sum(parts)
+        cost = 1 + c.length / READ_UNIT
+        rows.append({"id": c.id, "title": titles.get(c.id, c.id), "point": pts.meta[ks[0]]["title"], "topic": c.topic, "gain": gain, "chars": c.length, "bits": bits,
+                     "questions": len(need[ks[0]]), "score": gain / cost * (1 + bits), "today": c.id in picked})
+    rows.sort(key=lambda r: -r["score"])
+    seen_points, best = set(), []  # one card per primary point: the same point again adds little, so a list of twenty QPS cards says nothing
+    for r in rows:
+        if r["point"] not in seen_points:
+            seen_points.add(r["point"])
+            best.append(r)
+    return best[:n]
 
 
 LEARNED = 0.58  # mastery of a card just learned and past its first few-day interval
@@ -771,7 +813,7 @@ def dashboard(tree, p, cards, titles, edges, history, gen=None) -> str:
             "evidence": (ev_q.get(t) or {}),
         })
     data = {"topics": topics, "edges": [{"src": e.src, "dst": e.dst, "s": e.strength, "kind": e.kind} for e in edges],
-            "pareto": p.pareto, "held": p.held, "generality": gen, "points": exam_point_rows(tree, p), "metrics": coverage_metrics(tree, p, gen, cfg_global), "history": history, "activity": daily_activity, "brief": brief,
+            "pareto": p.pareto, "held": p.held, "generality": gen, "points": exam_point_rows(tree, p), "worth": card_worth(cards, titles, p, kp_state.get("in_deck", set())), "metrics": coverage_metrics(tree, p, gen, cfg_global), "history": history, "activity": daily_activity, "brief": brief,
             "picked": [{"id": cid, "title": titles.get(cid, cid)} for cid in p.picked],
             "pickedTopics": sorted({c.topic for c in cards if c.id in set(p.picked)}),
             "method": {"coverage": ev.get("coverage"), "bank_reports": ev.get("method", {}).get("bank_reports"),
@@ -1050,6 +1092,8 @@ def run(apply_to_anki: bool) -> None:
     point_of = {c.id: c.point for c in cards}
     for n, group in enumerate(interleave(fresh, topic_of, int(cfg.get("round_size", 20)), point_of), 1):  # short runs of related cards, then a change of subject
         stages[f"{n:02d} 第 {n} 组"] = group
+    if kp_state:
+        kp_state["in_deck"] = {i for i, c in anki.items() if c["deckName"].startswith(DECK)}
     if kp_state:  # what Anki deals today: the stages in deck order, up to the daily limit
         kp_state["today"] = [i for _, ids in sorted(stages.items()) for i in ids][:int(cfg.get("daily_new", 35))]
     daily_activity[:] = per_day(logs)

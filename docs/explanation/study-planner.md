@@ -135,6 +135,8 @@ whole questions keep their reserved share.
 
 A day runs in short related blocks: up to five cards on a topic, those on one exam point together, then a change of subject, so a card can build on the one before it. Selection compares cards by coverage added per unit of reading (`READ_UNIT`), and cards over 2,000 characters wait until they are split. Topics that feel like one subject can share a daily cap (`family_caps`).
 
+The dashboard also ranks unlearned cards by information worth: coverage added per unit of reading times one plus the card's spread, the Shannon entropy in bits of the questions that need its points, weighted by how often each is asked. It lists one card per primary point, because a point needs few cards. It is a view; it does not choose the day's cards.
+
 Each subject has its own part of the deck and its own daily budget of new cards and reviews, so one cannot starve another:
 system design, low-level design and LeetCode. New cards dealt and not learned stay first the next day, in a `0 昨天没学完` part,
 and count against that day's budget.

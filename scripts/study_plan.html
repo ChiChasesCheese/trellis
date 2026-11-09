@@ -42,6 +42,8 @@ aside section+section{margin-top:34px;padding-top:22px;border-top:1px solid var(
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0 28px;margin:26px 0 0;border-top:2px solid var(--ink)}
 .kpi{padding:12px 0 14px;border-bottom:1px solid var(--rule)}.kpi b{display:block;font:400 34px/1.1 var(--hand)}.kpi span{display:block;font-size:13.5px;margin-top:2px}.kpi small{display:block;color:var(--ink-2);font-size:12.5px;line-height:1.45;margin-top:3px}
 .kpisrc{grid-column:1/-1;color:var(--ink-2);font-size:12.5px;padding:10px 0 0}
+.worth{margin-top:44px}.worth .lead{margin:0 0 10px;max-width:74ch}.worth table{width:100%;border-collapse:collapse;font-size:13.5px}.worth th{text-align:left;font-weight:400;color:var(--ink-2);padding:6px;border-bottom:2px solid var(--ink);white-space:nowrap}.worth td{padding:7px 6px;border-bottom:1px solid var(--rule);vertical-align:top}.worth small{display:block;color:var(--ink-2);font-size:12.5px}.worth .tag{font-size:11px;color:var(--blue);border:1px solid var(--blue);border-radius:999px;padding:0 6px;margin-left:6px;white-space:nowrap}
+@media (max-width:900px){.worth .hide-s{display:none}}
 .ready{margin-top:44px}.ready table{width:100%;border-collapse:collapse;font-size:13.5px}.ready th{text-align:left;font-weight:400;color:var(--ink-2);padding:6px;border-bottom:2px solid var(--ink)}.ready td{padding:7px 6px;border-bottom:1px solid var(--rule);vertical-align:top}.ready td button{all:unset;cursor:pointer}.ready td button:hover{color:var(--blue)}.ready .miss{color:var(--ink-2);font-size:12.5px}.ready .lead{margin:0 0 10px;max-width:72ch}
 @media (max-width:900px){.ready .hide-s{display:none}}
 .kph{font:400 18px/1.3 var(--hand);margin:18px 0 4px}
@@ -120,6 +122,7 @@ svg text{font-family:var(--text)}
  <div><h2>近 30 天</h2><svg id="trend" viewBox="0 0 520 220" role="img" aria-label="近 30 天复习"></svg><p>柱子是每天复习的次数，红色部分是按了「忘记」的次数。</p></div>
 </div>
 <div class="tops" id="tops"></div>
+<div class="worth" id="worth"></div>
 <div class="ready" id="ready"></div>
 <div class="gen" id="gen"></div>
 </div>
@@ -261,6 +264,9 @@ if(lead)show(lead.id);
   a.map((d,i)=>i%Math.ceil(n/7)===0||i===n-1?`<text x="${X(i)}" y="${h-14}" font-size="12" text-anchor="middle" fill="${ink2}">${+d.date.slice(5,7)}/${+d.date.slice(8)}</text>`:'').join('')})();
 (function(){if(!P)return;const rs=P.top.map(k=>P.rows[k]);
  document.getElementById('tops').innerHTML=`<h2>现在最该补的考点</h2><p class="lead">多道题共用的考点有 ${P.n} 个，权重最高的 ${P.n80} 个占了它们权重的 80%。这里按「权重 × 没掌握的部分」排序，权重来自 ${P.questions} 道题逐题标注的「必讲 / 追问 / 加分」。点开看每道题怎么用它。</p>${rs.map(r=>pointRow(r)).join('')}`})();
+(function(){const W=D.worth;if(!W||!W.length)return;
+ document.getElementById('worth').innerHTML=`<h2>最值钱的卡</h2><p class="lead">还没学过的卡里，每个考点取最值钱的一张，共 ${W.length} 张。分数 = 每读一单位带来的考点覆盖 × (1 + 跨题熵)。跨题熵用比特表示：只有一道题用它是 0，被越多高频题均匀地用到越高。</p>
+ <table><thead><tr><th>#</th><th>卡片</th><th class="num">覆盖增益</th><th class="num hide-s">字数</th><th class="num">跨题熵</th><th class="num hide-s">用到的题</th></tr></thead><tbody>${W.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.title)}${r.today?'<span class="tag">今日</span>':''}<small>${esc(r.point)}</small></td><td class="num">${(r.gain*100).toFixed(3)}%</td><td class="num hide-s">${r.chars}</td><td class="num">${r.bits.toFixed(1)}</td><td class="num hide-s">${r.questions}</td></tr>`).join('')}</tbody></table>`})();
 (function(){const K=D.metrics;if(!K)return;const f=x=>(x*100).toFixed(1)+'%',R=K.representatives,A=(D.method||{}).agreement,MM=D.method||{};
  const tile=(v,t,s)=>`<div class="kpi"><b>${v}</b><span>${t}</span><small>${s}</small></div>`;
  document.getElementById('kpis').innerHTML=
