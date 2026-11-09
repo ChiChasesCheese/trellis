@@ -54,7 +54,6 @@ REPORT_TAG = "plan::report"
 STAGES = {"s00": "1 弱项补强", "s05": "3 题目与整轮", "s07": "3 题目与整轮", "s08": "3 题目与整轮"}
 STAGE_DEFAULT = "2 概念与技术"
 SUBJECT_DECK = daily_extra.SUBJECT_DECK[daily_extra.SD_ROOT]
-RETIRED_STAGES = ("1 弱项补强", "2 概念与技术", "3 题目与整轮", "4 算法", "5 到期复习")  # before each subject had its own part
 TOPIC_DEPTH = {"s08": 3}  # TikTok: one topic per question, not one per section
 EXTRA = {f"q.{m}" for m in ("cdn-design", "pastebin", "object-storage", "auth-service", "reddit", "social-graph", "email-service",
                              "video-conferencing", "google-maps", "calendar", "e-commerce", "in-the-wild", "uid")}
@@ -850,8 +849,8 @@ def report_card(head: str, body: str):
 
 def preset(cfg):
     names = [d for d in call("deckNames") if d == DECK or d.startswith(DECK + "::")]
-    retired = sorted((d for d in names for r in RETIRED_STAGES if d == f"{DECK}::{r}" or d.startswith(f"{DECK}::{r}::")), key=len, reverse=True)
-    empty = [d for d in retired if not call("findCards", query=f'"deck:{d}"')]
+    # yesterday's groups and any retired parts: every sub-deck left empty after the deal goes
+    empty = sorted((d for d in names if d != DECK and not call("findCards", query=f'"deck:{d}"')), key=len, reverse=True)
     if empty:
         call("deleteDecks", decks=empty, cardsToo=True)
         names = [d for d in names if d not in empty]
@@ -901,6 +900,35 @@ def points_report(p, cards) -> str:
         out.append(f"<li>{html.escape(pts.meta[k]['title'])}{'（' + how + '）' if how else ''}</li>")
     out.append("</ul>")
     return "".join(out)
+
+
+def capped(ids: list[str], caps: dict[str, dict], topic_of: dict[str, str]) -> list[str]:
+    """Drop cards past a family's daily maximum: topics that feel like one subject (estimation) should not fill a day."""
+    used: dict[str, int] = defaultdict(int)
+    family = {t: name for name, spec in caps.items() for t in spec["topics"]}
+    out = []
+    for i in ids:
+        f = family.get(topic_of.get(i, ""))
+        if f and used[f] >= caps[f]["max"]:
+            continue
+        if f:
+            used[f] += 1
+        out.append(i)
+    return out
+
+
+def interleave(ids: list[str], topic_of: dict[str, str], size: int) -> list[list[str]]:
+    """Round-robin over the topics, each in its own order, then cut into groups: variety within a sitting, order within a topic."""
+    by_topic: dict[str, list[str]] = defaultdict(list)
+    for i in ids:
+        by_topic[topic_of[i]].append(i)
+    queues = sorted(by_topic.values(), key=len, reverse=True)
+    mixed = []
+    while any(queues):
+        for q in queues:
+            if q:
+                mixed.append(q.pop(0))
+    return [mixed[k:k + size] for k in range(0, len(mixed), size)]
 
 
 def extra_report(ex) -> str:
@@ -991,19 +1019,24 @@ def run(apply_to_anki: bool) -> None:
     p.picked += [i for i in q_plan.picked if i not in already][: budget - len(p.picked)]
     if cfg.get("pure_coverage") and model:  # no personal boosts: the cards that add the most exam-point coverage, whole questions in their share
         unseen = [c for c in cards if c.id not in was_dealt and not (traces.get(c.id) and traces[c.id].reps)]
-        concept, _ = coverage_order([c for c in unseen if c.id not in only_questions], p.card_mastery, model, budget - int(budget * share))
+        # asks for more than the budget: a capped family's surplus gives way to the next-best cards
+        concept, _ = coverage_order([c for c in unseen if c.id not in only_questions], p.card_mastery, model, budget - int(budget * share) + 60)
         ids = {c.id for c in question_cards}
         whole, _ = coverage_order([c for c in unseen if c.id in ids], p.card_mastery, model, int(budget * share))
-        p.picked = concept + whole
+        keep = capped(concept, cfg.get("family_caps", {}), {c.id: c.topic for c in cards})[: budget - int(budget * share)]
+        p.picked = keep + whole
     p.picked = carried + p.picked
     sprint = sprint_plan(cfg, tree, cards, p, traces, edges, gen, sprint_day, now)
     seen = {i for i, t in traces.items() if t.reps}
     if sprint_day >= 1 and sprint:  # the sprint's own sequence replaces the day's picks
         p.picked = [i for i in plan_sprint.deal_today(sprint, seen, int(cfg["daily_new"])) if i in anki]
     stages = defaultdict(list)
-    was_carried = set(carried)
-    for i in p.picked:
-        stages[daily_extra.CARRIED if i in was_carried else STAGES.get(tree.top(anki_leaf[i]), STAGE_DEFAULT)].append(i)
+    topic_of = {c.id: c.topic for c in cards}
+    if carried:
+        stages[daily_extra.CARRIED] = list(carried)
+    fresh = [i for i in p.picked if i not in set(carried)]
+    for n, group in enumerate(interleave(fresh, topic_of, int(cfg.get("round_size", 20))), 1):  # a few topics at a time, never one block
+        stages[f"{n:02d} 第 {n} 组"] = group
     if kp_state:  # what Anki deals today: the stages in deck order, up to the daily limit
         kp_state["today"] = [i for _, ids in sorted(stages.items()) for i in ids][:int(cfg.get("daily_new", 35))]
     daily_activity[:] = per_day(logs)

@@ -91,3 +91,10 @@ def test_low_level_design_deals_foundations_before_problems():
              {"deckName": deck + "11 Hello Interview 低层设计::并发", "due": 9}, {"deckName": deck + "03 对象建模", "due": 5}]
     order = sorted(cards, key=daily_extra.lld_rank)
     assert [c["due"] for c in order] == [5, 9, 1, 2]
+
+
+def test_a_day_is_interleaved_and_a_family_is_capped():
+    import study_plan
+    topic = {"a1": "x", "a2": "x", "a3": "x", "b1": "y", "c1": "z"}
+    assert study_plan.interleave(["a1", "a2", "a3", "b1", "c1"], topic, 3) == [["a1", "b1", "c1"], ["a2", "a3"]]
+    assert study_plan.capped(["a1", "a2", "b1"], {"f": {"topics": ["x"], "max": 1}}, topic) == ["a1", "b1"]
