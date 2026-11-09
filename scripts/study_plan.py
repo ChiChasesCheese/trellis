@@ -1030,6 +1030,7 @@ def run(apply_to_anki: bool) -> None:
     seen = {i for i, t in traces.items() if t.reps}
     if sprint_day >= 1 and sprint:  # the sprint's own sequence replaces the day's picks
         p.picked = [i for i in plan_sprint.deal_today(sprint, seen, int(cfg["daily_new"])) if i in anki]
+        carried = [i for i in carried if i in set(p.picked)]  # the sequence already puts what is left first; nothing is added on top
     stages = defaultdict(list)
     topic_of = {c.id: c.topic for c in cards}
     if carried:
