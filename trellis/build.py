@@ -293,8 +293,8 @@ pre code, .hl code {
   background: none;
   padding: 0;
   font-size: inherit;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
+  white-space: pre;
+  overflow-wrap: normal;
 }
 .hl .c, .hl .c1, .hl .cm, .hl .ch { color: #6a9955; font-style: normal; }
 .hl .k, .hl .kn, .hl .kc, .hl .kd, .hl .ow, .hl .kr { color: #a626a4; }
