@@ -40,7 +40,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import daily_extra  # noqa: E402
 import plan_kp  # noqa: E402
 import plan_sprint  # noqa: E402
-from trellis.plan import HELD_CARDS, CardInfo, Edge, PointModel, plan  # noqa: E402
+from trellis.plan import HELD_CARDS, CardInfo, Edge, PointModel, coverage_order, plan  # noqa: E402
 from trellis.project import load_project  # noqa: E402
 from trellis.sequence import core_leaves  # noqa: E402
 from trellis.traces import Trace  # noqa: E402
@@ -972,6 +972,7 @@ def run(apply_to_anki: bool) -> None:
     carry = not dealt_on.exists() or dealt_on.read_text().strip() != now.strftime("%Y-%m-%d")
     carried = [i for i, c in anki.items() if carry and c["deckName"].startswith(DECK) and c["queue"] == 0] if apply_to_anki else []
     budget = max(0, int(cfg.get("daily_new", 100)) - len(carried))
+    was_dealt = set(carried)
     boosts = topic_boost(tree, {c.topic for c in cards}, cfg.get("boost", {}))
     share = float(cfg.get("question_share", 0.2))
     spread = float(cfg.get("spread", 0.5))
@@ -988,6 +989,12 @@ def run(apply_to_anki: bool) -> None:
     q_plan = plan(question_cards, traces, {t: base.get(t, 0) for t in {c.topic for c in question_cards}}, edges, boosts, now_ms,
                   int(budget * share), exclude=set(p.picked) | set(carried), spread=spread, points=model)
     p.picked += [i for i in q_plan.picked if i not in already][: budget - len(p.picked)]
+    if cfg.get("pure_coverage") and model:  # no personal boosts: the cards that add the most exam-point coverage, whole questions in their share
+        unseen = [c for c in cards if c.id not in was_dealt and not (traces.get(c.id) and traces[c.id].reps)]
+        concept, _ = coverage_order([c for c in unseen if c.id not in only_questions], p.card_mastery, model, budget - int(budget * share))
+        ids = {c.id for c in question_cards}
+        whole, _ = coverage_order([c for c in unseen if c.id in ids], p.card_mastery, model, int(budget * share))
+        p.picked = concept + whole
     p.picked = carried + p.picked
     sprint = sprint_plan(cfg, tree, cards, p, traces, edges, gen, sprint_day, now)
     seen = {i for i, t in traces.items() if t.reps}

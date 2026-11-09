@@ -130,6 +130,9 @@ concepts and technologies, whole questions.
 
 Moved cards record their home deck and go back on the next run. The decks the plan owns deal no new cards themselves.
 
+With `pure_coverage` set, a day's system-design cards are the ones that add the most exam-point coverage, with no personal boosts;
+whole questions keep their reserved share.
+
 Each subject has its own part of the deck and its own daily budget of new cards and reviews, so one cannot starve another:
 system design, low-level design and LeetCode. New cards dealt and not learned stay first the next day, in a `0 昨天没学完` part,
 and count against that day's budget.
