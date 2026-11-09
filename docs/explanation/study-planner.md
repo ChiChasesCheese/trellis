@@ -133,7 +133,7 @@ Moved cards record their home deck and go back on the next run. The decks the pl
 With `pure_coverage` set, a day's system-design cards are the ones that add the most exam-point coverage, with no personal boosts;
 whole questions keep their reserved share.
 
-A day runs in short related blocks: up to five cards on a topic, those on one exam point together, then a change of subject, so a card can build on the one before it. Selection compares cards by coverage added per unit of reading (`READ_UNIT`) times one plus their spread, and cards over 2,000 characters wait until they are split. Topics that feel like one subject can share a daily cap (`family_caps`).
+A day's system-design cards are cut into five sittings of about equal size, each on related material: a domain's topics stay together and cards on one exam point sit side by side, so a card can build on the one before it. Selection compares cards by coverage added per unit of reading (`READ_UNIT`) times one plus their spread, and cards over 2,000 characters wait until they are split. Topics that feel like one subject can share a daily cap (`family_caps`).
 
 The dashboard also ranks unlearned cards by information worth: coverage added per unit of reading times one plus the card's spread, the Shannon entropy in bits of the questions that need its points, weighted by how often each is asked. It lists one card per primary point, because a point needs few cards. The same worth chooses the day's system-design cards, inside each domain (top-level branch), and a domain's share of the budget follows the square root of the coverage it can still add, so the most valuable cards of every area get in, not only of the area every question needs.
 

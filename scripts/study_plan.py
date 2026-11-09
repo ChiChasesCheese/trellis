@@ -974,28 +974,45 @@ def capped(ids: list[str], caps: dict[str, dict], topic_of: dict[str, str]) -> l
     return out
 
 
-def interleave(ids: list[str], topic_of: dict[str, str], size: int, point_of: dict[str, str] | None = None, run: int = 5) -> list[list[str]]:
-    """Short runs of related cards, then a change of subject: each topic's cards, those on one exam point together, are cut into
-    runs of `run`; the runs rotate across topics and are packed into groups of about `size`, never splitting a run."""
+def into_sessions(ids: list[str], topic_of: dict[str, str], domain_of, title, n: int, point_of: dict[str, str] | None = None) -> list[tuple[str, list[str]]]:
+    """Cut a day into `n` sittings of about equal size, each on related material: topics of one domain stay together, a topic is
+    never split unless a domain is too big for a sitting, and cards on one exam point sit side by side. Returns (theme, cards) per sitting."""
     point_of = point_of or {}
     by_topic: dict[str, list[str]] = defaultdict(list)
     for i in ids:
         by_topic[topic_of[i]].append(i)
-    queues = []
-    for cards in sorted(by_topic.values(), key=len, reverse=True):
-        order = {p: k for k, p in enumerate(dict.fromkeys(point_of.get(i, "") or i for i in cards))}
-        cards = sorted(cards, key=lambda i: order[point_of.get(i, "") or i])  # stable: cards of one point stay in teaching order
-        queues.append([cards[k:k + run] for k in range(0, len(cards), run)])
-    groups, current = [], []
-    while any(queues):
-        for q in queues:
-            if q:
-                chunk = q.pop(0)
-                if current and len(current) + len(chunk) > size:
-                    groups.append(current)
-                    current = []
-                current += chunk
-    return groups + ([current] if current else [])
+    domains: dict[str, list[str]] = defaultdict(list)
+    for t in by_topic:
+        domains[domain_of(t)].append(t)
+    size = math.ceil(len(ids) / n) if ids else 1
+    # a domain too big for one sitting is cut along its topics; then the pieces go, largest first, to the emptiest sitting
+    pieces: list[list[str]] = []
+    for d, topics in domains.items():
+        piece, count = [], 0
+        for t in sorted(topics, key=lambda t: -len(by_topic[t])):
+            if piece and count + len(by_topic[t]) > 1.3 * size:
+                pieces.append(piece)
+                piece, count = [], 0
+            piece.append(t)
+            count += len(by_topic[t])
+        pieces.append(piece)
+    load = lambda piece: sum(len(by_topic[t]) for t in piece)  # noqa: E731
+    bins: list[list[list[str]]] = [[] for _ in range(n)]
+    for piece in sorted(pieces, key=load, reverse=True):
+        min(bins, key=lambda b: sum(load(x) for x in b)).append(piece)
+    sittings = []
+    for b in sorted((x for x in bins if x), key=lambda b: -sum(load(p) for p in b)):
+        group = []
+        for piece in sorted(b, key=load, reverse=True):
+            for t in piece:
+                order = {p: k for k, p in enumerate(dict.fromkeys(point_of.get(i, "") or i for i in by_topic[t]))}
+                group += sorted(by_topic[t], key=lambda i: order[point_of.get(i, "") or i])
+        sittings.append(group)
+    out = []
+    for group in sittings:
+        names = [re.sub(r"[（(].*?[）)]|:", "", title(t)).strip() for t, _ in Counter(topic_of[i] for i in group).most_common(2)]
+        out.append((" · ".join(names), group))
+    return out
 
 
 def extra_report(ex) -> str:
@@ -1105,8 +1122,8 @@ def run(apply_to_anki: bool) -> None:
         stages[daily_extra.CARRIED] = list(carried)
     fresh = [i for i in p.picked if i not in set(carried)]
     point_of = {c.id: c.point for c in cards}
-    for n, group in enumerate(interleave(fresh, topic_of, int(cfg.get("round_size", 20)), point_of), 1):  # short runs of related cards, then a change of subject
-        stages[f"{n:02d} 第 {n} 组"] = group
+    for n, (theme, group) in enumerate(into_sessions(fresh, topic_of, tree.top, tree.title, int(cfg.get("sessions", 5)), point_of), 1):
+        stages[f"{n} 第 {n} 场 · {theme}"] = group
     if kp_state:
         kp_state["in_deck"] = {i for i, c in anki.items() if c["deckName"].startswith(DECK)}
         kp_state["pool"] = {c.id for c in cards if not question_topic(tree, c.topic) or c.topic in reps}  # what the plan can deal
