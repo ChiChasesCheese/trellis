@@ -240,7 +240,7 @@ def simplify(points: list[tuple[float, float]], eps: float) -> list[tuple[float,
     return left[:-1] + simplify(points[i + 1 :], eps)
 ```
 
-299 个点（一段带抖动的水平线加一段斜线）`eps = 0.5` → 4 个点。
+299 个点（150 个点的水平线，接 149 个点、斜率 0.5 的斜线）`eps = 0.5` → 3 个点：起点、拐角处一个点、终点。笔迹带不超过 `eps` 的小抖动时，通常仍是 3 个点，偶尔在拐角附近多留 1 个。
 
 **深入。**
 1. 【必讲】预览与提交分离，高频事件按帧合并。
