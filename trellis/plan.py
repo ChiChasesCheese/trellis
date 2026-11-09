@@ -30,6 +30,7 @@ DEFAULT_LEVEL = 0.8
 READY_AT = 0.4  # prerequisite mastery at which a dependant counts as fully ready
 DIMINISH = 0.8  # each further card from the same topic in one round is worth this much less
 DIMINISH_POINT = 0.6  # and from the same exam point, much less: a second card on a point adds little the same day
+UNPROVEN = 0.5  # what a card counts for until it has passed one review after a real gap
 HELD_CARDS = 3  # a point is held once about this many of its cards are; a point taught by ten cards does not need all ten
 READ_UNIT = 400  # characters: a card this long costs twice the attention of a very short one
 FIRST_PASS_MAX = 2000  # characters: a card longer than this waits until it has been split or the basics are held
@@ -144,6 +145,8 @@ def card_mastery(trace: Trace | None, now_ms: int) -> float:
     h = card_hold(trace)
     if h is None:
         return 0.0
+    if trace.delayed == 0:  # only seen in its first sitting, however it was graded: no evidence yet that it can be recalled later
+        h *= UNPROVEN
     if trace.last_review and trace.interval > 0:
         elapsed = max(0.0, (now_ms - trace.last_review) / 86_400_000)
         h *= 0.9 ** (elapsed / trace.interval) / 0.9 if elapsed > trace.interval else 1.0

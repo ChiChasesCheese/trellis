@@ -251,7 +251,7 @@ def record(slugs_of: dict[str, str], known: set[str] = frozenset()):
         slug = key
         log = revs.get(str(c["cardId"]), [])
         tr = Trace(card_id=ident, reps=c["reps"], lapses=c["lapses"], interval=max(c["interval"], 0), type=c["type"],
-                   last_review=max((r["id"] for r in log), default=0))
+                   last_review=max((r["id"] for r in log), default=0), delayed=sum(1 for r in log if r["type"] == 1 and r["ease"] > 1))
         s = per[slug]
         s["cards"] += 1
         s["seen"] += bool(c["reps"])
@@ -272,7 +272,7 @@ def mastery_at(log: list[dict], t: int) -> float:
         return 0.0
     last = past[-1]
     tr = Trace(card_id="", reps=len(past), lapses=sum(1 for r in past if r["ease"] == 1 and r["type"] == 1),
-               interval=max(last["ivl"], 0), type=2 if last["ivl"] > 0 else 1, last_review=last["id"])
+               interval=max(last["ivl"], 0), type=2 if last["ivl"] > 0 else 1, last_review=last["id"], delayed=sum(1 for r in past if r["type"] == 1 and r["ease"] > 1))
     return card_mastery(tr, t)
 
 

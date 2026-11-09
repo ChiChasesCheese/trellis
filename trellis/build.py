@@ -198,6 +198,7 @@ def _blank_before_lists(text: str) -> str:
     return "\n".join(out)
 
 CSS = """
+.grade { color: var(--dim); font-size: 12.5px; margin-top: 18px; text-align: center; }
 :root {
   --ink: #1a1a1a; --dim: #6b7280; --paper: #fbfbfb;
   --accent: #3b6fd4; --rule: rgba(140, 140, 140, 0.28);
@@ -759,6 +760,9 @@ def _related_notes(used: dict[str, tuple[str, str]], links: dict) -> str:
     return f'<details class="sec related-notes"><summary><span class="label">相关知识点</span></summary>{"".join(rows)}</details>'
 
 
+_GRADE = '<div class="grade">说全了 Good · 卡壳或漏要点 Hard · 想不起来 Again · 第一次学不按 Easy</div>'
+
+
 def _qa_model() -> genanki.Model:
     return genanki.Model(
         _stable_id("trellis:model:qa"),
@@ -767,7 +771,7 @@ def _qa_model() -> genanki.Model:
         templates=[{
             "name": "QA",
             "qfmt": '<div class="crumb">{{Crumb}}</div>{{Question}}',
-            "afmt": '{{FrontSide}}<hr id="answer">{{Answer}}',
+            "afmt": '{{FrontSide}}<hr id="answer">{{Answer}}' + _GRADE,
         }],
         css=CSS,
     )
@@ -782,7 +786,7 @@ def _cloze_model() -> genanki.Model:
         templates=[{
             "name": "Cloze",
             "qfmt": '<div class="crumb">{{Crumb}}</div>{{cloze:Text}}',
-            "afmt": '<div class="crumb">{{Crumb}}</div>{{cloze:Text}}',
+            "afmt": '<div class="crumb">{{Crumb}}</div>{{cloze:Text}}' + _GRADE,
         }],
         css=CSS,
     )

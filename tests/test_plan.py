@@ -1,3 +1,4 @@
+import pytest
 import sys
 from pathlib import Path
 
@@ -71,7 +72,7 @@ def test_exam_point_weight_follows_role_and_question_frequency():
 def test_coverage_is_measured_on_points_and_a_card_adds_only_what_is_not_held():
     cards = [CardInfo(c, "l", "t", i, "必会") for i, c in enumerate(("a1", "a2", "a3", "a4", "b1"))]
     model = PointModel({"big": 3.0, "small": 1.0}, {"a1": ["big"], "a2": ["big"], "a3": ["big"], "a4": ["big"], "b1": ["small"]})
-    held = {c: Trace(c, reps=9, interval=30, type=2, last_review=DAY) for c in ("a1", "a2", "a3")}
+    held = {c: Trace(c, reps=9, interval=30, type=2, last_review=DAY, delayed=3) for c in ("a1", "a2", "a3")}
     p = plan(cards, held, {"t": 1.0}, [], {}, now_ms=2 * DAY, budget=1, points=model)
     assert abs(p.held - 0.75) < 0.01  # three held cards hold "big"; a fourth unseen card does not count against it
     assert p.card_value["a4"] < p.card_value["b1"]  # another card on a held point adds less than the first on a new one
@@ -100,3 +101,10 @@ def test_a_day_is_interleaved_and_a_family_is_capped():
     assert len(sessions) == 2 and sum(len(g) for _, g in sessions) == 6
     assert sessions[0][1][:3] == ["a1", "a2", "a3"]  # a topic stays together
     assert study_plan.capped(["a1", "a2", "b1"], {"f": {"topics": ["x"], "max": 1}}, topic) == ["a1", "b1"]
+
+
+def test_a_card_counts_for_less_until_it_has_been_recalled_after_a_gap():
+    now = 100 * DAY
+    first_sitting = Trace("c", reps=2, interval=10, type=2, last_review=now - DAY)
+    recalled = Trace("c", reps=3, interval=10, type=2, last_review=now - DAY, delayed=1)
+    assert card_mastery(first_sitting, now) == pytest.approx(card_mastery(recalled, now) / 2)

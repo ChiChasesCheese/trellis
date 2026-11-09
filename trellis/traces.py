@@ -50,6 +50,7 @@ class Trace:
     type: int = TYPE_NEW
     due: int = 0
     last_review: int = 0       # epoch ms, 0 when unknown
+    delayed: int = 0           # reviews passed after a real gap (not in learning steps): evidence of recall, not recognition
     # FSRS, when the collection has it enabled. Absent on SM-2.
     difficulty: float | None = None
     stability: float | None = None

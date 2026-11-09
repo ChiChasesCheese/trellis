@@ -622,7 +622,7 @@ def anki_state(ids: set[str]):
         log = revs.get(str(c["cardId"]), [])
         logs[ident] = log
         traces[ident] = Trace(card_id=ident, reps=c["reps"], lapses=c["lapses"], interval=max(c["interval"], 0),
-                              ease=c.get("factor", 0) / 1000, type=c["type"], due=c["due"],
+                              ease=c.get("factor", 0) / 1000, type=c["type"], due=c["due"], delayed=sum(1 for r in log if r["type"] == 1 and r["ease"] > 1),
                               last_review=max((r["id"] for r in log), default=0))
         anki[ident] = c
     return traces, anki, logs
@@ -936,8 +936,12 @@ def preset(cfg):
         conf = call("getDeckConfig", deck=prefix)
         # the deck holds exactly the day's budget, so Anki's own limit must never bite: a rebuild during the day deals a full set again
         conf["new"]["perDay"], conf["rev"]["perDay"] = 9999, 9999
+        conf["maxTaken"] = 300  # the default 60 s cap hides how long cards really take
+        conf["new"]["ints"] = [1, 2, 0]  # an Easy on first sight is re-tested in two days, not left for four or five
         conf["newGatherPriority"], conf["newSortOrder"] = 0, 0
         call("saveDeckConfig", config=conf)
+    current["maxTaken"] = 300
+    current["new"]["ints"] = [1, 2, 0]
     current["new"]["perDay"] = 9999  # the budgets are enforced by what is dealt, not by Anki
     current["rev"]["perDay"] = 9999
     current["newGatherPriority"] = 0  # deck order: report, weak spots, concepts, questions
