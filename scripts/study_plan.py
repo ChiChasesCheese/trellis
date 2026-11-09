@@ -913,15 +913,21 @@ def preset(cfg):
     # only what is outside the subject parts: resetting those too would lose their own limits and clone a new preset on every run
     call("setDeckConfigId", decks=[d for d in names if not any(d == x or d.startswith(x + "::") for x in parts)], configId=current["id"])
     # each subject has its own limit; the top deck only adds them up
+    presets_file = OUT / "presets.json"
+    known = json.loads(presets_file.read_text(encoding="utf-8")) if presets_file.exists() else {}
     for root, part, n in ((daily_extra.SD_ROOT, daily_extra.SUBJECT_DECK[daily_extra.SD_ROOT], cfg.get("daily_new", 100)),
                           (daily_extra.LLD_ROOT, daily_extra.SUBJECT_DECK[daily_extra.LLD_ROOT], cfg.get("lld_new", 100)),
                           ("LeetCode Tops", daily_extra.SUBJECT_DECK["LeetCode Tops"], cfg.get("lc_new", 20))):
-        title, prefix = f"{DECK} · {part[2:]}", f"{DECK}::{part}"
+        title, prefix = f"{part[2:]}每日", f"{DECK}::{part}"
         decks = [d for d in names if d == prefix or d.startswith(prefix + "::")]
         if not decks:
             continue
-        have = call("getDeckConfig", deck=prefix)
-        cid = have["id"] if have["name"] == title else call("cloneDeckConfigId", name=title, cloneFrom=current["id"])
+        # AnkiConnect cannot list presets and refuses to clone onto a name in use, so a new preset's id is remembered
+        cid = known.get(title) or call("cloneDeckConfigId", name=title, cloneFrom=current["id"])
+        if not cid:
+            raise RuntimeError(f"could not create preset {title}")
+        known[title] = cid
+        presets_file.write_text(json.dumps(known, ensure_ascii=False), encoding="utf-8")
         call("setDeckConfigId", decks=decks, configId=cid)
         conf = call("getDeckConfig", deck=prefix)
         conf["new"]["perDay"], conf["rev"]["perDay"] = int(n), 9999
