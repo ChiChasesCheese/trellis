@@ -40,7 +40,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import daily_extra  # noqa: E402
 import plan_kp  # noqa: E402
 import plan_sprint  # noqa: E402
-from trellis.plan import FIRST_PASS_MAX, HELD_CARDS, READ_UNIT, CardInfo, Edge, PointModel, coverage_by_domain, coverage_order, plan  # noqa: E402
+from trellis.plan import FIRST_PASS_MAX, HELD_CARDS, READ_UNIT, CardInfo, Edge, PointModel, coverage_by_domain, coverage_order, essence_cards, plan  # noqa: E402
 from trellis.project import load_project  # noqa: E402
 from trellis.sequence import core_leaves  # noqa: E402
 from trellis.traces import Trace  # noqa: E402
@@ -1102,8 +1102,11 @@ def run(apply_to_anki: bool) -> None:
     if cfg.get("pure_coverage") and model:  # no personal boosts: the cards that add the most exam-point coverage, whole questions in their share
         unseen = [c for c in cards if c.id not in was_dealt and not (traces.get(c.id) and traces[c.id].reps)]
         # asks for more than the budget: a capped family's surplus gives way to the next-best cards
-        concept, _ = coverage_by_domain([c for c in unseen if c.id not in only_questions], p.card_mastery, model, budget - int(budget * share) + 60,
-                                        lambda c: tree.top(c.topic))
+        pool = [c for c in unseen if c.id not in only_questions]
+        if cfg.get("essence"):  # one card per heavy point; the rest of the deck is reference, not a task
+            pool = essence_cards(pool, p.card_mastery, model, int(cfg.get("essence_points", 400)),
+                                 {k for k, m in kp_state["points"].meta.items() if m["topic"] not in kp_state["points"].needs and k not in plan_kp.META and model.weight.get(k, 0.0) > 0})
+        concept, _ = coverage_by_domain(pool, p.card_mastery, model, min(len(pool), budget - int(budget * share) + 60), lambda c: tree.top(c.topic))
         ids = {c.id for c in question_cards}
         whole, _ = coverage_order([c for c in unseen if c.id in ids], p.card_mastery, model, int(budget * share))
         keep = capped(concept, cfg.get("family_caps", {}), {c.id: c.topic for c in cards})[: budget - int(budget * share)]

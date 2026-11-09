@@ -5,8 +5,8 @@ deck, and frozen from the first day on, so the projection stays comparable with 
 
 - Concept cards are picked by the exam-point coverage they add per unit of reading (`trellis.plan.coverage_order`), woven across the domains, so each
   day holds some of every area, most valuable first.
-- Each practice day adds the cards of one representative question, in the order the questions add coverage. The last day is a
-  full mock of the next representative question, which is deliberately left unstudied.
+- The essence comes first: one card for each of the heaviest exam points not held yet. The days after it review and practise two
+  representative questions a day; the last day is a full mock of the next one, which is deliberately left unstudied.
 - Today's deal is the first `new_per_day` unseen cards of the whole sequence, so whatever was not finished comes first.
 - The projection assumes every dealt card is learned that day and every review after it passes on schedule.
 """
@@ -23,10 +23,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from trellis.hold import MATURE_DAYS  # noqa: E402
-from trellis.plan import PointModel, coverage_by_domain, coverage_order  # noqa: E402
+from trellis.plan import PointModel, coverage_by_domain, coverage_order, essence_cards  # noqa: E402
+import plan_kp  # noqa: E402
+
+META = plan_kp.META
 
 FILE = ROOT / "sources/local/plan/sprint.json"
 ROLE = {"必讲": 1.0, "追问": 0.6, "加分": 0.3}
+QUESTION_DAYS_REPS = 6  # the representative questions practised after the essence; the next one is kept for the mock
 QUESTION_CARDS = 16  # of each practice day's new cards, how many come from the day's representative question
 GRADUATING, EASE = 1, 2.5  # the deck's first interval and Anki's starting ease
 
@@ -80,31 +84,35 @@ def build(cfg: dict, cards: list, mastery: dict[str, float], unseen: set[str], m
           reps: list[dict], q_freq: dict[str, float], title, is_question, skip: set[str], generated: str, domain_of=lambda c: "") -> dict:
     s = cfg["sprint"]
     n_days, per_day = int(s["days"]), int(s["new_per_day"])
-    practice = reps[:n_days - 1]
-    mock = reps[n_days - 1] if len(reps) >= n_days else None
     concept = [c for c in cards if not is_question(c.topic) and c.id in unseen]
-    capacity = [per_day - (QUESTION_CARDS if i < len(practice) else 0) for i in range(n_days)]
-    picked, gain = coverage_by_domain(concept, mastery, model, sum(capacity), domain_of)
+    shared = {k for k, m in pts.meta.items() if m["topic"] not in pts.needs and k not in META and model.weight.get(k, 0.0) > 0}
+    chosen = essence_cards(concept, mastery, model, int(s.get("essence_points", 400)), shared)  # one card per heavy point: the essence first
+    picked, gain = coverage_by_domain(chosen, mastery, model, len(chosen), domain_of)
     by_id = {c.id: c for c in cards}
     days_concept, at = [], 0  # the list is woven across domains, so each day holds some of every area, most valuable first
-    for size in capacity:
-        days_concept.append(picked[at:at + size])
-        at += size
+    for _ in range(n_days):
+        days_concept.append(picked[at:at + per_day])
+        at += per_day
+    practice = list(reps[:QUESTION_DAYS_REPS])  # once the essence is through, the remaining days review it and practise whole questions
+    mock = reps[QUESTION_DAYS_REPS] if len(reps) > QUESTION_DAYS_REPS else None
     days = []
     start = date.fromisoformat(s["start"])
     point_weight = lambda k: model.weight.get(k, 0.0)  # noqa: E731
     used: dict[str, int] = {}  # card -> the day it is dealt
     listed: set[str] = set()  # a point is listed on the first day that teaches it
     for n in range(1, n_days + 1):
-        q = practice[n - 1] if n <= len(practice) else None
-        q_cards = []
-        if q:
+        todays: list[dict] = []
+        if not days_concept[n - 1]:
+            todays, practice = practice[:2], practice[2:]
+        q_cards: list[str] = []
+        for q in todays:
             pool = [c for c in cards if c.topic == q["id"] and c.id in unseen]
-            q_cards, _ = coverage_order(pool, mastery, model, QUESTION_CARDS)
+            q_cards += coverage_order(pool, mastery, model, QUESTION_CARDS)[0]
         ids = days_concept[n - 1] + q_cards
+        q = {"id": todays[0]["id"], "title": "、".join(x["title"] for x in todays)} if todays else None
         for i in ids:
             used[i] = n
-        topics = Counter(by_id[i].topic for i in days_concept[n - 1])
+        topics = Counter(by_id[i].topic for i in ids)
         points = sorted({by_id[i].point for i in ids if by_id[i].point and point_weight(by_id[i].point) > 0} - listed, key=lambda k: -point_weight(k))
         listed |= set(points)
         held = dict(mastery)
@@ -115,7 +123,7 @@ def build(cfg: dict, cards: list, mastery: dict[str, float], unseen: set[str], m
                      "theme": [plain_title(title(t)) for t, _ in topics.most_common(3)],
                      "topics": [{"id": t, "title": title(t), "cards": v} for t, v in topics.most_common()],
                      "points": [pts.meta[k]["title"] for k in points[:8]],
-                     "question": {"id": q["id"], "title": q["title"], "mock": False} if q else
+                     "question": {"id": q["id"], "title": q["title"], "mock": False} if q and n < n_days else
                                  ({"id": mock["id"], "title": mock["title"], "mock": True} if mock and n == n_days else None),
                      "cards": ids,
                      "proj_covered": model.coverage(held),

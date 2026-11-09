@@ -418,3 +418,22 @@ def coverage_by_domain(cards: list[CardInfo], mastery: dict[str, float], points:
         order.append(ranked[d][taken[d]])
         taken[d] += 1
     return order, {i: gains[i] for i in order}
+
+
+def essence_cards(cards: list[CardInfo], mastery: dict[str, float], points: PointModel, n: int, allowed: set[str]) -> list[CardInfo]:
+    """The essence: for each of the `n` heaviest points in `allowed` not held yet, the one card most worth reading first."""
+    held = points.mastery(mastery)
+    best: dict[str, CardInfo] = {}
+
+    def worth(c: CardInfo) -> float:
+        return (1 + c.spread) / (1 + c.length / READ_UNIT)
+
+    for c in cards:
+        ks = points.cards.get(c.id)
+        if not ks or ks[0] not in allowed or c.length > FIRST_PASS_MAX or mastery.get(c.id, 0.0) > 0:
+            continue
+        if ks[0] not in best or worth(c) > worth(best[ks[0]]):
+            best[ks[0]] = c
+    top = sorted(allowed, key=lambda k: -points.weight.get(k, 0.0))[:n]
+    return [best[k] for k in top if k in best and held.get(k, 0.0) < 0.5]
+

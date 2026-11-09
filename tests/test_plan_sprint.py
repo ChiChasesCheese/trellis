@@ -64,3 +64,10 @@ def test_every_domain_gets_a_share_of_the_day():
     cards = [CardInfo(i, "l" + i, "big" if i in "abcd" else "small", 1) for i in ("a", "b", "c", "d", "x", "y")]
     order, _ = coverage_by_domain(cards, {}, model, 4, lambda c: c.topic)
     assert len(order) == 4 and {"x", "y"} & set(order)  # the small domain is not crowded out
+
+
+def test_essence_takes_one_card_per_heavy_point():
+    from trellis.plan import essence_cards
+    model = PointModel({"big": 5.0, "mid": 3.0, "tiny": 0.1}, {"a": ["big"], "b": ["big"], "c": ["mid"], "d": ["tiny"]})
+    cards = [CardInfo("a", "l1", "t", 1, length=1200), CardInfo("b", "l2", "t", 1, length=100), CardInfo("c", "l3", "t", 1), CardInfo("d", "l4", "t", 1)]
+    assert [c.id for c in essence_cards(cards, {}, model, 2, {"big", "mid", "tiny"})] == ["b", "c"]

@@ -137,6 +137,8 @@ A day's system-design cards are cut into five sittings of about equal size, each
 
 The dashboard also ranks unlearned cards by information worth: coverage added per unit of reading times one plus the card's spread, the Shannon entropy in bits of the questions that need its points, weighted by how often each is asked. It lists one card per primary point, because a point needs few cards. The same worth chooses the day's system-design cards, inside each domain (top-level branch), and a domain's share of the budget follows the square root of the coverage it can still add, so the most valuable cards of every area get in, not only of the area every question needs.
 
+With `essence` set, the deck is treated as reference and only an essence is dealt: one card for each of the 400 heaviest shared exam points not held yet, then practice on whole questions. Low-level design has no exam points on most of its cards yet, so its essence is a rule: core foundations, a dozen cards of method and of concurrency, and the first cards of the most-reported problems.
+
 Each subject has its own part of the deck and its own daily budget of new cards and reviews, so one cannot starve another:
 system design, low-level design and LeetCode. New cards dealt and not learned stay first the next day, in a `0 昨天没学完` part,
 and count against that day's budget.

@@ -105,6 +105,43 @@ def lld_rank(c: dict) -> tuple:
     return (group, n, c["due"])
 
 
+LLD_PROBLEMS = ("可配置淘汰策略的内存键值存储", "限流器", "可配置缓存", "文件系统", "任务调度器", "日志服务", "多线程日志框架", "停车场", "电梯", "熔断器")  # by reported frequency
+
+
+def lld_order(cfg: dict, home: dict) -> list[dict]:
+    """New low-level-design cards in study order. With `essence`: foundations marked core, a dozen cards each of method and concurrency,
+    and the first few cards of the most-reported problems. The rest is reference. Until the deck has exam points this is a rule, not a score."""
+    new = _cards(f'("deck:{LLD_ROOT}" OR "deck:{DECK}::{SUBJECT_DECK[LLD_ROOT]}") is:new -is:suspended')
+    for c in new:
+        c["deckName"] = home.get(str(c["cardId"]), c["deckName"])  # rank by where it lives, also while the plan has borrowed it
+    new = sorted((c for c in new if c["deckName"].split("::")[0] == LLD_ROOT), key=lld_rank)
+    if not cfg.get("essence"):
+        return new
+    tags: dict[int, list[str]] = {}
+    nids = sorted({c["note"] for c in new})
+    for i in range(0, len(nids), 500):
+        for n in call("notesInfo", notes=nids[i:i + 500]):
+            tags[n["noteId"]] = n["tags"]
+    out, count = [], defaultdict(int)
+    for c in new:
+        parts = c["deckName"].split("::")
+        top, sub = parts[1] if len(parts) > 1 else "", parts[2] if len(parts) > 2 else ""
+        if top[:2].isdigit() and int(top[:2]) <= 8:
+            keep = "trellis::core" in tags.get(c["note"], [])
+        elif top.startswith("11") and sub in LLD_FOUNDATIONS[:2]:
+            count[sub] += 1
+            keep = count[sub] <= 12
+        elif top.startswith(("10", "11")) and sub.startswith(LLD_PROBLEMS):
+            name = next(p for p in LLD_PROBLEMS if sub.startswith(p))
+            count[name] += 1
+            keep = count[name] <= 8
+        else:
+            keep = False
+        if keep:
+            out.append(c)
+    return out
+
+
 def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, carry: bool = True) -> Extra:
     """Pick today's LeetCode problems, low-level design cards and reviews. Reads Anki, writes nothing. With `carry`, new cards
     dealt on an earlier day and not learned stay first, counted in the day's budget."""
@@ -199,7 +236,7 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
         if home.get(str(c["cardId"]), "").split("::")[0] == LLD_ROOT and len(ex.lld_new) < lld_limit:
             ex.lld_new.append({"card": c["cardId"], "carried": True})
     have = {x["card"] for x in ex.lld_new}
-    for c in sorted(_cards(f'"deck:{LLD_ROOT}" is:new -is:suspended'), key=lld_rank):
+    for c in lld_order(cfg, home):
         if len(ex.lld_new) >= lld_limit:
             break
         if c["cardId"] not in have:
