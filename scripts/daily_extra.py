@@ -39,7 +39,11 @@ from lc_data import call  # noqa: E402
 OUT = ROOT / "sources/local/plan"
 HOMES = OUT / "homes.json"
 DECK = "今日计划"
-LC_STAGE, REVIEW_STAGE = "4 算法", "5 到期复习"
+CARRIED = "0 昨天没学完"  # what was dealt and not learned comes first the next day
+LLD_ROOT, SD_ROOT = "低层设计（LLD）", "系统设计"
+SUBJECT_DECK = {SD_ROOT: "1 系统设计", LLD_ROOT: "2 低层设计", "LeetCode Tops": "3 算法"}  # each subject has its own part and budget
+REVIEWS = {SD_ROOT: 150, LLD_ROOT: 80, "LeetCode Tops": 60}
+LLD_FOUNDATIONS = ("低层设计答题框架", "并发", "低层设计跨题模式")
 DAY_MS = 86_400_000
 URGENCY_CAP = 2.0  # how far overdue-ness can raise a review: urgency is 1 + min(cap, days overdue / interval)
 VALUE_FLOOR = 0.3  # a review of the least valuable card in a deck still counts this much
@@ -56,6 +60,7 @@ DEFAULT_DECKS = {"系统设计": 1.0, "LeetCode Tops": 1.0, "低层设计（LLD�
 class Extra:
     lc_new: list[dict] = field(default_factory=list)       # {card, slug, title, why}
     lc_similar: list[dict] = field(default_factory=list)   # {card, slug, title, why, due_now}
+    lld_new: list[dict] = field(default_factory=list)      # {card, title, carried}
     reviews: list[dict] = field(default_factory=list)      # {card, home, score}
     backlog: int = 0                                       # due cards left in their decks
     by_deck: dict = field(default_factory=dict)            # root deck -> reviews taken
@@ -91,8 +96,18 @@ def homes() -> dict[str, str]:
     return json.loads(HOMES.read_text(encoding="utf-8")) if HOMES.exists() else {}
 
 
-def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None) -> Extra:
-    """Pick today's LeetCode problems and reviews. Reads Anki, writes nothing."""
+def lld_rank(c: dict) -> tuple:
+    """Low-level design, foundations first: method and principles, then the concurrency and cross-problem material, then problems."""
+    parts = c["deckName"].split("::")
+    top = parts[1] if len(parts) > 1 else ""
+    n = int(top[:2]) if top[:2].isdigit() else 99
+    group = 0 if n <= 8 else 1 if n == 11 and len(parts) > 2 and parts[2] in LLD_FOUNDATIONS else 2
+    return (group, n, c["due"])
+
+
+def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, carry: bool = True) -> Extra:
+    """Pick today's LeetCode problems, low-level design cards and reviews. Reads Anki, writes nothing. With `carry`, new cards
+    dealt on an earlier day and not learned stay first, counted in the day's budget."""
     import lc_analysis as lca
     now_ms = now_ms or int(time.time() * 1000)
     ex = Extra()
@@ -141,19 +156,32 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None) ->
             taken.add(p["slug"])
             ex.lc_similar.append({"card": card["cardId"], "slug": p["slug"], "title": p["title"],
                                   "why": f"和你刚忘的「{f['title']}」同一个思路", "due_now": card["queue"] == 2 and card["due"] > today})
+    # the day's new LeetCode cards all count against one budget: what was left yesterday, then similar problems, then the rest
+    limit = int(cfg.get("lc_new", 20))
+    inside = _cards(f'"deck:{DECK}" is:new') if carry else []
+    inside_ident = _idents(inside)
+    for c in inside:
+        if home.get(str(c["cardId"]), "").split("::")[0] in LC_ROOTS and len(ex.lc_new) < limit:
+            slug, _ = lca.resolve(inside_ident.get(c["cardId"], ""), slugs_of, known)
+            ex.lc_new.append({"card": c["cardId"], "slug": slug or "", "title": probs[slug]["title"] if slug else inside_ident.get(c["cardId"], ""),
+                              "why": "昨天没学完", "carried": True})
+            taken.add(slug)
+    ex.lc_similar = [x for x in ex.lc_similar if x["slug"] not in {n["slug"] for n in ex.lc_new}]
+    room = limit - len(ex.lc_new) - sum(1 for x in ex.lc_similar if not x["due_now"])
     # problems just solved on LeetCode (the daily deck writes one card each): deal them while the solve is fresh
+    solved = 0
     for c in lc_cards:
-        if c["queue"] == 0 and c["deckName"].startswith(SOLVED_DECK) and len(ex.lc_new) < int(cfg.get("solved_max", 10)):
+        if c["queue"] == 0 and c["deckName"].startswith(SOLVED_DECK) and solved < min(int(cfg.get("solved_max", 10)), room):
+            solved += 1
             slug, _ = lca.resolve(ident.get(c["cardId"], ""), slugs_of, known)
             ex.lc_new.append({"card": c["cardId"], "slug": slug or "", "title": probs[slug]["title"] if slug else ident.get(c["cardId"], ""),
                               "why": "你刚在 LeetCode 上做过"})
             taken.add(slug)
-    solved = len(ex.lc_new)
     fresh = [p for s, p in probs.items() if s not in taken and not p["seen"] and p["techniques"]]
     # what a new problem adds: its frequency, on a technique not held yet, less again for each pick on that technique today
     held = {t["id"]: t["mastery"] for t in analysis["dims"]["techniques"]}
     picks_on: dict[str, int] = defaultdict(int)
-    while len(ex.lc_new) - solved < int(cfg.get("lc_new", 8)) and fresh:
+    while len(ex.lc_new) + sum(1 for x in ex.lc_similar if not x["due_now"]) < limit and fresh:
         def worth(p):
             t = p["techniques"][0]
             return p["importance"] * boost.get(t, 1.0) * (1 - held.get(t, 0.0)) * 0.6 ** picks_on[t]
@@ -165,7 +193,19 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None) ->
             taken.add(p["slug"])
             picks_on[p["techniques"][0]] += 1
 
-    # ---- reviews, every deck
+    # ---- low-level design: its own budget
+    lld_limit = int(cfg.get("lld_new", 100))
+    for c in inside:
+        if home.get(str(c["cardId"]), "").split("::")[0] == LLD_ROOT and len(ex.lld_new) < lld_limit:
+            ex.lld_new.append({"card": c["cardId"], "carried": True})
+    have = {x["card"] for x in ex.lld_new}
+    for c in sorted(_cards(f'"deck:{LLD_ROOT}" is:new -is:suspended'), key=lld_rank):
+        if len(ex.lld_new) >= lld_limit:
+            break
+        if c["cardId"] not in have:
+            ex.lld_new.append({"card": c["cardId"], "carried": False})
+
+    # ---- reviews: each subject's most valuable due cards, within its own budget
     due = _cards("is:due -is:suspended")
     due_ident = _idents(due)
     raw = []
@@ -214,15 +254,16 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None) ->
         scored.append({"card": c["cardId"], "home": h, "score": score, "root": root})
     scored += list(one_per_problem.values())
     scored = [s for s in scored if s["card"] not in {x["card"] for x in ex.lc_similar + ex.lc_new}]
-    only = cfg.get("review_only")  # a sprint reviews these decks, in this order; the others wait
-    if only:
-        scored = [s for s in scored if s["root"] in only]
-        scored.sort(key=lambda s: (only.index(s["root"]), -s["score"]))
-    else:
-        scored.sort(key=lambda s: -s["score"])
-    budget = int(cfg.get("review_budget", 150))
-    ex.reviews = scored[:budget]
-    ex.backlog = len(scored) - len(ex.reviews)
+    budgets = {**REVIEWS, **cfg.get("reviews", {})}
+    scored.sort(key=lambda s: -s["score"])
+    taken_of: dict[str, int] = defaultdict(int)
+    for s in scored:
+        if s["root"] in budgets:
+            if taken_of[s["root"]] < budgets[s["root"]]:
+                taken_of[s["root"]] += 1
+                ex.reviews.append(s)
+            else:
+                ex.backlog += 1
     counts = defaultdict(int)
     for s in ex.reviews:
         counts[s["root"]] += 1
@@ -252,8 +293,13 @@ def release(keep: set[int]) -> int:
 
 def deal(ex: Extra) -> None:
     home = homes()
-    info = {c["cardId"]: c for c in call("cardsInfo", cards=[x["card"] for x in ex.lc_new + ex.lc_similar + ex.reviews])}
-    for stage, items in ((LC_STAGE, ex.lc_new + ex.lc_similar), (REVIEW_STAGE, ex.reviews)):
+    info = {c["cardId"]: c for c in call("cardsInfo", cards=[x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.reviews])}
+    lc, lld = SUBJECT_DECK["LeetCode Tops"], SUBJECT_DECK[LLD_ROOT]
+    plan = [(f"{lc}::{CARRIED}", [x for x in ex.lc_new if x.get("carried")]),
+            (f"{lc}::2 新题与相似题", [x for x in ex.lc_new if not x.get("carried")] + ex.lc_similar),
+            (f"{lld}::{CARRIED}", [x for x in ex.lld_new if x["carried"]]), (f"{lld}::2 新卡", [x for x in ex.lld_new if not x["carried"]])]
+    plan += [(f"{d}::9 到期复习", [x for x in ex.reviews if x["root"] == r]) for r, d in SUBJECT_DECK.items()]
+    for stage, items in plan:
         ids = [x["card"] for x in items if x["card"] in info]
         for i in ids:
             if not info[i]["deckName"].startswith(DECK):
@@ -267,13 +313,13 @@ def deal(ex: Extra) -> None:
 
 
 def keep_ids(ex: Extra) -> set[int]:
-    return {x["card"] for x in ex.lc_new + ex.lc_similar + ex.reviews}
+    return {x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.reviews}
 
 
 def main() -> int:
     cfg = json.loads((OUT / "config.json").read_text(encoding="utf-8"))
     ex = prepare(cfg, {})
-    print(f"LeetCode: {len(ex.lc_new)} new, {len(ex.lc_similar)} similar")
+    print(f"LeetCode: {len(ex.lc_new)} new, {len(ex.lc_similar)} similar · low-level design: {len(ex.lld_new)} new")
     for x in ex.lc_similar:
         print(f"  similar {x['title']}  ({x['why']}){'  [due now]' if x['due_now'] else ''}")
     for x in ex.lc_new:

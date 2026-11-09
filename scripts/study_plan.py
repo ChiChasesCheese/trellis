@@ -53,6 +53,8 @@ DONE_TAG = "今日计划::已学"
 REPORT_TAG = "plan::report"
 STAGES = {"s00": "1 弱项补强", "s05": "3 题目与整轮", "s07": "3 题目与整轮", "s08": "3 题目与整轮"}
 STAGE_DEFAULT = "2 概念与技术"
+SUBJECT_DECK = daily_extra.SUBJECT_DECK[daily_extra.SD_ROOT]
+RETIRED_STAGES = ("1 弱项补强", "2 概念与技术", "3 题目与整轮", "4 算法", "5 到期复习")  # before each subject had its own part
 TOPIC_DEPTH = {"s08": 3}  # TikTok: one topic per question, not one per section
 EXTRA = {f"q.{m}" for m in ("cdn-design", "pastebin", "object-storage", "auth-service", "reddit", "social-graph", "email-service",
                              "video-conferencing", "google-maps", "calendar", "e-commerce", "in-the-wild", "uid")}
@@ -679,8 +681,8 @@ def render_report(tree, p, cards, titles, base, edges, traces, logs, picks_by_st
             f" · 连续 {st} 天")
     body = [f"<p><b>昨天：</b>复习 {a1['reviews']} 次，新学 {a1['new']} 张，按「忘记」{a1['again']} 次，约 {a1['minutes']} 分钟。"
             f"近 7 天复习 {a7['reviews']} 次，忘记率 {a7['again'] / max(1, a7['reviews']) * 100:.0f}%。</p>",
-            f"<p><b>今天：</b>到期复习约 {due} 张；新卡每天 {cfg_global.get('daily_new', 35)} 张，计划里备了两天的量："
-            + "、".join(f"{k[2:]} {v}" for k, v in sorted(stage_counts.items())) + "，按这个顺序发。</p>",
+            f"<p><b>今天：</b>到期复习约 {due} 张；新卡每天 {cfg_global.get('daily_new', 35)} 张，按这个顺序发："
+            + "、".join(f"{k[2:]} {v}" for k, v in sorted(stage_counts.items())) + "。</p>",
             "<p><b>各部分掌握度</b>（深色已掌握，浅色已见过）</p>", svg_bars(bars),
             "<p><b>二八曲线</b>：按重要度排卡片，前多少张卡覆盖多少面试权重</p>", svg_pareto(p.pareto, p.held),
             "<p><b>现在最值得学的主题</b></p><ul>"]
@@ -827,7 +829,7 @@ def deal(picked_stage: dict[str, list[str]], anki):
     for stage, ids in picked_stage.items():
         cids = [anki[i]["cardId"] for i in ids if i in anki]
         if cids:
-            call("changeDeck", cards=cids, deck=f"{DECK}::{stage}")
+            call("changeDeck", cards=cids, deck=f"{DECK}::{SUBJECT_DECK}::{stage}")
 
 
 def report_card(head: str, body: str):
@@ -848,6 +850,11 @@ def report_card(head: str, body: str):
 
 def preset(cfg):
     names = [d for d in call("deckNames") if d == DECK or d.startswith(DECK + "::")]
+    retired = sorted((d for d in names for r in RETIRED_STAGES if d == f"{DECK}::{r}" or d.startswith(f"{DECK}::{r}::")), key=len, reverse=True)
+    empty = [d for d in retired if not call("findCards", query=f'"deck:{d}"')]
+    if empty:
+        call("deleteDecks", decks=empty, cardsToo=True)
+        names = [d for d in names if d not in empty]
     current = call("getDeckConfig", deck=DECK)
     if current["name"] != DECK:
         cid = call("cloneDeckConfigId", name=DECK, cloneFrom=call("getDeckConfig", deck="系统设计")["id"])
@@ -855,8 +862,22 @@ def preset(cfg):
         current = call("getDeckConfig", deck=DECK)
     else:
         call("setDeckConfigId", decks=names, configId=current["id"])
-    # system design + LeetCode new + similar + just solved + the report card
-    current["new"]["perDay"] = int(cfg.get("daily_new", 35)) + int(cfg.get("lc_new", 8)) + int(cfg.get("similar_max", 10)) + int(cfg.get("solved_max", 10)) + 1
+    # each subject has its own limit; the top deck only adds them up
+    for root, part, n in ((daily_extra.SD_ROOT, daily_extra.SUBJECT_DECK[daily_extra.SD_ROOT], cfg.get("daily_new", 100)),
+                          (daily_extra.LLD_ROOT, daily_extra.SUBJECT_DECK[daily_extra.LLD_ROOT], cfg.get("lld_new", 100)),
+                          ("LeetCode Tops", daily_extra.SUBJECT_DECK["LeetCode Tops"], cfg.get("lc_new", 20))):
+        title, prefix = f"{DECK} · {part[2:]}", f"{DECK}::{part}"
+        decks = [d for d in names if d == prefix or d.startswith(prefix + "::")]
+        if not decks:
+            continue
+        have = call("getDeckConfig", deck=prefix)
+        cid = have["id"] if have["name"] == title else call("cloneDeckConfigId", name=title, cloneFrom=current["id"])
+        call("setDeckConfigId", decks=decks, configId=cid)
+        conf = call("getDeckConfig", deck=prefix)
+        conf["new"]["perDay"], conf["rev"]["perDay"] = int(n), 9999
+        conf["newGatherPriority"], conf["newSortOrder"] = 0, 0
+        call("saveDeckConfig", config=conf)
+    current["new"]["perDay"] = int(cfg.get("daily_new", 100)) + int(cfg.get("lld_new", 100)) + int(cfg.get("lc_new", 20)) + 1  # + the report card
     current["rev"]["perDay"] = 9999
     current["newGatherPriority"] = 0  # deck order: report, weak spots, concepts, questions
     current["newSortOrder"] = 0
@@ -946,7 +967,11 @@ def run(apply_to_anki: bool) -> None:
             personal = min(1.0, (t.lapses + sum(1 for r in log if r["ease"] == 1) * 0.5 + hard * 0.3) / t.reps * 2)
             personal = min(1.0, personal + (0.2 if t.ease and t.ease < 2.3 else 0.0))
             c.difficulty = 0.5 * c.difficulty + 0.5 * personal
-    budget = int(cfg.get("daily_new", 35)) * int(cfg.get("buffer_days", 2))
+    # new cards dealt on an earlier day and not learned stay first and count in today's budget; a rebuild on the same day starts clean
+    dealt_on = OUT / "last_deal.txt"  # only a real rebuild counts; a report run must not end the carry-over
+    carry = not dealt_on.exists() or dealt_on.read_text().strip() != now.strftime("%Y-%m-%d")
+    carried = [i for i, c in anki.items() if carry and c["deckName"].startswith(DECK) and c["queue"] == 0] if apply_to_anki else []
+    budget = max(0, int(cfg.get("daily_new", 100)) - len(carried))
     boosts = topic_boost(tree, {c.topic for c in cards}, cfg.get("boost", {}))
     share = float(cfg.get("question_share", 0.2))
     spread = float(cfg.get("spread", 0.5))
@@ -955,21 +980,23 @@ def run(apply_to_anki: bool) -> None:
     model = kp_state.get("model")
     # shared knowledge takes the main budget; whole questions only get their own reserved share, from the representatives
     only_questions = {c.id for c in cards if question_topic(tree, c.topic)}
-    p = plan(cards, traces, base, edges, boosts, now_ms, budget - int(budget * share), exclude=only_questions, spread=spread, points=model)
+    p = plan(cards, traces, base, edges, boosts, now_ms, budget - int(budget * share), exclude=only_questions | set(carried), spread=spread, points=model)
     question_cards = [c for c in cards if STAGES.get(tree.top(c.leaf)) == "3 题目与整轮"]
     # whole questions are practised on a few representatives that between them exercise most shared concepts
     question_cards = [c for c in question_cards if c.topic in reps] or question_cards
     already = {i for i in p.picked if STAGES.get(tree.top(anki_leaf[i])) == "3 题目与整轮"}
     q_plan = plan(question_cards, traces, {t: base.get(t, 0) for t in {c.topic for c in question_cards}}, edges, boosts, now_ms,
-                  int(budget * share), exclude=set(p.picked), spread=spread, points=model)
+                  int(budget * share), exclude=set(p.picked) | set(carried), spread=spread, points=model)
     p.picked += [i for i in q_plan.picked if i not in already][: budget - len(p.picked)]
+    p.picked = carried + p.picked
     sprint = sprint_plan(cfg, tree, cards, p, traces, edges, gen, sprint_day, now)
     seen = {i for i, t in traces.items() if t.reps}
     if sprint_day >= 1 and sprint:  # the sprint's own sequence replaces the day's picks
         p.picked = [i for i in plan_sprint.deal_today(sprint, seen, int(cfg["daily_new"])) if i in anki]
     stages = defaultdict(list)
+    was_carried = set(carried)
     for i in p.picked:
-        stages[STAGES.get(tree.top(anki_leaf[i]), STAGE_DEFAULT)].append(i)
+        stages[daily_extra.CARRIED if i in was_carried else STAGES.get(tree.top(anki_leaf[i]), STAGE_DEFAULT)].append(i)
     if kp_state:  # what Anki deals today: the stages in deck order, up to the daily limit
         kp_state["today"] = [i for _, ids in sorted(stages.items()) for i in ids][:int(cfg.get("daily_new", 35))]
     daily_activity[:] = per_day(logs)
@@ -997,9 +1024,9 @@ def run(apply_to_anki: bool) -> None:
     if apply_to_anki:  # today's LeetCode analysis: mastery, slips and similar problems read from fresh numbers
         import lc_analysis
         lc_analysis.main()
-    extra = daily_extra.prepare(cfg, sd_value)
+    extra = daily_extra.prepare(cfg, sd_value, carry=carry)
     body += points_report(p, cards) + extra_report(extra)
-    summary["extra"] = {"lc_new": len(extra.lc_new), "lc_similar": len(extra.lc_similar), "reviews": len(extra.reviews),
+    summary["extra"] = {"lc_new": len(extra.lc_new), "lc_similar": len(extra.lc_similar), "lld_new": len(extra.lld_new), "reviews": len(extra.reviews),
                         "backlog": extra.backlog}
     OUT.mkdir(parents=True, exist_ok=True)
     hist_file.write_text("".join(json.dumps(h, ensure_ascii=False) + "\n" for h in history), encoding="utf-8")
@@ -1011,7 +1038,7 @@ def run(apply_to_anki: bool) -> None:
     (OUT / "index.html").write_text(dashboard(tree, p, cards, titles, edges, history, gen), encoding="utf-8")
     print(f"held {p.held * 100:.1f}% · seen {summary['seen']}/{len(cards)} · picked {len(p.picked)} "
           f"({', '.join(f'{k} {len(v)}' for k, v in sorted(stages.items()))}) · topics {len(p.topics)} · edges {len(edges)}")
-    print(f"LeetCode {len(extra.lc_new)} new + {len(extra.lc_similar)} similar · reviews {len(extra.reviews)} taken, "
+    print(f"LeetCode {len(extra.lc_new)} new + {len(extra.lc_similar)} similar · LLD {len(extra.lld_new)} new · reviews {len(extra.reviews)} taken, "
           f"{extra.backlog} waiting · {extra.by_deck}")
     if apply_to_anki:
         release(p, anki)
@@ -1022,6 +1049,7 @@ def run(apply_to_anki: bool) -> None:
         report_card(head, body)
         preset(cfg)
         drop_old_deck()
+        dealt_on.write_text(now.strftime("%Y-%m-%d"))
         call("sync")
         print("Anki: 今日计划 rebuilt")
 

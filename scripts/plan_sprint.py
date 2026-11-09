@@ -46,8 +46,7 @@ def apply(cfg: dict, today: date) -> int:
     s = cfg.get("sprint")
     n = day_of(s, today)
     if n >= 1:
-        cfg.update(daily_new=int(s["new_per_day"]), buffer_days=1, lc_new=int(s.get("lc_new", 0)),
-                   review_budget=int(s["review_budget"]), review_only=s.get("review_only", ["系统设计", "LeetCode Tops"]))
+        cfg.update(daily_new=int(s["new_per_day"]), buffer_days=1)
     return n
 
 

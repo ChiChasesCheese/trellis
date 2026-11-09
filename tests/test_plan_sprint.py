@@ -23,7 +23,7 @@ def test_budgets_apply_only_while_the_sprint_runs():
     assert plan_sprint.apply(before, date(2026, 11, 8)) == 0 and before["daily_new"] == 35
     during = {"sprint": CFG, "daily_new": 35, "lc_new": 6}
     assert plan_sprint.apply(during, date(2026, 11, 10)) == 2
-    assert (during["daily_new"], during["lc_new"], during["review_budget"]) == (80, 0, 120)
+    assert (during["daily_new"], during["lc_new"]) == (80, 6)  # each subject keeps its own budget during the sprint
     after = {"sprint": CFG, "daily_new": 35, "lc_new": 6}
     assert plan_sprint.apply(after, date(2026, 11, 16)) == -1 and after["daily_new"] == 35
 

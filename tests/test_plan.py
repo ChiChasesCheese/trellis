@@ -82,3 +82,12 @@ def test_oral_counts_add_weight_to_points_no_question_needs():
     w = plan_kp.weights(pts, {"q": 1.0}, {}, 0.7)
     assert w["a"] > w["b"]
     assert abs(w["a"] - w["b"] - plan_kp.ORAL_SHARE) < 1e-9
+
+
+def test_low_level_design_deals_foundations_before_problems():
+    import daily_extra
+    deck = "低层设计（LLD）::"
+    cards = [{"deckName": deck + "09 设计题::电梯", "due": 1}, {"deckName": deck + "11 Hello Interview 低层设计::电梯", "due": 2},
+             {"deckName": deck + "11 Hello Interview 低层设计::并发", "due": 9}, {"deckName": deck + "03 对象建模", "due": 5}]
+    order = sorted(cards, key=daily_extra.lld_rank)
+    assert [c["due"] for c in order] == [5, 9, 1, 2]
