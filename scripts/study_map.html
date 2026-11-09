@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>系统设计地图</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css">
+<style>
+/*CARD_CSS*/
+:root{--b:#F5F6F3;--g:rgba(30,36,51,.045);--i:#1E2433;--i2:#5B6273;--r:#D9DDD8;--bl:#2558C9;--re:#C8323C;--am:#D9971A;--gr:#2F8A55;--pa:#fff;
+ --hand:"LXGW WenKai","Kaiti SC","STKaiti","KaiTi",serif;--text:-apple-system,"PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif}
+@media (prefers-color-scheme:dark){:root{--b:#1D2622;--g:rgba(233,234,227,.04);--i:#E9EAE3;--i2:#A3AAA4;--r:#34403A;--bl:#8DB1FF;--re:#FF8A8A;--am:#F2C35B;--gr:#7FD39C;--pa:#232E29}}
+*{box-sizing:border-box}html,body{margin:0;background:var(--b);color:var(--i);font:15px/1.65 var(--text);font-variant-numeric:tabular-nums}
+header{position:sticky;top:0;z-index:20;display:flex;gap:12px;align-items:center;padding:10px 18px;background:var(--b);border-bottom:2px solid var(--i);flex-wrap:wrap}
+header h1{font:400 22px/1 var(--hand);margin:0 auto 0 0}header .st{color:var(--i2);font-size:12.5px}
+.seg{display:flex;border:1.5px solid var(--i);border-radius:8px;overflow:hidden}.seg button{all:unset;cursor:pointer;padding:5px 13px;font-size:13.5px}.seg button[aria-pressed=true]{background:var(--i);color:var(--b)}
+#q{font:inherit;font-size:13.5px;padding:5px 10px;border:1.5px solid var(--r);border-radius:8px;background:var(--pa);color:var(--i);width:180px}
+#menu{all:unset;display:none;cursor:pointer;border:1.5px solid var(--i);border-radius:8px;padding:3px 10px;font-size:13.5px}
+main{display:grid;grid-template-columns:330px minmax(0,1fr);min-height:calc(100vh - 54px)}
+nav{position:sticky;top:54px;align-self:start;height:calc(100vh - 54px);overflow:auto;border-right:1px solid var(--r);padding:10px 8px 40px 14px;font-size:13.5px}
+nav .dom{font:400 16.5px/1.3 var(--hand);margin:14px 0 4px}nav details summary{cursor:pointer;list-style:none;padding:3px 4px;border-radius:5px;display:flex;gap:6px;align-items:baseline}
+nav details summary::-webkit-details-marker{display:none}nav details>summary::before{content:"▸";color:var(--i2);font-size:11px}nav details[open]>summary::before{content:"▾"}
+nav a{color:inherit;text-decoration:none}nav .tn{flex:1;min-width:0}nav .c{color:var(--i2);font-size:11.5px;white-space:nowrap}nav .pts{margin:0 0 6px 18px;padding:0;list-style:none;font-size:12.5px;color:var(--i2)}nav .pts li{padding:2px 0;display:flex;gap:6px}nav .pts a:hover{color:var(--bl)}
+nav .sel>summary{background:color-mix(in srgb,var(--bl) 13%,transparent)}.dot{flex:none;width:7px;height:7px;border-radius:50%;margin-top:6px;background:var(--r)}
+#art{padding:26px 34px 90px;max-width:900px;min-width:0}#art h2.tt{font:400 clamp(24px,3.4vw,34px)/1.25 var(--hand);margin:0 0 8px}#art .meta{color:var(--i2);font-size:13.5px;margin:0 0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0}.chips a,.chip{font-size:12.5px;border:1px solid var(--r);border-radius:999px;padding:1px 9px;color:inherit;text-decoration:none;background:var(--pa)}.chips a:hover{border-color:var(--bl);color:var(--bl)}
+.pre{margin:0 0 4px;font-size:13px;color:var(--i2)}.kp{border-top:1px solid var(--r);padding:16px 0 8px;scroll-margin-top:66px}.kp h3{font:400 20px/1.35 var(--hand);margin:0 0 4px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}.kp h3 b{font-weight:400;font-size:11px;color:var(--bl);border:1px solid var(--bl);border-radius:999px;padding:0 6px}.kp h3 .ro{font-size:12.5px;color:var(--i2);font-family:var(--text)}.kp p.sum{margin:2px 0 8px;font-size:14px}
+.meter{height:6px;width:90px;border-radius:3px;background:var(--r);overflow:hidden;display:inline-block;vertical-align:middle}.meter i{display:block;height:100%}
+details.use{font-size:13px;margin:4px 0 8px;color:var(--i2)}details.use summary{cursor:pointer}details.use ul{margin:4px 0 0;padding-left:16px}details.use em{font-style:normal;color:var(--re);margin:0 4px}details.use a{color:var(--bl);text-decoration:none}
+details.cd{border:1px solid var(--r);border-radius:9px;margin:7px 0;background:var(--pa)}details.cd>summary{cursor:pointer;list-style:none;padding:9px 12px;font-size:14px;display:flex;gap:8px;align-items:baseline}details.cd>summary::-webkit-details-marker{display:none}details.cd>summary .lv{font-size:11px;color:var(--i2);white-space:nowrap}details.cd .card{max-width:none;margin:0;padding:6px 14px 16px;font-size:15.5px;background:transparent}mark.cl{background:color-mix(in srgb,var(--am) 32%,transparent);color:inherit;border-radius:3px;padding:0 2px}.card hr{margin:12px 0}
+.empty{color:var(--i2)}#mm{display:none;height:calc(100vh - 54px)}#mm svg{width:100%;height:100%}body.mm main{display:none}body.mm #mm{display:block}
+#scrim{display:none}
+@media (max-width:860px){main{grid-template-columns:1fr}#menu{display:inline-block}nav{position:fixed;left:0;top:54px;bottom:0;width:86vw;max-width:340px;background:var(--b);z-index:15;transform:translateX(-102%);transition:transform .18s;border-right:2px solid var(--i)}body.open nav{transform:none}body.open #scrim{display:block;position:fixed;inset:54px 0 0;background:rgba(0,0,0,.25);z-index:14}#art{padding:18px 16px 70px}#q{width:110px}header .st{display:none}}
+</style></head><body>
+<header><button id="menu" aria-label="目录">目录</button><h1>系统设计地图</h1><span class="st" id="st"></span><input id="q" placeholder="搜索考点、主题" aria-label="搜索"><div class="seg"><button id="v1" aria-pressed="true">目录</button><button id="v2" aria-pressed="false">思维导图</button></div></header>
+<div id="scrim"></div><main><nav id="nav" aria-label="目录"></nav><article id="art"></article></main><div id="mm"><svg></svg></div>
+<script>
+const D=/*DATA*/null;const P=D.points,TOP={};D.tree.forEach(g=>g.topics.forEach(t=>{t.g=g;TOP[t.id]=t}));
+if(matchMedia('(prefers-color-scheme:dark)').matches)document.body.classList.add('night_mode');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));const pct=x=>Math.round(x*100)+'%';
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function col(m,seen){if(!seen&&!m)return 'var(--r)';return m<.25?'var(--re)':m<.6?'var(--am)':'var(--gr)'}
+const meter=m=>`<span class="meter"><i style="width:${Math.max(2,m*100)}%;background:${col(m,1)}"></i></span>`;
+document.getElementById('st').textContent=`考点覆盖 ${(D.covered*100).toFixed(1)}% · 学过 ${D.seen}/${D.cards} 张${D.dag?'':' · 依赖配置中'}`;
+const nav=document.getElementById('nav');
+function drawNav(f){f=(f||'').trim().toLowerCase();const hit=x=>!f||x.toLowerCase().includes(f);
+ nav.innerHTML=D.tree.map(g=>{const ts=g.topics.map(t=>{const ps=t.p.filter(k=>P[k]&&(P[k].home===t.id||f)&&(!f||hit(P[k].t)));if(f&&!hit(t.t)&&!ps.length)return '';
+  return `<details data-t="${t.id}" ${f&&ps.length?'open':''}><summary><span class="dot" style="background:${col(t.m,t.seen)}"></span><a class="tn" href="#t/${t.id}">${esc(t.t)}</a><span class="c">${t.seen}/${t.n}</span></summary><ul class="pts">${t.p.filter(k=>P[k]&&P[k].home===t.id&&hit(P[k].t)).slice(0,60).map(k=>`<li><span class="dot" style="background:${col(P[k].m,P[k].m>0)}"></span><a href="#p/${t.id}/${k}">${esc(P[k].t)}</a></li>`).join('')}</ul></details>`}).join('');
+  return ts?`<div class="dom">${esc(g.t)}</div>${ts}`:''}).join('')}
+drawNav();document.getElementById('q').addEventListener('input',e=>drawNav(e.target.value));
+const cache={};async function load(t){if(!cache[t]){const r=await fetch(`data/${encodeURIComponent(t)}.json`);cache[t]=await r.json()}return cache[t]}
+const link=k=>P[k]?`<a href="#p/${P[k].home}/${k}">${esc(P[k].t)}</a>`:'';
+function cardHtml(c){const open=false;return `<details class="cd"${open?' open':''}><summary><span class="dot" style="margin-top:7px;background:${col(c.m,c.seen)}"></span><span style="flex:1;min-width:0">${esc(c.t||c.leaf)}</span><span class="lv">${esc(c.lv)}</span></summary><div class="card">${c.q}${c.a?'<hr id="answer">'+c.a:''}</div></details>`}
+function pointBlock(k,cards){const p=P[k];if(!p)return '';const ro=[['必讲',0],['追问',1],['加分',2]].filter(([,i])=>p.n[i]).map(([n,i])=>`${n} ${p.n[i]}`).join(' · ');
+ return `<section class="kp" id="k-${k}"><h3>${esc(p.t)}${p.core?'<b>核心</b>':''}<span class="ro">${ro||'设计题未用到'} ${meter(p.m)}</span></h3>${p.s?`<p class="sum">${esc(p.s)}</p>`:''}
+ ${p.pre.length?`<p class="pre">先学</p><div class="chips">${p.pre.map(link).join('')}</div>`:''}${p.post.length?`<p class="pre">学完可以接</p><div class="chips">${p.post.slice(0,8).map(link).join('')}</div>`:''}
+ ${p.q.length?`<details class="use"><summary>哪些题用到（${p.q.length}）</summary><ul>${p.q.map(([q,t,r,w])=>`<li><a href="#t/${q}">${esc(t)}</a><em>${r}</em>${esc(w)}</li>`).join('')}</ul></details>`:''}
+ ${cards.map(cardHtml).join('')}</section>`}
+async function show(t,kp){const T=TOP[t];const art=document.getElementById('art');if(!T){art.innerHTML='<p class="empty">选择左边的主题开始。</p>';return}
+ document.querySelectorAll('nav details').forEach(d=>{const on=d.dataset.t===t;d.classList.toggle('sel',on);if(on)d.open=true});
+ art.innerHTML='<p class="empty">加载中…</p>';const data=await load(t);const byK={},loose=[];
+ data.cards.forEach(c=>{const k=c.k[0];if(k){(byK[k]=byK[k]||[]).push(c)}else loose.push(c)});
+ let body='';
+ if(T.q){const ns=D.needs[t]||[],own=D.own[t]||[];
+  for(const role of ['必讲','追问','加分']){const xs=ns.filter(n=>n[1]===role);if(xs.length)body+=`<section class="kp"><h3>${role}（${xs.length}）</h3><ul>${xs.map(n=>`<li>${link(n[0])}${n[2]?` <span style="color:var(--i2);font-size:13px">${esc(n[2])}</span>`:''}</li>`).join('')}</ul></section>`}
+  if(own.length)body+=`<section class="kp"><h3>本题专属（${own.length}）</h3><ul>${own.map(o=>`<li>${esc(o[2])} <span style="color:var(--i2);font-size:12.5px">${esc(o[1])}</span></li>`).join('')}</ul></section>`;
+  body+=`<section class="kp"><h3>答案卡片（${data.cards.length}）</h3>${data.cards.map(cardHtml).join('')}</section>`}
+ else{const order=T.p.filter(k=>byK[k]);body=order.map(k=>pointBlock(k,byK[k])).join('');if(loose.length)body+=`<section class="kp"><h3>其他</h3>${loose.map(cardHtml).join('')}</section>`}
+ art.innerHTML=`<h2 class="tt">${esc(T.t)}</h2><p class="meta">${esc(T.g.t)} · ${T.q?'设计题':'知识主题'} · ${T.n} 张卡，学过 ${T.seen} 张 · 占考点权重 ${(T.w*100).toFixed(1)}% · 掌握 ${pct(T.m)}</p>${body||'<p class="empty">这个主题没有卡。</p>'}`;
+ if(kp){const el=document.getElementById('k-'+kp);if(el)el.scrollIntoView()}else window.scrollTo(0,0)}
+function route(){document.body.classList.remove('open');setView(false);const m=location.hash.match(/^#([tp])\/([^/]+)(?:\/(.+))?$/);if(m)show(m[2],m[1]==='p'?decodeURIComponent(m[3]):null);else{const first=D.tree[1]?.topics[0]||D.tree[0].topics[0];show(first.id)}}
+addEventListener('hashchange',route);document.getElementById('menu').onclick=()=>document.body.classList.toggle('open');document.getElementById('scrim').onclick=()=>document.body.classList.remove('open');
+let mmDone=false;function setView(m){document.body.classList.toggle('mm',m);document.getElementById('v1').setAttribute('aria-pressed',!m);document.getElementById('v2').setAttribute('aria-pressed',m);if(m&&!mmDone)drawMM()}
+document.getElementById('v1').onclick=()=>setView(false);document.getElementById('v2').onclick=()=>setView(true);
+function drawMM(){mmDone=true;const add=(s,a)=>new Promise((ok,no)=>{const e=document.createElement('script');e.src=s;e.onload=ok;e.onerror=no;document.head.appendChild(e)});
+ add('https://cdn.jsdelivr.net/npm/d3@7').then(()=>add('https://cdn.jsdelivr.net/npm/markmap-view@0.18')).then(()=>{
+  const node=(c,kids,fold)=>({content:c,children:kids||[],payload:fold?{fold:1}:{}});
+  const root=node('系统设计',D.tree.map(g=>node(esc(g.t),g.topics.map(t=>node(`<a href="#t/${t.id}">${esc(t.t)}</a>`,t.p.filter(k=>P[k]&&P[k].home===t.id).map(k=>node(`<a href="#p/${t.id}/${k}">${P[k].core?'★ ':''}${esc(P[k].t)}</a>${P[k].pre.length?' <small>← '+P[k].pre.map(x=>P[x]?esc(P[x].t):'').join('、')+'</small>':''}`)),true)),false)));
+  window.markmap.Markmap.create('#mm svg',{initialExpandLevel:2,duration:200},root);
+  document.querySelector('#mm svg').addEventListener('click',e=>{const a=e.target.closest('a');if(a&&a.hash){e.preventDefault();location.hash=a.hash.slice(1)}});
+ }).catch(()=>{document.getElementById('mm').innerHTML='<p class="empty" style="padding:30px">思维导图的脚本加载失败，需要联网。</p>'})}
+route();
+</script></body></html>

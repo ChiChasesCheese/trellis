@@ -9,6 +9,7 @@ out. Regenerate after exam points change (research/sysdesign/KP_AGENT.md).
 """
 from __future__ import annotations
 
+import json
 import re
 import sys
 from collections import Counter, defaultdict
@@ -46,6 +47,8 @@ def main() -> int:
         if k not in plan_kp.META:
             by_topic[m["topic"]].append(k)
 
+    dag_file = ROOT / "sources/local/plan/kp/dag.json"
+    dag = json.loads(dag_file.read_text(encoding="utf-8")).get("edges", {}) if dag_file.exists() else {}
     concepts, questions = ["# 系统设计 考点地图", ""], ["# 系统设计 题目考点", ""]
     n_points, n_questions = 0, 0
     for g in sorted(groups):
@@ -59,6 +62,9 @@ def main() -> int:
                     n = Counter(r[1] for r in req.get(k, []))
                     how = " ".join(f"{role}{n[role]}" for role in ROLES if n[role])
                     concepts.append(f"    - {'★ ' if pts.meta[k].get('core') else ''}{clean(pts.meta[k]['title'])}{' · ' + how if how else ''}")
+                    before = [clean(pts.meta[x]["title"]) for x in dag.get(k, []) if x in pts.meta]
+                    if before:
+                        concepts.append(f"      - 先学：{'、'.join(before)}")
                     n_points += 1
         qs = [t for t in groups[g] if t in pts.needs and t not in S.NOT_A_QUESTION]
         if qs:

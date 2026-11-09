@@ -77,6 +77,11 @@ def main() -> int:
     missing = refresh_sections()
     print(f"LeetCode problems with no tags: {len(missing)}" + (f" ({', '.join(missing[:10])})" if missing else ""))
     cards = untagged_cards("export" in sys.argv)
+    dag_file = KP / "dag.json"
+    if dag_file.exists():
+        known = {k["id"] for v in json.loads((KP / "catalog.json").read_text(encoding="utf-8")).values() for k in v}
+        level = json.loads(dag_file.read_text(encoding="utf-8")).get("level", {})
+        print(f"exam points not yet placed in the prerequisite DAG: {len(known - set(level))}")
     n = sum(len(v) for v in cards.values())
     print(f"system-design cards with no exam points: {n} in {len(cards)} topics" + (f" ({', '.join(list(cards)[:10])})" if cards else ""))
     return 0

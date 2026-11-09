@@ -94,6 +94,8 @@ learner.
 
 New cards must be annotated too: `scripts/plan_maintain.py` lists cards with no points and problems with no tags.
 
+Points are linked by prerequisites: a shared point lists the points you cannot follow it without, at most three, across topics where true (`kp/dag.json`). A question's own points rest on the shared points it must cover. A selection brings along what a chosen point rests on, and orders cards so that prerequisites come first. Anki deals a deck by package position, which cannot be changed from outside, so inside a sitting the order is set with sub-decks: `1 先学`, `2 后学`. The edges are judged from the deck's own titles and cards, not measured.
+
 ## 4. What is already held, and what is ready
 
 - **Mastery** of a card is its Hold (the scheduler's interval, normalised against a 21-day mature card and discounted

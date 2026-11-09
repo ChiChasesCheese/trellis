@@ -73,6 +73,7 @@ class PointModel:
     on points, not topics: a point is covered when it is held, however many other cards its topic has."""
     weight: dict[str, float]
     cards: dict[str, list[str]]
+    prereq: dict[str, list[str]] = field(default_factory=dict)  # point -> the points to learn before it
 
     def teaching(self) -> dict[str, float]:
         out: dict[str, float] = defaultdict(float)
@@ -417,6 +418,7 @@ def coverage_by_domain(cards: list[CardInfo], mastery: dict[str, float], points:
         d = min((x for x in ranked if taken[x] < quota[x]), key=lambda x: (taken[x] + 1) / quota[x])
         order.append(ranked[d][taken[d]])
         taken[d] += 1
+    order = order_by_prereq(order, points)
     return order, {i: gains[i] for i in order}
 
 
@@ -435,5 +437,66 @@ def essence_cards(cards: list[CardInfo], mastery: dict[str, float], points: Poin
         if ks[0] not in best or worth(c) > worth(best[ks[0]]):
             best[ks[0]] = c
     top = sorted(allowed, key=lambda k: -points.weight.get(k, 0.0))[:n]
-    return [best[k] for k in top if k in best and held.get(k, 0.0) < 0.5]
+    wanted: dict[str, None] = {}
+
+    def need(k: str) -> None:  # what a point rests on comes along, if it is not held yet
+        if k in wanted:
+            return
+        wanted[k] = None
+        for p in points.prereq.get(k, []):
+            if p in best and held.get(p, 0.0) < 0.5:
+                need(p)
+
+    for k in top:
+        if k in best and held.get(k, 0.0) < 0.5:
+            need(k)
+    return [best[k] for k in wanted]
+
+
+def order_by_prereq(ids: list[str], points: PointModel) -> list[str]:
+    """Reorder as little as possible so a card comes after the cards here that teach its primary point's prerequisites."""
+    teachers: dict[str, list[str]] = defaultdict(list)
+    for i in ids:
+        ks = points.cards.get(i)
+        if ks:
+            teachers[ks[0]].append(i)
+    done: set[str] = set()
+    out: list[str] = []
+
+    def place(i: str) -> None:
+        if i in done:
+            return
+        done.add(i)
+        for k in (points.cards.get(i) or [])[:1]:
+            for p in points.prereq.get(k, []):
+                for t in teachers.get(p, []):
+                    place(t)
+        out.append(i)
+
+    for i in ids:
+        place(i)
+    return out
+
+
+def prereq_layers(ids: list[str], points: PointModel) -> dict[str, int]:
+    """Card -> its layer (0 first) among these cards: one more than the deepest card here that teaches a prerequisite."""
+    teachers: dict[str, list[str]] = defaultdict(list)
+    for i in ids:
+        ks = points.cards.get(i)
+        if ks:
+            teachers[ks[0]].append(i)
+    layer: dict[str, int] = {}
+
+    def go(i: str, path: tuple = ()) -> int:
+        if i in layer:
+            return layer[i]
+        if i in path:
+            return 0
+        below = [go(t, path + (i,)) for k in (points.cards.get(i) or [])[:1] for p in points.prereq.get(k, []) for t in teachers.get(p, [])]
+        layer[i] = 1 + max(below) if below else 0
+        return layer[i]
+
+    for i in ids:
+        go(i)
+    return layer
 

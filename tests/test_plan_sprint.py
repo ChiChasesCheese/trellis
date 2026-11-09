@@ -71,3 +71,17 @@ def test_essence_takes_one_card_per_heavy_point():
     model = PointModel({"big": 5.0, "mid": 3.0, "tiny": 0.1}, {"a": ["big"], "b": ["big"], "c": ["mid"], "d": ["tiny"]})
     cards = [CardInfo("a", "l1", "t", 1, length=1200), CardInfo("b", "l2", "t", 1, length=100), CardInfo("c", "l3", "t", 1), CardInfo("d", "l4", "t", 1)]
     assert [c.id for c in essence_cards(cards, {}, model, 2, {"big", "mid", "tiny"})] == ["b", "c"]
+
+
+def test_a_card_waits_for_the_cards_teaching_its_prerequisites():
+    from trellis.plan import order_by_prereq, prereq_layers
+    model = PointModel({"base": 1.0, "next": 2.0, "other": 1.0}, {"b": ["base"], "n": ["next"], "o": ["other"]}, {"next": ["base"]})
+    assert order_by_prereq(["n", "o", "b"], model) == ["b", "n", "o"]
+    assert prereq_layers(["n", "o", "b"], model) == {"n": 1, "o": 0, "b": 0}
+
+
+def test_essence_brings_along_an_unheld_prerequisite():
+    from trellis.plan import essence_cards
+    model = PointModel({"big": 5.0, "small": 0.1}, {"a": ["big"], "b": ["small"]}, {"big": ["small"]})
+    cards = [CardInfo("a", "l1", "t", 1), CardInfo("b", "l2", "t", 1)]
+    assert [c.id for c in essence_cards(cards, {}, model, 1, {"big", "small"})] == ["a", "b"]  # `order_by_prereq` then puts b first

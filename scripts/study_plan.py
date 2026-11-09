@@ -40,7 +40,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import daily_extra  # noqa: E402
 import plan_kp  # noqa: E402
 import plan_sprint  # noqa: E402
-from trellis.plan import FIRST_PASS_MAX, HELD_CARDS, READ_UNIT, CardInfo, Edge, PointModel, coverage_by_domain, coverage_order, essence_cards, plan  # noqa: E402
+from trellis.plan import FIRST_PASS_MAX, HELD_CARDS, READ_UNIT, CardInfo, Edge, PointModel, coverage_by_domain, coverage_order, essence_cards, order_by_prereq, plan, prereq_layers  # noqa: E402
 from trellis.project import load_project  # noqa: E402
 from trellis.sequence import core_leaves  # noqa: E402
 from trellis.traces import Trace  # noqa: E402
@@ -304,6 +304,7 @@ def build_inputs(tree: Tree):
     return cards, titles, base, edges
 
 
+DAG = ROOT / "sources/local/plan/kp/dag.json"  # which exam point to learn before which (research/sysdesign/kp_dag.py)
 kp_state: dict = {}  # exam points of this run, for the dashboard and the report
 
 
@@ -477,7 +478,12 @@ def apply_exam_points(tree, cards, base, topics, agg, kinds, is_question, by_top
             elif c.id in pts.card:  # an intro or navigation card teaches no point
                 c.freq, c.graded = 0.3, True
     # interview-process points stay visible on the map but count for nothing
-    model = PointModel({k: v for k, v in kp_w.items() if k not in plan_kp.META}, pts.card)
+    prereq = dict(json.loads(DAG.read_text(encoding="utf-8")).get("edges", {})) if DAG.exists() else {}
+    for q, ns in pts.needs.items():  # a question's own points rest on the shared points its answer must cover
+        musts = [n["kp"] for n in ns if n["role"] == "必讲"]
+        for o in pts.own.get(q, []):
+            prereq[o["id"]] = musts
+    model = PointModel({k: v for k, v in kp_w.items() if k not in plan_kp.META}, pts.card, prereq)
     kp_state.update(points=pts, weight=kp_w, teach=teach, model=model, q_freq=q_freq)
     need: dict[str, dict[str, float]] = defaultdict(dict)
     for q, f in q_freq.items():
@@ -973,7 +979,7 @@ def capped(ids: list[str], caps: dict[str, dict], topic_of: dict[str, str]) -> l
     return out
 
 
-def into_sessions(ids: list[str], topic_of: dict[str, str], domain_of, title, n: int, point_of: dict[str, str] | None = None) -> list[tuple[str, list[str]]]:
+def into_sessions(ids: list[str], topic_of: dict[str, str], domain_of, title, n: int, point_of: dict[str, str] | None = None, model=None) -> list[tuple[str, list[str]]]:
     """Cut a day into `n` sittings of about equal size, each on related material: topics of one domain stay together, a topic is
     never split unless a domain is too big for a sitting, and cards on one exam point sit side by side. Returns (theme, cards) per sitting."""
     point_of = point_of or {}
@@ -1007,6 +1013,10 @@ def into_sessions(ids: list[str], topic_of: dict[str, str], domain_of, title, n:
                 order = {p: k for k, p in enumerate(dict.fromkeys(point_of.get(i, "") or i for i in by_topic[t]))}
                 group += sorted(by_topic[t], key=lambda i: order[point_of.get(i, "") or i])
         sittings.append(group)
+    if model:  # the sittings holding the foundations come first
+        layers = prereq_layers(ids, model)
+        sittings.sort(key=lambda g: sum(layers.get(i, 0) for i in g) / len(g))
+        sittings = [order_by_prereq(g, model) for g in sittings]
     out = []
     for group in sittings:
         names = [re.sub(r"[（(].*?[）)]|:", "", title(t)).strip() for t, _ in Counter(topic_of[i] for i in group).most_common(2)]
@@ -1124,8 +1134,11 @@ def run(apply_to_anki: bool) -> None:
         stages[daily_extra.CARRIED] = list(carried)
     fresh = [i for i in p.picked if i not in set(carried)]
     point_of = {c.id: c.point for c in cards}
-    for n, (theme, group) in enumerate(into_sessions(fresh, topic_of, tree.top, tree.title, int(cfg.get("sessions", 5)), point_of), 1):
-        stages[f"{n} 第 {n} 场 · {theme}"] = group
+    for n, (theme, group) in enumerate(into_sessions(fresh, topic_of, tree.top, tree.title, int(cfg.get("sessions", 5)), point_of, model), 1):
+        layers = prereq_layers(group, model) if model else {}
+        depth = max(layers.values(), default=0)
+        for i in group:  # Anki deals a deck by package position, so order inside a sitting can only be set by sub-decks
+            stages[f"{n} 第 {n} 场 · {theme}" + (f"::{min(layers[i], 2) + 1} {'先学' if layers[i] == 0 else '后学'}" if depth else "")].append(i)
     if kp_state:
         kp_state["in_deck"] = {i for i, c in anki.items() if c["deckName"].startswith(DECK)}
         kp_state["pool"] = {c.id for c in cards if not question_topic(tree, c.topic) or c.topic in reps}  # what the plan can deal
@@ -1182,6 +1195,7 @@ def run(apply_to_anki: bool) -> None:
         preset(cfg)
         drop_old_deck()
         dealt_on.write_text(now.strftime("%Y-%m-%d"))
+        subprocess.run([sys.executable, str(ROOT / "scripts/study_map.py")], cwd=ROOT, check=False)  # the map site follows the plan
         call("sync")
         print("Anki: 今日计划 rebuilt")
 

@@ -178,7 +178,7 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
 - `anki-push` moves a domain's decks onto their own preset `Trellis · <title>` (cloned, deals new cards by position) and
   repositions only cards Anki still calls new. Never write to the shared `Default` preset or to a reviewed card's `due`.
 - **Before any statistic or report from Anki, sync first:** `git pull`, then AnkiConnect `sync`, waiting until it answers again, and only then read or add anything up. Chi studies on his phone, so without a sync the desktop collection misses those reviews and every number is wrong.
-- A new system-design card or LeetCode problem must be annotated, or the daily planner gives it no weight: exam points for cards, technique and pitfall tags for problems. `scripts/plan_maintain.py` lists what is missing.
+- A new system-design card or LeetCode problem must be annotated, or the daily planner gives it no weight: exam points for cards, technique and pitfall tags for problems. A new exam point also needs its prerequisite edges. `scripts/plan_maintain.py` lists what is missing.
 - A leaf is weak only on cards with a verdict (taken / slipped); young cards are not evidence, and a weak leaf whose grown
   cards are unreviewed is *settling* and is not a `grow` target (ADR 0009).
 
