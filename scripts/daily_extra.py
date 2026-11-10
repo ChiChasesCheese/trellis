@@ -61,6 +61,7 @@ class Extra:
     lc_new: list[dict] = field(default_factory=list)       # {card, slug, title, why}
     lc_similar: list[dict] = field(default_factory=list)   # {card, slug, title, why, due_now}
     lld_new: list[dict] = field(default_factory=list)      # {card, title, carried}
+    work_new: list[dict] = field(default_factory=list)     # {card, part, carried}: a private work deck, configured locally
     reviews: list[dict] = field(default_factory=list)      # {card, home, score}
     backlog: int = 0                                       # due cards left in their decks
     by_deck: dict = field(default_factory=dict)            # root deck -> reviews taken
@@ -142,7 +143,66 @@ def lld_order(cfg: dict, home: dict) -> list[dict]:
     return out
 
 
-def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, carry: bool = True) -> Extra:
+WORK_PART = "4 公司实践"
+STAGES = {"overview": "1 全景", "core": "2 核心", "deep": "3 深入"}
+LEVEL = {"必会": 1.0, "追问": 0.6, "加分": 0.3}
+
+
+def work_root(cfg: dict) -> str | None:
+    """The private work deck, named only in the local config (its name is private), joins the plan as its own subject."""
+    root = (cfg.get("work") or {}).get("deck")
+    if root:
+        SUBJECT_DECK[root] = WORK_PART
+        REVIEWS.setdefault(root, int(cfg["work"].get("reviews", 60)))
+    return root
+
+
+def work_order(cfg: dict, home: dict, points) -> list[dict]:
+    """New cards of the work deck in study order, the system-design way: stage first (the system map and the payment life
+    cycle, then the core mechanisms, then depth); inside a stage the more required level on the heavier exam point first
+    (the point's interview weight from the system-design plan), then moved behind the cards here that teach its
+    prerequisites. Each card gets the sub-deck it is dealt into: its stage, and 先学 or 后学 by prerequisite layer.
+    Merged and dropped cards are suspended and never dealt."""
+    from trellis.plan import PointModel, order_by_prereq, prereq_layers
+    root = work_root(cfg)
+    if not root:
+        return []
+    new = _cards(f'("deck:{root}" OR "deck:{DECK}::{WORK_PART}") is:new -is:suspended')
+    for c in new:
+        c["deckName"] = home.get(str(c["cardId"]), c["deckName"])
+    new = [c for c in new if c["deckName"].split("::")[0] == root]
+    tags = {}
+    nids = sorted({c["note"] for c in new})
+    for i in range(0, len(nids), 500):
+        for n in call("notesInfo", notes=nids[i:i + 500]):
+            tags[n["noteId"]] = n["tags"]
+
+    def tag(c, key):
+        return [t[len(key) + 2:] for t in tags.get(c["note"], []) if t.startswith(key + "::")]
+    weight = dict(points.weight) if points else {}
+    floor = min(weight.values()) if weight else 1.0
+    kps = {str(c["cardId"]): tag(c, "kp") for c in new}
+
+    def key(c):
+        stage = (tag(c, "stage") or ["core"])[0]
+        ks = kps[str(c["cardId"])]
+        w = weight.get(ks[0], floor) if ks else floor
+        return (list(STAGES).index(stage) if stage in STAGES else 1, -LEVEL.get((tag(c, "level") or ["追问"])[0], 0.6) * w, c["deckName"], c["due"])
+    new.sort(key=key)
+    model = PointModel(weight, kps, dict(points.prereq) if points else {})
+    by_id = {str(c["cardId"]): c for c in new}
+    out = []
+    for stage, part in STAGES.items():
+        ids = [i for i in (str(c["cardId"]) for c in new) if (tag(by_id[i], "stage") or ["core"])[0] == stage]
+        ids = order_by_prereq(ids, model)
+        layer = prereq_layers(ids, model)
+        for i in ids:
+            by_id[i]["part"] = f"{part} · {'先学' if layer.get(i, 0) == 0 else '后学'}"
+            out.append(by_id[i])
+    return out
+
+
+def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, carry: bool = True, points=None) -> Extra:
     """Pick today's LeetCode problems, low-level design cards and reviews. Reads Anki, writes nothing. With `carry`, new cards
     dealt on an earlier day and not learned stay first, counted in the day's budget."""
     import lc_analysis as lca
@@ -242,6 +302,20 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
         if c["cardId"] not in have:
             ex.lld_new.append({"card": c["cardId"], "carried": False})
 
+    # ---- the private work deck: its own budget, in the order of work_order
+    root = work_root(cfg)
+    if root:
+        work_limit = int(cfg["work"].get("new", 30))
+        for c in inside:
+            if home.get(str(c["cardId"]), "").split("::")[0] == root and len(ex.work_new) < work_limit:
+                ex.work_new.append({"card": c["cardId"], "part": CARRIED, "carried": True})
+        have = {x["card"] for x in ex.work_new}
+        for c in work_order(cfg, home, points):
+            if len(ex.work_new) >= work_limit:
+                break
+            if c["cardId"] not in have:
+                ex.work_new.append({"card": c["cardId"], "part": c["part"], "carried": False})
+
     # ---- reviews: each subject's most valuable due cards, within its own budget
     due = _cards("is:due -is:suspended")
     due_ident = _idents(due)
@@ -330,11 +404,12 @@ def release(keep: set[int]) -> int:
 
 def deal(ex: Extra) -> None:
     home = homes()
-    info = {c["cardId"]: c for c in call("cardsInfo", cards=[x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.reviews])}
+    info = {c["cardId"]: c for c in call("cardsInfo", cards=[x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.work_new + ex.reviews])}
     lc, lld = SUBJECT_DECK["LeetCode Tops"], SUBJECT_DECK[LLD_ROOT]
     plan = [(f"{lc}::{CARRIED}", [x for x in ex.lc_new if x.get("carried")]),
             (f"{lc}::2 新题与相似题", [x for x in ex.lc_new if not x.get("carried")] + ex.lc_similar),
             (f"{lld}::{CARRIED}", [x for x in ex.lld_new if x["carried"]]), (f"{lld}::2 新卡", [x for x in ex.lld_new if not x["carried"]])]
+    plan += [(f"{WORK_PART}::{part}", [x for x in ex.work_new if x["part"] == part]) for part in dict.fromkeys(x["part"] for x in ex.work_new)]
     plan += [(f"{d}::9 到期复习", [x for x in ex.reviews if x["root"] == r]) for r, d in SUBJECT_DECK.items()]
     for stage, items in plan:
         ids = [x["card"] for x in items if x["card"] in info]
@@ -350,13 +425,15 @@ def deal(ex: Extra) -> None:
 
 
 def keep_ids(ex: Extra) -> set[int]:
-    return {x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.reviews}
+    return {x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.work_new + ex.reviews}
 
 
 def main() -> int:
     cfg = json.loads((OUT / "config.json").read_text(encoding="utf-8"))
     ex = prepare(cfg, {})
-    print(f"LeetCode: {len(ex.lc_new)} new, {len(ex.lc_similar)} similar · low-level design: {len(ex.lld_new)} new")
+    print(f"LeetCode: {len(ex.lc_new)} new, {len(ex.lc_similar)} similar · low-level design: {len(ex.lld_new)} new · work: {len(ex.work_new)} new")
+    for part in dict.fromkeys(x["part"] for x in ex.work_new):
+        print(f"  work {part}: {sum(x['part'] == part for x in ex.work_new)}")
     for x in ex.lc_similar:
         print(f"  similar {x['title']}  ({x['why']}){'  [due now]' if x['due_now'] else ''}")
     for x in ex.lc_new:

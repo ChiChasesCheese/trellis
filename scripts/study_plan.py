@@ -1035,6 +1035,8 @@ def extra_report(ex) -> str:
     if ex.lc_new:
         out.append(f"<li>新题 {len(ex.lc_new)} 道：" + "、".join(html.escape(x["title"]) for x in ex.lc_new[:4])
                    + ("等" if len(ex.lc_new) > 4 else "") + "</li>")
+    if ex.work_new:
+        out.append(f"</ul><p><b>公司实践</b></p><ul><li>新卡 {len(ex.work_new)} 张：先全景，再核心，最后深入；前置考点的卡先学。</li>")
     out.append("</ul><p><b>到期复习</b></p><ul>")
     out.append(f"<li>今天拿进来 {len(ex.reviews)} 张：" + "，".join(f"{k} {v}" for k, v in ex.by_deck.items()) + "。</li>")
     if ex.backlog:
@@ -1173,9 +1175,9 @@ def run(apply_to_anki: bool) -> None:
     if apply_to_anki:  # today's LeetCode analysis: mastery, slips and similar problems read from fresh numbers
         import lc_analysis
         lc_analysis.main()
-    extra = daily_extra.prepare(cfg, sd_value, carry=carry)
+    extra = daily_extra.prepare(cfg, sd_value, carry=carry, points=kp_state.get("model"))
     body += points_report(p, cards) + extra_report(extra)
-    summary["extra"] = {"lc_new": len(extra.lc_new), "lc_similar": len(extra.lc_similar), "lld_new": len(extra.lld_new), "reviews": len(extra.reviews),
+    summary["extra"] = {"lc_new": len(extra.lc_new), "lc_similar": len(extra.lc_similar), "lld_new": len(extra.lld_new), "work_new": len(extra.work_new), "reviews": len(extra.reviews),
                         "backlog": extra.backlog}
     OUT.mkdir(parents=True, exist_ok=True)
     hist_file.write_text("".join(json.dumps(h, ensure_ascii=False) + "\n" for h in history), encoding="utf-8")
