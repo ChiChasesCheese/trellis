@@ -1,0 +1,1393 @@
+rank	id	domain	topic	point	core	questions	prerequisites
+1	scope.qps-peak	通用	范围和估算	总量除以时间得 QPS、读写拆分与峰值（QPS）	core	65	
+2	scope.storage-estimate	通用	范围和估算	存储估算与是否分库（Storage）		40	scope.qps-peak
+3	dlv.non-functional-reqs	答题框架与估算	系统设计答题框架	非功能需求：量化与检查清单（NFR）	core	39	
+4	dlv.functional-reqs	答题框架与估算	系统设计答题框架	功能需求：句式与数量（Functional Reqs）		33	
+5	dlv.entities-api	答题框架与估算	系统设计答题框架	核心实体与 API 设计（Entities, API）		31	dlv.functional-reqs
+6	num.littles-law	答题框架与估算	估算与必须知道的数字	利特尔法则估算并发（Little's Law）	core	16	
+7	contention.conditional-write	常见模式	处理争用	条件写：检查与占用合一（Conditional Write）	core	23	contention.lost-update
+8	rt.reconnect-resume	常见模式	实时更新	断线发现、重连与消息补发（Resume, Sequence）	core	13	
+9	rk.client-generated-key	通用	副作用之前先定重试键	重试键在请求前由客户端生成	core	5	api.idempotency-key
+10	reads.fanout-write-vs-read	常见模式	扩展读	写扩散与读聚合（Fan-out）	core	11	
+11	rank.precompute-vs-funnel	常见模式	排行与检索	写后预计算还是读时漏斗	core	11	
+12	bound.capped-zset	通用	热点页面读有界的小结构	有序集合 ZADD 加 ZREMRANGEBYRANK 裁剪	core	8	bound.why-bounded,redis.data-structures
+13	sw.batching	常见模式	扩展写	批处理的层次与收益（Batching）		16	
+14	rt.websocket	常见模式	实时更新	WebSocket：升级握手与全双工（WebSocket）	core	13	
+15	rel.degradation	核心概念	可靠性与服务保护	降级：主动关掉非核心功能（Degradation）		16	
+16	num.capacity-walkthrough	答题框架与估算	估算与必须知道的数字	不过度设计的容量估算（Capacity Estimate）	core	13	num.db-limits,num.modern-hardware-mindset
+17	cache.stampede	核心概念	缓存	缓存击穿与请求合并（Single-Flight）	core	14	cache.aside
+18	contention.occ-version	常见模式	处理争用	乐观并发控制与版本号（OCC）	core	9	contention.conditional-write
+19	kafka.key-ordering	关键技术	Kafka 与消息队列	分区内有序：同键同分区（Partition Key）	core	10	kafka.model
+20	ms.state-machine	常见模式	多步骤流程与分布式事务	实体状态机与合法迁移（State Machine）	core	16	
+21	rank.windowed-topk-merge	常见模式	排行与检索	窗口预聚合与分片前 K 归并	core	5	
+22	kafka.at-least-once-default	关键技术	Kafka 与消息队列	默认选至少一次（At-least-once）	core	11	
+23	net.timeout-retry-backoff	核心概念	网络	超时重试与退避抖动（Backoff, Jitter）	core	13	
+24	contention.admission-control-queue	常见模式	处理争用	准入控制、排队与削峰（Admission Control）	core	12	
+25	rt.sse	常见模式	实时更新	SSE 单向推送与断线补发（SSE）	core	10	
+26	rt.hop2-choice	常见模式	实时更新	第二跳：拉取、哈希路由或发布订阅（Hop 2）	core	6	
+27	idem.db-last-line	常见模式	幂等与结果未知	最终防线是数据库唯一约束（DB Last Line）		14	idem.methods
+28	redis.rate-limit	关键技术	Redis	固定与滑动窗口限流（Rate Limiting）	core	8	redis.tx-lua-pipeline
+29	blob.presigned-upload	常见模式	大文件	预签名直传（Presigned URL Upload）	core	7	blob.why-object-storage
+30	once.absolute-write	通用	派生状态只应用一次	写绝对值而非增量（Absolute Write）	core	3	
+31	net.circuit-breaker	核心概念	网络	熔断器与级联故障（Circuit Breaker）	core	12	
+32	rt.protocol-choice	常见模式	实时更新	第一跳协议选择顺序与场景（Protocol Choice）	core	7	rt.long-polling,rt.sse,rt.websocket
+33	redis.failover-lost-writes	关键技术	Redis	故障转移丢写与脑裂（Split Brain）	core	10	redis.replication-async
+34	rk.unique-constraint-replay	通用	副作用之前先定重试键	唯一约束去重并重放结果	core	2	rk.client-generated-key
+35	contention.hot-key-sharded-counter	常见模式	处理争用	热点键与分片计数器（Sharded Counter）		13	
+36	reads.read-bottleneck	常见模式	扩展读	读写比与读瓶颈（Read-Heavy Load）		9	
+37	redis.cluster-slots	关键技术	Redis	哈希槽与 MOVED/ASK 重定向（Hash Slot）	core	6	
+38	rank.approx-vs-exact	常见模式	排行与检索	近似还是精确 Top-K		5	
+39	rank.derived-index	常见模式	排行与检索	搜索走派生索引、写路径保正确（Derived Index）	core	5	
+40	ms.outbox	常见模式	多步骤流程与分布式事务	事务外盒可靠发布（Outbox）	core	14	
+41	shard.key-criteria	核心概念	分片	分片键三标准：高基数、均匀、对齐查询	core	19	
+42	once.applied-record	通用	派生状态只应用一次	已应用记录与派生值同事务（Applied Record）	core	3	
+43	redis.tx-lua-pipeline	关键技术	Redis	事务、Lua 与 Pipeline（MULTI/Lua）		9	
+44	lt.why-async	常见模式	长时间任务与定时	何时必须异步化（Why Async）	core	7	
+45	lt.decouple-flow	常见模式	长时间任务与定时	接受与处理解耦的完整流程（Accept/Process）	core	5	
+46	idem.claim-before-execute	常见模式	幂等与结果未知	先占键再执行，防并发重复（Claim First）	core	7	idem.methods
+47	api.pagination	核心概念	API 设计	分页：偏移与游标（Pagination）	core	11	
+48	rel.timeout-deadline	核心概念	可靠性与服务保护	超时取值与截止时间（Deadline）	core	7	
+49	paycor.unknown-flow	支付系统	正确性工程	未知结果的收敛流程（Resolution Flow）	core	7	idem.unknown-outcome
+50	lt.worker-crash	常见模式	长时间任务与定时	工作者崩溃：心跳与租约（Heartbeat/Lease）	core	7	lt.decouple-flow
+51	redis.leaderboard-zset	关键技术	Redis	有序集合排行榜（Sorted Set）	core	7	
+52	cache.aside	核心概念	缓存	旁路缓存（Cache-Aside）	core	11	
+53	blob.byte-meta-split	常见模式	大文件	字节与元数据分离（Blob/Metadata Split）	core	10	
+54	dm.facts-vs-views	核心概念	数据建模	事实与派生视图（CQRS）	core	9	
+55	idem.unknown-outcome	常见模式	幂等与结果未知	超时不等于失败：结果未知（Unknown Outcome）	core	9	
+56	lt.due-lookup	常见模式	长时间任务与定时	到期任务查找（Due Lookup）	core	9	
+57	lt.fire-once	常见模式	长时间任务与定时	触发幂等、租约与围栏（Fire Once）	core	8	lt.worker-crash
+58	num.db-limits	答题框架与估算	估算与必须知道的数字	单库容量与吞吐（DB Limits）	core	5	
+59	cache.hot-key	核心概念	缓存	热 key 的发现与分流（Hot Key）	core	9	
+60	rt.two-hops	常见模式	实时更新	实时更新的两跳框架（Two Hops）		5	
+61	scope.restate-scope	通用	范围和估算	范围被划掉后的说法（Restating Scope）		0	
+62	dlock.fencing-token	核心概念	分布式锁	防护令牌（Fencing Token）	core	11	
+63	dlv.hld	答题框架与估算	系统设计答题框架	高层设计：先简后繁（High-Level Design）		10	dlv.entities-api
+64	redis.pubsub	关键技术	Redis	Pub/Sub 的至多一次保证与选型（Pub/Sub）		6	
+65	bound.rebuild	通用	热点页面读有界的小结构	派生结构丢了怎么重建（Rebuild）		6	
+66	rel.bulkhead	核心概念	可靠性与服务保护	舱壁隔离：线程池与信号量（Bulkhead）		8	
+67	sw.queue-burst-absorption	常见模式	扩展写	队列只吸收短暂突发（Burst Absorption）	core	12	
+68	rt.ordering	常见模式	实时更新	多服务器下的消息顺序（Message Ordering）		5	
+69	sw.hot-key-dynamic-split	常见模式	扩展写	只对热键动态拆分（Hot Key）		7	sw.hot-key-split-all
+70	pplat.fail-open-closed	支付系统	支付平台架构	依赖故障放行还是拒绝（Fail-open）		8	
+71	obs.p99-alerting	核心概念	可观测性	告警看 P99 不看平均（P99）	core	2	
+72	paycor.sm-cas	支付系统	正确性工程	条件更新实现状态转移（Compare-and-Set）		8	
+73	cap.consistency-grading	核心概念	CAP、一致性与复制	按数据含义给一致性分级	core	9	cap.consistency-spectrum
+74	rank.sorted-set-score	常见模式	排行与检索	有序集合与复合分数（Sorted Set Score）		5	
+75	contention.reservation-lock	常见模式	处理争用	选座保留十分钟：带 TTL 的预留（Reservation）	core	7	contention.conditional-write,contention.pessimistic-lock
+76	once.incr-not-enough	通用	派生状态只应用一次	原子 INCR 或事务为何不够（Crash Window）	core	1	
+77	idem.key-by-scenario	常见模式	幂等与结果未知	各场景的幂等键形态（Key Shape）		7	api.idempotency-key,idem.methods
+78	bound.expiry-score	通用	热点页面读有界的小结构	到期时间作分数，替代带 TTL 的 Set		5	
+79	rt.polling	常见模式	实时更新	简单轮询与流量估算（Polling）		8	
+80	api.idempotency-key	核心概念	API 设计	幂等键（Idempotency-Key）	core	5	api.http-methods
+81	blob.multipart-resume	常见模式	大文件	分块上传与断点续传（Multipart Upload）	core	5	blob.presigned-upload
+82	obs.three-pillars	核心概念	可观测性	指标、日志、追踪的分工（Three Pillars）	core	3	
+83	once.atomic-claim	通用	派生状态只应用一次	ZREM 抢占处理权（Atomic Claim）		3	
+84	rel.downstream-protection	核心概念	可靠性与服务保护	下游保护与扇出预算（Downstream）		7	
+85	dm.entities-keys	核心概念	数据建模	实体、主键、外键与约束（FK）		10	
+86	ms.reserve-confirm	常见模式	多步骤流程与分布式事务	先预留再确认（Reserve-Confirm）	core	9	
+87	cdc.what-is-cdc	关键技术	变更数据捕获（CDC）	CDC 是什么与工作原理（CDC）	core	8	
+88	flink.watermarks	关键技术	Flink	水位线处理乱序与迟到（Watermarks）	core	5	flink.time-domain
+89	rank.verify-at-source	常见模式	排行与检索	核验点放在详情与下单（Verify at Source）		4	rank.derived-index
+90	recon.why-reconcile	支付系统	对账、结算与资金管理	为什么还要对账：检测型控制（Reconciliation）	core	11	
+91	gw.shared-rate-limit-counter	关键技术	API 网关	多实例下的限流计数器（Shared Counter）		5	
+92	bound.why-bounded	通用	热点页面读有界的小结构	每次现算 vs 有界读（Bounded Read）	core	0	
+93	cc.responsibility-and-new-problem	通用	加组件先说职责和新问题	加组件：职责加新问题（Trade-off）	core	0	
+94	cc.redis-total	通用	加组件先说职责和新问题	Redis 总额副本与 SET 回填	core	0	
+95	cc.queue-redelivery	通用	加组件先说职责和新问题	队列至少一次：重放与 applied 去重	core	0	once.applied-record
+96	cc.record-or-rule	通用	加组件先说职责和新问题	处理必须落到具体记录或规则	core	0	
+97	api.status-codes	核心概念	API 设计	状态码：2xx、4xx 与 5xx 的类别		6	
+98	obs.red-use	核心概念	可观测性	RED 与 USE 方法（RED/USE）	core	0	
+99	rt.reconnect-storm	常见模式	实时更新	重连风暴、退避抖动与发布（Reconnect Storm）		3	
+100	rk.per-boundary-keys	通用	副作用之前先定重试键	每道边界一个键（Key per Boundary）		1	rk.client-generated-key
+101	obs.canonical-log	核心概念	可观测性	一请求一行宽日志（Canonical Log）	core	0	
+102	rel.config-change-risk	核心概念	可靠性与服务保护	配置变更是最危险的发布（Config Risk）		3	rel.deploy-strategies
+103	redis.distributed-lock	关键技术	Redis	Redis 分布式锁的正确写法（SET NX EX）	core	4	
+104	reads.cdn-edge	常见模式	扩展读	CDN 与边缘缓存（CDN）		7	
+105	kafka.retry-topic-dlq	关键技术	Kafka 与消息队列	重试主题与死信队列（Retry & DLQ）		7	kafka.key-ordering
+106	paycor.webhook-role	支付系统	正确性工程	webhook 是提示不是真相（Webhook）	core	4	
+107	paycor.webhook-signature	支付系统	正确性工程	webhook 验签与防重放（Signature）		6	
+108	bd.bloom-semantics	关键技术	大数据数据结构	布隆过滤器：一定不在或可能在（Bloom Filter）	core	9	
+109	flink.windows	关键技术	Flink	窗口类型与状态成本（Windows）		5	flink.keyed-state
+110	rel.retry-what	核心概念	可靠性与服务保护	哪些错误才能重试（Retryable Errors）	core	3	
+111	cache.consistency-window	核心概念	缓存	一致性窗口与取舍（Consistency Window）	core	8	cache.invalidation-order
+112	cache.hit-rate-math	核心概念	缓存	命中率与容量账（Hit Rate Math）	core	10	
+113	blob.state-sync	常见模式	大文件	上传状态机与事件同步（State Sync）	core	4	blob.presigned-upload
+114	paycor.minor-units	支付系统	正确性工程	金额用整数最小单位加币种（Minor Units）	core	6	
+115	rel.retry-dead-letter	核心概念	可靠性与服务保护	至少一次、重试与死信（DLQ）	core	5	
+116	reads.fanout-hybrid	常见模式	扩展读	扇出混合与易错（Hybrid Fan-out）		4	reads.fanout-write-vs-read
+117	arch.config-session	核心概念	服务架构	配置中心与分布式 Session		4	
+118	sw.hierarchical-aggregation	常见模式	扩展写	分层聚合（Hierarchical Aggregation）		6	
+119	lt.time-semantics	常见模式	长时间任务与定时	时区、夏令时与月末语义（Time Semantics）		6	
+120	blob.why-object-storage	常见模式	大文件	为何用对象存储不经服务器（Blob）		8	
+121	bound.rank-window	通用	热点页面读有界的小结构	排名与前后窗口读（ZREVRANK）		2	redis.leaderboard-zset
+122	dm.pick-db	核心概念	数据建模	按访问模式和一致性选存储		11	
+123	rel.availability-math	核心概念	可靠性与服务保护	串并联可用性与相关故障（Availability Math）	core	2	
+124	infra.canary-release	核心概念	平台基础设施：容器、服务网格、发布	自动灰度：基线对照与自动回滚（Canary）	core	5	
+125	kafka.model	关键技术	Kafka 与消息队列	主题、分区与消费者组（Topic/Partition）	core	5	
+126	bound.zset-vs-list	通用	热点页面读有界的小结构	为何用有序集合而不是列表（ZSET vs List）		2	redis.data-structures
+127	rank.funnel-fallback	常见模式	排行与检索	排序服务降级链（Ranking Fallback）		3	rank.precompute-vs-funnel
+128	rt.pubsub-fanout	常见模式	实时更新	发布订阅推送：扇出与隐患（Pub/Sub Fanout）		9	
+129	bound.score-cursor	通用	热点页面读有界的小结构	分数游标翻页与分数精度（Cursor）		3	
+130	cache.layers	核心概念	缓存	缓存放哪一层（Cache Tiers）	core	6	
+131	rdbms.skip-locked	关键技术	关系数据库：MySQL 与 PostgreSQL	SKIP LOCKED 做任务队列（Job Queue）		6	contention.pessimistic-lock
+132	num.latency-ladder	答题框架与估算	估算与必须知道的数字	经典延迟量级表（Latency Ladder）		4	
+133	es.when-es	关键技术	Elasticsearch	何时用专用搜索引擎（Search vs DB）	core	4	
+134	clocks.ntp-error	核心概念	时钟、顺序与故障检测	NTP 时间戳的真实误差（Clock Skew）	core	5	
+135	net.long-conn-ops	核心概念	网络	长连接心跳与运维（Keepalive）		1	net.lb-types,net.tcp-handshake
+136	rdbms.isolation-levels	关键技术	关系数据库：MySQL 与 PostgreSQL	隔离级别与并发异常（Isolation）	core	4	
+137	sw.horizontal-sharding	常见模式	扩展写	水平分片与槽位映射（Sharding）	core	5	
+138	ddb.keys	关键技术	DynamoDB	分区键与排序键的选择（Partition/Sort Key）	core	6	
+139	contention.single-writer-ordering	常见模式	处理争用	单写者、序号与版本排序（Single Writer）		8	contention.occ-version
+140	kafka.broker-capacity-sizing	关键技术	Kafka 与消息队列	单 broker 量级与估算（Sizing）	core	3	
+141	cache.penetration	核心概念	缓存	缓存穿透与空值缓存（Penetration）	core	3	
+142	bd.bloom-use	关键技术	大数据数据结构	布隆适用场景：爬虫去重与缓存前置		6	bd.bloom-semantics
+143	overview.cdn-edge-cache	答题框架与估算	速览：概念、技术、模式	CDN 边缘缓存、私有内容与更新（CDN）		4	
+144	rel.ha-rto-rpo	核心概念	可靠性与服务保护	冗余、故障转移与 RTO/RPO（HA）		6	
+145	cap.choose-c-or-a	核心概念	CAP、一致性与复制	何时选一致性、何时选可用性	core	5	cap.three-properties
+146	sw.backpressure-monitoring	常见模式	扩展写	有界队列、背压与积压监控（Backpressure）	core	9	sw.queue-burst-absorption
+147	card.auth-vs-capture	支付系统	卡支付生命周期	先授权再请款的原因（Auth vs Capture）	core	4	
+148	dm.indexing	核心概念	数据建模	按访问模式建索引与复合索引	core	7	
+149	rk.server-issued-key	通用	副作用之前先定重试键	键由服务端更早签发（Server-issued Key）		0	rk.client-generated-key
+150	rk.own-retry-recognition	通用	副作用之前先定重试键	识别自己的重试而不是当作冲突（Own Retry）		0	rk.client-generated-key
+151	idem.methods	常见模式	幂等与结果未知	幂等实现方式与场景（Methods）		7	idem.natural-idempotent
+152	once.ledger-entry-id	通用	派生状态只应用一次	账本分录 id 由转账号派生（Entry Id）		2	
+153	redis.perf-numbers	关键技术	Redis	单节点吞吐与 N+1（Throughput）		3	
+154	rel.cascading-failure	核心概念	可靠性与服务保护	雪崩：慢依赖拖垮全链路（Cascading Failure）	core	3	
+155	idem.same-key-safe-retry	常见模式	幂等与结果未知	同键重试为什么安全（Safe Retry）		7	api.idempotency-key,idem.unknown-outcome
+156	num.cache-numbers	答题框架与估算	估算与必须知道的数字	缓存的数字与扩缩信号（Cache Numbers）		4	
+157	rt.consistent-hash	常见模式	实时更新	一致性哈希路由与搬迁量（Consistent Hash）		4	ch.ring
+158	flink.checkpoint-barrier	关键技术	Flink	检查点与屏障（Checkpoint Barrier）	core	4	flink.keyed-state
+159	ledger.why-double-entry	支付系统	账务与资金	为什么用复式记账而非余额字段（Double-entry）	core	4	
+160	rdbms.repl-modes	关键技术	关系数据库：MySQL 与 PostgreSQL	复制：同步与异步的取舍（Replication）	core	2	
+161	ledger.append-only-immutability	支付系统	账务与资金	账本只追加与不可变的工程保证（Append-only）	core	7	ledger.account-journal-posting
+162	rdbms.wal-redo	关键技术	关系数据库：MySQL 与 PostgreSQL	WAL/redo：顺序写日志与刷盘（WAL）	core	2	
+163	idx.geohash	核心概念	数据库索引	Geohash：二维转一维前缀（Geohash）	core	3	
+164	lt.task-dependencies	常见模式	长时间任务与定时	任务依赖与编排（Orchestration）		4	lt.decouple-flow
+165	idx.lsm-why	核心概念	数据库索引	LSM 树：以顺序写换写入吞吐（LSM）	core	3	
+166	once.fill-exec-id	通用	派生状态只应用一次	成交回报按 exec_id 去重		1	
+167	infra.feature-flags	核心概念	平台基础设施：容器、服务网格、发布	功能开关：部署不等于发布（Feature Flag）	core	3	
+168	sw.load-shedding	常见模式	扩展写	过载时丢写（Load Shedding）	core	8	
+169	contention.lost-update	常见模式	处理争用	读后写竞态与丢失更新（Lost Update）	core	5	
+170	dm.pk-generation	核心概念	数据建模	主键生成：自增、UUID、时间有序 ID		4	
+171	redis.single-thread-model	关键技术	Redis	单线程命令执行与 I/O 多路复用（epoll）	core	2	
+172	ledger.concurrent-deduction	支付系统	账务与资金	并发扣款防超扣（Concurrent Deduction）	core	5	
+173	es.es-sync	关键技术	Elasticsearch	搜索与主库同步：CDC 与对账（Sync）	core	6	cdc.what-is-cdc
+174	mr.home-region-writes	核心概念	多区域部署	归属区域写入与数据驻留（Home Region）		5	
+175	ch.ring	核心概念	一致性哈希	哈希环：顺时针找归属（Hash Ring）	core	5	
+176	card.tokenization	支付系统	卡支付生命周期	令牌化（Tokenization）	core	3	
+177	rt.gateway-routing	常见模式	实时更新	连接网关与用户路由（Gateway）	core	3	
+178	flink.need-stream	关键技术	Flink	该不该上流处理（Stream vs Batch）	core	4	
+179	kafka.delay-message	关键技术	Kafka 与消息队列	延迟消息与订单超时取消（Delay Message）		5	
+180	paycor.no-2pc	支付系统	正确性工程	跨服务一致性为何少用 2PC（Why Not 2PC）	core	3	
+181	rel.spike-absorb	核心概念	可靠性与服务保护	入口、缓存与队列三层削峰（Absorb Spikes）		3	
+182	rdbms.check-then-write	关键技术	关系数据库：MySQL 与 PostgreSQL	并发下先查后写的竞态（Lost Check）	core	6	rdbms.isolation-levels
+183	lt.head-of-line	常见模式	长时间任务与定时	快慢任务队头阻塞（Head-of-Line）		7	lt.decouple-flow
+184	kafka.why-mq-benefit-cost	关键技术	Kafka 与消息队列	为什么上消息队列：收益与代价（Why MQ）		5	
+185	num.modern-hardware-mindset	答题框架与估算	估算与必须知道的数字	用现代硬件的数字（Modern Numbers）	core	0	
+186	num.scaling-triggers	答题框架与估算	估算与必须知道的数字	扩容触发信号速查（Scaling Triggers）	core	0	
+187	contention.hot-resource	常见模式	处理争用	同一资源被所有人抢（Hot Resource）	core	5	
+188	kafka.commit-timing	关键技术	Kafka 与消息队列	先处理后提交位移（Offset Commit）	core	4	kafka.append-log-offset
+189	rdbms.btree	关键技术	关系数据库：MySQL 与 PostgreSQL	B+ 树结构与容量估算（B+Tree）	core	0	
+190	agent.loop	AI 系统	Agent 与 RAG	Agent Loop 与手写 ReAct（Loop）	core	0	
+191	net.http-semantics-caching	核心概念	网络	HTTP 方法、状态码与缓存（HTTP Caching）		4	
+192	dm.normalization	核心概念	数据建模	范式化优先，按需反范式（Denormalization）	core	4	
+193	ch.fixed-slots	核心概念	一致性哈希	固定槽位与哈希环的取舍（Fixed Slots）		2	ch.ring
+194	redis.persistence	关键技术	Redis	RDB 与 AOF 的丢数据窗口（Persistence）	core	3	
+195	cc.geo-ephemeral	通用	加组件先说职责和新问题	司机位置：短命数据与地理索引（GEO）		1	
+196	rank.index-version-ordering	常见模式	排行与检索	索引更新带版本防乱序（Version Ordering）		2	rank.derived-index
+197	reads.read-replicas	常见模式	扩展读	读副本与复制延迟（Read Replica）	core	4	
+198	idx.lsm-vs-btree	核心概念	数据库索引	LSM 与 B 树的取舍（LSM vs B-Tree）	core	1	idx.lsm-why
+199	paycor.webhook-inbox	支付系统	正确性工程	收件箱去重：先落库后处理（Inbox）	core	0	
+200	flink.idempotent-sink	关键技术	Flink	幂等汇：主键 upsert（Idempotent Sink）		3	flink.exactly-once-boundary
+201	net.trust-boundary-user-id	核心概念	网络	不信任请求里的用户 ID（Authz）		4	
+202	kafka.hot-partition	关键技术	Kafka 与消息队列	热点分区与加盐（Hot Partition）	core	4	kafka.key-ordering
+203	rel.retry-amplification	核心概念	可靠性与服务保护	重试放大与重试预算（Retry Budget）		4	
+204	bound.subscribe-first	通用	热点页面读有界的小结构	先订阅实时流再读历史（Subscribe First）		1	
+205	idem.dedup-retention	常见模式	幂等与结果未知	去重表增长与保留期（Dedup Retention）		6	idem.methods
+206	rdbms.composite	关键技术	关系数据库：MySQL 与 PostgreSQL	联合索引：最左前缀与列序（Composite）	core	2	rdbms.btree
+207	idem.natural-idempotent	常见模式	幂等与结果未知	幂等定义与天然幂等操作（Idempotency）	core	6	
+208	bd.cms	关键技术	大数据数据结构	Count-Min Sketch：d×w 计数器取最小值	core	3	
+209	rdbms.keyset	关键技术	关系数据库：MySQL 与 PostgreSQL	深分页与键集分页（Keyset Pagination）		5	rdbms.clustered-covering,rdbms.composite
+210	blob.content-chunking	常见模式	大文件	内容寻址分块去重（Chunking）		5	
+211	dlock.lock-is-optimization	核心概念	分布式锁	锁只是优化，正确性靠数据库兜底	core	3	
+212	recon.three-way-layers	支付系统	对账、结算与资金管理	三方对账：账本、渠道报告、银行（Three-way）	core	2	
+213	redis.lock-failure	关键技术	Redis	锁失效：Redlock 与围栏令牌（Fencing）	core	1	redis.distributed-lock
+214	rdbms.replica-lag	关键技术	关系数据库：MySQL 与 PostgreSQL	复制延迟与读自己的写（Read-Your-Writes）	core	4	rdbms.repl-modes
+215	contention.pessimistic-lock	常见模式	处理争用	悲观锁与行锁（Pessimistic Lock）	core	2	contention.lost-update
+216	rt.hashmap-internals	语言运行时与操作系统	语言运行时与并发	HashMap 结构、扩容与树化	core	0	
+217	redis.zset-skiplist	关键技术	Redis	有序集合与跳表原理（Skip List）		1	redis.data-structures
+218	idx.hash-index	核心概念	数据库索引	哈希索引的边界（Hash Index）		2	
+219	rel.autoscale-limits	核心概念	可靠性与服务保护	自动扩缩容的限制（Autoscaling Limits）		2	
+220	redis.cache-ttl-eviction	关键技术	Redis	缓存的 TTL 与淘汰（TTL, Eviction）	core	5	
+221	api.authn-authz	核心概念	API 设计	认证、授权与 API Key/JWT（AuthN）	core	2	
+222	api.http-methods	核心概念	API 设计	HTTP 方法语义、幂等与重试安全	core	2	
+223	flink.time-domain	关键技术	Flink	事件时间与处理时间（Event Time）		3	
+224	tsdb.cardinality	关键技术	时序数据库	基数爆炸（Cardinality）	core	4	tsdb.data-model
+225	blob.download-cdn	常见模式	大文件	直下、CDN 签名与范围续传（CDN, Range）		3	blob.presigned-upload
+226	cache.invalidation-order	核心概念	缓存	先更库再删缓存（Write Then Delete）	core	3	cache.aside
+227	tsdb.when-needed	关键技术	时序数据库	何时需要时序库（When TSDB）	core	4	
+228	num.write-overengineer	答题框架与估算	估算与必须知道的数字	写吞吐过度设计（Write Overkill）		3	
+229	contention.pessimistic-pitfalls	常见模式	处理争用	悲观锁的两类错误与代价（Locking Pitfalls）		3	contention.pessimistic-lock
+230	kafka.mq-selection	关键技术	Kafka 与消息队列	Kafka、SQS 等选型（MQ Selection）		3	kafka.when-to-use
+231	lt.idempotent-submit	常见模式	长时间任务与定时	重复提交与幂等键（Idempotency Key）	core	2	lt.decouple-flow
+232	cap.per-feature-mixed	核心概念	CAP、一致性与复制	同一系统按功能混合取舍	core	1	cap.choose-c-or-a
+233	cc.stream-offset-watermark	通用	加组件先说职责和新问题	流处理：offset 去重与水位线		0	
+234	shard.hash-default	核心概念	分片	哈希分片是默认选择（Hash）	core	7	
+235	redis.hashtag-multikey	关键技术	Redis	哈希标签与跨槽操作（Hash Tag）		1	redis.cluster-slots
+236	lld.clock-injection	低层设计	低层设计跨题模式	时钟注入与单调时钟（Injected Clock）	core	4	
+237	lt.enqueue-gap	常见模式	长时间任务与定时	先写库再入队的缝隙（Dual Write Gap）		2	lt.id-not-payload
+238	gw.when-to-use	关键技术	API 网关	什么时候该画网关（When to Use）	core	2	
+239	shard.hot-spots	核心概念	分片	热点分片与应对（Hot Spot）	core	6	
+240	card.clearing-settlement	支付系统	卡支付生命周期	清算、结算与 T+2（Settlement）	core	2	land.four-parties
+241	cache.avalanche	核心概念	缓存	缓存雪崩（Avalanche）	core	3	
+242	agent.context-engineering	AI 系统	Agent 与 RAG	上下文工程：预算、压缩与子 Agent 隔离	core	1	agent.llm-basics
+243	bd.quantile-merge	关键技术	大数据数据结构	分位数不可平均，只能合并直方图	core	3	bd.histogram-quantile
+244	rdbms.mvcc	关键技术	关系数据库：MySQL 与 PostgreSQL	MVCC：版本链与读视图（ReadView）	core	0	rdbms.isolation-levels
+245	kafka.durability-config	关键技术	Kafka 与消息队列	不丢消息的持久性配置（Durability Config）	core	3	kafka.replication-isr-acks
+246	ms.saga	常见模式	多步骤流程与分布式事务	Saga 与补偿动作（Saga, Compensation）	core	4	
+247	obs.exemplars	核心概念	可观测性	示例点：指标跳到追踪（Exemplar）		0	bd.histogram-quantile,obs.three-pillars
+248	obs.trace-sampling	核心概念	可观测性	追踪采样：头部与尾部（Sampling）		0	obs.three-pillars
+249	obs.loadtest-isolation	核心概念	可观测性	压测流量隔离（Load Test）		0	
+250	sw.async-ack	常见模式	扩展写	队列带来的异步确认语义（Async Ack）		3	sw.queue-burst-absorption
+251	pplat.failover-double-charge	支付系统	支付平台架构	渠道切换重复扣款（Double Charge）	core	2	idem.unknown-outcome
+252	ms.2pc	常见模式	多步骤流程与分布式事务	两阶段提交：提交点与阻塞（2PC）	core	4	
+253	rdbms.default-choice	关键技术	关系数据库：MySQL 与 PostgreSQL	默认选关系库与何时换（Default Pick）	core	4	
+254	shard.stable-hash	核心概念	分片	路由需跨进程稳定的哈希		1	shard.hash-default
+255	idx.index-cost	核心概念	数据库索引	索引的代价与太多索引（Index Cost）	core	1	
+256	risk.pci-scope-reduction	支付系统	风控与合规	缩小 PCI 范围（Scope Reduction）	core	3	card.tokenization
+257	bd.cms-topk-lfu	关键技术	大数据数据结构	CMS 做 Top K 与缓存 LFU		4	bd.cms
+258	cap.conflict-resolution	核心概念	CAP、一致性与复制	分区后冲突合并：LWW、并集、版本向量、CRDT	core	4	cap.replication-topologies
+259	cache.multilevel	核心概念	缓存	多级缓存（Multi-Level Cache）		5	cache.layers
+260	ddb.hot-partition	关键技术	DynamoDB	热分区、写入分片与自适应容量（Hot Partition）	core	3	ddb.partition-limits
+261	cache.down-recovery	核心概念	缓存	缓存宕机、切流与冷启动（Cold Start）		3	cache.hit-rate-math
+262	rt.skip-realtime	常见模式	实时更新	何时不做实时与高级答案（Skip Realtime）	core	0	
+263	contention.zero-rows-trap	常见模式	处理争用	受影响行数为零要中止事务（Zero Rows）		3	contention.conditional-write
+264	es.inverted-index	关键技术	Elasticsearch	倒排索引与 doc values（Inverted）	core	3	
+265	blob.direct-vs-proxy	常见模式	大文件	何时不用直传（Direct vs Proxy）	core	1	blob.presigned-upload
+266	rel.deploy-strategies	核心概念	可靠性与服务保护	滚动、蓝绿与金丝雀发布（Deploy Strategies）	core	1	
+267	dlock.gc-pause-lease	核心概念	分布式锁	租约盲区：GC 停顿后双持有者	core	3	dlock.watchdog
+268	num.cost-awareness	答题框架与估算	估算与必须知道的数字	要不要估算成本（Cost）		4	
+269	kafka.replication-isr-acks	关键技术	Kafka 与消息队列	副本、ISR 与 acks=all（Replication）	core	2	kafka.model
+270	rel.spike-diagnose	核心概念	可靠性与服务保护	流量暴增先判断真假（Spike Triage）	core	0	
+271	rel.error-budget	核心概念	可靠性与服务保护	SLO 与错误预算（Error Budget）	core	0	
+272	cache.cdn-hit-rate	核心概念	缓存	CDN 缓存键与回源收敛（CDN Cache Key）		4	reads.cdn-edge
+273	flink.exactly-once-boundary	关键技术	Flink	精确一次只覆盖内部状态（EOS）	core	4	flink.checkpoint-barrier
+274	ch.vnodes	核心概念	一致性哈希	虚拟节点让负载均匀（Virtual Nodes）	core	4	ch.ring
+275	cache.cdn-dynamic	核心概念	缓存	动态内容与 CDN（Dynamic Content）		4	reads.cdn-edge
+276	redis.expire-evict-internals	关键技术	Redis	过期删除与近似 LRU/LFU（Expiry）		2	
+277	reads.cache-versioning	常见模式	扩展读	缓存键版本化（Versioned Keys）	core	1	
+278	tsdb.downsampling	关键技术	时序数据库	降采样与汇总（Downsampling）	core	4	
+279	bd.histogram-quantile	关键技术	大数据数据结构	直方图近似分位数（Histogram）	core	1	
+280	rdbms.clustered-covering	关键技术	关系数据库：MySQL 与 PostgreSQL	聚簇索引、回表、覆盖索引与下推	core	1	rdbms.btree
+281	ledger.hold-available-balance	支付系统	账务与资金	账面余额、可用余额与冻结（Hold）	core	3	
+282	kafka.replay-deterministic-sink	关键技术	Kafka 与消息队列	重放须写出同样的行（Replay）		3	kafka.exactly-once-scope
+283	cdc.at-least-once	关键技术	变更数据捕获（CDC）	至少一次投递与幂等消费（At-Least-Once）	core	3	cdc.what-is-cdc
+284	lt.worker-deploy	常见模式	长时间任务与定时	工作者部署方式（Worker Deployment）		2	lt.decouple-flow
+285	dlock.lock-selection	核心概念	分布式锁	选型：效率型还是正确性型	core	3	dlock.redlock-critique
+286	rdbms.acid	关键技术	关系数据库：MySQL 与 PostgreSQL	ACID 四性与各自机制（ACID）	core	1	
+287	shard.when-to-shard	核心概念	分片	何时才分片：先算数再提	core	3	
+288	idx.btree-default	核心概念	数据库索引	为什么默认选 B 树及选型顺序（Default）	core	0	rdbms.btree
+289	zk.chat-routing	关键技术	ZooKeeper 与共识	聊天路由：只登记服务器不登记用户（Routing）		1	zk.service-discovery
+290	sw.burst-handling	常见模式	扩展写	突发流量不能只靠自动扩缩容（Bursts）	core	3	
+291	paycor.sm-out-of-order	支付系统	正确性工程	乱序事件与状态阶位（Out-of-Order）		2	ms.state-machine
+292	cap.replication-topologies	核心概念	CAP、一致性与复制	复制拓扑：单主、多主、无主（Replication）	core	2	
+293	cdc.dual-write	关键技术	变更数据捕获（CDC）	双写的不一致与崩溃窗口（Dual Write）	core	6	
+294	shard.cross-shard-txn	核心概念	分片	跨分片事务：避免、Saga、最终一致	core	4	
+295	ddb.gsi-lsi	关键技术	DynamoDB	GSI 与 LSI 的区别与限制（GSI vs LSI）	core	4	ddb.keys
+296	ms.idempotency-key	常见模式	多步骤流程与分布式事务	幂等键与恰好一次的效果（Idempotency Key）	core	2	ms.durable-execution
+297	lt.result-delivery	常见模式	长时间任务与定时	结果通知与 API 设计（Result Delivery）		1	lt.decouple-flow
+298	agent.project-walkthrough	AI 系统	Agent 与 RAG	从一次请求讲清 Agent 架构（Walkthrough）		0	
+299	dm.document-db	核心概念	数据建模	文档库：嵌套与反范式（Document）		1	
+300	blob.small-objects-cost	常见模式	大文件	海量小对象的成本与打包（Small Objects）		2	
+301	zk.leader-election	关键技术	ZooKeeper 与共识	选主：顺序加临时节点（Leader Election）	core	3	zk.watches
+302	sw.estimate-first	常见模式	扩展写	先算账再选写扩展策略（Estimate First）	core	3	
+303	prox.geohash-boundary	关键技术	邻近搜索	Geohash 边界陷阱与 3x3 补救	core	4	idx.geohash
+304	prox.why-btree-fails	关键技术	邻近搜索	普通索引为何查不了附近（Why B-Tree Fails）	core	4	
+305	tsdb.data-model	关键技术	时序数据库	指标、标签与字段（Tags vs Fields）	core	3	
+306	tsdb.sizing	关键技术	时序数据库	写入量与存储估算（Sizing）	core	3	
+307	agent.mcp	AI 系统	Agent 与 RAG	MCP 与函数调用、Skills 的分层		0	agent.function-calling
+308	tsdb.compression	关键技术	时序数据库	增量编码与压缩（Delta/XOR）	core	3	
+309	cap.consistency-spectrum	核心概念	CAP、一致性与复制	一致性光谱与最终一致的实现	core	1	
+310	api.rbac-ratelimit	核心概念	API 设计	角色权限与限流（RBAC, Rate Limit）		3	api.authn-authz
+311	shard.cross-shard-query	核心概念	分片	跨分片查询为何贵、怎么减少	core	4	
+312	idx.compaction	核心概念	数据库索引	压实策略与写停顿（Compaction）		2	idx.lsm-why
+313	bd.bloom-sizing	关键技术	大数据数据结构	布隆定容：约 10 比特每元素（1%）	core	3	bd.bloom-impl
+314	paycor.atomic-boundary	支付系统	正确性工程	缩小原子边界（Atomic Boundary）		1	
+315	conc.check-then-act	低层设计	并发	先检查后操作（Check-Then-Act）	core	1	
+316	prox.candidate-filter	关键技术	邻近搜索	先出候选集再精确过滤（Filter）	core	4	
+317	net.latency-physics	核心概念	网络	光速下限、CDN 与区域分区（Latency Floor）	core	2	
+318	ch.rebalance-strategies	核心概念	一致性哈希	三种再平衡策略（Rebalance Strategies）		2	
+319	num.app-server-numbers	答题框架与估算	估算与必须知道的数字	应用服务器的数字（App Server）		1	
+320	prox.geohash-precision	关键技术	邻近搜索	Geohash 精度选择与随纬度变化		2	prox.geohash-boundary
+321	lld.heap-lazy-delete	低层设计	低层设计跨题模式	堆、惰性删除与 Top-K（Heap）		5	
+322	cap.split-brain	核心概念	CAP、一致性与复制	脑裂、多数派选举与租约（Split Brain）	core	1	
+323	rdbms.sharding	关键技术	关系数据库：MySQL 与 PostgreSQL	分库分表：何时拆与分片键（Sharding）	core	0	
+324	agent.function-calling	AI 系统	Agent 与 RAG	Function Calling 一次调用的完整链路	core	0	
+325	agent.memory-tiers	AI 系统	Agent 与 RAG	短期记忆与长期记忆（Memory）	core	0	
+326	agent.agent-eval	AI 系统	Agent 与 RAG	Agent 评测与指标（Golden Set, Judge）	core	0	agent.loop
+327	rt.chm-design	语言运行时与操作系统	语言运行时与并发	ConcurrentHashMap：CAS 加桶锁与计数	core	1	rt.hashmap-internals
+328	contention.scenario-mapping	常见模式	处理争用	场景对应方案：拍卖、订票、秒杀（Scenarios）		1	contention.choose-tool-order,contention.reservation-lock
+329	api.jwt-pitfalls	核心概念	API 设计	JWT 的实际坑（JWT Pitfalls）	core	1	api.authn-authz
+330	paycor.unknown-choices	支付系统	正确性工程	查询、同键重试、撤销与对账的取舍		1	paycor.unknown-flow
+331	net.layers-request	核心概念	网络	网络三层与一次请求全过程（Request Path）	core	0	
+332	rdbms.deadlock	关键技术	关系数据库：MySQL 与 PostgreSQL	死锁成因、排查与避免（Deadlock）	core	1	rdbms.gap-locks
+333	agent.harness	AI 系统	Agent 与 RAG	Harness Engineering：模型之外的一切		0	
+334	rt.fullgc-troubleshoot	语言运行时与操作系统	语言运行时与并发	Full GC 排查与调优验证流程	core	0	rt.gc-generations
+335	rt.volatile-cas-jmm	语言运行时与操作系统	语言运行时与并发	volatile、CAS 与可见性（JMM）	core	0	
+336	tsdb.append-only	关键技术	时序数据库	追加写（Append-Only）		2	
+337	ledger.stored-vs-computed-balance	支付系统	账务与资金	余额存字段还是实时求和（Derived Balance）	core	2	ledger.account-journal-posting
+338	ch.modulo-problem	核心概念	一致性哈希	取模分片扩缩容全员搬迁（Modulo Hashing）	core	2	
+339	ms.orchestration	常见模式	多步骤流程与分布式事务	编舞还是编排（Orchestration）	core	2	ms.saga
+340	redis.sentinel	关键技术	Redis	哨兵下线判定与选主（Sentinel）		1	redis.replication-async
+341	cache.delete-fail-cdc	核心概念	缓存	删除失败兜底与 CDC 失效（Retry/CDC）		2	cache.invalidation-order
+342	es.scatter-gather	关键技术	Elasticsearch	两阶段查询：分散与汇总（Scatter-Gather）	core	1	
+343	pplat.timeout-budget-bulkhead	支付系统	支付平台架构	超时预算与渠道舱壁（Timeout Budget）	core	2	rel.bulkhead,rel.timeout-deadline
+344	rdbms.numbers	关键技术	关系数据库：MySQL 与 PostgreSQL	单机读写量级与规模经验值（Capacity）		2	
+345	net.tcp-udp-choice	核心概念	网络	TCP 与 UDP 的选择（TCP vs UDP）	core	1	
+346	redis.replica-read	关键技术	Redis	读副本与写后读旧值（Read-Your-Writes）		2	redis.replication-async
+347	redis.replication-async	关键技术	Redis	异步复制与增量同步（PSYNC）		1	
+348	prox.hot-cells	关键技术	邻近搜索	密度不均与热点格子（Hot Cells）		2	prox.encoded-keys
+349	api.rest-resources	核心概念	API 设计	REST 资源建模（Resources）	core	1	
+350	olap.batch-rerun	核心概念	分析型系统：OLAP、数仓与批处理	批处理容错：丢弃重跑与原子发布（Rerun Safe）	core	4	
+351	prox.dispatch-flow	关键技术	邻近搜索	叫车派单完整流程（Dispatch Flow）	core	2	prox.h3-dispatch
+352	ledger.reversal	支付系统	账务与资金	冲正：用反向分录纠错（Reversal）	core	3	ledger.append-only-immutability
+353	dm.interview-bar	核心概念	数据建模	建模深度与白板六步清单	core	0	
+354	dm.requirements-factors	核心概念	数据建模	从数据量、访问模式、一致性出发	core	0	
+355	dm.acid-not-invariants	核心概念	数据建模	ACID 不自动保证业务不变量	core	0	rdbms.acid
+356	blob.presign-security	常见模式	大文件	预签名 URL 的安全边界（Presign）		2	blob.presigned-upload
+357	cap.linearizable-needed	核心概念	CAP、一致性与复制	哪些功能真的需要线性一致	core	3	cap.lin-vs-serializable
+358	rel.shuffle-sharding	核心概念	可靠性与服务保护	洗牌分片缩小爆炸半径（Shuffle Sharding）		1	
+359	rel.constant-work	核心概念	可靠性与服务保护	恒定工作：故障时工作量不变（Constant Work）		1	
+360	cache.why-when	核心概念	缓存	何时引入缓存（Cache Motivation）	core	0	
+361	reads.escalation-order	常见模式	扩展读	读扩展的递进顺序（Escalation Order）	core	1	
+362	shard.global-index	核心概念	分片	全局二级索引的异步陷阱（GSI）		3	
+363	cass.when-to-use	关键技术	Cassandra	何时选与何时不选（When to Use）	core	5	
+364	rt.threadlocal	语言运行时与操作系统	语言运行时与并发	ThreadLocal 泄漏与线程池串号		0	rt.gc-reachability
+365	agent.hybrid-recall	AI 系统	Agent 与 RAG	混合召回与查询改写（Hybrid）	core	0	vec.embedding-metrics
+366	reads.indexing	常见模式	扩展读	索引（Indexing）	core	1	
+367	paycor.rounding	支付系统	正确性工程	舍入规则与舍入点（Rounding）		1	
+368	rel.retry-needs-idempotency	核心概念	可靠性与服务保护	重试的前提是幂等（Retry & Idempotency）		0	
+369	idx.lsm-read	核心概念	数据库索引	LSM 读路径、布隆过滤器与范围扫描		2	idx.lsm-why
+370	lt.async-costs	常见模式	长时间任务与定时	异步的代价与新失败模式（Async Costs）		1	lt.decouple-flow
+371	dm.single-vs-per-kind	核心概念	数据建模	相似记录：单表类型列还是分表		1	
+372	contention.guard-right-resource	常见模式	处理争用	保护真正被争抢的资源（Guard the Resource）		2	contention.conditional-write
+373	num.queue-numbers	答题框架与估算	估算与必须知道的数字	消息队列的数字（Queue Numbers）		0	
+374	num.latency-overestimate	答题框架与估算	估算与必须知道的数字	高估索引查询延迟（Latency Overestimate）		0	
+375	num.coordinated-omission	答题框架与估算	估算与必须知道的数字	压测漏掉排队样本（Coordinated Omission）		0	
+376	num.p999-cost	答题框架与估算	估算与必须知道的数字	p99.9 为什么越压越贵（Tail Cost）		0	
+377	num.tail-amplification	答题框架与估算	估算与必须知道的数字	扇出与多跳放大尾延迟（Tail Amplification）		0	
+378	net.dns-resolve-ttl	核心概念	网络	DNS 解析与缓存（DNS Resolution）		2	
+379	cass.gossip	关键技术	Cassandra	Gossip：去中心化的集群状态传播（Gossip）		2	
+380	cache.big-key	核心概念	缓存	大 key 的危害与处理（Big Key）		0	redis.single-thread-model
+381	es.pagination	关键技术	Elasticsearch	分页：from/size、search_after、PIT	core	0	es.query-dsl,es.scatter-gather
+382	agent.chunking	AI 系统	Agent 与 RAG	切块策略（Chunking）		0	agent.rag-vs-finetune
+383	lld.lru-hash-list	低层设计	低层设计跨题模式	LRU 的哈希表加双向链表（LRU）	core	1	
+384	prox.moving-store	关键技术	邻近搜索	移动点存储选型：Redis、PostGIS、ES	core	1	prox.two-approaches
+385	dm.graph-fit	核心概念	数据建模	图数据库何时值得（Graph）		2	
+386	rt.go-gmp	语言运行时与操作系统	语言运行时与并发	Go 调度：G、M、P 与 M:N（GMP）	core	0	
+387	rt.gc-generations	语言运行时与操作系统	语言运行时与并发	回收算法与分代设计（Generational GC）	core	0	rt.gc-reachability
+388	os.process-thread-coroutine	语言运行时与操作系统	操作系统	进程线程协程之别（Coroutine）		0	
+389	kafka.backlog-guardrails	关键技术	Kafka 与消息队列	积压的过期风险与预防（Backlog Guardrails）		1	
+390	agent.exit-conditions	AI 系统	Agent 与 RAG	死循环与退出条件（Exit Conditions）	core	0	agent.loop
+391	agent.tool-errors	AI 系统	Agent 与 RAG	工具失败：参数错、超时与重试	core	0	agent.function-calling
+392	kafka.high-throughput-io	关键技术	Kafka 与消息队列	顺序写、页缓存与零拷贝（Sequential I/O）		2	kafka.append-log-offset
+393	dlock.watchdog	核心概念	分布式锁	看门狗自动续期（Watchdog）	core	1	redis.distributed-lock
+394	paycor.allocation	支付系统	正确性工程	按比例分摊保证守恒（Allocation）		0	
+395	paycor.sm-modeling	支付系统	正确性工程	状态建模：单状态、多维、事件溯源		0	
+396	kafka.retention-compaction	关键技术	Kafka 与消息队列	保留策略、压缩与分层存储（Retention）		3	kafka.append-log-offset
+397	idem.request-hash-conflict	常见模式	幂等与结果未知	同键不同请求体（Request Hash）		1	api.idempotency-key
+398	zk.raft-election-replication	关键技术	ZooKeeper 与共识	Raft 选主、日志复制与保证（Raft）		2	
+399	api.graphql-when	核心概念	API 设计	何时用 GraphQL 及其代价（GraphQL）	core	0	
+400	api.principles	核心概念	API 设计	API 设计原则（Principles）	core	0	
+401	bd.exact-when-required	关键技术	大数据数据结构	要求绝对不重复就用精确存储		1	
+402	contention.choose-tool-order	常见模式	处理争用	争抢方案的选型顺序（Choosing Order）	core	1	contention.isolation-write-skew,contention.occ-version,contention.pessimistic-lock
+403	sec.oidc	核心概念	安全：认证、授权与接口安全	OIDC 与 ID Token 验证（OIDC）	core	1	sec.oauth-why
+404	rdbms.two-phase-commit	关键技术	关系数据库：MySQL 与 PostgreSQL	redo 与 binlog 两阶段提交（2PC）		0	rdbms.wal-redo
+405	agent.react-vs-plan	AI 系统	Agent 与 RAG	ReAct 与 Plan-and-Execute 的选择		0	agent.loop
+406	contention.recognition-signals	常见模式	处理争用	何时主动提竞争（Recognition Signals）		3	
+407	kafka.backlog-triage	关键技术	Kafka 与消息队列	积压先判断根因再止血（Backlog Triage）	core	2	kafka.consumer-count-vs-partitions
+408	recon.exact-match	支付系统	对账、结算与资金管理	精确匹配与键规范化（Exact Match）	core	1	
+409	contention.isolation-write-skew	常见模式	处理争用	隔离级别与写偏斜（Write Skew）	core	0	
+410	bd.quantile-sketches	关键技术	大数据数据结构	t-digest 与 DDSketch		2	bd.histogram-quantile
+411	net.tls-handshake	核心概念	网络	TLS 握手与前向保密（TLS）		0	
+412	contention.dont-overcomplicate	常见模式	处理争用	别过度设计（Overengineering）		2	contention.choose-tool-order
+413	olap.map-shuffle-reduce	核心概念	分析型系统：OLAP、数仓与批处理	批处理三步 map/shuffle/reduce（MR）	core	3	
+414	rt.sync-vs-reentrantlock	语言运行时与操作系统	语言运行时与并发	synchronized 对比 ReentrantLock		0	
+415	agent.vs-workflow	AI 系统	Agent 与 RAG	Agent 与 Chatbot、Workflow 的区别	core	0	
+416	flink.keyed-state	关键技术	Flink	有状态算子与托管状态（Keyed State）	core	2	flink.operators
+417	arch.when-to-split	核心概念	服务架构	何时拆微服务（When to Split）	core	2	
+418	reads.derived-rebuild	常见模式	扩展读	派生视图修复：v2 重建与 Kappa 重放		2	
+419	tsdb.retention	关键技术	时序数据库	保留期实现（Retention）		3	tsdb.time-partition
+420	rdbms.gap-locks	关键技术	关系数据库：MySQL 与 PostgreSQL	行锁形态：记录锁、间隙锁、next-key		1	rdbms.phantom
+421	os.page-cache-fsync	语言运行时与操作系统	操作系统	页缓存与 fsync 持久性（Page Cache）	core	1	
+422	vec.ann-approx	关键技术	向量数据库	精确 KNN 与近似 ANN（Approximate NN）	core	1	vec.embedding-metrics
+423	contention.occ-retry-loop	常见模式	处理争用	乐观重试循环怎么写（Retry Loop）		3	contention.occ-version
+424	recon.daily-flow	支付系统	对账、结算与资金管理	每日渠道对账流程（Daily Run）	core	1	
+425	conc.actor-model	低层设计	并发	Actor 模型（Actor Model）		1	conc.blocking-queue
+426	mr.async-rpo	核心概念	多区域部署	异步复制的 RPO 与延迟（RPO）	core	1	rel.ha-rto-rpo
+427	dm.kv-store	核心概念	数据建模	键值存储：缓存而非主库（Key-Value）		1	
+428	cache.write-patterns	核心概念	缓存	写穿、写回与读穿（Write-Through/Behind）		1	cache.aside
+429	sw.lsm-write-path	常见模式	扩展写	写优化存储：追加式与 LSM（LSM Tree）	core	2	
+430	ledger.multi-currency-books	支付系统	账务与资金	多币种分币种记账（Per-currency Books）	core	1	ledger.account-journal-posting
+431	overview.derived-data-sync	答题框架与估算	速览：概念、技术、模式	派生数据与最终一致（Derived Data）		3	
+432	ms.durable-execution	常见模式	多步骤流程与分布式事务	持久化执行与崩溃恢复（Durable Execution）	core	3	ms.orchestration
+433	lt.graceful-shutdown	常见模式	长时间任务与定时	优雅退出与可恢复任务（Graceful Shutdown）		1	lt.worker-crash
+434	ms.workflow-engines	常见模式	多步骤流程与分布式事务	工作流引擎选型（Temporal）		3	ms.durable-execution
+435	rdbms.vacuum-bloat	关键技术	关系数据库：MySQL 与 PostgreSQL	PostgreSQL 死元组与 VACUUM（Bloat）		2	rdbms.mvcc
+436	es.mapping-types	关键技术	Elasticsearch	索引映射与 text/keyword（Mapping）	core	0	
+437	es.segments	关键技术	Elasticsearch	段不可变：增删改与合并（Segments）	core	0	es.lucene-es
+438	es.shard-sizing	关键技术	Elasticsearch	分片与副本规划（Shard Sizing）	core	0	es.routing,es.scatter-gather
+439	es.node-failure	关键技术	Elasticsearch	节点宕机、选主与脑裂（Failover）	core	0	es.node-types
+440	agent.multi-agent	AI 系统	Agent 与 RAG	多 Agent 编排与失败恢复（Multi-Agent）		0	agent.loop
+441	ledger.hot-account	支付系统	账务与资金	热点账户与分桶（Hot Account）		2	ledger.stored-vs-computed-balance
+442	bd.hll-use	关键技术	大数据数据结构	HLL 适用场景与小基数混合方案		3	bd.hll
+443	net.tcp-reliability-congestion	核心概念	网络	TCP 可靠传输与拥塞控制（cwnd）		2	
+444	recon.tplusn-in-transit	支付系统	对账、结算与资金管理	T+N 结算周期与在途资金（T+N）	core	1	
+445	redis.geo-bitmap-hll	关键技术	Redis	Geo、Bitmap、HLL 去重计数（HLL）		1	
+446	rt.threadpool-flow	语言运行时与操作系统	语言运行时与并发	线程池参数与任务处理顺序	core	0	
+447	reads.mv-maintenance	常见模式	扩展读	物化视图全量重算还是增量维护		2	cdc.what-is-cdc
+448	cap.failover-loss	核心概念	CAP、一致性与复制	故障转移丢写与半同步的缺口		2	rdbms.repl-modes
+449	cache.eviction	核心概念	缓存	淘汰策略与 TTL（LRU/LFU/TTL）		1	
+450	lt.id-not-payload	常见模式	长时间任务与定时	队列里放任务 ID 而非数据（ID vs Payload）		1	lt.decouple-flow
+451	cap.quorum-not-linearizable	核心概念	CAP、一致性与复制	R+W>N 仍不线性一致		1	cap.quorum
+452	tsdb.time-partition	关键技术	时序数据库	按时间分区（Time Partition）	core	2	
+453	rdbms.page-split	关键技术	关系数据库：MySQL 与 PostgreSQL	自增主键与页分裂（Page Split）		1	rdbms.btree
+454	bd.when-probabilistic	关键技术	大数据数据结构	何时才换概率型结构（Over-engineering）	core	1	
+455	bd.hll	关键技术	大数据数据结构	HLL：最长前导零估基数（HLL）	core	1	
+456	es.nrt-refresh	关键技术	Elasticsearch	近实时：refresh 与 translog（NRT）		2	es.segments
+457	cap.nfr-first-question	核心概念	CAP、一致性与复制	CAP 作为非功能需求的第一问		2	
+458	os.epoll-mechanism	语言运行时与操作系统	操作系统	epoll：红黑树加就绪链表（epoll）	core	1	os.select-poll-limits
+459	cache.fill-race	核心概念	缓存	回填竞态、双删与租约（Fill Race/Lease）		3	cache.invalidation-order
+460	ms.when-workflow	常见模式	多步骤流程与分布式事务	何时用与不用工作流（When to Use）	core	2	ms.durable-execution
+461	mr.three-region-quorum	核心概念	多区域部署	零数据丢失为何需要三区域（Quorum）	core	0	
+462	prox.rtree	关键技术	邻近搜索	R 树：最小外接矩形（R-Tree, MBR）	core	1	prox.quadtree
+463	rt.webrtc	常见模式	实时更新	WebRTC 点对点与 STUN/TURN（WebRTC）		1	
+464	sec.password-hashing	核心概念	安全：认证、授权与接口安全	密码哈希与 API 密钥存储（Argon2id）	core	2	
+465	rdbms.phantom	关键技术	关系数据库：MySQL 与 PostgreSQL	快照读、当前读与幻读（Phantom）		0	rdbms.mvcc
+466	rdbms.explain-slow	关键技术	关系数据库：MySQL 与 PostgreSQL	EXPLAIN 与慢 SQL 排查（Slow Query）		0	rdbms.clustered-covering,rdbms.composite
+467	sec.scope-audience	核心概念	安全：认证、授权与接口安全	scope 与 aud 各限制什么（Audience）	core	1	sec.oauth-why
+468	rel.server-retry-control	核心概念	可靠性与服务保护	服务端控制重试风暴（Server-side Control）		1	rel.retry-amplification
+469	rdbms.pg-indexes	关键技术	关系数据库：MySQL 与 PostgreSQL	PG 特色索引：GIN、GiST、JSONB、全文		2	
+470	ai.cost-levers	AI 系统	AI 系统设计补充	降本杠杆的顺序（Cost Levers）		1	ai.decode-bandwidth
+471	rt.long-polling	常见模式	实时更新	长轮询：延迟与超时对齐（Long Polling）		0	
+472	rt.observer-pubsub	常见模式	实时更新	观察者与发布订阅模式（Observer, Pub-Sub）		0	
+473	prox.two-approaches	关键技术	邻近搜索	两条路线：空间树与编码键（Trees vs Keys）	core	1	
+474	redis.streams-queue	关键技术	Redis	Streams 工作队列（Consumer Group）		1	
+475	rt.aqs-juc	语言运行时与操作系统	语言运行时与并发	AQS 与并发工具类、CompletableFuture		0	rt.volatile-cas-jmm
+476	cache.stale-directives	核心概念	缓存	过期先返旧值（Stale-While-Revalidate）		1	net.http-semantics-caching
+477	prox.h3-dispatch	关键技术	邻近搜索	H3 派单：取多少圈格子（Ring Query）	core	0	prox.h3
+478	redis.data-structures	关键技术	Redis	按需求选数据结构（Data Structures）		0	
+479	api.rpc-grpc	核心概念	API 设计	RPC 与 gRPC（Protobuf）		1	
+480	pplat.adapter-normalization	支付系统	支付平台架构	渠道适配器与状态归一（Adapter）		1	pplat.gateway-unified-model
+481	rel.spike-postmortem	核心概念	可靠性与服务保护	复盘与预防：压测找拐点（Postmortem）		0	
+482	rel.burn-rate-alert	核心概念	可靠性与服务保护	燃烧率多窗口告警（Burn Rate）		0	rel.error-budget
+483	rel.slo-dependency-ceiling	核心概念	可靠性与服务保护	SLO 受硬依赖限制（Ceiling）		0	
+484	rel.gray-failure	核心概念	可靠性与服务保护	灰色故障：健康检查全绿却很慢（Gray Failure）		0	
+485	rel.chaos-fault	核心概念	可靠性与服务保护	混沌工程：假设检验（Chaos Engineering）		0	
+486	rel.avoid-fallback	核心概念	可靠性与服务保护	回退路径最需要时失效（Fallback Risk）		0	
+487	pplat.async-accept	支付系统	支付平台架构	支付异步受理：先受理后处理（Async Accept）	core	2	
+488	recon.settlement-batch-net	支付系统	对账、结算与资金管理	结算批次与净额入账（Settlement Batch）		2	
+489	olap.lakehouse	核心概念	分析型系统：OLAP、数仓与批处理	湖表格式：原子提交与维护（Iceberg, Delta）	core	3	
+490	kafka.append-log-offset	关键技术	Kafka 与消息队列	追加日志与偏移量（Append-only Log）	core	0	kafka.model
+491	bd.structure-pick	关键技术	大数据数据结构	四类需求四种结构选型	core	0	
+492	vec.index-choice	关键技术	向量数据库	索引选型：按数据特征选（Index Choice）		1	vec.hnsw,vec.ivf
+493	lld.clock-pitfalls	低层设计	低层设计跨题模式	时间相关的常见错误（Clock Pitfalls）		2	lld.clock-injection
+494	conc.fine-lock	低层设计	并发	细粒度锁与锁映射（Fine-Grained Lock）		1	conc.coarse-lock
+495	lld.strategy-forms	低层设计	低层设计跨题模式	策略的形态选择（Strategy Forms）		1	ld.strategy
+496	os.reactor-model	语言运行时与操作系统	操作系统	单与多 Reactor 的取舍（Reactor）	core	0	os.epoll-mechanism
+497	agent.rag-eval	AI 系统	Agent 与 RAG	RAG 评测与知识库更新（RAG Eval）		0	agent.chunking
+498	cap.three-properties	核心概念	CAP、一致性与复制	CAP 三性质与分区时二选一（CAP）	core	0	
+499	redis.when-not	关键技术	Redis	何时不该用 Redis（When Not）		1	
+500	rt.gc-collector-choice	语言运行时与操作系统	语言运行时与并发	收集器选型：Parallel、G1、ZGC		1	rt.gc-generations
+501	idx.latch	核心概念	数据库索引	闩锁：B 树要，LSM 几乎不要（Latch）		0	idx.lsm-why,rdbms.btree
+502	idx.quadtree-rtree	核心概念	数据库索引	四叉树与 R 树（Quadtree and R-Tree）		0	
+503	idx.clustered-vs-heap	核心概念	数据库索引	聚簇存储与堆表（Clustered vs Heap）		0	rdbms.btree
+504	kafka.consumer-count-vs-partitions	关键技术	Kafka 与消息队列	消费者数与分区数（Consumer Parallelism）		1	kafka.model
+505	rdbms.shard-ops	关键技术	关系数据库：MySQL 与 PostgreSQL	分片算法、全局 ID 与平滑迁移		1	rdbms.repl-modes,rdbms.sharding
+506	rt.collections-choice	语言运行时与操作系统	语言运行时与并发	常用集合选型		0	
+507	agent.rag-debugging	AI 系统	Agent 与 RAG	检索对了答案错：逐段定位（RAG Debug）	core	0	agent.chunking,agent.rerank
+508	tsdb.query-execution	关键技术	时序数据库	多标签查询执行（Query Execution）		2	tsdb.storage-engine,tsdb.time-partition
+509	tsdb.out-of-order	关键技术	时序数据库	乱序与迟到数据（Out-of-Order）		2	tsdb.storage-engine
+510	blob.quarantine-scan	常见模式	大文件	隔离桶扫描与防滥用（Quarantine Bucket）		0	blob.presigned-upload
+511	blob.s3-conditional-write	常见模式	大文件	S3 强一致与条件写（Conditional Write）		0	
+512	cap.offline-multileader	核心概念	CAP、一致性与复制	离线可写应用就是多主		3	cap.replication-topologies
+513	ledger.account-journal-posting	支付系统	账务与资金	账户、交易、分录三层（Journal）	core	1	ledger.debit-credit-entries
+514	net.lb-types	核心概念	网络	客户端、L4、L7 负载均衡（L4 vs L7）	core	1	
+515	cass.partition-sizing	关键技术	Cassandra	分区键选择与分区大小（Partition Sizing）	core	3	cass.primary-key
+516	tsdb.ingest-pull-push	关键技术	时序数据库	采集方式：推与拉（Push vs Pull）		2	
+517	ddb.when-to-use	关键技术	DynamoDB	何时选与不选 DynamoDB（When to Use）	core	1	
+518	risk.sync-decision-path	支付系统	风控与合规	同步风控路径与降级（Sync Decision Path）	core	1	risk.device-ml,risk.rules-velocity
+519	es.query-planning	关键技术	Elasticsearch	查询规划：先取小的倒排列表（Query Planning）		1	es.inverted-index
+520	es.hot-counter	关键技术	Elasticsearch	高频计数不进索引（Hot Field Update）		1	es.segments
+521	cap.quorum	核心概念	CAP、一致性与复制	法定人数 R+W>N（Quorum）	core	1	
+522	rdbms.index-failure	关键技术	关系数据库：MySQL 与 PostgreSQL	索引失效的写法（Index Miss）		0	rdbms.composite
+523	cass.positioning	关键技术	Cassandra	定位：宽列、最终一致（Wide-column）	core	1	
+524	cap.cp-ap-behavior	核心概念	CAP、一致性与复制	CP 与 AP 在分区时的表现	core	0	cap.three-properties
+525	sw.vertical-scaling	常见模式	扩展写	先用尽单机硬件（Vertical Scaling）		1	
+526	shard.range	核心概念	分片	范围分片：范围扫描强但易倾斜（Range）		1	
+527	dm.wide-column	核心概念	数据建模	宽列库：高写入时间序列（Wide Column）		1	
+528	sec.refresh-rotation	核心概念	安全：认证、授权与接口安全	刷新令牌轮换与重用检测		1	sec.oauth-why
+529	idem.fallback-after-retry	常见模式	幂等与结果未知	重试与补偿都失败后的兜底（Fallback）		1	
+530	os.false-sharing	语言运行时与操作系统	操作系统	伪共享与缓存行（False Sharing）		2	
+531	redis.fork-cow	关键技术	Redis	fork 写时复制与 AOF 重写（COW）		0	redis.persistence
+532	flink.parallelism-hot-key	关键技术	Flink	并行度、Kafka 分区与热键（Parallelism）		1	flink.cluster-slots,flink.operators,kafka.model
+533	overview.utilization-knee	答题框架与估算	速览：概念、技术、模式	利用率不能拉满（Utilization Knee）		2	
+534	pplat.gateway-unified-model	支付系统	支付平台架构	统一网关与支付单、尝试分离（Payment Gateway）	core	1	
+535	contention.other-stores	常见模式	处理争用	SQL 之外的对应手段（Other Stores）		1	contention.occ-version,contention.pessimistic-lock
+536	gw.proxy-buffering	关键技术	API 网关	反向代理缓冲保护应用服务器（Proxy Buffering）		2	
+537	po.reserve	支付系统	打款与资金分发	延迟结算与保证金（Reserve）		1	
+538	net.api-style-pick	核心概念	网络	REST、GraphQL、gRPC 选型	core	0	
+539	dlv.latency-metric	答题框架与估算	系统设计答题框架	把“要快”写成响应时间指标（Latency SLO）		1	dlv.non-functional-reqs
+540	agent.llm-gateway	AI 系统	Agent 与 RAG	LLM 调用网关：流式与 RPM/TPM 限流		1	agent.llm-basics
+541	es.geo	关键技术	Elasticsearch	地理搜索：geo_point 与 geo_shape		2	es.query-dsl
+542	zk.config-management	关键技术	ZooKeeper 与共识	配置管理：改一个节点全体生效（Config）		2	zk.watches
+543	sw.async-pipeline-pattern	常见模式	扩展写	异步流水线模式与易错点（Async Pipeline）		3	
+544	card.auth-hold	支付系统	卡支付生命周期	授权冻结、预授权与过期（Auth Hold）		1	card.auth-vs-capture
+545	vec.updates-hot-cold	关键技术	向量数据库	更新、软删除与热冷索引（Hot/Cold Index）	core	1	vec.hnsw
+546	os.io-models	语言运行时与操作系统	操作系统	五种 I/O 模型与阻塞/同步之分（I/O Models）	core	0	
+547	os.virtual-memory-paging	语言运行时与操作系统	操作系统	虚拟内存、页表与缺页（Virtual Memory）	core	0	
+548	ms.outbox-delivery	常见模式	多步骤流程与分布式事务	外盒投递：中继、顺序与清理（Relay, CDC）		3	ms.outbox
+549	ledger.leaked-hold	支付系统	账务与资金	冻结未释放导致资金消失（Leaked Hold）		2	ledger.hold-available-balance
+550	bd.hll-merge	关键技术	大数据数据结构	HLL 合并并集、交集靠容斥		1	bd.hll
+551	sec.auth-code-channels	核心概念	安全：认证、授权与接口安全	授权码：前端通道与后端通道	core	0	sec.oauth-why
+552	sec.pkce	核心概念	安全：认证、授权与接口安全	PKCE 与公共客户端（PKCE）	core	0	sec.auth-code-channels
+553	sec.passkeys	核心概念	安全：认证、授权与接口安全	通行密钥防钓鱼与服务端校验（Passkey）	core	0	
+554	olap.skew-straggler	核心概念	分析型系统：OLAP、数仓与批处理	倾斜与慢节点（Skew vs Straggler）		1	olap.map-shuffle-reduce
+555	net.tcp-handshake	核心概念	网络	TCP 三次握手与四次挥手（TCP Handshake）		0	
+556	net.request-hedging	核心概念	网络	请求对冲压低尾延迟（Request Hedging）		2	
+557	temporal.timers	关键技术	Temporal	持久计时器（Durable Timer）	core	2	temporal.workflow-activity
+558	rt.goroutine-leak	语言运行时与操作系统	语言运行时与并发	goroutine 泄漏的避免与发现		0	
+559	rt.jvm-memory-classload	语言运行时与操作系统	语言运行时与并发	JVM 内存区域与类加载（Metaspace）		0	
+560	rt.threadpool-dynamic	语言运行时与操作系统	语言运行时与并发	线程池动态调参、监控与舱壁隔离		0	rt.threadpool-flow
+561	rt.java-basics-misc	语言运行时与操作系统	语言运行时与并发	Java 基础：String、hashCode、IO、代理		0	
+562	ledger.fx-clearing-journal	支付系统	账务与资金	换汇分录与中转账户（FX Clearing）		1	ledger.multi-currency-books
+563	conc.bounded-queue	低层设计	并发	有界队列、容量与背压（Backpressure）	core	2	conc.blocking-queue
+564	rdbms.conn-pool	关键技术	关系数据库：MySQL 与 PostgreSQL	连接池模式与边界（PgBouncer）		1	
+565	redis.internal-structures	关键技术	Redis	内部编码与渐进 rehash（Encoding）		0	redis.data-structures
+566	dlv.estimation	答题框架与估算	系统设计答题框架	估算只在影响设计时做（Estimation）	core	2	
+567	kafka.batching-compression	关键技术	Kafka 与消息队列	批量与压缩提吞吐（Batching）		1	
+568	lt.use-cases	常见模式	长时间任务与定时	典型异步场景（Use Cases）		0	
+569	os.sched-algorithms	语言运行时与操作系统	操作系统	进程调度算法（Scheduling）		1	
+570	bd.bucket-design	关键技术	大数据数据结构	桶设计：固定、指数、动态与常见坑		1	bd.histogram-quantile
+571	sec.secrets-handling	核心概念	安全：认证、授权与接口安全	服务凭据保管与工作负载身份		1	
+572	dm.schema-on-read	核心概念	数据建模	读时模式与写时模式		0	dm.document-db
+573	dm.join-trap	核心概念	数据建模	大规模下联接是性能陷阱		0	dm.normalization
+574	dm.one-to-one-split	核心概念	数据建模	一对一表何时该拆		0	
+575	dm.sparse-attributes	核心概念	数据建模	稀疏属性：宽表、EAV、JSON 列		0	
+576	dm.schema-migration	核心概念	数据建模	在线模式变更：扩展—收缩（Expand-Contract）		0	
+577	dm.view-pitfalls	核心概念	数据建模	派生视图常见错误与规则		0	
+578	sec.secrets-rotation	核心概念	安全：认证、授权与接口安全	不停机轮换密钥（Key Rotation）		1	
+579	reads.sharding-for-reads	常见模式	扩展读	为读而分片（Sharding for Reads）		1	
+580	olap.columnar-compression	核心概念	分析型系统：OLAP、数仓与批处理	列存压缩：字典与游程编码（Compression）		2	
+581	prox.h3	关键技术	邻近搜索	H3：六边形格子（H3）		2	prox.s2
+582	dlock.redlock-critique	核心概念	分布式锁	Kleppmann 批评与 Antirez 回应		0	dlock.fencing-token,dlock.redlock-algorithm
+583	rdbms.txn-mdl-ddl	关键技术	关系数据库：MySQL 与 PostgreSQL	长事务、元数据锁与在线 DDL（MDL）		0	rdbms.mvcc
+584	rdbms.write-ladder	关键技术	关系数据库：MySQL 与 PostgreSQL	单机写不够：扩容、批量、异步卸载		0	
+585	rdbms.failover	关键技术	关系数据库：MySQL 与 PostgreSQL	故障切换与脑裂（Failover）		0	rdbms.repl-modes
+586	rdbms.sql-basics	关键技术	关系数据库：MySQL 与 PostgreSQL	SQL 基础、表设计与执行流程（Schema）		0	
+587	vec.hnsw	关键技术	向量数据库	HNSW：多层近邻图与调参（HNSW）	core	0	vec.ann-approx
+588	kafka.no-loss-three-stages	关键技术	Kafka 与消息队列	消息丢失的三个环节（Three Stages）		0	kafka.replication-isr-acks
+589	recon.timezone-cutoff	支付系统	对账、结算与资金管理	切日时区不一致造成假差异（Cutoff Timezone）		1	
+590	recon.diff-types	支付系统	对账、结算与资金管理	长款、短款、金额与状态不一致（Break Types）		1	
+591	recon.aggregate-fuzzy-match	支付系统	对账、结算与资金管理	一对多、多对一与模糊匹配（Fuzzy Match）		1	
+592	recon.fuzzy-match-pitfall	支付系统	对账、结算与资金管理	模糊匹配掩盖重复扣款（Fuzzy Pitfall）		1	
+593	recon.exception-cases	支付系统	对账、结算与资金管理	差错单与分级自动化（Exception Handling）		1	recon.diff-types
+594	reads.deleted-items-cdn	常见模式	扩展读	已删除项过滤与 CDN 失效（Deleted Items）		0	reads.cache-versioning,reads.cdn-edge
+595	reads.jitter-negative	常见模式	扩展读	TTL 抖动与负缓存（Jitter）		0	
+596	reads.when-not-to	常见模式	扩展读	何时不需要读扩展（When Not To）		0	
+597	reads.scenario-notes	常见模式	扩展读	常见场景的读扩展要点（Scenarios）		0	
+598	ai.decode-bandwidth	AI 系统	AI 系统设计补充	解码受显存带宽限制（Decode Bound）	core	1	
+599	dlock.local-vs-distributed	核心概念	分布式锁	本地锁挡不住多实例（Distributed Lock）		2	
+600	idem.same-txn	常见模式	幂等与结果未知	幂等记录与业务同事务（Same Txn）	core	1	api.idempotency-key,idem.methods
+601	rt.go-channel-map	语言运行时与操作系统	语言运行时与并发	channel 底层与 map 并发安全		0	
+602	rt.go-gc	语言运行时与操作系统	语言运行时与并发	Go GC：三色标记、写屏障、GOGC		0	
+603	rt.threadpool-reject	语言运行时与操作系统	语言运行时与并发	拒绝策略与 CallerRuns 风险		0	rt.threadpool-flow
+604	rt.threadpool-sizing	语言运行时与操作系统	语言运行时与并发	线程池大小：CPU 密集与 IO 密集		0	
+605	rt.virtual-threads	语言运行时与操作系统	语言运行时与并发	虚拟线程与 Pinning（Virtual Threads）		0	
+606	rt.py-gil	语言运行时与操作系统	语言运行时与并发	Python GIL 及其绕过		0	
+607	risk.rules-velocity	支付系统	风控与合规	规则引擎与速度检查（Velocity Check）		1	
+608	agent.write-tools	AI 系统	Agent 与 RAG	写操作工具：权限、确认、幂等、审计	core	0	agent.function-calling
+609	pplat.cascade-retry-decline	支付系统	支付平台架构	硬拒绝与软拒绝、级联重试（Cascading Retry）		1	
+610	redis.slow-commands	关键技术	Redis	慢命令、大键与阻塞排查（Blocking Commands）		0	redis.single-thread-model
+611	conc.atomics-cas	低层设计	并发	原子变量与 CAS（Atomics/CAS）		0	conc.rmw
+612	linux.oom-confirm	语言运行时与操作系统	Linux 排障	确认进程被 OOM Killer 杀（OOM Killer）	core	0	
+613	contention.2pl-vs-ssi	常见模式	处理争用	两阶段锁与可串行化快照隔离（2PL vs SSI）		1	contention.isolation-write-skew,contention.pessimistic-lock
+614	contention.ssi-detection	常见模式	处理争用	SSI 发现过期前提的两个时刻（SSI Detection）		1	contention.2pl-vs-ssi,rdbms.mvcc
+615	arch.api-evolution	核心概念	服务架构	API 演进：先增量再版本（API Evolution）	core	0	
+616	arch.distributed-monolith	核心概念	服务架构	分布式单体的检验（Distributed Monolith）	core	0	
+617	arch.sync-chain	核心概念	服务架构	同步调用链拖垮可用性（Sync Chain）	core	0	
+618	arch.faas-db-pressure	核心概念	服务架构	函数无限扩张压垮数据库（FaaS DB Pressure）	core	0	
+619	api.param-placement	核心概念	API 设计	参数放哪里：路径、查询、请求体		0	
+620	api.error-envelope	核心概念	API 设计	统一错误响应信封（Error Envelope）		0	api.status-codes
+621	api.filter-sort	核心概念	API 设计	过滤与排序约定（Filter and Sort）		0	
+622	api.graphql-n-plus-one	核心概念	API 设计	GraphQL 的 N+1 与批处理（DataLoader）		0	api.graphql-when
+623	api.graphql-defense	核心概念	API 设计	GraphQL 防护：深度、成本、持久化查询		0	api.graphql-when
+624	api.grpc-ops	核心概念	API 设计	gRPC 运维：七层负载均衡与截止时间		0	api.rpc-grpc,net.lb-types
+625	api.versioning	核心概念	API 设计	版本策略：URL 与请求头（Versioning）		0	
+626	recon.diff-causes	支付系统	对账、结算与资金管理	差异的来源分类（Break Causes）		1	
+627	recon.timing-tradeoff	支付系统	对账、结算与资金管理	对账时机：实时、批量、流式（Timing）		1	
+628	recon.short-deposit-triage	支付系统	对账、结算与资金管理	银行少入账的逐层定位（Shortfall Triage）		1	recon.settlement-batch-net,recon.three-way-layers
+629	ai.prompt-versioning	AI 系统	AI 系统设计补充	提示词与模型同版本（Versioning）		1	
+630	ms.tcc	常见模式	多步骤流程与分布式事务	TCC 三接口与额度冻结（TCC）		1	
+631	contention.aba-version-choice	常见模式	处理争用	版本值的选择与 ABA（ABA Problem）		0	contention.occ-version
+632	contention.pg-repeatable-read	常见模式	处理争用	各库的可重复读差异（RR）		0	rdbms.mvcc
+633	contention.write-anomaly-types	常见模式	处理争用	脏写、丢失更新、写偏斜的区分（Anomalies）		0	contention.isolation-write-skew,contention.lost-update
+634	contention.serial-execution	常见模式	处理争用	事务真串行执行的条件（Serial Execution）		0	contention.isolation-write-skew
+635	card.3ds-async	支付系统	卡支付生命周期	3DS 引入异步状态（requires_action）	core	1	card.3ds-flow,paycor.webhook-role
+636	dlock.redlock-algorithm	核心概念	分布式锁	RedLock 流程与多数派容错		0	redis.distributed-lock
+637	agent.memory-quality	AI 系统	Agent 与 RAG	记忆冲突、过期与污染门（Memory Quality）		0	agent.memory-tiers
+638	ledger.debit-credit-entries	支付系统	账务与资金	借贷方向与典型分录（Debit and Credit）		1	
+639	ledger.late-adjustment	支付系统	账务与资金	关账后补记：当期调整（Late Adjustment）		1	ledger.as-of-query
+640	recon.prefund-reserve	支付系统	对账、结算与资金管理	预付与保证金（Prefunding and Reserve）		1	
+641	net.tcp-framing	核心概念	网络	TCP 字节流与粘包（Message Framing）		0	
+642	flink.recovery	关键技术	Flink	故障恢复流程（Recovery）	core	1	flink.checkpoint-barrier
+643	es.mapping-cost	关键技术	Elasticsearch	映射成本与 nested 取舍（Mapping Cost）		0	es.mapping-types
+644	es.doc-update	关键技术	Elasticsearch	文档更新与乐观并发（_version）		0	
+645	es.query-dsl	关键技术	Elasticsearch	查询与排序（Query DSL）		0	es.mapping-types
+646	es.lucene-es	关键技术	Elasticsearch	Lucene 与 ES 的分工（Lucene）		0	
+647	es.node-types	关键技术	Elasticsearch	节点类型与集群启动（Node Roles）		0	
+648	es.routing	关键技术	Elasticsearch	文档路由与主分片数不可改（Routing）		0	
+649	es.design-lessons	关键技术	Elasticsearch	从 ES 借来的设计经验（Lessons）		0	
+650	os.select-poll-limits	语言运行时与操作系统	操作系统	select/poll 的瓶颈（select/poll）		0	
+651	os.lt-et	语言运行时与操作系统	操作系统	水平触发与边缘触发（LT vs ET）		0	os.epoll-mechanism
+652	os.malloc-brk-mmap	语言运行时与操作系统	操作系统	malloc 的 brk 与 mmap（malloc）		0	os.virtual-memory-paging
+653	po.state-machine	支付系统	打款与资金分发	打款单状态机与条件更新	core	1	
+654	po.chargeback-after-payout	支付系统	打款与资金分发	提现后才到的拒付	core	1	
+655	fx.three-decisions	支付系统	跨境与换汇	汇率三问：来源、锁定、加价（Three Decisions）	core	0	
+656	fx.quote-lock	支付系统	跨境与换汇	报价锁定与有效期（Quote Lock）	core	0	
+657	fx.transaction-exposure	支付系统	跨境与换汇	收付时间差的敞口（Exposure）	core	0	
+658	fx.three-currencies	支付系统	跨境与换汇	展示、扣款、结算三种币种（Three Currencies）	core	0	
+659	sec.oauth-why	核心概念	安全：认证、授权与接口安全	OAuth 为何不交密码（OAuth）		0	
+660	rt.goroutine-lightweight	语言运行时与操作系统	语言运行时与并发	goroutine 为何轻：小栈与用户态切换		0	
+661	rt.gc-reachability	语言运行时与操作系统	语言运行时与并发	可达性分析与 GC Roots		0	
+662	rt.hashmap-not-threadsafe	语言运行时与操作系统	语言运行时与并发	HashMap 为什么线程不安全		0	rt.hashmap-internals
+663	agent.injection-sandbox	AI 系统	Agent 与 RAG	Prompt 注入、最小权限与沙箱	core	0	agent.function-calling
+664	os.oom-killer	语言运行时与操作系统	操作系统	OOM Killer 与退出码 137（OOM）		1	
+665	recon.float-financing	支付系统	对账、结算与资金管理	提前到款的垫资规模与成本（Float Cost）		0	recon.tplusn-in-transit
+666	recon.funds-pool	支付系统	对账、结算与资金管理	渠道资金池与头寸表（Cash Position）		0	
+667	recon.payout-prefund-exhaustion	支付系统	对账、结算与资金管理	预存耗尽致打款失败（Prefund）		0	
+668	sec.ssrf	核心概念	安全：认证、授权与接口安全	回调地址的 SSRF 防护（SSRF）		1	
+669	mr.failover-drill	核心概念	多区域部署	没演练的故障转移等于不存在（Failover Drill）		0	
+670	vec.embedding-metrics	关键技术	向量数据库	嵌入向量与相似度度量（Embedding, Metrics）		0	
+671	vec.ivf	关键技术	向量数据库	IVF 聚类与 nprobe（IVF）		0	vec.ann-approx
+672	ledger.balanced-journal-check	支付系统	账务与资金	单笔分录借贷平衡校验（Balanced Journal）		1	ledger.debit-credit-entries
+673	cdc.warehouse	关键技术	变更数据捕获（CDC）	OLTP 复制到数仓（Warehouse）		2	cdc.what-is-cdc
+674	olap.replica-vs-warehouse	核心概念	分析型系统：OLAP、数仓与批处理	为何不让分析师查只读副本（Warehouse）	core	1	
+675	risk.hosted-fields-flow	支付系统	风控与合规	托管输入框的数据流（Hosted Fields）		1	risk.pci-scope-reduction
+676	prox.s2	关键技术	邻近搜索	S2：球面上的格子（S2）		1	idx.geohash
+677	agent.tool-registry	AI 系统	Agent 与 RAG	大量工具：注册中心与检索暴露（Tool Registry）		0	agent.function-calling
+678	bd.bloom-variants	关键技术	大数据数据结构	布隆变体：计数型、布谷鸟、分块		2	bd.bloom-impl
+679	land.platform-money-flows	支付系统	支付生态与角色	平台的多方向资金流与分层（Money Flows）	core	0	
+680	land.method-abstraction	支付系统	支付生态与角色	按交互与确认形态抽象支付方式（Abstraction）	core	0	land.method-dimensions
+681	land.info-vs-fund-flow	支付系统	支付生态与角色	信息流与资金流分离（Auth vs Funds）	core	0	
+682	land.payout-timing	支付系统	支付生态与角色	何时给卖家放款（Payout Timing）	core	0	land.info-vs-fund-flow
+683	land.four-parties	支付系统	支付生态与角色	卡支付四方模型（Four-party Model）	core	0	
+684	prox.quadtree	关键技术	邻近搜索	四叉树：构造与查询（Quadtree）		0	
+685	prox.quadtree-problems	关键技术	邻近搜索	四叉树的深度与磁盘问题		0	prox.quadtree
+686	prox.kd-tree	关键技术	邻近搜索	k-d 树：按中位数切分（k-d Tree）		0	prox.quadtree
+687	prox.bkd	关键技术	邻近搜索	BKD 树：k-d 树加磁盘块（BKD）		0	prox.kd-tree
+688	prox.rtree-overlap	关键技术	邻近搜索	R 树的重叠代价与 R* 树		0	prox.rtree
+689	prox.encoded-keys	关键技术	邻近搜索	编码键：用普通索引代替自定义树		0	prox.two-approaches
+690	prox.knn	关键技术	邻近搜索	最近 k 个与半径查询（kNN）		0	prox.candidate-filter,prox.encoded-keys
+691	card.token-lockin	支付系统	卡支付生命周期	PSP 令牌绑定与迁移（Token Lock-in）		1	card.tokenization
+692	cdc.when-to-use	关键技术	变更数据捕获（CDC）	何时用 CDC：派生副本三特征（When to Use）	core	1	cdc.what-is-cdc
+693	arch.faas-cold-start	核心概念	服务架构	FaaS 冷启动（Cold Start）		0	
+694	kafka.partition-count-change	关键技术	Kafka 与消息队列	改分区数与定分区数（Partition Count）		0	kafka.key-ordering
+695	kafka.producer-retry-order	关键技术	Kafka 与消息队列	生产者重试打乱顺序（In-flight Retry）		0	kafka.key-ordering
+696	kafka.consumer-thread-order	关键技术	Kafka 与消息队列	消费端线程池破坏顺序（Consumer Threads）		0	kafka.key-ordering
+697	kafka.high-watermark-epoch	关键技术	Kafka 与消息队列	高水位与 epoch（High Watermark）		0	kafka.replication-isr-acks
+698	kafka.rabbitmq-ack-model	关键技术	Kafka 与消息队列	RabbitMQ 模型与 ack（RabbitMQ）		0	
+699	kafka.exactly-once-scope	关键技术	Kafka 与消息队列	恰好一次的真实范围（Exactly-once）		0	kafka.at-least-once-default
+700	kafka.txn-vs-outbox	关键技术	Kafka 与消息队列	事务还是发件箱（Outbox）		0	kafka.exactly-once-scope,ms.outbox
+701	kafka.rebalance-storm	关键技术	Kafka 与消息队列	再均衡停顿与连环再均衡（Rebalance）		0	kafka.model
+702	kafka.page-cache-lag	关键技术	Kafka 与消息队列	滞后超出页缓存窗口（Page Cache）		0	kafka.high-throughput-io
+703	kafka.when-to-use	关键技术	Kafka 与消息队列	何时用队列、何时用流（Queue vs Stream）		0	kafka.model
+704	kafka.vs-pulsar	关键技术	Kafka 与消息队列	Kafka 与 Pulsar 的架构差异（Pulsar）		0	kafka.model
+705	bd.bloom-impl	关键技术	大数据数据结构	位数组加 k 个哈希的实现		0	
+706	ledger.as-of-query	支付系统	账务与资金	时间点查询：记账时间与生效时间（As-of Query）		1	ledger.append-only-immutability
+707	shard.topk-merge	核心概念	分片	深分页与局部 Top-K 合并		1	shard.cross-shard-query
+708	net.tcp-queues-syn-flood	核心概念	网络	半/全连接队列与 SYN 洪泛（SYN Flood）		0	net.tcp-handshake
+709	card.auth-timeout	支付系统	卡支付生命周期	授权超时不重发新授权（Auth Timeout）	core	0	card.auth-vs-capture,idem.unknown-outcome
+710	card.fee-structure	支付系统	卡支付生命周期	商户折扣率的构成（MDR Structure）	core	0	
+711	card.void-vs-refund	支付系统	卡支付生命周期	撤销、退款与拒付（Void/Refund）	core	0	card.capture-timing
+712	card.refund-idempotency	支付系统	卡支付生命周期	退款幂等与防重复（Refund Idempotency）	core	0	api.idempotency-key,card.void-vs-refund
+713	card.3ds-flow	支付系统	卡支付生命周期	3-D Secure 流程（3DS Flow）	core	0	card.auth-path
+714	rt.go-scheduler-flow	语言运行时与操作系统	语言运行时与并发	Go 调度流程：窃取、系统调用、抢占		0	rt.go-gmp
+715	rt.go-pitfalls	语言运行时与操作系统	语言运行时与并发	Go 易错点：slice 共享、逃逸、defer		0	
+716	rt.fullgc-causes	语言运行时与操作系统	语言运行时与并发	Full GC 常见根因		0	rt.gc-generations
+717	rt.chm-compound	语言运行时与操作系统	语言运行时与并发	复合操作不原子与 null 禁用		0	rt.chm-design
+718	rt.executors-pitfall	语言运行时与操作系统	语言运行时与并发	为何禁用 Executors 内置线程池		0	rt.threadpool-flow
+719	rt.py-concurrency-choice	语言运行时与操作系统	语言运行时与并发	Python 并发选型：asyncio、线程、进程		0	rt.py-gil
+720	agent.rag-vs-finetune	AI 系统	Agent 与 RAG	RAG 与微调的选择（RAG vs Fine-tuning）	core	0	
+721	po.why-hard	支付系统	打款与资金分发	打款比收款更难做对（Payout）	core	0	
+722	po.duplicate-risk	支付系统	打款与资金分发	重复打款比重复扣款更危险	core	0	
+723	po.freeze-then-send	支付系统	打款与资金分发	先冻结再外发与对应分录（Freeze）	core	0	ledger.why-double-entry
+724	po.unknown-timeout	支付系统	打款与资金分发	超时是未知结果，只查不重发	core	0	
+725	po.reject-vs-return	支付系统	打款与资金分发	同步拒绝与事后退票（Return）	core	0	
+726	po.split-ledger	支付系统	打款与资金分发	分账即记账与退款回滚	core	0	ledger.why-double-entry,paycor.allocation
+727	po.rails-compare	支付系统	打款与资金分发	打款轨道四维度对比（Rails）	core	0	
+728	ledger.fx-gain-loss	支付系统	账务与资金	汇兑损益与期末重估（FX Revaluation）		1	ledger.multi-currency-books
+729	sw.resharding	常见模式	扩展写	零停机扩分片（Resharding）	core	0	sw.horizontal-sharding
+730	linux.method	语言运行时与操作系统	Linux 排障	线上排查通用五步（Method）	core	0	
+731	linux.slow-checklist	语言运行时与操作系统	Linux 排障	服务突然变慢的排查清单（Checklist）	core	0	
+732	linux.cpu-hot-thread	语言运行时与操作系统	Linux 排障	CPU 高：定位到线程与代码（top -H）	core	0	
+733	linux.load-vs-cpu	语言运行时与操作系统	Linux 排障	load 高而 CPU 低：D 状态与等 IO	core	0	
+734	linux.disk-full	语言运行时与操作系统	Linux 排障	磁盘满：df、du、lsof 与 inode	core	0	
+735	cass.primary-key	关键技术	Cassandra	主键=分区键+聚簇键（Primary Key）	core	3	
+736	sec.authz-models	核心概念	安全：认证、授权与接口安全	RBAC 何时升级 ABAC 或 ReBAC		1	
+737	tsdb.block-metadata	关键技术	时序数据库	块级元数据与裁剪（Block Pruning）		2	
+738	ch.dynamic-split	核心概念	一致性哈希	动态分裂与合并分区（Dynamic Split）		1	
+739	cap.misconceptions	核心概念	CAP、一致性与复制	CAP 常见误解：CA、可用性含义		0	cap.three-properties
+740	cap.pacelc	核心概念	CAP、一致性与复制	无分区时的延迟代价（PACELC）		0	cap.three-properties
+741	cap.base	核心概念	CAP、一致性与复制	BASE 与 ACID 的关系		0	
+742	cap.sloppy-quorum	核心概念	CAP、一致性与复制	宽松法定人数与暗示移交（Sloppy Quorum）		0	cap.quorum
+743	cap.read-repair-antientropy	核心概念	CAP、一致性与复制	读修复与反熵（Anti-Entropy）		0	cap.replication-topologies
+744	cap.leaderless-failed-write	核心概念	CAP、一致性与复制	无主存储里失败的写		0	cap.quorum
+745	cap.repl-log-formats	核心概念	CAP、一致性与复制	复制日志格式：语句、WAL、逻辑		0	
+746	cap.multi-leader-hazards	核心概念	CAP、一致性与复制	给单主库加多主悄悄失效的功能		0	cap.replication-topologies
+747	cap.causal-consistency	核心概念	CAP、一致性与复制	因果一致与生产中的凑法（Causal）		0	cap.consistency-spectrum
+748	cap.lin-vs-serializable	核心概念	CAP、一致性与复制	线性一致、可串行化与严格可串行化		0	
+749	cap.tech-selection	核心概念	CAP、一致性与复制	用 CAP 论证技术选型		0	cap.choose-c-or-a
+750	cap.consistency-pitfalls	核心概念	CAP、一致性与复制	一致性取舍的常见错误		0	
+751	land.virtual-coins	支付系统	支付生态与角色	虚拟币充值与递延收入（Virtual Coins）		1	
+752	idem.order-stock-eventual	常见模式	幂等与结果未知	订单与库存最终一致（Order & Stock）		0	ms.outbox,ms.saga
+753	dlock.retry-reentrant	核心概念	分布式锁	加锁失败与可重入（Reentrancy）		0	dlock.local-vs-distributed
+754	dlock.ttl-contention	核心概念	分布式锁	TTL 取值与竞争激烈的处理（TTL）		0	dlock.local-vs-distributed
+755	dlock.monotonic-token-source	核心概念	分布式锁	谁能发严格单调的令牌		0	dlock.fencing-token
+756	agent.badcase-review	AI 系统	Agent 与 RAG	Badcase 复盘：发现到回归（Badcase）		0	agent.agent-eval
+757	ledger.platform-account-set	支付系统	账务与资金	平台核心账户与待结算分离		0	ledger.account-journal-posting
+758	ledger.account-granularity	支付系统	账务与资金	账户粒度与子账本（Sub-ledger）		0	ledger.account-journal-posting
+759	ledger.build-vs-ledger-db	支付系统	账务与资金	自建账本还是专用账本库		0	
+760	ledger.ledger-shape-choice	支付系统	账务与资金	账本形态：复式、里程碑、流水		0	ledger.why-double-entry
+761	tsdb.bloom-filter	关键技术	时序数据库	布隆过滤器减少读盘（Bloom Filter）		1	idx.lsm-read
+762	tsdb.storage-engine	关键技术	时序数据库	存储引擎写路径与文件格式（Storage Engine）		1	idx.lsm-why,tsdb.compression,tsdb.data-model
+763	pplat.critical-path	支付系统	支付平台架构	核心链路与非核心链路划分（Critical Path）	core	0	
+764	pplat.obs-silent-failure	支付系统	支付平台架构	业务层静默失败与可观测性（Silent Failure）	core	0	
+765	pplat.routing-dimensions	支付系统	支付平台架构	渠道路由的目标与维度（Channel Routing）	core	0	
+766	pplat.sub-billing-objects	支付系统	支付平台架构	订阅对象与账期锚点（Billing Cycle）	core	0	
+767	pplat.sub-invoice-idempotency	支付系统	支付平台架构	账单唯一键防重复续费（Invoice）	core	0	pplat.sub-billing-objects
+768	pplat.test-unknown-outcome	支付系统	支付平台架构	测试未知结果、重复与乱序（Fault Injection）	core	0	idem.unknown-outcome
+769	infra.rollback-safe	核心概念	平台基础设施：容器、服务网格、发布	回滚安全：N-1 读 N 的数据（Rollback）	core	1	
+770	net.anycast-geodns	核心概念	网络	Anycast 与 GeoDNS 选址（Anycast）		1	net.dns-resolve-ttl
+771	olap.star-schema	核心概念	分析型系统：OLAP、数仓与批处理	星型模型：事实表加宽维度表（Star Schema）	core	0	
+772	linux.jvm-tools	语言运行时与操作系统	Linux 排障	JVM 诊断工具：jstat、jstack、jmap、MAT		0	
+773	net.nagle-delayed-ack	核心概念	网络	Nagle 与延迟确认叠加的 40ms（Nagle）		0	net.tcp-reliability-congestion
+774	net.time-wait-close-wait	核心概念	网络	TIME_WAIT 与 CLOSE_WAIT 状态		0	net.tcp-handshake
+775	net.http-versions	核心概念	网络	HTTP/2、HTTP/3 与队头阻塞（HOL）		0	
+776	net.lb-algorithms-health	核心概念	网络	负载均衡算法与健康检查（LB Algorithms）		0	net.lb-types
+777	net.lb-health-panic	核心概念	网络	健康检查全摘与恐慌模式（Panic Mode）		0	net.lb-algorithms-health
+778	net.lb-spof-dns-failover	核心概念	网络	负载均衡器单点与 DNS 轮转局限（LB SPOF）		0	net.dns-resolve-ttl,net.lb-types
+779	net.slow-triage	核心概念	网络	网页慢的分段定位（Latency Breakdown）		0	net.layers-request
+780	clocks.vector-clock	核心概念	时钟、顺序与故障检测	向量时钟与并发检测（Vector Clock）		1	clocks.lamport-clock
+781	sec.grant-choice	核心概念	安全：认证、授权与接口安全	授权方式选型（Grant Types）		0	sec.pkce
+782	sec.spa-bff	核心概念	安全：认证、授权与接口安全	单页应用令牌存放：BFF		0	sec.pkce
+783	sec.confused-deputy	核心概念	安全：认证、授权与接口安全	混淆代理漏洞（Confused Deputy）		0	
+784	sec.service-auth	核心概念	安全：认证、授权与接口安全	服务间认证：mTLS 加令牌		0	net.tls-handshake
+785	sec.sender-constrained	核心概念	安全：认证、授权与接口安全	发送方约束令牌（DPoP）		0	sec.oauth-why
+786	sec.account-recovery	核心概念	安全：认证、授权与接口安全	账号恢复才是真实安全等级		0	sec.passkeys
+787	sec.credential-stuffing	核心概念	安全：认证、授权与接口安全	撞库与机群级防护（Credential Stuffing）		0	
+788	land.ecommerce-escrow	支付系统	支付生态与角色	电商代收代付与延迟放款（Escrow）		1	
+789	gw.routing-first	关键技术	API 网关	网关第一职责是路由（Request Routing）	core	0	
+790	pplat.money-invariants	支付系统	支付平台架构	资金不变量监控（Money Invariants）		2	
+791	po.split-design	支付系统	打款与资金分发	分账设计空间：何时拆、谁持有、何时放		1	
+792	gw.request-flow	关键技术	API 网关	请求穿过网关的六步（Request Flow）		1	
+793	vec.sharding-tail	关键技术	向量数据库	分片、扇出查询与尾延迟（Sharding）		0	
+794	agent.llm-basics	AI 系统	Agent 与 RAG	LLM 运行机制：Token、采样与幻觉		0	
+795	agent.graphrag	AI 系统	Agent 与 RAG	GraphRAG：何时值得上		0	agent.hybrid-recall
+796	vec.filtered-search	关键技术	向量数据库	前过滤与后过滤（Filtered Search）	core	0	vec.ann-approx
+797	vec.memory-quantization	关键技术	向量数据库	内存估算与量化（Quantization）	core	0	vec.embedding-metrics
+798	vec.pgvector-vs-dedicated	关键技术	向量数据库	扩展还是专用向量库（pgvector）	core	0	
+799	vec.architecture-decisions	关键技术	向量数据库	向量搜索的架构模式与决策（Architecture）	core	0	
+800	card.partial-refund	支付系统	卡支付生命周期	部分退款与累计上限（Partial Refund）		1	card.void-vs-refund
+801	arch.schema-compat	核心概念	服务架构	Schema 兼容模式与上线顺序		0	
+802	arch.service-discovery	核心概念	服务架构	服务发现：客户端与服务端（Discovery）		0	
+803	arch.rpc-gateway-lb	核心概念	服务架构	RPC、网关与负载均衡（RPC/Gateway/LB）		0	
+804	arch.inverse-conway	核心概念	服务架构	逆康威：按架构设计团队（Inverse Conway）		0	
+805	arch.faas-cost	核心概念	服务架构	FaaS 与自有服务器成本交叉点（FaaS Cost）		0	
+806	bd.bloom-cache-saturation	关键技术	大数据数据结构	缓存前置布隆失效：饱和与多写入方		0	bd.bloom-use
+807	bd.hll-precision	关键技术	大数据数据结构	HLL 精度与内存的关系		0	
+808	bd.real-systems	关键技术	大数据数据结构	概率结构在真实系统中的位置		0	
+809	cdc.migration	关键技术	变更数据捕获（CDC）	零停机迁移：先开 CDC 再回填（Migration）	core	1	cdc.what-is-cdc
+810	gw.horizontal-scaling	关键技术	API 网关	无状态网关水平扩展与两层负载均衡（Scaling）		1	net.lb-types
+811	ms.saga-isolation	常见模式	多步骤流程与分布式事务	Saga 没有隔离性（Isolation）		0	ms.saga
+812	ms.compensation-failure	常见模式	多步骤流程与分布式事务	补偿失败怎么办（Compensation Failure）		0	ms.saga
+813	ms.2pc-xa	常见模式	多步骤流程与分布式事务	2PC 的代价、XA 与 Seata AT		0	ms.2pc
+814	ms.tcc-edge	常见模式	多步骤流程与分布式事务	TCC 的空回滚、悬挂与幂等（Empty Rollback）		0	ms.tcc
+815	ms.tx-message	常见模式	多步骤流程与分布式事务	事务消息与 Outbox 取舍（Half Message）		0	ms.outbox
+816	ms.workflow-evolution	常见模式	多步骤流程与分布式事务	长寿工作流的版本化与历史体积（Versioning）		0	ms.durable-execution
+817	ms.waits-timeouts	常见模式	多步骤流程与分布式事务	等待、信号与超时心跳（Signal, Heartbeat）		0	ms.durable-execution
+818	shard.directory	核心概念	分片	目录分片：灵活但多一跳（Directory）		1	
+819	shard.vs-partition	核心概念	分片	分区与分片的区别		0	
+820	shard.directory-failure	核心概念	分片	目录故障与加固		0	shard.directory
+821	shard.index-write-amp	核心概念	分片	全局索引写放大 1+k		0	shard.global-index
+822	shard.interview-script	核心概念	分片	面试讲法：分片键、策略、取舍、增长		0	
+823	shard.modern-db	核心概念	分片	现代数据库的分片机制		0	
+824	fx.mid-bid-ask-spread	支付系统	跨境与换汇	中间价、买卖价与点差（Mid/Bid/Ask）		0	
+825	fx.pair-direction	支付系统	跨境与换汇	货币对报价方向（Base/Quote）		0	
+826	fx.lock-timing-tradeoff	支付系统	跨境与换汇	汇率锁定时点的取舍（Lock Timing）		0	fx.quote-lock
+827	fx.markup-decimal-rounding	支付系统	跨境与换汇	加价与 Decimal 舍入（Markup）		0	fx.mid-bid-ask-spread,paycor.rounding
+828	fx.rate-snapshot	支付系统	跨境与换汇	汇率快照与多源校验（Rate Snapshot）		0	fx.quote-lock
+829	fx.stale-rate	支付系统	跨境与换汇	汇率源静默停更的资金事故（Stale Rate）		0	
+830	fx.unhedged-settlement	支付系统	跨境与换汇	承诺币种与收款币种错配（Currency Mismatch）		0	
+831	fx.position-netting	支付系统	跨境与换汇	头寸、净敞口与轧差（Position & Netting）		0	fx.transaction-exposure
+832	fx.centralized-conversion	支付系统	跨境与换汇	集中换汇日常流程（Centralized FX）		0	fx.position-netting
+833	fx.conversion-strategy	支付系统	跨境与换汇	每笔换汇、定时换汇与持有对冲的取舍（Strategies）		0	fx.hedging-tools,fx.position-netting
+834	fx.hedging-tools	支付系统	跨境与换汇	对冲工具：自然对冲、即期、远期（Hedging）		0	fx.transaction-exposure
+835	fx.risk-practice	支付系统	跨境与换汇	汇率风险管理做法（Risk Practice）		0	fx.centralized-conversion,fx.hedging-tools
+836	fx.pricing-settlement-tradeoffs	支付系统	跨境与换汇	区域定价表与结算币种的取舍（Pricing Choices）		0	fx.three-currencies
+837	fx.price-table-risk	支付系统	跨境与换汇	本地固定价格表的汇率风险（Price Table Risk）		0	
+838	fx.dcc	支付系统	跨境与换汇	动态货币转换（DCC）		0	
+839	fx.local-acquiring	支付系统	跨境与换汇	本地收单（Local Acquiring）		0	land.four-parties
+840	conc.semaphore	低层设计	并发	信号量与许可泄漏（Semaphore）	core	1	conc.coarse-lock
+841	pplat.smart-routing	支付系统	支付平台架构	智能路由、探索利用与熔断（Smart Routing）		1	pplat.routing-dimensions
+842	cass.query-driven-modeling	关键技术	Cassandra	查询驱动建模（Query-driven）	core	1	cass.primary-key
+843	vec.hybrid-search	关键技术	向量数据库	混合搜索：关键词加向量（Hybrid Search）		0	vec.embedding-metrics
+844	land.advertiser-payment	支付系统	支付生态与角色	广告主预付与后付（Advertiser Payment）		0	
+845	land.payout-subscription	支付系统	支付生态与角色	打款与订阅的资金方向（Payout）		0	
+846	land.method-dimensions	支付系统	支付生态与角色	评价支付方式的维度（Dimensions）		0	
+847	land.cards	支付系统	支付生态与角色	银行卡支付特点（Cards）		0	
+848	land.bank-transfers	支付系统	支付生态与角色	银行转账 ACH 与实时支付（ACH）		0	
+849	land.wallets	支付系统	支付生态与角色	通道型钱包与余额型钱包（Wallets）		0	
+850	land.local-bnpl	支付系统	支付生态与角色	本地支付方式与 BNPL（Local）		0	
+851	land.late-funds-voucher	支付系统	支付生态与角色	现金凭证迟到资金（Late Funds）		0	
+852	land.early-payout-fraud	支付系统	支付生态与角色	授权即提现的盗刷损失（Early Payout）		0	
+853	land.why-intermediaries	支付系统	支付生态与角色	为什么需要收单行与卡组织（Intermediaries）		0	
+854	land.card-scheme	支付系统	支付生态与角色	卡组织的角色（Card Scheme）		0	land.four-parties
+855	land.psp-gateway-payfac	支付系统	支付生态与角色	网关、PSP 与 PayFac（PayFac）		0	land.four-parties
+856	land.integration-choices	支付系统	支付生态与角色	接入方式：直连、PSP、PayFac		0	land.psp-gateway-payfac
+857	land.fee-split	支付系统	支付生态与角色	手续费拆分：交换费、卡组织费、收单费（Fee Split）		0	land.four-parties
+858	land.payfac-submerchant-fraud	支付系统	支付生态与角色	子商户盗刷连锁反应（Sub-merchant）		0	land.psp-gateway-payfac
+859	card.auth-path	支付系统	卡支付生命周期	授权链路与参与方（Auth Path）		0	land.four-parties
+860	card.response-codes	支付系统	卡支付生命周期	响应码与软硬拒绝（Response Codes）		0	
+861	card.capture-timing	支付系统	卡支付生命周期	请款时机：即时还是延迟（Capture Timing）		0	card.auth-hold
+862	card.capture-bookkeeping	支付系统	卡支付生命周期	请款约束与 PSP 分录（Capture Ledger）		0	card.auth-vs-capture,ledger.debit-credit-entries
+863	card.pricing-models	支付系统	卡支付生命周期	商户定价模型（Pricing Models）		0	card.fee-structure
+864	card.fee-accuracy	支付系统	卡支付生命周期	费用核算与降级（Fee Accuracy）		0	card.fee-structure
+865	card.refund-routes	支付系统	卡支付生命周期	退款路径取舍（Refund Routes）		0	card.void-vs-refund
+866	card.refund-failure	支付系统	卡支付生命周期	退款失败与处理（Refund Failure）		0	card.refund-routes
+867	card.token-choice	支付系统	卡支付生命周期	令牌类型取舍（Token Choice）		0	card.tokenization
+868	card.network-token	支付系统	卡支付生命周期	网络令牌与订阅续费（Network Token）		0	card.token-choice
+869	card.sca-psd2	支付系统	卡支付生命周期	PSD2 强客户认证与豁免（SCA）		0	card.3ds-flow
+870	card.3ds-trigger	支付系统	卡支付生命周期	何时触发 3DS（3DS Strategy）		0	card.liability-shift,card.sca-psd2
+871	card.liability-shift	支付系统	卡支付生命周期	责任转移（Liability Shift）		0	card.3ds-flow,risk.chargeback-mechanism
+872	agent.degradation	AI 系统	Agent 与 RAG	供应商故障：熔断与降级（Fallback）		0	
+873	agent.memory-retrieval	AI 系统	Agent 与 RAG	记忆存储与召回漏斗（Memory Retrieval）		0	agent.memory-tiers
+874	agent.rerank	AI 系统	Agent 与 RAG	重排（Rerank）的位置与作用		0	agent.hybrid-recall
+875	po.withdrawable	支付系统	打款与资金分发	可提现金额的计算（Withdrawable）		0	
+876	po.pull-push	支付系统	打款与资金分发	拉模式与推模式（Pull/Push）		0	
+877	po.idempotent-reference	支付系统	打款与资金分发	打款单号作为渠道幂等引用		0	api.idempotency-key
+878	po.submit-mode	支付系统	打款与资金分发	实时逐笔与批量提交		0	
+879	po.paid-not-terminal	支付系统	打款与资金分发	paid 不是终态		0	po.reject-vs-return,po.state-machine
+880	po.retry-policy	支付系统	打款与资金分发	失败后重试、修正与暂挂取舍		0	po.idempotent-reference
+881	po.erqing	支付系统	打款与资金分发	二清与合规边界（Money Transmission）		0	
+882	po.instant-payments	支付系统	打款与资金分发	实时支付及其新风险（RTP/FedNow/Pix）		0	
+883	po.local-rails	支付系统	打款与资金分发	SEPA 与本地钱包		0	
+884	po.rail-routing	支付系统	打款与资金分发	渠道路由与适配器		0	po.rails-compare
+885	po.misdirect-controls	支付系统	打款与资金分发	不可撤回轨道的误打防护		0	po.instant-payments
+886	sw.db-tuning	常见模式	扩展写	数据库调优：减索引与分组提交（Tuning）		0	
+887	sw.vertical-partitioning	常见模式	扩展写	垂直分区：按访问模式拆列		0	
+888	sw.hot-key-split-all	常见模式	扩展写	热键整体拆分子键（Split All Keys）		0	
+889	ai.guardrails	AI 系统	AI 系统设计补充	LLM 护栏：信任边界校验（Guardrails）	core	1	
+890	linux.locate-layer	语言运行时与操作系统	Linux 排障	定位层次：接入、应用、依赖、资源		0	
+891	linux.stop-bleed	语言运行时与操作系统	Linux 排障	止血与留证的取舍（Stop the Bleeding）		0	linux.method
+892	linux.postmortem	语言运行时与操作系统	Linux 排障	故障复盘记录什么（Postmortem）		0	
+893	linux.free-available	语言运行时与操作系统	Linux 排障	free 的 available 与 buff/cache		0	
+894	linux.leak-or-growth	语言运行时与操作系统	Linux 排障	泄漏还是正常增长（Memory Leak）		0	
+895	linux.jvm-offheap	语言运行时与操作系统	Linux 排障	JVM 堆外内存与容器限制（Off-Heap）		0	
+896	linux.oom-protect	语言运行时与操作系统	Linux 排障	预防与保护关键进程（OOM Protection）		0	
+897	linux.fd-limit	语言运行时与操作系统	Linux 排障	文件描述符耗尽（Too many open files）		0	
+898	linux.zombie	语言运行时与操作系统	Linux 排障	僵尸进程（Zombie）		0	
+899	linux.network-layered	语言运行时与操作系统	Linux 排障	网络慢或连不上：分层排查（Network）		0	net.layers-request
+900	linux.shell-log	语言运行时与操作系统	Linux 排障	Shell 日志分析一行流（awk/sort/uniq）		0	
+901	conc.deadlock-order	低层设计	并发	死锁与统一加锁顺序（Lock Ordering）	core	1	
+902	pplat.slice-alerting	支付系统	支付平台架构	按渠道国家切片的告警设计（Sliced Alerts）		1	pplat.success-rate-definition
+903	ai.speculative	AI 系统	AI 系统设计补充	推测解码（Speculative Decoding）		1	ai.decode-bandwidth
+904	pplat.degrade-ratelimit	支付系统	支付平台架构	降级与限流（Degradation）		0	pplat.critical-path
+905	pplat.orchestration-build-buy	支付系统	支付平台架构	支付编排与薄网关、自建、采购（Orchestration）		0	pplat.gateway-unified-model
+906	pplat.success-rate-definition	支付系统	支付平台架构	成功率与授权率的口径（Authorization Rate）		0	
+907	pplat.sub-dunning	支付系统	支付平台架构	催收重试与卡更新（Dunning）		0	pplat.sub-billing-objects
+908	pplat.sub-proration	支付系统	支付平台架构	升降级按比例计费（Proration）		0	
+909	pplat.test-tools-fidelity	支付系统	支付平台架构	沙箱、模拟器与录制回放（Fidelity）		0	
+910	pplat.shadow-canary	支付系统	支付平台架构	影子流量与灰度发布（Shadow, Canary）		0	
+911	infra.k8s-resources	核心概念	平台基础设施：容器、服务网格、发布	requests 与 limits（Limits）		1	infra.k8s-primitives
+912	olap.column-store-writes	核心概念	分析型系统：OLAP、数仓与批处理	列存的写入：增量区加后台合并（Delta Merge）		0	olap.columnar-compression
+913	olap.data-cube	核心概念	分析型系统：OLAP、数仓与批处理	数据立方：毫秒切片的代价（OLAP Cube）		0	olap.star-schema
+914	olap.shuffle-cost	核心概念	分析型系统：OLAP、数仓与批处理	Shuffle 是最贵的一步（Shuffle Cost）		0	olap.map-shuffle-reduce
+915	olap.dataflow-lineage	核心概念	分析型系统：OLAP、数仓与批处理	数据流引擎与血缘重算（Lineage）		0	olap.map-shuffle-reduce
+916	overview.defaults-first	答题框架与估算	速览：概念、技术、模式	先用默认方案再按信号升级（Simple First）	core	2	
+917	temporal.determinism	关键技术	Temporal	工作流确定性（Determinism）	core	1	temporal.workflow-activity
+918	temporal.signals	关键技术	Temporal	Signal 与外部事件唤醒（Signal）	core	1	temporal.workflow-activity
+919	temporal.design-patterns	关键技术	Temporal	设计题中的落地（Design Patterns）	core	1	temporal.signals,temporal.timers
+920	gw.middleware-pitch	关键技术	API 网关	中间件怎么提才合适（Middleware）		0	
+921	gw.routing-translation	关键技术	API 网关	路由表与协议、响应转换（Routing Table）		0	gw.routing-first
+922	gw.caching	关键技术	API 网关	网关缓存什么（Gateway Caching）		0	
+923	gw.global-deploy	关键技术	API 网关	全球部署与 GeoDNS（Global）		0	
+924	gw.managed-vs-oss	关键技术	API 网关	托管网关与开源网关选型（Managed vs OSS）		0	
+925	gw.timeouts-retries	关键技术	API 网关	网关超时、重试与熔断		0	
+926	gw.authn-placement	关键技术	API 网关	鉴权放网关与下游仍要保护（Authn Placement）		0	api.authn-authz
+927	gw.gateway-mesh-bff	关键技术	API 网关	网关、服务网格与 BFF 分工		0	
+928	ld.srp-ocp	低层设计	低层设计答题框架	SRP 与 OCP：按变化原因拆，用抽象扩展	core	0	
+929	ld.patterns-stance	低层设计	低层设计答题框架	设计模式的态度与三大类		0	
+930	overview.dist-lock	答题框架与估算	速览：概念、技术、模式	分布式锁：何时用与怎么用（Distributed Lock）		0	
+931	lld.conservation-rounding	低层设计	低层设计跨题模式	守恒分摊与取整只做一次（Conservation）		1	
+932	ld.lld-vs-system-design	低层设计	低层设计答题框架	LLD 与系统设计的区别		1	
+933	tsdb.twcs	关键技术	时序数据库	按时间窗口压缩（TWCS）		1	idx.compaction
+934	risk.aml-why	支付系统	风控与合规	AML、KYC、制裁为何必须（AML Duty）	core	0	
+935	risk.kyc-tiers	支付系统	风控与合规	分级 KYC 与合规取舍（Tiered KYC）	core	0	
+936	risk.sanctions	支付系统	风控与合规	制裁名单筛查（Sanctions Screening）	core	0	
+937	risk.compliance-gate	支付系统	风控与合规	合规状态与出金闸门（Compliance Gate）	core	0	risk.kyc-tiers,risk.sanctions
+938	risk.chargeback-mechanism	支付系统	风控与合规	拒付机制与退款的区别（Chargeback）	core	0	land.four-parties
+939	risk.chargeback-ratio	支付系统	风控与合规	拒付率超线与预防（Chargeback Ratio）	core	0	risk.chargeback-mechanism
+940	risk.fraud-tradeoff	支付系统	风控与合规	误拒与漏放的成本（FP/FN）	core	0	risk.chargeback-mechanism
+941	risk.chd-sad	支付系统	风控与合规	持卡人数据与敏感认证数据（CHD/SAD）	core	0	
+942	vec.lsh-annoy	关键技术	向量数据库	LSH 与 Annoy 随机投影树（LSH, Annoy）		0	vec.ann-approx
+943	vec.embedding-migration	关键技术	向量数据库	嵌入漂移与换模型迁移（Embedding Drift）		0	vec.embedding-metrics
+944	vec.rag-design	关键技术	向量数据库	RAG 知识库的向量部分（RAG）		0	vec.filtered-search
+945	vec.gotchas	关键技术	向量数据库	向量库的局限与常见误区（Gotchas）		0	
+946	cass.discord-case	关键技术	Cassandra	案例：Discord 消息表（Discord）		2	cass.primary-key
+947	cdc.when-not	关键技术	变更数据捕获（CDC）	何时不该用 CDC：不知为何变（Misuse）	core	0	cdc.when-to-use
+948	temporal.timer-service	关键技术	Temporal	自建计时器服务（Timer Service）		1	temporal.timers
+949	cdc.cache-invalidation	关键技术	变更数据捕获（CDC）	用 CDC 做缓存失效有必要吗		2	cache.aside,cdc.what-is-cdc
+950	clocks.hlc	核心概念	时钟、顺序与故障检测	混合逻辑时钟（HLC）		1	clocks.lamport-clock
+951	flink.dataflow-model	关键技术	Flink	数据流图与作业骨架（Dataflow Graph）	core	0	
+952	ddb.global-tables-ttl	关键技术	DynamoDB	全局表、TTL 与流保留（Global Tables）		1	
+953	ld.observer	低层设计	低层设计答题框架	观察者：一对多通知及其坑（Observer）		1	
+954	ch.bounded-load	核心概念	一致性哈希	有界负载的一致性哈希（Bounded Load）		0	ch.ring
+955	ch.rendezvous	核心概念	一致性哈希	Rendezvous 哈希（HRW）		0	ch.ring
+956	ch.ring-implementation	核心概念	一致性哈希	哈希环的实现：有序数组加二分（Implementation）		0	ch.ring
+957	ch.when-to-expand	核心概念	一致性哈希	面试何时展开一致性哈希（Interview Use）		0	ch.ring
+958	ch.data-movement	核心概念	一致性哈希	靠复制而不是搬迁恢复（Replication）		0	ch.ring
+959	ch.delayed-removal	核心概念	一致性哈希	节点短暂失联先别摘（Delayed Removal）		0	ch.data-movement
+960	ch.rebalance-storm	核心概念	一致性哈希	自动重平衡放大故障（Rebalance Storm）		0	
+961	infra.k8s-primitives	核心概念	平台基础设施：容器、服务网格、发布	Pod、Deployment、HPA 等原语（K8s）	core	0	
+962	risk.rescreen	支付系统	风控与合规	存量客户重新筛查（Rescreening）		0	risk.sanctions
+963	risk.txn-monitoring	支付系统	风控与合规	交易监控与可疑交易报告（SAR）		0	
+964	risk.chargeback-lifecycle	支付系统	风控与合规	拒付生命周期与账务（Lifecycle）		0	risk.chargeback-mechanism
+965	risk.reason-codes	支付系统	风控与合规	拒付原因码与证据（Reason Codes）		0	risk.chargeback-lifecycle
+966	risk.chargeback-response	支付系统	风控与合规	拒付应对取舍（Dispute Strategy）		0	risk.chargeback-lifecycle,risk.chargeback-ratio
+967	risk.evidence-practice	支付系统	风控与合规	拒付证据留存与案件管理（Evidence）		0	risk.reason-codes
+968	risk.device-ml	支付系统	风控与合规	设备指纹与机器学习评分（Device/ML）		0	
+969	risk.card-testing	支付系统	风控与合规	试卡攻击（Card Testing）		0	risk.rules-velocity
+970	risk.fraud-engineering	支付系统	风控与合规	风控工程实践（Fraud Engineering）		0	risk.sync-decision-path
+971	risk.log-leak	支付系统	风控与合规	日志泄露卡号（Log Leak）		0	risk.pci-scope-reduction
+972	risk.key-management	支付系统	风控与合规	密钥管理与访问控制（Key Management）		0	
+973	risk.data-residency	支付系统	风控与合规	数据驻留（Data Residency）		0	
+974	cdc.record	关键技术	变更数据捕获（CDC）	CDC 记录的结构（Change Record）		0	cdc.what-is-cdc
+975	cdc.background-jobs	关键技术	变更数据捕获（CDC）	CDC 触发清理与延时任务的问题		0	cdc.what-is-cdc
+976	cdc.slot-bloat	关键技术	变更数据捕获（CDC）	复制槽停摆撑爆磁盘（Replication Slot）		0	cdc.what-is-cdc
+977	cdc.snapshot	关键技术	变更数据捕获（CDC）	初始快照加增量与压缩主题起点（Snapshot）		0	cdc.what-is-cdc
+978	cdc.other-dbs	关键技术	变更数据捕获（CDC）	别的数据库的变更流（Streams）		0	cdc.what-is-cdc
+979	cdc.vs-event-sourcing	关键技术	变更数据捕获（CDC）	CDC 与事件溯源：谁是事实（Event Sourcing）		0	cdc.what-is-cdc
+980	flink.alternatives	关键技术	Flink	Flink 与 Kafka Streams 取舍		0	
+981	flink.source-sink	关键技术	Flink	常用源与汇（Source and Sink）		0	
+982	flink.operators	关键技术	Flink	常见算子与 keyBy（Operators）		0	flink.dataflow-model
+983	flink.state-backends	关键技术	Flink	状态后端与状态规模（State Backends）		0	flink.keyed-state
+984	flink.idle-partition	关键技术	Flink	空闲分区卡住水位线（Idle Partition）		0	flink.watermarks
+985	flink.two-phase-commit	关键技术	Flink	两阶段提交汇（Two-phase Commit）		0	flink.exactly-once-boundary,ms.2pc
+986	flink.cluster-slots	关键技术	Flink	集群角色与任务槽（JobManager, Slots）		0	flink.dataflow-model
+987	flink.sample-jobs	关键技术	Flink	实时看板与欺诈检测两个典型作业（Sample Jobs）		0	flink.watermarks,flink.windows
+988	flink.stream-table-join	关键技术	Flink	流与表连接的时间偏差（Temporal Join）		0	flink.time-domain
+989	idem.no-support-manual	常见模式	幂等与结果未知	对方不支持幂等和查询（No Idempotency）		0	idem.unknown-outcome
+990	idem.retry-limit-reconcile	常见模式	幂等与结果未知	重试上限与对账兜底（Retry Limit）		0	
+991	idem.distributed-txn-selection	常见模式	幂等与结果未知	2PC、TCC、Saga 选型（Selection）		0	
+992	encoding.compat-both-directions	核心概念	编码与模式演进	滚动发布要双向兼容（Compatibility）	core	0	
+993	encoding.protobuf-tag-rules	核心概念	编码与模式演进	Protobuf 字段编号即身份（Field Tag）	core	0	
+994	encoding.unknown-field-preserve	核心概念	编码与模式演进	读改写必须保留未知字段（Unknown Fields）	core	0	
+995	cass.tombstone-gc-repair	关键技术	Cassandra	墓碑、gc_grace 与修复（Tombstone）		1	idx.lsm-why
+996	infra.two-phase-format	核心概念	平台基础设施：容器、服务网格、发布	改数据格式分两次发布（Expand/Contract）		0	
+997	infra.k8s-troubleshooting	核心概念	平台基础设施：容器、服务网格、发布	Pod 反复重启的排查（CrashLoop）		0	infra.k8s-primitives
+998	infra.k8s-overkill	核心概念	平台基础设施：容器、服务网格、发布	何时不该上 Kubernetes（Platform Tax）		0	
+999	infra.mesh-sidecar	核心概念	平台基础设施：容器、服务网格、发布	sidecar 的流量拦截（Sidecar）		0	
+1000	infra.mesh-vs-code	核心概念	平台基础设施：容器、服务网格、发布	网格还是代码：重试放哪层（Mesh vs Library）		0	infra.mesh-sidecar
+1001	infra.mesh-cost	核心概念	平台基础设施：容器、服务网格、发布	网格的代价、ambient 与何时不用（Mesh Cost）		0	infra.mesh-sidecar
+1002	zk.coordination-problems	关键技术	ZooKeeper 与共识	协调的五类难题（Coordination Problems）	core	0	
+1003	zk.znode-types	关键技术	ZooKeeper 与共识	ZNode 数据模型与三种类型（ZNode）	core	0	
+1004	zk.watches	关键技术	ZooKeeper 与共识	监视：变更通知与一次性触发（Watch）	core	0	zk.znode-types
+1005	zk.distributed-lock	关键技术	ZooKeeper 与共识	分布式锁及与 Redis 锁对比（Lock）	core	0	dlock.local-vs-distributed,zk.watches
+1006	zk.ensemble-quorum	关键技术	ZooKeeper 与共识	集合规模、多数派与容错（Quorum）	core	0	
+1007	zk.consistency-guarantees	关键技术	ZooKeeper 与共识	一致性保证与写后读旧值（Stale Read）	core	0	zk.read-write-path
+1008	zk.session-timeout	关键技术	ZooKeeper 与共识	会话心跳与超时取舍（Session Timeout）	core	0	zk.znode-types
+1009	zk.failure-partition	关键技术	ZooKeeper 与共识	服务器、分区与客户端故障（Partition）	core	0	zk.ensemble-quorum,zk.session-timeout
+1010	zk.limits-misuse	关键技术	ZooKeeper 与共识	局限与常见误用（Limits）	core	0	
+1011	ai.gpu-cost-metrics	AI 系统	AI 系统设计补充	GPU 成本指标：MFU 与 goodput	core	0	
+1012	ai.quantization	AI 系统	AI 系统设计补充	三种量化各攻哪个瓶颈（Quantization）	core	0	ai.decode-bandwidth
+1013	encoding.dataflow-reader	核心概念	编码与模式演进	数据流向决定兼容方向（Dataflow）		0	encoding.compat-both-directions
+1014	encoding.json-pitfalls	核心概念	编码与模式演进	JSON 当数据契约的坑（JSON Contract）		0	
+1015	encoding.avro-default-rule	核心概念	编码与模式演进	Avro 增删字段须带默认值（Avro）		0	encoding.compat-both-directions
+1016	ddb.consistency	关键技术	DynamoDB	逐请求选择一致性与副本路径（Consistency）	core	0	
+1017	ddb.capacity-units	关键技术	DynamoDB	容量单位 RCU/WCU 与计费模式（RCU/WCU）	core	0	
+1018	cass.consistency-quorum	关键技术	Cassandra	可调一致性与 QUORUM（Quorum）	core	1	cass.replication-strategy
+1019	cass.lww-lwt	关键技术	Cassandra	最后写入胜出与轻量级事务（LWW & LWT）		1	
+1020	zk.modern-usage-kraft	关键技术	ZooKeeper 与共识	谁还在用 ZooKeeper 与 KRaft（KRaft）		0	
+1021	zk.service-discovery	关键技术	ZooKeeper 与共识	服务发现：临时节点注册（Discovery）		0	zk.watches
+1022	zk.herd-effect	关键技术	ZooKeeper 与共识	惊群与监视热点（Herd Effect）		0	zk.watches
+1023	zk.ensemble-deployment	关键技术	ZooKeeper 与共识	集合部署：观察者与跨机房（Observer）		0	zk.ensemble-quorum
+1024	zk.zab-broadcast	关键技术	ZooKeeper 与共识	ZAB：选主与原子广播（ZAB）		0	zk.ensemble-quorum
+1025	zk.read-write-path	关键技术	ZooKeeper 与共识	读本地写经领导者与写吞吐（Read/Write Path）		0	zk.ensemble-quorum
+1026	zk.storage-log-snapshot	关键技术	ZooKeeper 与共识	事务日志与快照（WAL and Snapshot）		0	
+1027	zk.alternatives-choice	关键技术	ZooKeeper 与共识	协调方案选型（etcd, Consul）		0	
+1028	zk.mq-coordination	关键技术	ZooKeeper 与共识	消息队列的元数据协调（Broker Metadata）		0	zk.leader-election,zk.session-timeout
+1029	zk.consensus-placement	关键技术	ZooKeeper 与共识	共识放在控制面（Control Plane）		0	
+1030	zk.flp-impossibility	关键技术	ZooKeeper 与共识	FLP 不可能性与实际出路（FLP）		0	
+1031	zk.raft-prevote	关键技术	ZooKeeper 与共识	预投票与法定人数检查（Pre-vote）		0	zk.raft-election-replication
+1032	zk.total-order-broadcast	关键技术	ZooKeeper 与共识	全序广播与共识（Total Order）		0	zk.raft-election-replication
+1033	zk.wait-free-primitives	关键技术	ZooKeeper 与共识	无等待原语与配方（Wait-free）		0	zk.distributed-lock,zk.leader-election
+1034	tsdb.assumptions	关键技术	时序数据库	时序库的数据假设（Assumptions）		0	tsdb.cardinality,tsdb.compression
+1035	ddb.data-model	关键技术	DynamoDB	数据模型：表、项与无模式（Data Model）		0	
+1036	ddb.index-sync	关键技术	DynamoDB	索引同步与读到旧数据（Propagation）		0	ddb.gsi-lsi
+1037	ddb.query-scan	关键技术	DynamoDB	Query、Scan 与投影（Query vs Scan）		0	ddb.keys
+1038	ddb.conditional-writes	关键技术	DynamoDB	条件写入与乐观并发（Conditional Write）		0	
+1039	ddb.transactions	关键技术	DynamoDB	事务写入（TransactWriteItems）		0	ddb.conditional-writes
+1040	ddb.partition-limits	关键技术	DynamoDB	单分区上限与估算（Partition Limits）		0	ddb.capacity-units
+1041	ddb.scaling-replication	关键技术	DynamoDB	自动拆分、三副本与容错（Replication）		0	
+1042	ddb.dax	关键技术	DynamoDB	DAX 缓存及陷阱（DAX）		0	ddb.consistency
+1043	ddb.streams-cdc	关键技术	DynamoDB	Streams 变更捕获（Streams, CDC）		0	
+1044	ddb.pagination-single-table	关键技术	DynamoDB	分页与单表设计（Single-Table）		0	ddb.query-scan
+1045	ddb.security	关键技术	DynamoDB	安全三点：加密、IAM、VPC（Security）		0	
+1046	overview.write-scaling	答题框架与估算	速览：概念、技术、模式	扩展写：分片、分区与削峰（Write Scaling）		1	
+1047	cass.data-model	关键技术	Cassandra	键空间、表与宽列（Keyspace & Table）		0	
+1048	cass.replication-strategy	关键技术	Cassandra	副本放置与复制策略（Replication）		0	ch.ring
+1049	cass.query-routing	关键技术	Cassandra	任意节点当协调者（Coordinator）		0	cass.replication-strategy
+1050	cass.failure-detection	关键技术	Cassandra	Phi 故障检测（Phi Accrual）		0	cass.gossip
+1051	cass.hinted-handoff	关键技术	Cassandra	宕机写入与提示移交（Hinted Handoff）		0	
+1052	cass.ticketmaster-case	关键技术	Cassandra	案例：选座浏览（Ticketmaster）		0	cass.query-driven-modeling
+1053	cass.advanced-indexes	关键技术	Cassandra	SAI、物化视图与搜索索引（SAI & MV）		0	cass.primary-key
+1054	cass.batch-misuse	关键技术	Cassandra	BATCH 与旧式二级索引误用（Batch Misuse）		0	cass.query-routing
+1055	cass.queue-antipattern	关键技术	Cassandra	别拿表当队列（Queue Anti-pattern）		0	idx.lsm-why
+1056	clocks.fault-models	核心概念	时钟、顺序与故障检测	故障模型：崩溃恢复与部分同步（Fault Models）	core	0	
+1057	clocks.lamport-clock	核心概念	时钟、顺序与故障检测	Lamport 时钟（Lamport Clock）	core	0	
+1058	clocks.truetime-commit-wait	核心概念	时钟、顺序与故障检测	TrueTime 区间与提交等待（Commit Wait）		0	
+1059	conc.lld-scope	低层设计	并发	LLD 并发范围：单进程线程（LLD Scope）		0	
+1060	conc.gil	低层设计	并发	GIL 不等于线程安全（GIL）		0	
+1061	conc.problem-types	低层设计	并发	三类并发问题（Problem Types）		0	
+1062	conc.rmw	低层设计	并发	读改写丢失更新（Read-Modify-Write）	core	0	
+1063	conc.coarse-lock	低层设计	并发	粗粒度锁（Coarse-Grained Lock）	core	0	conc.check-then-act,conc.rmw
+1064	conc.rwlock	低层设计	并发	读写锁（Read-Write Lock）		0	conc.coarse-lock
+1065	conc.thread-confinement	低层设计	并发	线程封闭（Thread Confinement）		0	
+1066	conc.lock-hygiene	低层设计	并发	持锁卫生：不调外部代码（Lock Hygiene）		0	conc.coarse-lock
+1067	conc.lock-strategy	低层设计	并发	锁策略决策树（Locking Strategy）	core	0	conc.atomics-cas,conc.fine-lock,conc.rwlock
+1068	conc.primitive-choice	低层设计	并发	并发原语选型与语言对照（Primitives）		0	conc.atomics-cas,conc.blocking-queue,conc.semaphore
+1069	conc.condvar	低层设计	并发	条件变量（Condition Variable）		0	conc.coarse-lock
+1070	conc.blocking-queue	低层设计	并发	阻塞队列与生产者消费者（Blocking Queue）	core	0	conc.condvar
+1071	conc.async-offload	低层设计	并发	异步处理：先响应后处理（Async Offload）		0	conc.blocking-queue
+1072	conc.graceful-shutdown	低层设计	并发	优雅停机与毒丸（Poison Pill）		0	conc.blocking-queue
+1073	conc.actor-vs-queue	低层设计	并发	Actor 还是队列加工人池（Actor vs Queue）		0	conc.actor-model
+1074	conc.weighted-semaphore	低层设计	并发	加权信号量与总量限制（Weighted Semaphore）		0	conc.semaphore
+1075	conc.object-pool	低层设计	并发	资源池：阻塞队列装对象（Object Pool）	core	0	conc.blocking-queue
+1076	conc.pool-operations	低层设计	并发	池的超时、排障与利用率（Pool Ops）		0	conc.object-pool
+1077	conc.scarcity-tools	低层设计	并发	稀缺资源工具选型（Scarcity Tools）		0	conc.object-pool,conc.weighted-semaphore
+1078	lld.concurrency-invariants	低层设计	低层设计跨题模式	类设计并发：共享状态与临界区（Thread-safety）	core	0	
+1079	lld.concurrency-pitfalls	低层设计	低层设计跨题模式	并发回答的常见错误（Pitfalls）		0	lld.concurrency-invariants
+1080	lld.structure-choice	低层设计	低层设计跨题模式	按需求选有序数据结构（Structure Choice）		0	
+1081	ld.strategy	低层设计	低层设计答题框架	策略：组合替代条件分支（Strategy）	core	0	ld.polymorphism
+1082	lld.strategy-pitfalls	低层设计	低层设计跨题模式	策略模式的常见错误（Strategy Pitfalls）		0	lld.strategy-forms
+1083	ld.five-step-timing	低层设计	低层设计答题框架	LLD 五步节奏与时间分配	core	0	
+1084	ld.requirements	低层设计	低层设计答题框架	需求：四主题提问与范围外清单	core	0	
+1085	ld.entity-filter	低层设计	低层设计答题框架	挑实体：有状态或规则才独立	core	0	
+1086	ld.state-behavior	低层设计	低层设计答题框架	类的状态来自需求，规则跟着状态走	core	0	
+1087	ld.implementation	低层设计	低层设计答题框架	实现：先主路径再边界		0	
+1088	ld.verification	低层设计	低层设计答题框架	场景走查与不变量测试（Verification）		0	
+1089	ld.extensibility-answer	低层设计	低层设计答题框架	扩展追问：指出边界而非重写	core	0	
+1090	ld.time-management	低层设计	低层设计答题框架	时间超支与被打断时的取舍		0	ld.five-step-timing
+1091	ld.typed-result	低层设计	低层设计答题框架	用结果枚举代替布尔返回		0	
+1092	ld.undo-memento	低层设计	低层设计答题框架	撤销：命令历史与不可变快照（Memento）		0	
+1093	ld.seams-and-machine-coding	低层设计	低层设计答题框架	留接缝与限时可运行变体		0	
+1094	ld.regional-variants	低层设计	低层设计答题框架	地区与公司差异、含糊题目		0	
+1095	ld.altitude	低层设计	低层设计答题框架	层次跑偏：别讲分片和 Kafka		0	
+1096	ld.state-machine	低层设计	低层设计答题框架	状态机：状态类与枚举加转换表	core	0	
+1097	ld.principles-usage	低层设计	低层设计答题框架	设计原则是决策工具，会互相冲突		0	
+1098	ld.simplicity-principles	低层设计	低层设计答题框架	KISS、DRY、YAGNI 的取舍	core	0	
+1099	ld.soc	低层设计	低层设计答题框架	关注点分离（Separation of Concerns）		0	
+1100	ld.demeter	低层设计	低层设计答题框架	迪米特法则		0	
+1101	ld.lsp-isp	低层设计	低层设计答题框架	LSP 与 ISP		0	
+1102	ld.dip-di	低层设计	低层设计答题框架	DIP 与依赖注入的区别		0	
+1103	ld.encapsulation	低层设计	低层设计答题框架	封装与返回内部集合		0	
+1104	ld.abstraction	低层设计	低层设计答题框架	抽象：在变化点引入接口		0	
+1105	ld.polymorphism	低层设计	低层设计答题框架	多态取代类型判断及其代价	core	0	ld.abstraction
+1106	ld.inheritance-vs-composition	低层设计	低层设计答题框架	继承与组合：默认接口加组合	core	0	
+1107	ld.oop-signal-to-action	低层设计	低层设计答题框架	需求信号对应的 OOP 设计动作		0	
+1108	ld.pattern-triggers	低层设计	低层设计答题框架	需求措辞到模式的触发		0	
+1109	ld.factory	低层设计	低层设计答题框架	工厂：简单工厂与策略分工		0	
+1110	ld.decorator-facade	低层设计	低层设计答题框架	装饰器与外观		0	
+1111	ld.builder-singleton	低层设计	低层设计答题框架	建造者与单例：多数时候不用		0	
+1112	dlv.framework-timeline	答题框架与估算	系统设计答题框架	交付框架与时间分配（Delivery Framework）	core	0	
+1113	dlv.deep-dive	答题框架与估算	系统设计答题框架	深入探讨：主动发现瓶颈并追溯需求（Deep Dive）	core	0	dlv.hld,dlv.non-functional-reqs
+1114	dlv.time-slip	答题框架与估算	系统设计答题框架	时间超支后的补救（Time Management）		0	dlv.framework-timeline
+1115	overview.networking-defaults	答题框架与估算	速览：概念、技术、模式	网络默认与 L4/L7（Networking）		0	
+1116	overview.api-default-rest	答题框架与估算	速览：概念、技术、模式	API 设计默认 REST（REST API）		0	
+1117	overview.relational-features	答题框架与估算	速览：概念、技术、模式	关系型数据库的三样本领（Relational DB）		0	
+1118	overview.nosql-features	答题框架与估算	速览：概念、技术、模式	NoSQL 的特性与代表（NoSQL）		0	
+1119	overview.estimation-numbers	答题框架与估算	速览：概念、技术、模式	估算时机与现代硬件量级（Estimation）	core	0	
+1120	overview.queue-buffer-backpressure	答题框架与估算	速览：概念、技术、模式	消息队列：缓冲、解耦与反压（Backpressure）		0	
+1121	overview.pattern-thinking	答题框架与估算	速览：概念、技术、模式	按模式思考与组合（Pattern Selection）	core	0	
+1122	temporal.why-durable	关键技术	Temporal	为何需要持久化工作流（Durable Workflow）	core	0	
+1123	temporal.workflow-activity	关键技术	Temporal	工作流与活动分工（Workflow vs Activity）	core	0	
+1124	temporal.activity-policy	关键技术	Temporal	Activity 超时重试（Policy）		0	temporal.workflow-activity
+1125	temporal.saga	关键技术	Temporal	Saga 补偿（Saga Compensation）		0	ms.saga,temporal.workflow-activity
+1126	temporal.server-architecture	关键技术	Temporal	服务端四个角色（Server Roles）		0	temporal.workflow-activity
+1127	temporal.state-storage	关键技术	Temporal	历史分片、可变状态与任务发件箱（State Storage）		0	temporal.server-architecture
+1128	temporal.sticky-execution	关键技术	Temporal	缓存与粘性执行（Sticky Execution）		0	temporal.determinism,temporal.task-queues
+1129	temporal.task-queues	关键技术	Temporal	Task Queue 与两类任务（Task Queue）		0	temporal.server-architecture
+1130	temporal.scaling	关键技术	Temporal	集群扩展与瓶颈（Scaling）		0	temporal.state-storage,temporal.task-queues
+1131	temporal.limitations	关键技术	Temporal	Temporal 的局限（Limitations）		0	temporal.determinism
+1132	locker.entities-state-placement	低层设计	Amazon 快递柜	三个类的划分与占用状态放格口（物理状态）而非关系状态	core	0	
+1133	locker.availability-lookup	低层设计	Amazon 快递柜	找空格口：占用标志遍历为推荐，不能从取件码推算占用	core	0	
+1134	locker.pickup-error-semantics	低层设计	Amazon 快递柜	取件错误语义：无效与已用同报无效，过期单独报并保留码	core	0	
+1135	locker.release-single-path	低层设计	Amazon 快递柜	释放只走一个方法，同时置格口空闲并删码	core	0	
+1136	locker.expiry-keeps-package	低层设计	Amazon 快递柜	码过期不等于包裹离开：不自动释放，批量开门只开不清理	core	0	
+1137	locker.register-before-open	低层设计	Amazon 快递柜	开门不可撤销，先登记内存状态最后开门并在失败时回滚	core	0	
+1138	locker.token-code-space	低层设计	Amazon 快递柜	取件码碰撞与被猜中概率，用 secrets 而非 random		0	
+1139	locker.size-fallback	低层设计	Amazon 快递柜	尺寸只向上降级，分配逻辑收在一个方法		0	
+1140	locker.multi-package	低层设计	Amazon 快递柜	一格多包裹时才引入 Package 类与容量		0	
+1141	locker.multi-station	低层设计	Amazon 快递柜	多柜点：码只需在柜点内唯一，加 Station 注册表转发		0	
+1142	bms.showtime-owns-seat-state	低层设计	电影票预订（BookMyShow）	场次拥有座位状态，协调者只做路由和索引	core	0	
+1143	bms.reservation-back-reference	低层设计	电影票预订（BookMyShow）	订单带指向场次的反向引用，取消逻辑在场次上而不是订单	core	0	
+1144	bms.book-cancel-order	低层设计	电影票预订（BookMyShow）	订座先让场次成功再登记索引，保证索引里的每条订单已保存	core	0	
+1145	bms.available-seats-derived	低层设计	电影票预订（BookMyShow）	可用座位由固定布局减去订单座位推算，不另存集合		0	
+1146	bms.double-cancel-atomic-pop	低层设计	电影票预订（BookMyShow）	取消用索引 pop 一步原子取走，防双击取消两次	core	0	
+1147	bms.dedupe-validate-seats	低层设计	电影票预订（BookMyShow）	边界去重并校验座位格式（大写字母加数字），拒绝 a5、A05		0	
+1148	bms.index-single-builder	低层设计	电影票预订（BookMyShow）	新增场次别漏索引：建索引写成一个函数，主数据加派生视图		0	
+1149	bms.search-semantics	低层设计	电影票预订（BookMyShow）	搜索语义：空串返回空、子串匹配、大小写折叠、只返回未开场		0	
+1150	bms.dataclass-eq-identity	低层设计	电影票预订（BookMyShow）	@dataclass 默认按字段相等，订单用 eq=False 按身份比较避免递归与误删		0	
+1151	bms.hold-timeline	低层设计	电影票预订（BookMyShow）	占座时间线：过期读时判断，确认时再走订单冲突检查		0	
+1152	c4.direction-vectors	低层设计	四子棋（Connect Four）	判胜：四个方向用 (0,1)(1,0)(1,1)(-1,1) 向量数据，从落点向两侧数连续同色，总数>=4 即赢，只检查刚落的一子	core	0	
+1153	c4.drop-disc-validate-in-board	低层设计	四子棋（Connect Four）	placeDisc 集中全部校验：越界或满列返回 -1，从底行向上找第一个空格并返回落点行，Game 只看是否 -1	core	0	
+1154	c4.validate-before-mutate	低层设计	四子棋（Connect Four）	makeMove 先做完所有会失败的检查（已结束、没轮到、列非法），再落子、判胜、判平、换人，失败不留半截状态	core	0	
+1155	c4.state-enum-invalid-count	低层设计	四子棋（Connect Four）	数非法状态：4 个布尔 16 种仅 4 合法；枚举加可空赢家 9 种仅 4 合法；WON 携带赢家的 sum type 无非法组合，Python 用 assert_never 穷尽匹配	core	0	
+1156	c4.board-cells-store-color	低层设计	四子棋（Connect Four）	格子存棋色而非 Player：类型更简单，Board 脱离 Game 单独可测		0	
+1157	c4.bitboard-win	低层设计	四子棋（Connect Four）	位棋盘：每色一个整数，每列加哨兵位，用 m & (m>>s) 再移 2s 判四连，O(1) 判胜供搜索		0	
+1158	elv.scan-movement	低层设计	电梯	运动算法：FIFO 折返、最近优先方向不稳定且会饿死远层，SCAN 同向走到前方无请求再换向、等待有上界（严格叫 LOOK）	core	0	
+1159	elv.step-five-cases	低层设计	电梯	step() 五种情形的顺序：无请求置 IDLE；IDLE 选最近（平局取低层）定方向；本层该停就移除并本拍返回不移动；前方无请求换向；否则走一层	core	0	
+1160	elv.typed-request	低层设计	电梯	Request(floor, kind) 三种类型（上行呼叫、下行呼叫、目的层），相等性含类型，否则 7 层下行呼叫被上行电梯带去 8 层	core	0	
+1161	elv.stop-vs-travel	低层设计	电梯	停靠看类型、行驶不看类型：路过反向呼叫不停；0 层与 9 层不特判，边界由入口校验和前进条件共同推出	core	0	
+1162	elv.dispatch-tiers	低层设计	电梯	派发三档：最近的（不看方向）、方向感知、再加承诺检查 has_requests_at_or_beyond(floor, dir)；同档平局取最近再取列表靠前	core	0	
+1163	elv.immediate-vs-queued-dispatch	低层设计	电梯	控制器立即派发无队列（几乎无状态）；高峰期一次性决策暴露问题，排队模型保留未分配呼叫、每拍重选		0	
+1164	elv.deterministic-tiebreak	低层设计	电梯	从无序集合选元素必须带排序键 (距离, 楼层)，否则测试不稳定、无法重现		0	
+1165	elv.express-and-cancel	低层设计	电梯	快速电梯：Elevator 加 is_express 与允许楼层集合，Controller 空闲时优先派；取消：remove_request 是 add_request 的逆操作		0	
+1166	elv.same-floor-noop	低层设计	电梯	当前层请求视为空操作是有意简化，电梯刚停该层时同层同向呼叫会被丢；有门后要区分已停且门开		0	
+1167	elv.destination-dispatch-scan-look	低层设计	电梯	SCAN 一直扫到边缘，本题是 LOOK；C-SCAN 单向循环；目的层派梯先输入目的层再分配把同向的人分到同一部		0	
+1168	fs.parent-pointer-path	低层设计	文件系统	条目只存名字与父指针，完整路径沿父指针现算：改名移动只改自身，存路径字符串则要更新所有后代；双向引用用弱引用回指	core	0	
+1169	fs.children-map-and-two-way-sync	低层设计	文件系统	Folder 的 add_child、remove_child 是改子节点的唯一入口并顺手维护孩子的父指针；list 默认插入顺序，排序或不区分大小写在文件夹内规范化	core	0	
+1170	fs.rename-detach-reattach	低层设计	文件系统	改名不能只改对象上的名字：父字典键仍是旧名；先摘下、改名、再挂回，校验全在修改之前	core	0	
+1171	fs.move-validate-then-mutate	低层设计	文件系统	移动：根不能动，先做完源/目标父/不成环（从目标父沿父指针向上碰到源即拒）/不重名检查，再摘与挂，否则条目凭空消失	core	0	
+1172	fs.path-resolution-helpers	低层设计	文件系统	路径解析拆成解析路径、解析父级、取名字三个辅助函数：空片段、非绝对、中途遇文件各报不同错；pathlib 会悄悄抹平斜杠	core	0	
+1173	fs.move-target-is-full-path	低层设计	文件系统	move 的目标是新完整路径而非目标目录：一个操作覆盖移动与改名，目标已存在即报已存在，语义要在接口里写明		0	
+1174	fs.detached-subtree-path	低层设计	文件系统	删除后手里旧引用的路径不以根开头：判断是否仍在树里要让根有身份，不能靠父指针为空		0	
+1175	fs.path-cache-global-version	低层设计	文件系统	路径缓存的难点是失效：全局版本号在改名移动时加一，读时版本不同才重算，默认现算因为深度只有十几层		0	
+1176	fs.lock-ordering-immutable-id	低层设计	文件系统	加锁顺序用终身不变的单调编号而不是路径字符串（改名会变）；同一文件夹在两端只锁一次		0	
+1177	fs.hard-link-inode	低层设计	文件系统	真实文件系统名字存在目录条目里、文件在 inode 里，硬链接让一个文件多条路径；面试模型是每条目一条路径的树		0	
+1178	fs.name-index-and-lazy-walk	低层设计	文件系统	按名字搜索：O(n) 遍历，或名字到条目的索引（创建删除改名同步维护），前缀用 trie；遍历用显式栈生成器避开递归深度		0	
+1179	inv.manager-warehouse-split	低层设计	库存管理	两层结构：Manager 路由与协调，Warehouse 管本仓库存和告警	core	0	
+1180	inv.atomic-transfer	低层设计	库存管理	调拨原子化：同时持有两个仓库的锁并按 ID 排序	core	0	
+1181	inv.reentrant-trap	低层设计	库存管理	调拨持两把锁再调用加锁方法：不可重入锁自死锁，用无锁内部方法		0	
+1182	inv.threshold-crossing	低层设计	库存管理	告警只在向下穿越阈值时触发：之前>=阈值且之后<阈值	core	0	
+1183	inv.collect-then-dispatch	低层设计	库存管理	锁内登记通知、锁外派发回调	core	0	
+1184	inv.availability-snapshot	低层设计	库存管理	可用性查询只是快照，真正保证在 remove_stock 内		0	
+1185	inv.transit-stock	低层设计	库存管理	在途库存：调拨本身也是库存持有者		0	
+1186	inv.oversell-policy	低层设计	库存管理	预留还是乐观接单：限量发售与日用品不同		0	
+1187	inv.input-validation	低层设计	库存管理	非法输入的返回假、抛异常、忽略三类处理		0	
+1188	logsvc.immutable-record	低层设计	日志服务	LogRecord 是不可变值对象（时间戳、级别、消息、线程名）；时间戳与线程名在 Logger.log 入口取一次，所有目的地看到同一条	core	0	
+1189	logsvc.destination-composition	低层设计	日志服务	Destination = 阈值 + Formatter + Sink：过滤在目的地而不在 Logger，Sink 只把字符串变成字节	core	0	
+1190	logsvc.lock-per-destination	低层设计	日志服务	每目的地一把锁只包 sink.write，过滤与格式化在锁外（记录不可变、formatter 无状态）；跨线程只保证不交错	core	0	
+1191	logsvc.sink-failure-diagnose	低层设计	日志服务	sink 写失败：往上抛会打断遍历并让业务崩，吞掉则静默；在目的地内捕获并限量写 stderr 诊断	core	0	
+1192	logsvc.filesink-open-once-flush	低层设计	日志服务	FileSink 构造时追加模式打开一次并保留句柄，写后 flush，而不是每次写重新 open		0	
+1193	logsvc.hierarchy-named-logger	低层设计	日志服务	层级命名 logger：LoggerFactory 注册表按点分前缀找父级，有效级别沿父链查并缓存在热路径上		0	
+1194	logsvc.ordering-boundary	低层设计	日志服务	顺序保证边界：单线程内有序，跨线程只保证不交错；要全局按时间戳有序只能单队列单写线程或窗口排序		0	
+1195	logsvc.stdlib-mapping	低层设计	日志服务	Python logging 对应同一形状：Logger、Handler（目的地加锁、阈值）、Formatter，热路径上还有级别缓存与过滤器		0	
+1196	parking.entities-and-enums	低层设计	停车场	实体划分：车辆只是枚举，车位类型与车型分成两个枚举	core	0	
+1197	parking.occupancy-set	低层设计	停车场	占用状态放 Lot 的集合（关系状态），是票表的冗余索引，需对账与同步	core	0	
+1198	parking.ticket-lifecycle	低层设计	停车场	票是不可变记录，出场即删，重复出场自然失败，释放与删票一起做	core	0	
+1199	parking.fee-ceiling	低层设计	停车场	按小时向上取整的整数算法与临界时长（0、整点、整点加 1 毫秒）	core	0	
+1200	parking.validate-before-mutate	低层设计	停车场	先校验、后改共享状态：避免出现幽灵占用	core	0	
+1201	parking.spot-compat-mapping	低层设计	停车场	车型到可用车位类型的有序映射，摩托车可停汽车位只改这一处		0	
+1202	parking.broken-spot-state	低层设计	停车场	车位损坏是物理状态放车位上，与占用关系状态分开		0	
+1203	parking.multi-floor	低层设计	停车场	多楼层：加 Floor 层，票不变，选层策略与空位计数		0	
+1204	parking.pricing-evolution	低层设计	停车场	定价从统一费率到车型表再到策略的演进转折点		0	
+1205	parking.ticket-identity	低层设计	停车场	票号既是标识又是凭证要不可猜；丢票靠车牌第二索引		0	
+1206	rlld.gcra	低层设计	限流器	GCRA：每键只存理论到达时间的令牌桶等价写法		0	
+1207	rlld.default-limiter-shared	低层设计	限流器	未配置端点共用默认限流器，是否按端点分桶		0	
+1208	rlld.dynamic-config	低层设计	限流器	动态配置：整体重建对原地更新保留状态		0	
+1209	rlld.eviction-lossless	低层设计	限流器	空闲淘汰何时无损：空闲时间不小于 capacity/rate 或窗口长度		0	
+1210	rlld.retry-after-math	低层设计	限流器	重试时间向上取整，拒绝时也要写回结算时间	core	0	
+1211	cb.acquire-report-protocol	低层设计	熔断器	call 三步：锁内取许可、锁外调下游、锁内回报并核对代号	core	0	
+1212	cb.generation-id	低层设计	熔断器	状态代号：转换时加一，迟到的旧结果只计指标不改状态	core	0	
+1213	cb.half-open-parameters	低层设计	熔断器	半开参数：同时探测数、连续成功门槛、冷却时间固定或退避，防止惊群	core	0	
+1214	cb.failure-window	低层设计	熔断器	失败判定：连续失败数 vs 滑动窗口失败率加最小样本数		0	
+1215	cb.failure-classification	低层设计	熔断器	哪些结果计失败：超时、5xx、连接失败与慢调用，业务 4xx 不算		0	
+1216	cb.fallback-metrics	低层设计	熔断器	降级要求与指标：成功、失败、拒绝、状态切换事件		0	
+1217	cb.granularity-scope	低层设计	熔断器	熔断器粒度：下游加关键接口，每进程各自维护不共享		0	
+1218	cb.composition-order	低层设计	熔断器	与限流、超时、重试的组合顺序，重试在熔断之外		0	
+1219	bship.check-then-apply	低层设计	海战棋（Battleship）	校验与施加拆成两个函数，非法操作不改棋盘不耗回合	core	0	
+1220	bship.derived-sunk	低层设计	海战棋（Battleship）	沉没由 hits 与格数现算，不另存布尔	core	0	
+1221	bship.win-before-swap	低层设计	海战棋（Battleship）	先判胜负再换人，避免赢了仍轮到对手	core	0	
+1222	bship.salvo-validate-all	低层设计	海战棋（Battleship）	齐射先整体校验（含齐射内重复）再统一施加		0	
+1223	bship.adjacent-ship-check	低层设计	海战棋（Battleship）	相邻检查含斜角九宫格，只查自己的船		0	
+1224	bship.dataclass-default-factory	低层设计	海战棋（Battleship）	数据类可变默认值用 field(default_factory)，避免两方共用		0	
+1225	bship.server-referee-view	低层设计	海战棋（Battleship）	联网时服务器是唯一裁判，客户端只拿到 board_view		0	
+1226	vend.inventory-reserve-commit	低层设计	多地点饮品自助售卖系统	库存实际量与已预留量分离：可用量=实际-预留	core	0	
+1227	vend.machine-offline	低层设计	多地点饮品自助售卖系统	机器离线：心跳超时，预留订单转 FAILED 或重路由		0	
+1228	vend.pickup-code	低层设计	多地点饮品自助售卖系统	取货码：随机、一次性、限定机器，READY 才开门		0	
+1229	vend.menu-derived	低层设计	多地点饮品自助售卖系统	菜单由库存推导，下单以 reserve 结果为准		0	
+1230	vend.refill-dedup	低层设计	多地点饮品自助售卖系统	补货任务去重：同机同料只保留一个未完成任务		0	
+1231	credit.event-replay-ledger	低层设计	用户额度与令牌余额服务	账本存事件（Grant、Charge），把事件按时间排序后重放出余额和分配，乱序迟到作废都变成改事件表再重放	core	0	
+1232	credit.dry-run-commit	低层设计	用户额度与令牌余额服务	接受新事件前在副本上纯函数重放，所有已接受扣费仍能全额扣下才提交，否则抛 InsufficientCreditsError 账本不变	core	0	
+1233	credit.sort-key-same-instant	低层设计	用户额度与令牌余额服务	事件键 (at, 是否扣费, id)：同刻先发放后扣费；包键按到期、发放、id；发放含、到期不含	core	0	
+1234	credit.shortfall-semantics	低层设计	用户额度与令牌余额服务	不够扣：整笔拒绝（账本不变）与尽力而为（取到手的部分）是两种语义，开头先问清		0	
+1235	credit.revoke-as-early-expiry	低层设计	用户额度与令牌余额服务	作废额度包等价于把到期时间提前到 at，复用试跑再提交，已扣的不追回		0	
+1236	credit.inclusive-window	低层设计	用户额度与令牌余额服务	题面右端点含而内部到期不含，离散时间 expires_at = t + 有效期 + 1		0	
+1237	credit.immutable-value-types	低层设计	用户额度与令牌余额服务	事件用冻结 dataclass 自带按值比较、可 replace，返回值用 NamedTuple 兼顾拆包与字段名		0	
+1238	dasher.in-flight-count	低层设计	配送员结算（按配送事件计算报酬）	接单那一刻的在途数：排序加堆，同刻结束不算在途	core	0	
+1239	dasher.cancelled-semantics	低层设计	配送员结算（按配送事件计算报酬）	取消的单：取消前占用配送员，付不付由开关决定	core	0	
+1240	dasher.sweep-line-per-minute	低层设计	配送员结算（按配送事件计算报酬）	按分钟计费：扫描线切段，相邻事件点间在途集合不变		0	
+1241	dasher.peak-window-slice	低层设计	配送员结算（按配送事件计算报酬）	高峰窗口：在窗口边界切段，取中点判断窗口，跨午夜拆成两个		0	
+1242	dasher.settlement-period	低层设计	配送员结算（按配送事件计算报酬）	结算周期归属：整单记入结束时间所在的一期		0	
+1243	datetime.four-concepts	低层设计	日期时间库	必须分开四个概念：Instant、LocalDateTime、时区规则、Duration 与 Period，全部不可变	core	0	
+1244	datetime.instant-and-epoch-day	低层设计	日期时间库	内部表示：Instant 用秒加纳秒，LocalDate 存纪元日，构造即校验	core	0	
+1245	datetime.civil-algorithm	低层设计	日期时间库	年月日与纪元日互转的民用历算法，不循环逐年累加	core	0	
+1246	datetime.month-add-clamp	低层设计	日期时间库	月份加法截断到月末，不满足结合律	core	0	
+1247	datetime.zone-conversion-methods	低层设计	日期时间库	时区转换两种语义：with_zone 保持时间点，with_local_same 保持墙钟读数	core	0	
+1248	datetime.duration-vs-period	低层设计	日期时间库	精确时长与日历时长：夏令时当天加 1 天与 24 小时不同		0	
+1249	datetime.dst-gap-overlap	低层设计	日期时间库	夏令时间隙顺延或报错，重叠默认取较早并可选较晚，按偏移量判定		0	
+1250	datetime.zone-rules-future-events	低层设计	日期时间库	时区规则存转换点列表二分，未来事件存本地时间加时区名，已发生存 UTC		0	
+1251	datetime.chronology	低层设计	日期时间库	日历系统抽象为 Chronology 策略，跨日历先转纪元日		0	
+1252	elevator.class-roles	低层设计	电梯系统	类划分：Elevator 小状态机、Dispatcher 抽象与 NearestCar、Controller 入口	core	0	
+1253	elevator.hall-calls-by-direction	低层设计	电梯系统	外呼按方向分开存放，只在折返点接反方向呼叫，轿厢内选择不经调度	core	0	
+1254	elevator.look-scan	低层设计	电梯系统	单部电梯用 LOOK 扫描：对比 FCFS、SCAN、SSTF，无饥饿	core	0	
+1255	elevator.eta-dispatch	低层设计	电梯系统	多部电梯代价函数 eta：空闲、顺路加停靠代价、需折返，分配后不改派	core	0	
+1256	elevator.fault-states	低层设计	电梯系统	故障、超载、紧急停止：MAINTENANCE 状态重新分配未服务外呼		0	
+1257	elevator.edge-cases	低层设计	电梯系统	边界：当前层外呼开门、轿厢选当前层忽略、同层上下行同时、越界、开门时新请求		0	
+1258	elevator.peak-preposition	低层设计	电梯系统	高峰优化：上班高峰空闲电梯预停大堂		0	
+1259	tkb.ticket-type-model	低层设计	活动票务预订后端（防超卖的 REST 服务）	TicketType 的 total/sold/held 三列，可售数=total-sold-held，订单价格快照	core	0	
+1260	tkb.capacity-change	低层设计	活动票务预订后端（防超卖的 REST 服务）	改容量不能小于 sold+held，各票型总量不超场馆容量，同事务校验		0	
+1261	figma.preview-vs-commit	低层设计	矢量图形编辑器的绘图 API（类 Figma）	预览与提交分离：瞬时状态不进日志	core	0	
+1262	figma.frame-coalescing	低层设计	矢量图形编辑器的绘图 API（类 Figma）	按帧合并指针事件，位移按绝对值计算	core	0	
+1263	figma.scene-graph-model	低层设计	矢量图形编辑器的绘图 API（类 Figma）	场景图、客户端生成 ID、分数索引排序	core	0	
+1264	figma.op-model	低层设计	矢量图形编辑器的绘图 API（类 Figma）	统一 Op(node_id, prop, value)，apply 返回逆操作	core	0	
+1265	figma.undo-group-collab	低层设计	矢量图形编辑器的绘图 API（类 Figma）	一次手势一步撤销，协作下只撤自己的操作	core	0	
+1266	figma.op-buffer-sync	低层设计	矢量图形编辑器的绘图 API（类 Figma）	OpBuffer 按 (节点, 属性) 合并与批量同步	core	0	
+1267	figma.property-level-lww	低层设计	矢量图形编辑器的绘图 API（类 Figma）	属性级后写者胜、删除与层级成环的处理		0	
+1268	figma.render-dirty-rect	低层设计	矢量图形编辑器的绘图 API（类 Figma）	脏区域重绘、图层分离与分块缓存		0	
+1269	figma.oplog-snapshot-offline	低层设计	矢量图形编辑器的绘图 API（类 Figma）	操作日志加快照、本地优先与离线		0	
+1270	figma.freehand-simplify	低层设计	矢量图形编辑器的绘图 API（类 Figma）	自由笔迹用 RDP 简化再拟合贝塞尔		0	
+1271	grocery.reserve-before-debit	低层设计	生鲜订阅转订单服务	可撤销的步骤在前、不可撤销的扣款放最后	core	0	
+1272	grocery.atomic-reserve-all-or-nothing	低层设计	生鲜订阅转订单服务	库存整单全有或全无的原子预留	core	0	
+1273	grocery.catch-up-run-due	低层设计	生鲜订阅转订单服务	run_due 补跑错过的多期，无论成败都推进 next_run	core	0	
+1274	grocery.failure-policy-interface	低层设计	生鲜订阅转订单服务	失败策略与部分发货的取舍		0	
+1275	grocery.subscription-snapshot-version	低层设计	生鲜订阅转订单服务	转换读订阅快照版本，修改只影响下一期		0	
+1276	grocery.price-at-conversion	低层设计	生鲜订阅转订单服务	价格在转换时取当前价，价格保护记上限		0	
+1277	imgx.frozen-value-objects	低层设计	图片变换流水线	Image 与每个变换做成 frozen dataclass(slots)：按值比较与哈希、可作缓存键、可 pickle；__post_init__ 用 object.__setattr__ 规范化	core	0	
+1278	imgx.pool-task-granularity	低层设计	图片变换流水线	进程池任务粒度=一张图×全部流水线，用 initializer 每进程只收一次流水线，单图出错只回错误字符串	core	0	
+1279	imgx.batch-sizing-math	低层设计	图片变换流水线	百万图切成每批 50 张的任务（2 万个、每个约 200 秒），够长摊薄队列开销、够短便于失败重做	core	0	
+1280	imgx.content-addressed-output	低层设计	图片变换流水线	输出路径含规范化 JSON（键排序）的 SHA-256 前 16 位，键顺序不同的相同变换得同一路径	core	0	
+1281	imgx.shape-precheck	低层设计	图片变换流水线	每步多一个 output_size(h, w) 只推演形状不碰像素，在第一张图前发现裁剪越界，StepError 带 index		0	
+1282	imgx.prefix-cache	低层设计	图片变换流水线	同一张图跑多条前几步相同的流水线：键 (输入图, 步骤前缀)，从最长已缓存前缀接着算；不用 id 做键		0	
+1283	imgx.peephole-merge	低层设计	图片变换流水线	相邻步骤合并只做保证等价的改写：Rotate 相加取模；Brighten 因截断到 0..255 仅同号可合并，合并级联		0	
+1284	imgx.library-swap	低层设计	图片变换流水线	换图像库时把库调用包进 Step.apply，流水线、注册表、缓存、进程池不变，只换 Image 与逐像素函数		0	
+1285	jobboard.specification	低层设计	招聘信息平台（Job Board）	规格模式：每条件一个对象，search 只依赖 ok(job)，用 & 与 | 组合成树，也可翻译成数据库或搜索引擎过滤器	core	0	
+1286	jobboard.application-permissions-in-service	低层设计	招聘信息平台（Job Board）	权限放在服务方法内：撤回只能申请人、推进只能职位所属雇主，不靠接口层或调用方自觉	core	0	
+1287	jobboard.inverted-index-candidates	低层设计	招聘信息平台（Job Board）	内存搜索：关键词倒排索引求交集得候选集，再与开放未过期规格及用户规格逐个判断，适合几万职位		0	
+1288	jobboard.expiry-by-comparison	低层设计	招聘信息平台（Job Board）	过期靠 expires_at 与当前时间比较（OpenSpec），定时任务只负责归档，清理延迟也不会搜到过期职位		0	
+1289	jobboard.resume-version-snapshot	低层设计	招聘信息平台（Job Board）	投递时锁定当时的简历版本，申请只存对象引用与版本		0	
+1290	kv.fetch-flow	低层设计	可配置淘汰策略的内存键值存储	命令统一流程 _fetch：加锁、惰性过期、类型检查、腾空间、访问	core	0	
+1291	kv.expire-vs-evict	低层设计	可配置淘汰策略的内存键值存储	过期（到点消失）与淘汰（内存不够牺牲）是两回事	core	0	
+1292	kv.capacity-bytes	低层设计	可配置淘汰策略的内存键值存储	容量按字节而非键数：每个值提供 size_of，循环淘汰		0	
+1293	kv.txn-snapshot-rollback	低层设计	可配置淘汰策略的内存键值存储	事务：缓冲、同锁提交、首次触碰留快照回滚；淘汰的键不回滚		0	
+1294	kv.lfu-decay-tinylfu	低层设计	可配置淘汰策略的内存键值存储	LFU 的新数据易被淘汰、旧高频不衰减：频次衰减与 TinyLFU 准入		0	
+1295	kv.policy-switch	低层设计	可配置淘汰策略的内存键值存储	运行时切换策略：用现有键重建新策略对象，丢失访问历史		0	
+1296	logfw.three-stage-pipeline	低层设计	多线程日志框架	三线程流水线：接入分配序号、写入成批落盘、确认独立回调	core	0	
+1297	logfw.ack-and-failure	低层设计	多线程日志框架	确认语义：写成功才 set_result，I/O 失败整批 set_exception，log 本身不抛	core	0	
+1298	logfw.db-sink	低层设计	多线程日志框架	日志落库：批量插入、按时间分区、先落文件或队列再导入		0	
+1299	plot.compat-table	低层设计	停车场管理系统	车型到车位类型的兼容表 COMPAT（摩托 SMALL/REGULAR/LARGE，卡车 LARGE）：先试最合适再升级，大车位留给大车	core	0	
+1300	plot.pay-before-release	低层设计	停车场管理系统	离场先缴费成功再释放车位，缴费失败则抛异常、车位保持占用可重试，避免一个车位两辆车	core	0	
+1301	plot.fee-tiers-boundaries	低层设计	停车场管理系统	阶梯计费边界：前 15 分钟免费、首小时、之后每小时向上取整、每天封顶；遗失票按最高日费		0	
+1302	plot.recover-from-tickets	低层设计	停车场管理系统	重启后遍历持久化的未结束票据，重建分配器的占用状态，以票据为准		0	
+1303	rl.composite-weighted	低层设计	限流器（单机类设计）	多规则组合：全部通过才放行且不重复扣减，带 cost 的权重请求		0	
+1304	recent.per-customer-lru	低层设计	最近浏览记录	每客户定长 LRU：view 语义与 limit 校验	core	0	
+1305	recent.outer-lru-customer-cap	低层设计	最近浏览记录	外层 LRU 限制客户数，LRU 套 LRU		0	
+1306	recent.tolerated-race	低层设计	最近浏览记录	被淘汰客户的旧引用写入丢失，尽力而为数据可接受		0	
+1307	recent.first-unique-visitor	低层设计	最近浏览记录	严格 O(1) 的第一个只访问一次的客户		0	
+1308	recent.limit-resize-and-window	低层设计	最近浏览记录	limit 调整惰性裁剪与最近 7 天时间戳		0	
+1309	recent.redis-production	低层设计	最近浏览记录	生产形态：Redis 有序集合、事件合并、登录后账号合并		0	
+1310	waitlist.drain-single-rule	低层设计	餐厅候位 API	入座规则写成不读实例状态的纯函数 _drain，所有改状态的入口统一收尾	core	0	
+1311	waitlist.best-fit	低层设计	餐厅候位 API	多张空桌都坐得下时选容量最小的，同容量取编号小	core	0	
+1312	waitlist.first-fit-skip	低层设计	餐厅候位 API	从队首往后找第一个坐得下的，坐不下的留在原位保持顺序	core	0	
+1313	waitlist.size-buckets	低层设计	餐厅候位 API	名单很长时按人数分桶，不变量成立时 finish 只需为刚空出的桌找人		0	
+1314	waitlist.starvation-counter	低层设计	餐厅候位 API	防饿死：被越过次数达到上限的人挡住后面，计数器优于优先级		0	
+1315	waitlist.estimate-by-simulation	低层设计	餐厅候位 API	等位估计：在队伍副本上复用同一 _drain 往前推演，而非平均等待乘位置		0	
+1316	waitlist.change-size	低层设计	餐厅候位 API	改人数：先校验、再改、最后统一收尾，改小可能带动后面入座		0	
+1317	waitlist.python-idioms	低层设计	餐厅候位 API	Python 写法：for-else、dataclasses.replace 复制、slots 内部数据类		0	
+1318	sched.two-level-queue	低层设计	任务调度器	两级队列：定时堆管何时，就绪队列管谁先	core	0	
+1319	sched.misfire-overlap	低层设计	任务调度器	错过触发合并与同一任务不重叠	core	0	
+1320	sched.fixed-rate-vs-delay	低层设计	任务调度器	固定频率、固定延迟、cron 三种下一次算法	core	0	
+1321	sched.priority-aging	低层设计	任务调度器	优先级饥饿：老化或保留最低份额		0	
+1322	sched.recover-on-restart	低层设计	任务调度器	重启读库重建定时堆，错过的按 misfire 处理		0	
+1323	sheet.set-validate-before-commit	低层设计	电子表格引擎	set 顺序：校验、解析、查环都在写入之前	core	0	
+1324	sheet.formula-ast	低层设计	电子表格引擎	公式存成解析好的不可变语法树，不存字符串	core	0	
+1325	sheet.dependency-graph	低层设计	电子表格引擎	依赖正反两张边表（_deps/_users），改线先摘旧边	core	0	
+1326	sheet.cycle-detection-dfs	低层设计	电子表格引擎	环检测：沿依赖 DFS 能否走回被写格子，菱形不是环	core	0	
+1327	sheet.cached-incremental-recalc	低层设计	电子表格引擎	缓存值加增量重算，避免惰性求值的指数爆炸	core	0	
+1328	sheet.topological-order-diamond	低层设计	电子表格引擎	沿反向边后序得拓扑序，菱形下游只算一次		0	
+1329	sheet.error-as-value	低层设计	电子表格引擎	出错即值：错误对象存进缓存，下游读到重抛		0	
+1330	sheet.recursive-descent-precedence	低层设计	电子表格引擎	递归下降：一个优先级一层函数		0	
+1331	sheet.range-dependencies	低层设计	电子表格引擎	区间展开成每格依赖，生成器共用，大表改区间节点		0	
+1332	sheet.iterative-postorder	低层设计	电子表格引擎	迭代后序遍历避免 5000 格链递归溢出		0	
+1333	tw.follow-two-tables	低层设计	微博客与个性化信息流	关注关系存正向和反向两份：一份服务读时聚合，一份服务扇出	core	0	
+1334	tw.celebrity-threshold	低层设计	微博客与个性化信息流	明星阈值（如粉丝超 10 万）：不扇出，读时实时拉取并合并	core	0	
+1335	tw.delete-filter-on-read	低层设计	微博客与个性化信息流	删除与取关读时过滤，不清每个粉丝的缓存		0	
+1336	tw.cache-ids-or-content	低层设计	微博客与个性化信息流	缓存存 ID 还是完整内容：存 ID 省空间且删除只改一处		0	
+1337	tw.fanout-active-only	低层设计	微博客与个性化信息流	只给近 30 天活跃用户写缓存，进一步压低写放大		0	
+1338	lc721.shared-email-components	TikTok 高频设计题	LC 721 账户合并	识别：共享某元素即同组且可传递，即连通分量(并查集/DFS/BFS)；同名不一定同人	core	0	
+1339	lc721.email-first-owner-union	TikTok 高频设计题	LC 721 账户合并	邮箱记住第一个拥有它的账户，再遇到就合并，传递性由并查集保证，免去两两比较 O(N²k)	core	0	
+1340	lc721.group-sort-output	TikTok 高频设计题	LC 721 账户合并	按并查集的根分组邮箱，ASCII 排序，补上名称，复杂度 O(NαE+E log E)		0	
+1341	trie.prefix-sharing	TikTok 高频设计题	LC 208 实现 Trie (前缀树)	公共前缀共用路径：空间由 O(ΣL²) 降到 O(总字符)	core	0	
+1342	trie.end-flag	TikTok 高频设计题	LC 208 实现 Trie (前缀树)	路径存在与单词结尾分开：end 标记区分 search 与 startsWith	core	0	
+1343	lc236.postorder-report	TikTok 高频设计题	LC 236 二叉树的最近公共祖先	后序递归：每个子树汇报找到了谁，碰到 p 或 q 立刻返回自己，左右都非空则当前节点是 LCA，O(n)	core	0	
+1344	lc236.return-self-early-pitfall	TikTok 高频设计题	LC 236 二叉树的最近公共祖先	碰到 p 或 q 必须立刻返回，且左右两边都递归完再判断，否则会漏掉分居两侧或返回子孙	core	0	
+1345	lc236.parent-pointer-iterative	TikTok 高频设计题	LC 236 二叉树的最近公共祖先	深树不递归：显式栈记父指针，p 及祖先入集合，q 向上爬；多次查询用倍增表 O(log n)		0	
+1346	lc1926.bfs-shortest-path	TikTok 高频设计题	LC 1926 迷宫中离入口最近的出口	识别：网格加每步代价相同求最少步数是无权图最短路，用 BFS 而非 DFS	core	0	
+1347	lc1926.mark-on-enqueue	TikTok 高频设计题	LC 1926 迷宫中离入口最近的出口	入队时就标记已访问，同一格不会被多次加入，队列带步数	core	0	
+1348	lc1926.entrance-not-exit	TikTok 高频设计题	LC 1926 迷宫中离入口最近的出口	出口是边界上的空格，入口本身在边界上也不算出口，第一次碰到即返回	core	0	
+1349	islands.connected-component-flood-fill	TikTok 高频设计题	LC 694 不同岛屿的数量	四连通块的 DFS/BFS 遍历与 seen 标记	core	0	
+1350	islands.translation-invariant-signature	TikTok 高频设计题	LC 694 不同岛屿的数量	平移不变签名：相对行优先首格的偏移集合	core	0	
+1351	islands.set-dedup-of-signatures	TikTok 高频设计题	LC 694 不同岛屿的数量	签名放进哈希集合去重，O(mn)，不做两两比较	core	0	
+1352	lc200.flood-fill-count	TikTok 高频设计题	LC 200 岛屿数量	数连通分量：按行扫描，遇到未处理陆地计数加一并 DFS/BFS 把整座岛沉掉，O(mn)	core	0	
+1353	lc200.recursion-limit-explicit-stack	TikTok 高频设计题	LC 200 岛屿数量	递归深度可达 mn 会触发 RecursionError，改显式栈并在入栈时标记		0	
+1354	lc200.union-find-online	TikTok 高频设计题	LC 200 岛屿数量	并查集：陆地逐个加入时在线维护岛数，合并成功则减一（LC 305）		0	
+1355	lc101.mirror-pair-traversal	TikTok 高频设计题	LC 101 对称二叉树	对称等价于左右子树互为镜像：成对遍历且指针交叉配对（外侧配外侧、内侧配内侧），O(n)	core	0	
+1356	lc101.none-pairs-and-check-order	TikTok 高频设计题	LC 101 对称二叉树	空子树对也要入栈，先判双空再判一空再比值，避免漏掉结构不同	core	0	
+1357	lc101.recursive-and-bfs-variants	TikTok 高频设计题	LC 101 对称二叉树	递归 mirror(a,b) 与 BFS 成对出入队的等价写法，及 LC 100/226/572 同模式		0	
+1358	ttkb.payment-outside-txn	TikTok 高频设计题	活动票务预订（防超卖）	付款外部调用放在数据库事务之外，拆成两个短事务	core	0	
+1359	ttkb.idempotent-release	TikTok 高频设计题	活动票务预订（防超卖）	所有释放动作条件更新加幂等保护，库存不会被释放两次	core	0	
+1360	billing.versioned-rules	TikTok 高频设计题	计费 / 计税引擎	带生效时间的规则版本，交易按发生时间取版本	core	0	
+1361	billing.tax-on-fees	TikTok 高频设计题	计费 / 计税引擎	税是链上排在费用后的规则，按 kind 汇总费用	core	0	
+1362	billing.refund-version	TikTok 高频设计题	计费 / 计税引擎	退款手续费按原交易的规则版本计算		0	
+1363	billing.fail-loud-no-version	TikTok 高频设计题	计费 / 计税引擎	无版本即报错，静默返回 0 会漏收		0	
+1364	billing.rule-dag	TikTok 高频设计题	计费 / 计税引擎	规则依赖复杂时建 DAG 拓扑排序，有环拒绝发布		0	
+1365	dle.post-order-idempotent-balanced	TikTok 高频设计题	复式账本（类设计）	post 顺序：查去重表，按币种汇总各腿校验为 0，再在同一临界区追加日志、登记去重、更新余额与历史	core	0	
+1366	dle.balance-at-bisect	TikTok 高频设计题	复式账本（类设计）	每个账户币种维护序号列表与更新后余额列表，bisect_right 二分取不大于给定序号的最后一项，O(log n)		0	
+1367	dle.tamper-evidence	TikTok 高频设计题	复式账本（类设计）	证明账没被改：存储只追加、verify 重算、按块哈希链并定期发布最新哈希		0	
+1368	dle.log-partition-cold	TikTok 高频设计题	复式账本（类设计）	日志按时间分区旧分区转冷存储，余额索引与快照保证读取不依赖旧分区		0	
+1369	xfer.in-progress-placeholder	TikTok 高频设计题	幂等转账服务	进行中占位记录加 done 事件，等待者拿结果，超时返回 StillRunning	core	0	
+1370	xfer.remember-business-reject	TikTok 高频设计题	幂等转账服务	业务拒绝（余额不足）要保存，超时与暂时故障不保存	core	0	
+1371	xfer.crash-replay-stuck-key	TikTok 高频设计题	幂等转账服务	占键后崩溃键卡在进行中：开始时间加恢复任务同键重放		0	
+1372	xfer.multi-instance-db-constraint	TikTok 高频设计题	幂等转账服务	多实例：内存锁换成数据库唯一约束与行锁，等待改轮询或订阅		0	
+1373	inst.annuity-formula	TikTok 高频设计题	分期计划生成器	等额本息：月利率 r=apr_bps/10000/12，每期还款额 P·r/(1−(1+r)^−n) 取整一次，利息=剩余本金×r，本金=还款额−利息	core	0	
+1374	inst.last-period-absorbs	TikTok 高频设计题	分期计划生成器	最后一期本金取剩余本金使余额恰好归零，代价是最后一期合计金额可能差几分，合同需声明	core	0	
+1375	inst.add-months-clamp	TikTok 高频设计题	分期计划生成器	到期日=起始日加 k 个月并取 min(day, 当月天数)，两周一期用 14×k 天；合同到期日与顺延扣款日分开存	core	0	
+1376	inst.equal-principal-variant	TikTok 高频设计题	分期计划生成器	等额本金：每期本金相同、利息按剩余本金算，只把每期还款额换成每期本金份额，作为另一策略函数		0	
+1377	inst.prepay-overdue-allocation	TikTok 高频设计题	分期计划生成器	提前还款用剩余本金与期数重生成新计划；逾期另设还款记录与分桶，逾期费是新费用行；还款按固定顺序冲抵		0	
+1378	inst.immutable-plan-daily-interest	TikTok 高频设计题	分期计划生成器	计划不可变可追溯；按日计息每期利息=剩余本金×年利率÷365×当期天数，各期还款额不再相等		0	
+1379	merchantrl.design-pieces	TikTok 高频设计题	按商户限流	五个组件各管一事：令牌桶、惰性补充、LRU、分段锁、时钟注入，及类划分	core	0	
+1380	merchantrl.token-bucket-choice	TikTok 高频设计题	按商户限流	为什么选令牌桶：允许受限突发、只存两个字段、速率与突发可分别配置	core	0	
+1381	merchantrl.lazy-refill	TikTok 高频设计题	按商户限流	惰性补充：访问时补 max(0, now−updated)×rate 并以突发为上限，无需定时器	core	0	
+1382	merchantrl.retry-after-oversize-cost	TikTok 高频设计题	按商户限流	retry_after = 缺少令牌 ÷ 速率；cost 大于突发上限直接拒绝并返回无穷等待	core	0	
+1383	merchantrl.eviction-extra-burst	TikTok 高频设计题	按商户限流	LRU 淘汰的代价：未补满的桶被淘汰后再出现多得一次突发，新桶是满的	core	0	
+1384	merchantrl.config-hot-reload	TikTok 高频设计题	按商户限流	配置热更新：下次 allow 读新配置，容量变小时 min 截断现有令牌		0	
+1385	querycond.layered-pipeline	TikTok 高频设计题	条件解析与内存表查询（SQL 风格）	分层：tokenize 到 Parser 到语法树到 matches 到 Table，各层输入输出清晰	core	0	
+1386	querycond.lexer	TikTok 高频设计题	条件解析与内存表查询（SQL 风格）	词法先行：split 分不清引号内的 AND，长运算符写前面	core	0	
+1387	querycond.precedence-parens	TikTok 高频设计题	条件解析与内存表查询（SQL 风格）	递归下降表达优先级与括号，解析后检查无多余 token	core	0	
+1388	querycond.no-eval	TikTok 高频设计题	条件解析与内存表查询（SQL 风格）	不用 eval：查询字符串不可信，语法树只含自定义节点	core	0	
+1389	querycond.null-three-valued	TikTok 高频设计题	条件解析与内存表查询（SQL 风格）	NULL 的三值逻辑：matches 返回 True/False/None，select 用 is True 过滤		0	
+1390	querycond.index-candidate-superset	TikTok 高频设计题	条件解析与内存表查询（SQL 风格）	索引候选集必须是结果的超集再复查：AND 可用，OR 用索引会漏行		0	
+1391	querycond.like-orderby-pitfalls	TikTok 高频设计题	条件解析与内存表查询（SQL 风格）	LIKE 转正则用 fullmatch 与 re.escape，ORDER BY 遇 NULL 的排序键		0	
+1392	querycond.operator-pipeline	TikTok 高频设计题	条件解析与内存表查询（SQL 风格）	JOIN、GROUP BY 演进为算子链，过滤下推		0	
