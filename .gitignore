@@ -65,3 +65,9 @@ research/domains/bagu/
 skeleton/sysdesign.yaml
 research/sysdesign/
 vault/domains/sysdesign/
+
+# Private material (employer internals, interviews a company must not see): local and Anki only, never GitHub.
+# Guarded by scripts/private_guard.py (git hooks) against the terms in ~/.config/trellis/private_terms.txt.
+vault/private/
+skeleton/private-*.yaml
+research/private/
