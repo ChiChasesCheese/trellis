@@ -71,3 +71,7 @@ vault/domains/sysdesign/
 vault/private/
 skeleton/private-*.yaml
 research/private/
+
+# Headlands interview prep: private, local and Anki only (Chi, 2026-11-09). Earlier history still holds it.
+vault/interviews/companies/headlands/
+research/companies/headlands/
