@@ -144,6 +144,7 @@ def lld_order(cfg: dict, home: dict) -> list[dict]:
 
 
 WORK_PART = "4 公司实践"
+MAP_PART = "0 全生命周期总览"
 STAGES = {"overview": "1 全景", "core": "2 核心", "deep": "3 深入"}
 LEVEL = {"必会": 1.0, "追问": 0.6, "加分": 0.3}
 
@@ -161,7 +162,7 @@ def work_order(cfg: dict, home: dict, points) -> list[dict]:
     """New cards of the work deck in study order, the system-design way: stage first (the system map and the payment life
     cycle, then the core mechanisms, then depth); inside a stage the more required level on the heavier exam point first
     (the point's interview weight from the system-design plan), then moved behind the cards here that teach its
-    prerequisites. Each card gets the sub-deck it is dealt into: its stage, and 先学 or 后学 by prerequisite layer.
+    prerequisites. A `seq::<n>` tag puts authored map cards first in their stage. Each card gets the sub-deck it is dealt into: its stage, and 先学 or 后学 by prerequisite layer.
     Merged and dropped cards are suspended and never dealt."""
     from trellis.plan import PointModel, order_by_prereq, prereq_layers
     root = work_root(cfg)
@@ -187,7 +188,9 @@ def work_order(cfg: dict, home: dict, points) -> list[dict]:
         stage = (tag(c, "stage") or ["core"])[0]
         ks = kps[str(c["cardId"])]
         w = weight.get(ks[0], floor) if ks else floor
-        return (list(STAGES).index(stage) if stage in STAGES else 1, -LEVEL.get((tag(c, "level") or ["追问"])[0], 0.6) * w, c["deckName"], c["due"])
+        seq = tag(c, "seq")  # an authored reading order (the map cards of a stage) comes before the weight order
+        return (list(STAGES).index(stage) if stage in STAGES else 1, int(seq[0]) if seq and seq[0].isdigit() else 999,
+                -LEVEL.get((tag(c, "level") or ["追问"])[0], 0.6) * w, c["deckName"], c["due"])
     new.sort(key=key)
     model = PointModel(weight, kps, dict(points.prereq) if points else {})
     by_id = {str(c["cardId"]): c for c in new}
@@ -197,7 +200,8 @@ def work_order(cfg: dict, home: dict, points) -> list[dict]:
         ids = order_by_prereq(ids, model)
         layer = prereq_layers(ids, model)
         for i in ids:
-            by_id[i]["part"] = f"{part} · {'先学' if layer.get(i, 0) == 0 else '后学'}"
+            # Anki shows a sub-deck's new cards in the order they were added, so authored map cards get a sub-deck of their own, first
+            by_id[i]["part"] = MAP_PART if tag(by_id[i], "seq") else f"{part} · {'先学' if layer.get(i, 0) == 0 else '后学'}"
             out.append(by_id[i])
     return out
 
