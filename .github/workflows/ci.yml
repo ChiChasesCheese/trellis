@@ -66,9 +66,6 @@ jobs:
               - *common
               - 'vault/interviews/core/coding/amazon/**'
               - 'vault/interviews/companies/amazon/**'
-            headlands:
-              - *common
-              - 'vault/interviews/companies/headlands/**'
             airbnb:
               - *common
               - 'vault/interviews/companies/airbnb/**'
