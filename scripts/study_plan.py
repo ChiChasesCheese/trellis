@@ -17,6 +17,7 @@ deck tagged 今日计划::已学; the report card is reset to new each day so it
 """
 from __future__ import annotations
 
+import fcntl
 import html
 import json
 import math
@@ -1272,7 +1273,17 @@ def main() -> int:
         minutes = int(args[args.index("--minutes") + 1]) if "--minutes" in args else 30
         serve(host, minutes)
         return 0
-    run(apply_to_anki=cmd == "daily")
+    if cmd != "daily":
+        run(apply_to_anki=False)
+        return 0
+    # one rebuild at a time: a late scheduled run and a run by hand would otherwise move the same cards between decks together
+    with open(OUT / "daily.lock", "w") as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print("another daily run holds the lock; nothing done")
+            return 1
+        run(apply_to_anki=True)
     return 0
 
 
