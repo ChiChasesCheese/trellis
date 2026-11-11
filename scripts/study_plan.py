@@ -51,6 +51,7 @@ DECK = "今日计划"
 OLD_DECK = "今日 100（面试轮廓）"
 DONE_TAG = "今日计划::已学"
 REPORT_TAG = "plan::report"
+WEAK_PART = "0 弱项补强"  # sorts before 0 昨天没学完 and every sitting
 STAGES = {"s00": "1 弱项补强", "s05": "3 题目与整轮", "s07": "3 题目与整轮", "s08": "3 题目与整轮"}
 STAGE_DEFAULT = "2 概念与技术"
 SUBJECT_DECK = daily_extra.SUBJECT_DECK[daily_extra.SD_ROOT]
@@ -1134,11 +1135,18 @@ def run(apply_to_anki: bool) -> None:
         ahead = [i for i in plan_sprint.deal_today(sprint, seen, int(cfg["daily_new"]) + 60) if i in anki]
         p.picked = capped(ahead, cfg.get("family_caps", {}), {c.id: c.topic for c in cards})[:int(cfg["daily_new"])]
         carried = [i for i in carried if i in set(p.picked)]  # the sequence already puts what is left first; nothing is added on top
+    # weak spots a real mock exposed come before coverage and the sprint: the plan's weights alone never reach them
+    weak = [c.id for c in cards if tree.top(c.topic) == "s00" and c.id in anki and c.id not in set(carried)
+            and anki[c.id]["queue"] == 0 and not (traces.get(c.id) and traces[c.id].reps)][: int(cfg.get("weak_per_day", 20))]
+    rest = [i for i in p.picked if i not in set(carried) and i not in set(weak)]
+    p.picked = carried + weak + rest[: max(0, int(cfg.get("daily_new", 100)) - len(carried) - len(weak))]
     stages = defaultdict(list)
     topic_of = {c.id: c.topic for c in cards}
     if carried:
         stages[daily_extra.CARRIED] = list(carried)
-    fresh = [i for i in p.picked if i not in set(carried)]
+    if weak:
+        stages[WEAK_PART] = list(weak)
+    fresh = [i for i in p.picked if i not in set(carried) and i not in set(weak)]
     point_of = {c.id: c.point for c in cards}
     for n, (theme, group) in enumerate(into_sessions(fresh, topic_of, tree.top, tree.title, int(cfg.get("sessions", 5)), point_of, model), 1):
         layers = prereq_layers(group, model) if model else {}
