@@ -180,6 +180,11 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
 - **Private material never reaches GitHub.** An employer's internals or interview notes a company must not see live only in `sources/local/private/<name>/` (or `vault/private/`, `skeleton/private-*.yaml`, all gitignored) and in Anki, which may sync them to Chi's phone. Never stage them, never quote them in a public file, never send them to another cloud service. `scripts/private_guard.py` runs as pre-commit and pre-push hooks (`scripts/install_private_guard.sh`) against the private term list in `~/.config/trellis/private_terms.txt`; a refusal is never bypassed with `--no-verify`.
 - **Before any statistic or report from Anki, sync first:** `git pull`, then AnkiConnect `sync`, waiting until it answers again, and only then read or add anything up. Chi studies on his phone, so without a sync the desktop collection misses those reviews and every number is wrong.
 - A new system-design card or LeetCode problem must be annotated, or the daily planner gives it no weight: exam points for cards, technique and pitfall tags for problems. A new exam point also needs its prerequisite edges. `scripts/plan_maintain.py` lists what is missing.
+- The quick deck (碎片速刷, ten-second cards; `scripts/quick_deck.py`, card data only in `sources/local/quick/`) is planned by
+  `scripts/quick_plan.py`, called from `study_plan.py daily`: one priority per unseen card from the answers so far, sorted and cut at
+  the day's number. The cut is made with decks (the day's cards in the deck, the rest in `碎片速刷::后备`, whose preset deals 0 new),
+  because new-card positions cannot be written. Options on those cards carry `class="tappable"` and `onclick`: without them
+  AnkiMobile reads every tap as "show answer".
 - A leaf is weak only on cards with a verdict (taken / slipped); young cards are not evidence, and a weak leaf whose grown
   cards are unreviewed is *settling* and is not a `grow` target (ADR 0009).
 

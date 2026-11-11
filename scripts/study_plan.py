@@ -40,6 +40,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import daily_extra  # noqa: E402
 import plan_kp  # noqa: E402
 import plan_sprint  # noqa: E402
+import quick_plan  # noqa: E402
 from trellis.plan import FIRST_PASS_MAX, HELD_CARDS, READ_UNIT, CardInfo, Edge, PointModel, coverage_by_domain, coverage_order, essence_cards, order_by_prereq, plan, prereq_layers  # noqa: E402
 from trellis.project import load_project  # noqa: E402
 from trellis.sequence import core_leaves  # noqa: E402
@@ -52,6 +53,7 @@ OLD_DECK = "今日 100（面试轮廓）"
 DONE_TAG = "今日计划::已学"
 REPORT_TAG = "plan::report"
 WEAK_PART = "0 弱项补强"  # sorts before 0 昨天没学完 and every sitting
+QUICK_PART = "0 速刷错题"  # after those two, before every sitting
 STAGES = {"s00": "1 弱项补强", "s05": "3 题目与整轮", "s07": "3 题目与整轮", "s08": "3 题目与整轮"}
 STAGE_DEFAULT = "2 概念与技术"
 SUBJECT_DECK = daily_extra.SUBJECT_DECK[daily_extra.SD_ROOT]
@@ -1140,15 +1142,29 @@ def run(apply_to_anki: bool) -> None:
     weak = [c.id for c in sorted(cards, key=lambda c: first.index(c.topic) if c.topic in first else len(first))
             if tree.top(c.topic) == "s00" and c.id in anki and c.id not in set(carried)
             and anki[c.id]["queue"] == 0 and not (traces.get(c.id) and traces[c.id].reps)][: int(cfg.get("weak_per_day", 20))]
-    rest = [i for i in p.picked if i not in set(carried) and i not in set(weak)]
-    p.picked = carried + weak + rest[: max(0, int(cfg.get("daily_new", 100)) - len(carried) - len(weak))]
+    # the quick deck (碎片速刷) is planned from the same answers: its order and number, and the points missed there,
+    # whose full cards come next here. It is local material, so a checkout without it skips the step.
+    quick, deep = {}, []
+    if model and (quick_plan.qd.HOME / "points.json").exists():
+        try:
+            quick = quick_plan.plan(call, apply_to_anki, model, now)
+            unseen_rank = {c.id: c.rank for c in cards if c.id in anki and c.id not in set(carried) | set(weak)
+                           and anki[c.id]["queue"] == 0 and not (traces.get(c.id) and traces[c.id].reps)}
+            deep = quick_plan.full_cards(quick["missed"], kp_state["points"].card, unseen_rank, quick_plan.settings()["deepen_per_day"])
+        except Exception as e:  # the main plan never fails for the quick deck's sake
+            print(f"quick deck plan skipped: {type(e).__name__}: {e}")
+    first_part = set(carried) | set(weak) | set(deep)
+    rest = [i for i in p.picked if i not in first_part]
+    p.picked = carried + weak + deep + rest[: max(0, int(cfg.get("daily_new", 100)) - len(first_part))]
     stages = defaultdict(list)
     topic_of = {c.id: c.topic for c in cards}
     if carried:
         stages[daily_extra.CARRIED] = list(carried)
     if weak:
         stages[WEAK_PART] = list(weak)
-    fresh = [i for i in p.picked if i not in set(carried) and i not in set(weak)]
+    if deep:
+        stages[QUICK_PART] = list(deep)
+    fresh = [i for i in p.picked if i not in first_part]
     point_of = {c.id: c.point for c in cards}
     for n, (theme, group) in enumerate(into_sessions(fresh, topic_of, tree.top, tree.title, int(cfg.get("sessions", 5)), point_of, model), 1):
         layers = prereq_layers(group, model) if model else {}
@@ -1187,6 +1203,8 @@ def run(apply_to_anki: bool) -> None:
         lc_analysis.main()
     extra = daily_extra.prepare(cfg, sd_value, carry=carry, points=kp_state.get("model"))
     body += points_report(p, cards) + extra_report(extra)
+    if quick:
+        body += f"<p>{html.escape(quick_plan.line(quick))}" + (f" · 其中 {len(deep)} 个考点的完整卡排进了今天" if deep else "") + "</p>"
     summary["extra"] = {"lc_new": len(extra.lc_new), "lc_similar": len(extra.lc_similar), "lld_new": len(extra.lld_new), "work_new": len(extra.work_new), "reviews": len(extra.reviews),
                         "backlog": extra.backlog}
     OUT.mkdir(parents=True, exist_ok=True)
