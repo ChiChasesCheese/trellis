@@ -22,18 +22,23 @@ from itertools import accumulate, groupby
 
 
 def minimum_moves(nums: list[int], k: int, max_changes: int) -> int:
-    # c：Alice 站在某个 1 上，不用"造 1"就能拿到的相邻 1 的个数（0、1、1 步），最多 3 个
-    longest_run = max((len(list(g)) for v, g in groupby(nums) if v), default=0)
+    # c：Alice 站在某个 1 上，不用"造 1"就能拿到的相邻 1 的个数（0、1、1
+    # 步），最多 3 个
+    runs = (len(list(g)) for v, g in groupby(nums) if v)
+    longest_run = max(runs, default=0)
     c = min(longest_run, 3, k)
-    if max_changes >= k - c:                   # 剩下的 k-c 个全靠"造 1 再换过来"，每个 2 步
+    # 剩下的 k-c 个全靠"造 1 再换过来"，每个 2 步
+    if max_changes >= k - c:
         return max(c - 1, 0) + 2 * (k - c)
 
     # 否则造 1 的次数全部用完，还得把 need 个已有的 1 挪到 Alice 身边
     need = k - max_changes
     pos = [i for i, x in enumerate(nums) if x]
-    pre = list(accumulate(pos, initial=0))     # pre[i] = pos[0] + ... + pos[i-1]
+    # pre[i] = pos[0] + ... + pos[i-1]
+    pre = list(accumulate(pos, initial=0))
 
-    def cost(l: int) -> int:                   # 窗口 pos[l : l+need] 全部挪向中位数的总步数
+    # 窗口 pos[l : l+need] 全部挪向中位数的总步数
+    def cost(l: int) -> int:
         r, m = l + need, l + need // 2
         left = pos[m] * (m - l) - (pre[m] - pre[l])
         right = (pre[r] - pre[m + 1]) - pos[m] * (r - m - 1)

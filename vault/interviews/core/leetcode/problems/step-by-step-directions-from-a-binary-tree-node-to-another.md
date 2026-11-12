@@ -16,19 +16,26 @@ slug: step-by-step-directions-from-a-binary-tree-node-to-another
 **推导。** 暴力：先建父指针和邻接表，再从起点 BFS 到终点并记录方向，`O(n)` 但要建图。洞察：两条根路径的最长公共前缀对应 LCA，起点从 LCA 向下的路径长度就是要向上走的步数，所以不需要显式找 LCA 节点。
 
 ```python
-def get_directions(root: TreeNode | None, startValue: int, destValue: int) -> str:
-    def find(node: TreeNode | None, target: int, path: list[str]) -> bool:
+def get_directions(
+    root: TreeNode | None, startValue: int, destValue: int
+) -> str:
+    def find(
+        node: TreeNode | None, target: int, path: list[str]
+    ) -> bool:
         if node is None:
             return False
         if node.val == target:
             return True
-        path.append("L")                         # 先试左子树，失败再回溯
+        # 先试左子树，失败再回溯
+        path.append("L")
         if find(node.left, target, path):
             return True
-        path[-1] = "R"                           # 复用同一个位置改成 R 试右子树
+        # 复用同一个位置改成 R 试右子树
+        path[-1] = "R"
         if find(node.right, target, path):
             return True
-        path.pop()                               # 两边都没有：撤销这一步
+        # 两边都没有：撤销这一步
+        path.pop()
         return False
 
     to_start: list[str] = []
@@ -36,8 +43,10 @@ def get_directions(root: TreeNode | None, startValue: int, destValue: int) -> st
     find(root, startValue, to_start)             # 根到起点的路径
     find(root, destValue, to_dest)               # 根到终点的路径
     common = 0
-    while common < min(len(to_start), len(to_dest)) and to_start[common] == to_dest[common]:
-        common += 1                              # 公共前缀对应根到 LCA 的路径，来回都不用走
+    limit = min(len(to_start), len(to_dest))
+    while common < limit and to_start[common] == to_dest[common]:
+        # 公共前缀对应根到 LCA 的路径，来回都不用走
+        common += 1
     return "U" * (len(to_start) - common) + "".join(to_dest[common:])
 ```
 
@@ -49,10 +58,14 @@ def get_directions(root: TreeNode | None, startValue: int, destValue: int) -> st
 - 链状树深度达 `10^5`，递归版本会 `RecursionError`，改用显式栈，遍历时记录父指针，再沿父指针回溯出两条根路径：
 
 ```python
-def get_directions_iterative(root: TreeNode | None, startValue: int, destValue: int) -> str:
-    parent: dict[int, tuple[int, str]] = {}      # 子节点值 -> (父节点值, 从父到子的方向)
+def get_directions_iterative(
+    root: TreeNode | None, startValue: int, destValue: int
+) -> str:
+    # 子节点值 -> (父节点值, 从父到子的方向)
+    parent: dict[int, tuple[int, str]] = {}
     stack = [root]
-    while stack:                                 # 显式栈遍历，记录父指针
+    # 显式栈遍历，记录父指针
+    while stack:
         node = stack.pop()
         for child, letter in ((node.left, "L"), (node.right, "R")):
             if child:
@@ -61,7 +74,8 @@ def get_directions_iterative(root: TreeNode | None, startValue: int, destValue: 
 
     def path_from_root(val: int) -> str:
         letters: list[str] = []
-        while val in parent:                     # 沿父指针走到根，再反转
+        # 沿父指针走到根，再反转
+        while val in parent:
             val, letter = parent[val]
             letters.append(letter)
         return "".join(reversed(letters))

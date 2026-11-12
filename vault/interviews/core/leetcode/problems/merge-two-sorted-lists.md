@@ -20,8 +20,11 @@ slug: merge-two-sorted-lists
 **推导。** 把两条链的值倒进数组再排序，是 `O((m+n) log(m+n))`，也浪费了「已有序」这个条件。已有序时，合并后的最小值只可能是两个队头之一，所以每步比较两个队头、取小者，总共 `m+n` 步。结果链头不固定，用一个哑结点当起点，循环里不必区分「第一个结点」。
 
 ```python
-def merge_two_lists(list1: ListNode | None, list2: ListNode | None) -> ListNode | None:
-    dummy = tail = ListNode()       # 哑结点：结果链从 dummy.next 开始，不用特判头
+def merge_two_lists(
+    list1: ListNode | None, list2: ListNode | None
+) -> ListNode | None:
+    # 哑结点：结果链从 dummy.next 开始，不用特判头
+    dummy = tail = ListNode()
     while list1 and list2:
         # 两个队头里较小的那个接到结果尾；相等时取 list1，保持稳定
         if list1.val <= list2.val:
@@ -29,7 +32,8 @@ def merge_two_lists(list1: ListNode | None, list2: ListNode | None) -> ListNode 
         else:
             tail.next, list2 = list2, list2.next
         tail = tail.next
-    tail.next = list1 or list2      # 至多一条还有剩，剩下的本来有序，整段接上
+    # 至多一条还有剩，剩下的本来有序，整段接上
+    tail.next = list1 or list2
     return dummy.next
 ```
 
@@ -40,7 +44,9 @@ def merge_two_lists(list1: ListNode | None, list2: ListNode | None) -> ListNode 
 **拓展优化。**
 - 递归写法：谁的头小，谁就是结果的头，它的 `next` 是「剩下部分的合并」。深度最多 `m+n`。
 ```python
-def merge_two_lists_recursive(list1: ListNode | None, list2: ListNode | None) -> ListNode | None:
+def merge_two_lists_recursive(
+    list1: ListNode | None, list2: ListNode | None
+) -> ListNode | None:
     if not list1 or not list2:           # 一方为空：另一方就是结果
         return list1 or list2
     if list1.val <= list2.val:
@@ -55,5 +61,11 @@ def merge_two_lists_recursive(list1: ListNode | None, list2: ListNode | None) ->
 - 循环后忘了接剩余部分：`[1,2,4]` 与 `[1,3,4]` 会输出 `[1, 1, 2, 3, 4]`，丢掉最后的 `4`。
 - 不用哑结点、直接 `head = None` 再判断：每一步都要多一个「是不是第一个」的分支，容易写出空指针。
 - 递归版深度等于 `m+n`：题目上限是 100，安全；换成万级长度的链就会触到 CPython 约 1000 的递归上限，要改迭代。
+
+**追问。**
+- 合并后去重（相同的值只留一个）：接结点前先和 `tail.val` 比较，相同就跳过，仍是 `O(m+n)`。
+- 不能改原链表（要新建结点）：每次 `tail.next = ListNode(值)`，时间不变，空间变成 `O(m+n)`。
+- 用它排序链表（LC 148）：快慢指针找中点断开，两半递归排序再用本题合并，`O(n log n)` 时间；递归栈 `O(log n)`。
+- 合并 `k` 条链（LC 23）：分治两两合并，共 `log k` 轮，每轮总长 `N`，`O(N log k)`；一条一条往前并会退化成 `O(kN)`。
 
 **同模式。** LC 23 合并 K 个升序链表、LC 148 排序链表、LC 88 合并两个有序数组、LC 86 分隔链表。

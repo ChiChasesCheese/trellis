@@ -20,9 +20,11 @@ from collections import defaultdict, deque
 
 
 def amount_of_time(root: TreeNode, start: int) -> int:
-    graph: defaultdict[int, list[int]] = defaultdict(list)   # 把树变成无向图：值互不相同，直接用值当点
+    # 把树变成无向图：值互不相同，直接用值当点
+    graph: defaultdict[int, list[int]] = defaultdict(list)
 
-    def link(node: TreeNode) -> None:                        # 递归遍历，把每条父子边双向写进邻接表
+    # 递归遍历，把每条父子边双向写进邻接表
+    def link(node: TreeNode) -> None:
         for child in (node.left, node.right):
             if child:
                 graph[node.val].append(child.val)
@@ -32,10 +34,12 @@ def amount_of_time(root: TreeNode, start: int) -> int:
     link(root)
     queue = deque([start])
     seen = {start}
-    minutes = -1                                   # 第 0 层（起点）不花时间
+    # 第 0 层（起点）不花时间
+    minutes = -1
     while queue:
         minutes += 1
-        for _ in range(len(queue)):                # 一次处理完一整层 = 过一分钟
+        # 一次处理完一整层 = 过一分钟
+        for _ in range(len(queue)):
             u = queue.popleft()
             for v in graph[u]:
                 if v not in seen:
@@ -48,15 +52,9 @@ def amount_of_time(root: TreeNode, start: int) -> int:
 
 **复杂度。** 时间 `O(n)`；空间 `O(n)`（邻接表、`seen`、队列、递归栈）。
 
-**易错点。**
-- 只算 `start` 子树的高度（只向下感染）：示例 1 得到 `1`，正确是 `4`，因为感染也会向上传给父节点，再传到别的分支。
-- 没有 `seen`：无向图里来回走，节点被重复入队，层数膨胀甚至死循环。
-- 层数从 `0` 开始计、没有减一：单节点树返回 `1`，正确是 `0`。起点那一层不花时间。
-- 递归建图的深度：链状的 `10^5` 个节点，递归深度 `10^5`，超过 CPython 默认上限约 `1000`，抛 `RecursionError`；要 `sys.setrecursionlimit` 调大，或把建图改成显式栈（见追问）。
+**拓展优化。**
+- 显式栈建图：用 `build_graph(root)` 代替 `link(root)`，其余的 BFS 不变；`10^5` 层的链也不会触到递归上限。
 
-**追问。**
-- 不建图的一遍 DFS：后序遍历，每个节点返回子树高度；遇到 `start` 时记录它向下的高度，沿路向上的每个祖先，用「到 `start` 的距离 + 另一侧子树高度」更新答案，`O(n)` 时间、`O(h)` 额外空间。
-- 建图不想碰递归上限：用显式栈遍历，其余不变：
 ```python
 from collections import defaultdict
 
@@ -64,7 +62,8 @@ from collections import defaultdict
 def build_graph(root: TreeNode) -> defaultdict[int, list[int]]:
     graph: defaultdict[int, list[int]] = defaultdict(list)
     stack = [root]
-    while stack:                                   # 显式栈代替 link 的递归
+    # 显式栈代替 link 的递归
+    while stack:
         node = stack.pop()
         for child in (node.left, node.right):
             if child:
@@ -73,6 +72,16 @@ def build_graph(root: TreeNode) -> defaultdict[int, list[int]]:
                 stack.append(child)
     return graph
 ```
+
+**易错点。**
+- 只算 `start` 子树的高度（只向下感染）：示例 1 得到 `1`，正确是 `4`，因为感染也会向上传给父节点，再传到别的分支。
+- 没有 `seen`：无向图里来回走，节点被重复入队，层数膨胀甚至死循环。
+- 层数从 `0` 开始计、没有减一：单节点树返回 `1`，正确是 `0`。起点那一层不花时间。
+- 递归建图的深度：链状的 `10^5` 个节点，递归深度 `10^5`，超过 CPython 默认上限约 `1000`，抛 `RecursionError`；要 `sys.setrecursionlimit` 调大，或把建图改成显式栈（见拓展优化）。
+
+**追问。**
+- 不建图的一遍 DFS：后序遍历，每个节点返回子树高度；遇到 `start` 时记录它向下的高度，沿路向上的每个祖先，用「到 `start` 的距离 + 另一侧子树高度」更新答案，`O(n)` 时间、`O(h)` 额外空间。
+- 建图不想碰递归上限：改用显式栈建图，见拓展优化，其余不变。
 - 多个起点同时感染：把所有起点一起放进初始队列，其余不变（多源 BFS）。
 - 要每个节点被感染的时刻：BFS 时记录 `dist[v] = dist[u] + 1`。
 

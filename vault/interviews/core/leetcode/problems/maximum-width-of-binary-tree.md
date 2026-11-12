@@ -20,13 +20,16 @@ def width_of_binary_tree(root: TreeNode | None) -> int:
     if root is None:
         return 0
     best = 0
-    level: list[tuple[TreeNode, int]] = [(root, 0)]      # (节点, 它在满二叉树该层里的编号)
+    # (节点, 它在满二叉树该层里的编号)
+    level: list[tuple[TreeNode, int]] = [(root, 0)]
     while level:
-        base = level[0][1]                               # 本层最左编号，用来归零
+        # 本层最左编号，用来归零
+        base = level[0][1]
         best = max(best, level[-1][1] - base + 1)
         nxt: list[tuple[TreeNode, int]] = []
         for node, idx in level:
-            idx -= base                                  # 归零后编号不会随深度指数膨胀
+            # 归零后编号不会随深度指数膨胀
+            idx -= base
             if node.left:
                 nxt.append((node.left, 2 * idx))
             if node.right:
@@ -42,7 +45,7 @@ def width_of_binary_tree(root: TreeNode | None) -> int:
 **易错点。**
 - 只数每层的节点个数而不用编号：示例 1 得到 `3`（正确 `4`），示例 2 得到 `2`（正确 `7`），因为中间的空位没计入。
 - 宽度是 `最右编号 - 最左编号 + 1`，漏掉 `+ 1` 会少算 1。
-- 不归零在 Python 里不会溢出，但深度 3000 的树编号会长到 3000 位的大整数，每次运算变慢；用 `idx -= base` 保持小数值，也是在向面试官表明你知道其他语言会溢出。
+- 不归零在 Python 里不会溢出，但深度 3000 的树编号会长到 3000 个二进制位的大整数，每次运算变慢；用 `idx -= base` 保持小数值，也是在向面试官表明你知道其他语言会溢出。
 
 **追问。**
 - 用 DFS：先序遍历（先左后右）时，用字典 `first[depth]` 记每层**第一次**见到的编号，当前宽度 = `idx - first[depth] + 1`，取最大。

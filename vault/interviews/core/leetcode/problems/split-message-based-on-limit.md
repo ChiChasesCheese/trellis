@@ -20,11 +20,15 @@ def split_message(message: str, limit: int) -> list[str]:
     n = len(message)
     total_parts = 0
     index_digits = 0                       # 编号 1..b 的位数总和
-    for b in range(1, n + 1):              # 每段至少装 1 个字符，所以 b <= n
+    # 每段至少装 1 个字符，所以 b <= n
+    for b in range(1, n + 1):
         index_digits += len(str(b))
-        suffix = 3 + len(str(b))           # "<", "/", ">" 加上总段数 b 的位数
-        capacity = b * (limit - suffix) - index_digits    # b 段一共能装的字符数
-        if limit - suffix - len(str(b)) <= 0:             # 连最后一段（编号位数最多）都装不下 1 个字符
+        # "<", "/", ">" 加上总段数 b 的位数
+        suffix = 3 + len(str(b))
+        # b 段一共能装的字符数
+        capacity = b * (limit - suffix) - index_digits
+        # 连最后一段（编号位数最多）都装不下 1 个字符
+        if limit - suffix - len(str(b)) <= 0:
             return []
         if capacity >= n:
             total_parts = b
@@ -35,7 +39,8 @@ def split_message(message: str, limit: int) -> list[str]:
     pos = 0
     for a in range(1, total_parts + 1):
         tail = f"<{a}/{total_parts}>"
-        take = limit - len(tail)           # 除最后一段外都刚好填满 limit
+        # 除最后一段外都刚好填满 limit
+        take = limit - len(tail)
         out.append(message[pos:pos + take] + tail)
         pos += take
     return out
@@ -51,7 +56,7 @@ def split_message(message: str, limit: int) -> list[str]:
 - 最后一段也当成必须填满 `limit`：最后一段只取剩余字符，切片 `message[pos:pos + take]` 在末尾自然截断。
 
 **追问。**
-- 总段数能不能不逐个枚举：按 `b` 的位数分组，每组内容量随 `b` 严格递增，对每组二分，只需要常数个组（见另一种解法）。
+- 总段数能不能不逐个枚举：按 `b` 的位数 `d` 分组（`b <= 10^4` 最多 5 组），组内每多一段就多一份正文，容量随 `b` 严格递增，对每组二分即可，找 `b` 的时间降到 `O(log n)`；构造输出仍是 `O(n)`。
 - 消息是流式的，不知道总长：总段数要等到全部读完才知道，要么缓存全部再切，要么在后缀里为 `b` 预留固定宽度（例如固定 5 位）。
 - 要求每段正文至少 `m` 个字符：把无解判断改成 `limit - 3 - 2 · len(b) < m`，容量公式里的每段下限同步调整。
 

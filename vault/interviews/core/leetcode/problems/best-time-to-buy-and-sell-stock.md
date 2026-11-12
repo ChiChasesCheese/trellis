@@ -36,7 +36,8 @@ def best_days(prices: list[int]) -> tuple[int, int] | None:
     for day, p in enumerate(prices):
         if p < prices[low_day]:
             low_day = day                           # 最低价所在的下标
-        if p - prices[low_day] > best:              # 严格变大才更新，无利可图时返回 None
+        # 严格变大才更新，无利可图时返回 None
+        if p - prices[low_day] > best:
             best = p - prices[low_day]
             ans = (low_day, day)
     return ans
@@ -49,7 +50,8 @@ from itertools import pairwise
 def max_profit_kadane(prices: list[int]) -> int:
     best = cur = 0
     for a, b in pairwise(prices):
-        cur = max(0, cur + b - a)                   # 以当天结尾的最大连续涨幅，为负就清零重来
+        # 以当天结尾的最大连续涨幅，为负就清零重来
+        cur = max(0, cur + b - a)
         best = max(best, cur)
     return best
 ```

@@ -37,7 +37,8 @@ def reverse_list(head: ListNode | None) -> ListNode | None:
 def reverse_list(head: ListNode | None) -> ListNode | None:
     if head is None or head.next is None:
         return head                    # 空链表或单个节点：自己就是新头
-    new_head = reverse_list(head.next)  # 后面整段先翻好，head.next 现在是它的尾
+    # 后面整段先翻好，head.next 现在是它的尾
+    new_head = reverse_list(head.next)
     head.next.next = head              # 让后半段的尾指回 head
     head.next = None                   # head 成为整条链表的新尾
     return new_head
@@ -46,7 +47,7 @@ def reverse_list(head: ListNode | None) -> ListNode | None:
 **易错点。**
 - 忘记先保存后继：先写 `cur.next = prev`，再写 `cur = cur.next`，此时 `cur.next` 已经是 `prev`，`[1,2,3]` 会在第一步之后只剩 `[1]`。
 - 返回 `prev` 而不是 `cur`：循环结束时 `cur` 是 `None`；空链表直接返回 `prev = None`，`[]` 无需特判。
-- 元组赋值的顺序：`head.next, prev, head = prev, head, head.next` 可行（右边先全部求值，再从左到右赋值），但换成 `head, head.next, prev = ...` 会先改 `head`，`head.next` 随即指向错误的节点，在 `[1,2,3]` 上抛 `AttributeError`。
+- 元组赋值的顺序：`cur.next, prev, cur = prev, cur, cur.next` 可行（右边先全部求值，再从左到右赋值），但换成 `cur, cur.next, prev = prev, cur, cur.next` 会先把 `cur` 改成 `prev`（初始是 `None`），随后写 `cur.next` 时在 `[1,2,3]` 上抛 `AttributeError`。
 
 **追问。**
 - 只反转第 `m` 到第 `n` 个节点（LC 92）：找到第 `m-1` 个节点，反转这一段后接回两端，用哑节点避免 `m = 1` 的特判。

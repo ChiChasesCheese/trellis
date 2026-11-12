@@ -17,7 +17,8 @@ slug: valid-palindrome-ii
 
 ```python
 def valid_palindrome(s: str) -> bool:
-    def is_pal(i: int, j: int) -> bool:        # s[i..j]（闭区间）是不是回文
+    # s[i..j]（闭区间）是不是回文
+    def is_pal(i: int, j: int) -> bool:
         while i < j:
             if s[i] != s[j]:
                 return False
@@ -27,7 +28,8 @@ def valid_palindrome(s: str) -> bool:
 
     left, right = 0, len(s) - 1
     while left < right:
-        if s[left] != s[right]:                # 第一次失配：删左边或删右边，各试一次
+        # 第一次失配：删左边或删右边，各试一次
+        if s[left] != s[right]:
             return is_pal(left + 1, right) or is_pal(left, right - 1)
         left += 1
         right -= 1

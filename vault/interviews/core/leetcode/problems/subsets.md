@@ -21,8 +21,10 @@ def subsets(nums: list[int]) -> list[list[int]]:
     path: list[int] = []
 
     def dfs(start: int) -> None:
-        res.append(path[:])                 # 每个节点都是一个子集：进来先记一份快照
-        for i in range(start, len(nums)):   # 只往后选，保证同一个子集不会按不同顺序出现两次
+        # 每个节点都是一个子集：进来先记一份快照
+        res.append(path[:])
+        # 只往后选，保证同一个子集不会按不同顺序出现两次
+        for i in range(start, len(nums)):
             path.append(nums[i])
             dfs(i + 1)
             path.pop()                      # 回溯：撤销选择
@@ -41,7 +43,8 @@ def subsets(nums: list[int]) -> list[list[int]]:
 ```python
 def subsets(nums: list[int]) -> list[list[int]]:
     n = len(nums)
-    return [[nums[i] for i in range(n) if mask >> i & 1]    # mask 的第 i 位为 1：选 nums[i]
+    # mask 的第 i 位为 1：选 nums[i]
+    return [[nums[i] for i in range(n) if mask >> i & 1]
             for mask in range(1 << n)]
 ```
 
@@ -52,7 +55,9 @@ from itertools import chain, combinations
 
 def subsets(nums: list[int]) -> list[list[int]]:
     # 大小 0..n 的组合依次拼起来 = 全部子集，共 2^n 个
-    return [list(c) for c in chain.from_iterable(combinations(nums, r) for r in range(len(nums) + 1))]
+    sizes = range(len(nums) + 1)
+    groups = (combinations(nums, r) for r in sizes)
+    return [list(c) for c in chain.from_iterable(groups)]
 ```
 
 **易错点。**

@@ -22,13 +22,17 @@ slug: maximum-swap
 ```python
 def maximum_swap(num: int) -> int:
     digits = list(str(num))
-    last = {d: i for i, d in enumerate(digits)}   # 每个数字最后一次出现的下标（后写覆盖前写）
+    # 每个数字最后一次出现的下标（后写覆盖前写）
+    last = {d: i for i, d in enumerate(digits)}
     for i, d in enumerate(digits):
         for big in "9876543210":                  # 从最大的数字开始找
             if big <= d:
-                break                             # 已经没有比 d 更大的了，这一位不用换
-            if last.get(big, -1) > i:             # 右边有更大的数字：换最右边的那个
-                digits[i], digits[last[big]] = digits[last[big]], digits[i]
+                # 已经没有比 d 更大的了，这一位不用换
+                break
+            # 右边有更大的数字：换最右边的那个
+            if last.get(big, -1) > i:
+                j = last[big]
+                digits[i], digits[j] = digits[j], digits[i]
                 return int("".join(digits))
     return num
 ```
@@ -40,7 +44,7 @@ def maximum_swap(num: int) -> int:
 **易错点。**
 - 与最大数字的**第一次**出现交换：`1993` 应得 `9913`，写成第一次出现得 `9193`（把 `1` 换到了较高的位置，丢了一个高位的 `9`）。
 - 候选数字从小到大枚举：会换成「比 `d` 大的最小数字」而不是最大的。`2736` 应得 `7236`，从小到大找到 `3` 就换，得 `3726`。必须从 `9` 往下找。
-- 没找到可交换的位就继续扫描所有位：贪心要在**第一个**能变大的位置交换并立即返回，继续往后扫会白白改动低位。
+- 交换后不返回、继续往后扫：本题只允许交换一次。`2736` 换成 `7236` 后若不 `return`，下一位 `2` 会再与 `6` 交换成 `7632`，这是两次交换，正确答案是 `7236`。
 - 忘了 `num = 0` 或递减数字：`9973` 这类已经最大的数应原样返回，循环结束后返回 `num` 而不是别的值。
 
 **追问。**

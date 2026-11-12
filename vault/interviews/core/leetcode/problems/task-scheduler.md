@@ -23,16 +23,19 @@ from collections import Counter, deque
 
 
 def least_interval_heap(tasks: list[str], n: int) -> int:
-    heap = [-c for c in Counter(tasks).values()]  # 大根堆：每次执行剩余次数最多的任务
+    # 大根堆：每次执行剩余次数最多的任务
+    heap = [-c for c in Counter(tasks).values()]
     heapq.heapify(heap)
-    cooling: deque[tuple[int, int]] = deque()     # (可再次执行的时刻, 剩余次数)
+    # (可再次执行的时刻, 剩余次数)
+    cooling: deque[tuple[int, int]] = deque()
     time = 0
     while heap or cooling:
         time += 1
         if heap:
             left = -heapq.heappop(heap) - 1
             if left:
-                cooling.append((time + n, left))  # 冷却 n 个时间单位后才能回堆
+                # 冷却 n 个时间单位后才能回堆
+                cooling.append((time + n, left))
         if cooling and cooling[0][0] == time:
             heapq.heappush(heap, -cooling.popleft()[1])
     return time
@@ -50,7 +53,8 @@ def least_interval(tasks: list[str], n: int) -> int:
     counts = Counter(tasks).values()
     peak = max(counts)                           # 出现最多的任务的次数
     ties = sum(c == peak for c in counts)        # 有几种任务并列最多
-    # 最多的任务把时间切成 peak-1 个长度为 n+1 的完整周期，最后一段只放并列最多的任务
+    # 最多的任务把时间切成 peak-1 个长度为 n+1 的完整周期，
+    # 最后一段只放并列最多的任务
     return max(len(tasks), (peak - 1) * (n + 1) + ties)
 ```
 
@@ -60,12 +64,11 @@ def least_interval(tasks: list[str], n: int) -> int:
 
 **拓展优化。**
 - 需要输出具体排程时用上面的堆模拟：每个时间点从堆中取剩余最多的，取不到就输出待命。
-- 排程要求「同类任务间隔恰好」不同时，改为按周期轮转填充，公式不再成立。
 
 **易错点。**
 - 漏掉 `ties`：`["A","A","B","B"]`、`n = 2` 应为 `5`（`A B _ A B`），只算 `(peak - 1) * (n + 1) + 1` 得 `4`。
 - 漏掉与 `len(tasks)` 取最大：`["A","A","B","B","C","C"]`、`n = 1` 时公式给出 `5`，实际要 `6`（任务多到不需要待命）。
-- 把冷却当成「中间相隔 `n`」写成 `peak * n`：一个周期长度是 `n + 1`（含任务本身）。
+- 周期长度写成 `n` 而不是 `n + 1`（忘了任务本身占一格）：`["A","A","A"]`、`n = 2` 应为 `7`（`A _ _ A _ _ A`），写成 `(peak - 1) * n + ties` 只得 `5`。
 
 **追问。**
 - 输出具体排程：堆模拟，或按周期把次数从多到少依次填入。

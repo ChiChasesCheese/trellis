@@ -22,9 +22,11 @@ def can_complete_circuit(gas: list[int], cost: list[int]) -> int:
         diff = g - c                        # 在 i 站净得多少油
         total += diff
         tank += diff
-        if tank < 0:                        # 从 start 出发走不到 i+1：start..i 都不能当起点
+        # 从 start 出发走不到 i+1：start..i 都不能当起点
+        if tank < 0:
             start, tank = i + 1, 0
-    return start if total >= 0 else -1      # 总油量够，从最后一次重置的位置出发一定可行
+    # 总油量够，从最后一次重置的位置出发一定可行
+    return start if total >= 0 else -1
 ```
 
 运行：`([1,2,3,4,5], [3,4,5,1,2])` → `3`，`([2,3,4], [3,4,3])` → `-1`，`([5], [4])` → `0`，`([2], [2])` → `0`，`([3,1,1], [1,2,2])` → `0`。
@@ -38,10 +40,12 @@ def can_complete_circuit(gas: list[int], cost: list[int]) -> int:
 from itertools import accumulate
 
 def can_complete_circuit(gas: list[int], cost: list[int]) -> int:
-    acc = list(accumulate(g - c for g, c in zip(gas, cost)))   # acc[i] = 走到 i+1 站时的累计净油量
+    # acc[i] = 走到 i+1 站时的累计净油量
+    acc = list(accumulate(g - c for g, c in zip(gas, cost)))
     if acc[-1] < 0:                                # 总油量不够，无解
         return -1
-    return (acc.index(min(acc)) + 1) % len(gas)    # 累计量最低点的下一站：此后每一步都从最低点往上走
+    # 累计量最低点的下一站：此后每一步都从最低点往上走
+    return (acc.index(min(acc)) + 1) % len(gas)
 ```
 
 **易错点。**

@@ -18,12 +18,14 @@ slug: design-add-and-search-words-data-structure
 ```python
 class WordDictionary:
     def __init__(self) -> None:
-        self.root: dict[str, dict] = {}           # 字典树：键是字母，值是子结点；键 "$" 标记单词在此结束
+        # 字典树：键是字母，值是子结点；键 "$" 标记单词在此结束
+        self.root: dict[str, dict] = {}
 
     def addWord(self, word: str) -> None:
         node = self.root
         for ch in word:
-            node = node.setdefault(ch, {})        # 有就取、没有就建，一步完成
+            # 有就取、没有就建，一步完成
+            node = node.setdefault(ch, {})
         node["$"] = {}
 
     def search(self, word: str) -> bool:
@@ -31,14 +33,16 @@ class WordDictionary:
             if i == len(word):
                 return "$" in node
             ch = word[i]
-            if ch == ".":                         # 通配符：除结束标记外，每个孩子都试一遍
-                return any(dfs(child, i + 1) for key, child in node.items() if key != "$")
+            # 通配符：除结束标记外，每个孩子都试一遍
+            if ch == ".":
+                return any(dfs(child, i + 1)
+                           for key, child in node.items() if key != "$")
             return ch in node and dfs(node[ch], i + 1)
 
         return dfs(self.root, 0)
 ```
 
-**运行。** 加入 `bad`、`dad`、`mad` 后：`search("pad")` → `False`，`search("bad")` → `True`，`search(".ad")` → `True`，`search("b..")` → `True`；另有 `search("b")` → `False`，`search("badd")` → `False`，`search("....")` → `False`，`search("...")` → `True`。一万个长度 25 的随机单词，搜索 `"." * 25` 约 0.03 秒。
+**运行。** 加入 `bad`、`dad`、`mad` 后：`search("pad")` → `False`，`search("bad")` → `True`，`search(".ad")` → `True`，`search("b..")` → `True`；另有 `search("b")` → `False`，`search("badd")` → `False`，`search("....")` → `False`，`search("...")` → `True`。一万个长度 25 的随机单词，搜索落空的 `"." * 24`（要遍历整棵树）约 0.03 秒。
 
 **复杂度。** `addWord` 时间 `O(L)`；`search` 无通配符时 `O(L)`，有通配符时最坏访问整棵树的所有结点，`O(总字符数)`；空间 `O(总字符数)`。
 

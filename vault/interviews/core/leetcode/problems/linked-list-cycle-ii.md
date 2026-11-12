@@ -39,7 +39,8 @@ def detect_cycle(head: ListNode | None) -> ListNode | None:
     slow = fast = head
     while fast and fast.next:
         slow, fast = slow.next, fast.next.next
-        if slow is fast:                    # 阶段一：先移动再比较，相遇说明有环
+        # 阶段一：先移动再比较，相遇说明有环
+        if slow is fast:
             # 阶段二：a = kL - b，head 与相遇点同速前进，会在入口会合
             while head is not slow:
                 head, slow = head.next, slow.next
@@ -59,5 +60,11 @@ def detect_cycle(head: ListNode | None) -> ListNode | None:
 - 把相遇点当入口：`[3,2,0,-4]`、`pos = 1` 时两个指针在值为 `-4` 的结点相遇，入口是值为 `2` 的结点；返回相遇点得到 `-4`。
 - 把 `while slow is not fast` 当阶段一的循环条件：`slow = fast = head` 一开始就相等，循环一次不进，无环的 `[1]` 会被当成相遇并返回 `1`。必须先走一步再比较。
 - 阶段二里让其中一个指针仍走两步：距离关系 `a = kL - b` 要求两者同速，走两步会错过入口。
+
+**追问。**
+- 快指针为什么不会跳过慢指针：进环后快慢指针的距离每步恰好缩小 `1`，一定会落在同一个结点上；总步数 `O(n)`。
+- 快指针改成每次走三步行不行：距离每步缩小 `2`，环长是偶数且距离为奇数时永远追不上，而且 `a = kL - b` 的推导也要重做，所以固定用「快二慢一」。
+- 求环的长度（LC 141 的延伸）：相遇后固定一个指针，另一个绕一圈数步数，`O(n)` 时间、`O(1)` 空间。
+- 允许 `O(n)` 额外空间时：用集合记录访问过的结点（见简单解法），最直观，不需要任何推导，面试里可以作为第一版。
 
 **同模式。** LC 141 环形链表、LC 287 寻找重复数、LC 202 快乐数、LC 160 相交链表。

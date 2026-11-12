@@ -28,9 +28,11 @@ class Bucket:
 
 class AllOne:
     def __init__(self) -> None:
-        self.head, self.tail = Bucket(0), Bucket(-1)   # 哨兵：head.next 是最小计数桶，tail.prev 是最大
+        # 哨兵：head.next 是最小计数桶，tail.prev 是最大
+        self.head, self.tail = Bucket(0), Bucket(-1)
         self.head.next, self.tail.prev = self.tail, self.head
-        self.where: dict[str, Bucket] = {}              # key -> 它当前所在的桶
+        # key -> 它当前所在的桶
+        self.where: dict[str, Bucket] = {}
 
     def _insert_after(self, node: Bucket, cnt: int) -> Bucket:
         new = Bucket(cnt)
@@ -44,22 +46,26 @@ class AllOne:
 
     def inc(self, key: str) -> None:
         cur = self.where.get(key)
-        anchor = self.head if cur is None else cur      # 新桶（计数 +1）该插在 anchor 后面
+        # 新桶（计数 +1）该插在 anchor 后面
+        anchor = self.head if cur is None else cur
         target = anchor.next
         new_cnt = anchor.cnt + 1
-        if target.cnt != new_cnt:                       # 相邻桶不是 cnt + 1 就新建一个
+        # 相邻桶不是 cnt + 1 就新建一个
+        if target.cnt != new_cnt:
             target = self._insert_after(anchor, new_cnt)
         target.keys.add(key)
         self.where[key] = target
         if cur is not None:
             cur.keys.discard(key)
             if not cur.keys:
-                self._remove(cur)                       # 空桶要摘掉，否则 getMinKey 会读到空集合
+                # 空桶要摘掉，否则 getMinKey 会读到空集合
+                self._remove(cur)
 
     def dec(self, key: str) -> None:
         cur = self.where[key]
         if cur.cnt == 1:
-            del self.where[key]                         # 计数归零：key 彻底删除
+            # 计数归零：key 彻底删除
+            del self.where[key]
         else:
             target = cur.prev
             if target.cnt != cur.cnt - 1:
@@ -109,19 +115,23 @@ class AllOneHeap:
     def dec(self, key: str) -> None:
         self.cnt[key] -= 1
         if self.cnt[key] == 0:
-            del self.cnt[key]                       # 堆里的旧条目留着，取堆顶时再清
+            # 堆里的旧条目留着，取堆顶时再清
+            del self.cnt[key]
         else:
             self._push(key)
 
     def getMaxKey(self) -> str:
-        while self.max_heap and self.cnt.get(self.max_heap[0][1]) != -self.max_heap[0][0]:
-            heapq.heappop(self.max_heap)            # 懒删除：条目的计数与字典不符就是过期的
-        return self.max_heap[0][1] if self.max_heap else ""
+        heap = self.max_heap
+        while heap and self.cnt.get(heap[0][1]) != -heap[0][0]:
+            # 懒删除：条目的计数与字典不符就是过期的
+            heapq.heappop(heap)
+        return heap[0][1] if heap else ""
 
     def getMinKey(self) -> str:
-        while self.min_heap and self.cnt.get(self.min_heap[0][1]) != self.min_heap[0][0]:
-            heapq.heappop(self.min_heap)
-        return self.min_heap[0][1] if self.min_heap else ""
+        heap = self.min_heap
+        while heap and self.cnt.get(heap[0][1]) != heap[0][0]:
+            heapq.heappop(heap)
+        return heap[0][1] if heap else ""
 ```
 
 **易错点。**

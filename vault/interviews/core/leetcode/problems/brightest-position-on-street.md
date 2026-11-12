@@ -20,15 +20,19 @@ from collections import defaultdict
 
 
 def brightest_position(lights: list[list[int]]) -> int:
-    diff: defaultdict[int, int] = defaultdict(int)   # 差分：在坐标 x 处亮度变化多少
+    # 差分：在坐标 x 处亮度变化多少
+    diff: defaultdict[int, int] = defaultdict(int)
     for pos, rng in lights:
-        diff[pos - rng] += 1                     # 灯照亮 [pos-rng, pos+rng]：左端 +1
+        # 灯照亮 [pos-rng, pos+rng]：左端 +1
+        diff[pos - rng] += 1
         diff[pos + rng + 1] -= 1                 # 右端的下一格 -1
     best = cur = 0
     ans = 0
-    for x in sorted(diff):                       # 亮度只在有事件的坐标处变化，按坐标从小到大扫
+    # 亮度只在有事件的坐标处变化，按坐标从小到大扫
+    for x in sorted(diff):
         cur += diff[x]
-        if cur > best:                           # 严格大于：并列时保留坐标更小的
+        # 严格大于：并列时保留坐标更小的
+        if cur > best:
             best, ans = cur, x
     return ans
 ```

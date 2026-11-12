@@ -18,10 +18,13 @@ slug: search-suggestions-system
 **简单解法。** 同样先排序，但每个前缀线性扫描，不做二分。
 
 ```python
-def suggested_products_scan(products: list[str], searchWord: str) -> list[list[str]]:
+def suggested_products_scan(
+    products: list[str], searchWord: str
+) -> list[list[str]]:
     products = sorted(products)
     return [
-        [p for p in products if p.startswith(searchWord[:i])][:3]    # 排序后过滤，前三个即字典序最小的
+        # 排序后过滤，前三个即字典序最小的
+        [p for p in products if p.startswith(searchWord[:i])][:3]
         for i in range(1, len(searchWord) + 1)
     ]
 ```
@@ -34,15 +37,20 @@ def suggested_products_scan(products: list[str], searchWord: str) -> list[list[s
 from bisect import bisect_left
 
 
-def suggested_products(products: list[str], searchWord: str) -> list[list[str]]:
+def suggested_products(
+    products: list[str], searchWord: str
+) -> list[list[str]]:
     products = sorted(products)
     ans: list[list[str]] = []
-    lo = 0                                       # 匹配区间的起点；前缀变长，起点只会不减
+    # 匹配区间的起点；前缀变长，起点只会不减
+    lo = 0
     for i in range(1, len(searchWord) + 1):
         prefix = searchWord[:i]
-        lo = bisect_left(products, prefix, lo)   # 第一个 >= prefix 的位置
+        # 第一个 >= prefix 的位置
+        lo = bisect_left(products, prefix, lo)
         # 区间里字典序最小的三个；不以 prefix 开头说明区间已结束
-        ans.append([p for p in products[lo:lo + 3] if p.startswith(prefix)])
+        top = products[lo:lo + 3]
+        ans.append([p for p in top if p.startswith(prefix)])
     return ans
 ```
 
@@ -57,19 +65,24 @@ def suggested_products(products: list[str], searchWord: str) -> list[list[str]]:
 from typing import Any
 
 
-def suggested_products_trie(products: list[str], searchWord: str) -> list[list[str]]:
+def suggested_products_trie(
+    products: list[str], searchWord: str
+) -> list[list[str]]:
     root: dict[str, Any] = {}
-    for word in sorted(products):                # 按字典序插入，节点上的前三个就是最小的三个
+    # 按字典序插入，节点上的前三个就是最小的三个
+    for word in sorted(products):
         node = root
         for ch in word:
             node = node.setdefault(ch, {})
-            top3 = node.setdefault("#", [])      # "#" 不是小写字母，不会和子节点冲突
+            # "#" 不是小写字母，不会和子节点冲突
+            top3 = node.setdefault("#", [])
             if len(top3) < 3:
                 top3.append(word)
     ans: list[list[str]] = []
     node = root
     for ch in searchWord:
-        node = node.get(ch, {})                  # 走丢后一直停在空节点，之后全部返回 []
+        # 走丢后一直停在空节点，之后全部返回 []
+        node = node.get(ch, {})
         ans.append(node.get("#", []))
     return ans
 ```
@@ -78,7 +91,7 @@ def suggested_products_trie(products: list[str], searchWord: str) -> list[list[s
 
 **易错点。**
 - 忘了先排序：返回的是输入顺序的前三个，不是字典序最小的三个。
-- 二分后不检查 `startswith`：`"mouse"` 的位置后面可能是 `"moustache"` 之类不匹配的词，必须过滤。
+- 二分后不检查 `startswith`：`products = ["mouse","moustache"]`、前缀 `"mouse"`：窗口里的 `"moustache"` 并不以 `"mouse"` 开头，不过滤会得到 `["mouse","moustache"]`，正确是 `["mouse"]`。
 - 把 `bisect_left` 写成 `bisect_right`：恰好等于前缀的产品（如 `"bags"` 对前缀 `"bags"`）会被漏掉。
 
 **追问。**

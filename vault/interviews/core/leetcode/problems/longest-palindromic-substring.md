@@ -18,10 +18,14 @@ slug: longest-palindromic-substring
 ```python
 def longest_palindrome(s: str) -> str:
     n = len(s)
-    best_l = best_r = 0                            # 当前最长回文是 s[best_l : best_r + 1]
-    for center in range(2 * n - 1):                # 2n-1 个中心：n 个字符 + n-1 个缝
+    # 当前最长回文是 s[best_l : best_r + 1]
+    best_l = best_r = 0
+    # 2n-1 个中心：n 个字符 + n-1 个缝
+    for center in range(2 * n - 1):
         l = center // 2
-        r = l + center % 2                         # center 偶数：以字符为中心（l == r）；奇数：以缝为中心（r = l + 1）
+        # center 偶数：以字符为中心（l == r）；奇数：以缝为中心（r = l +
+        # 1）
+        r = l + center % 2
         while l >= 0 and r < n and s[l] == s[r]:
             l -= 1
             r += 1

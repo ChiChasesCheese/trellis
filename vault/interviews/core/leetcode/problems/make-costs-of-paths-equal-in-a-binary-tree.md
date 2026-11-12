@@ -17,12 +17,16 @@ slug: make-costs-of-paths-equal-in-a-binary-tree
 
 ```python
 def min_increments(n: int, cost: list[int]) -> int:
-    c = [0] + cost                               # 1 下标，节点 i 的孩子是 2i、2i+1
+    # 1 下标，节点 i 的孩子是 2i、2i+1
+    c = [0] + cost
     ans = 0
-    for i in range(n // 2, 0, -1):               # 从最后一个非叶子节点倒着往上
+    # 从最后一个非叶子节点倒着往上
+    for i in range(n // 2, 0, -1):
         left, right = c[2 * i], c[2 * i + 1]
-        ans += abs(left - right)                 # 较小的一边加到和较大的一边相等
-        c[i] += max(left, right)                 # c[i] 变成「i 到叶子的路径值」
+        # 较小的一边加到和较大的一边相等
+        ans += abs(left - right)
+        # c[i] 变成「i 到叶子的路径值」
+        c[i] += max(left, right)
     return ans
 ```
 

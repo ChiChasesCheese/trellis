@@ -28,7 +28,8 @@ def permute_unique(nums: list[int]) -> list[list[int]]:
         if len(path) == n:
             res.append(path[:])         # 拷贝一份，path 之后还会被改
             return
-        for x in count:                 # 只遍历不同的值：同一层同一个值只试一次
+        # 只遍历不同的值：同一层同一个值只试一次
+        for x in count:
             if count[x] == 0:
                 continue
             count[x] -= 1
@@ -47,7 +48,7 @@ def permute_unique(nums: list[int]) -> list[list[int]]:
 
 **易错点。**
 - 把 `for x in count` 写成 `for x in nums`：同一个值被试多次，`[1,1,2]` 输出 `12` 个列表（只有 3 种）。
-- 排序 + 下标版漏掉 `not used[i-1]`：`[1,1,2]` 一个结果都出不来（返回 `[]`）。
+- 排序 + 下标版把条件写成只判 `nums[i] == nums[i-1]`、漏掉 `not used[i-1]`：两个 `1` 永远不能同时出现在路径里，`[1,1,2]` 一个结果都出不来（返回 `[]`）。
 - `res.append(path)` 忘记拷贝：所有结果最后都变成空列表。
 
 **追问。**

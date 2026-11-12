@@ -17,14 +17,17 @@ slug: valid-parenthesis-string
 
 ```python
 def check_valid_string(s: str) -> bool:
-    lo = hi = 0                        # 还没配对的 '(' 数量的可能区间 [lo, hi]
+    # 还没配对的 '(' 数量的可能区间 [lo, hi]
+    lo = hi = 0
     for ch in s:
         lo += 1 if ch == '(' else -1   # '*' 当 ')' 或 ')' 都让 lo 减一
         hi += 1 if ch != ')' else -1   # '*' 当 '(' 或 '(' 都让 hi 加一
         if hi < 0:                     # 即使全当 '(' 也配不上这个 ')'
             return False
-        lo = max(lo, 0)                # 区间下界不能为负：多出来的 '*' 当空串
-    return lo == 0                     # 0 在区间里，说明存在一种取法恰好配平
+        # 区间下界不能为负：多出来的 '*' 当空串
+        lo = max(lo, 0)
+    # 0 在区间里，说明存在一种取法恰好配平
+    return lo == 0
 ```
 
 运行：`"()"` → `True`，`"(*)"` → `True`，`"(*))"` → `True`，`"*("` → `False`，`")*"` → `False`，`"*"` → `True`，`"(((*"` → `False`。

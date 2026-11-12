@@ -21,10 +21,12 @@ from collections import defaultdict
 def group_anagrams(strs: list[str]) -> list[list[str]]:
     groups: defaultdict[tuple[int, ...], list[str]] = defaultdict(list)
     for s in strs:
-        count = [0] * 26                       # 26 个字母的出现次数就是指纹
+        # 26 个字母的出现次数就是指纹
+        count = [0] * 26
         for ch in s:
             count[ord(ch) - ord("a")] += 1
-        groups[tuple(count)].append(s)         # list 不可哈希，转成 tuple 才能当键
+        # list 不可哈希，转成 tuple 才能当键
+        groups[tuple(count)].append(s)
     return list(groups.values())
 ```
 

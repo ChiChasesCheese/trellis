@@ -22,18 +22,22 @@ import re
 
 
 def calculate(s: str) -> int:
-    tokens = re.findall(r"\d+|[-+*/]", s)          # 空格自然被丢掉；数字和算符交替出现
+    # 空格自然被丢掉；数字和算符交替出现
+    tokens = re.findall(r"\d+|[-+*/]", s)
     flat: list[int | str] = [int(tokens[0])]
     for i in range(1, len(tokens), 2):
         op, nxt = tokens[i], int(tokens[i + 1])
         if op == "*":
-            flat[-1] *= nxt                         # 乘除立刻并进前一个数
+            # 乘除立刻并进前一个数
+            flat[-1] *= nxt
         elif op == "/":
-            flat[-1] = int(flat[-1] / nxt)          # 向 0 取整；// 向下取整，遇负数会错
+            # 向 0 取整；// 向下取整，遇负数会错
+            flat[-1] = int(flat[-1] / nxt)
         else:
             flat += [op, nxt]                       # 加减留到第二遍
     total = flat[0]
-    for i in range(1, len(flat), 2):                # 第二遍：只剩 + -，从左到右
+    # 第二遍：只剩 + -，从左到右
+    for i in range(1, len(flat), 2):
         total += flat[i + 1] if flat[i] == "+" else -flat[i + 1]
     return total
 ```
@@ -44,9 +48,11 @@ def calculate(s: str) -> int:
 
 ```python
 def calculate(s: str) -> int:
-    stack: list[int] = []                 # 栈里是待相加的项；* / 当场并进栈顶
+    # 栈里是待相加的项；* / 当场并进栈顶
+    stack: list[int] = []
     num, op = 0, "+"                      # op 是 num 左边的运算符
-    for ch in s + "+":                    # 末尾补一个 "+" 当哨兵，逼出最后一个数
+    # 末尾补一个 "+" 当哨兵，逼出最后一个数
+    for ch in s + "+":
         if ch == " ":
             continue
         if ch.isdigit():
@@ -59,7 +65,8 @@ def calculate(s: str) -> int:
         elif op == "*":
             stack.append(stack.pop() * num)
         else:
-            stack.append(int(stack.pop() / num))      # 向 0 取整；// 向下取整，遇负数会错
+            # 向 0 取整；// 向下取整，遇负数会错
+            stack.append(int(stack.pop() / num))
         op, num = ch, 0
     return sum(stack)
 ```
@@ -73,8 +80,10 @@ def calculate(s: str) -> int:
 ```python
 def calculate_o1(s: str) -> int:
     total = last = num = 0
-    op = "+"                                        # op 是 num 左边的运算符
-    for ch in s + "+":                              # 末尾补 "+" 当哨兵，结算最后一个数
+    # op 是 num 左边的运算符
+    op = "+"
+    # 末尾补 "+" 当哨兵，结算最后一个数
+    for ch in s + "+":
         if ch == " ":
             continue
         if ch.isdigit():
@@ -87,7 +96,8 @@ def calculate_o1(s: str) -> int:
             total += last
             last = -num
         elif op == "*":
-            last *= num                             # 乘除只改还没定的 last
+            # 乘除只改还没定的 last
+            last *= num
         else:
             last = int(last / num)                  # 向 0 取整
         op, num = ch, 0

@@ -21,7 +21,8 @@ def remove_duplicates(s: str, k: int) -> str:
     for ch in s:
         if stack and stack[-1][0] == ch:
             _, cnt = stack.pop()
-            if cnt + 1 < k:                # 还没凑够 k 个：把计数加一放回去；凑够就不放回，整段被删
+            # 还没凑够 k 个：把计数加一放回去；凑够就不放回，整段被删
+            if cnt + 1 < k:
                 stack.append((ch, cnt + 1))
         else:
             stack.append((ch, 1))

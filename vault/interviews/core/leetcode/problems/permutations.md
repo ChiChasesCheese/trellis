@@ -20,7 +20,8 @@ def permute(nums: list[int]) -> list[list[int]]:
     n = len(nums)
     res: list[list[int]] = []
     path: list[int] = []                # 当前已选出的前缀
-    used = [False] * n                  # used[i]：nums[i] 是否已在 path 里
+    # used[i]：nums[i] 是否已在 path 里
+    used = [False] * n
 
     def dfs() -> None:
         if len(path) == n:

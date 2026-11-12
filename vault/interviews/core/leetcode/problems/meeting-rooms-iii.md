@@ -11,7 +11,7 @@ slug: meeting-rooms-iii
 ## A
 **一句话。** 按开始时间排序后依次安排，用两个堆维护房间：空闲房间的最小堆（按编号），占用房间的最小堆（按 `(结束时间, 编号)`）。来一场会议，先把已结束的房间放回空闲堆；有空房间就取编号最小的；没有就取最早结束的房间，会议顺延到那个时刻开始，结束时间 = 空出时刻 + 原时长。`O(M log M + M log n)`。
 
-**识别。** 「按规则逐个分配资源」是事件模拟；“编号最小的空房间”“最早空出的房间”这两个选择规则恰好对应**两个最小堆**。`start_i` 互不相同，所以排序后优先级（原开始时间更早的先用）自然成立，不需要额外的队列。`M = 10^5`，`n <= 100`，`O(M · n)` 也能过（见另一种解法），堆是更稳的 `O(M log n)`。
+**识别。** 「按规则逐个分配资源」是事件模拟；“编号最小的空房间”“最早空出的房间”这两个选择规则恰好对应**两个最小堆**。`start_i` 互不相同，所以排序后优先级（原开始时间更早的先用）自然成立，不需要额外的队列。`M = 10^5`，`n <= 100`，每场会议线性扫一遍 `n` 个房间的 `O(M · n)` 也能过，堆是更稳的 `O(M log n)`。
 
 **推导。** 暴力：按时间一秒一秒推进，每秒检查所有房间和待办会议，时间到 `5 * 10^5`，每秒 `O(n + M)`，太慢。浪费：绝大多数时刻什么也没发生。洞察：只有“会议开始”这个事件需要决策，且会议已按开始时间排好序，所以按会议逐个处理即可。每次处理前，把所有已经结束（`结束时间 <= 当前会议开始时间`，半闭区间）的房间从占用堆搬回空闲堆。有空房间就用编号最小的；没有就弹出占用堆里最早空出的房间（并列时编号小的先出，元组比较正好满足），新会议的结束时间是 `空出时刻 + (end - start)`。
 
@@ -20,21 +20,27 @@ from heapq import heappop, heappush
 
 
 def most_booked(n: int, meetings: list[list[int]]) -> int:
-    free = list(range(n))                      # 空闲房间号的最小堆（升序列表本身就是堆）
-    busy: list[tuple[int, int]] = []           # (结束时间, 房间号) 的最小堆
+    # 空闲房间号的最小堆（升序列表本身就是堆）
+    free = list(range(n))
+    # (结束时间, 房间号) 的最小堆
+    busy: list[tuple[int, int]] = []
     count = [0] * n
     for start, end in sorted(meetings):        # 按开始时间依次安排
-        while busy and busy[0][0] <= start:    # 区间半开：结束时间 == start 的房间已空
+        # 区间半开：结束时间 == start 的房间已空
+        while busy and busy[0][0] <= start:
             heappush(free, heappop(busy)[1])
         if free:
             room = heappop(free)               # 编号最小的空房间
             finish = end
         else:
-            ready, room = heappop(busy)        # 最早空出来的房间（同时空出取编号小）
-            finish = ready + (end - start)     # 延期：时长不变，从 ready 开始
+            # 最早空出来的房间（同时空出取编号小）
+            ready, room = heappop(busy)
+            # 延期：时长不变，从 ready 开始
+            finish = ready + (end - start)
         count[room] += 1
         heappush(busy, (finish, room))
-    return max(range(n), key=count.__getitem__)   # max 取并列里第一个，即编号最小
+    # max 取并列里第一个，即编号最小
+    return max(range(n), key=count.__getitem__)
 ```
 
 运行：`(2, [[0,10],[1,5],[2,7],[3,4]])` → `0`，`(3, [[1,20],[2,10],[3,5],[4,9],[6,8]])` → `1`，`(1, [[1,2]])` → `0`，`(3, [[0,1]])` → `0`；`n = 100`、`10^5` 场随机会议 → 约 `40 ms`。

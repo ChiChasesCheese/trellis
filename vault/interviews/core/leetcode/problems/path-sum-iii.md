@@ -23,16 +23,21 @@ slug: path-sum-iii
 
 ```python
 def path_sum(root: TreeNode | None, target_sum: int) -> int:
-    def count_from(node: TreeNode | None, remain: int) -> int:   # 以 node 为起点的向下路径数
+    # 以 node 为起点的向下路径数
+    def count_from(node: TreeNode | None, remain: int) -> int:
         if node is None:
             return 0
         remain -= node.val
-        return (remain == 0) + count_from(node.left, remain) + count_from(node.right, remain)
+        return ((remain == 0)
+                + count_from(node.left, remain)
+                + count_from(node.right, remain))
 
-    def dfs(node: TreeNode | None) -> int:                       # 每个结点都当一次起点
+    # 每个结点都当一次起点
+    def dfs(node: TreeNode | None) -> int:
         if node is None:
             return 0
-        return count_from(node, target_sum) + dfs(node.left) + dfs(node.right)
+        return (count_from(node, target_sum)
+                + dfs(node.left) + dfs(node.right))
 
     return dfs(root)
 ```
@@ -43,16 +48,21 @@ def path_sum(root: TreeNode | None, target_sum: int) -> int:
 
 ```python
 def path_sum(root: TreeNode | None, target_sum: int) -> int:
-    prefix: Counter[int] = Counter({0: 1})       # 当前根到结点链上：前缀和 -> 出现次数
+    # 当前根到结点链上：前缀和 -> 出现次数
+    prefix: Counter[int] = Counter({0: 1})
 
-    def dfs(node: TreeNode | None, total: int) -> int:   # total：根到 node 父亲的和
+    # total：根到 node 父亲的和
+    def dfs(node: TreeNode | None, total: int) -> int:
         if node is None:
             return 0
         total += node.val                        # 根到 node 的和
-        count = prefix[total - target_sum]       # 有多少个祖先前缀和恰好差 target_sum
-        prefix[total] += 1                       # 进入：把 node 的前缀和加入当前链
+        # 有多少个祖先前缀和恰好差 target_sum
+        count = prefix[total - target_sum]
+        # 进入：把 node 的前缀和加入当前链
+        prefix[total] += 1
         count += dfs(node.left, total) + dfs(node.right, total)
-        prefix[total] -= 1                       # 离开：撤销，别的分支看不到这条链
+        # 离开：撤销，别的分支看不到这条链
+        prefix[total] -= 1
         return count
 
     return dfs(root, 0)
@@ -68,9 +78,12 @@ def path_sum(root: TreeNode | None, target_sum: int) -> int:
 ```python
 from collections import defaultdict
 
-def path_sum_paths(root: TreeNode | None, target_sum: int) -> list[list[int]]:
+def path_sum_paths(
+    root: TreeNode | None, target_sum: int
+) -> list[list[int]]:
     prefix: defaultdict[int, list[int]] = defaultdict(list)
-    prefix[0].append(0)                              # 空前缀：路径上还有 0 个结点时和为 0
+    # 空前缀：路径上还有 0 个结点时和为 0
+    prefix[0].append(0)
     path: list[int] = []
     res: list[list[int]] = []
 
@@ -79,9 +92,11 @@ def path_sum_paths(root: TreeNode | None, target_sum: int) -> list[list[int]]:
             return
         total += node.val
         path.append(node.val)
-        for j in prefix[total - target_sum]:         # 先查：起点在路径上第 j 个结点之后
+        # 先查：起点在路径上第 j 个结点之后
+        for j in prefix[total - target_sum]:
             res.append(path[j:])
-        prefix[total].append(len(path))              # 再登记：前缀和 total 出现在 len(path) 个结点之后
+        # 再登记：前缀和 total 出现在 len(path) 个结点之后
+        prefix[total].append(len(path))
         dfs(node.left, total)
         dfs(node.right, total)
         prefix[total].pop()                          # 离开：撤销
@@ -91,35 +106,42 @@ def path_sum_paths(root: TreeNode | None, target_sum: int) -> list[list[int]]:
     return res
 ```
 
-**易错点。**
-- 忘了播种 `{0: 1}`：从根出发的路径数不到。`root=[1]`, `targetSum=1` 答案是 `1`，漏播种得 `0`；例 2（`22`）有两条从根出发的路径 `5→4→11→2`、`5→8→4→5`，漏播种只剩 `1`（正确 `3`）。
-- 忘了离开时撤销：左子树的前缀和泄漏到右子树。`root=[0,1,3]`，`targetSum=2`，正确 `0`，不撤销得 `1`（右结点 `3` 误用了左结点残留的前缀和 `1`）。
-- 用滑动窗口：值含负数，窗口和不单调。
-- 递归深度：1000 结点的单链深度就是 1000，CPython 默认递归上限约 1000，会抛 `RecursionError`；要么 `sys.setrecursionlimit` 调高，要么改成显式栈（见追问）。
+- 显式栈（树很深、不想递归时）：同一个结点压两次，第二次是「离开」标记，用来撤销前缀和。
 
-**追问。**
-- 路径可以向上向下（任意两点间）：这就是树上的「任意路径和」，需要换成后序 DFS 在每个结点合并左右子树，不再是前缀和。
-- N 叉树或「只数以叶子结尾」：前缀和哈希不变，只是遍历孩子列表；以叶子结尾则在叶子处才计数。
-- 不想递归（树很深）：显式栈，同一个结点压两次，第二次是「离开」标记，用来撤销前缀和：
 ```python
 def path_sum_stack(root: TreeNode | None, target_sum: int) -> int:
     count = 0
-    prefix: Counter[int] = Counter({0: 1})   # 当前根到结点链上：前缀和 -> 出现次数
+    # 当前根到结点链上：前缀和 -> 出现次数
+    prefix: Counter[int] = Counter({0: 1})
     stack: list[tuple[TreeNode | None, int, bool]] = [(root, 0, False)]
-    while stack:                             # 迭代 DFS：进入时加入前缀和，离开时撤销
+    # 迭代 DFS：进入时加入前缀和，离开时撤销
+    while stack:
         node, total, leaving = stack.pop()
         if node is None:
             continue
         if leaving:
-            prefix[total] -= 1               # 回溯：别的分支看不到这条链
+            # 回溯：别的分支看不到这条链
+            prefix[total] -= 1
             continue
         total += node.val                    # 根到 node 的和
-        count += prefix[total - target_sum]  # 有多少个祖先前缀和恰好差 target_sum
+        # 有多少个祖先前缀和恰好差 target_sum
+        count += prefix[total - target_sum]
         prefix[total] += 1
         stack.append((node, total, True))
         stack.append((node.right, total, False))
         stack.append((node.left, total, False))
     return count
 ```
+
+**易错点。**
+- 忘了播种 `{0: 1}`：从根出发的路径数不到。`root=[1]`, `targetSum=1` 答案是 `1`，漏播种得 `0`；例 2（`22`）有两条从根出发的路径 `5→4→11→2`、`5→8→4→5`，漏播种只剩 `1`（正确 `3`）。
+- 忘了离开时撤销：左子树的前缀和泄漏到右子树。`root=[0,1,3]`，`targetSum=2`，正确 `0`，不撤销得 `1`（右结点 `3` 误用了左结点残留的前缀和 `1`）。
+- 用滑动窗口：值含负数，窗口和不单调。
+- 递归深度：1000 结点的单链深度就是 1000，CPython 默认递归上限约 1000，会抛 `RecursionError`；要么 `sys.setrecursionlimit` 调高，要么改成显式栈（见拓展优化）。
+
+**追问。**
+- 路径可以向上向下（任意两点间）：这就是树上的「任意路径和」，需要换成后序 DFS 在每个结点合并左右子树，不再是前缀和。
+- N 叉树或「只数以叶子结尾」：前缀和哈希不变，只是遍历孩子列表；以叶子结尾则在叶子处才计数。
+- 不想递归（树很深）：改成显式栈，见拓展优化。
 
 **同模式。** LC 560 和为 K 的子数组（一维版）、LC 112 / 113 路径总和 I / II、LC 523 连续的子数组和、LC 974 和可被 K 整除的子数组。
