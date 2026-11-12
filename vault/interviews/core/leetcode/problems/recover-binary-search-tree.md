@@ -30,8 +30,10 @@ def recover_tree(root: TreeNode | None) -> None:
         inorder(node.left)
         if prev and prev.val > node.val:        # 一处逆序对
             if first is None:
-                first = prev           # 第一处逆序：较大的那个是被换错的结点
-            second = node              # 最后一处逆序：较小的那个是另一个
+                # 第一处逆序：较大的那个是被换错的结点
+                first = prev
+            # 最后一处逆序：较小的那个是另一个
+            second = node
         prev = node
         inorder(node.right)
 
@@ -43,6 +45,36 @@ def recover_tree(root: TreeNode | None) -> None:
 运行：`[1,3,null,null,2]` → `[3,1,null,null,2]`，`[3,1,4,null,null,2]` → `[2,1,4,null,null,3]`，`[1,2]` → `[2,1]`；1000 个结点的单链右斜树，首尾值互换后可恢复（调大递归上限后；默认上限下抛 `RecursionError`）。
 
 **复杂度。** 时间 `O(n)`，每个结点访问一次；空间 `O(h)`（递归栈），`h` 为树高，最坏 `O(n)`。
+
+**拓展优化。**
+- 进阶的 `O(1)` 空间：Morris 遍历。临时把中序前驱的右指针指回当前结点当「线索」，不用栈；逆序检测与上面完全相同，遍历结束时线索已全部拆掉，树结构不变。时间仍 `O(n)`（每条边至多走两次）。
+```python
+def recover_tree_morris(root: TreeNode | None) -> None:
+    prev = first = second = None
+    cur = root
+    while cur:
+        if cur.left:
+            # 找 cur 的中序前驱：左子树里最右的结点
+            pred = cur.left
+            while pred.right and pred.right is not cur:
+                pred = pred.right
+            if pred.right is None:
+                # 第一次到：建线索，前驱的右指针指回 cur
+                pred.right = cur
+                cur = cur.left
+                continue
+            # 第二次到：左子树已访问完，拆线索
+            pred.right = None
+        # 到这里 cur 就是中序下一个被访问的结点
+        if prev and prev.val > cur.val:
+            if first is None:
+                first = prev
+            second = cur
+        prev = cur
+        cur = cur.right
+    if first and second:
+        first.val, second.val = second.val, first.val
+```
 
 **易错点。**
 - 把 `second` 只在第一处逆序时赋值：不相邻互换会漏掉第二处。中序 `3,2,1`（示例 1）里，第一处逆序是 `(3,2)`，第二处是 `(2,1)`，只处理第一处会交换 `3` 和 `2`，得到 `2,3,1`，仍不是升序；正确是交换 `3` 和 `1`。
@@ -72,7 +104,7 @@ def recover_tree(root: TreeNode | None) -> None:
     if first and second:
         first.val, second.val = second.val, first.val
 ```
-- `O(1)` 空间：Morris 遍历（用空闲的右指针临时做线索回到祖先），逆序检测逻辑完全相同，遍历结束时树结构已还原。
+- 为什么只交换值就够？题目保证恰好两个结点的**值**被互换，结构没动；把这两个结点的值换回来，中序就重新升序。
 - 不允许改动结点值、只能改指针：要找到两个结点的父指针并交换位置，相邻、父子关系要分情况，面试里通常不要求。
 - 如果被换错的是任意 `k` 个结点：要么排序比较（`O(n log n)`），要么求中序序列里不在最长非降子序列上的结点；已不是单遍扫描的问题。
 

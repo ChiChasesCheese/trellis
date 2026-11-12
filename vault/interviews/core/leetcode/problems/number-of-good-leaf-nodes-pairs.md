@@ -22,16 +22,20 @@ from itertools import accumulate
 def count_pairs(root: TreeNode | None, distance: int) -> int:
     ans = 0
 
-    def dfs(node: TreeNode | None) -> list[int]:    # 返回 cnt：cnt[d] = 子树里距 node 恰好 d 的叶子数（d <= distance）
+    # 返回 cnt：cnt[d] = 子树里距 node 恰好 d 的叶子数（d <= distance）
+    def dfs(node: TreeNode | None) -> list[int]:
         nonlocal ans
         if node is None:
             return [0] * (distance + 1)
         if not node.left and not node.right:
             return [1] + [0] * distance             # 叶子自己距自己 0
-        left = [0] + dfs(node.left)[:distance]      # 孩子子树的叶子，距 node 都多 1；超过 distance 的丢弃
+        # 孩子子树的叶子，距 node 都多 1；超过 distance 的丢弃
+        left = [0] + dfs(node.left)[:distance]
         right = [0] + dfs(node.right)[:distance]
-        right_prefix = list(accumulate(right))      # right_prefix[j]：距离 <= j 的右侧叶子数
-        ans += sum(left[i] * right_prefix[distance - i] for i in range(distance + 1))
+        # right_prefix[j]：距离 <= j 的右侧叶子数
+        right_prefix = list(accumulate(right))
+        ans += sum(left[i] * right_prefix[distance - i]
+                   for i in range(distance + 1))
         return [a + b for a, b in zip(left, right)]
 
     dfs(root)
@@ -58,13 +62,16 @@ from itertools import accumulate
 def count_pairs_iter(root: TreeNode | None, distance: int) -> int:
     if root is None:
         return 0
-    order = [root]                         # 层序：父节点一定排在子节点前面
-    for node in order:                     # 遍历列表的同时往里追加，恰好是 BFS
+    # 层序：父节点一定排在子节点前面
+    order = [root]
+    # 遍历列表的同时往里追加，恰好是 BFS
+    for node in order:
         if node.left:
             order.append(node.left)
         if node.right:
             order.append(node.right)
-    cnt: dict[TreeNode, list[int]] = {}    # cnt[x][d]：x 的子树里，距 x 恰好 d 的叶子数
+    # cnt[x][d]：x 的子树里，距 x 恰好 d 的叶子数
+    cnt: dict[TreeNode, list[int]] = {}
     ans = 0
     for node in reversed(order):           # 逆层序：孩子先于父亲被处理
         if not node.left and not node.right:
@@ -79,7 +86,8 @@ def count_pairs_iter(root: TreeNode | None, distance: int) -> int:
                 side.append([0] * (distance + 1))
         left, right = side
         right_prefix = list(accumulate(right))
-        ans += sum(left[i] * right_prefix[distance - i] for i in range(distance + 1))
+        ans += sum(left[i] * right_prefix[distance - i]
+                   for i in range(distance + 1))
         cnt[node] = [a + b for a, b in zip(left, right)]
     return ans
 ```

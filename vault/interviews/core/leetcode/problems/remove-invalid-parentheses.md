@@ -23,16 +23,21 @@ def remove_invalid_parentheses(s: str) -> list[str]:
             left_rem += 1
         elif ch == ")":
             if left_rem:
-                left_rem -= 1                  # 这个 ) 能和前面某个 ( 配对
+                # 这个 ) 能和前面某个 ( 配对
+                left_rem -= 1
             else:
-                right_rem += 1                 # 前面没有可配的 (，这个 ) 必须删
+                # 前面没有可配的 (，这个 ) 必须删
+                right_rem += 1
     delta = {"(": 1, ")": -1}
-    res: set[str] = set()                      # 不同位置删同样的括号会得到同一个串，用集合去重
+    # 不同位置删同样的括号会得到同一个串，用集合去重
+    res: set[str] = set()
     path: list[str] = []
 
     def dfs(i: int, left: int, right: int, balance: int) -> None:
-        if left < 0 or right < 0 or balance < 0 or left + right > len(s) - i:
-            return                             # 删多了、) 已无法挽回、或剩下的字符不够删
+        if (left < 0 or right < 0 or balance < 0
+                or left + right > len(s) - i):
+            # 删多了、) 已无法挽回、或剩下的字符不够删
+            return
         if i == len(s):
             if left == right == balance == 0:
                 res.add("".join(path))

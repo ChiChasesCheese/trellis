@@ -32,14 +32,16 @@ class Codec:
         return ",".join(out)
 
     def deserialize(self, data: str) -> TreeNode | None:
-        tokens = iter(data.split(","))             # 标记流只被顺序消费一次
+        # 标记流只被顺序消费一次
+        tokens = iter(data.split(","))
 
         def build() -> TreeNode | None:
             tok = next(tokens)
             if tok == "#":
                 return None
             node = TreeNode(int(tok))
-            node.left = build()                    # 先左后右，与序列化的顺序一致
+            # 先左后右，与序列化的顺序一致
+            node.left = build()
             node.right = build()
             return node
 
@@ -56,14 +58,16 @@ class Codec:
 ```python
 from collections import deque
 
-class Codec:
+class CodecBFS:
     def serialize(self, root: TreeNode | None) -> str:
         out: list[str] = []
-        queue = deque([root])                      # 空孩子也入队，才能写出 null 占位
+        # 空孩子也入队，才能写出 null 占位
+        queue = deque([root])
         while queue:
             node = queue.popleft()
             if node is None:
-                out.append("null")                 # 空位也要占一格，结构才能还原
+                # 空位也要占一格，结构才能还原
+                out.append("null")
                 continue
             out.append(str(node.val))
             queue.append(node.left)
@@ -76,10 +80,12 @@ class Codec:
         if first == "null":
             return None
         root = TreeNode(int(first))
-        queue = deque([root])                      # 队里是「还没领孩子」的结点，顺序与序列化时一致
+        # 队里是「还没领孩子」的结点，顺序与序列化时一致
+        queue = deque([root])
         while queue:
             node = queue.popleft()
-            left, right = next(tokens, "null"), next(tokens, "null")   # 每个结点后面跟着它的两个孩子位
+            # 每个结点后面跟着它的两个孩子位
+            left, right = next(tokens, "null"), next(tokens, "null")
             if left != "null":
                 node.left = TreeNode(int(left))
                 queue.append(node.left)
@@ -111,7 +117,8 @@ class CodecBST:
 
         def build(lo: float, hi: float) -> TreeNode | None:
             nonlocal i
-            if i == len(vals) or not lo < vals[i] < hi:   # 下一个值不属于这个范围：这棵子树到此为止
+            # 下一个值不属于这个范围：这棵子树到此为止
+            if i == len(vals) or not lo < vals[i] < hi:
                 return None
             node = TreeNode(vals[i])
             i += 1

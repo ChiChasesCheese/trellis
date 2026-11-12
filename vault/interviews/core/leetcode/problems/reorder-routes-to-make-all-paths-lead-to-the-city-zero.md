@@ -19,14 +19,19 @@ slug: reorder-routes-to-make-all-paths-lead-to-the-city-zero
 def min_reorder(n: int, connections: list[list[int]]) -> int:
     adj: list[list[tuple[int, int]]] = [[] for _ in range(n)]
     for a, b in connections:
-        adj[a].append((b, 1))              # 从 a 走到 b：顺着原方向，即背离城市 0，这条边要反转
-        adj[b].append((a, 0))              # 从 b 走到 a：逆着原方向，即朝向城市 0，不用动
+        # 从 a 走到 b：顺着原方向，即背离城市 0，这条边要反转
+        adj[a].append((b, 1))
+        # 从 b 走到 a：逆着原方向，即朝向城市 0，不用动
+        adj[b].append((a, 0))
 
-    def dfs(u: int, parent: int) -> int:   # 以 u 为根的子树里需要反转的边数
+    # 以 u 为根的子树里需要反转的边数
+    def dfs(u: int, parent: int) -> int:
         flips = 0
         for v, cost in adj[u]:
-            if v != parent:                # 树没有环：只要不走回父亲，就不会重复访问
-                flips += cost + dfs(v, u)  # 进入 v 的这条边的代价 + v 子树里的代价
+            # 树没有环：只要不走回父亲，就不会重复访问
+            if v != parent:
+                # 进入 v 的这条边的代价 + v 子树里的代价
+                flips += cost + dfs(v, u)
         return flips
 
     return dfs(0, -1)
@@ -49,8 +54,10 @@ def min_reorder(n: int, connections: list[list[int]]) -> int:
 def min_reorder_stack(n: int, connections: list[list[int]]) -> int:
     adj: list[list[tuple[int, int]]] = [[] for _ in range(n)]
     for a, b in connections:
-        adj[a].append((b, 1))              # 从 a 走到 b：顺着原方向，即背离城市 0，这条边要反转
-        adj[b].append((a, 0))              # 从 b 走到 a：逆着原方向，即朝向城市 0，不用动
+        # 从 a 走到 b：顺着原方向，即背离城市 0，这条边要反转
+        adj[a].append((b, 1))
+        # 从 b 走到 a：逆着原方向，即朝向城市 0，不用动
+        adj[b].append((a, 0))
     seen = [False] * n
     seen[0] = True
     stack = [0]

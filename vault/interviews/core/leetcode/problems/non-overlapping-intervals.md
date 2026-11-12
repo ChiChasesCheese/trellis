@@ -21,9 +21,12 @@ from operator import itemgetter
 
 
 def erase_overlap_intervals(intervals: list[list[int]]) -> int:
-    kept, end = 0, -inf                                   # 已保留的区间数、最后保留区间的右端点
-    for start, finish in sorted(intervals, key=itemgetter(1)):   # 按右端点升序
-        if start >= end:                                  # 只在端点接触不算重叠，所以是 >=
+    # 已保留的区间数、最后保留区间的右端点
+    kept, end = 0, -inf
+    # 按右端点升序
+    for start, finish in sorted(intervals, key=itemgetter(1)):
+        # 只在端点接触不算重叠，所以是 >=
+        if start >= end:
             kept += 1
             end = finish
     return len(intervals) - kept

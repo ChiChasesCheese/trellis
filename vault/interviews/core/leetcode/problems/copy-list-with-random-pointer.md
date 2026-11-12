@@ -21,7 +21,8 @@ slug: copy-list-with-random-pointer
 
 ```python
 def copy_random_list(head: Node | None) -> Node | None:
-    clone = {None: None}            # 旧结点 -> 新结点；None 映射到 None，连指针时不用判空
+    # 旧结点 -> 新结点；None 映射到 None，连指针时不用判空
+    clone = {None: None}
     cur = head
     while cur:                      # 第一遍：只造结点，不连指针
         clone[cur] = Node(cur.val)
@@ -43,13 +44,15 @@ def copy_random_list(head: Node | None) -> Node | None:
 ```python
 def copy_random_list_o1(head: Node | None) -> Node | None:
     cur = head
-    while cur:                      # 1. 每个旧结点后面插入它的副本：A -> A' -> B -> B'
+    # 1. 每个旧结点后面插入它的副本：A -> A' -> B -> B'
+    while cur:
         copy = Node(cur.val)
         copy.next = cur.next
         cur.next = copy
         cur = copy.next
     cur = head
-    while cur:                      # 2. 副本的 random = 原结点 random 的副本（紧跟在它后面）
+    # 2. 副本的 random = 原结点 random 的副本（紧跟在它后面）
+    while cur:
         cur.next.random = cur.random.next if cur.random else None
         cur = cur.next.next
     dummy = tail = Node(0)
@@ -68,5 +71,10 @@ def copy_random_list_o1(head: Node | None) -> Node | None:
 - 用 `val` 当字典键：例 3 的三个结点值都是 `3`，键冲突，后一个覆盖前一个，`random` 指错结点。键必须是结点对象。
 - 一遍同时造结点和连 `random`：`[[7,null],[13,0],[11,4],...]` 中结点 `11` 的 `random` 指向还没造出的下标 4，字典查询抛 `KeyError`。
 - 第二遍写成 `clone[cur].random = cur.random`：新结点的 `random` 指回旧链，违反「不指向原链表」，判题时被检出。
+
+**追问。**
+- 为什么映射表里要放 `None → None`？`next`、`random` 可能为空，有这一项就不必每次判空；否则要写成 `clone.get(cur.random)`。
+- 想省掉字典怎么办？用拓展优化里的「副本插在原结点后面」：副本的 `random` 就是 `cur.random.next`，最后拆链，空间 `O(1)`，时间仍 `O(n)`；代价是中途会临时改动原链表，必须拆回去。
+- 面试官要求不许修改原链表呢？那只能用字典（`O(n)` 空间）；穿插法在拆链之前原链是被改过的。
 
 **同模式。** LC 133 克隆图、LC 1485 克隆含随机指针的二叉树、LC 2 两数相加、LC 148 排序链表。

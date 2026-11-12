@@ -17,13 +17,16 @@ slug: house-robber-iii
 
 ```python
 def rob(root: TreeNode | None) -> int:
-    def go(node: TreeNode | None) -> tuple[int, int]:   # (偷 node 时子树最大收益, 不偷 node 时子树最大收益)
+    # (偷 node 时子树最大收益, 不偷 node 时子树最大收益)
+    def go(node: TreeNode | None) -> tuple[int, int]:
         if node is None:
             return 0, 0
         take_l, skip_l = go(node.left)
         take_r, skip_r = go(node.right)
-        take = node.val + skip_l + skip_r                # 偷它：孩子必须不偷
-        skip = max(take_l, skip_l) + max(take_r, skip_r) # 不偷它：孩子偷不偷都行，各取较大
+        # 偷它：孩子必须不偷
+        take = node.val + skip_l + skip_r
+        # 不偷它：孩子偷不偷都行，各取较大
+        skip = max(take_l, skip_l) + max(take_r, skip_r)
         return take, skip
 
     return max(go(root))
@@ -47,18 +50,22 @@ def rob_stack(root: TreeNode | None) -> int:
         return 0
     order: list[TreeNode] = []
     stack = [root]
-    while stack:                              # 先序（根、右、左）：父一定排在子之前
+    # 先序（根、右、左）：父一定排在子之前
+    while stack:
         node = stack.pop()
         order.append(node)
         if node.left:
             stack.append(node.left)
         if node.right:
             stack.append(node.right)
-    take: dict[TreeNode, int] = {}            # take[v]：偷 v 时子树最大收益
-    skip: dict[TreeNode, int] = {}            # skip[v]：不偷 v 时子树最大收益
+    # take[v]：偷 v 时子树最大收益
+    take: dict[TreeNode, int] = {}
+    # skip[v]：不偷 v 时子树最大收益
+    skip: dict[TreeNode, int] = {}
     for node in reversed(order):              # 倒序处理：孩子总先于父亲
         l, r = node.left, node.right
-        skip[node] = max(take.get(l, 0), skip.get(l, 0)) + max(take.get(r, 0), skip.get(r, 0))
+        skip[node] = (max(take.get(l, 0), skip.get(l, 0))
+                      + max(take.get(r, 0), skip.get(r, 0)))
         take[node] = node.val + skip.get(l, 0) + skip.get(r, 0)
     return max(take[root], skip[root])
 ```

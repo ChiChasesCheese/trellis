@@ -19,7 +19,8 @@ slug: kth-largest-element-in-an-array
 
 ```python
 def find_kth_largest(nums: list[int], k: int) -> int:
-    # 降序后第 k 个就是答案；重复值各占一个位置，正好符合「排序后的第 k 个」，不用去重
+    # 降序后第 k 个就是答案；重复值各占一个位置，
+    # 正好符合「排序后的第 k 个」，不用去重
     return sorted(nums, reverse=True)[k - 1]
 ```
 
@@ -35,11 +36,14 @@ def find_kth_largest(nums: list[int], k: int) -> int:
         pivot = random.choice(nums)
         bigger = [x for x in nums if x > pivot]
         equal = nums.count(pivot)
-        if k <= len(bigger):                       # 答案在比 pivot 大的那一堆里
+        # 答案在比 pivot 大的那一堆里
+        if k <= len(bigger):
             nums = bigger
-        elif k <= len(bigger) + equal:             # 落在 pivot 自己这一段
+        # 落在 pivot 自己这一段
+        elif k <= len(bigger) + equal:
             return pivot
-        else:                                      # 答案在比 pivot 小的那一堆里
+        # 答案在比 pivot 小的那一堆里
+        else:
             k -= len(bigger) + equal
             nums = [x for x in nums if x < pivot]
 ```
@@ -59,7 +63,8 @@ def find_kth_largest(nums: list[int], k: int) -> int:
     heapq.heapify(heap)                      # 前 k 个先建堆，O(k)
     for x in nums[k:]:
         if x > heap[0]:
-            heapq.heapreplace(heap, x)       # 比堆顶大才有资格挤进前 k 大
+            # 比堆顶大才有资格挤进前 k 大
+            heapq.heapreplace(heap, x)
     return heap[0]
 ```
 
@@ -87,10 +92,12 @@ def find_kth_largest(nums: list[int], k: int) -> int:
     target = len(nums) - k                   # 升序排好后答案所在的下标
     lo, hi = 0, len(nums) - 1
     while True:
-        p = random.randint(lo, hi)           # 随机 pivot，避开有序输入的最坏情况
+        # 随机 pivot，避开有序输入的最坏情况
+        p = random.randint(lo, hi)
         nums[p], nums[hi] = nums[hi], nums[p]
         pivot, store = nums[hi], lo
-        for i in range(lo, hi):              # Lomuto 划分：小于 pivot 的换到左边
+        # Lomuto 划分：小于 pivot 的换到左边
+        for i in range(lo, hi):
             if nums[i] < pivot:
                 nums[i], nums[store] = nums[store], nums[i]
                 store += 1

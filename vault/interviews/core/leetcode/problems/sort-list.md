@@ -23,15 +23,19 @@ slug: sort-list
 def sort_list(head: ListNode | None) -> ListNode | None:
     if not head or not head.next:           # 0 或 1 个结点：已有序
         return head
-    # 快慢指针找前半段的尾；fast 从 head.next 起步，保证 2 个结点时也能切成 1 + 1
+    # 快慢指针找前半段的尾；fast 从 head.next 起步，保证 2 个结点时也能
+    # 切成 1 + 1
     slow, fast = head, head.next
     while fast and fast.next:
         slow, fast = slow.next, fast.next.next
-    mid, slow.next = slow.next, None        # 断开：前半段 [head, slow]，后半段从 mid 起
+    # 断开：前半段 [head, slow]，后半段从 mid 起
+    mid, slow.next = slow.next, None
     return merge_sorted(sort_list(head), sort_list(mid))
 
 
-def merge_sorted(a: ListNode | None, b: ListNode | None) -> ListNode | None:
+def merge_sorted(
+        a: ListNode | None,
+        b: ListNode | None) -> ListNode | None:
     dummy = tail = ListNode()
     while a and b:
         if a.val <= b.val:                  # 相等取 a，归并排序保持稳定
@@ -66,14 +70,18 @@ def sort_list_bottom_up(head: ListNode | None) -> ListNode | None:
         length, node = length + 1, node.next
     dummy = ListNode(0, head)
     step = 1
-    while step < length:                    # 每轮把相邻的两段（各 step 个）合并成一段
+    # 每轮把相邻的两段（各 step 个）合并成一段
+    while step < length:
         tail, cur = dummy, dummy.next
         while cur:
             left = cur
-            right = cut(left, step)         # 切出 left，right 是剩余部分的头
-            cur = cut(right, step)          # 再切出 right，cur 是下一对的头
+            # 切出 left，right 是剩余部分的头
+            right = cut(left, step)
+            # 再切出 right，cur 是下一对的头
+            cur = cut(right, step)
             tail.next = merge_sorted(left, right)
-            while tail.next:                # 把 tail 推到合并后这一段的末尾
+            # 把 tail 推到合并后这一段的末尾
+            while tail.next:
                 tail = tail.next
         step *= 2
     return dummy.next
@@ -83,5 +91,11 @@ def sort_list_bottom_up(head: ListNode | None) -> ListNode | None:
 - 找中点后不断开 `slow.next`：左半段仍连着右半段，递归永远缩不小，`RecursionError`。
 - `fast` 也从 `head` 起步：`[2,1]` 时 `slow` 停在第二个结点，`mid` 为 `None`，左半段还是 `[2,1]`，无限递归。
 - 以为递归版是 `O(1)` 空间：它的栈深 `log n`，`5 * 10^4` 个结点仍安全，但进阶要求的严格常数空间要用自底向上版。
+
+**追问。**
+- 排序稳定吗？稳定：合并时相等取左段（`<=`），相等元素保持原相对顺序。
+- 自底向上版的复杂度？时间仍是 `O(n log n)`（`log n` 轮，每轮扫 `n` 个结点），空间 `O(1)`，满足进阶。
+- 为什么不用快排或堆排？快排要随机选枢轴、堆排要下标随机访问，链表都不顺手；链表快排最坏 `O(n²)`，归并稳定地 `O(n log n)`。
+- 有多个有序链表要合并（LC 23）：两两归并，或用大小为 `k` 的最小堆，`O(N log k)`。
 
 **同模式。** LC 21 合并两个有序链表、LC 23 合并 K 个升序链表、LC 147 对链表进行插入排序、LC 912 排序数组。

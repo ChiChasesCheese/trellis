@@ -23,14 +23,16 @@ slug: all-nodes-distance-k-in-binary-tree
 def distance_k(root: TreeNode, target: TreeNode, k: int) -> list[int]:
     parent: dict[TreeNode, TreeNode | None] = {root: None}
     stack = [root]
-    while stack:                          # 迭代 DFS 给每个结点记父指针（避免递归栈）
+    # 迭代 DFS 给每个结点记父指针（避免递归栈）
+    while stack:
         node = stack.pop()
         for child in (node.left, node.right):
             if child:
                 parent[child] = node
                 stack.append(child)
 
-    frontier, seen = [target], {target}   # 从 target 出发的 BFS，一层 = 距离 +1
+    # 从 target 出发的 BFS，一层 = 距离 +1
+    frontier, seen = [target], {target}
     for _ in range(k):
         nxt: list[TreeNode] = []
         for node in frontier:
@@ -50,10 +52,12 @@ def distance_k(root: TreeNode, target: TreeNode, k: int) -> list[int]:
 - 不建父指针表，空间降到 `O(h)`：一次后序 DFS 返回「到 `target` 的距离」，在每个祖先处按距离 `d` 收下它自己或向另一侧下探。
 
 ```python
-def distance_k(root: TreeNode, target: TreeNode, k: int) -> list[int]:
+def distance_k_dfs(
+        root: TreeNode, target: TreeNode, k: int) -> list[int]:
     res: list[int] = []
 
-    def collect(node: TreeNode | None, depth: int) -> None:   # 收集 node 往下恰好 depth 层的结点
+    # 收集 node 往下恰好 depth 层的结点
+    def collect(node: TreeNode | None, depth: int) -> None:
         if node is None or depth < 0:
             return
         if depth == 0:
@@ -62,7 +66,8 @@ def distance_k(root: TreeNode, target: TreeNode, k: int) -> list[int]:
         collect(node.left, depth - 1)
         collect(node.right, depth - 1)
 
-    def dfs(node: TreeNode | None) -> int:         # node 到 target 的距离；target 不在子树里返回 -1
+    # node 到 target 的距离；target 不在子树里返回 -1
+    def dfs(node: TreeNode | None) -> int:
         if node is None:
             return -1
         if node is target:
@@ -71,12 +76,15 @@ def distance_k(root: TreeNode, target: TreeNode, k: int) -> list[int]:
         left, right = dfs(node.left), dfs(node.right)
         if left == -1 and right == -1:
             return -1
-        d = (left if left != -1 else right) + 1    # 当前祖先到 target 的距离
+        # 当前祖先到 target 的距离
+        d = (left if left != -1 else right) + 1
         other = node.right if left != -1 else node.left
         if d == k:
-            res.append(node.val)                   # 祖先自己正好在距离 k
+            # 祖先自己正好在距离 k
+            res.append(node.val)
         else:
-            collect(other, k - d - 1)              # 绕到另一侧子树，再往下 k - d - 1 层
+            # 绕到另一侧子树，再往下 k - d - 1 层
+            collect(other, k - d - 1)
         return d
 
     dfs(root)

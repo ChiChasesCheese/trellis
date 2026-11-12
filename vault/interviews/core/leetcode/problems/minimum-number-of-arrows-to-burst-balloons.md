@@ -23,8 +23,10 @@ from operator import itemgetter
 def find_min_arrow_shots(points: list[list[int]]) -> int:
     arrows = 0
     last = -inf                            # 上一支箭的位置
-    for start, end in sorted(points, key=itemgetter(1)):   # 按右端点排序
-        if start > last:                   # 上一支箭够不着：新射一支，射在 end（尽量靠右）
+    # 按右端点排序
+    for start, end in sorted(points, key=itemgetter(1)):
+        # 上一支箭够不着：新射一支，射在 end（尽量靠右）
+        if start > last:
             arrows += 1
             last = end
     return arrows

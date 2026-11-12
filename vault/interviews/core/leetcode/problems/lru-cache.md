@@ -24,19 +24,23 @@ from collections import OrderedDict
 class LRUCache:
     def __init__(self, capacity: int) -> None:
         self.cap = capacity
-        self.od: OrderedDict[int, int] = OrderedDict()     # 队头是最久未使用，队尾是最近使用
+        # 队头是最久未使用，队尾是最近使用
+        self.od: OrderedDict[int, int] = OrderedDict()
 
     def get(self, key: int) -> int:
         if key not in self.od:
             return -1
-        self.od.move_to_end(key)                           # 命中：标记为刚用过
+        # 命中：标记为刚用过
+        self.od.move_to_end(key)
         return self.od[key]
 
     def put(self, key: int, value: int) -> None:
         self.od[key] = value
-        self.od.move_to_end(key)                           # 新键或旧键都放到队尾
+        # 新键或旧键都放到队尾
+        self.od.move_to_end(key)
         if len(self.od) > self.cap:
-            self.od.popitem(last=False)                    # 超容量：弹出队头
+            # 超容量：弹出队头
+            self.od.popitem(last=False)
 ```
 
 `get`、`put` 都是 `O(1)`，空间 `O(capacity)`，作为开场答案够用；面试官常追一句「不许用 `OrderedDict`」，这时要能手写下面的版本。
@@ -57,7 +61,9 @@ class LRUCache:
     def __init__(self, capacity: int) -> None:
         self.cap = capacity
         self.map: dict[int, Node] = {}
-        self.head, self.tail = Node(), Node()      # 哨兵（sentinel）消掉空链表和头尾的特判；head.next 最近使用，tail.prev 最久未使用
+        # 哨兵（sentinel）消掉空链表和头尾的特判；
+        # head.next 最近使用，tail.prev 最久未使用
+        self.head, self.tail = Node(), Node()
         self.head.next, self.tail.prev = self.tail, self.head
 
     def _unlink(self, node: Node) -> None:
@@ -72,7 +78,8 @@ class LRUCache:
         if key not in self.map:
             return -1
         node = self.map[key]
-        self._unlink(node)                         # 摘下来再放到最前面 = 标记为刚用过
+        # 摘下来再放到最前面 = 标记为刚用过
+        self._unlink(node)
         self._push_front(node)
         return node.val
 
@@ -83,10 +90,12 @@ class LRUCache:
             self._unlink(node)
             self._push_front(node)
             return
-        if len(self.map) == self.cap:              # 满了：逐出链表尾部（最久未使用）
+        # 满了：逐出链表尾部（最久未使用）
+        if len(self.map) == self.cap:
             lru = self.tail.prev
             self._unlink(lru)
-            del self.map[lru.key]                  # 节点自带 key，才能回头删字典项
+            # 节点自带 key，才能回头删字典项
+            del self.map[lru.key]
         node = self.map[key] = Node(key, value)
         self._push_front(node)
 ```
@@ -102,12 +111,14 @@ class LRUCache:
 class LRUCache:
     def __init__(self, capacity: int) -> None:
         self.cap = capacity
-        self.d: dict[int, int] = {}                        # 按插入顺序，最前面的最久未使用
+        # 按插入顺序，最前面的最久未使用
+        self.d: dict[int, int] = {}
 
     def get(self, key: int) -> int:
         if key not in self.d:
             return -1
-        self.d[key] = self.d.pop(key)                      # 删掉再插入 = 挪到最新
+        # 删掉再插入 = 挪到最新
+        self.d[key] = self.d.pop(key)
         return self.d[key]
 
     def put(self, key: int, value: int) -> None:
@@ -125,5 +136,7 @@ class LRUCache:
 **追问。**
 - 要线程安全：`get` 也会改顺序，所以读写都要拿同一把 `threading.Lock`。
 - 按访问频率逐出（LFU）：按频次分桶，每个桶一条链表，再维护 `min_freq`。
+- 为什么必须双向链表？摘掉任意节点要改前驱的 `next`，单链表找前驱要 `O(n)`；哈希表只给了节点，没给前驱。
+- 加过期时间（TTL）：节点多存一个过期时间，`get` 命中时检查并惰性删除；再配一个按过期时间排序的最小堆做主动清理，摊还 `O(log n)`。
 
 **同模式。** LC 460 LFU 缓存、LC 432 全 O(1) 的数据结构、LC 380 O(1) 时间插入删除和获取随机元素（字典加数组）、LC 707 设计链表。

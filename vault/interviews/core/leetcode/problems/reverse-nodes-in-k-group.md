@@ -23,13 +23,17 @@ def reverse_k_group(head: ListNode | None, k: int) -> ListNode | None:
     while head:
         nodes.append(head)
         head = head.next
-    for i in range(0, len(nodes) - k + 1, k):          # 只处理完整的一组
-        nodes[i:i + k] = nodes[i:i + k][::-1]          # 切片反转：换的是节点本身
+    # 只处理完整的一组
+    for i in range(0, len(nodes) - k + 1, k):
+        # 切片反转：换的是节点本身
+        nodes[i:i + k] = nodes[i:i + k][::-1]
     dummy = cur = ListNode(0)
     for node in nodes:
-        cur.next = node                                # 按新顺序重新接线
+        # 按新顺序重新接线
+        cur.next = node
         cur = node
-    cur.next = None                                    # 新的尾巴必须断开，否则会成环
+    # 新的尾巴必须断开，否则会成环
+    cur.next = None
     return dummy.next
 ```
 
@@ -40,20 +44,24 @@ def reverse_k_group(head: ListNode | None, k: int) -> ListNode | None:
 ```python
 def reverse_k_group(head: ListNode | None, k: int) -> ListNode | None:
     dummy = ListNode(0, head)
-    group_prev = dummy                       # 本组前一个节点（上一组翻转后的尾）
+    # 本组前一个节点（上一组翻转后的尾）
+    group_prev = dummy
     while True:
         kth: ListNode | None = group_prev
-        for _ in range(k):                   # 往后数 k 个；不够 k 个就结束，余下原样保留
+        # 往后数 k 个；不够 k 个就结束，余下原样保留
+        for _ in range(k):
             kth = kth.next
             if kth is None:
                 return dummy.next
         group_next = kth.next                # 下一组的头
-        prev, cur = group_next, group_prev.next      # prev 先指向下一组：翻完后本组尾巴自动接上
+        # prev 先指向下一组：翻完后本组尾巴自动接上
+        prev, cur = group_next, group_prev.next
         while cur is not group_next:
             nxt = cur.next
             cur.next = prev
             prev, cur = cur, nxt
-        tail = group_prev.next               # 翻转前的头，现在是本组的尾
+        # 翻转前的头，现在是本组的尾
+        tail = group_prev.next
         group_prev.next = kth                # 前一段接上新的头（kth）
         group_prev = tail
 ```
@@ -68,13 +76,16 @@ def reverse_k_group(head: ListNode | None, k: int) -> ListNode | None:
 ```python
 def reverse_k_group(head: ListNode | None, k: int) -> ListNode | None:
     tail = head
-    for _ in range(k):                                 # 数 k 个，不够就保持原样
+    # 数 k 个，不够就保持原样
+    for _ in range(k):
         if tail is None:
             return head
         tail = tail.next
-    prev, cur = reverse_k_group(tail, k), head         # prev 初值 = 后面已处理好的部分
+    # prev 初值 = 后面已处理好的部分
+    prev, cur = reverse_k_group(tail, k), head
     for _ in range(k):
-        cur.next, prev, cur = prev, cur, cur.next      # 经典反转，组尾自动接上后半部分
+        # 经典反转，组尾自动接上后半部分
+        cur.next, prev, cur = prev, cur, cur.next
     return prev
 ```
 

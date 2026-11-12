@@ -16,21 +16,26 @@ slug: combination-sum
 **推导。** 暴力：每一步从所有候选里选一个，直到和不小于目标，得到的是**排列**（`[2,2,3]` 与 `[2,3,2]` 重复）。去重的洞察：约定组合内部的元素按候选数组的下标非递减顺序出现。具体做法是递归函数带一个 `start`，本层只能选 `candidates[start:]` 里的数，选了第 `i` 个之后传 `i`（允许再选它自己）。排序后，若 `candidates[i] > remain`，后面更大的数也放不下，直接 `break` 剪枝。
 
 ```python
-def combination_sum(candidates: list[int], target: int) -> list[list[int]]:
-    candidates = sorted(candidates)                # 排序后，一旦某个数放不下，后面更大的都放不下
+def combination_sum(
+        candidates: list[int], target: int) -> list[list[int]]:
+    # 排序后，一旦某个数放不下，后面更大的都放不下
+    candidates = sorted(candidates)
     result: list[list[int]] = []
     path: list[int] = []
 
     def dfs(start: int, remain: int) -> None:
         if remain == 0:
-            result.append(path[:])                 # 存副本：path 之后还会被修改
+            # 存副本：path 之后还会被修改
+            result.append(path[:])
             return
         for i in range(start, len(candidates)):
             x = candidates[i]
             if x > remain:
-                break                              # 剪枝：后面的数只会更大
+                # 剪枝：后面的数只会更大
+                break
             path.append(x)
-            dfs(i, remain - x)                     # 传 i 而不是 i+1：同一个数可以重复选
+            # 传 i 而不是 i+1：同一个数可以重复选
+            dfs(i, remain - x)
             path.pop()
 
     dfs(0, target)

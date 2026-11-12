@@ -25,7 +25,8 @@ class Codec:
         out: list[str] = []
 
         def dfs(node: Node) -> None:
-            out.append(f"{node.val} {len(node.children)}")   # 值 + 孩子个数
+            # 值 + 孩子个数
+            out.append(f"{node.val} {len(node.children)}")
             for child in node.children:
                 dfs(child)
 
@@ -34,13 +35,16 @@ class Codec:
         return " ".join(out)
 
     def deserialize(self, data: str) -> Node | None:
-        if not data:                              # 空树："".split() 是 []，必须先判空
+        # 空树："".split() 是 []，必须先判空
+        if not data:
             return None
-        tokens = map(int, data.split())           # 一次性迭代器，递归调用之间共享读到哪了
+        # 一次性迭代器，递归调用之间共享读到哪了
+        tokens = map(int, data.split())
 
         def build() -> Node:
             node = Node(next(tokens), [])
-            for _ in range(next(tokens)):         # 读到几个孩子，就递归建几棵子树
+            # 读到几个孩子，就递归建几棵子树
+            for _ in range(next(tokens)):
                 node.children.append(build())
             return node
 
@@ -65,7 +69,8 @@ class CodecBFS:
         queue = deque([root])
         while queue:
             node = queue.popleft()
-            out += [str(node.val), str(len(node.children))]   # 值 + 孩子个数
+            # 值 + 孩子个数
+            out += [str(node.val), str(len(node.children))]
             queue.extend(node.children)
         return " ".join(out)
 
@@ -74,10 +79,12 @@ class CodecBFS:
             return None
         tokens = map(int, data.split())
         root = Node(next(tokens), [])
-        queue = deque([(root, next(tokens))])      # (结点, 它还要读几个孩子)；层序读，与序列化的入队顺序一致
+        # (结点, 它还要读几个孩子)；层序读，与序列化的入队顺序一致
+        queue = deque([(root, next(tokens))])
         while queue:
             node, cnt = queue.popleft()
-            for _ in range(cnt):                   # 孩子在输出里的顺序和入队顺序一致
+            # 孩子在输出里的顺序和入队顺序一致
+            for _ in range(cnt):
                 child = Node(next(tokens), [])
                 node.children.append(child)
                 queue.append((child, next(tokens)))
@@ -99,10 +106,13 @@ class CodecStack:
             return ""
         out: list[str] = []
         stack = [root]
-        while stack:                              # 迭代先序，树高 1000 也不会爆递归栈
+        # 迭代先序，树高 1000 也不会爆递归栈
+        while stack:
             node = stack.pop()
-            out.append(f"{node.val} {len(node.children)}")   # 值 + 孩子个数
-            stack.extend(reversed(node.children))            # 反着压，左孩子先弹出
+            # 值 + 孩子个数
+            out.append(f"{node.val} {len(node.children)}")
+            # 反着压，左孩子先弹出
+            stack.extend(reversed(node.children))
         return " ".join(out)
 
     def deserialize(self, data: str) -> Node | None:
@@ -110,9 +120,11 @@ class CodecStack:
             return None
         tokens = map(int, data.split())
         root = Node(next(tokens), [])
-        nodes, left = [root], [next(tokens)]      # 当前链上的结点，及各自还缺几个孩子
+        # 当前链上的结点，及各自还缺几个孩子
+        nodes, left = [root], [next(tokens)]
         while nodes:
-            if left[-1] == 0:                     # 孩子收齐了，回到父结点
+            # 孩子收齐了，回到父结点
+            if left[-1] == 0:
                 nodes.pop()
                 left.pop()
                 continue
@@ -123,7 +135,6 @@ class CodecStack:
             left.append(next(tokens))
         return root
 ```
-- 想要人能读懂的格式：括号形式 `1(3(5 6) 2 4)`，更短也更可读，代价是解析要用栈匹配括号。
 - 树巨大、不能一次拿到整个字符串：序列化改成生成器 `yield` 每个 token，反序列化从迭代器读——本方案的 `tokens` 迭代器已经是流式的。
 - 结点值是任意字符串或可为负：用 `json.dumps` 序列化 `[val, [children...]]` 的嵌套列表最稳，注意深度上限；或给 token 加长度前缀。
 

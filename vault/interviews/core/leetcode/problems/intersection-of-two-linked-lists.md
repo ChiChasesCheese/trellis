@@ -18,16 +18,20 @@ slug: intersection-of-two-linked-lists
 **简单解法。** 把 A 的所有节点放进集合，再顺着 B 走，第一个在集合里的节点就是交点。
 
 ```python
-def get_intersection_node(head_a: ListNode | None, head_b: ListNode | None) -> ListNode | None:
+def get_intersection_node(
+        head_a: ListNode | None,
+        head_b: ListNode | None) -> ListNode | None:
     in_a: set[ListNode] = set()
     node = head_a
     while node:
-        in_a.add(node)                              # 按对象身份存，不是按值
+        # 按对象身份存，不是按值
+        in_a.add(node)
         node = node.next
     node = head_b
     while node:
         if node in in_a:
-            return node                             # B 上第一个也在 A 里的节点
+            # B 上第一个也在 A 里的节点
+            return node
         node = node.next
     return None
 ```
@@ -37,12 +41,15 @@ def get_intersection_node(head_a: ListNode | None, head_b: ListNode | None) -> L
 最优解：
 
 ```python
-def get_intersection_node(head_a: ListNode | None, head_b: ListNode | None) -> ListNode | None:
+def get_intersection_node(
+        head_a: ListNode | None,
+        head_b: ListNode | None) -> ListNode | None:
     a, b = head_a, head_b
     while a is not b:                   # 比的是节点本身（地址），不是值
         a = a.next if a else head_b     # 走到头就换到另一条链表的表头
         b = b.next if b else head_a
-    return a                            # 相交节点；不相交时 a、b 同时为 None
+    # 相交节点；不相交时 a、b 同时为 None
+    return a
 ```
 
 运行：`[4,1,8,4,5]` 与 `[5,6,1,8,4,5]`（共享后三个节点）→ 值为 `8` 的节点，`[1,9,1,2,4]` 与 `[3,2,4]` → 值为 `2` 的节点，`[2,6,4]` 与 `[1,5]` → `None`，两条等长且不相交的链表 → `None`。
@@ -52,7 +59,9 @@ def get_intersection_node(head_a: ListNode | None, head_b: ListNode | None) -> L
 **拓展优化。**
 - 先量长度，让长的链表先走 `|m - n|` 步，再齐头并进到第一个相同节点；同样 `O(m + n)` / `O(1)`，比换表头的写法直观：
 ```python
-def get_intersection_node_by_length(head_a: ListNode | None, head_b: ListNode | None) -> ListNode | None:
+def get_intersection_node_by_length(
+        head_a: ListNode | None,
+        head_b: ListNode | None) -> ListNode | None:
     def length(node: ListNode | None) -> int:
         n = 0
         while node:
@@ -62,17 +71,19 @@ def get_intersection_node_by_length(head_a: ListNode | None, head_b: ListNode | 
 
     a, b = head_a, head_b
     la, lb = length(a), length(b)
-    for _ in range(la - lb):                        # A 更长：A 先走掉多出来的部分
+    # A 更长：A 先走掉多出来的部分
+    for _ in range(la - lb):
         a = a.next
     for _ in range(lb - la):
         b = b.next
-    while a is not b:                               # 剩余长度相同：同步前进，必在交点相遇或同时走到 None
+    # 剩余长度相同：同步前进，必在交点相遇或同时走到 None
+    while a is not b:
         a, b = a.next, b.next
     return a
 ```
 
 **易错点。**
-- 比较值而不是节点：把 `a is not b` 换成 `a.val != b.val`，示例一会在值为 `1` 的另一个节点上停下，返回值为 `1` 的节点，正确答案是值为 `8` 的节点。必须比较节点本身。
+- 比较值而不是节点：把 `a is not b` 换成 `a.val != b.val`，示例一会在两个值同为 `5` 的不同节点上停下，返回值为 `5` 的节点，正确答案是值为 `8` 的节点；而且两链不相交时值比较还可能读到 `None.val` 而报错。必须比较节点本身。
 - 走到末尾不换表头，直接置 `None` 结束：长度不同的两个指针永远对不齐，示例一返回 `None`。
 - 换表头的判断写成 `a.next is None`（走到最后一个节点就换）：指针永远不会变成 `None`，不相交时两个指针一直循环，永不停止。要等指针真的走到 `None`（越过末尾）再换。
 

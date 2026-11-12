@@ -18,17 +18,22 @@ slug: n-queens
 ```python
 def solve_n_queens(n: int) -> list[list[str]]:
     result: list[list[str]] = []
-    cols: list[int] = []                           # cols[r] = 第 r 行皇后所在的列
+    # cols[r] = 第 r 行皇后所在的列
+    cols: list[int] = []
     used_col: set[int] = set()
-    used_diag: set[int] = set()                    # 主对角线（左上-右下）：r - c 相同
-    used_anti: set[int] = set()                    # 副对角线（右上-左下）：r + c 相同
+    # 主对角线（左上-右下）：r - c 相同
+    used_diag: set[int] = set()
+    # 副对角线（右上-左下）：r + c 相同
+    used_anti: set[int] = set()
 
     def place(r: int) -> None:
         if r == n:
-            result.append(["." * c + "Q" + "." * (n - c - 1) for c in cols])
+            result.append(["." * c + "Q" + "." * (n - c - 1)
+                           for c in cols])
             return
         for c in range(n):
-            if c in used_col or r - c in used_diag or r + c in used_anti:
+            if (c in used_col or r - c in used_diag
+                    or r + c in used_anti):
                 continue
             cols.append(c)
             used_col.add(c)
@@ -55,7 +60,7 @@ def solve_n_queens(n: int) -> list[list[str]]:
 
 **追问。**
 - 只要解的个数（LC 52）：不用生成棋盘，改用位运算，`n = 12` 得到 `14200`，在 0.1 秒内完成。
-- 想再快：利用左右对称，只搜第一行的前一半列，结果翻倍。
+- 想再快：利用左右对称，只搜第一行的前一半列，结果镜像后翻倍；`n` 为奇数时中间那一列要单独搜，不能翻倍。
 - 只要找到一个解：找到后立刻返回，不再继续搜索。
 
 **同模式。** LC 52 N 皇后 II、LC 37 解数独、LC 46 全排列、LC 79 单词搜索、LC 131 分割回文串。

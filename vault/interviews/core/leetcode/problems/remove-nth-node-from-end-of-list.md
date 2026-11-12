@@ -16,12 +16,15 @@ slug: remove-nth-node-from-end-of-list
 **推导。** 暴力：第一趟数出长度 `L`，第二趟走到第 `L - n - 1` 个结点删除下一个，两趟 `O(L)`，能过但不满足进阶。浪费在“先数长度”。改成间距法：快指针先走 `n` 步，之后两个指针同步走，快指针到尾时，慢指针离尾部恰好也是 `n` 个结点之差。因为要停在待删结点的**前一个**，快指针要停在最后一个结点（`fast.next` 为空）而不是越过它。待删的可能是头结点，所以从哑结点出发，哑结点充当头结点的前驱。
 
 ```python
-def remove_nth_from_end(head: ListNode | None, n: int) -> ListNode | None:
+def remove_nth_from_end(
+        head: ListNode | None, n: int) -> ListNode | None:
     dummy = ListNode(0, head)               # 哑结点：删头结点时不用特判
     fast = slow = dummy
-    for _ in range(n):                      # fast 先走 n 步，和 slow 拉开 n 的间距
+    # fast 先走 n 步，和 slow 拉开 n 的间距
+    for _ in range(n):
         fast = fast.next
-    while fast.next:                        # fast 停在最后一个结点时，slow 正好在待删结点的前一个
+    # fast 停在最后一个结点时，slow 正好在待删结点的前一个
+    while fast.next:
         fast, slow = fast.next, slow.next
     slow.next = slow.next.next
     return dummy.next

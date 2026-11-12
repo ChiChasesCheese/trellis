@@ -27,11 +27,13 @@ def restore_ip_addresses(s: str) -> list[str]:
             if start == n:              # 恰好用完所有字符
                 res.append(".".join(parts))
             return
-        if not left <= n - start <= 3 * left:   # 每段 1~3 位：剩余字符数不在范围内就剪枝
+        # 每段 1~3 位：剩余字符数不在范围内就剪枝
+        if not left <= n - start <= 3 * left:
             return
         for end in range(start + 1, min(start + 3, n) + 1):
             seg = s[start:end]
-            if len(seg) > 1 and seg[0] == "0":  # 前导零：更长的段同样非法，直接 break
+            # 前导零：更长的段同样非法，直接 break
+            if len(seg) > 1 and seg[0] == "0":
                 break
             if int(seg) > 255:                  # 更长的段只会更大
                 break

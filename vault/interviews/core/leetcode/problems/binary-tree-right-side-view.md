@@ -21,7 +21,8 @@ def right_side_view(root: TreeNode | None) -> list[int]:
     level = [root] if root else []
     while level:
         ans.append(level[-1].val)                  # 这一层最右的节点
-        level = [kid for node in level for kid in (node.left, node.right) if kid]
+        level = [kid for node in level
+                 for kid in (node.left, node.right) if kid]
     return ans
 ```
 
@@ -38,7 +39,8 @@ def right_side_view_dfs(root: TreeNode | None) -> list[int]:
     def dfs(node: TreeNode | None, depth: int) -> None:
         if node is None:
             return
-        if depth == len(ans):                       # 该深度第一次到达，先右后左所以一定是最右的
+        # 该深度第一次到达，先右后左所以一定是最右的
+        if depth == len(ans):
             ans.append(node.val)
         dfs(node.right, depth + 1)
         dfs(node.left, depth + 1)

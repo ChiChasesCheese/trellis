@@ -20,19 +20,24 @@ def delete_node(root: TreeNode | None, key: int) -> TreeNode | None:
     if root is None:
         return None                            # 树里没有 key
     if key < root.val:
-        root.left = delete_node(root.left, key)      # 目标在左子树：删完用返回值接回来
+        # 目标在左子树：删完用返回值接回来
+        root.left = delete_node(root.left, key)
     elif key > root.val:
         root.right = delete_node(root.right, key)
     else:
         if root.left is None:
-            return root.right                  # 没有左孩子（含叶子）：右子树顶替自己
+            # 没有左孩子（含叶子）：右子树顶替自己
+            return root.right
         if root.right is None:
-            return root.left                   # 只有左孩子：左子树顶替自己
-        succ = root.right                      # 两个孩子：用中序后继（右子树最小值）顶替
+            # 只有左孩子：左子树顶替自己
+            return root.left
+        # 两个孩子：用中序后继（右子树最小值）顶替
+        succ = root.right
         while succ.left:
             succ = succ.left
         root.val = succ.val
-        root.right = delete_node(root.right, succ.val)   # 再到右子树里删掉那个后继
+        # 再到右子树里删掉那个后继
+        root.right = delete_node(root.right, succ.val)
     return root
 ```
 
@@ -49,20 +54,25 @@ def delete_node(root: TreeNode | None, key: int) -> TreeNode | None:
 - 树很深、递归会超限：迭代版先沿路径找到目标和它的父节点，两个孩子时找后继并转成删除后继，最后让孩子顶替；`O(h)` 时间、`O(1)` 空间。
 
 ```python
-def delete_node_iter(root: TreeNode | None, key: int) -> TreeNode | None:
+def delete_node_iter(
+        root: TreeNode | None, key: int) -> TreeNode | None:
     parent, node = None, root
-    while node and node.val != key:            # 先找到 key 所在的节点和它的父节点
+    # 先找到 key 所在的节点和它的父节点
+    while node and node.val != key:
         parent = node
         node = node.left if key < node.val else node.right
     if node is None:
         return root                            # 树里没有 key
-    if node.left and node.right:               # 两个孩子：用中序后继（右子树最小值）顶替
+    # 两个孩子：用中序后继（右子树最小值）顶替
+    if node.left and node.right:
         succ_parent, succ = node, node.right
         while succ.left:
             succ_parent, succ = succ, succ.left
         node.val = succ.val
-        parent, node = succ_parent, succ       # 问题转成删除后继，它至多有一个右孩子
-    child = node.left or node.right            # 至多一个孩子：让孩子顶替自己的位置
+        # 问题转成删除后继，它至多有一个右孩子
+        parent, node = succ_parent, succ
+    # 至多一个孩子：让孩子顶替自己的位置
+    child = node.left or node.right
     if parent is None:
         return child                           # 删的是根
     if parent.left is node:

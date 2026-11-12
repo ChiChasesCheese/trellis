@@ -16,14 +16,20 @@ slug: lowest-common-ancestor-of-a-binary-tree
 **推导。** 暴力：分别求出根到 `p`、根到 `q` 的路径，取最长公共前缀的最后一个节点 → `O(n)` 时间，但要写路径回溯，且路径要完整保存。洞察：不必保存路径，让每个子树只回答一个问题「我这里面有没有 `p` 或 `q`，有的话是谁」。三种情形：当前节点就是 `p` 或 `q` → 返回自己（即使另一个在它下面，它也是答案，因为节点可以是自己的祖先）；左右两边都返回非空 → `p`、`q` 分居两侧，当前节点是汇合点；只有一边非空 → 两个都在那一边（或只找到一个），原样往上传。
 
 ```python
-def lowest_common_ancestor(root: TreeNode | None, p: TreeNode, q: TreeNode) -> TreeNode | None:
-    if root is None or root is p or root is q:       # 空树、或碰到 p / q：这棵子树的汇报就是它自己
+def lowest_common_ancestor(
+        root: TreeNode | None,
+        p: TreeNode, q: TreeNode) -> TreeNode | None:
+    # 空树、或碰到 p / q：这棵子树的汇报就是它自己
+    if root is None or root is p or root is q:
         return root
-    left = lowest_common_ancestor(root.left, p, q)   # 左子树里找到了谁
-    right = lowest_common_ancestor(root.right, p, q) # 右子树里找到了谁
-    if left and right:                               # p、q 分居两侧：当前节点就是最近公共祖先
+    # 左、右子树里各找到了谁
+    left = lowest_common_ancestor(root.left, p, q)
+    right = lowest_common_ancestor(root.right, p, q)
+    # p、q 分居两侧：当前节点就是最近公共祖先
+    if left and right:
         return root
-    return left or right                             # 只有一边有：把它往上传
+    # 只有一边有：把它往上传
+    return left or right
 ```
 
 运行：`[3,5,1,6,2,0,8,null,null,7,4]` 中 `p = 5, q = 1` → `3`，`p = 5, q = 4` → `5`；`[1,2]` 中 `p = 1, q = 2` → `1`。

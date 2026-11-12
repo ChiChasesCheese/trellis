@@ -20,19 +20,24 @@ slug: word-search
 ```python
 def exist(board: list[list[str]], word: str) -> bool:
     rows, cols = len(board), len(board[0])
-    visited: set[tuple[int, int]] = set()           # 本条路径已用过的格子，不改输入
+    # 本条路径已用过的格子，不改输入
+    visited: set[tuple[int, int]] = set()
 
-    def dfs(r: int, c: int, k: int) -> bool:        # 站在 (r, c)，要匹配 word[k]
+    # 站在 (r, c)，要匹配 word[k]
+    def dfs(r: int, c: int, k: int) -> bool:
         if board[r][c] != word[k]:
             return False
         if k == len(word) - 1:
             return True
         visited.add((r, c))
         for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
-            if 0 <= nr < rows and 0 <= nc < cols and (nr, nc) not in visited and dfs(nr, nc, k + 1):
+            if (0 <= nr < rows and 0 <= nc < cols
+                    and (nr, nc) not in visited
+                    and dfs(nr, nc, k + 1)):
                 visited.discard((r, c))
                 return True
-        visited.discard((r, c))                     # 回溯：这格在别的路径里还能用
+        # 回溯：这格在别的路径里还能用
+        visited.discard((r, c))
         return False
 
     return any(dfs(r, c, 0) for r in range(rows) for c in range(cols))
@@ -50,20 +55,26 @@ from itertools import chain
 def exist(board: list[list[str]], word: str) -> bool:
     rows, cols = len(board), len(board[0])
     board_count = Counter(chain.from_iterable(board))
-    if Counter(word) - board_count:                # 单词需要的某个字母比棋盘上的还多：直接 False
+    # 单词需要的某个字母比棋盘上的还多：直接 False
+    if Counter(word) - board_count:
         return False
     if board_count[word[0]] > board_count[word[-1]]:
-        word = word[::-1]                          # 从出现次数少的一端起手，起点更少
+        # 从出现次数少的一端起手，起点更少
+        word = word[::-1]
 
-    def dfs(r: int, c: int, k: int) -> bool:       # 当前站在 (r, c)，要匹配 word[k]
+    # 当前站在 (r, c)，要匹配 word[k]
+    def dfs(r: int, c: int, k: int) -> bool:
         if board[r][c] != word[k]:
             return False
         if k == len(word) - 1:
             return True
-        board[r][c] = "#"                          # 原地标记"本条路径已用过"
+        # 原地标记"本条路径已用过"
+        board[r][c] = "#"
         found = any(
-            0 <= nr < rows and 0 <= nc < cols and dfs(nr, nc, k + 1)
-            for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1))
+            0 <= nr < rows and 0 <= nc < cols
+            and dfs(nr, nc, k + 1)
+            for nr, nc in ((r + 1, c), (r - 1, c),
+                           (r, c + 1), (r, c - 1))
         )
         board[r][c] = word[k]                      # 回溯：还原
         return found
@@ -87,7 +98,8 @@ def find_words(board: list[list[str]], words: list[str]) -> list[str]:
         node = trie
         for ch in w:
             node = node.setdefault(ch, {})
-        node["$"] = w                               # 单词结尾处存下整个单词
+        # 单词结尾处存下整个单词
+        node["$"] = w
     rows, cols = len(board), len(board[0])
     found: list[str] = []
 
@@ -95,16 +107,20 @@ def find_words(board: list[list[str]], words: list[str]) -> list[str]:
         ch = board[r][c]
         node = parent.get(ch)
         if node is None:
-            return                                  # 前缀树里没有这条路：剪枝
+            # 前缀树里没有这条路：剪枝
+            return
         if "$" in node:
-            found.append(node.pop("$"))             # 取走，同一个单词不会重复收集
+            # 取走，同一个单词不会重复收集
+            found.append(node.pop("$"))
         board[r][c] = "#"                           # 本条路径已用
         for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
-            if 0 <= nr < rows and 0 <= nc < cols and board[nr][nc] != "#":
+            if (0 <= nr < rows and 0 <= nc < cols
+                    and board[nr][nc] != "#"):
                 dfs(nr, nc, node)
         board[r][c] = ch                            # 回溯
         if not node:
-            parent.pop(ch)                          # 子树已空：剪掉，后面不再进入
+            # 子树已空：剪掉，后面不再进入
+            parent.pop(ch)
 
     for r in range(rows):
         for c in range(cols):
@@ -114,11 +130,13 @@ def find_words(board: list[list[str]], words: list[str]) -> list[str]:
 
 **易错点。**
 - 不标记已用的格子：`[["a","b"]]` 找 `"aba"` 会得到 `True`（`a` 被用了两次），正确是 `False`。
-- 回溯时漏掉还原：失败路径留下的 `"#"` 会阻断之后的起点，`[["a","b","b"]]` 找 `"bba"` 会得到 `False`，正确是 `True`。
+- 回溯时漏掉还原：失败路径留下的 `"#"` 会阻断之后的起点，`[["a","a","b","b"]]` 找 `"bba"`：先从下标 `2` 的 `b` 起走，走进下标 `3` 的 `b` 失败，两格都留着 `"#"`，最终得到 `False`，正确是 `True`（下标 `3 → 2 → 1`）。
 - `any(...)` 的生成器里先判断坐标范围再递归，否则越界下标会抛 `IndexError`；负下标不会报错，但会读到另一侧的格子，必须显式检查 `0 <= nr`。
 
 **追问。**
 - 返回具体路径：`dfs` 成功返回时（`True` 一路向上传）顺便把坐标 `append` 进列表，最后反转。
 - 允许八个方向：方向元组换成八个。
+- 为什么要反转单词、先数字母？`6 x 6` 全是 `"a"` 的棋盘找 `"aaaaaaaaaaaaaab"`（`14` 个 `a` 再一个 `b`）：不剪枝要把指数级的 `a` 路径全试完才失败（秒级），字母计数一步就返回 `False`。
+- 多个单词怎么办？每个单词跑一遍是 `O(单词数 * mn * 3^L)`；用拓展优化里的前缀树，一次 DFS 同时匹配所有单词，共享前缀只搜一次。
 
 **同模式。** LC 212 单词搜索 II、LC 51 N 皇后、LC 130 被围绕的区域、LC 200 岛屿数量、LC 980 不同路径 III。

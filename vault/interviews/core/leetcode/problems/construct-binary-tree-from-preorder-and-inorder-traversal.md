@@ -18,17 +18,25 @@ slug: construct-binary-tree-from-preorder-and-inorder-traversal
 **推导。** 取先序第一个值 `v` 作根，在中序里 `index(v)` 找到分界，左边 `k` 个是左子树，右边是右子树；再对两半递归。每次线性找 `v` 总共 `O(n^2)`；建 `值 -> 中序下标` 的哈希表后查找 `O(1)`。先序数组不再切片：先序的访问顺序恰好是「根、整个左子树、整个右子树」，所以只要按这个顺序递归，用一个迭代器逐个取下一个值即可，中序只需要用区间 `[lo, hi)` 表示当前子树的范围。
 
 ```python
-def build_tree(preorder: list[int], inorder: list[int]) -> TreeNode | None:
-    pos = {v: i for i, v in enumerate(inorder)}    # 值 -> 中序下标，O(1) 定位分界
-    pre = iter(preorder)                           # 先序按「根、左、右」被依次消费
+def build_tree(
+        preorder: list[int],
+        inorder: list[int]) -> TreeNode | None:
+    # 值 -> 中序下标，O(1) 定位分界
+    pos = {v: i for i, v in enumerate(inorder)}
+    # 先序按「根、左、右」被依次消费
+    pre = iter(preorder)
 
-    def build(lo: int, hi: int) -> TreeNode | None:  # 当前子树对应 inorder[lo:hi]
+    # 当前子树对应 inorder[lo:hi]
+    def build(lo: int, hi: int) -> TreeNode | None:
         if lo >= hi:
-            return None                            # 区间为空：没有这棵子树，也不消费先序
-        val = next(pre)                            # 先序的下一个值就是这棵子树的根
+            # 区间为空：没有这棵子树，也不消费先序
+            return None
+        # 先序的下一个值就是这棵子树的根
+        val = next(pre)
         mid = pos[val]
         node = TreeNode(val)
-        node.left = build(lo, mid)                 # 必须先建左再建右：先序里左子树排在前面
+        # 必须先建左再建右：先序里左子树排在前面
+        node.left = build(lo, mid)
         node.right = build(mid + 1, hi)
         return node
 
@@ -47,5 +55,10 @@ def build_tree(preorder: list[int], inorder: list[int]) -> TreeNode | None:
 - 先建右子树再建左子树：迭代器按先序消费，顺序反了就把左子树的值分给了右边。示例 1 中根 `3` 之后的 `9` 被当成右子树的根，迭代器很快用尽，抛 `StopIteration`。
 - 每次用 `inorder.index(val)` 查找、再用切片 `inorder[:k]` 递归：每层复制和查找 `O(n)`，总 `O(n^2)`。
 - 先序是 `[1,2,3,...,3000]`、中序是 `[1,2,3,...,3000]` 的单链：递归深度 `3000`，超过 CPython 默认上限约 `1000`，会抛 `RecursionError`；`sys.setrecursionlimit` 调高即可。
+
+**追问。**
+- 只给先序和后序行不行？一般不行：只有一个孩子时，无法判断它是左还是右（LC 889 额外保证了结果是满二叉树，或接受任意一种解）。先序加中序、中序加后序则总能唯一确定。
+- 有重复值怎么办？哈希表不能唯一定位根，分界不唯一，树本身也可能不唯一；需要额外信息（如结点编号）。
+- 只想要后序输出、不必真建树？同样的递归，把「访问根」放到两次递归之后，直接追加到结果列表，仍是 `O(n)`。
 
 **同模式。** LC 106 从中序与后序遍历序列构造二叉树、LC 889 从前序与后序遍历序列构造二叉树、LC 108 将有序数组转换为二叉搜索树、LC 297 二叉树的序列化与反序列化。

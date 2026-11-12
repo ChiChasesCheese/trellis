@@ -43,16 +43,18 @@ def reorder_list_array(head: ListNode | None) -> None:
 def reorder_list(head: ListNode | None) -> None:
     if not head or not head.next:
         return
-    # 1. 快慢指针：slow 停在前半段最后一个结点（奇数长时中间结点归前半段）
+    # 1. 快慢指针：slow 停在前半段最后一个结点
+    #    （奇数长时中间结点归前半段）
     slow = fast = head
     while fast.next and fast.next.next:
         slow, fast = slow.next, fast.next.next
-    # 2. 断开两半，并反转后半段
-    second, slow.next = slow.next, None     # 必须断开，否则前半段尾巴还连着后半段
+    # 2. 断开两半（必须断，否则前半段尾巴还连着后半段），
+    #    并反转后半段
+    second, slow.next = slow.next, None
     prev = None
     while second:
         second.next, prev, second = prev, second, second.next
-    second = prev                           # 反转后的后半段，从原来的尾开始
+    second = prev                  # 反转后的后半段，从原来的尾开始
     # 3. 交错合并：first 取一个，second 取一个
     first = head
     while second:
@@ -64,13 +66,18 @@ def reorder_list(head: ListNode | None) -> None:
 
 **运行。** `[1,2,3,4]` → `[1, 4, 2, 3]`；`[1,2,3,4,5]` → `[1, 5, 2, 4, 3]`；`[1]` → `[1]`；`[1,2]` → `[1, 2]`。
 
-**复杂度。** 时间 `O(n)`，空间 `O(1)`。
+**复杂度。** 时间 `O(n)`：找中点、反转、合并各扫一遍；空间 `O(1)`：只改指针，不借助数组或栈。
 
 **拓展优化。**
 - 递归写法：用递归栈当「从尾部往前取」的工具，回溯到第 `i` 层时取出对应的尾部结点，空间 `O(n)`，深度会触到 CPython 约 1000 的递归上限。
 
 **易错点。**
 - 没有断开前半段：`[1,2,3,4]` 中 `2.next` 仍指向 `3`，合并最后一步又把 `3.next` 接回 `3`，形成自环，遍历永远不结束。
-- 反转完直接用 `second`：循环结束时 `second` 已是 `None`，合并循环一次不进，`[1,2,3,4]` 原样输出；要用 `prev`（后半段新头）。
+- 反转完直接用 `second`：循环结束时 `second` 已是 `None`，合并循环一次不进，`[1,2,3,4]` 只剩 `[1, 2]`（后半段已被断开丢掉），正确是 `[1, 4, 2, 3]`；要用 `prev`（后半段新头）。
+
+**追问。**
+- 面试里先怎么答？先说数组版：结点放进数组，双指针按下标重连，`O(n)` 时间 `O(n)` 空间；再说「找中点 + 反转 + 交错」把空间降到 `O(1)`。
+- 递归版行不行？行（回溯时取尾部结点），但栈深 `O(n)`，`n = 5 * 10^4` 在 CPython 默认限制下会 `RecursionError`，所以不作为主解。
+- 奇数长度怎么收尾？中间结点归前半段，合并循环以 `second` 为准，`first` 多出的那个结点自然留在最后：`[1,2,3]` → `[1, 3, 2]`。
 
 **同模式。** LC 234 回文链表、LC 206 反转链表、LC 21 合并两个有序链表、LC 876 链表的中间结点。

@@ -17,16 +17,21 @@ slug: binary-tree-maximum-path-sum
 
 ```python
 def max_path_sum(root: TreeNode | None) -> int:
-    best = root.val                                # 初值不能是 0：全负树的答案是负数
+    # 初值不能是 0：全负树的答案是负数
+    best = root.val
 
-    def gain(node: TreeNode | None) -> int:        # 从 node 向下走的最大单链和；空节点贡献 0
+    # 从 node 向下走的最大单链和；空节点贡献 0
+    def gain(node: TreeNode | None) -> int:
         nonlocal best
         if node is None:
             return 0
-        left = max(gain(node.left), 0)             # 负收益的子树直接不要
+        # 负收益的子树直接不要
+        left = max(gain(node.left), 0)
         right = max(gain(node.right), 0)
-        best = max(best, node.val + left + right)  # 以 node 为最高点的路径：两侧都可以带
-        return node.val + max(left, right)         # 往父亲返回时只能选一边
+        # 以 node 为最高点的路径：两侧都可以带
+        best = max(best, node.val + left + right)
+        # 往父亲返回时只能选一边
+        return node.val + max(left, right)
 
     gain(root)
     return best
@@ -42,8 +47,10 @@ def max_path_sum(root: TreeNode | None) -> int:
 ```python
 def max_path_nodes(root: TreeNode) -> list[TreeNode]:
     best, top = root.val, root
-    gain: dict[TreeNode, int] = {}                 # 从结点向下的最大单链和
-    nxt: dict[TreeNode, TreeNode | None] = {}      # 这条最好的单链下一步走哪个孩子
+    # 从结点向下的最大单链和
+    gain: dict[TreeNode, int] = {}
+    # 这条最好的单链下一步走哪个孩子
+    nxt: dict[TreeNode, TreeNode | None] = {}
 
     def dfs(node: TreeNode | None) -> int:
         nonlocal best, top
@@ -52,7 +59,13 @@ def max_path_nodes(root: TreeNode) -> list[TreeNode]:
         left, right = max(dfs(node.left), 0), max(dfs(node.right), 0)
         if node.val + left + right > best:
             best, top = node.val + left + right, node
-        nxt[node] = node.left if left >= right and left > 0 else node.right if right > 0 else None   # 单链往增益更大的正一侧走
+        # 单链往增益更大的正一侧走
+        if left >= right and left > 0:
+            nxt[node] = node.left
+        elif right > 0:
+            nxt[node] = node.right
+        else:
+            nxt[node] = None
         gain[node] = node.val + max(left, right)
         return gain[node]
 
@@ -60,7 +73,8 @@ def max_path_nodes(root: TreeNode) -> list[TreeNode]:
     # 以最高点 top 为中心，左右各沿 nxt 走下去（只有增益为正的一侧才走）
     left_chain: list[TreeNode] = []
     cur = top.left if gain.get(top.left, 0) > 0 else None
-    while cur:                                     # 从最高点往左下走，得到由近到远的链
+    # 从最高点往左下走，得到由近到远的链
+    while cur:
         left_chain.append(cur)
         cur = nxt[cur]
     right_chain: list[TreeNode] = []
@@ -68,11 +82,12 @@ def max_path_nodes(root: TreeNode) -> list[TreeNode]:
     while cur:
         right_chain.append(cur)
         cur = nxt[cur]
-    return left_chain[::-1] + [top] + right_chain  # 左链倒过来接最高点，再接右链
+    # 左链倒过来接最高点，再接右链
+    return left_chain[::-1] + [top] + right_chain
 ```
 
 **易错点。**
-- 负增益必须舍弃：`max(gain, 0)`。漏掉时 `[2,-1]` 得 `1`（把 `-1` 也加进来），正确是 `2`。
+- 负增益必须舍弃：`max(gain, 0)`。漏掉时 `[1,-2,3]` 得 `3`（`-2` 把经过根的路径 `1 + (-2) + 3 = 2` 拉低了，却没发现 `1 → 3` 这条更好的路径），正确是 `4`。
 - 返回给父亲的只能是**一侧**：把 `val + left + right` 作为返回值，`[1,2,3,null,null,4,5]` 会得到 `15`（拼出一条分叉的非法「路径」），正确是 `12`（`4 → 3 → 5`）。
 - 初值不能是 `0`：所有节点为负时答案是负数（`[-3]` → `-3`），`best` 要用 `root.val` 或 `-inf` 初始化。
 - 递归深度：链状树深度为 `n = 3×10^4`，CPython 默认递归上限约 1000，会抛 `RecursionError`；要么 `sys.setrecursionlimit(100000)`，要么改成显式栈（见追问）。
@@ -84,20 +99,26 @@ def max_path_nodes(root: TreeNode) -> list[TreeNode]:
 def max_path_sum_stack(root: TreeNode | None) -> int:
     order: list[TreeNode] = []
     stack = [root]
-    while stack:                                   # 先序（根右左）收集节点：孩子总排在父亲后面
+    # 先序（根右左）收集节点：孩子总排在父亲后面
+    while stack:
         node = stack.pop()
         order.append(node)
         if node.left:
             stack.append(node.left)
         if node.right:
             stack.append(node.right)
-    gain: dict[TreeNode, int] = {}                 # gain[node]：从 node 向下走的最大单链和
+    # gain[node]：从 node 向下走的最大单链和
+    gain: dict[TreeNode, int] = {}
     best = root.val
-    for node in reversed(order):                   # 倒过来 = 孩子先于父亲
-        left = max(gain.get(node.left, 0), 0)      # 负收益的子树直接不要；None 不在字典里，取 0
+    # 倒过来 = 孩子先于父亲
+    for node in reversed(order):
+        # 负收益的子树直接不要；None 不在字典里，取 0
+        left = max(gain.get(node.left, 0), 0)
         right = max(gain.get(node.right, 0), 0)
-        best = max(best, node.val + left + right)  # 以 node 为最高点的路径
-        gain[node] = node.val + max(left, right)   # 往父亲返回时只能选一边
+        # 以 node 为最高点的路径
+        best = max(best, node.val + left + right)
+        # 往父亲返回时只能选一边
+        gain[node] = node.val + max(left, right)
     return best
 ```
 

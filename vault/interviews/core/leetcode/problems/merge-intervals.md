@@ -18,8 +18,10 @@ slug: merge-intervals
 ```python
 def merge(intervals: list[list[int]]) -> list[list[int]]:
     merged: list[list[int]] = []
-    for start, end in sorted(intervals):           # 按起点排序；起点相同按终点，不影响结果
-        if merged and start <= merged[-1][1]:      # 与上一个区间重叠（端点相接也算）
+    # 按起点排序；起点相同按终点，不影响结果
+    for start, end in sorted(intervals):
+        # 与上一个区间重叠（端点相接也算）
+        if merged and start <= merged[-1][1]:
             merged[-1][1] = max(merged[-1][1], end)
         else:
             merged.append([start, end])
@@ -35,11 +37,13 @@ def merge(intervals: list[list[int]]) -> list[list[int]]:
 ```python
 def merge_bucket(intervals: list[list[int]]) -> list[list[int]]:
     limit = max(end for _, end in intervals)
-    reach = [-1] * (limit + 1)                      # reach[s]：以 s 为起点的最远终点，-1 表示没有
+    # reach[s]：以 s 为起点的最远终点，-1 表示没有
+    reach = [-1] * (limit + 1)
     for start, end in intervals:
         reach[start] = max(reach[start], end)
     merged: list[list[int]] = []
-    for start, end in enumerate(reach):             # 按坐标从小到大 = 按起点排序
+    # 按坐标从小到大 = 按起点排序
+    for start, end in enumerate(reach):
         if end < 0:
             continue
         if merged and start <= merged[-1][1]:
@@ -50,18 +54,23 @@ def merge_bucket(intervals: list[list[int]]) -> list[list[int]]:
 ```
 - 往已排序、互不重叠的区间里插入一个新区间（LC 57），不重排，`O(n)`：
 ```python
-def insert(intervals: list[list[int]], new: list[int]) -> list[list[int]]:
+def insert(
+        intervals: list[list[int]],
+        new: list[int]) -> list[list[int]]:
     lo, hi = new
     i, n = 0, len(intervals)
     ans: list[list[int]] = []
-    while i < n and intervals[i][1] < lo:           # 完全在新区间左边：原样保留
+    # 完全在新区间左边：原样保留
+    while i < n and intervals[i][1] < lo:
         ans.append(intervals[i])
         i += 1
-    while i < n and intervals[i][0] <= hi:          # 与新区间重叠：并进 [lo, hi]
+    # 与新区间重叠：并进 [lo, hi]
+    while i < n and intervals[i][0] <= hi:
         lo, hi = min(lo, intervals[i][0]), max(hi, intervals[i][1])
         i += 1
     ans.append([lo, hi])
-    ans.extend(intervals[i:])                       # 完全在右边：原样拼上
+    # 完全在右边：原样拼上
+    ans.extend(intervals[i:])
     return ans
 ```
 

@@ -20,17 +20,22 @@ slug: add-two-numbers
 **推导。** 先把两条链转成整数，相加，再拆回链表，在 Python 里能过（大整数），但换成定长整数的语言就溢出，面试官要的是逐位。竖式加法从个位开始：`当前位 = a + b + carry`，写下 `% 10`，`// 10` 作为新的进位。两条链长度不同时，短的那条当作后面全是 `0`；全部走完后若还有进位，要再补一个结点。
 
 ```python
-def add_two_numbers(l1: ListNode | None, l2: ListNode | None) -> ListNode | None:
+def add_two_numbers(
+        l1: ListNode | None,
+        l2: ListNode | None) -> ListNode | None:
     dummy = tail = ListNode()
     carry = 0
-    while l1 or l2 or carry:        # 进位也算一轮：最高位相加溢出时要多出一个结点
-        if l1:                      # 短的链当作后面全是 0，所以只在还有结点时才加
+    # 进位也算一轮：最高位相加溢出时要多出一个结点
+    while l1 or l2 or carry:
+        # 短的链当作后面全是 0，所以只在还有结点时才加
+        if l1:
             carry += l1.val
             l1 = l1.next
         if l2:
             carry += l2.val
             l2 = l2.next
-        carry, digit = divmod(carry, 10)    # digit 是这一位的结果，carry 带到下一位
+        # digit 是这一位的结果，carry 带到下一位
+        carry, digit = divmod(carry, 10)
         tail.next = ListNode(digit)
         tail = tail.next
     return dummy.next
@@ -48,5 +53,10 @@ def add_two_numbers(l1: ListNode | None, l2: ListNode | None) -> ListNode | None
 - 循环条件漏了 `carry`：`[5]` + `[5]` 输出 `[0]`，丢了进位 `1`，正确是 `[0, 1]`。
 - 短链走完后还去读 `.val`：`[1,2,3]` + `[4]` 在第二轮抛 `AttributeError: 'NoneType' object has no attribute 'val'`，要先判 `if l2`。
 - 一条链走完就退出循环：`[9,9,9,9,9,9,9]` + `[9,9,9,9]` 的高位全靠长链和进位继续算，提前退出得不到正确的 `[8, 9, 9, 9, 0, 0, 0, 1]`。
+
+**追问。**
+- 数字改成正序存储（LC 445）、且不许反转输入：两条链各压一次栈，从栈顶（个位）弹出相加，结果用头插法建链；时间 `O(m + n)`，空间 `O(m + n)`。
+- 为什么不直接转成整数相加？Python 的大整数能过，但换成定长整数的语言会溢出；链表长度没有上限时，逐位模拟才通用。
+- 最后一位进位怎么处理？循环条件带上 `carry`，进位非零就多走一轮补出最高位结点，不需要循环外再特判。
 
 **同模式。** LC 445 两数相加 II、LC 415 字符串相加、LC 67 二进制求和、LC 66 加一。
