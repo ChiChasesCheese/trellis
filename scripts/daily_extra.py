@@ -4,23 +4,22 @@ study_plan.py calls this; on its own it prints what it would do:
 
     uv run python scripts/daily_extra.py            # dry run
 
-LeetCode (deck stage `4 算法`):
-- **Similar problems.** A problem pressed 「忘记」 in the last `similar_days` days brings up to `similar_per_fail` problems
-  not held yet, ranked by similarity plus asked-frequency. Similarity = 4 if the failed problem's solution lists it under
-  同模式 + 3 x same main technique + 1.5 x shared techniques + shared patterns + 0.5 x shared pitfalls; at least 4 to count. A similar problem never
-  seen is dealt as new; one seen but not held is made due today (Anki's own Set Due Date).
-- **New problems.** `lc_new` unseen problems a day, by what each adds: importance x the slip boost of its main technique
-  (at most 1.5) x how much of that technique is not held, less for each pick on the same technique that day.
-- **Just solved.** New cards in the daily deck (one per problem solved on LeetCode) are dealt first, up to `solved_max`.
-- The card dealt for a problem is fixed by the deck layout: its whole answer in the module deck, as in lc_lists.py.
+LeetCode (its own daily deck 今日算法): `lc_new` problems a day, each by its whole answer, from two topics at a time.
+- **Topics** are the pattern of each problem's main technique (01 hashing … 22 math & bits). A round takes each topic's next `lc.per_round`
+  most-asked problems, `lc.per_topic` a day: two topics are in focus for about three days, then the next two.
+- **Done** means answered since `lc.since`. A problem seen before counts as new: if it is not due, it is made due today
+  (Anki's own Set Due Date). One left unanswered comes back the next day, as it is still first in its topic.
+- The LeetCode review backlog is not dealt.
 
-Reviews (deck stage `5 到期复习`): every due card in every deck, ranked by
+Low-level design has its own daily deck too (今日低层设计), `lld_new` cards a day plus its reviews.
+
+Reviews (stage `9 到期复习` of each subject): every due card in every deck, ranked by
     deck weight x (0.3 + value) x urgency,   urgency = 1 + min(2, days overdue / interval)
 where value is the percentile, inside its deck, of the card's planner value (system design) or its problem's importance
 (LeetCode); cards with no value measure sit at 0.5. The
 first `review_budget` come into the plan; one card per LeetCode problem. The rest wait in their decks.
 
-Every card moved into 今日计划 is recorded with its home deck in sources/local/plan/homes.json and goes back there at the
+Every card moved into a daily deck is recorded with its home deck in sources/local/plan/homes.json and goes back there at the
 next run unless it is picked again.
 """
 from __future__ import annotations
@@ -30,6 +29,7 @@ import sys
 import time
 from collections import defaultdict
 from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,16 +39,19 @@ from lc_data import call  # noqa: E402
 OUT = ROOT / "sources/local/plan"
 HOMES = OUT / "homes.json"
 DECK = "今日计划"
+LC_DECK, LLD_DECK = "今日算法", "今日低层设计"  # LeetCode and low-level design each have a daily deck of their own (Chi 2026-11-11)
+DAILY = (DECK, LC_DECK, LLD_DECK)
 CARRIED = "0 昨天没学完"  # what was dealt and not learned comes first the next day
 LLD_ROOT, SD_ROOT = "低层设计（LLD）", "系统设计"
-SUBJECT_DECK = {SD_ROOT: "1 系统设计", LLD_ROOT: "2 低层设计", "LeetCode Tops": "3 算法"}  # each subject has its own part and budget
-REVIEWS = {SD_ROOT: 150, LLD_ROOT: 80, "LeetCode Tops": 60}
+SUBJECT_DECK = {SD_ROOT: f"{DECK}::1 系统设计", LLD_ROOT: LLD_DECK, "LeetCode Tops": LC_DECK}  # each subject: its deck and budget
+REVIEWS = {SD_ROOT: 150, LLD_ROOT: 80, "LeetCode Tops": 0}  # LeetCode: new problems only, its backlog is left alone
 LLD_FOUNDATIONS = ("低层设计答题框架", "并发", "低层设计跨题模式")
 DAY_MS = 86_400_000
 URGENCY_CAP = 2.0  # how far overdue-ness can raise a review: urgency is 1 + min(cap, days overdue / interval)
 VALUE_FLOOR = 0.3  # a review of the least valuable card in a deck still counts this much
 LC_ROOTS = ("LeetCode Tops",)
 SOLVED_DECK = "LeetCode Tops::28 Daily"
+LC_DEFAULTS = {"since": "2026-11-12T04:00", "per_topic": 5, "per_round": 15}
 PREFER = ("tlc-tops-{s}-0-whole", "tlc-{s}-0-whole", "tlc-core-{s}", "lca-{s}", "tlc-daily-{s}-0-whole")
 DEFAULT_DECKS = {"系统设计": 1.0, "LeetCode Tops": 1.0, "低层设计（LLD）": 0.6, "Kafka": 0.5, "Python": 0.5,
                  "Code Core": 0.5, "Narrative Round": 0.4, "编程语言原理：Go · Java · Rust · Python · C++": 0.3,
@@ -56,10 +59,19 @@ DEFAULT_DECKS = {"系统设计": 1.0, "LeetCode Tops": 1.0, "低层设计（LLD�
                  "Headlands": 0.1, "Markets & Factors": 0.1, "Quant Infrastructure": 0.1}
 
 
+def in_daily(deck: str) -> bool:
+    return any(deck == d or deck.startswith(d + "::") for d in DAILY)
+
+
+def daily_query() -> str:
+    return "(" + " OR ".join(f'"deck:{d}"' for d in DAILY) + ")"
+
+
 @dataclass
 class Extra:
     lc_new: list[dict] = field(default_factory=list)       # {card, slug, title, why}
-    lc_similar: list[dict] = field(default_factory=list)   # {card, slug, title, why, due_now}
+    lc_similar: list[dict] = field(default_factory=list)   # {card, slug, title, why, due_now}: no longer dealt
+    lc_focus: list[str] = field(default_factory=list)      # the topics today's problems come from
     lld_new: list[dict] = field(default_factory=list)      # {card, title, carried}
     work_new: list[dict] = field(default_factory=list)     # {card, part, carried}: a private work deck, configured locally
     reviews: list[dict] = field(default_factory=list)      # {card, home, score}
@@ -112,7 +124,7 @@ LLD_PROBLEMS = ("可配置淘汰策略的内存键值存储", "限流器", "可�
 def lld_order(cfg: dict, home: dict) -> list[dict]:
     """New low-level-design cards in study order. With `essence`: foundations marked core, a dozen cards each of method and concurrency,
     and the first few cards of the most-reported problems. The rest is reference. Until the deck has exam points this is a rule, not a score."""
-    new = _cards(f'("deck:{LLD_ROOT}" OR "deck:{DECK}::{SUBJECT_DECK[LLD_ROOT]}") is:new -is:suspended')
+    new = _cards(f'("deck:{LLD_ROOT}" OR "deck:{SUBJECT_DECK[LLD_ROOT]}") is:new -is:suspended')
     for c in new:
         c["deckName"] = home.get(str(c["cardId"]), c["deckName"])  # rank by where it lives, also while the plan has borrowed it
     new = sorted((c for c in new if c["deckName"].split("::")[0] == LLD_ROOT), key=lld_rank)
@@ -143,7 +155,7 @@ def lld_order(cfg: dict, home: dict) -> list[dict]:
     return out
 
 
-WORK_PART = "4 公司实践"
+WORK_PART = f"{DECK}::4 公司实践"
 MAP_PART = "0 全生命周期总览"
 STAGES = {"overview": "1 全景", "core": "2 核心", "deep": "3 深入"}
 LEVEL = {"必会": 1.0, "追问": 0.6, "加分": 0.3}
@@ -168,7 +180,7 @@ def work_order(cfg: dict, home: dict, points) -> list[dict]:
     root = work_root(cfg)
     if not root:
         return []
-    new = _cards(f'("deck:{root}" OR "deck:{DECK}::{WORK_PART}") is:new -is:suspended')
+    new = _cards(f'("deck:{root}" OR "deck:{WORK_PART}") is:new -is:suspended')
     for c in new:
         c["deckName"] = home.get(str(c["cardId"]), c["deckName"])
     new = [c for c in new if c["deckName"].split("::")[0] == root]
@@ -215,86 +227,64 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
     weights = {**DEFAULT_DECKS, **cfg.get("decks", {})}
     home = homes()
 
-    # ---- LeetCode
+    # ---- LeetCode: `lc_new` problems a day from two topics at a time (Chi 2026-11-11), each problem by its whole answer.
+    # A problem is done once answered since the round began; one seen before counts as new and is made due today.
+    # Topics are the pattern of each problem's main technique (01 hashing … 22 math & bits), in that order. A round takes each topic's
+    # next `per_round` most-asked problems, `per_topic` a day, so two topics stay in focus about three days, then the next
+    # two; after the last topic the next round starts. The review backlog is not dealt (REVIEWS: 0).
+    lcfg = {**LC_DEFAULTS, **cfg.get("lc", {})}
     analysis = json.loads((ROOT / "sources/local/lc/analysis.json").read_text(encoding="utf-8"))
     probs = analysis["problems"]
-    boost = {t["id"]: min(1.5, max(1.0, 1 + 0.5 * (t["slip_ratio"] - 1))) for t in analysis["dims"]["techniques"]}
-    lc_cards = _cards(" OR ".join(f'"deck:{d}"' for d in LC_ROOTS) + ' OR "deck:今日计划"')
+    names = {t["id"]: t["name"] for t in analysis["dims"]["patterns"]}
+    taxonomy = json.loads((ROOT / "sources/local/lc/taxonomy.json").read_text(encoding="utf-8"))
+    pattern_of = {t["id"]: t["pattern"] for t in taxonomy["techniques"]}
+
+    def topic(p: dict) -> str | None:
+        """A problem's topic: the pattern of its main technique (its pattern list is in id order, not by importance)."""
+        return pattern_of.get(p["techniques"][0]) if p["techniques"] else (p["patterns"] or [None])[0]
+    lc_cards = _cards("(" + " OR ".join(f'"deck:{d}"' for d in LC_ROOTS) + f") OR {daily_query()}")
     ident = _idents(lc_cards)
     slugs_of, known = lca.card_slugs(), set(probs)
     by_ident = {ident[c["cardId"]]: c for c in lc_cards if ident.get(c["cardId"])}
+    since = int(datetime.fromisoformat(lcfg["since"]).timestamp() * 1000)
     seen_cards = [c["cardId"] for c in lc_cards if c["reps"]]
     revs = call("getReviewsOfCards", cards=seen_cards) if seen_cards else {}
-    failed = {}
+    done = set()
     for c in lc_cards:
-        slug, _ = lca.resolve(ident.get(c["cardId"], ""), slugs_of, known)
-        if slug and any(r["ease"] == 1 and r["id"] > now_ms - int(cfg.get("similar_days", 7)) * DAY_MS
-                        for r in revs.get(str(c["cardId"]), [])):
-            failed[slug] = probs[slug]
+        if any(r["id"] >= since for r in revs.get(str(c["cardId"]), [])):
+            slug, _ = lca.resolve(ident.get(c["cardId"], ""), slugs_of, known)
+            done.add(slug)
 
     def card_for(slug: str) -> dict | None:
-        return next((by_ident[p.format(s=slug)] for p in PREFER if p.format(s=slug) in by_ident), None)
+        card = next((by_ident[p.format(s=slug)] for p in PREFER if p.format(s=slug) in by_ident), None)
+        return card if card and card["queue"] != -1 else None  # suspended by hand: left out
 
-    today = anki_today()
-    taken = set(failed)
-    same_file = ROOT / "sources/local/lc/same.json"  # the problems each solution itself lists under 同模式
-    same = json.loads(same_file.read_text(encoding="utf-8")) if same_file.exists() else {}
-    per_fail, cap = int(cfg.get("similar_per_fail", 2)), int(cfg.get("similar_max", 10))
-    for slug, f in sorted(failed.items(), key=lambda kv: -kv[1]["importance"]):
-        if not f["techniques"]:
-            continue
-        def sim(p, f=f):
-            return (4.0 * (p["num"] in same.get(f["slug"], ())) + 3.0 * (p["techniques"][:1] == f["techniques"][:1])
-                    + 1.5 * len(set(p["techniques"]) & set(f["techniques"])) + len(set(p["patterns"]) & set(f["patterns"]))
-                    + 0.5 * len(set(p["pitfalls"]) & set(f["pitfalls"])))
-        imp_top = max(p["importance"] for p in probs.values()) or 1.0
-        cands = [p for s, p in probs.items() if s not in taken and p["mastery"] < 0.5 and p["techniques"] and sim(p) >= 4.0]
-        cands.sort(key=lambda p: -(sim(p) + 2 * p["importance"] / imp_top))
-        for p in cands[:per_fail]:
+    ranked: dict[str, list[dict]] = defaultdict(list)
+    for p in sorted(probs.values(), key=lambda p: -p["importance"]):
+        if topic(p) and card_for(p["slug"]):
+            ranked[topic(p)].append(p)
+    topics, per = sorted(ranked), int(lcfg["per_round"])
+
+    def left(t: str, r: int) -> list[dict]:
+        return [p for p in ranked[t][:per * r] if p["slug"] not in done]
+
+    rounds = range(1, max((len(v) for v in ranked.values()), default=0) // per + 2)
+    r = next((r for r in rounds if any(left(t, r) for t in topics)), None)
+    if r:
+        limit, active = int(cfg.get("lc_new", 10)), [t for t in topics if left(t, r)]
+        picks = [p for t in active[:2] for p in left(t, r)[:int(lcfg["per_topic"])]]
+        for t in active:  # a topic in focus with fewer than its share left: the next topic fills the day
+            picks += [p for p in left(t, r) if p not in picks][:max(0, limit - len(picks))]
+        today = anki_today()
+        for p in picks[:limit]:
             card = card_for(p["slug"])
-            if card is None or len(ex.lc_similar) >= cap:
-                continue
-            taken.add(p["slug"])
-            ex.lc_similar.append({"card": card["cardId"], "slug": p["slug"], "title": p["title"],
-                                  "why": f"和你刚忘的「{f['title']}」同一个思路", "due_now": card["queue"] == 2 and card["due"] > today})
-    # the day's new LeetCode cards all count against one budget: what was left yesterday, then similar problems, then the rest
-    limit = int(cfg.get("lc_new", 20))
-    inside = _cards(f'"deck:{DECK}" is:new') if carry else []
-    inside_ident = _idents(inside)
-    for c in inside:
-        if home.get(str(c["cardId"]), "").split("::")[0] in LC_ROOTS and len(ex.lc_new) < limit:
-            slug, _ = lca.resolve(inside_ident.get(c["cardId"], ""), slugs_of, known)
-            ex.lc_new.append({"card": c["cardId"], "slug": slug or "", "title": probs[slug]["title"] if slug else inside_ident.get(c["cardId"], ""),
-                              "why": "昨天没学完", "carried": True})
-            taken.add(slug)
-    ex.lc_similar = [x for x in ex.lc_similar if x["slug"] not in {n["slug"] for n in ex.lc_new}]
-    room = limit - len(ex.lc_new) - sum(1 for x in ex.lc_similar if not x["due_now"])
-    # problems just solved on LeetCode (the daily deck writes one card each): deal them while the solve is fresh
-    solved = 0
-    for c in lc_cards:
-        if c["queue"] == 0 and c["deckName"].startswith(SOLVED_DECK) and solved < min(int(cfg.get("solved_max", 10)), room):
-            solved += 1
-            slug, _ = lca.resolve(ident.get(c["cardId"], ""), slugs_of, known)
-            ex.lc_new.append({"card": c["cardId"], "slug": slug or "", "title": probs[slug]["title"] if slug else ident.get(c["cardId"], ""),
-                              "why": "你刚在 LeetCode 上做过"})
-            taken.add(slug)
-    fresh = [p for s, p in probs.items() if s not in taken and not p["seen"] and p["techniques"]]
-    # what a new problem adds: its frequency, on a technique not held yet, less again for each pick on that technique today
-    held = {t["id"]: t["mastery"] for t in analysis["dims"]["techniques"]}
-    picks_on: dict[str, int] = defaultdict(int)
-    while len(ex.lc_new) + sum(1 for x in ex.lc_similar if not x["due_now"]) < limit and fresh:
-        def worth(p):
-            t = p["techniques"][0]
-            return p["importance"] * boost.get(t, 1.0) * (1 - held.get(t, 0.0)) * 0.6 ** picks_on[t]
-        p = max(fresh, key=worth)
-        fresh.remove(p)
-        card = card_for(p["slug"])
-        if card and card["queue"] == 0:
-            ex.lc_new.append({"card": card["cardId"], "slug": p["slug"], "title": p["title"], "why": "考频高，这个思路还没掌握"})
-            taken.add(p["slug"])
-            picks_on[p["techniques"][0]] += 1
+            ex.lc_new.append({"card": card["cardId"], "slug": p["slug"], "title": p["title"], "topic": names.get(topic(p), topic(p)),
+                              "why": f"第 {r} 轮", "due_now": card["queue"] in (2, 3) and card["due"] > today})
+        ex.lc_focus = list(dict.fromkeys(x["topic"] for x in ex.lc_new))
 
     # ---- low-level design: its own budget
+    today = anki_today()
+    inside = _cards(f'{daily_query()} is:new') if carry else []
     lld_limit = int(cfg.get("lld_new", 100))
     for c in inside:
         if home.get(str(c["cardId"]), "").split("::")[0] == LLD_ROOT and len(ex.lld_new) < lld_limit:
@@ -326,7 +316,7 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
     raw = []
     for c in due:
         h = home.get(str(c["cardId"]), c["deckName"])
-        if h.startswith(DECK):  # dealt by the system-design plan today; it is already in the deck
+        if in_daily(h):  # dealt by the system-design plan today; it is already in the deck
             continue
         root = h.split("::")[0]
         idn = due_ident.get(c["cardId"], "")
@@ -391,7 +381,7 @@ def release(keep: set[int]) -> int:
     home = homes()
     if not home:
         return 0
-    inside = {c["cardId"]: c for c in _cards(f'"deck:{DECK}"')}
+    inside = {c["cardId"]: c for c in _cards(daily_query())}
     back = defaultdict(list)
     for cid, deck in list(home.items()):
         cid_i = int(cid)
@@ -410,19 +400,18 @@ def deal(ex: Extra) -> None:
     home = homes()
     info = {c["cardId"]: c for c in call("cardsInfo", cards=[x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.work_new + ex.reviews])}
     lc, lld = SUBJECT_DECK["LeetCode Tops"], SUBJECT_DECK[LLD_ROOT]
-    plan = [(f"{lc}::{CARRIED}", [x for x in ex.lc_new if x.get("carried")]),
-            (f"{lc}::2 新题与相似题", [x for x in ex.lc_new if not x.get("carried")] + ex.lc_similar),
-            (f"{lld}::{CARRIED}", [x for x in ex.lld_new if x["carried"]]), (f"{lld}::2 新卡", [x for x in ex.lld_new if not x["carried"]])]
+    plan = [(f"{lc}::{n} {topic}", [x for x in ex.lc_new if x["topic"] == topic]) for n, topic in enumerate(dict.fromkeys(x["topic"] for x in ex.lc_new), 1)]
+    plan += [(f"{lld}::{CARRIED}", [x for x in ex.lld_new if x["carried"]]), (f"{lld}::2 新卡", [x for x in ex.lld_new if not x["carried"]])]
     plan += [(f"{WORK_PART}::{part}", [x for x in ex.work_new if x["part"] == part]) for part in dict.fromkeys(x["part"] for x in ex.work_new)]
     plan += [(f"{d}::9 到期复习", [x for x in ex.reviews if x["root"] == r]) for r, d in SUBJECT_DECK.items()]
     for stage, items in plan:
         ids = [x["card"] for x in items if x["card"] in info]
         for i in ids:
-            if not info[i]["deckName"].startswith(DECK):
+            if not in_daily(info[i]["deckName"]):
                 home[str(i)] = info[i]["deckName"]
         if ids:
-            call("changeDeck", cards=ids, deck=f"{DECK}::{stage}")
-    now_due = [x["card"] for x in ex.lc_similar if x["due_now"]]
+            call("changeDeck", cards=ids, deck=stage)
+    now_due = [x["card"] for x in ex.lc_new + ex.lc_similar if x.get("due_now")]  # a problem seen before is due today again
     if now_due:
         call("setDueDate", cards=now_due, days="0")
     HOMES.write_text(json.dumps(home, ensure_ascii=False, indent=0), encoding="utf-8")

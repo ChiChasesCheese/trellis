@@ -888,7 +888,7 @@ def deal(picked_stage: dict[str, list[str]], anki):
     for stage, ids in picked_stage.items():
         cids = [anki[i]["cardId"] for i in ids if i in anki]
         if cids:
-            call("changeDeck", cards=cids, deck=f"{DECK}::{SUBJECT_DECK}::{stage}")
+            call("changeDeck", cards=cids, deck=f"{SUBJECT_DECK}::{stage}")
 
 
 def report_card(head: str, body: str):
@@ -908,9 +908,9 @@ def report_card(head: str, body: str):
 
 
 def preset(cfg):
-    names = [d for d in call("deckNames") if d == DECK or d.startswith(DECK + "::")]
+    names = [d for d in call("deckNames") if daily_extra.in_daily(d)]
     # yesterday's groups and any retired parts: every sub-deck left empty after the deal goes
-    empty = sorted((d for d in names if d != DECK and not call("findCards", query=f'"deck:{d}"')), key=len, reverse=True)
+    empty = sorted((d for d in names if d not in daily_extra.DAILY and not call("findCards", query=f'"deck:{d}"')), key=len, reverse=True)
     if empty:
         call("deleteDecks", decks=empty, cardsToo=True)
         names = [d for d in names if d not in empty]
@@ -919,14 +919,16 @@ def preset(cfg):
         cid = call("cloneDeckConfigId", name=DECK, cloneFrom=call("getDeckConfig", deck="系统设计")["id"])
         call("setDeckConfigId", decks=names, configId=cid)
         current = call("getDeckConfig", deck=DECK)
-    parts = [f"{DECK}::{p}" for p in daily_extra.SUBJECT_DECK.values()]
+    parts = list(daily_extra.SUBJECT_DECK.values())
     # only what is outside the subject parts: resetting those too would lose their own limits and clone a new preset on every run
-    call("setDeckConfigId", decks=[d for d in names if not any(d == x or d.startswith(x + "::") for x in parts)], configId=current["id"])
+    call("setDeckConfigId", decks=[d for d in names if d.split("::")[0] == DECK and not any(d == x or d.startswith(x + "::") for x in parts)],
+         configId=current["id"])
     # each subject has its own limit; the top deck only adds them up
     presets_file = OUT / "presets.json"
     known = json.loads(presets_file.read_text(encoding="utf-8")) if presets_file.exists() else {}
-    for part in daily_extra.SUBJECT_DECK.values():
-        title, prefix = f"{part[2:]}每日", f"{DECK}::{part}"
+    for prefix in daily_extra.SUBJECT_DECK.values():
+        name = prefix.split("::")[-1]
+        title = (name[2:] if name[:1].isdigit() else name.removeprefix("今日")) + "每日"  # 「1 系统设计」, 「今日算法」 -> 系统设计每日, 算法每日
         decks = [d for d in names if d == prefix or d.startswith(prefix + "::")]
         if not decks:
             continue

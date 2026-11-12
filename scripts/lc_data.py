@@ -17,6 +17,7 @@ LC = ROOT / "vault/interviews/core/leetcode"
 OUT = ROOT / "sources/local/lc"
 DECKS = ["LeetCode Tops"]
 PLAN_DECK = "今日计划"
+PLAN_DECKS = (PLAN_DECK, "今日算法", "今日低层设计")  # the daily decks borrow cards from their home decks
 GH = OUT / "github/leetcode-company-wise-problems"
 GH_URL = "https://github.com/liquidslr/leetcode-company-wise-problems.git"
 TARGETS = ("TikTok", "ByteDance")
