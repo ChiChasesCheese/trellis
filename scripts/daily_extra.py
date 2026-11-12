@@ -26,6 +26,7 @@ next run unless it is picked again.
 """
 from __future__ import annotations
 
+import functools
 import json
 import sys
 import time
@@ -240,7 +241,8 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
     probs = json.loads((ROOT / "sources/local/lc/analysis.json").read_text(encoding="utf-8"))["problems"]
     lc_cards = _cards("(" + " OR ".join(f'"deck:{d}"' for d in LC_ROOTS) + f") OR {daily_query()}")
     ident = _idents(lc_cards)
-    tree = lc_tree.build()["lists"]
+    built = lc_tree.build()
+    tree, core = built["lists"], set(built["core"])
     named = {c["slug"]: f"LC {c['num']} {c['title']}" for lst in tree for _, x in lc_tree.leaves(lst) for c in x["candidates"]}
     slugs_of, known = lca.card_slugs(), set(probs) | set(named)  # a problem added to a thin leaf has no analysis row yet
     by_ident = {ident[c["cardId"]]: c for c in lc_cards if ident.get(c["cardId"])}
@@ -259,14 +261,16 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
 
     per = int(lcfg["per_section"])
 
-    def left(lst: dict, r: int) -> list[tuple[str, str, str]]:
-        """(slug, leaf label, leaf id) still to do this round, in the list's order; a leaf with none of ours is skipped."""
+    def left(lst: dict, r: int, only: set | None) -> list[tuple[str, str, str]]:
+        """(slug, leaf label, leaf id) still to do this round, in the list's order; with `only`, just those problems."""
         return [(s, f"{n:02d} " + " › ".join(path[1:]), leaf["id"]) for n, (path, leaf) in enumerate(lc_tree.leaves(lst), 1)
-                for s in leaf["problems"][:per * r] if s not in done and card_for(s)]
+                for s in [x for x in leaf["problems"] if only is None or x in only][:per * r] if s not in done and card_for(s)]
 
     rounds = range(1, max((len(x["problems"]) for lst in tree for _, x in lc_tree.leaves(lst)), default=0) // per + 2)
-    r = next((r for r in rounds if any(left(lst, r) for lst in tree)), None)
+    # 80/20: the core problems first, through every round; the rest only once the core is done
+    r, only = next(((r, o) for o in (core, None) for r in rounds if any(left(lst, r, o) for lst in tree)), (None, None))
     if r:
+        left = functools.partial(left, only=only)
         limit, active = int(cfg.get("lc_new", 10)), [lst for lst in tree if left(lst, r)]
         picks = [(lst["title"], *x) for lst in active[:2] for x in left(lst, r)[:int(lcfg["per_topic"])]]
         for lst in active:  # a list in focus with less than its share left: the next list fills the day
@@ -281,7 +285,7 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
                                   "why": "先学套路", "due_now": False, "learn": True})
             card = card_for(slug)
             ex.lc_new.append({"card": card["cardId"], "slug": slug, "title": probs[slug]["title"] if slug in probs else named.get(slug, slug), "topic": name, "section": section,
-                              "why": f"第 {r} 轮", "due_now": card["queue"] in (2, 3) and card["due"] > today})
+                              "why": f"{'核心题' if only else '其余题'} · 第 {r} 轮", "due_now": card["queue"] in (2, 3) and card["due"] > today})
         ex.lc_focus = list(dict.fromkeys(x["topic"] for x in ex.lc_new))
 
     # ---- low-level design: its own budget

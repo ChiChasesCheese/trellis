@@ -10,6 +10,12 @@ list -> 一、二、… -> §1.1 -> §2.1.1, in his order; the lists in the orde
 with problems under it. Each leaf keeps its problems from his post (`candidates`: slug, number, title, rating, members
 only) and the articles he links for its technique (`articles`). Our problems hang on their leaf: a problem listed in
 several leaves goes to the one in the list of its main technique, else to the first. Problems in no list are not dealt.
+
+Order (Chi, 2026-11-11: by asked-frequency, coverage and importance, 80/20). A node's weight is the importance (public
+company-wise frequency) summed over its problems. Lists go heaviest first; inside a node, children go heaviest first,
+except that a 基础 child leads its siblings and a 进阶 or 选做 child follows them; inside a leaf, problems go most asked
+first. `core`
+is the smallest set of problems that carries `CORE_SHARE` of all importance: the daily deck deals those first.
 """
 from __future__ import annotations
 
@@ -31,6 +37,7 @@ PATTERN_LIST = {"01-hashing": "data-structures", "02-prefix-sum": "data-structur
                 "13-topo-sort": "graph", "14-union-find": "data-structures", "15-shortest-path": "graph",
                 "16-backtracking": "list-tree-backtracking", "17-dp": "dp", "18-greedy": "greedy", "19-trie": "data-structures",
                 "20-design": "data-structures", "21-string": "string", "22-math-bit": "math"}
+CORE_SHARE = 0.8  # the problems carrying this share of all importance are dealt first
 SECTION = re.compile(r"^(#{2,5}) (?:([零一二三四五六七八九十]+)、|§([\d.]+) )(.+)$")
 NUMERAL = "零一二三四五六七八九十"
 PROBLEM = re.compile(r"^\s*- \[(\d+)\. ([^\]]+)\]\(https://leetcode\.cn/problems/([a-z0-9-]+)/?\)(.*)$")
@@ -134,7 +141,39 @@ def build() -> dict:
             ours = home.get((lst["key"], path), [])
             # problems added to a thin leaf (expand.json) join after ours once their answer body exists
             leaf["problems"] = ours + [c["slug"] for c in exp.get(leaf["id"], []) if c["slug"] not in ours and (body / f"{c['slug']}.md").exists()]
-    return {"lists": lists, "primary": primary}
+    weight = {slug: p["importance"] for slug, p in probs.items()}
+    weight.update({c["slug"]: c.get("importance", 0.0) for v in exp.values() for c in v})
+    lists = prioritize(lists, weight)
+    every = sorted({s for lst in lists for _, x in leaves(lst) for s in x["problems"]}, key=lambda s: -weight.get(s, 0.0))
+    total, acc, core = sum(weight.get(s, 0.0) for s in every) or 1.0, 0.0, []
+    for s in every:
+        if acc >= CORE_SHARE * total:
+            break
+        core.append(s)
+        acc += weight.get(s, 0.0)
+    return {"lists": lists, "primary": primary, "core": core}
+
+
+def prioritize(lists: list[dict], weight: dict[str, float]) -> list[dict]:
+    """Heaviest first at every level, but a 基础 child before its siblings and a 进阶 / 选做 child after them; a leaf's
+    problems most asked first."""
+    def mass(n: dict) -> float:
+        n["weight"] = sum(weight.get(s, 0.0) for s in n.get("problems", [])) + sum(mass(c) for c in n["children"])
+        return n["weight"]
+
+    def rank(title: str) -> int:
+        return 0 if "基础" in title else 2 if "进阶" in title or "选做" in title else 1
+
+    def order(n: dict) -> None:
+        n["children"].sort(key=lambda c: (rank(c["title"]), -c["weight"]))
+        if n.get("problems"):
+            n["problems"].sort(key=lambda s: -weight.get(s, 0.0))
+        for c in n["children"]:
+            order(c)
+    for lst in lists:
+        mass(lst)
+        order(lst)
+    return sorted(lists, key=lambda lst: -lst["weight"])
 
 
 SKELETON = ROOT / "skeleton/leetcode-tree.yaml"  # local only, like the cards: built from 0x3F's posts
