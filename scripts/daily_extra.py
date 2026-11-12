@@ -6,8 +6,8 @@ study_plan.py calls this; on its own it prints what it would do:
 
 LeetCode (its own daily deck 今日算法): `lc_new` problems a day, each by its whole answer, from two lists of the knowledge
 tree at a time.
-- **The tree** is 0x3F's problem lists, three levels deep (scripts/lc_tree.py): list -> group -> section, in his order.
-- **A round** takes `lc.per_section` more problems from every section, most asked first. Two lists are in focus,
+- **The tree** is 0x3F's problem lists as deep as his posts go (scripts/lc_tree.py), in his order.
+- **A round** takes `lc.per_section` more problems from every leaf, most asked first. Two lists are in focus,
   `lc.per_topic` problems each a day; when one has nothing left this round, the next list takes its place.
 - **Done** means answered since `lc.since`. A problem seen before counts as new: if it is not due, it is made due today
   (Anki's own Set Due Date). One left unanswered comes back the next day, as it is still first in its section.
@@ -230,8 +230,8 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
     home = homes()
 
     # ---- LeetCode: `lc_new` problems a day from two lists of the knowledge tree at a time (Chi 2026-11-11), each problem by
-    # its whole answer. The tree is 0x3F's problem lists, three levels deep (lc_tree.py). A round takes `per_section`
-    # more problems from every section, most asked first, in 0x3F's order; two lists are in focus, `per_topic` each a day,
+    # its whole answer. The tree is 0x3F's problem lists as deep as his posts go (lc_tree.py). A round takes `per_section`
+    # more problems from every leaf, most asked first, in 0x3F's order; two lists are in focus, `per_topic` each a day,
     # and when one has nothing left this round the next list takes its place. A problem is done once answered since the
     # round began; one seen before counts as new and is made due today. The review backlog is not dealt (REVIEWS: 0).
     import lc_tree
@@ -258,17 +258,17 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
     per = int(lcfg["per_section"])
 
     def left(lst: dict, r: int) -> list[tuple[str, str]]:
-        """(slug, section) still to do in this round, in the list's order."""
-        return [(s, f"{n:02d} {sec['name']}") for n, sec in enumerate((x for g in lst["groups"] for x in g["sections"]), 1)
-                for s in sec["problems"][:per * r] if s not in done and card_for(s)]
+        """(slug, leaf) still to do in this round, in the list's order; a leaf with none of our problems is skipped."""
+        return [(s, f"{n:02d} " + " › ".join(path[1:])) for n, (path, leaf) in enumerate(lc_tree.leaves(lst), 1)
+                for s in leaf["problems"][:per * r] if s not in done and card_for(s)]
 
-    rounds = range(1, max((len(x["problems"]) for lst in tree for g in lst["groups"] for x in g["sections"]), default=0) // per + 2)
+    rounds = range(1, max((len(x["problems"]) for lst in tree for _, x in lc_tree.leaves(lst)), default=0) // per + 2)
     r = next((r for r in rounds if any(left(lst, r) for lst in tree)), None)
     if r:
         limit, active = int(cfg.get("lc_new", 10)), [lst for lst in tree if left(lst, r)]
-        picks = [(lst["name"], *x) for lst in active[:2] for x in left(lst, r)[:int(lcfg["per_topic"])]]
+        picks = [(lst["title"], *x) for lst in active[:2] for x in left(lst, r)[:int(lcfg["per_topic"])]]
         for lst in active:  # a list in focus with less than its share left: the next list fills the day
-            picks += [(lst["name"], *x) for x in left(lst, r) if x[0] not in {p[1] for p in picks}][:max(0, limit - len(picks))]
+            picks += [(lst["title"], *x) for x in left(lst, r) if x[0] not in {p[1] for p in picks}][:max(0, limit - len(picks))]
         today = anki_today()
         for name, slug, section in picks[:limit]:
             card = card_for(slug)
