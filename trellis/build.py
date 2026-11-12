@@ -354,6 +354,11 @@ details.example > summary::-webkit-details-marker { display: none; }
 details.example > summary::after { content: " ▸"; color: var(--dim); }
 details.example[open] > summary::after { content: " ▾"; }
 
+.qnote { margin-top: 18px; padding: 10px 12px; border-radius: 8px; background: var(--chip); font-size: .94em; text-align: left; }
+.qnote > div + div { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--rule); }
+.qnote b.qk { display: inline-block; margin-right: 8px; color: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: .04em; }
+.qn-wait { color: var(--dim); }
+
 @media (max-width: 500px) {
   .card { font-size: 17px; padding: 16px 14px 24px; }
   .hl pre, pre { font-size: 13px; padding: 10px 12px; }
@@ -760,6 +765,15 @@ def _related_notes(used: dict[str, tuple[str, str]], links: dict) -> str:
     return f'<details class="sec related-notes"><summary><span class="label">相关知识点</span></summary>{"".join(rows)}</details>'
 
 
+# Every note type ends with these two fields: Chi writes what he does not understand into Note (on the phone), and
+# scripts/card_notes.py writes the explanation into NoteAnswer, also for a card he only starred (tag `marked`).
+# No build or refresh ever writes either of them.
+NOTE_FIELDS = ("Note", "NoteAnswer")
+NOTE_BLOCK = ('{{#NoteAnswer}}<div class="qnote">{{#Note}}<div class="qn"><b class="qk">疑问</b>{{Note}}</div>{{/Note}}'
+              '<div class="qn-a"><b class="qk">{{#Note}}解答{{/Note}}{{^Note}}讲解{{/Note}}</b>{{NoteAnswer}}</div></div>{{/NoteAnswer}}'
+              '{{^NoteAnswer}}{{#Note}}<div class="qnote"><div class="qn"><b class="qk">疑问</b>{{Note}}</div>'
+              '<div class="qn-wait">解答待生成</div></div>{{/Note}}{{/NoteAnswer}}')
+
 _GRADE = '<div class="grade">说全了 Good · 卡壳或漏要点 Hard · 想不起来 Again · 第一次学不按 Easy</div>'
 
 
@@ -767,11 +781,11 @@ def _qa_model() -> genanki.Model:
     return genanki.Model(
         _stable_id("trellis:model:qa"),
         "Trellis QA",
-        fields=[{"name": "Question"}, {"name": "Answer"}, {"name": "Crumb"}],
+        fields=[{"name": f} for f in ("Question", "Answer", "Crumb", *NOTE_FIELDS)],
         templates=[{
             "name": "QA",
             "qfmt": '<div class="crumb">{{Crumb}}</div>{{Question}}',
-            "afmt": '{{FrontSide}}<hr id="answer">{{Answer}}' + _GRADE,
+            "afmt": '{{FrontSide}}<hr id="answer">{{Answer}}' + NOTE_BLOCK + _GRADE,
         }],
         css=CSS,
     )
@@ -782,11 +796,11 @@ def _cloze_model() -> genanki.Model:
         _stable_id("trellis:model:cloze"),
         "Trellis Cloze",
         model_type=genanki.Model.CLOZE,
-        fields=[{"name": "Text"}, {"name": "Crumb"}],
+        fields=[{"name": f} for f in ("Text", "Crumb", *NOTE_FIELDS)],
         templates=[{
             "name": "Cloze",
             "qfmt": '<div class="crumb">{{Crumb}}</div>{{cloze:Text}}',
-            "afmt": '<div class="crumb">{{Crumb}}</div>{{cloze:Text}}' + _GRADE,
+            "afmt": '<div class="crumb">{{Crumb}}</div>{{cloze:Text}}' + NOTE_BLOCK + _GRADE,
         }],
         css=CSS,
     )
@@ -873,7 +887,7 @@ def build_package(
         if card.type == "qa":
             note = genanki.Note(
                 model=qa_model,
-                fields=[_html(question), _html(answer, related, own, fold=skeleton.fold, fold_code=skeleton.fold_code, links=links, node=card.node) + index.get(card.id, "") + footer, crumb],
+                fields=[_html(question), _html(answer, related, own, fold=skeleton.fold, fold_code=skeleton.fold_code, links=links, node=card.node) + index.get(card.id, "") + footer, crumb, "", ""],
                 guid=genanki.guid_for(f"trellis:{card.id}"),
                 tags=tags,
                 due=position,
@@ -881,7 +895,7 @@ def build_package(
         else:
             note = genanki.Note(
                 model=cloze_model,
-                fields=[_html(question) + footer, crumb],
+                fields=[_html(question) + footer, crumb, "", ""],
                 guid=genanki.guid_for(f"trellis:{card.id}"),
                 tags=tags,
                 due=position,

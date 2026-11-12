@@ -185,6 +185,12 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   the day's number. The cut is made with decks (the day's cards in the deck, the rest in `碎片速刷::后备`, whose preset deals 0 new),
   because new-card positions cannot be written. Options on those cards carry `class="tappable"` and `onclick`: without them
   AnkiMobile reads every tap as "show answer".
+- Every note type ends with the fields `Note` and `NoteAnswer` (`trellis/build.py` `NOTE_FIELDS`). Chi writes questions
+  into `Note` on the phone; `scripts/card_notes.py` lists them and starred cards (`marked`) and writes explanations into
+  `NoteAnswer` (rules in `docs/card-notes.md`). A build or refresh never writes these two fields. A new note type gets them
+  too, at the end, or its notes have nowhere for Chi's questions. Adding a field to a note type that exists forces a
+  one-way full sync. AnkiConnect refuses a full sync, so the upload is done once in the desktop app. Importing a whole
+  package over existing notes (`anki-push`) would blank both fields.
 - A leaf is weak only on cards with a verdict (taken / slipped); young cards are not evidence, and a weak leaf whose grown
   cards are unreviewed is *settling* and is not a `grow` target (ADR 0009).
 

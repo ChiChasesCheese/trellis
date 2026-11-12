@@ -92,6 +92,7 @@ def add_subset(folder: Path, nids: list[int]) -> None:
 
 
 def refresh(domain: str, dry: bool, add: str | None = None) -> None:
+    from trellis.build import NOTE_FIELDS
     from trellis.skeleton import load_skeleton
     via = load_skeleton(ROOT / "skeleton" / f"{domain}.yaml").anki_via
     if via:
@@ -116,7 +117,7 @@ def refresh(domain: str, dry: bool, add: str | None = None) -> None:
         names = sorted(note["fields"], key=lambda k: note["fields"][k]["order"])
         if len(names) != len(new):
             continue
-        fields = {k: v for k, v in zip(names, new) if note["fields"][k]["value"] != v}
+        fields = {k: v for k, v in zip(names, new) if k not in NOTE_FIELDS and note["fields"][k]["value"] != v}  # Chi's notes stay
         if fields:
             changes.append({"id": note["noteId"], "fields": fields})
     wanted = set(Path(add[1:]).read_text().split()) if add and add.startswith("@") else None  # @file: exactly these ids
@@ -136,10 +137,13 @@ def refresh(domain: str, dry: bool, add: str | None = None) -> None:
 
 
 def style() -> None:
-    from trellis.build import CSS
-    for name in ("Trellis QA", "Trellis Cloze"):
-        call("updateModelStyling", model={"name": name, "css": CSS})
-        print(name, "styled")
+    """CSS and template text of the two note types, from the code. Editing a template's text syncs normally."""
+    from trellis.build import CSS, _cloze_model, _qa_model
+    for m in (_qa_model(), _cloze_model()):
+        call("updateModelStyling", model={"name": m.name, "css": CSS})
+        t = m.templates[0]
+        call("updateModelTemplates", model={"name": m.name, "templates": {t["name"]: {"Front": t["qfmt"], "Back": t["afmt"]}}})
+        print(m.name, "styled")
 
 
 def main() -> int:

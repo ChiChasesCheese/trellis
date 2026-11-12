@@ -34,6 +34,9 @@ from statistics import median
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
+
+from trellis.build import NOTE_BLOCK, NOTE_FIELDS  # noqa: E402
+
 HOME = Path(os.environ.get("QUICK_HOME") or ROOT / "sources/local/quick")
 DECK = "碎片速刷"
 TAG = "quick"
@@ -396,7 +399,7 @@ table.sol { margin:0 0 10px; } table.sol td { border:none; border-bottom:1px sol
 """
 
 HEAD = '<div class="crumb">{{Crumb}}<span class="chip">%s</span></div>'
-TAIL = ('{{#Why}}<div class="why">{{Why}}</div>{{/Why}}<div class="pt">考点：{{Point}}</div>'
+TAIL = ('{{#Why}}<div class="why">{{Why}}</div>{{/Why}}<div class="pt">考点：{{Point}}</div>' + NOTE_BLOCK +
         '<div class="grade" id="grade">答对 Good · 答错或猜的 Again</div>')
 
 # Script shared by the tapped formats. Three things it has to get right on a phone:
@@ -530,7 +533,7 @@ def scrambled(n: int, seed: str, identity_ok: bool) -> list[int]:
 def fields(c: dict, point: dict) -> tuple[str, list[str]]:
     """Model key and field values of a card."""
     f, why, crumb, title = c["fmt"], mark(c.get("why", "")), point["topic_title"], point["title"]
-    if c.get("more"):  # kept inside the Why field: a new field would force a one-way full sync of the collection
+    if c.get("more"):  # kept inside the Why field: a new field forces a one-way full sync of the collection
         why += f'<div class="more"><b>延伸</b>{mark(c["more"])}</div>'
     if f in ("qa", "flaw"):
         q = ("这句话错在哪？<br>" if f == "flaw" else "") + mark(c["q"])
@@ -572,15 +575,17 @@ def all_cards(verified_only: bool) -> tuple[list[dict], list[str]]:
 
 
 def substitute(tmpl: str, vals: dict[str, str], back: bool) -> str:
-    tmpl = re.sub(r"\{\{#(\w+)\}\}(.*?)\{\{/\1\}\}", lambda m: m.group(2) if vals.get(m.group(1)) else "", tmpl, flags=re.S)
+    section = re.compile(r"\{\{([#^])(\w+)\}\}(.*?)\{\{/\2\}\}", re.S)
+    while section.search(tmpl):  # sections of other fields nest: resolve the outer ones until none is left
+        tmpl = section.sub(lambda m: m.group(3) if bool(vals.get(m.group(2))) == (m.group(1) == "#") else "", tmpl)
 
     def rep(m):
         key = m.group(1)
         if key.startswith("cloze:"):
             show = r'<span class="cloze">\1</span>' if back else '<span class="cloze">[...]</span>'
             return re.sub(r"\{\{c1::(.*?)\}\}", show, vals[key[6:]])
-        return vals[key]
-    return re.sub(r"\{\{([^#/}][^}]*)\}\}", rep, tmpl)
+        return vals.get(key, "")
+    return re.sub(r"\{\{([^#^/}][^}]*)\}\}", rep, tmpl)
 
 
 SIM = """<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -633,7 +638,7 @@ def package(cards: list[dict], path: Path) -> dict[str, dict]:
     from trellis.build import _stable_id
 
     sides = templates()
-    models = {k: genanki.Model(_stable_id(f"trellis:model:{name}"), name, fields=[{"name": f} for f in names],
+    models = {k: genanki.Model(_stable_id(f"trellis:model:{name}"), name, fields=[{"name": f} for f in (*names, *NOTE_FIELDS)],
                                templates=[{"name": name.split()[-1], "qfmt": sides[k][0], "afmt": sides[k][1]}], css=css(),
                                **({"model_type": genanki.Model.CLOZE} if cloze else {}))
               for k, (name, names, _front, _back, cloze) in MODELS.items()}
@@ -643,7 +648,7 @@ def package(cards: list[dict], path: Path) -> dict[str, dict]:
         key, vals = fields(c, c["_point"])
         ident = f"quick.{c['kp']}"
         tags = [TAG, f"{TAG}::{c['_point']['day']}", f"kp::{c['kp']}", f"fmt::{c['fmt']}", f"id::{ident}"]
-        deck.add_note(genanki.Note(model=models[key], fields=vals, guid=genanki.guid_for(f"trellis:{ident}"), tags=tags,
+        deck.add_note(genanki.Note(model=models[key], fields=vals + [""] * len(NOTE_FIELDS), guid=genanki.guid_for(f"trellis:{ident}"), tags=tags,
                                    due=c["_point"]["rank"] + 1))
         built[ident] = {"fields": dict(zip(MODELS[key][1], vals)), "model": MODELS[key][0], "tags": tags}
     genanki.Package([deck]).write_to_file(path)
