@@ -19,7 +19,8 @@ slug: bus-routes
 from collections import defaultdict, deque
 
 
-def num_buses_to_destination(routes: list[list[int]], source: int, target: int) -> int:
+def num_buses_to_destination(routes: list[list[int]],
+                             source: int, target: int) -> int:
     if source == target:
         return 0
     stop_routes: defaultdict[int, list[int]] = defaultdict(list)   # 站 -> 经过它的线路

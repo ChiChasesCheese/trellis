@@ -41,4 +41,9 @@ def target_indices(nums: list[int], target: int) -> list[int]:
 - 返回原数组里的下标：同一个例子得到 `[1, 3]`，题目要的是**排序后**的下标。
 - 对不存在的 `target` 单独分支：`equal = 0` 时 `range` 本来就是空，多写分支只会引入错误。
 
+**追问。**
+- 数组已经有序：用 `bisect_left`、`bisect_right` 直接得到区间 `[left, right)`，`O(log n)`（LC 34）。
+- 对同一个数组查询很多个 `target`：排序一次，再用二分，总 `O(n log n + q log n)`；或者统计一次计数表加前缀和。
+- 要原数组里等于 `target` 的下标（题目问的是排序后的下标，不是这个）：`[i for i, x in enumerate(nums) if x == target]`，`O(n)`。
+
 **同模式。** LC 1365 有多少小于当前数字的数字、LC 34 在排序数组中查找元素的第一个和最后一个位置、LC 35 搜索插入位置、LC 912 排序数组。

@@ -19,7 +19,8 @@ slug: tt-basic-calculator-ladder
 import re
 
 PREC = {"+": 1, "-": 1, "*": 2, "/": 2}
-TOKEN = re.compile(r"\s*(?:(\d+)|(\S))")
+# finditer 自己跳过空白；开头写 \s* 会让末尾长空白变 O(n^2)
+TOKEN = re.compile(r"(\d+)|(\S)")
 
 
 def tokenize(s: str) -> list[int | str]:

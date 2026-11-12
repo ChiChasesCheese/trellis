@@ -19,7 +19,8 @@ slug: course-schedule-ii
 from collections import deque
 
 
-def find_order(num_courses: int, prerequisites: list[list[int]]) -> list[int]:
+def find_order(num_courses: int,
+               prerequisites: list[list[int]]) -> list[int]:
     graph: list[list[int]] = [[] for _ in range(num_courses)]
     indegree = [0] * num_courses
     for course, pre in prerequisites:

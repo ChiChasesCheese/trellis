@@ -19,7 +19,8 @@ slug: course-schedule
 from collections import deque
 
 
-def can_finish(num_courses: int, prerequisites: list[list[int]]) -> bool:
+def can_finish(num_courses: int,
+               prerequisites: list[list[int]]) -> bool:
     graph: list[list[int]] = [[] for _ in range(num_courses)]
     indegree = [0] * num_courses
     for course, pre in prerequisites:
@@ -47,7 +48,8 @@ def can_finish(num_courses: int, prerequisites: list[list[int]]) -> bool:
 from collections import deque
 
 
-def find_order(num_courses: int, prerequisites: list[list[int]]) -> list[int]:
+def find_order(num_courses: int,
+               prerequisites: list[list[int]]) -> list[int]:
     graph: list[list[int]] = [[] for _ in range(num_courses)]
     indegree = [0] * num_courses
     for course, pre in prerequisites:
@@ -66,7 +68,8 @@ def find_order(num_courses: int, prerequisites: list[list[int]]) -> list[int]:
 ```
 - 三色标记 DFS，每个点只搜一次 `O(V + E)`；链很长时递归会超过默认约 1000 层，要调高上限或改迭代：
 ```python
-def can_finish_dfs(num_courses: int, prerequisites: list[list[int]]) -> bool:
+def can_finish_dfs(num_courses: int,
+                   prerequisites: list[list[int]]) -> bool:
     graph: list[list[int]] = [[] for _ in range(num_courses)]
     for course, pre in prerequisites:
         graph[pre].append(course)
@@ -80,7 +83,8 @@ def can_finish_dfs(num_courses: int, prerequisites: list[list[int]]) -> bool:
         state[u] = 2                               # 子树里没有环：封口，不再重搜
         return False
 
-    return not any(state[i] == 0 and has_cycle(i) for i in range(num_courses))
+    return not any(state[i] == 0 and has_cycle(i)
+                   for i in range(num_courses))
 ```
 
 **易错点。**

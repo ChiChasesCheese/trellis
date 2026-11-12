@@ -19,7 +19,8 @@ slug: parallel-courses-iii
 from collections import deque
 
 
-def minimum_time(n: int, relations: list[list[int]], time: list[int]) -> int:
+def minimum_time(n: int, relations: list[list[int]],
+                 time: list[int]) -> int:
     graph: list[list[int]] = [[] for _ in range(n + 1)]
     indeg = [0] * (n + 1)
     for a, b in relations:

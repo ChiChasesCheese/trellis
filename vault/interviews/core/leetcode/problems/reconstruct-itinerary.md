@@ -18,6 +18,9 @@ slug: reconstruct-itinerary
 **推导。** 暴力回溯：每步按字典序尝试未用的机票，走不通就撤销，最坏指数级。普通贪心（每次走最小的出边）会走进死胡同：`JFK` 有 `KUL`（终点）和 `NRT`（还能回 `JFK`）两张票，先走 `KUL` 就再也回不来。欧拉路径的结构是：从起点走，遇到死胡同的那个点一定是整条路径的终点；把它放在最后，回溯到上一个有剩余边的点再绕一圈，把绕的圈接到前面。后序入栈 + 反转正好实现这件事，每条边只走一次。
 
 ```python
+from collections import defaultdict
+
+
 def find_itinerary(tickets: list[list[str]]) -> list[str]:
     graph: defaultdict[str, list[str]] = defaultdict(list)
     for src, dst in sorted(tickets, reverse=True):   # 逆序放入，pop() 从尾部取出的就是字典序最小的目的地
@@ -60,5 +63,10 @@ def find_itinerary_stack(tickets: list[list[str]]) -> list[str]:
 - 忘了反转：`route` 是后序，直接返回得到的是倒序的行程。
 - 忘了逆序排序再 `pop()`：用 `pop(0)` 是 `O(n)`；正序存入再 `pop()` 会先走字典序最大的。
 - 最坏递归深度 `301`，低于 CPython 默认约 1000 的限制；票数再多就要改成上面的显式栈。
+
+**追问。**
+- 为什么后序反转得到的是字典序最小：每个点总是先尝试最小的出边；被卡死的点一定是路径终点，先入栈就排在最后，其余的圈按尝试顺序接在前面，所以每个位置上都是可行的最小选择。
+- 如何判断无解：有向图要有欧拉路径，需要度数条件（见拓展优化）并且所有边在同一连通块；这里保证有解，真实系统里要先验证，或者检查 `len(route) == E + 1`。
+- 每个机场的出边要取最小，为什么不用堆：逆序排序后 `pop()` 是 `O(1)`，总排序 `O(E log E)`，比每次堆弹出同阶但常数更小。
 
 **同模式。** LC 2097 合法重新排列数对、LC 753 破解保险箱、LC 207 课程表、LC 399 除法求值。

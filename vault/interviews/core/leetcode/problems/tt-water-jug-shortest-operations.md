@@ -20,8 +20,10 @@ from collections import deque
 from math import gcd
 
 
-def jug_steps(x: int, y: int, z: int, single: bool = False) -> list[str] | None:
-    """两个水壶容量 x、y。得到恰好 z 升（single=False：两壶之和；True：某一壶里）的最短操作序列；做不到返回 None。"""
+def jug_steps(x: int, y: int, z: int,
+              single: bool = False) -> list[str] | None:
+    """容量 x、y 的两个水壶，得到恰好 z 升的最短操作序列。
+    single=False：两壶之和为 z；True：某一壶里为 z。做不到返回 None。"""
     top = max(x, y) if single else x + y
     if z < 0 or z > top or z % gcd(x, y):          # 先用数论判不可能，免得白白搜遍整个状态空间
         return None
@@ -30,7 +32,8 @@ def jug_steps(x: int, y: int, z: int, single: bool = False) -> list[str] | None:
         return z in (a, b) if single else a + b == z
 
     start = (0, 0)
-    parent: dict[tuple[int, int], tuple[tuple[int, int], str] | None] = {start: None}
+    State = tuple[int, int]
+    parent: dict[State, tuple[State, str] | None] = {start: None}
     queue = deque([start])
     while queue:
         a, b = state = queue.popleft()
@@ -41,8 +44,12 @@ def jug_steps(x: int, y: int, z: int, single: bool = False) -> list[str] | None:
                 ops.append(op)
             return ops[::-1]
         pour_ab, pour_ba = min(a, y - b), min(b, x - a)
-        moves = (((x, b), "fill X"), ((a, y), "fill Y"), ((0, b), "empty X"), ((a, 0), "empty Y"),
-                 ((a - pour_ab, b + pour_ab), "pour X->Y"), ((a + pour_ba, b - pour_ba), "pour Y->X"))
+        moves = (
+            ((x, b), "fill X"), ((a, y), "fill Y"),
+            ((0, b), "empty X"), ((a, 0), "empty Y"),
+            ((a - pour_ab, b + pour_ab), "pour X->Y"),
+            ((a + pour_ba, b - pour_ba), "pour Y->X"),
+        )
         for nxt, op in moves:
             if nxt not in parent:
                 parent[nxt] = ((a, b), op)

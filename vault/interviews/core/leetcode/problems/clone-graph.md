@@ -33,15 +33,37 @@ def clone_graph(node: Node | None) -> Node | None:
 
 **复杂度。** 时间 `O(V + E)`；空间 `O(V)`（哈希表加递归栈，栈深至多 `V`）。
 
+**拓展优化。**
+- BFS：没有递归，链状大图（`1500` 个节点）也不会 `RecursionError`。入队前先登记拷贝，出队时给当前拷贝挂上邻居的拷贝：
+
+```python
+from collections import deque
+
+
+def clone_graph_bfs(node: Node | None) -> Node | None:
+    if node is None:
+        return None
+    copies = {node: Node(node.val)}            # 入队前就登记：每个节点只入队一次
+    queue = deque([node])
+    while queue:
+        cur = queue.popleft()
+        for nb in cur.neighbors:
+            if nb not in copies:
+                copies[nb] = Node(nb.val)
+                queue.append(nb)
+            copies[cur].neighbors.append(copies[nb])   # 拷贝之间连边
+    return copies[node]
+```
+
 **易错点。**
 - 没有「原节点 → 拷贝」映射、每次都新建：相邻节点互为邻居，递归永远走不完。`[[2],[1]]` 抛 `RecursionError`。
 - 忘记判空：`[]` 的入参是 `None`，直接 `node.val` 会 `AttributeError`。
 - 先递归、后登记：`clone = Node(...); clone.neighbors = [dfs(nb) ...]` 之后才写 `copies[cur] = clone`，环上的节点会无限递归；登记必须在递归邻居之前。
-- 深度：递归深度最坏等于图里最长的一条路径。题目限定至多 `100` 个节点，没有问题；节点上千的链状图（例如 `1500` 个节点）会超过 CPython 默认递归上限（约 `1000`）而抛 `RecursionError`，要么调高 `sys.setrecursionlimit`，要么改用 BFS（见追问）。
+- 深度：递归深度最坏等于图里最长的一条路径。题目限定至多 `100` 个节点，没有问题；节点上千的链状图（例如 `1500` 个节点）会超过 CPython 默认递归上限（约 `1000`）而抛 `RecursionError`，要么调高 `sys.setrecursionlimit`，要么改用 BFS（见拓展优化）。
 - 直接 `copies[cur].neighbors = cur.neighbors`：新图的邻居还指向旧节点，只是「浅拷贝」。
 
 **追问。**
-- BFS 写法（深图安全）：入队前先建拷贝并登记，出队时把每个邻居的拷贝挂到当前拷贝上；没有递归，链状大图也不受影响。
+- 为什么 BFS 里也要在入队前登记：出队时才登记的话，同一节点会被多个邻居重复入队、建出多份拷贝，图结构就错了。
 - 图不连通、只给了节点列表：对每个未复制的节点各跑一次同样的流程，共用同一张 `copies`。
 - 一行调用：`copy.deepcopy(node)` 自带 memo 能处理环，但面试要求手写。
 

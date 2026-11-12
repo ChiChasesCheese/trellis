@@ -20,6 +20,9 @@ slug: find-all-anagrams-in-a-string
 **推导。** 暴力：对每个起点取长 `m` 的子串，排序后与 `sorted(p)` 比较，`O(n·m log m)`。改进一：用计数代替排序，`Counter(window) == Counter(p)`，`O(n·m)`。浪费在于相邻两个窗口只差一进一出，却整个重新计数。洞察：窗口右移一格，只有两个字母的计数变了——增量更新。再进一步，每次比较两张计数表仍是 `O(Σ)`；维护「计数不平衡的字母种数」，一进一出只会让它变化 `-1/0/+1`，判断「是否异位词」降到 `O(1)`。
 
 ```python
+from collections import Counter
+
+
 def find_anagrams(s: str, p: str) -> list[int]:
     m = len(p)
     need = Counter(p)             # need[c]：窗口里还缺几个 c；负数表示多了

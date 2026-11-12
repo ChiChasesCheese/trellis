@@ -19,7 +19,8 @@ slug: cheapest-flights-within-k-stops
 from math import inf
 
 
-def find_cheapest_price(n: int, flights: list[list[int]], src: int, dst: int, k: int) -> int:
+def find_cheapest_price(n: int, flights: list[list[int]],
+                        src: int, dst: int, k: int) -> int:
     # dp[t][v]：最多坐 t 趟航班，从 src 到城市 v 的最小价格
     dp: list[list[float]] = [[inf] * n for _ in range(k + 2)]
     dp[0][src] = 0                          # 0 趟航班：只在出发地，价格 0
@@ -42,7 +43,9 @@ import heapq
 from math import inf
 
 
-def find_cheapest_price_dijkstra(n: int, flights: list[list[int]], src: int, dst: int, k: int) -> int:
+def find_cheapest_price_dijkstra(
+        n: int, flights: list[list[int]],
+        src: int, dst: int, k: int) -> int:
     graph: list[list[tuple[int, int]]] = [[] for _ in range(n)]
     for u, v, w in flights:
         graph[u].append((v, w))
@@ -59,6 +62,20 @@ def find_cheapest_price_dijkstra(n: int, flights: list[list[int]], src: int, dst
             heapq.heappush(heap, (cost + w, legs + 1, v))
     return -1
 ```
+- 滚动数组：每行只读上一行，两个长度 `n` 的数组交替即可，空间 `O(n)`；表格版更适合讲解和回溯路径，这一版是面试里常见的 Bellman-Ford 写法：
+```python
+def find_cheapest_price_rolling(n: int, flights: list[list[int]],
+                                src: int, dst: int, k: int) -> int:
+    dist = [inf] * n
+    dist[src] = 0
+    for _ in range(k + 1):                  # 最多 k + 1 趟航班
+        nxt = dist[:]                       # 必须拷贝：本轮只读上一轮的 dist
+        for u, v, w in flights:
+            if dist[u] + w < nxt[v]:
+                nxt[v] = dist[u] + w
+        dist = nxt
+    return -1 if dist[dst] == inf else int(dist[dst])
+```
 - 提前结束：若某一轮松弛后 `dp[t] == dp[t-1]`，后面的行不会再变，直接 `break`；`k` 接近 `n` 时省掉大量行。
 
 **易错点。**
@@ -70,6 +87,7 @@ def find_cheapest_price_dijkstra(n: int, flights: list[list[int]], src: int, dst
 
 **追问。**
 - 要输出具体的路线：松弛时同时记录前驱表 `parent[t][v]`，从 `parent[k+1][dst]` 沿行号逐行往回走。
-- 空间可以压到 O(n)：见 Python 工具箱「DP 降维」。
+- 空间压到 `O(n)`：见拓展优化的滚动数组。每轮必须拷贝上一轮，原地更新会让一轮坐多趟（见易错点第一条）。
+- 为什么不用 Dijkstra 的普通版：价格最小的路线可能用掉太多航班，后到的更贵但航班少的路线才合法，所以状态必须带上航班数（拓展优化里的 Dijkstra），最坏情况下不比 DP 快，优势只在能早早弹出终点时。
 
 **同模式。** LC 743 网络延迟时间、LC 1631 最小体力消耗路径、LC 1514 概率最大的路径、LC 1928 规定时间内到达终点的最小花费（同样带一个资源上限）。

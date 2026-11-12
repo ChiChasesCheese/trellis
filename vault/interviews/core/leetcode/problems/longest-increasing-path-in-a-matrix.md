@@ -33,7 +33,7 @@ def longest_increasing_path(matrix: list[list[int]]) -> int:
     return max(dfs(i, j) for i in range(m) for j in range(n))
 ```
 
-运行：`[[9,9,4],[6,6,8],[2,1,1]]` → `4`，`[[3,4,5],[3,2,6],[2,2,1]]` → `4`，`[[1]]` → `1`，`[[5,5],[5,5]]` → `1`；`200 x 200` 的随机矩阵 → `12`；`200 x 200` 的蛇形严格递增矩阵 → `40000`；`200 x 200` 的梳状矩阵（最长路径 `20101` 格）在默认递归上限下抛 `RecursionError`，`sys.setrecursionlimit(100000)` 后 → `20101`。
+运行：`[[9,9,4],[6,6,8],[2,1,1]]` → `4`，`[[3,4,5],[3,2,6],[2,2,1]]` → `4`，`[[1]]` → `1`，`[[5,5],[5,5]]` → `1`；`200 x 200` 的随机矩阵 → 十几（随机，实测 `13`）；`200 x 200` 的蛇形严格递增矩阵 → `40000`；`200 x 200` 的梳状矩阵（最长路径 `20101` 格）在默认递归上限下抛 `RecursionError`，`sys.setrecursionlimit(100000)` 后 → `20101`。
 
 **复杂度。** 时间 `O(mn)`：每个格子的 `dfs` 只真正计算一次，每次看 `4` 个邻居；空间 `O(mn)`：`memo` 表，外加递归栈，最深等于最长路径的格子数。
 
@@ -57,7 +57,8 @@ def longest_increasing_path_topo(matrix: list[list[int]]) -> int:
             x, y = i + di, j + dj
             if 0 <= x < m and 0 <= y < n and matrix[x][y] > matrix[i][j]:
                 out_deg[i][j] += 1
-    layer = [(i, j) for i, j in product(range(m), range(n)) if out_deg[i][j] == 0]
+    layer = [(i, j) for i, j in product(range(m), range(n))
+             if out_deg[i][j] == 0]
     steps = 0                                  # 剥掉的层数 = 最长路径的点数
     while layer:
         steps += 1

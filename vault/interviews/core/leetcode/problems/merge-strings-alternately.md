@@ -35,4 +35,8 @@ def merge_alternately(word1: str, word2: str) -> str:
 - 忘记追加尾巴：`("ab", "pqrs")` 只得到 `"apbq"`，正确是 `"apbqrs"`。
 - 用 `+=` 在循环里反复拼接字符串，在长输入下是 `O(n^2)` 的隐患，应该 `"".join(...)`。
 
+**追问。**
+- 交替合并 `k` 个字符串：`"".join(c for tup in zip_longest(*words, fillvalue="") for c in tup)`，按「列」轮流取，`O(总长)`。
+- 输入是很长的流或迭代器：写成生成器，逐字符产出，不必把结果整个放进内存。
+
 **同模式。** LC 392 判断子序列、LC 88 合并两个有序数组、LC 21 合并两个有序链表、LC 2 两数相加。

@@ -21,14 +21,18 @@ from collections import deque
 
 def oranges_rotting(grid: list[list[int]]) -> int:
     m, n = len(grid), len(grid[0])
-    queue = deque((i, j) for i, row in enumerate(grid) for j, v in enumerate(row) if v == 2)
+    queue = deque(
+        (i, j) for i, row in enumerate(grid)
+        for j, v in enumerate(row) if v == 2     # 所有初始腐烂橘子 = 第 0 层
+    )
     fresh = sum(row.count(1) for row in grid)
     minutes = 0
     while queue and fresh:                     # 没有新鲜橘子就立刻停，不多算一分钟
         minutes += 1
         for _ in range(len(queue)):            # 恰好处理完当前这一层 = 过去一分钟
             i, j = queue.popleft()
-            for ni, nj in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
+            for ni, nj in ((i + 1, j), (i - 1, j),
+                           (i, j + 1), (i, j - 1)):
                 if 0 <= ni < m and 0 <= nj < n and grid[ni][nj] == 1:
                     grid[ni][nj] = 2           # 入队时就标记，避免重复入队
                     fresh -= 1

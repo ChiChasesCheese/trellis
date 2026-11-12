@@ -34,7 +34,8 @@ def max_sum_after_partitioning(arr: list[int], k: int) -> int:
             return 0
         ans = 0
         for length in range(1, min(k, n - i) + 1):  # 第一段取 length 个，全变成段内最大值
-            ans = max(ans, max(arr[i:i + length]) * length + best(i + length))
+            seg = max(arr[i:i + length]) * length
+            ans = max(ans, seg + best(i + length))
         return ans
 
     return best(0)
@@ -56,7 +57,7 @@ def max_sum_after_partitioning(arr: list[int], k: int) -> int:
     return dp[n]
 ```
 
-运行：`arr=[1,15,7,9,2,5,10], k=3` → `84`，`arr=[1,4,1,5,7,3,6,1,9,9,3], k=4` → `83`，`arr=[1], k=1` → `1`，`arr=[0,0,0], k=2` → `0`，`arr=[10**9]*500, k=500` → `500000000000`。
+运行：`arr=[1,15,7,9,2,5,10], k=3` → `84`，`arr=[1,4,1,5,7,3,6,1,9,9,3], k=4` → `83`，`arr=[1], k=1` → `1`，`arr=[0,0,0], k=2` → `0`，`arr=[10**9]*500, k=500` → `500000000000`（超出题目的 32 位保证，只是压测大数；C++ / Java 要用 64 位整数）。
 
 **复杂度。** 时间 `O(n·k)`：`n` 个状态，每个状态枚举最后一段的长度至多 `k` 种，滚动最大值使每次转移 `O(1)`；`n = k = 500` 时约 `1.25·10^5` 次转移。空间 `O(n)`。
 
@@ -90,5 +91,7 @@ def partition_plan(arr: list[int], k: int) -> tuple[int, list[int]]:
 
 **追问。**
 - `n` 到 `10^5`、`k` 也很大：`O(n·k)` 不够，需要单调栈 / 凸包技巧（斜率优化）把转移降到摊还 `O(n)` 或 `O(n log n)`；面试里说明思路即可。
+- 每段长度必须**恰好**为 `k`（而不是至多）：切法唯一（`n` 须被 `k` 整除），不需要 DP，逐段累加 `k × 段最大值`，`O(n)`。
+- 把「变成段内最大值」改成「变成段内最小值」还要最大化总和：每段 `j × 最小值 <= 段内元素和`，所以每个元素自成一段最优，答案就是 `sum(arr)`，不需要 DP；能识别出这种退化是在考察是否理解转移的含义。
 
 **同模式。** LC 139 单词拆分、LC 91 解码方法、LC 132 分割回文串 II、LC 1105 填充书架、LC 410 分割数组的最大值、LC 1335 工作计划的最低难度。

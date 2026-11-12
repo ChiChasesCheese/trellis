@@ -21,7 +21,8 @@ from collections.abc import Iterator
 DIRS = ((1, 0), (-1, 0), (0, 1), (0, -1))
 
 
-def components(grid: list[list[int]]) -> Iterator[list[tuple[int, int]]]:
+def components(grid: list[list[int]]
+               ) -> Iterator[list[tuple[int, int]]]:
     """逐个产出岛屿的格子列表；不修改 grid，visited 单独记。"""
     m, n = len(grid), len(grid[0])
     seen = [[False] * n for _ in range(m)]
@@ -31,7 +32,9 @@ def components(grid: list[list[int]]) -> Iterator[list[tuple[int, int]]]:
         cells.append((x, y))
         for dx, dy in DIRS:
             nx, ny = x + dx, y + dy
-            if 0 <= nx < m and 0 <= ny < n and grid[nx][ny] == 1 and not seen[nx][ny]:
+            if not (0 <= nx < m and 0 <= ny < n):
+                continue
+            if grid[nx][ny] == 1 and not seen[nx][ny]:
                 dfs(nx, ny, cells)
 
     for r in range(m):
@@ -47,7 +50,7 @@ def num_islands(grid: list[list[int]]) -> int:
 
 
 def num_distinct_islands(grid: list[list[int]]) -> int:
-    """形状相同（只允许平移）算同一种：格子坐标减去最小的 (行, 列) 后排序，作为形状签名。"""
+    """只允许平移：格子坐标减去最小的 (行, 列)，排序后当签名。"""
     shapes = set()
     for cells in components(grid):
         r0, c0 = min(cells)                                 # 行优先最小的格子当原点
@@ -56,12 +59,16 @@ def num_distinct_islands(grid: list[list[int]]) -> int:
 
 
 # 8 种变换 = 4 次旋转 × 是否翻转，即 (x, y) 的全部「换序加变号」
-TRANSFORMS = (lambda x, y: (x, y), lambda x, y: (x, -y), lambda x, y: (-x, y), lambda x, y: (-x, -y),
-              lambda x, y: (y, x), lambda x, y: (y, -x), lambda x, y: (-y, x), lambda x, y: (-y, -x))
+TRANSFORMS = (
+    lambda x, y: (x, y), lambda x, y: (x, -y),
+    lambda x, y: (-x, y), lambda x, y: (-x, -y),
+    lambda x, y: (y, x), lambda x, y: (y, -x),
+    lambda x, y: (-y, x), lambda x, y: (-y, -x),
+)
 
 
 def num_distinct_islands_ii(grid: list[list[int]]) -> int:
-    """旋转、翻转后相同也算同一种：8 种变换各自归一化，取字典序最小的作为签名。"""
+    """含旋转翻转：8 种变换各自归一化，取字典序最小的当签名。"""
     shapes = set()
     for cells in components(grid):
         forms = []
@@ -77,18 +84,11 @@ def num_distinct_islands_ii(grid: list[list[int]]) -> int:
 
 **复杂度。** `num_islands` 为 `O(mn)` 时间、`O(mn)` 空间（`seen` 和递归栈）；形状版本每座岛多一次排序，总计 `O(mn log mn)`，旋转翻转版常数乘 8。
 
-**易错点。**
-- 递归深度：全 `1` 的网格或蛇形岛，DFS 深度可达 `9 * 10^4`，CPython 默认递归上限约 `1000`，会抛 `RecursionError`；要么 `sys.setrecursionlimit` 调大，要么改成迭代。
-- 形状签名没有平移归一化：用绝对坐标当签名，开头的例子得到 `4`，正确是 `3`。
-- 少了翻转、只做 4 种旋转：`["011","110","000","110","011"]`（一个 S 形、一个 Z 形）得到 `2` 种，正确是 `1` 种。
-- 访问数组写成 `[[False] * n] * m`：所有行是同一个列表，标记一格等于标记整列，开头的例子得到 `2`，正确是 `4`。
-
-**追问。**
-- 地图太大放不进内存：分块处理，块内用并查集，再把块边界上相邻的两格陆地所属的集合合并，数最后的根。
-- 流式输入：逐行读，只保存上一行每格的并查集标签，内存 `O(n)`。
+**拓展优化。**
 - 不想动递归上限：把 `dfs` 换成显式栈，入栈时就标记：
 ```python
-def components_stack(grid: list[list[int]]) -> Iterator[list[tuple[int, int]]]:
+def components_stack(grid: list[list[int]]
+                     ) -> Iterator[list[tuple[int, int]]]:
     m, n = len(grid), len(grid[0])
     seen = [[False] * n for _ in range(m)]
     for r in range(m):
@@ -102,11 +102,24 @@ def components_stack(grid: list[list[int]]) -> Iterator[list[tuple[int, int]]]:
                 cells.append((x, y))
                 for dx, dy in DIRS:
                     nx, ny = x + dx, y + dy
-                    if 0 <= nx < m and 0 <= ny < n and grid[nx][ny] == 1 and not seen[nx][ny]:
+                    if not (0 <= nx < m and 0 <= ny < n):
+                        continue
+                    if grid[nx][ny] == 1 and not seen[nx][ny]:
                         seen[nx][ny] = True                 # 入栈时就标记，避免重复入栈
                         stack.append((nx, ny))
             yield cells
 ```
+
+**易错点。**
+- 递归深度：全 `1` 的网格或蛇形岛，DFS 深度可达 `9 * 10^4`，CPython 默认递归上限约 `1000`，会抛 `RecursionError`；要么 `sys.setrecursionlimit` 调大，要么改成迭代。
+- 形状签名没有平移归一化：用绝对坐标当签名，开头的例子得到 `4`，正确是 `3`。
+- 少了翻转、只做 4 种旋转：`["011","110","000","110","011"]`（一个 S 形、一个 Z 形）得到 `2` 种，正确是 `1` 种。
+- 访问数组写成 `[[False] * n] * m`：所有行是同一个列表，标记一格等于标记整列，开头的例子得到 `2`，正确是 `4`。
+
+**追问。**
+- 地图太大放不进内存：分块处理，块内用并查集，再把块边界上相邻的两格陆地所属的集合合并，数最后的根。
+- 流式输入：逐行读，只保存上一行每格的并查集标签，内存 `O(n)`。
+- 不想动递归上限：换成显式栈，见拓展优化。
 - 其他变体：8 方向（`DIRS` 加 4 个对角）、最大面积（LC 695，取 `max(len(cells))`）、最大人工岛（LC 827）。
 
 **同模式。** LC 200 岛屿数量、LC 694 不同岛屿的数量、LC 711 不同岛屿的数量 II、LC 695 岛屿的最大面积、LC 827 最大人工岛、LC 130 被围绕的区域。

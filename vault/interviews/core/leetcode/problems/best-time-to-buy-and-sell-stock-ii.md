@@ -20,9 +20,13 @@ slug: best-time-to-buy-and-sell-stock-ii
 **推导。** DP 通解：每天两个状态，`cash`（不持股）和 `hold`（持股），`cash = max(cash, hold + p)`，`hold = max(hold, cash - p)`，`O(n)`。观察转移：不限次数时，价格上涨的一段 `a < b < c < d` 买在 `a` 卖在 `d` 的利润 `d - a`，等于逐日买卖的 `(b-a) + (c-b) + (d-c)`；而下跌的价差不会被选中。因此最优利润就是所有正的相邻差之和 `Σ max(p[i] - p[i-1], 0)`——不需要找谷峰，也不需要状态。
 
 ```python
+from itertools import pairwise
+
+
 def max_profit(prices: list[int]) -> int:
     # 每一段上涨都能吃到：把所有 “后一天比前一天高” 的差额加起来
-    return sum(max(today - yesterday, 0) for yesterday, today in pairwise(prices))
+    gains = (b - a for a, b in pairwise(prices))      # 相邻两天的差额
+    return sum(g for g in gains if g > 0)
 ```
 
 运行：`prices=[7,1,5,3,6,4]` → `7`，`prices=[1,2,3,4,5]` → `4`，`prices=[7,6,4,3,1]` → `0`，`prices=[5]` → `0`，`prices=[2,2,2]` → `0`。

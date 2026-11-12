@@ -19,7 +19,9 @@ slug: course-schedule-iv
 from collections import deque
 
 
-def check_if_prerequisite(num_courses: int, prerequisites: list[list[int]], queries: list[list[int]]) -> list[bool]:
+def check_if_prerequisite(
+        num_courses: int, prerequisites: list[list[int]],
+        queries: list[list[int]]) -> list[bool]:
     graph: list[list[int]] = [[] for _ in range(num_courses)]
     indegree = [0] * num_courses
     for a, b in prerequisites:             # a 是 b 的先修课：边 a -> b
@@ -37,7 +39,7 @@ def check_if_prerequisite(num_courses: int, prerequisites: list[list[int]], quer
     return [bool(pre[v] >> u & 1) for u, v in queries]
 ```
 
-运行：三个示例依次得到 `[False, True]`、`[False, False]`、`[True, True]`；链 `0→1→2` 查 `[0,2]` 得 `True`；`100` 门课、`4950` 条边的完全有向无环图加 `10^4` 个查询约 `0.5 ms`。
+运行：题面两个示例得到 `[False, True]` 和 `[True, True]`；`2, [], [[1,0],[0,1]]` → `[False, False]`；链 `0→1→2` 查 `[0,2]` 得 `True`；`100` 门课、`4950` 条边的完全有向无环图加 `10^4` 个查询约 `1 ms`。
 
 **复杂度。** 时间 `O(n + E)` 次位运算（每次约 `n` 位）加 `O(1)` 每个查询；空间 `O(n)` 个整数，约 `n^2 / 8` 字节。
 

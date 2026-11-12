@@ -28,7 +28,8 @@ def generate_trees(n: int) -> list[TreeNode | None]:
         return [
             TreeNode(root, left, right)
             for root in range(lo, hi + 1)         # 枚举根
-            for left, right in product(build_range(lo, root - 1), build_range(root + 1, hi))
+            for left, right in product(build_range(lo, root - 1),
+                                       build_range(root + 1, hi))
         ]
     return build_range(1, n)
 ```

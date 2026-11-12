@@ -28,9 +28,18 @@ PATTERN_LIST = {"01-hashing": "data-structures", "02-prefix-sum": "data-structur
                 "13-topo-sort": "graph", "14-union-find": "data-structures", "15-shortest-path": "graph",
                 "16-backtracking": "list-tree-backtracking", "17-dp": "dp", "18-greedy": "greedy", "19-trie": "data-structures",
                 "20-design": "data-structures", "21-string": "string", "22-math-bit": "math"}
-SECTION = re.compile(r"^(#{2,5}) (?:([零一二三四五六七八九十]+)、|§[\d.]+ )(.+)$")
+SECTION = re.compile(r"^(#{2,5}) (?:([零一二三四五六七八九十]+)、|§([\d.]+) )(.+)$")
+NUMERAL = "零一二三四五六七八九十"
 PROBLEM = re.compile(r"^\s*- \[(\d+)\. ([^\]]+)\]\(https://leetcode\.cn/problems/([a-z0-9-]+)/?\)(.*)$")
 ARTICLE = re.compile(r"\[([^\]]+)\]\((https://leetcode\.cn/(?:problems/[a-z0-9-]+/solutions|circle/discuss|discuss/post)/[^)\s]+)\)")
+
+
+def chinese(n: str) -> int:
+    """零 … 九十九."""
+    if "十" not in n:
+        return NUMERAL.index(n)
+    tens, _, ones = n.partition("十")
+    return (NUMERAL.index(tens) if tens else 1) * 10 + (NUMERAL.index(ones) if ones else 0)
 
 
 def parse(name: str) -> dict:
@@ -38,7 +47,7 @@ def parse(name: str) -> dict:
     text = (POSTS / f"{name}.md").read_text(encoding="utf-8")
     title = text.splitlines()[0].lstrip("# ")
     m = re.search(r"】(.+?)（", title)
-    root = {"title": m.group(1) if m else title, "key": name, "children": [], "articles": []}
+    root = {"title": m.group(1) if m else title, "key": name, "id": name, "children": [], "articles": []}
     stack, fenced = [(1, root)], False
     for line in text.splitlines():
         if line.startswith("```"):
@@ -56,7 +65,8 @@ def parse(name: str) -> dict:
             if root.get("closed"):
                 continue
             level = len(s.group(1))
-            node = {"title": s.group(3).strip(), "children": [], "articles": [], "candidates": []}
+            num = str(chinese(s.group(2))) if s.group(2) else s.group(3)  # 十二、 -> 12, §2.1.1 -> 2.1.1
+            node = {"title": s.group(4).strip(), "id": f"{name}.{num.replace('.', '-')}", "children": [], "articles": [], "candidates": []}
             while stack[-1][0] >= level:
                 stack.pop()
             stack[-1][1]["children"].append(node)

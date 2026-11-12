@@ -31,8 +31,11 @@ def num_distinct_islands(grid: list[list[int]]) -> int:
             while stack:
                 r, c = stack.pop()
                 cells.append((r - r0, c - c0))     # 相对起点的偏移 = 平移不变量
-                for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
-                    if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1 and not seen[nr][nc]:
+                for nr, nc in ((r + 1, c), (r - 1, c),
+                               (r, c + 1), (r, c - 1)):
+                    if not (0 <= nr < rows and 0 <= nc < cols):
+                        continue
+                    if grid[nr][nc] == 1 and not seen[nr][nc]:
                         seen[nr][nc] = True
                         stack.append((nr, nc))
             shapes.add(frozenset(cells))           # 无序的格子集合：与遍历顺序无关
@@ -52,9 +55,12 @@ def num_distinct_islands_path(grid: list[list[int]]) -> int:
 
     def dfs(r: int, c: int, path: list[str]) -> None:
         seen[r][c] = True
-        for name, dr, dc in (("d", 1, 0), ("u", -1, 0), ("r", 0, 1), ("l", 0, -1)):
+        for name, dr, dc in (("d", 1, 0), ("u", -1, 0),
+                             ("r", 0, 1), ("l", 0, -1)):
             nr, nc = r + dr, c + dc
-            if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1 and not seen[nr][nc]:
+            if not (0 <= nr < rows and 0 <= nc < cols):
+                continue
+            if grid[nr][nc] == 1 and not seen[nr][nc]:
                 path.append(name)                   # 记下走的方向
                 dfs(nr, nc, path)
         path.append("b")                            # 回溯标记：区分「这里走到头」和「没往这走」，路径才唯一
