@@ -136,8 +136,20 @@ nodes:
     title: LC 787 K 站中转内最便宜的航班（Cheapest Flights Within K Stops）
     summary: Medium；Depth-First Search, Breadth-First Search, Graph, Dynamic Programming。
   core: true
-- id: dp-grid-string
+- id: dp-linear
   order: 13
+  title: 动态规划：线性与状态机
+  summary: 动态规划：线性与状态机：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: dp-linear.climbing-stairs-ii
+    title: LC 3693 爬楼梯 II（Climbing Stairs II）
+    summary: Medium；。
+  - id: dp-linear.longest-strictly-increasing-or-strictly-decreasing-subarray
+    title: LC 3105 最长的严格递增或递减子数组（Longest Strictly Increasing or Strictly Decreasing Subarray）
+    summary: Easy；Array。
+  core: true
+- id: dp-grid-string
+  order: 14
   title: 动态规划：网格、双串与区间
   summary: 动态规划：网格、双串与区间：Chi 解过的题，按知识点归在一起。
   children:
@@ -146,16 +158,19 @@ nodes:
     summary: Medium；Array, Dynamic Programming, Matrix。
   core: true
 - id: greedy
-  order: 14
+  order: 15
   title: 贪心
   summary: 贪心：Chi 解过的题，按知识点归在一起。
   children:
   - id: greedy.maximize-sum-after-at-most-k-digit-rearrangements
     title: LC 4093 至多 K 次数字重排后的最大和（Maximize Sum After At Most K Digit Rearrangements）
     summary: Medium；。
+  - id: greedy.minimum-cost-to-acquire-required-items
+    title: LC 3789 采购的最小花费（Minimum Cost to Acquire Required Items）
+    summary: Medium；Greedy, Math。
   core: true
 - id: design
-  order: 15
+  order: 16
   title: 数据结构设计题
   summary: 数据结构设计题：Chi 解过的题，按知识点归在一起。
   children:
@@ -170,7 +185,7 @@ nodes:
     summary: Medium；Design, Hash Table, Ordered Set, Heap (Priority Queue)。
   core: true
 - id: math-bit-sim
-  order: 16
+  order: 17
   title: 数学、位运算与模拟
   summary: 数学、位运算与模拟：Chi 解过的题，按知识点归在一起。
   children:
@@ -194,7 +209,7 @@ nodes:
     summary: Easy；Array, Math。
   core: true
 - id: sorting-permutation
-  order: 17
+  order: 18
   title: 排序、置换环与逆序对
   summary: 排序、置换环与逆序对：Chi 解过的题，按知识点归在一起。
   children:
