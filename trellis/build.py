@@ -131,7 +131,7 @@ def _fold_examples(html: str) -> str:
     return head + "".join(rest)
 
 
-_RELATED_LABELS = ("同模式的题", "同模式", "同类", "对应 LeetCode", "相关题", "核心题")
+_RELATED_LABELS = ("同模式的题", "同模式", "同类", "对应 LeetCode", "相关题", "核心题", "对应题目")
 _RELATED_P = re.compile(r'<p>(?:<span class="label">(%s)</span>|<strong>(%s)</strong>[：:])\s*(.*?)</p>'
                         % ("|".join(_RELATED_LABELS), "|".join(_RELATED_LABELS)), re.S)
 _LI_LEAD_LC = re.compile(r"<li>((?:<strong>)?LC\s*(\d+)(?![\d]).*?)</li>", re.S)
@@ -698,7 +698,7 @@ def _anchor(tag: str, text: str) -> str:
     return f'<a class="ref" href="anki://x-callback-url/search?query={quote("tag:" + tag, safe="")}">{text}</a>'
 
 
-def _html(text: str, related: dict | None = None, own: set[int] | None = None, fold: bool = False, fold_code: int = 0,
+def _html(text: str, related: dict | None = None, own: set[int] | None = None, fold: bool | str = False, fold_code: int = 0,
           links: dict | None = None, node: str = "") -> str:
     # Obsidian wikilinks have nowhere to point inside Anki; render the
     # display text as a styled reference instead.
@@ -734,7 +734,9 @@ def _html(text: str, related: dict | None = None, own: set[int] | None = None, f
         return f"\n\nTRELLISSVG{len(svgs) - 1}\n\n"
     text = _MERMAID_FENCE.sub(_mermaid, text)
     text = _nested_indent(text)
-    if fold:
+    if fold == "bullets":  # recite-a-pattern cards: paragraphs and code stay open, each bullet shows its head only
+        text = _fold_bullets(text)
+    elif fold:
         text = _outline(text)
     _MD.reset()
     html = _MD.convert(_blank_before_lists(text))

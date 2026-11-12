@@ -6,6 +6,7 @@ deck: LeetCode Tops::27 通用核心：TikTok 高频 × Amazon × 经典题单
 lang: zh
 vault: interviews/core/leetcode/tiktok-core
 examples_from: interviews/core/leetcode/problems
+fold: bullets
 study:
   order: core-first
   mix: new-first

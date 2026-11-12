@@ -6,6 +6,7 @@ deck: LeetCode Tops::24 TikTok 字节高频 · 整题答案（whole answers）
 lang: zh
 vault: interviews/core/leetcode/tiktok
 examples_from: interviews/core/leetcode/problems
+fold: bullets
 study:
   order: core-first
   mix: new-first

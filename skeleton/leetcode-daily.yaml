@@ -6,6 +6,7 @@ deck: LeetCode Tops::28 Daily（按知识点）
 lang: zh
 vault: interviews/core/leetcode/daily
 examples_from: interviews/core/leetcode/problems
+fold: bullets
 study:
   order: core-first
   mix: new-first

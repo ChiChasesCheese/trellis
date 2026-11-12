@@ -136,7 +136,7 @@ class Skeleton:
     # domain's cards mention in a 同模式 / 对应 LeetCode line or at the start of a list item opens in place with
     # that problem's short statement and solution.
     examples_from: str = ""
-    fold: bool = False  # answers render as a foldable outline (sections, then bullets)
+    fold: bool | str = False  # True: answers render as a foldable outline (sections, then bullets); "bullets": only each bullet folds to its head
     fold_code: int = 0  # code blocks longer than this many lines open on a tap; 0 keeps them open
     # More vault folders whose cards and readings this domain also owns: a merged view over other domains' content
     # (their node ids reappear in this skeleton, placed by topic).
@@ -317,7 +317,7 @@ def load_skeleton(path: str | Path) -> Skeleton:
 
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},
                         include=list(include), deck_depth=deck_depth, deck_moves=deck_moves, anki_via=anki_via,
-                        lang=lang, folder=folder, deck=deck, examples_from=examples_from, fold=bool(data.get("fold", False)), fold_code=int(data.get("fold_code", 0) or 0),
+                        lang=lang, folder=folder, deck=deck, examples_from=examples_from, fold=data.get("fold") if data.get("fold") == "bullets" else bool(data.get("fold", False)), fold_code=int(data.get("fold_code", 0) or 0),
                         study=_parse_study(data.get("study"), errors))
     for node in skeleton.walk():
         if node.id in skeleton.by_id:
