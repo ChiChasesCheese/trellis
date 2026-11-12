@@ -11,10 +11,9 @@ with problems under it. Each leaf keeps its problems from his post (`candidates`
 only) and the articles he links for its technique (`articles`). Our problems hang on their leaf: a problem listed in
 several leaves goes to the one in the list of its main technique, else to the first. Problems in no list are not dealt.
 
-Order (Chi, 2026-11-11: by asked-frequency, coverage and importance, 80/20). A node's weight is the importance (public
-company-wise frequency) summed over its problems. Lists go heaviest first; inside a node, children go heaviest first,
-except that a 基础 child leads its siblings and a 进阶 or 选做 child follows them; inside a leaf, problems go most asked
-first. `core`
+Order (Chi, 2026-11-11: by asked-frequency, coverage and importance, 80/20; the lists in any order, the headings inside a
+list in his order). A node's weight is the importance (public company-wise frequency) summed over its problems. Lists
+go heaviest first; inside a list the headings keep his order; inside a leaf, problems go most asked first. `core`
 is the smallest set of problems that carries `CORE_SHARE` of all importance: the daily deck deals those first.
 """
 from __future__ import annotations
@@ -155,17 +154,12 @@ def build() -> dict:
 
 
 def prioritize(lists: list[dict], weight: dict[str, float]) -> list[dict]:
-    """Heaviest first at every level, but a 基础 child before its siblings and a 进阶 / 选做 child after them; a leaf's
-    problems most asked first."""
+    """The lists heaviest first; inside a list his order is kept; inside a leaf, problems most asked first."""
     def mass(n: dict) -> float:
         n["weight"] = sum(weight.get(s, 0.0) for s in n.get("problems", [])) + sum(mass(c) for c in n["children"])
         return n["weight"]
 
-    def rank(title: str) -> int:
-        return 0 if "基础" in title else 2 if "进阶" in title or "选做" in title else 1
-
     def order(n: dict) -> None:
-        n["children"].sort(key=lambda c: (rank(c["title"]), -c["weight"]))
         if n.get("problems"):
             n["problems"].sort(key=lambda s: -weight.get(s, 0.0))
         for c in n["children"]:
