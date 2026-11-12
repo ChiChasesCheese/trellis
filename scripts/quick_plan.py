@@ -255,13 +255,15 @@ def quota(days: dict[str, dict], limits: dict[str, int], current: int, due_soon:
     return min(n, unseen) if unseen else n, reason
 
 
-def moves(cards: list[Card], today: set[str], home: str, wait: str) -> dict[str, list[int]]:
-    """Deck -> the cards to move there: unseen cards outside today's cut wait, everything else is in the deck itself."""
+def moves(cards: list[Card], today: set[str], home: str, wait: str, title: dict[str, str] | None = None) -> dict[str, list[int]]:
+    """Deck -> the cards to move there: unseen cards outside today's cut wait, everything else is in the deck itself, in
+    the sub-deck of its topic when `title` names it (Chi, 2026-11-12: show what is being drilled, as 今日算法 does)."""
     out: dict[str, list[int]] = {home: [], wait: []}
     for c in cards:
-        want = wait if c.new and not c.sights and c.kp not in today else home
+        mine = f"{home}::{title[c.topic]}" if title and c.topic in title else home
+        want = wait if c.new and not c.sights and c.kp not in today else mine
         if c.deck != want:
-            out[want].append(c.cid)
+            out.setdefault(want, []).append(c.cid)
     return {deck: ids for deck, ids in out.items() if ids}
 
 
@@ -288,9 +290,21 @@ def waiting_deck(call) -> None:
 
 def deal(call, cards: list[Card], today: set[str]) -> int:
     waiting_deck(call)
-    todo = moves(cards, today, qd.DECK, WAIT)
+    title = {p["topic"]: p["topic_title"] for p in json.loads((qd.HOME / "points.json").read_text(encoding="utf-8"))}
+    todo = moves(cards, today, qd.DECK, WAIT, title)
     for deck, ids in todo.items():
         call("changeDeck", cards=ids, deck=deck)
+    # the topic sub-decks share the deck's preset, which takes new cards by position across them: the planned order holds
+    conf = call("getDeckConfig", deck=qd.DECK)
+    subs = [d for d in call("deckNames") if d.startswith(qd.DECK + "::") and not d.startswith(WAIT)]
+    if subs:
+        call("setDeckConfigId", decks=subs, configId=conf["id"])
+    if conf.get("newGatherPriority") != 1:  # 1: lowest position first, across sub-decks
+        conf["newGatherPriority"] = 1
+        call("saveDeckConfig", config=conf)
+    empty = sorted((d for d in subs if not call("findCards", query=f'"deck:{d}"')), key=len, reverse=True)
+    if empty:
+        call("deleteDecks", decks=empty, cardsToo=True)
     return sum(len(ids) for ids in todo.values())
 
 

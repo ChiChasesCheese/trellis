@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import functools
 import json
+import re
 import sys
 import time
 from collections import defaultdict
@@ -415,9 +416,16 @@ def deal(ex: Extra) -> None:
                 plan += [(f"{lc}::{n} {topic}::{sec}::1 学习卡", learn), (f"{lc}::{n} {topic}::{sec}::2 题目", [x for x in items if not x.get("learn")])]
             else:
                 plan.append((f"{lc}::{n} {topic}::{sec}", items))
-    plan += [(f"{lld}::{CARRIED}", [x for x in ex.lld_new if x["carried"]]), (f"{lld}::2 新卡", [x for x in ex.lld_new if not x["carried"]])]
+    # low-level design by topic (Chi, 2026-11-12): two levels of each card's home deck, new and due cards together
+    def topic_of(card: int) -> str:
+        where = home.get(str(card)) or info[card]["deckName"]
+        parts = [re.sub(r"\s*[（(][^）)]*[）)]", "", x).strip() for x in where.split("::")[1:3]]  # 作答方法（Machine Coding Method） -> 作答方法
+        return " › ".join(x for x in parts if x) or "其他"
+    lld_items = [x for x in ex.lld_new + [r for r in ex.reviews if r["root"] == LLD_ROOT] if x["card"] in info]
+    for t in sorted(dict.fromkeys(topic_of(x["card"]) for x in lld_items)):
+        plan.append((f"{lld}::{t}", [x for x in lld_items if topic_of(x["card"]) == t]))
     plan += [(f"{WORK_PART}::{part}", [x for x in ex.work_new if x["part"] == part]) for part in dict.fromkeys(x["part"] for x in ex.work_new)]
-    plan += [(f"{d}::9 到期复习", [x for x in ex.reviews if x["root"] == r]) for r, d in SUBJECT_DECK.items()]
+    plan += [(f"{d}::9 到期复习", [x for x in ex.reviews if x["root"] == r]) for r, d in SUBJECT_DECK.items() if r != LLD_ROOT]
     for stage, items in plan:
         ids = [x["card"] for x in items if x["card"] in info]
         for i in ids:
