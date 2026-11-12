@@ -406,8 +406,15 @@ def deal(ex: Extra) -> None:
     home = homes()
     info = {c["cardId"]: c for c in call("cardsInfo", cards=[x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.work_new + ex.reviews])}
     lc, lld = SUBJECT_DECK["LeetCode Tops"], SUBJECT_DECK[LLD_ROOT]
-    plan = [(f"{lc}::{n} {topic}::{sec}", [x for x in ex.lc_new if (x["topic"], x["section"]) == (topic, sec)])
-            for n, topic in enumerate(ex.lc_focus, 1) for sec in dict.fromkeys(x["section"] for x in ex.lc_new if x["topic"] == topic)]
+    plan = []
+    for n, topic in enumerate(ex.lc_focus, 1):
+        for sec in dict.fromkeys(x["section"] for x in ex.lc_new if x["topic"] == topic):
+            items = [x for x in ex.lc_new if (x["topic"], x["section"]) == (topic, sec)]
+            learn = [x for x in items if x.get("learn")]
+            if learn:  # a card added later sits behind older ones in Anki's new queue; the deck order puts it first
+                plan += [(f"{lc}::{n} {topic}::{sec}::1 学习卡", learn), (f"{lc}::{n} {topic}::{sec}::2 题目", [x for x in items if not x.get("learn")])]
+            else:
+                plan.append((f"{lc}::{n} {topic}::{sec}", items))
     plan += [(f"{lld}::{CARRIED}", [x for x in ex.lld_new if x["carried"]]), (f"{lld}::2 新卡", [x for x in ex.lld_new if not x["carried"]])]
     plan += [(f"{WORK_PART}::{part}", [x for x in ex.work_new if x["part"] == part]) for part in dict.fromkeys(x["part"] for x in ex.work_new)]
     plan += [(f"{d}::9 到期复习", [x for x in ex.reviews if x["root"] == r]) for r, d in SUBJECT_DECK.items()]
