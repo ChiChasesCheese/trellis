@@ -240,7 +240,9 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
     probs = json.loads((ROOT / "sources/local/lc/analysis.json").read_text(encoding="utf-8"))["problems"]
     lc_cards = _cards("(" + " OR ".join(f'"deck:{d}"' for d in LC_ROOTS) + f") OR {daily_query()}")
     ident = _idents(lc_cards)
-    slugs_of, known = lca.card_slugs(), set(probs)
+    tree = lc_tree.build()["lists"]
+    named = {c["slug"]: f"LC {c['num']} {c['title']}" for lst in tree for _, x in lc_tree.leaves(lst) for c in x["candidates"]}
+    slugs_of, known = lca.card_slugs(), set(probs) | set(named)  # a problem added to a thin leaf has no analysis row yet
     by_ident = {ident[c["cardId"]]: c for c in lc_cards if ident.get(c["cardId"])}
     since = int(datetime.fromisoformat(lcfg["since"]).timestamp() * 1000)
     seen_cards = [c["cardId"] for c in lc_cards if c["reps"]]
@@ -255,7 +257,6 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
         card = next((by_ident[p.format(s=slug)] for p in PREFER if p.format(s=slug) in by_ident), None)
         return card if card and card["queue"] != -1 else None  # suspended by hand: left out
 
-    tree = lc_tree.build()["lists"]
     per = int(lcfg["per_section"])
 
     def left(lst: dict, r: int) -> list[tuple[str, str, str]]:
@@ -279,7 +280,7 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
                 ex.lc_new.append({"card": learn["cardId"], "slug": "", "title": "学习卡", "topic": name, "section": section,
                                   "why": "先学套路", "due_now": False, "learn": True})
             card = card_for(slug)
-            ex.lc_new.append({"card": card["cardId"], "slug": slug, "title": probs[slug]["title"], "topic": name, "section": section,
+            ex.lc_new.append({"card": card["cardId"], "slug": slug, "title": probs[slug]["title"] if slug in probs else named.get(slug, slug), "topic": name, "section": section,
                               "why": f"第 {r} 轮", "due_now": card["queue"] in (2, 3) and card["due"] > today})
         ex.lc_focus = list(dict.fromkeys(x["topic"] for x in ex.lc_new))
 
@@ -324,7 +325,7 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
         slug = None
         if root in LC_ROOTS:
             slug, _ = lca.resolve(idn, slugs_of, known)
-            value = probs[slug]["importance"] if slug else 0.0
+            value = probs.get(slug, {}).get("importance", 0.0) if slug else 0.0
         else:
             value = sd_value.get(idn, 0.0)
         raw.append((c, h, root, slug, value))

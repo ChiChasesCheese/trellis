@@ -127,9 +127,13 @@ def build() -> dict:
         key, path = next((w for w in where if w[0] == own_list(p)), where[0])
         home.setdefault((key, path), []).append(p["slug"])
         primary[p["slug"]] = list(path)
+    exp = json.loads((LC / "expand.json").read_text(encoding="utf-8")) if (LC / "expand.json").exists() else {}
+    body = ROOT / "vault/interviews/core/leetcode/problems"
     for lst in lists:
         for path, leaf in leaves(lst):
-            leaf["problems"] = home.get((lst["key"], path), [])
+            ours = home.get((lst["key"], path), [])
+            # problems added to a thin leaf (expand.json) join after ours once their answer body exists
+            leaf["problems"] = ours + [c["slug"] for c in exp.get(leaf["id"], []) if c["slug"] not in ours and (body / f"{c['slug']}.md").exists()]
     return {"lists": lists, "primary": primary}
 
 
@@ -144,13 +148,11 @@ def card_id(leaf_id: str) -> str:
 
 def write(t: dict) -> int:
     """The domain leetcode-tree: every leaf with a problem, its ancestors, a stub per problem (ours, then those added
-    from expand.json once their body exists), in the order the daily deck deals them."""
+    from expand.json), in the order the daily deck deals them."""
     import yaml
-    exp = json.loads((LC / "expand.json").read_text(encoding="utf-8")) if (LC / "expand.json").exists() else {}
 
     def problems(leaf: dict) -> list[str]:
-        extra = [c["slug"] for c in exp.get(leaf["id"], []) if (PROBLEMS / f"{c['slug']}.md").exists()]
-        return [s for s in leaf.get("problems", []) if (PROBLEMS / f"{s}.md").exists()] + extra
+        return [s for s in leaf.get("problems", []) if (PROBLEMS / f"{s}.md").exists()]
 
     def node(n: dict, path: tuple, top: str) -> dict | None:
         path = path + (n["title"],)
