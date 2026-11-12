@@ -454,7 +454,8 @@ def _head(text: str) -> tuple[str, str]:
             return before.strip(), after.strip()
     for seps in ("：:", "，,；;。"):
         parts = _split_at(text, seps)
-        if parts and parts[1].strip() and 2 <= _width(parts[0]) <= PHRASE_MAX:
+        question = parts and parts[0].rstrip().endswith(("？", "?"))  # a question is a fine phrase, even a longer one
+        if parts and parts[1].strip() and 2 <= _width(parts[0]) <= (44 if question else PHRASE_MAX):
             return parts[0].strip(), parts[1].strip()
     return text, ""
 
