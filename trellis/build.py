@@ -776,9 +776,10 @@ NOTE_FIELDS = ("Note", "NoteAnswer")
 
 
 def note_fields() -> tuple[str, ...]:
-    """The note fields, or none while a collection still waits for the one-time field migration (TRELLIS_NOTE_FIELDS=0):
-    an import whose note type has fields the collection lacks would create a second copy of the note type."""
-    return () if os.environ.get("TRELLIS_NOTE_FIELDS") == "0" else NOTE_FIELDS
+    """The note fields only where the caller has checked the collection has them (TRELLIS_NOTE_FIELDS=1, set by
+    anki_refresh.match_note_fields). Off by default: importing a note type with fields the collection lacks changes its
+    schema, and Anki then demands a one-way full sync that only a click in the desktop app can answer."""
+    return NOTE_FIELDS if os.environ.get("TRELLIS_NOTE_FIELDS") == "1" else ()
 
 
 NOTE_BLOCK = ('{{#NoteAnswer}}<div class="qnote">{{#Note}}<div class="qn"><b class="qk">疑问</b>{{Note}}</div>{{/Note}}'
