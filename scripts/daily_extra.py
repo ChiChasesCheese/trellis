@@ -4,11 +4,13 @@ study_plan.py calls this; on its own it prints what it would do:
 
     uv run python scripts/daily_extra.py            # dry run
 
-LeetCode (its own daily deck 今日算法): `lc_new` problems a day, each by its whole answer, from two topics at a time.
-- **Topics** are the pattern of each problem's main technique (01 hashing … 22 math & bits). A round takes each topic's next `lc.per_round`
-  most-asked problems, `lc.per_topic` a day: two topics are in focus for about three days, then the next two.
+LeetCode (its own daily deck 今日算法): `lc_new` problems a day, each by its whole answer, from two lists of the knowledge
+tree at a time.
+- **The tree** is 0x3F's problem lists, three levels deep (scripts/lc_tree.py): list -> group -> section, in his order.
+- **A round** takes `lc.per_section` more problems from every section, most asked first. Two lists are in focus,
+  `lc.per_topic` problems each a day; when one has nothing left this round, the next list takes its place.
 - **Done** means answered since `lc.since`. A problem seen before counts as new: if it is not due, it is made due today
-  (Anki's own Set Due Date). One left unanswered comes back the next day, as it is still first in its topic.
+  (Anki's own Set Due Date). One left unanswered comes back the next day, as it is still first in its section.
 - The LeetCode review backlog is not dealt.
 
 Low-level design has its own daily deck too (今日低层设计), `lld_new` cards a day plus its reviews.
@@ -51,7 +53,7 @@ URGENCY_CAP = 2.0  # how far overdue-ness can raise a review: urgency is 1 + min
 VALUE_FLOOR = 0.3  # a review of the least valuable card in a deck still counts this much
 LC_ROOTS = ("LeetCode Tops",)
 SOLVED_DECK = "LeetCode Tops::28 Daily"
-LC_DEFAULTS = {"since": "2026-11-12T04:00", "per_topic": 5, "per_round": 15}
+LC_DEFAULTS = {"since": "2026-11-12T04:00", "per_topic": 5, "per_section": 1}
 PREFER = ("tlc-tops-{s}-0-whole", "tlc-{s}-0-whole", "tlc-core-{s}", "lca-{s}", "tlc-daily-{s}-0-whole")
 DEFAULT_DECKS = {"系统设计": 1.0, "LeetCode Tops": 1.0, "低层设计（LLD）": 0.6, "Kafka": 0.5, "Python": 0.5,
                  "Code Core": 0.5, "Narrative Round": 0.4, "编程语言原理：Go · Java · Rust · Python · C++": 0.3,
@@ -227,21 +229,14 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
     weights = {**DEFAULT_DECKS, **cfg.get("decks", {})}
     home = homes()
 
-    # ---- LeetCode: `lc_new` problems a day from two topics at a time (Chi 2026-11-11), each problem by its whole answer.
-    # A problem is done once answered since the round began; one seen before counts as new and is made due today.
-    # Topics are the pattern of each problem's main technique (01 hashing … 22 math & bits), in that order. A round takes each topic's
-    # next `per_round` most-asked problems, `per_topic` a day, so two topics stay in focus about three days, then the next
-    # two; after the last topic the next round starts. The review backlog is not dealt (REVIEWS: 0).
+    # ---- LeetCode: `lc_new` problems a day from two lists of the knowledge tree at a time (Chi 2026-11-11), each problem by
+    # its whole answer. The tree is 0x3F's problem lists, three levels deep (lc_tree.py). A round takes `per_section`
+    # more problems from every section, most asked first, in 0x3F's order; two lists are in focus, `per_topic` each a day,
+    # and when one has nothing left this round the next list takes its place. A problem is done once answered since the
+    # round began; one seen before counts as new and is made due today. The review backlog is not dealt (REVIEWS: 0).
+    import lc_tree
     lcfg = {**LC_DEFAULTS, **cfg.get("lc", {})}
-    analysis = json.loads((ROOT / "sources/local/lc/analysis.json").read_text(encoding="utf-8"))
-    probs = analysis["problems"]
-    names = {t["id"]: t["name"] for t in analysis["dims"]["patterns"]}
-    taxonomy = json.loads((ROOT / "sources/local/lc/taxonomy.json").read_text(encoding="utf-8"))
-    pattern_of = {t["id"]: t["pattern"] for t in taxonomy["techniques"]}
-
-    def topic(p: dict) -> str | None:
-        """A problem's topic: the pattern of its main technique (its pattern list is in id order, not by importance)."""
-        return pattern_of.get(p["techniques"][0]) if p["techniques"] else (p["patterns"] or [None])[0]
+    probs = json.loads((ROOT / "sources/local/lc/analysis.json").read_text(encoding="utf-8"))["problems"]
     lc_cards = _cards("(" + " OR ".join(f'"deck:{d}"' for d in LC_ROOTS) + f") OR {daily_query()}")
     ident = _idents(lc_cards)
     slugs_of, known = lca.card_slugs(), set(probs)
@@ -259,26 +254,25 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
         card = next((by_ident[p.format(s=slug)] for p in PREFER if p.format(s=slug) in by_ident), None)
         return card if card and card["queue"] != -1 else None  # suspended by hand: left out
 
-    ranked: dict[str, list[dict]] = defaultdict(list)
-    for p in sorted(probs.values(), key=lambda p: -p["importance"]):
-        if topic(p) and card_for(p["slug"]):
-            ranked[topic(p)].append(p)
-    topics, per = sorted(ranked), int(lcfg["per_round"])
+    tree = lc_tree.build()["lists"]
+    per = int(lcfg["per_section"])
 
-    def left(t: str, r: int) -> list[dict]:
-        return [p for p in ranked[t][:per * r] if p["slug"] not in done]
+    def left(lst: dict, r: int) -> list[tuple[str, str]]:
+        """(slug, section) still to do in this round, in the list's order."""
+        return [(s, f"{n:02d} {sec['name']}") for n, sec in enumerate((x for g in lst["groups"] for x in g["sections"]), 1)
+                for s in sec["problems"][:per * r] if s not in done and card_for(s)]
 
-    rounds = range(1, max((len(v) for v in ranked.values()), default=0) // per + 2)
-    r = next((r for r in rounds if any(left(t, r) for t in topics)), None)
+    rounds = range(1, max((len(x["problems"]) for lst in tree for g in lst["groups"] for x in g["sections"]), default=0) // per + 2)
+    r = next((r for r in rounds if any(left(lst, r) for lst in tree)), None)
     if r:
-        limit, active = int(cfg.get("lc_new", 10)), [t for t in topics if left(t, r)]
-        picks = [p for t in active[:2] for p in left(t, r)[:int(lcfg["per_topic"])]]
-        for t in active:  # a topic in focus with fewer than its share left: the next topic fills the day
-            picks += [p for p in left(t, r) if p not in picks][:max(0, limit - len(picks))]
+        limit, active = int(cfg.get("lc_new", 10)), [lst for lst in tree if left(lst, r)]
+        picks = [(lst["name"], *x) for lst in active[:2] for x in left(lst, r)[:int(lcfg["per_topic"])]]
+        for lst in active:  # a list in focus with less than its share left: the next list fills the day
+            picks += [(lst["name"], *x) for x in left(lst, r) if x[0] not in {p[1] for p in picks}][:max(0, limit - len(picks))]
         today = anki_today()
-        for p in picks[:limit]:
-            card = card_for(p["slug"])
-            ex.lc_new.append({"card": card["cardId"], "slug": p["slug"], "title": p["title"], "topic": names.get(topic(p), topic(p)),
+        for name, slug, section in picks[:limit]:
+            card = card_for(slug)
+            ex.lc_new.append({"card": card["cardId"], "slug": slug, "title": probs[slug]["title"], "topic": name, "section": section,
                               "why": f"第 {r} 轮", "due_now": card["queue"] in (2, 3) and card["due"] > today})
         ex.lc_focus = list(dict.fromkeys(x["topic"] for x in ex.lc_new))
 
@@ -400,7 +394,8 @@ def deal(ex: Extra) -> None:
     home = homes()
     info = {c["cardId"]: c for c in call("cardsInfo", cards=[x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.work_new + ex.reviews])}
     lc, lld = SUBJECT_DECK["LeetCode Tops"], SUBJECT_DECK[LLD_ROOT]
-    plan = [(f"{lc}::{n} {topic}", [x for x in ex.lc_new if x["topic"] == topic]) for n, topic in enumerate(dict.fromkeys(x["topic"] for x in ex.lc_new), 1)]
+    plan = [(f"{lc}::{n} {topic}::{sec}", [x for x in ex.lc_new if (x["topic"], x["section"]) == (topic, sec)])
+            for n, topic in enumerate(ex.lc_focus, 1) for sec in dict.fromkeys(x["section"] for x in ex.lc_new if x["topic"] == topic)]
     plan += [(f"{lld}::{CARRIED}", [x for x in ex.lld_new if x["carried"]]), (f"{lld}::2 新卡", [x for x in ex.lld_new if not x["carried"]])]
     plan += [(f"{WORK_PART}::{part}", [x for x in ex.work_new if x["part"] == part]) for part in dict.fromkeys(x["part"] for x in ex.work_new)]
     plan += [(f"{d}::9 到期复习", [x for x in ex.reviews if x["root"] == r]) for r, d in SUBJECT_DECK.items()]
