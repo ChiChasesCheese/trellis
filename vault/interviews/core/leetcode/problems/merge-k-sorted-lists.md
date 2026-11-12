@@ -20,7 +20,8 @@ import heapq
 
 
 def merge_k_lists(lists: list[ListNode | None]) -> ListNode | None:
-    # 堆里放 (值, 链表编号, 节点)：值相同时比编号，永远不会去比较 ListNode
+    # 堆里放 (值, 链表编号, 节点)
+    # 值相同时比编号，永远不会去比较 ListNode
     heap = [(node.val, i, node) for i, node in enumerate(lists) if node]
     heapq.heapify(heap)
     dummy = tail = ListNode()
@@ -28,7 +29,8 @@ def merge_k_lists(lists: list[ListNode | None]) -> ListNode | None:
         _, i, node = heap[0]            # 堆顶就是当前最小的队头
         tail.next = node
         tail = node
-        if node.next:                   # 该链表还有后继：原地替换堆顶，只做一次下沉
+        # 该链表还有后继：原地替换堆顶，只做一次下沉
+        if node.next:
             heapq.heapreplace(heap, (node.next.val, i, node.next))
         else:
             heapq.heappop(heap)

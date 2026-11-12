@@ -21,15 +21,20 @@ slug: find-k-pairs-with-smallest-sums
 from heapq import heapify, heappop, heappush
 
 
-def k_smallest_pairs(nums1: list[int], nums2: list[int], k: int) -> list[list[int]]:
-    # 堆元素 (和, i, j)：第 i 行当前走到的位置是 j；先放每行的 (i, 0)，最多 k 行
-    heap = [(nums1[i] + nums2[0], i, 0) for i in range(min(k, len(nums1)))]
+def k_smallest_pairs(
+    nums1: list[int], nums2: list[int], k: int
+) -> list[list[int]]:
+    # 堆元素 (和, i, j)：第 i 行当前走到的位置是 j
+    # 先放每行的 (i, 0)，最多 k 行
+    rows = range(min(k, len(nums1)))
+    heap = [(nums1[i] + nums2[0], i, 0) for i in rows]
     heapify(heap)
     res: list[list[int]] = []
     while heap and len(res) < k:
         _, i, j = heappop(heap)  # 当前所有行头里和最小的
         res.append([nums1[i], nums2[j]])
-        if j + 1 < len(nums2):  # 同一行的下一个：只能由前一个生成，所以不会重复入堆
+        # 同一行的下一个：只能由前一个生成，所以不会重复入堆
+        if j + 1 < len(nums2):
             heappush(heap, (nums1[i] + nums2[j + 1], i, j + 1))
     return res
 ```
@@ -43,7 +48,13 @@ def k_smallest_pairs(nums1: list[int], nums2: list[int], k: int) -> list[list[in
 
 **易错点。**
 - 把全部 `n * m` 对一次性入堆：`n = m = 10^5` 时有 `10^10` 个，内存和时间都爆。
-- 弹出 `(i, j)` 后同时补 `(i + 1, j)` 和 `(i, j + 1)` 又不做去重：`(i + 1, j + 1)` 会被两个来源各入堆一次。`nums1 = nums2 = [1,2,3]`, `k = 6` 会得到 `[[1,1],[1,2],[2,1],[1,3],[2,2],[2,2]]`，正确是最后一个为 `[3,1]`；本写法只单向补 `(i, j + 1)`，每个位置只有一个来源，不需要去重集合。
+- 弹出 `(i, j)` 后同时补 `(i + 1, j)` 和 `(i, j + 1)` 又不做去重：`(i + 1, j + 1)` 会被两个来源各入堆一次。`nums1 = nums2 = [1,2,3]`, `k = 6` 会得到 `[[1,1],[1,2],[2,1],[1,3],[2,2],[2,2]]`，`[2,2]` 重复出现，漏掉了 `[3,1]`（同和的并列项顺序不限，但同一个位置不能出现两次）；本写法只单向补 `(i, j + 1)`，每个位置只有一个来源，不需要去重集合。
 - 补下一个元素前不检查 `j + 1 < len(nums2)`：`nums1 = [1,2]`, `nums2 = [3]`, `k = 2` 会 `IndexError`。
+
+**追问。**
+- 为什么初始只放前 `min(k, n)` 行？第 `i` 行的最小和 `nums1[i] + nums2[0]` 随 `i` 递增，第 `k + 1` 行以后要等前 `k` 行的头都弹出才轮到，而那时已经够 `k` 个了。
+- 想让 `nums1` 更长的那个当行吗？行数多时初始堆大，可以让较短的数组当行（最后交换输出每对的顺序），堆更小；不过受 `k` 限制，差别不大。
+- 另一种写法：每次弹出 `(i, j)` 同时放 `(i, j + 1)` 和（仅当 `j == 0`）`(i + 1, 0)`，也不会重复，起始堆只有一个元素。
+- 如果要求是第 `k` 小的和而不是 `k` 个数对？见拓展优化，二分和的取值再双指针计数。
 
 **同模式。** LC 378 有序矩阵中第 K 小的元素、LC 23 合并 K 个升序链表、LC 719 找出第 K 小的数对距离、LC 786 第 K 个最小的质数分数。

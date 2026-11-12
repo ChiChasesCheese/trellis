@@ -20,21 +20,29 @@ slug: snapshot-array
 **推导。** 朴素：`snap` 时复制数组，`get` 直接取，`snap` 是 `O(length)`、空间 `O(snaps·length)`，最坏 `2.5·10^9`。浪费在于：两次快照之间只有少数下标变了，却整份复制。改进：只记录变化。每个下标维护一份有序历史 `[(snap_id, val), ...]`，快照号单调递增（`snap_id` 只增不减）；`set` 在当前快照期内追加或覆盖，`snap` 只自增计数；`get` 要的是「在 `snap_id` 那一刻（含）之前最后一次写入的值」，也就是按快照号二分，找最后一个 `<= snap_id` 的记录。初始值 `0` 作为 `(0, 0)` 放在每个下标的历史开头，保证二分一定有结果。
 
 ```python
+from bisect import bisect_right      # key= 参数需要 Python 3.10+
+
+
 class SnapshotArray:
     def __init__(self, length: int) -> None:
         self.snap_id = 0
-        # 每个下标一条历史：(写入时的快照号, 值)，快照号递增；初始值 0 记在快照 0
-        self.history: list[list[tuple[int, int]]] = [[(0, 0)] for _ in range(length)]
+        # 每个下标一条历史：(写入时的快照号, 值)，快照号递增
+        # 初始值 0 记在快照 0
+        self.history: list[list[tuple[int, int]]] = [
+            [(0, 0)] for _ in range(length)
+        ]
 
     def set(self, index: int, val: int) -> None:
         hist = self.history[index]
-        if hist[-1][0] == self.snap_id:        # 同一个快照期内多次写：覆盖即可
+        # 同一个快照期内多次写：覆盖即可
+        if hist[-1][0] == self.snap_id:
             hist[-1] = (self.snap_id, val)
         else:
             hist.append((self.snap_id, val))
 
     def snap(self) -> int:
-        self.snap_id += 1                      # 不复制数组，只推进快照号
+        # 不复制数组，只推进快照号
+        self.snap_id += 1
         return self.snap_id - 1
 
     def get(self, index: int, snap_id: int) -> int:
@@ -44,7 +52,12 @@ class SnapshotArray:
         return hist[pos][1]
 ```
 
-运行：`["SnapshotArray","set","snap","set","get"], [[3],[0,5],[],[0,6],[0,0]]` → `[None, None, 0, None, 5]`，`没写过的下标` → `[None, 0, 0]`，`同一快照期内写两次、再跨快照读` → `[None, None, None, 0, None, 1, 2, 3]`，`length=50000 连续 50000 次 snap，最后一次的返回值` → `49999`。
+运行：
+- 官方例：`SnapshotArray(3)`、`set(0,5)`、`snap()`、`set(0,6)`、`get(0,0)` → `None, None, 0, None, 5`。
+- 没写过的下标：`SnapshotArray(3)`、`snap()` → `0`，`get(1,0)` → `0`。
+- 跨快照读：`SnapshotArray(1)`、`set(0,5)`、`snap()`、`set(0,6)`、`snap()` 之后，`get(0,0)` → `5`，`get(0,1)` → `6`。
+- 同一快照期写两次：`set(0,1)`、`set(0,2)`、`snap()`，`get(0,0)` → `2`（历史只留一条）。
+- `length = 50000`，连续 `50000` 次 `snap()`，最后一次返回 `49999`，`snap` 全是 `O(1)`。
 
 **复杂度。** `set` 与 `snap` 均 `O(1)`；`get` 是 `O(log k)`，`k` 为该下标被写入过的快照期个数（二分）；空间 `O(length + 写入次数)`，不随快照次数增长。
 
@@ -55,7 +68,7 @@ class SnapshotArray:
 - 同一个快照期内多次 `set` 都追加，历史会变长：结果仍然对（`bisect_right` 取最后一条），但浪费空间；覆盖最后一条更省。
 
 **追问。**
-- 再加 `rollback(snap_id)`（回到某个快照）：把每个历史里快照号 `> snap_id` 的记录截掉，并把 `snap_id` 设回去；摊还可以接受，但要遍历被改过的下标，需额外记录哪些下标被写过。
+- 再加 `rollback(snap_id)`（回到某个快照）：把每个历史里快照号 `> snap_id` 的记录截掉，并把 `self.snap_id` 设为 `snap_id + 1`（回到快照 `snap_id` 的内容，继续在新的一期写）；需额外记录被写过的下标，只截这些下标，代价与被改动的记录数成正比。
 - 下标范围很大（稀疏数组）：`history` 改成 `defaultdict(list)` 或 `dict`，只为被写过的下标建历史，`get` 找不到就返回默认值 `0`。
 - 同一模式的「时间版 KV 存储」（LC 981）：键换成字符串、快照号换成时间戳，同样「每键一份有序历史 + 二分」。
 

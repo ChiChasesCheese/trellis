@@ -20,16 +20,21 @@ from heapq import heappop, heappush
 from itertools import pairwise
 
 
-def furthest_building(heights: list[int], bricks: int, ladders: int) -> int:
-    ladder_climbs: list[int] = []                # 小根堆：当前用梯子的攀爬高度，最多 ladders 个
+def furthest_building(
+    heights: list[int], bricks: int, ladders: int
+) -> int:
+    # 小根堆：当前用梯子的攀爬高度，最多 ladders 个
+    ladder_climbs: list[int] = []
     for i, (cur, nxt) in enumerate(pairwise(heights)):
         climb = nxt - cur
         if climb <= 0:                           # 下坡或平地：免费
             continue
         heappush(ladder_climbs, climb)           # 先假设这次用梯子
-        if len(ladder_climbs) > ladders:         # 梯子不够：把最小的那次改用砖块
+        # 梯子不够：把最小的那次改用砖块
+        if len(ladder_climbs) > ladders:
             bricks -= heappop(ladder_climbs)
-            if bricks < 0:                       # 砖也不够：到不了 i + 1
+            # 砖也不够：到不了 i + 1
+            if bricks < 0:
                 return i
     return len(heights) - 1
 ```
@@ -43,10 +48,14 @@ def furthest_building(heights: list[int], bricks: int, ladders: int) -> int:
 - 二分答案：「能否到达 `t`」对 `t` 单调，判定是把前 `t` 个攀爬排序后让最大的 `ladders` 个用梯子，`O(n log² n)`。
 
 ```python
-def furthest_building_bsearch(heights: list[int], bricks: int, ladders: int) -> int:
+def furthest_building_bsearch(
+    heights: list[int], bricks: int, ladders: int
+) -> int:
     def reachable(t: int) -> bool:               # 能否到达建筑 t
-        climbs = sorted((max(0, b - a) for a, b in pairwise(heights[:t + 1])), reverse=True)
-        return sum(climbs[ladders:]) <= bricks   # 最大的 ladders 个交给梯子，其余用砖
+        steps = pairwise(heights[:t + 1])
+        climbs = sorted((max(0, b - a) for a, b in steps), reverse=True)
+        # 最大的 ladders 个交给梯子，其余用砖
+        return sum(climbs[ladders:]) <= bricks
     lo, hi = 0, len(heights) - 1
     while lo < hi:
         mid = (lo + hi + 1) // 2

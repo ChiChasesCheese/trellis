@@ -19,16 +19,19 @@ slug: subarray-product-less-than-k
 
 ```python
 def num_subarray_product_less_than_k(nums: list[int], k: int) -> int:
-    if k <= 1:                         # nums[i] >= 1，任何非空子数组乘积 >= 1 >= k
+    # nums[i] >= 1，任何非空子数组乘积 >= 1 >= k
+    if k <= 1:
         return 0
     ans = left = 0
     prod = 1
     for right, x in enumerate(nums):
         prod *= x
-        while prod >= k:               # 乘积太大：左端收缩（元素都 >= 1，收缩只会让乘积变小）
+        # 乘积太大：左端收缩（元素都 >= 1，收缩只会让乘积变小）
+        while prod >= k:
             prod //= nums[left]
             left += 1
-        ans += right - left + 1        # 以 right 结尾、左端落在 [left, right] 的子数组乘积都 < k
+        # 以 right 结尾、左端落在 [left, right] 的子数组乘积都 < k
+        ans += right - left + 1
     return ans
 ```
 
@@ -40,5 +43,10 @@ def num_subarray_product_less_than_k(nums: list[int], k: int) -> int:
 - 漏掉 `k <= 1` 的特判：`([1,1,1], 1)` 时乘积 `1 >= 1` 永远成立，`left` 越过数组末尾，抛 `IndexError`；`k = 0` 同理。
 - 只统计窗口个数（每步 `ans += 1`）：`([10,5,2,6], 100)` 得到 `4`，正确 `8`；要数的是以 `right` 结尾的所有子数组。
 - 用 `/` 代替 `//` 更新乘积：浮点数累积误差，`prod >= k` 的判断可能出错；乘积本身整除 `nums[left]`，用整除保持精确。
+
+**追问。**
+- 数组里有 `0` 或负数怎么办？单调性消失，窗口不能用了。`0` 可以按它切段，段内再用本解；一般情况改用前缀乘积（取对数转成前缀和）加二分，也只对全正数有效。
+- 不想做除法（担心溢出或精度）？改用前缀和做法：对 `log(nums[i])` 求前缀和，每个 `right` 二分找最小合法 `left`，`O(n log n)`；浮点比较要加 `eps`，面试里一般说明思路即可。
+- 要输出所有这样的子数组？答案本身是 `O(n^2)` 量级，只能枚举输出，窗口方法只能省去判断乘积的开销。
 
 **同模式。** LC 209 长度最小的子数组、LC 3 无重复字符的最长子串、LC 904 水果成篮、LC 560 和为 K 的子数组。

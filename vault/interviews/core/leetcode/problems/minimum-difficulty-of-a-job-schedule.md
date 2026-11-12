@@ -27,9 +27,12 @@ def min_difficulty(job_difficulty: list[int], d: int) -> int:
     dp = [[inf] * (n + 1) for _ in range(d + 1)]
     dp[0][0] = 0
     for k in range(1, d + 1):
-        for i in range(k, n + 1):                # 前 i 项至少要 k 项才能每天一项
+        # 前 i 项至少要 k 项才能每天一项
+        for i in range(k, n + 1):
             day_max = 0
-            for j in range(i - 1, k - 2, -1):    # 第 k 天做第 j..i-1 项，j 向左扩，当天最大难度只增不减
+            # 第 k 天做第 j..i-1 项，j 向左扩，当天最大难度只增不
+            # 减
+            for j in range(i - 1, k - 2, -1):
                 day_max = max(day_max, job_difficulty[j])
                 dp[k][i] = min(dp[k][i], dp[k - 1][j] + day_max)
     return dp[d][n]
@@ -48,7 +51,7 @@ def min_difficulty(job_difficulty: list[int], d: int) -> int:
 - 当天难度只取区间右端 `job[i-1]` 而不是区间最大值：`[6,5,4,3,2,1]`, `d = 2` 会得到 `3`，正确答案是 `7`。
 
 **追问。**
-- 空间可以压到 O(n)：见 Python 工具箱「DP 降维」。
+- 空间可以压吗？`dp[k]` 只依赖 `dp[k - 1]`，只留两行，空间 `O(n)`；要回溯切分方案就得保留整张表（或另存每格的 `j`）。
 - 输出具体切分方案：记录每个 `dp[k][i]` 取最小时的 `j`，从 `dp[d][n]` 倒推。
 - `d` 很大 `n` 也很大：划分型 DP 的转移可用单调栈或分治优化。
 

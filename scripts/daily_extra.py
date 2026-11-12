@@ -51,10 +51,11 @@ LLD_FOUNDATIONS = ("低层设计答题框架", "并发", "低层设计跨题模�
 DAY_MS = 86_400_000
 URGENCY_CAP = 2.0  # how far overdue-ness can raise a review: urgency is 1 + min(cap, days overdue / interval)
 VALUE_FLOOR = 0.3  # a review of the least valuable card in a deck still counts this much
-LC_ROOTS = ("LeetCode Tops",)
+TREE_ROOT = "算法知识树（灵神题单）"  # the knowledge tree's own deck: a learning card per leaf, then its problems
+LC_ROOTS = ("LeetCode Tops", TREE_ROOT)
 SOLVED_DECK = "LeetCode Tops::28 Daily"
 LC_DEFAULTS = {"since": "2026-11-12T04:00", "per_topic": 5, "per_section": 1}
-PREFER = ("tlc-tops-{s}-0-whole", "tlc-{s}-0-whole", "tlc-core-{s}", "lca-{s}", "tlc-daily-{s}-0-whole")
+PREFER = ("lct-{s}", "tlc-tops-{s}-0-whole", "tlc-{s}-0-whole", "tlc-core-{s}", "lca-{s}", "tlc-daily-{s}-0-whole")
 DEFAULT_DECKS = {"系统设计": 1.0, "LeetCode Tops": 1.0, "低层设计（LLD）": 0.6, "Kafka": 0.5, "Python": 0.5,
                  "Code Core": 0.5, "Narrative Round": 0.4, "编程语言原理：Go · Java · Rust · Python · C++": 0.3,
                  "Snowflake 原理": 0.3, "HFT 低延迟交易系统": 0.2, "CDN Content": 0.2, "Stripe": 0.2, "篮球（Basketball）": 0.2,
@@ -257,9 +258,9 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
     tree = lc_tree.build()["lists"]
     per = int(lcfg["per_section"])
 
-    def left(lst: dict, r: int) -> list[tuple[str, str]]:
-        """(slug, leaf) still to do in this round, in the list's order; a leaf with none of our problems is skipped."""
-        return [(s, f"{n:02d} " + " › ".join(path[1:])) for n, (path, leaf) in enumerate(lc_tree.leaves(lst), 1)
+    def left(lst: dict, r: int) -> list[tuple[str, str, str]]:
+        """(slug, leaf label, leaf id) still to do this round, in the list's order; a leaf with none of ours is skipped."""
+        return [(s, f"{n:02d} " + " › ".join(path[1:]), leaf["id"]) for n, (path, leaf) in enumerate(lc_tree.leaves(lst), 1)
                 for s in leaf["problems"][:per * r] if s not in done and card_for(s)]
 
     rounds = range(1, max((len(x["problems"]) for lst in tree for _, x in lc_tree.leaves(lst)), default=0) // per + 2)
@@ -270,7 +271,13 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
         for lst in active:  # a list in focus with less than its share left: the next list fills the day
             picks += [(lst["title"], *x) for x in left(lst, r) if x[0] not in {p[1] for p in picks}][:max(0, limit - len(picks))]
         today = anki_today()
-        for name, slug, section in picks[:limit]:
+        learned = set()
+        for name, slug, section, leaf in picks[:limit]:
+            learn = by_ident.get(lc_tree.card_id(leaf))
+            if learn and learn["queue"] == 0 and leaf not in learned:  # the leaf's learning card comes before its first problem
+                learned.add(leaf)
+                ex.lc_new.append({"card": learn["cardId"], "slug": "", "title": "学习卡", "topic": name, "section": section,
+                                  "why": "先学套路", "due_now": False, "learn": True})
             card = card_for(slug)
             ex.lc_new.append({"card": card["cardId"], "slug": slug, "title": probs[slug]["title"], "topic": name, "section": section,
                               "why": f"第 {r} 轮", "due_now": card["queue"] in (2, 3) and card["due"] > today})

@@ -21,11 +21,13 @@ def find_all_concatenated_words(words: list[str]) -> list[str]:
 
     def can_split(word: str) -> bool:
         n = len(word)
-        dp = [False] * (n + 1)                   # dp[i]：word[:i] 能否拆成词典里的若干词
+        # dp[i]：word[:i] 能否拆成词典里的若干词
+        dp = [False] * (n + 1)
         dp[0] = True
         for i in range(1, n + 1):
             for j in range(i):
-                if j == 0 and i == n:            # 整个单词本身不算一块：至少要两块
+                # 整个单词本身不算一块：至少要两块
+                if j == 0 and i == n:
                     continue
                 if dp[j] and word[j:i] in word_set:
                     dp[i] = True
@@ -44,7 +46,8 @@ def find_all_concatenated_words(words: list[str]) -> list[str]:
 
 ```python
 def find_all_concatenated_words_sorted(words: list[str]) -> list[str]:
-    seen: set[str] = set()                       # 只含已经处理过的（不长于当前的）单词
+    # 只含已经处理过的（不长于当前的）单词
+    seen: set[str] = set()
     ans: list[str] = []
     for word in sorted(words, key=len):
         n = len(word)
@@ -58,6 +61,7 @@ def find_all_concatenated_words_sorted(words: list[str]) -> list[str]:
     return ans
 ```
 
+- 注意这个版本返回的顺序是按长度排的，不是输入顺序；本题允许任意顺序。
 - 用前缀树代替切片加哈希，可以在走不通时立刻剪枝，常数更好。
 
 **易错点。**

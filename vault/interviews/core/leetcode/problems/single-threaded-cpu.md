@@ -20,18 +20,24 @@ from heapq import heappop, heappush
 
 def get_order(tasks: list[list[int]]) -> list[int]:
     n = len(tasks)
-    order = sorted(range(n), key=lambda i: tasks[i][0])   # 任务下标按入队时间排好
-    heap: list[tuple[int, int]] = []                      # (执行时间, 下标)：元组比较天然先时间后下标
+    # 任务下标按入队时间排好
+    order = sorted(range(n), key=lambda i: tasks[i][0])
+    # (执行时间, 下标)：元组比较天然先时间后下标
+    heap: list[tuple[int, int]] = []
     res: list[int] = []
-    t = p = 0                                             # t 当前时刻；p 下一个还没入队的任务在 order 里的位置
+    # t 当前时刻；p 下一个还没入队的任务在 order 里的位置
+    t = p = 0
     while len(res) < n:
         if not heap and t < tasks[order[p]][0]:
-            t = tasks[order[p]][0]                        # CPU 空闲且队列空：时间直接跳到下一个任务到达
-        while p < n and tasks[order[p]][0] <= t:          # 把此刻已到达的任务全部入堆
+            # CPU 空闲且队列空：时间直接跳到下一个任务到达
+            t = tasks[order[p]][0]
+        # 把此刻已到达的任务全部入堆
+        while p < n and tasks[order[p]][0] <= t:
             i = order[p]
             heappush(heap, (tasks[i][1], i))
             p += 1
-        cost, i = heappop(heap)                           # 取最短的；并列时下标小的先出
+        # 取最短的；并列时下标小的先出
+        cost, i = heappop(heap)
         t += cost
         res.append(i)
     return res
@@ -55,13 +61,15 @@ def average_waiting_time(tasks: list[list[int]]) -> float:
     wait = 0
     while served < n:
         if not heap and t < tasks[order[p]][0]:
-            t = tasks[order[p]][0]                  # 空闲：时间跳到下一个到达
+            # 空闲：时间跳到下一个到达
+            t = tasks[order[p]][0]
         while p < n and tasks[order[p]][0] <= t:
             i = order[p]
             heappush(heap, (tasks[i][1], i))
             p += 1
         cost, i = heappop(heap)
-        wait += t - tasks[i][0]                     # t 即这个任务的开始时刻
+        # t 即这个任务的开始时刻
+        wait += t - tasks[i][0]
         t += cost
         served += 1
     return wait / n

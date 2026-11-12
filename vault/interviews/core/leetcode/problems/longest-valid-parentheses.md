@@ -17,7 +17,8 @@ slug: longest-valid-parentheses
 
 ```python
 def longest_valid_parentheses(s: str) -> int:
-    stack = [-1]                        # 栈底永远是"最近一个没被匹配的位置"，初始是虚拟的 -1
+    # 栈底永远是"最近一个没被匹配的位置"，初始是虚拟的 -1
+    stack = [-1]
     best = 0
     for i, ch in enumerate(s):
         if ch == "(":
@@ -25,9 +26,11 @@ def longest_valid_parentheses(s: str) -> int:
         else:
             stack.pop()                 # 先尝试匹配：弹掉栈顶
             if stack:
-                best = max(best, i - stack[-1])     # 当前有效段是 (栈顶, i]
+                # 当前有效段是 (栈顶, i]
+                best = max(best, i - stack[-1])
             else:
-                stack.append(i)         # 栈空：这个 ")" 无法匹配，成为新的分界线
+                # 栈空：这个 ")" 无法匹配，成为新的分界线
+                stack.append(i)
     return best
 ```
 
@@ -40,7 +43,8 @@ def longest_valid_parentheses(s: str) -> int:
 ```python
 def longest_valid_parentheses_two_pass(s: str) -> int:
     best = 0
-    for seq, open_ch in ((s, "("), (s[::-1], ")")):  # 正向看 "("；反向看 ")"，补上 "(()" 这类左括号一直偏多的情况
+    # 正向看 "("；反向看 ")"，补上 "(()" 这类左括号一直偏多的情况
+    for seq, open_ch in ((s, "("), (s[::-1], ")")):
         left = right = 0
         for ch in seq:
             if ch == open_ch:
@@ -48,9 +52,11 @@ def longest_valid_parentheses_two_pass(s: str) -> int:
             else:
                 right += 1
             if left == right:
-                best = max(best, 2 * right)         # 配平：有效段长度是 2 * right
+                # 配平：有效段长度是 2 * right
+                best = max(best, 2 * right)
             elif right > left:
-                left = right = 0                    # 闭括号多了：这一段不可能延伸，从头计数
+                # 闭括号多了：这一段不可能延伸，从头计数
+                left = right = 0
     return best
 ```
 - 一维 DP：`dp[i]` 是以 `i` 结尾的最长有效段长度，只有 `s[i] == ")"` 时非零：
@@ -61,10 +67,13 @@ def longest_valid_parentheses_dp(s: str) -> int:
     for i in range(1, n):
         if s[i] != ")":
             continue
-        if s[i - 1] == "(":                         # ...() 直接配对，再接上前面的有效段
+        # ...() 直接配对，再接上前面的有效段
+        if s[i - 1] == "(":
             dp[i] = (dp[i - 2] if i >= 2 else 0) + 2
-        elif (j := i - dp[i - 1] - 1) >= 0 and s[j] == "(":   # ...)) 跨过 dp[i-1] 段，找与 i 配对的左括号 j
-            dp[i] = dp[i - 1] + 2 + (dp[j - 1] if j >= 1 else 0)   # 内层段 + 这一对 + 左边相邻的有效段
+        # ...)) 跨过 dp[i-1] 段，找与 i 配对的左括号 j
+        elif (j := i - dp[i - 1] - 1) >= 0 and s[j] == "(":
+            # 内层段 + 这一对 + 左边相邻的有效段
+            dp[i] = dp[i - 1] + 2 + (dp[j - 1] if j >= 1 else 0)
     return max(dp, default=0)
 ```
 

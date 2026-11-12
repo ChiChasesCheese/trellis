@@ -24,11 +24,14 @@ from collections import defaultdict
 def min_edge_reversals(n: int, edges: list[list[int]]) -> list[int]:
     graph: defaultdict[int, list[tuple[int, int]]] = defaultdict(list)
     for u, v in edges:
-        graph[u].append((v, 0))               # 沿原方向 u -> v 走：不用反转
-        graph[v].append((u, 1))               # 逆着走 v -> u：这条边必须反转
+        # 沿原方向 u -> v 走：不用反转
+        graph[u].append((v, 0))
+        # 逆着走 v -> u：这条边必须反转
+        graph[v].append((u, 1))
     ans = [0] * n
 
-    def count_from_root(u: int, parent: int) -> int:     # 以 0 为根时，所有边都朝外所需的反转数
+    # 以 0 为根时，所有边都朝外所需的反转数
+    def count_from_root(u: int, parent: int) -> int:
         total = 0
         for v, w in graph[u]:
             if v != parent:
@@ -38,7 +41,9 @@ def min_edge_reversals(n: int, edges: list[list[int]]) -> list[int]:
     def reroot(u: int, parent: int) -> None:
         for v, w in graph[u]:
             if v != parent:
-                # 根从 u 换到 v：边 (u, v) 的朝向要求翻转。原来不用反转（w = 0）现在要反转 +1；原来要反转（w = 1）现在不用 -1
+                # 根从 u 换到 v：边 (u, v) 的朝向要求翻转
+                # 原来不用反转（w = 0）现在要反转 +1
+                # 原来要反转（w = 1）现在不用 -1
                 ans[v] = ans[u] + (1 if w == 0 else -1)
                 reroot(v, u)
 
@@ -64,7 +69,8 @@ def min_edge_reversals_bfs(n: int, edges: list[list[int]]) -> list[int]:
         graph[u].append((v, 0))
         graph[v].append((u, 1))
     ans = [0] * n
-    order: list[tuple[int, int, int]] = []        # 按 BFS 顺序记下 (父, 子, 边权)，父一定出现在子之前
+    # 按 BFS 顺序记下 (父, 子, 边权)，父一定出现在子之前
+    order: list[tuple[int, int, int]] = []
     seen = [False] * n
     seen[0] = True
     queue = deque([0])
@@ -73,7 +79,8 @@ def min_edge_reversals_bfs(n: int, edges: list[list[int]]) -> list[int]:
         for v, w in graph[u]:
             if not seen[v]:
                 seen[v] = True
-                ans[0] += w                       # 累计根为 0 时的反转数
+                # 累计根为 0 时的反转数
+                ans[0] += w
                 order.append((u, v, w))
                 queue.append(v)
     for u, v, w in order:
@@ -85,5 +92,10 @@ def min_edge_reversals_bfs(n: int, edges: list[list[int]]) -> list[int]:
 - 换根时符号写反：`+1` 和 `-1` 交换，示例一得到 `[1, 1, 2, 0]`，正确 `[1, 1, 0, 2]`。
 - 对每个节点各做一次 DFS：`O(n²)`，`n = 10^5` 超时。
 - 最坏深度：`edges = [[0,1],[1,2],...]` 的链有 `10^5` 层，CPython 默认递归上限约 `1000`，上面的递归版会抛 `RecursionError`，需要 `sys.setrecursionlimit` 调高或改用上面的 BFS 版。
+
+**追问。**
+- 为什么换根只差 `±1`？边 `(u, v)` 把树分成两侧，`u` 一侧的边相对根的朝向不变，`v` 一侧也不变；只有这条边自己的朝向要求从「`u` 到 `v`」变成「`v` 到 `u`」，所以差恰好 `1`。
+- 图里有环（不再是树）怎么办？要变成最小代价可达性问题：先缩点（SCC），再在 DAG 上算最小树形图（Chu-Liu/Edmonds），已经是另一道题；本题的树性质是 `O(n)` 的前提。
+- 要同时输出每个根下该反转哪些边？再记一个集合：根为 `0` 时收集权重为 `1` 的边，换根时该边加入或移出集合；输出规模最坏 `O(n^2)`，通常只回答某一个根。
 
 **同模式。** LC 834 树中距离之和、LC 1466 重新规划路线、LC 310 最小高度树、LC 543 二叉树的直径。

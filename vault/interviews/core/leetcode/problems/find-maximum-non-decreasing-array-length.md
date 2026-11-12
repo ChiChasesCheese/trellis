@@ -23,8 +23,10 @@ def find_maximum_length_quadratic(nums: list[int]) -> int:
     s = [0] * (n + 1)                            # 前缀和
     for i, x in enumerate(nums):
         s[i + 1] = s[i] + x
-    f = [0] * (n + 1)                            # f[i]：前 i 个数最多切几段
-    last = [0] * (n + 1)                         # last[i]：取到 f[i] 时最后一段的和
+    # f[i]：前 i 个数最多切几段
+    f = [0] * (n + 1)
+    # last[i]：取到 f[i] 时最后一段的和
+    last = [0] * (n + 1)
     for i in range(1, n + 1):
         for j in range(i - 1, -1, -1):           # 最右的可行分割点最优
             if s[j] + last[j] <= s[i]:
@@ -46,17 +48,23 @@ from itertools import accumulate
 def find_maximum_length(nums: list[int]) -> int:
     n = len(nums)
     s = list(accumulate(nums, initial=0))        # s[i]：前 i 个数的和
-    f = [0] * (n + 1)                            # f[i]：前 i 个数最多切几段
-    last = [0] * (n + 1)                         # last[i]：取到 f[i] 时最后一段的最小和
-    q = deque([0])                               # 候选分割点，s[j] + last[j] 严格递增
+    # f[i]：前 i 个数最多切几段
+    f = [0] * (n + 1)
+    # last[i]：取到 f[i] 时最后一段的最小和
+    last = [0] * (n + 1)
+    # 候选分割点，s[j] + last[j] 严格递增
+    q = deque([0])
     for i in range(1, n + 1):
         while len(q) > 1 and s[q[1]] + last[q[1]] <= s[i]:
-            q.popleft()                          # 次队首也可行，说明队首不是最右的可行点
+            # 次队首也可行，说明队首不是最右的可行点
+            q.popleft()
         j = q[0]                                 # 最右的可行分割点
         f[i] = f[j] + 1
         last[i] = s[i] - s[j]
         while q and s[q[-1]] + last[q[-1]] >= s[i] + last[i]:
-            q.pop()                              # 队尾的 key 不比 i 小：i 更靠右且 key 更小，队尾被淘汰
+            # 队尾的 key 不比 i 小：i 更靠右且 key 更小，队尾被淘
+            # 汰
+            q.pop()
         q.append(i)
     return f[n]
 ```
@@ -73,7 +81,8 @@ def find_maximum_length_parts(nums: list[int]) -> list[list[int]]:
     n = len(nums)
     s = list(accumulate(nums, initial=0))
     last = [0] * (n + 1)
-    pre = [0] * (n + 1)                          # pre[i]：最后一段 nums[pre[i]:i] 的起点
+    # pre[i]：最后一段 nums[pre[i]:i] 的起点
+    pre = [0] * (n + 1)
     q = deque([0])
     for i in range(1, n + 1):
         while len(q) > 1 and s[q[1]] + last[q[1]] <= s[i]:
@@ -85,7 +94,8 @@ def find_maximum_length_parts(nums: list[int]) -> list[list[int]]:
         q.append(i)
     parts: list[list[int]] = []
     i = n
-    while i:                                     # 从末尾倒着沿 pre 取出每一段
+    # 从末尾倒着沿 pre 取出每一段
+    while i:
         parts.append(nums[pre[i]:i])
         i = pre[i]
     return parts[::-1]

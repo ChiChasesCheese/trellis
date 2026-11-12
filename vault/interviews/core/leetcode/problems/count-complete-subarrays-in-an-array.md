@@ -20,19 +20,25 @@ from collections import Counter
 
 
 def count_complete_subarrays(nums: list[int]) -> int:
-    n, total = len(nums), len(set(nums))      # total：整个数组的不同元素数
-    cnt: Counter[int] = Counter()             # 窗口 nums[left:right] 内每个数的出现次数
+    # total：整个数组的不同元素数
+    n, total = len(nums), len(set(nums))
+    # 窗口 nums[left:right] 内每个数的出现次数
+    cnt: Counter[int] = Counter()
     ans = right = 0
     for left in range(n):
-        while right < n and len(cnt) < total:   # 扩右：直到窗口凑齐 total 种数
+        # 扩右：直到窗口凑齐 total 种数
+        while right < n and len(cnt) < total:
             cnt[nums[right]] += 1
             right += 1
-        if len(cnt) < total:                    # 到末尾也凑不齐：更大的 left 更不可能
+        # 到末尾也凑不齐：更大的 left 更不可能
+        if len(cnt) < total:
             break
-        ans += n - right + 1                    # 以 left 开头、右端点在 [right-1, n-1] 的子数组都完全
+        # 以 left 开头、右端点在 [right-1, n-1] 的子数组都完全
+        ans += n - right + 1
         cnt[nums[left]] -= 1                    # 缩左：left 出窗口
         if cnt[nums[left]] == 0:
-            del cnt[nums[left]]                 # 计数归零必须删键，否则 len(cnt) 会虚高
+            # 计数归零必须删键，否则 len(cnt) 会虚高
+            del cnt[nums[left]]
     return ans
 ```
 

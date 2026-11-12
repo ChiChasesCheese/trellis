@@ -18,20 +18,43 @@ slug: longest-common-subsequence
 ```python
 def longest_common_subsequence(text1: str, text2: str) -> int:
     m, n = len(text1), len(text2)
-    # dp[i][j]：text1[:i] 与 text2[:j] 的 LCS 长度；第 0 行、第 0 列保持 0（空串）
+    # dp[i][j]：text1[:i] 与 text2[:j] 的 LCS 长度
+    # 第 0 行、第 0 列保持 0（空串）
     dp = [[0] * (n + 1) for _ in range(m + 1)]
     for i, a in enumerate(text1, 1):
         for j, b in enumerate(text2, 1):
             if a == b:
-                dp[i][j] = dp[i - 1][j - 1] + 1             # 末尾相同：一起算进去
+                # 末尾相同：一起算进去
+                dp[i][j] = dp[i - 1][j - 1] + 1
             else:
-                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])  # 不同：丢掉其中一个串的末尾
+                # 不同：丢掉其中一个串的末尾
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
     return dp[m][n]
 ```
 
 运行：`("abcde", "ace")` → `3`，`("abc", "abc")` → `3`，`("abc", "def")` → `0`，`("a", "a")` → `1`，`("bl", "yby")` → `1`，两个长 1000 的全 `"a"` 串 → `1000`。
 
 **复杂度。** 时间 `O(mn)`：双层循环，每格常数；空间 `O(mn)`：`(m + 1) × (n + 1)` 的表。
+
+**拓展优化。**
+- 滚动数组：`dp[i]` 只依赖第 `i - 1` 行和本行左边，只留一行，空间降到 `O(min(m, n))`（让短的串当列）。代价是不能再回溯出 LCS 字符串本身。
+
+```python
+def lcs_rolling(a: str, b: str) -> int:
+    if len(b) > len(a):
+        # 短串当列，行长度 = len(b) + 1
+        a, b = b, a
+    prev = [0] * (len(b) + 1)                 # 上一行 dp[i-1][*]
+    for x in a:
+        cur = [0] * (len(b) + 1)              # 本行，cur[0] 永远是 0
+        for j, y in enumerate(b, 1):
+            if x == y:
+                cur[j] = prev[j - 1] + 1      # 左上角
+            else:
+                cur[j] = max(prev[j], cur[j - 1])   # 上方、左边
+        prev = cur
+    return prev[-1]
+```
 
 **易错点。**
 - 把「不等」写成归零（按最长公共**子串**处理）会错：`"abcde"` 与 `"ace"` 得到 `1`，正确是 `3`。子序列允许跳过，不等时要继承 `max(上, 左)`。
@@ -41,6 +64,6 @@ def longest_common_subsequence(text1: str, text2: str) -> int:
 - 返回 LCS 字符串本身：完整的二维表就是回溯的依据，从右下角回溯（相等就斜上取字符，不等就往 `dp` 较大的方向走）。
 - 三个串、`k` 个串：状态多一维，`O(n^k)`。
 - 两个序列都很长但其中一个元素互不相同：把问题转成最长递增子序列（LIS），`O(n log n)`。
-- 空间可以压到 O(min(m, n))：见 Python 工具箱「DP 降维」。
+- 能省空间吗？能，滚动一行压到 `O(min(m, n))`（见上面的拓展优化），但回溯 LCS 字符串需要完整表，或者用 Hirschberg 分治保住线性空间，时间翻倍。
 
 **同模式。** LC 72 编辑距离、LC 583 两个字符串的删除操作、LC 712 最小 ASCII 删除和、LC 1035 不相交的线、LC 718 最长重复子数组（子串版，不等归零）。

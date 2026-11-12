@@ -17,7 +17,8 @@ slug: decode-string
 
 ```python
 def decode_string(s: str) -> str:
-    stack: list[tuple[str, int]] = []     # (进入 [ 之前已拼好的前缀, 这一层的重复次数)
+    # (进入 [ 之前已拼好的前缀, 这一层的重复次数)
+    stack: list[tuple[str, int]] = []
     cur, num = "", 0
     for ch in s:
         if ch.isdigit():
@@ -27,7 +28,8 @@ def decode_string(s: str) -> str:
             cur, num = "", 0              # 进入新的一层，从空串重新拼
         elif ch == "]":
             prev, times = stack.pop()
-            cur = prev + cur * times      # 把这一层重复 times 次接到前缀后面
+            # 把这一层重复 times 次接到前缀后面
+            cur = prev + cur * times
         else:
             cur += ch
     return cur
@@ -41,16 +43,18 @@ def decode_string(s: str) -> str:
 - 递归下降（recursive descent）：`parse(i)` 解析到 `]` 或末尾，深度等于嵌套层数，`s.length <= 30` 不会爆栈。
 
 ```python
-def decode_string(s: str) -> str:
+def decode_string_recursive(s: str) -> str:
     def parse(i: int) -> tuple[str, int]:
         out: list[str] = []
-        while i < len(s) and s[i] != "]":          # 遇到 ] 说明这一层结束，交还给调用者
+        # 遇到 ] 说明这一层结束，交还给调用者
+        while i < len(s) and s[i] != "]":
             if s[i].isdigit():
                 j = i
                 while s[j].isdigit():
                     j += 1
                 times = int(s[i:j])                # 多位数的重复次数
-                inner, i = parse(j + 1)            # 跳过 [，递归解内层；i 停在对应的 ]
+                # 跳过 [，递归解内层；i 停在对应的 ]
+                inner, i = parse(j + 1)
                 out.append(inner * times)
                 i += 1                             # 跳过 ]
             else:
@@ -65,19 +69,24 @@ def decode_string(s: str) -> str:
 
 ```python
 def decoded_length(s: str) -> int:
-    stack: list[tuple[int, int]] = []              # (进入 [ 之前的长度, 这一层的重复次数)
-    cur, num = 0, 0                                # cur：当前层已解码的长度
+    # (进入 [ 之前的长度, 这一层的重复次数)
+    stack: list[tuple[int, int]] = []
+    # cur：当前层已解码的长度
+    cur, num = 0, 0
     for ch in s:
         if ch.isdigit():
             num = num * 10 + int(ch)               # 多位数的次数
         elif ch == "[":
-            stack.append((cur, num))               # 保存外层现场，进入内层从 0 开始数
+            # 保存外层现场，进入内层从 0 开始数
+            stack.append((cur, num))
             cur, num = 0, 0
         elif ch == "]":
             prev, times = stack.pop()
-            cur = prev + cur * times               # 字符串拼接换成长度的乘加
+            # 字符串拼接换成长度的乘加
+            cur = prev + cur * times
         else:
-            cur += 1                               # 一个普通字母贡献长度 1
+            # 一个普通字母贡献长度 1
+            cur += 1
     return cur
 ```
 
@@ -88,5 +97,8 @@ def decoded_length(s: str) -> int:
 
 **追问。**
 - 要第 `k` 个字符（LC 880）：从后往前反推，不展开字符串。
+- 为什么主解里 `cur * times` 不会拖慢？每个字符最终在输出里出现多少次，就被复制多少次，总复制量和输出长度同阶；真正要小心的是「中间结果」不会比最终输出更大，所以空间也是 `O(输出长度)`。
+- 输出会爆炸（如 `300[300[300[a]]]` 有 `2.7 * 10^7` 个字符）怎么办？用 `decoded_length` 只算长度，或做成生成器按需产出，避免一次性拼成大字符串。
+- 括号嵌套很深时哪个更稳？栈版没有递归深度限制；递归版深度等于嵌套层数，本题 `s.length <= 30` 不会爆栈，一般输入要改栈版。
 
 **同模式。** LC 224 基本计算器、LC 227 基本计算器 II、LC 726 原子的数量、LC 20 有效的括号。

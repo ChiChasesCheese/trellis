@@ -20,6 +20,9 @@ slug: longest-happy-string
 **推导。** 暴力：DFS 枚举每一位放什么，指数级；用状态 `(a, b, c, 末尾字母, 连续次数)` 记忆化可以到 `O(a·b·c·6)`，`100^3` 的规模太大。贪心：若每步放剩余最多的字母，个数最多的字母被消耗得最快，最不容易在后面被迫连续或剩下。放第三个连续字母是违规的，所以当最多的字母已经连着两个，就用次多的字母垫一个。不垫（直接停）会少放字符；垫一个后最多的字母放回去继续。只剩下一种字母且已连着两个时，没法再放，结束。
 
 ```python
+import heapq
+
+
 def longest_diverse_string(a: int, b: int, c: int) -> str:
     # 最大堆（用负数模拟）：(-剩余个数, 字母)；个数为 0 的字母不入堆
     heap = [(-n, ch) for n, ch in ((a, "a"), (b, "b"), (c, "c")) if n]
@@ -27,14 +30,18 @@ def longest_diverse_string(a: int, b: int, c: int) -> str:
     out: list[str] = []
     while heap:
         n, ch = heapq.heappop(heap)                    # 剩余最多的字母
-        if out[-2:] == [ch, ch]:                       # 末尾已经连着两个 ch，不能再放
+        # 末尾已经连着两个 ch，不能再放
+        if out[-2:] == [ch, ch]:
             if not heap:
-                break                                  # 没有别的字母可垫：只能结束
-            n2, ch2 = heapq.heappop(heap)              # 垫一个次多的字母
+                # 没有别的字母可垫：只能结束
+                break
+            # 垫一个次多的字母
+            n2, ch2 = heapq.heappop(heap)
             out.append(ch2)
             if n2 + 1:
                 heapq.heappush(heap, (n2 + 1, ch2))
-            heapq.heappush(heap, (n, ch))              # 最多的字母原样放回
+            # 最多的字母原样放回
+            heapq.heappush(heap, (n, ch))
         else:
             out.append(ch)
             if n + 1:
@@ -42,7 +49,7 @@ def longest_diverse_string(a: int, b: int, c: int) -> str:
     return "".join(out)
 ```
 
-运行：`a=1, b=1, c=7` → `'ccaccbcc'`，`a=2, b=2, c=1` → `'ababc'`，`a=7, b=1, c=0` → `'aabaa'`，`a=0, b=0, c=1` → `'c'`，`a=0, b=0, c=5（只有一种字母）` → `'cc'`，`a=100, b=100, c=100 的长度` → `300`。
+运行：`a=1, b=1, c=7` → `'ccaccbcc'`，`a=2, b=2, c=1` → `'ababc'`，`a=7, b=1, c=0` → `'aabaa'`，`a=0, b=0, c=1` → `'c'`，`a=0, b=0, c=5`（只有一种字母）→ `'cc'`，`a=100, b=100, c=100` 的长度 → `300`。
 
 **复杂度。** 时间 `O(N log 3) = O(N)`，`N = a + b + c` 是总字符数：每放一个字符做常数次对大小为 `≤ 3` 的堆的操作；空间 `O(N)`（输出）+ `O(1)`（堆）。
 
@@ -54,7 +61,7 @@ def longest_diverse_string(a: int, b: int, c: int) -> str:
 
 **追问。**
 - 字母种类推广到 `k` 种、每种连续上限 `r`：堆仍是同一思路，只是「末尾已连续 `r` 个」时改取次多的；堆操作 `O(log k)`。
-- 只问最长长度、不要具体字符串：可以用公式式的贪心：两种较少字母的总和可用来隔开最多的字母；用堆模拟更不容易错。
-- 必须恰好用完所有字母（LC 767 重构字符串，相邻不同）：条件改成相邻不同，若最多的字母超过 `⌈N/2⌉` 则无解；堆的做法类似。
+- 只问最长长度、不要具体字符串：设最多的字母有 `x` 个，其余两种共 `y` 个。最多的字母每两个需要一个别的字母隔开，长度是 `y + min(x, 2 * (y + 1))`；`y` 相对 `x` 很小时，多出的最多字母放不下。
+- 相邻字母必须不同、且要用完全部字母（LC 767 重构字符串）：同样每步取最多的，但不能取刚放过的；最多的字母超过 `⌈N/2⌉` 则无解。
 
 **同模式。** LC 767 重构字符串、LC 984 不含 AAA 或 BBB 的字符串、LC 621 任务调度器、LC 358 K 距离间隔重排字符串、LC 1054 距离相等的条形码。

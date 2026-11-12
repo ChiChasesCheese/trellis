@@ -27,20 +27,24 @@ def min_transfers(transactions: list[list[int]]) -> int:
     for src, dst, amount in transactions:
         balance[src] -= amount  # 付出的人净余额减少（欠别人）
         balance[dst] += amount  # 收到的人净余额增加（被别人欠）
-    debts = [b for b in balance.values() if b != 0]  # 只有非零余额的人需要转账
+    # 只有非零余额的人需要转账
+    debts = [b for b in balance.values() if b != 0]
 
     def dfs(i: int) -> int:
         """debts[:i] 已全部结清，返回结清 debts[i:] 最少需要的笔数。"""
-        while i < len(debts) and debts[i] == 0:  # 被前面的对冲顺带结清的人跳过
+        # 被前面的对冲顺带结清的人跳过
+        while i < len(debts) and debts[i] == 0:
             i += 1
         if i == len(debts):
             return 0
         best = inf
         seen: set[int] = set()  # 同一层里相同余额的人效果一样，只试一次
         for j in range(i + 1, len(debts)):
-            if debts[j] * debts[i] < 0 and debts[j] not in seen:  # 符号相反才能对冲
+            # 符号相反才能对冲
+            if debts[j] * debts[i] < 0 and debts[j] not in seen:
                 seen.add(debts[j])
-                debts[j] += debts[i]  # i 把全部余额转给 j：i 结清，j 的余额合并
+                # i 把全部余额转给 j：i 结清，j 的余额合并
+                debts[j] += debts[i]
                 best = min(best, 1 + dfs(i + 1))
                 debts[j] -= debts[i]  # 回溯
         return best
@@ -67,11 +71,14 @@ def min_transfers_mask(transactions: list[list[int]]) -> int:
     debts = [b for b in balance.values() if b != 0]
     m = len(debts)
     total = [0] * (1 << m)  # total[mask]：子集 mask 的余额之和
-    best = [0] * (1 << m)   # best[mask]：mask 里最多的和为 0 的不相交小组数
+    # best[mask]：mask 里最多的和为 0 的不相交小组数
+    best = [0] * (1 << m)
     for mask in range(1, 1 << m):
         low = (mask & -mask).bit_length() - 1  # 最低位的人
         total[mask] = total[mask & (mask - 1)] + debts[low]
-        best[mask] = max(best[mask ^ (1 << i)] for i in range(m) if mask >> i & 1)
+        best[mask] = max(
+            best[mask ^ (1 << i)] for i in range(m) if mask >> i & 1
+        )
         if total[mask] == 0:
             best[mask] += 1
     return m - best[(1 << m) - 1]
@@ -81,5 +88,11 @@ def min_transfers_mask(transactions: list[list[int]]) -> int:
 - 贪心地让最大的债务人还给最大的债权人：`[[1,4,8],[3,0,6],[5,0,7]]` 贪心需要 `4` 笔，正确是 `3`（`1`、`4` 一组 `1` 笔，`3`、`5`、`0` 一组 `2` 笔）。
 - 不净额化，直接数交易笔数：示例 2 里有 `4` 笔交易，答案只要 `1` 笔（`0` 的净余额 `-4`，`1` 的 `+4`，`2` 的 `0`）。
 - 回溯完忘了还原 `debts[j]`：后面分支读到被污染的余额，`[[2,5,7],[3,2,7],[2,1,3]]` 返回 `3`，正确是 `2`；用 `debts[j] -= debts[i]` 精确复原。
+
+**追问。**
+- 为什么不能证明贪心？「最大债务人还给最大债权人」只保证每步结清一个人，但最优解要把余额拆成尽可能多的零和小组；`[[1,4,8],[3,0,6],[5,0,7]]` 贪心 `4` 笔、最优 `3` 笔。
+- 回溯和状态压缩怎么选？回溯在随机数据上很快，但最坏 `O((m - 1)!)`；状态压缩固定 `O(2^m * m)`，`m = 12` 时约 `5 * 10^4` 次操作，更稳。
+- 要输出具体转账方案？回溯时把每一对 `(i, j, debts[i])` 压入路径，找到更优时保存一份。
+- 这题是 NP 难吗？是，等价于把整数多重集拆成最多的零和子集（划分类问题），所以只能在 `m` 很小时用指数算法。
 
 **同模式。** LC 1307 口算难题、LC 698 划分为 k 个相等的子集、LC 996 平方数组的数目、LC 847 访问所有节点的最短路径。

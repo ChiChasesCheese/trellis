@@ -20,10 +20,12 @@ slug: russian-doll-envelopes
 ```python
 def max_envelopes_dp(envelopes: list[list[int]]) -> int:
     order = sorted(envelopes)
-    dp = [1] * len(order)                        # dp[i]：以 order[i] 作最外层的最长链
+    # dp[i]：以 order[i] 作最外层的最长链
+    dp = [1] * len(order)
     for i in range(len(order)):
         for j in range(i):
-            if order[j][0] < order[i][0] and order[j][1] < order[i][1]:   # 宽、高都严格更小
+            # 宽、高都严格更小
+            if order[j][0] < order[i][0] and order[j][1] < order[i][1]:
                 dp[i] = max(dp[i], dp[j] + 1)
     return max(dp)
 ```
@@ -37,15 +39,19 @@ from bisect import bisect_left
 
 
 def max_envelopes(envelopes: list[list[int]]) -> int:
-    # 宽度升序；同宽时高度降序，这样同宽的信封在高度序列里递减，不会被同时选进严格递增子序列
+    # 宽度升序；同宽时高度降序
+    # 这样同宽的信封在高度序列里递减，不会被同时选进严格递增子序列
     order = sorted(envelopes, key=lambda e: (e[0], -e[1]))
-    tails: list[int] = []                        # tails[k]：长度 k+1 的递增子序列的最小结尾高度
+    # tails[k]：长度 k+1 的递增子序列的最小结尾高度
+    tails: list[int] = []
     for _, h in order:
-        k = bisect_left(tails, h)                # 严格递增：相等的高度要替换，不能追加
+        # 严格递增：相等的高度要替换，不能追加
+        k = bisect_left(tails, h)
         if k == len(tails):
             tails.append(h)
         else:
-            tails[k] = h                         # 用更小的结尾替换，之后更容易接长
+            # 用更小的结尾替换，之后更容易接长
+            tails[k] = h
     return len(tails)
 ```
 
@@ -59,8 +65,10 @@ def max_envelopes(envelopes: list[list[int]]) -> int:
 ```python
 def max_envelopes_chain(envelopes: list[list[int]]) -> list[list[int]]:
     order = sorted(envelopes, key=lambda e: (e[0], -e[1]))
-    tails: list[int] = []                        # tails[k]：长度 k+1 的链的最小结尾对应的 order 下标
-    prev = [-1] * len(order)                     # prev[i]：链上排在 order[i] 前面的下标
+    # tails[k]：长度 k+1 的链的最小结尾对应的 order 下标
+    tails: list[int] = []
+    # prev[i]：链上排在 order[i] 前面的下标
+    prev = [-1] * len(order)
     for i, (_, h) in enumerate(order):
         k = bisect_left(tails, h, key=lambda t: order[t][1])
         if k:
@@ -71,7 +79,8 @@ def max_envelopes_chain(envelopes: list[list[int]]) -> list[list[int]]:
             tails[k] = i
     chain: list[list[int]] = []
     i = tails[-1]
-    while i != -1:                               # 从最长链的结尾倒着走回开头
+    # 从最长链的结尾倒着走回开头
+    while i != -1:
         chain.append(order[i])
         i = prev[i]
     return chain[::-1]

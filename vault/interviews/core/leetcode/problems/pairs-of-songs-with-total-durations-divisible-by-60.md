@@ -17,12 +17,15 @@ slug: pairs-of-songs-with-total-durations-divisible-by-60
 
 ```python
 def num_pairs_divisible_by_60(time: list[int]) -> int:
-    seen = [0] * 60                              # seen[r]：前面已出现、余数为 r 的歌曲数
+    # seen[r]：前面已出现、余数为 r 的歌曲数
+    seen = [0] * 60
     pairs = 0
     for t in time:
         r = t % 60
-        pairs += seen[(60 - r) % 60]             # 需要的搭档余数；r = 0 时搭档余数也是 0，所以再取一次模
-        seen[r] += 1                             # 先统计后登记，保证 i < j 且不与自己配对
+        # 需要的搭档余数；r = 0 时搭档余数也是 0，所以再取一次模
+        pairs += seen[(60 - r) % 60]
+        # 先统计后登记，保证 i < j 且不与自己配对
+        seen[r] += 1
     return pairs
 ```
 

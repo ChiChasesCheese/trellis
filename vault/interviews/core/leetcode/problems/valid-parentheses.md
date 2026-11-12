@@ -17,15 +17,18 @@ slug: valid-parentheses
 
 ```python
 def is_valid(s: str) -> bool:
-    pairs = {")": "(", "]": "[", "}": "{"}     # 右括号 -> 它该配的左括号
+    # 右括号 -> 它该配的左括号
+    pairs = {")": "(", "]": "[", "}": "{"}
     stack: list[str] = []
     for ch in s:
         if ch in pairs:
-            if not stack or stack.pop() != pairs[ch]:   # 栈空，或栈顶类型对不上
+            # 栈空，或栈顶类型对不上
+            if not stack or stack.pop() != pairs[ch]:
                 return False
         else:
             stack.append(ch)
-    return not stack                            # 还有没闭合的左括号就是无效
+    # 还有没闭合的左括号就是无效
+    return not stack
 ```
 
 运行：`"()"` → `True`，`"()[]{}"` → `True`，`"(]"` → `False`，`"([])"` → `True`，`"([)]"` → `False`，`"("` → `False`，`")"` → `False`，`10^4` 个 `"("` → `False`，`"()" * 5000` → `True`。

@@ -17,11 +17,15 @@ slug: word-break
 
 ```python
 def word_break(s: str, word_dict: list[str]) -> bool:
-    words = set(word_dict)                       # 哈希集合：判断"切片是不是单词"是 O(L)
-    max_len = max(map(len, words))               # 单词最长 max_len，更长的切片不用试
-    dp = [True] + [False] * len(s)               # dp[i]：前 i 个字符 s[:i] 能否被拆成单词
+    # 哈希集合：判断"切片是不是单词"是 O(L)
+    words = set(word_dict)
+    # 单词最长 max_len，更长的切片不用试
+    max_len = max(map(len, words))
+    # dp[i]：前 i 个字符 s[:i] 能否被拆成单词
+    dp = [True] + [False] * len(s)
     for i in range(1, len(s) + 1):
-        dp[i] = any(dp[j] and s[j:i] in words for j in range(max(0, i - max_len), i))
+        lo = max(0, i - max_len)   # 切点 j 只看最近 max_len 个位置
+        dp[i] = any(dp[j] and s[j:i] in words for j in range(lo, i))
     return dp[-1]
 ```
 

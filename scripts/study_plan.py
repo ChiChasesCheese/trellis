@@ -1038,9 +1038,11 @@ def extra_report(ex) -> str:
     out = ["<p><b>算法</b></p><ul>"]
     for x in ex.lc_similar:
         out.append(f"<li>相似题：{html.escape(x['title'])}（{html.escape(x['why'])}）</li>")
-    if ex.lc_new:
-        out.append(f"<li>新题 {len(ex.lc_new)} 道：" + "、".join(html.escape(x["title"]) for x in ex.lc_new[:4])
-                   + ("等" if len(ex.lc_new) > 4 else "") + "</li>")
+    problems = [x for x in ex.lc_new if not x.get("learn")]
+    if problems:
+        learn = len(ex.lc_new) - len(problems)
+        out.append(f"<li>新题 {len(problems)} 道（{' + '.join(ex.lc_focus)}）" + (f"，先读 {learn} 张学习卡" if learn else "") + "："
+                   + "、".join(html.escape(x["title"]) for x in problems[:4]) + ("等" if len(problems) > 4 else "") + "</li>")
     if ex.work_new:
         out.append(f"</ul><p><b>公司实践</b></p><ul><li>新卡 {len(ex.work_new)} 张：先全景，再核心，最后深入；前置考点的卡先学。</li>")
     out.append("</ul><p><b>到期复习</b></p><ul>")

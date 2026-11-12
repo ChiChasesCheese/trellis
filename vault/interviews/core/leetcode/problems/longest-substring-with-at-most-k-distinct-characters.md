@@ -23,7 +23,8 @@ def length_of_longest_substring_k_distinct(s: str, k: int) -> int:
     left = best = 0
     for right, ch in enumerate(s):
         count[ch] += 1
-        while len(count) > k:               # 种类超了：缩左端，计数归零就删键，len 才准
+        # 种类超了：缩左端，计数归零就删键，len 才准
+        while len(count) > k:
             out = s[left]
             count[out] -= 1
             if count[out] == 0:
@@ -46,13 +47,16 @@ def length_of_longest_substring_k_distinct(s: str, k: int) -> int:
     left = 0
     for ch in s:
         count[ch] += 1
-        if len(count) > k:                         # 种类超了：左端只出一格，窗口平移而不缩小
+        # 种类超了：左端只出一格，窗口平移而不缩小
+        if len(count) > k:
             out = s[left]
             count[out] -= 1
             if count[out] == 0:
-                del count[out]                     # 计数归零就删键，len(count) 才是真实种类数
+                # 计数归零就删键，len(count) 才是真实种类数
+                del count[out]
             left += 1
-    return len(s) - left                           # 窗口宽度只增不减，末态宽度 = 历史最大合法宽度
+    # 窗口宽度只增不减，末态宽度 = 历史最大合法宽度
+    return len(s) - left
 ```
 
 - `OrderedDict` 存「字符 → 最近下标」：超过 `k` 种时弹出最久没出现的字符，`left` 直接跳到它的下标加一，每步 `O(1)`。
@@ -61,13 +65,15 @@ def length_of_longest_substring_k_distinct(s: str, k: int) -> int:
 from collections import OrderedDict
 
 def length_of_longest_substring_k_distinct(s: str, k: int) -> int:
-    last: OrderedDict[str, int] = OrderedDict()    # 按最近出现时间排序，队头最久没出现
+    # 按最近出现时间排序，队头最久没出现
+    last: OrderedDict[str, int] = OrderedDict()
     left = best = 0
     for right, ch in enumerate(s):
         last.pop(ch, None)
         last[ch] = right                           # 重新登记并放到队尾
         if len(last) > k:
-            _, idx = last.popitem(last=False)      # 踢掉最久没出现的字符，窗口从它之后开始
+            # 踢掉最久没出现的字符，窗口从它之后开始
+            _, idx = last.popitem(last=False)
             left = idx + 1
         best = max(best, right - left + 1)
     return best
@@ -80,5 +86,8 @@ def length_of_longest_substring_k_distinct(s: str, k: int) -> int:
 
 **追问。**
 - 流式输入、`s` 很长：只需要窗口内的字符计数，空间 `O(k)`；若同时需要输出子串，另记起点。
+- 要「恰好 `k` 种」怎么办？恰好 = 至多 `k` 减去至多 `k - 1`（计数类问题，如 LC 992）；求最长时则在更新答案前加判断 `len(count) == k`。
+- 字符集很小（如小写字母）能更快吗？用长度 26 的数组代替 `Counter`，种类数另用一个整数维护，常数更小，仍是 `O(n)`。
+- 为什么 `if` 版本（窗口只增不缩）正确？答案只会在窗口变大时增加，窗口平移时宽度不变，所以末态宽度就是历史最大宽度；缺点是中途窗口可能不合法，不能在中途读取子串内容。
 
 **同模式。** LC 3 无重复字符的最长子串、LC 159 至多包含两个不同字符的最长子串、LC 904 水果成篮、LC 992 K 个不同整数的子数组、LC 424 替换后的最长重复字符。

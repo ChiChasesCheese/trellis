@@ -18,14 +18,18 @@ slug: longest-palindromic-subsequence
 ```python
 def longest_palindrome_subseq(s: str) -> int:
     n = len(s)
-    dp = [[0] * n for _ in range(n)]          # dp[i][j]：s[i..j] 内最长回文子序列的长度
-    for i in range(n - 1, -1, -1):            # i 从后往前：dp[i][*] 依赖 dp[i+1][*]
+    # dp[i][j]：s[i..j] 内最长回文子序列的长度
+    dp = [[0] * n for _ in range(n)]
+    # i 从后往前：dp[i][*] 依赖 dp[i+1][*]
+    for i in range(n - 1, -1, -1):
         dp[i][i] = 1                          # 单个字符本身是回文
         for j in range(i + 1, n):
             if s[i] == s[j]:
-                dp[i][j] = dp[i + 1][j - 1] + 2   # 两端相同：夹在中间的最优解外面各加一个
+                # 两端相同：夹在中间的最优解外面各加一个
+                dp[i][j] = dp[i + 1][j - 1] + 2
             else:
-                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])   # 两端不同：至少丢掉一端
+                # 两端不同：至少丢掉一端
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
     return dp[0][n - 1]
 ```
 
@@ -42,6 +46,7 @@ def longest_palindrome_subseq(s: str) -> int:
 **追问。**
 - 返回回文子序列本身：从 `dp[0][n-1]` 倒推，两端相同就同时收下，否则走向较大的一侧；`"bbbab"` → `"bbbb"`。
 - 让字符串变成回文的最少插入次数（LC 1312）= `n - LPS`。
-- 空间可以压到 O(n)：见 Python 工具箱「DP 降维」。
+- 空间能压吗？`dp[i][*]` 只依赖 `dp[i+1][*]` 和本行左边，用一行加一个临时变量保存左下角的旧值，空间 `O(n)`；代价是不能回溯出子序列本身。
+- 换成 LCS 怎么写？`s` 与 `s[::-1]` 的最长公共子序列就是答案（同为 `O(n^2)`，见 LC 1143），不用单独推区间 DP。
 
 **同模式。** LC 5 最长回文子串、LC 1143 最长公共子序列、LC 1312 让字符串成为回文串的最少插入次数、LC 730 统计不同回文子序列。

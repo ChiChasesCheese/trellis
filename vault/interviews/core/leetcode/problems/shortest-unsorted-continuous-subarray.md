@@ -21,15 +21,19 @@ from math import inf
 
 def find_unsorted_subarray(nums: list[int]) -> int:
     n = len(nums)
-    start, end = 0, -1                     # 初始 end - start + 1 == 0，即已有序
-    hi, lo = -inf, inf                     # 从左看的最大值；从右看的最小值
+    # 初始 end - start + 1 == 0，即已有序
+    start, end = 0, -1
+    # 从左看的最大值；从右看的最小值
+    hi, lo = -inf, inf
     for i in range(n):
-        if nums[i] < hi:                   # 左边有更大的数，i 必须被排序
+        # 左边有更大的数，i 必须被排序
+        if nums[i] < hi:
             end = i
         else:
             hi = nums[i]
         j = n - 1 - i
-        if nums[j] > lo:                   # 右边有更小的数，j 必须被排序
+        # 右边有更小的数，j 必须被排序
+        if nums[j] > lo:
             start = j
         else:
             lo = nums[j]

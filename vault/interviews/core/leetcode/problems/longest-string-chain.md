@@ -17,9 +17,12 @@ slug: longest-string-chain
 
 ```python
 def longest_str_chain(words: list[str]) -> int:
-    dp: dict[str, int] = {}                                  # dp[w]：以 w 结尾的最长词链
-    for w in sorted(words, key=len):                         # 短的先处理，前身一定已算好
-        dp[w] = 1 + max((dp.get(w[:i] + w[i + 1:], 0) for i in range(len(w))), default=0)
+    # dp[w]：以 w 结尾的最长词链
+    dp: dict[str, int] = {}
+    # 短的先处理，前身一定已算好
+    for w in sorted(words, key=len):
+        prev = (dp.get(w[:i] + w[i + 1:], 0) for i in range(len(w)))
+        dp[w] = 1 + max(prev, default=0)
     return max(dp.values())
 ```
 

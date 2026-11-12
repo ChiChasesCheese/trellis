@@ -23,13 +23,15 @@ from collections import deque
 
 class HitCounter:
     def __init__(self) -> None:
-        self.hits: deque[int] = deque()  # 每次敲击的时间戳，调用本身有序，所以队列天然升序
+        # 每次敲击的时间戳，调用本身有序，所以队列天然升序
+        self.hits: deque[int] = deque()
 
     def hit(self, timestamp: int) -> None:
         self.hits.append(timestamp)  # 同一秒多次敲击就存多份
 
     def getHits(self, timestamp: int) -> int:
-        while self.hits and self.hits[0] <= timestamp - 300:  # 窗口是 (t-300, t]：差值 >= 300 的已过期
+        # 窗口是 (t-300, t]：差值 >= 300 的已过期
+        while self.hits and self.hits[0] <= timestamp - 300:
             self.hits.popleft()
         return len(self.hits)
 ```
@@ -39,7 +41,7 @@ class HitCounter:
 **复杂度。** `hit` 为 `O(1)`，`getHits` 均摊 `O(1)`；空间 `O(窗口内的敲击数)`。
 
 **拓展优化。**
-- 每秒敲击量极大时队列会存下成千上万份：按秒聚合成 300 个桶的环形数组，内存固定 `O(300)`，`getHits` 是 `O(300)`，也不要求调用有序：
+- 每秒敲击量极大时队列会存下成千上万份：按秒聚合成 300 个桶的环形数组，内存固定 `O(300)`，`getHits` 是 `O(300)`：
 
 ```python
 class HitCounterRing:
@@ -49,12 +51,14 @@ class HitCounterRing:
 
     def hit(self, timestamp: int) -> None:
         i = timestamp % 300
-        if self.times[i] != timestamp:  # 槽里是 300 秒前的旧数据：先清零再记
+        # 槽里是 300 秒前的旧数据：先清零再记
+        if self.times[i] != timestamp:
             self.times[i], self.counts[i] = timestamp, 0
         self.counts[i] += 1
 
     def getHits(self, timestamp: int) -> int:
-        return sum(c for t, c in zip(self.times, self.counts) if timestamp - t < 300)
+        pairs = zip(self.times, self.counts)
+        return sum(c for t, c in pairs if timestamp - t < 300)
 ```
 
 - 多线程：`hit` 和 `getHits` 共用一把锁；更高并发时每个槽一把锁或原子计数，分布式时各机器各自计数再相加。
@@ -63,5 +67,11 @@ class HitCounterRing:
 - 边界写成 `<`（`self.hits[0] < timestamp - 300`）：示例里 `getHits(301)` 会返回 `4`，正确是 `3`，因为 `301 - 1 = 300` 已经不在 `(1, 301]` 里。
 - 环形数组忘记检查槽里的旧时间戳：`hit(1)` 之后 `hit(301)` 落在同一个槽，不清零的话这一秒会被记成 `2` 次。
 - 同一秒多次敲击要各算一次，不要用集合存时间戳。
+
+**追问。**
+- 每秒上百万次敲击怎么办？队列版内存随敲击数涨，改用环形桶，内存固定 `O(300)`，`hit` 是 `O(1)`，`getHits` 是 `O(300)`，与流量无关。
+- `getHits` 能不能也 `O(1)`？维护一个总数 `total`：`hit` 加一；过期时（弹队头或覆盖旧槽）减去对应计数，整体仍是均摊 `O(1)`，代价是每次要先清理过期槽，环形版需要按时间推进清理中间跳过的槽。
+- 窗口长度可变（如查询过去 `w` 秒）？队列版二分查最早未过期的位置（时间戳有序），`O(log n)`，同时不能再边查边丢。
+- 多机器分布式？各机器各自计数，查询时汇总，或把每秒计数写进共享存储（如 Redis 的有序集合）按分钟分片。
 
 **同模式。** LC 359 日志速率限制器、LC 933 最近的请求次数、LC 346 数据流中的移动平均值、LC 1797 设计一个验证系统。

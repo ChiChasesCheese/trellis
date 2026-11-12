@@ -19,9 +19,11 @@ slug: beautiful-arrangement
 
 ```python
 def count_arrangement(n: int) -> int:
-    used = [False] * (n + 1)                 # used[x]：数字 x 是否已被放在前面的位置
+    # used[x]：数字 x 是否已被放在前面的位置
+    used = [False] * (n + 1)
 
-    def dfs(pos: int) -> int:                # 在位置 pos 填数，返回从这里开始的方案数
+    # 在位置 pos 填数，返回从这里开始的方案数
+    def dfs(pos: int) -> int:
         if pos > n:                          # 1..n 全部填完且都合法
             return 1
         total = 0
@@ -43,16 +45,21 @@ def count_arrangement(n: int) -> int:
 - 已用集合压成位掩码，并用 `@cache` 记忆化：已填位置数等于掩码里 1 的个数，所以状态只有掩码一个，最多 `2^n` 个状态，每个 `O(n)`，总共 `O(n * 2^n)`：
 
 ```python
+from functools import cache
+
+
 def count_arrangement_mask(n: int) -> int:
     @cache
-    def dfs(mask: int) -> int:               # mask 的第 num-1 位为 1 表示数字 num 已用
+    # mask 的第 num-1 位为 1 表示数字 num 已用
+    def dfs(mask: int) -> int:
         pos = mask.bit_count() + 1           # 下一个要填的位置
         if pos > n:
             return 1
         return sum(
             dfs(mask | 1 << (num - 1))
             for num in range(1, n + 1)
-            if not mask >> (num - 1) & 1 and (num % pos == 0 or pos % num == 0)
+            if not mask >> (num - 1) & 1
+            and (num % pos == 0 or pos % num == 0)
         )
 
     return dfs(0)
@@ -65,5 +72,11 @@ def count_arrangement_mask(n: int) -> int:
 - 回溯时漏了撤销 `used[num] = False`：之后的分支看不到这个数字，计数偏少，`n = 3` 会得到 `1`（正确 `3`）。
 - 位置和数字都从 `1` 开始：从 `0` 开始会出现 `x % 0` 的除零错误。
 - 最坏递归深度是 `n = 15`，远小于 CPython 默认的约 1000 层上限。
+
+**追问。**
+- 为什么不直接 `n!` 个排列过滤？`15! ≈ 1.3 * 10^12`；按位置边填边检查，节点数降到约 `7.5 * 10^5`（我们数过 `747961`）。
+- 记忆化和纯回溯各自什么时候占优？状态压缩把节点数封顶在 `2^n * n = 5 * 10^5` 量级，且 `n` 再大一点仍可用；纯回溯代码短，`n <= 15` 同样够快，但没有上界保证。
+- 要输出所有方案而不是个数？只能回溯并保存路径，输出规模本身就是 `n = 15` 时 `24679` 个排列，无法比搜索更快。
+- 为什么「从大到小填位置」有帮助？位置 `1` 对所有数都合法，位置 `n` 的候选极少（`n` 的因数），先填后者能让死路更早暴露。
 
 **同模式。** LC 46 全排列、LC 51 N 皇后、LC 698 划分为 k 个相等的子集、LC 464 我能赢吗。

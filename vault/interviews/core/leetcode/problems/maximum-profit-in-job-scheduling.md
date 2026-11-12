@@ -16,14 +16,23 @@ slug: maximum-profit-in-job-scheduling
 **推导。** 暴力：每份工作选或不选，`2^n`。结构：按结束时间排序后，选第 `i` 份工作时，前面能接的工作恰好是排序后的一个**前缀**（结束时间 `<=` 它的开始时间），所以子问题只依赖「前缀的最优值」。DP：`dp[i]` 是前 `i` 份的最大报酬，转移 = 不做 `dp[i]` 或做 `dp[k] + profit`。浪费：为找 `k` 线性扫描会让总复杂度变成 `O(n^2)`；结束时间已有序，用二分把找 `k` 降到 `O(log n)`。最优：排序 `O(n log n)` + 每个工作一次二分 `O(log n)`。
 
 ```python
-def job_scheduling(start_time: list[int], end_time: list[int], profit: list[int]) -> int:
-    jobs = sorted(zip(end_time, start_time, profit))     # 按结束时间排序
+from bisect import bisect_right
+
+
+def job_scheduling(
+    start_time: list[int], end_time: list[int], profit: list[int]
+) -> int:
+    # 按结束时间排序
+    jobs = sorted(zip(end_time, start_time, profit))
     ends = [end for end, _, _ in jobs]
-    dp = [0] * (len(jobs) + 1)                           # dp[i]：只考虑前 i 份工作的最大报酬
+    # dp[i]：只考虑前 i 份工作的最大报酬
+    dp = [0] * (len(jobs) + 1)
     for i, (end, start, gain) in enumerate(jobs):
-        # 结束时间 <= start 的工作有 k 份，正是排序后的前 k 份；end > start，所以 k <= i
+        # 结束时间 <= start 的工作有 k 份，正是排序后的前 k 份
+        # end > start，所以 k <= i
         k = bisect_right(ends, start, 0, i)
-        dp[i + 1] = max(dp[i], dp[k] + gain)             # 不做这份 / 做这份
+        # 不做这份 / 做这份
+        dp[i + 1] = max(dp[i], dp[k] + gain)
     return dp[-1]
 ```
 
@@ -39,6 +48,7 @@ def job_scheduling(start_time: list[int], end_time: list[int], profit: list[int]
 **追问。**
 - 返回具体选了哪些工作：每步记下是否选了第 `i` 份和它接的前缀 `k`，从 `dp[n]` 往回走一遍。
 - 最多做 `k` 份（LC 1751）：状态变成 `dp[j][i]`（用 `j` 份、看前 `i` 份），用完整二维表。
-- 工作数很大时的在线版本：按开始时间排序 + 小顶堆（见另一种解法）。
+- 不想用二分、想要一遍扫描？按开始时间排序，用小顶堆存「已开始但还没结束」的 `(结束时间, 到该工作为止的最大报酬)`；每到一份新工作，先把结束时间 `<=` 它开始时间的弹出并更新 `best`，再压入 `(end, best + gain)`。同样 `O(n log n)`，适合边读边处理。
+- 时间轴不大（如 `<= 10^6`）能直接 DP 吗？可以：`dp[t]` 表示到时刻 `t` 的最大报酬，`dp[t] = max(dp[t-1], 在 t 结束的工作的 dp[start] + gain)`，`O(T + n)`；这里 `T` 到 `10^9`，所以要排序加二分。
 
 **同模式。** LC 1751 最多可以参加的会议数目 II（加「至多 `k` 个」）、LC 2008 出租车的最大盈利、LC 435 无重叠区间（无权重，贪心）、LC 646 最长数对链、LC 300 最长递增子序列（二分的另一个用法）。

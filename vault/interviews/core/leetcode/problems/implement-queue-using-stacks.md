@@ -19,13 +19,15 @@ slug: implement-queue-using-stacks
 class MyQueue:
     def __init__(self) -> None:
         self.inbox: list[int] = []        # 只负责 push：新元素压在栈顶
-        self.outbox: list[int] = []       # 只负责 pop / peek：栈顶就是队首
+        # 只负责 pop / peek：栈顶就是队首
+        self.outbox: list[int] = []
 
     def push(self, x: int) -> None:
         self.inbox.append(x)
 
     def _move(self) -> None:
-        if not self.outbox:               # 只有 outbox 空了才倒，倒的时候整个 inbox 一次倒完
+        # 只有 outbox 空了才倒，倒的时候整个 inbox 一次倒完
+        if not self.outbox:
             while self.inbox:
                 self.outbox.append(self.inbox.pop())
 
