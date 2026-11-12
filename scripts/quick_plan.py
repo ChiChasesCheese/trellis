@@ -16,6 +16,7 @@ day's number. The priority of a card is
   forward (weaker topics, recall formats); below it, cards predicted easier do (recognition formats).
 * related: a miss brings forward the unseen prerequisites of the missed point and the unseen points of its topic.
 * hold: a point that builds on a missed one waits until the missed one is answered right again.
+* focus: a multiplier per topic from `quick.focus` in the plan config, for what a real mock interview showed weak.
 
 A miss fades: each later right answer after an hour or more halves it, and so do four days. The points still missed
 are written to deepen.json; the main plan deals their full cards first (study_plan.py).
@@ -52,7 +53,7 @@ FORMAT_PRIOR = {"mc": 0.05, "match": 0.05, "order": 0.0, "cloze": -0.03, "qa": -
 PREREQ_CARRY = 0.3  # how much of a prerequisite's result carries to the point built on it
 DEFAULTS = {"target": 0.75, "band": 0.15, "tilt": 0.5, "recent": 40, "prereq_boost": 1.5, "topic_boost": 0.6, "hold": 0.5,
             "window": 8, "per_window": 2, "min_new": 30, "max_new": 200, "minutes": 90, "grow": 1.15, "shrink": 0.8,
-            "retention_floor": 0.75, "deepen_per_day": 10, "rollover_hour": 4}
+            "retention_floor": 0.75, "deepen_per_day": 10, "rollover_hour": 4, "focus": {}}
 
 
 def settings() -> dict:
@@ -165,8 +166,10 @@ def priorities(cards: list[Card], prereq: dict[str, list[str]], now_ms: int, cfg
         fit = max(0.5, min(1.6, 1.0 + cfg["tilt"] * t * (mean_p - p[c.kp]) / 0.2))
         related = 1.0 + cfg["prereq_boost"] * wanted_by.get(c.kp, 0.0) + cfg["topic_boost"] * min(1.0, topic_miss.get(c.topic, 0.0))
         hold = 1.0 - cfg["hold"] * max((miss.get(q, 0.0) for q in prereq.get(c.kp, [])), default=0.0)
-        out[c.kp] = c.weight * need * fit * related * hold
-        why[c.kp] = {"p": round(p[c.kp], 3), "need": round(need, 3), "fit": round(fit, 3), "related": round(related, 3), "hold": round(hold, 3)}
+        focus = float(cfg["focus"].get(c.topic, 1.0))  # topics a real mock showed weak (config quick.focus)
+        out[c.kp] = c.weight * need * fit * related * hold * focus
+        why[c.kp] = {"p": round(p[c.kp], 3), "need": round(need, 3), "fit": round(fit, 3), "related": round(related, 3), "hold": round(hold, 3),
+                     "focus": focus}
     return out, {**parts, "tilt": t, "recent": recent, "miss": miss, "why": why, "scores": scores}
 
 
