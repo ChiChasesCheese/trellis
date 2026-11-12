@@ -20,9 +20,11 @@ def min_operations(nums: list[int]) -> int:
     ops = 0
     prev = nums[0]                               # 调整后的前一个数
     for x in nums[1:]:
-        target = max(x, prev + 1)                # 至少要比前一个大 1，已经够大就不动
+        # 至少要比前一个大 1，已经够大就不动
+        target = max(x, prev + 1)
         ops += target - x
-        prev = target                            # 后面的数要和「调整后」的值比较
+        # 后面的数要和「调整后」的值比较
+        prev = target
     return ops
 ```
 

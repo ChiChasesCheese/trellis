@@ -19,18 +19,22 @@ slug: reverse-pairs
 
 ```python
 def reverse_pairs(nums: list[int]) -> int:
-    def sort_count(a: list[int]) -> tuple[list[int], int]:     # 返回 (排好序的 a, a 内部的翻转对数)
+    # 返回 (排好序的 a, a 内部的翻转对数)
+    def sort_count(a: list[int]) -> tuple[list[int], int]:
         if len(a) <= 1:
             return a, 0
         mid = len(a) // 2
         left, cl = sort_count(a[:mid])
         right, cr = sort_count(a[mid:])
-        cross = j = 0                                # 左段元素 x 在前、右段元素 y 在后的翻转对
-        for x in left:                               # left 递增：x 变大，满足 x > 2y 的 y 前缀只会变长
+        # 左段元素 x 在前、右段元素 y 在后的翻转对
+        cross = j = 0
+        # left 递增：x 变大，满足 x > 2y 的 y 前缀只会变长
+        for x in left:
             while j < len(right) and x > 2 * right[j]:
                 j += 1
             cross += j
-        return sorted(left + right), cl + cr + cross    # 两段各自有序，Timsort 线性时间归并
+        # 两段各自有序，Timsort 线性时间归并
+        return sorted(left + right), cl + cr + cross
     return sort_count(nums)[1]
 ```
 
@@ -46,8 +50,10 @@ from bisect import bisect_left, bisect_right
 
 
 def reverse_pairs_bit(nums: list[int]) -> int:
-    vals = sorted(set(nums))                  # 离散化：把数值压成 1..m 的名次
-    tree = [0] * (len(vals) + 1)              # 树状数组：统计已见元素落在每个名次的个数
+    # 离散化：把数值压成 1..m 的名次
+    vals = sorted(set(nums))
+    # 树状数组：统计已见元素落在每个名次的个数
+    tree = [0] * (len(vals) + 1)
 
     def add(i: int) -> None:
         while i < len(tree):
@@ -63,7 +69,8 @@ def reverse_pairs_bit(nums: list[int]) -> int:
 
     ans = 0
     for seen, y in enumerate(nums):           # seen = 已处理的元素个数
-        ans += seen - query(bisect_right(vals, 2 * y))    # 已见元素里 > 2y 的个数
+        # 已见元素里 > 2y 的个数
+        ans += seen - query(bisect_right(vals, 2 * y))
         add(bisect_left(vals, y) + 1)
     return ans
 ```
@@ -74,5 +81,10 @@ def reverse_pairs_bit(nums: list[int]) -> int:
 - 把条件写成 `>=`：`[1,3,2,3,1]` 得到 `3`，正确 `2`；写成 `x > y`（普通逆序对）得到 `4`。
 - 先合并再计数：合并后左右元素混在一起，指针不再单调，结果错误。必须先数跨半的配对再合并。
 - C++/Java 里 `2 * nums[j]` 对 `-2^31` 会溢出 32 位：要先转 `long`；Python 整数不会溢出，`[2147483647, -2147483648]` 的答案是 `1`。
+
+**追问。**
+- 能不能边合并边计数：不行。合并按 `x` 与 `y` 比大小，而翻转对的条件是 `x > 2y`，两者的指针停点不同，所以先单独扫一遍计数，再合并。
+- 元素值特别大或要在线处理（数据流）：用树状数组或动态开点线段树，每次插入 `O(log n)`；归并版只能离线。
+- 要输出每个 `i` 对应多少个 `j`：归并时给元素带上原下标，把每次的 `j` 累加到对应的左半元素上。
 
 **同模式。** LC 315 计算右侧小于当前元素的个数、LC 327 区间和的个数、LC 912 排序数组、LC 148 排序链表。

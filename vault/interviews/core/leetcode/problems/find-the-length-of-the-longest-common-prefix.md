@@ -19,12 +19,14 @@ slug: find-the-length-of-the-longest-common-prefix
 def longest_common_prefix(arr1: list[int], arr2: list[int]) -> int:
     prefixes: set[int] = set()
     for x in arr1:
-        while x and x not in prefixes:     # 已经在集合里说明它的更短前缀也都在，可以提前停
+        # 已经在集合里说明它的更短前缀也都在，可以提前停
+        while x and x not in prefixes:
             prefixes.add(x)
             x //= 10                       # 去掉最后一位 = 取前一个前缀
     best = 0
     for y in arr2:
-        while y and y not in prefixes:     # 从最长的前缀往短处找第一个命中的
+        # 从最长的前缀往短处找第一个命中的
+        while y and y not in prefixes:
             y //= 10
         if y:
             best = max(best, len(str(y)))

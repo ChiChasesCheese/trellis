@@ -19,10 +19,15 @@ slug: count-the-hidden-sequences
 from itertools import accumulate
 
 
-def number_of_arrays(differences: list[int], lower: int, upper: int) -> int:
-    prefix = [0, *accumulate(differences)]     # hidden[i] = hidden[0] + prefix[i]，别漏掉开头的 0
-    spread = max(prefix) - min(prefix)         # 数组内最大值与最小值之差，由 differences 唯一确定
-    return max(0, (upper - lower) - spread + 1)   # 起点 hidden[0] 在区间内能平移多少个位置
+def number_of_arrays(
+    differences: list[int], lower: int, upper: int
+) -> int:
+    # hidden[i] = hidden[0] + prefix[i]，别漏掉开头的 0
+    prefix = [0, *accumulate(differences)]
+    # 数组内最大值与最小值之差，由 differences 唯一确定
+    spread = max(prefix) - min(prefix)
+    # 起点 hidden[0] 在区间内能平移多少个位置
+    return max(0, (upper - lower) - spread + 1)
 ```
 
 运行：`([1,-3,4], 1, 6)` → `2`，`([3,-4,5,1,-2], -4, 5)` → `4`，`([4,-7,2], 3, 6)` → `0`，`([1,2], 1, 3)` → `0`，`([0], 5, 5)` → `1`；`10^5` 个随机差值 → 瞬间返回。

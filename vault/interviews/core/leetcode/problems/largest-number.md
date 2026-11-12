@@ -20,10 +20,12 @@ from functools import cmp_to_key
 
 def largest_number(nums: list[int]) -> str:
     def compare(a: str, b: str) -> int:
-        return (b + a > a + b) - (b + a < a + b)     # a+b 更大时 a 排前面，返回负数
+        # a+b 更大时 a 排前面，返回负数
+        return (b + a > a + b) - (b + a < a + b)
 
     strs = sorted(map(str, nums), key=cmp_to_key(compare))
-    return "0" if strs[0] == "0" else "".join(strs)  # 最大的是 0，说明全是 0
+    # 最大的是 0，说明全是 0
+    return "0" if strs[0] == "0" else "".join(strs)
 ```
 
 运行：`[10,2]` → `"210"`，`[3,30,34,5,9]` → `"9534330"`，`[1]` → `"1"`，`[0,0]` → `"0"`，`[3,30]` → `"330"`，`[121,12]` → `"12121"`。

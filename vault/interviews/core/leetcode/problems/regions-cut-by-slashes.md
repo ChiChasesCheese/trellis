@@ -18,12 +18,15 @@ slug: regions-cut-by-slashes
 ```python
 def regions_by_slashes(grid: list[str]) -> int:
     n = len(grid)
-    parent = list(range(4 * n * n))                    # 方块 (r,c) 的 4 个三角形：0 上 1 右 2 下 3 左
-    regions = 4 * n * n                                # 初始每个三角形自成一块
+    # 方块 (r,c) 的 4 个三角形：0 上 1 右 2 下 3 左
+    parent = list(range(4 * n * n))
+    # 初始每个三角形自成一块
+    regions = 4 * n * n
 
     def find(x: int) -> int:
         while parent[x] != x:
-            parent[x] = parent[parent[x]]              # 路径减半，摊还接近 O(1)
+            # 路径减半，摊还接近 O(1)
+            parent[x] = parent[parent[x]]
             x = parent[x]
         return x
 
@@ -32,27 +35,33 @@ def regions_by_slashes(grid: list[str]) -> int:
         ra, rb = find(a), find(b)
         if ra != rb:
             parent[ra] = rb
-            regions -= 1                               # 每成功合并一次，区域少一块
+            # 每成功合并一次，区域少一块
+            regions -= 1
 
     for r in range(n):
         for c in range(n):
             top = (r * n + c) * 4
             right, bottom, left = top + 1, top + 2, top + 3
             ch = grid[r][c]
-            if ch == "/":                              # '/' 把方块切成左上、右下两半
+            # '/' 把方块切成左上、右下两半
+            if ch == "/":
                 union(top, left)
                 union(bottom, right)
-            elif ch == "\\":                           # '\' 切成右上、左下两半
+            # '\' 切成右上、左下两半
+            elif ch == "\\":
                 union(top, right)
                 union(bottom, left)
-            else:                                      # 空格：四块全连通
+            # 空格：四块全连通
+            else:
                 union(top, right)
                 union(right, bottom)
                 union(bottom, left)
             if r + 1 < n:
-                union(bottom, ((r + 1) * n + c) * 4)           # 下三角 <-> 下方方块的上三角
+                # 下三角 <-> 下方方块的上三角
+                union(bottom, ((r + 1) * n + c) * 4)
             if c + 1 < n:
-                union(right, (r * n + c + 1) * 4 + 3)          # 右三角 <-> 右边方块的左三角
+                # 右三角 <-> 右边方块的左三角
+                union(right, (r * n + c + 1) * 4 + 3)
     return regions
 ```
 
@@ -73,7 +82,8 @@ def regions_by_slashes_scale3(grid: list[str]) -> int:
     wall = [[0] * (3 * n) for _ in range(3 * n)]
     for r in range(n):
         for c in range(n):
-            for k in range(3):                         # 在 3x3 里画对角线
+            # 在 3x3 里画对角线
+            for k in range(3):
                 if grid[r][c] == "/":
                     wall[3 * r + k][3 * c + 2 - k] = 1
                 elif grid[r][c] == "\\":
@@ -83,13 +93,17 @@ def regions_by_slashes_scale3(grid: list[str]) -> int:
         for sc in range(3 * n):
             if wall[sr][sc]:
                 continue
-            regions += 1                               # 遇到一块没数过的空地：新区域
-            wall[sr][sc] = 1                           # 入队即标记，同一格不会入队两次
+            # 遇到一块没数过的空地：新区域
+            regions += 1
+            # 入队即标记，同一格不会入队两次
+            wall[sr][sc] = 1
             queue = deque([(sr, sc)])
             while queue:
                 r, c = queue.popleft()
-                for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
-                    if 0 <= nr < 3 * n and 0 <= nc < 3 * n and not wall[nr][nc]:
+                for nr, nc in ((r + 1, c), (r - 1, c),
+                               (r, c + 1), (r, c - 1)):
+                    if (0 <= nr < 3 * n and 0 <= nc < 3 * n
+                            and not wall[nr][nc]):
                         wall[nr][nc] = 1
                         queue.append((nr, nc))
     return regions

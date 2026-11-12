@@ -17,13 +17,16 @@ slug: nth-digit
 
 ```python
 def find_nth_digit(n: int) -> int:
-    length, count, start = 1, 9, 1           # 当前段：length 位数，共 count 个，最小的是 start
-    while n > length * count:                # n 超出本段总位数：整段跳过
+    # 当前段：length 位数，共 count 个，最小的是 start
+    length, count, start = 1, 9, 1
+    # n 超出本段总位数：整段跳过
+    while n > length * count:
         n -= length * count
         length += 1
         count *= 10
         start *= 10
-    num = start + (n - 1) // length          # n 落在这个数里（n 已经变成段内的 1-based 位置）
+    # n 落在这个数里（n 已经变成段内的 1-based 位置）
+    num = start + (n - 1) // length
     return int(str(num)[(n - 1) % length])   # 数里的第几位
 ```
 
@@ -37,7 +40,7 @@ def find_nth_digit(n: int) -> int:
 
 **易错点。**
 - 用 `n // length` 而不是 `(n - 1) // length`：`n = 9`、`n = 10` 这类段边界上会错一个数，`n = 9` 应得到 `9`。
-- 循环条件写成 `n >= length * count`：`n` 恰好等于整段末尾时会多跳一段，`n = 9` 会错。
+- 循环条件写成 `n >= length * count`：`n` 恰好等于整段末尾时会多跳一段，`n = 9` 变成 `0` 后 `(n - 1) // length` 为负，取下标时抛 `IndexError`（应得 `9`）。
 - 段内偏移用 `n % length` 而不是 `(n - 1) % length`：第 1 位会变成第 0 位，`n = 10` 应得 `1`（数字 `10` 的首位）。
 
 **追问。**

@@ -17,9 +17,11 @@ slug: integer-break
 
 ```python
 def integer_break(n: int) -> int:
-    dp = [0] * (n + 1)                 # dp[i]：把 i 拆成至少 2 个正整数的最大乘积
+    # dp[i]：把 i 拆成至少 2 个正整数的最大乘积
+    dp = [0] * (n + 1)
     for i in range(2, n + 1):
-        for j in range(1, i):          # 先切下一块 j，剩下的 i - j 可以不再拆，也可以继续拆
+        # 先切下一块 j，剩下的 i - j 可以不再拆，也可以继续拆
+        for j in range(1, i):
             dp[i] = max(dp[i], j * (i - j), j * dp[i - j])
     return dp[n]
 ```

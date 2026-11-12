@@ -21,8 +21,10 @@ from heapq import heappop, heappush
 
 class TaskManager:
     def __init__(self, tasks: list[list[int]]) -> None:
-        self.info: dict[int, tuple[int, int]] = {}      # taskId -> (userId, 当前优先级)，系统里「真实存在」的任务
-        self.heap: list[tuple[int, int]] = []           # (-优先级, -taskId)：堆顶就是优先级最高、同级 taskId 最大
+        # taskId -> (userId, 当前优先级)：系统里「真实存在」的任务
+        self.info: dict[int, tuple[int, int]] = {}
+        # (-优先级, -taskId)：堆顶是优先级最高、同级 taskId 最大
+        self.heap: list[tuple[int, int]] = []
         for user_id, task_id, priority in tasks:
             self.add(user_id, task_id, priority)
 
@@ -33,18 +35,23 @@ class TaskManager:
     def edit(self, taskId: int, newPriority: int) -> None:
         user_id, _ = self.info[taskId]
         self.info[taskId] = (user_id, newPriority)
-        heappush(self.heap, (-newPriority, -taskId))    # 旧条目留在堆里不删，等弹出时再识别（懒删除）
+        # 旧条目留在堆里不删，等弹出时再识别（懒删除）
+        heappush(self.heap, (-newPriority, -taskId))
 
     def rmv(self, taskId: int) -> None:
-        del self.info[taskId]                           # 同样只改 info，堆里的旧条目以后会被丢弃
+        # 只改 info，堆里的旧条目以后会被丢弃
+        del self.info[taskId]
 
     def execTop(self) -> int:
         while self.heap:
             neg_priority, neg_task = heappop(self.heap)
             task_id = -neg_task
-            # 条目有效 <=> 任务还在系统里，且堆里记的优先级就是它当前的优先级
-            if task_id in self.info and self.info[task_id][1] == -neg_priority:
-                return self.info.pop(task_id)[0]        # 执行后从系统中删除，返回所属用户
+            # 条目有效 <=> 任务还在系统里，
+            # 且堆里记的优先级就是它当前的优先级
+            if (task_id in self.info
+                    and self.info[task_id][1] == -neg_priority):
+                # 执行后从系统中删除，返回所属用户
+                return self.info.pop(task_id)[0]
         return -1
 ```
 
@@ -57,6 +64,7 @@ class TaskManager:
 - 需要按用户查询任务时，再维护 `userId -> 任务集合` 的字典。
 
 **易错点。**
+- 只校验优先级、不校验任务是否还在：初始只有 `[1,101,10]`，`rmv(101)` 后 `execTop()` 会把堆里的旧条目当成有效而返回 `1`，应为 `-1`。
 - `edit` 后优先级相同的旧条目：把优先级改成原值会产生两个都「有效」的条目，第一个被执行后，第二个因 `taskId` 不在 `info` 中被丢弃，不会重复执行。
 - 只检查任务是否存在而不比较优先级：`edit` 之后的旧条目（优先级更高）仍会被认为有效，`edit(102, 8)` 后 `execTop()` 会错误地先执行 102 而返回 `2`，应为 `3`。
 - 堆键写成 `(-priority, taskId)`：并列时会取 `taskId` 最小的，题目要求最大。

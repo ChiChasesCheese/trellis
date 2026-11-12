@@ -21,7 +21,8 @@ import random
 
 class RandomizedSet:
     def __init__(self) -> None:
-        self.items: list[int] = []         # 紧凑数组：getRandom 按下标 O(1) 取
+        # 紧凑数组：getRandom 按下标 O(1) 取
+        self.items: list[int] = []
         self.pos: dict[int, int] = {}      # 值 -> 它在 items 里的下标
 
     def insert(self, val: int) -> bool:
@@ -35,7 +36,8 @@ class RandomizedSet:
         if (i := self.pos.pop(val, None)) is None:
             return False
         last = self.items.pop()            # 先弹出末尾，数组保持紧凑
-        if i < len(self.items):            # val 不在末尾：把 last 填进空出的 i
+        # val 不在末尾：把 last 填进空出的 i
+        if i < len(self.items):
             self.items[i] = last
             self.pos[last] = i
         return True

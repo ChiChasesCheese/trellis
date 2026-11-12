@@ -26,7 +26,8 @@ class MedianFinder:
         self.nums: list[int] = []                   # 始终保持升序
 
     def addNum(self, num: int) -> None:
-        insort(self.nums, num)                      # 二分找位置，再整体后移插入
+        # 二分找位置，再整体后移插入
+        insort(self.nums, num)
 
     def findMedian(self) -> float:
         n = len(self.nums)
@@ -45,12 +46,16 @@ from heapq import heappop, heappush, heappushpop
 
 class MedianFinder:
     def __init__(self) -> None:
-        self.low: list[int] = []              # 大根堆（存相反数）：较小的一半，堆顶 = 这一半的最大值
-        self.high: list[int] = []             # 小根堆：较大的一半，堆顶 = 这一半的最小值
+        # 大根堆（存相反数）：较小的一半，堆顶 = 这一半的最大值
+        self.low: list[int] = []
+        # 小根堆：较大的一半，堆顶 = 这一半的最小值
+        self.high: list[int] = []
 
     def addNum(self, num: int) -> None:
-        heappush(self.high, -heappushpop(self.low, -num))   # 先过 low 再交给 high，保证 low 的每个数 <= high 的每个数
-        if len(self.high) > len(self.low):                  # 保持 len(low) 等于 len(high) 或多 1
+        # 先过 low 再交给 high，保证 low 的每个数 <= high 的每个数
+        heappush(self.high, -heappushpop(self.low, -num))
+        # 保持 len(low) 等于 len(high) 或多 1
+        if len(self.high) > len(self.low):
             heappush(self.low, -heappop(self.high))
 
     def findMedian(self) -> float:
@@ -68,14 +73,16 @@ class MedianFinder:
 ```python
 class MedianFinderBuckets:
     def __init__(self) -> None:
-        self.count = [0] * 101                      # count[v]：数值 v 出现的次数
+        # count[v]：数值 v 出现的次数
+        self.count = [0] * 101
         self.total = 0
 
     def addNum(self, num: int) -> None:
         self.count[num] += 1
         self.total += 1
 
-    def kth(self, k: int) -> int:                   # 第 k 小的数（k 从 1 开始）
+    # 第 k 小的数（k 从 1 开始）
+    def kth(self, k: int) -> int:
         for value, c in enumerate(self.count):
             k -= c
             if k <= 0:
@@ -83,7 +90,8 @@ class MedianFinderBuckets:
         raise ValueError("k 超出范围")
 
     def findMedian(self) -> float:
-        lo = self.kth((self.total + 1) // 2)        # 奇数个时 lo 与 hi 是同一个数
+        # 奇数个时 lo 与 hi 是同一个数
+        lo = self.kth((self.total + 1) // 2)
         hi = self.kth(self.total // 2 + 1)
         return (lo + hi) / 2
 ```

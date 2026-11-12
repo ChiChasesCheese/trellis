@@ -20,7 +20,8 @@ from collections import defaultdict
 
 
 def accounts_merge(accounts: list[list[str]]) -> list[list[str]]:
-    parent = list(range(len(accounts)))        # 并查集：以账户下标为结点
+    # 并查集：以账户下标为结点
+    parent = list(range(len(accounts)))
 
     def find(x: int) -> int:
         while parent[x] != x:
@@ -28,20 +29,25 @@ def accounts_merge(accounts: list[list[str]]) -> list[list[str]]:
             x = parent[x]
         return x
 
-    owner: dict[str, int] = {}                 # 邮箱 -> 第一个出现它的账户
+    # 邮箱 -> 第一个出现它的账户
+    owner: dict[str, int] = {}
     for i, (_, *emails) in enumerate(accounts):
         for email in emails:
             j = owner.setdefault(email, i)
-            if j != i:                         # 邮箱已属于别的账户：两个账户合并
+            # 邮箱已属于别的账户：两个账户合并
+            if j != i:
                 parent[find(i)] = find(j)
 
     groups: defaultdict[int, list[str]] = defaultdict(list)
     for email, i in owner.items():
         groups[find(i)].append(email)
-    return [[accounts[root][0], *sorted(emails)] for root, emails in groups.items()]
+    return [
+        [accounts[root][0], *sorted(emails)]
+        for root, emails in groups.items()
+    ]
 ```
 
-运行：示例 1 → `[['John', 'john00@mail.com', 'john_newyork@mail.com', 'johnsmith@mail.com'], ['John', 'johnnybravo@mail.com'], ['Mary', 'mary@mail.com']]`；五个互不相交的账户（示例 2）→ 五个账户各自的邮箱排序后返回；链式 `[["J","a","b"],["J","b","c"],["J","c","d"]]` → `[['J', 'a', 'b', 'c', 'd']]`；`1000` 个账户、每个至多 `9` 个邮箱 → 约 `1 ms`。
+运行：示例 1 → `[['John', 'john00@mail.com', 'john_newyork@mail.com', 'johnsmith@mail.com'], ['John', 'johnnybravo@mail.com'], ['Mary', 'mary@mail.com']]`；示例 2（`David0` 到 `David5` 五个账户首尾相连地共享邮箱）→ 合成一个账户 `['David', 'David0@m.co', ..., 'David5@m.co']`；链式 `[["J","a","b"],["J","b","c"],["J","c","d"]]` → `[['J', 'a', 'b', 'c', 'd']]`；`1000` 个账户、每个至多 `9` 个邮箱 → 约 `1 ms`。
 
 **复杂度。** 时间：并查集操作近似常数（`α` 是反阿克曼函数），排序邮箱 `O(E log E)`，`E` 为邮箱总数；空间 `O(N + E)`。
 

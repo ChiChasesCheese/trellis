@@ -16,23 +16,32 @@ slug: evaluate-division
 **推导。** 暴力：建图（`a → b` 权 `v`，`b → a` 权 `1 / v`），每个查询做一次 DFS / BFS 累乘路径权值，`O(查询数 · (V + E))`。数据很小时足够。洞察：同一连通块内每个变量相对于一个代表元的比值是确定的，只需要预处理一次；查询时两个比值相除，代表元抵消。并查集在合并时就维护这个比值。
 
 ```python
-def calc_equation(equations: list[list[str]], values: list[float], queries: list[list[str]]) -> list[float]:
+def calc_equation(
+    equations: list[list[str]],
+    values: list[float],
+    queries: list[list[str]],
+) -> list[float]:
     parent: dict[str, str] = {}
-    ratio: dict[str, float] = {}                 # ratio[x] = x / parent[x]
+    # ratio[x] = x / parent[x]
+    ratio: dict[str, float] = {}
 
     def find(x: str) -> str:
-        p = parent.setdefault(x, x)              # 第一次见到的变量自成一组
+        # 第一次见到的变量自成一组
+        p = parent.setdefault(x, x)
         ratio.setdefault(x, 1.0)
         if p != x:
-            root = find(p)                       # 路径压缩：find(p) 之后 ratio[p] = p / root
-            ratio[x] *= ratio[p]                 # x/root = (x/p) * (p/root)
+            # 路径压缩：find(p) 之后 ratio[p] = p / root
+            root = find(p)
+            # x/root = (x/p) * (p/root)
+            ratio[x] *= ratio[p]
             parent[x] = root
         return parent[x]
 
     for (a, b), v in zip(equations, values):     # a / b = v
         ra, rb = find(a), find(b)
         if ra != rb:
-            parent[ra] = rb                      # ra / rb = (a / b) * (b / rb) / (a / ra)
+            # ra / rb = (a / b) * (b / rb) / (a / ra)
+            parent[ra] = rb
             ratio[ra] = v * ratio[b] / ratio[a]
 
     ans: list[float] = []
@@ -40,7 +49,8 @@ def calc_equation(equations: list[list[str]], values: list[float], queries: list
         if c in parent and d in parent and find(c) == find(d):
             ans.append(ratio[c] / ratio[d])      # (c/root) / (d/root)
         else:
-            ans.append(-1.0)                     # 变量没出现过，或不在同一个连通块
+            # 变量没出现过，或不在同一个连通块
+            ans.append(-1.0)
     return ans
 ```
 

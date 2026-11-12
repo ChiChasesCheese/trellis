@@ -21,8 +21,12 @@ from itertools import product
 
 def max_abs_val_expr(arr1: list[int], arr2: list[int]) -> int:
     ans = 0
-    for p, q in product((1, -1), repeat=2):          # 拆绝对值：|x| = max(x, -x)，i 项的符号可固定为 +
-        vals = [p * a + q * b + i for i, (a, b) in enumerate(zip(arr1, arr2))]
+    # 拆绝对值：|x| = max(x, -x)，i 项的符号可固定为 +
+    for p, q in product((1, -1), repeat=2):
+        vals = [
+            p * a + q * b + i
+            for i, (a, b) in enumerate(zip(arr1, arr2))
+        ]
         ans = max(ans, max(vals) - min(vals))
     return ans
 ```

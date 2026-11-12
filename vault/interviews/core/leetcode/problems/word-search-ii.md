@@ -20,7 +20,8 @@ from typing import Any
 
 
 def find_words(board: list[list[str]], words: list[str]) -> list[str]:
-    root: dict[str, Any] = {}              # 字典树：字符 -> 子结点；'$' -> 在此结束的整词
+    # 字典树：字符 -> 子结点；'$' -> 在此结束的整词
+    root: dict[str, Any] = {}
     for word in words:
         node = root
         for ch in word:
@@ -32,14 +33,17 @@ def find_words(board: list[list[str]], words: list[str]) -> list[str]:
     def dfs(i: int, j: int, parent: dict[str, Any]) -> None:
         ch = board[i][j]
         node = parent[ch]
-        if word := node.pop('$', None):    # 取走整词：同一个词不会被找到两次
+        # 取走整词：同一个词不会被找到两次
+        if word := node.pop('$', None):
             found.append(word)
-        board[i][j] = '#'                  # 占位，路径内不重复使用同一格
+        # 占位，路径内不重复使用同一格
+        board[i][j] = '#'
         for ni, nj in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
             if 0 <= ni < m and 0 <= nj < n and board[ni][nj] in node:
                 dfs(ni, nj, node)
         board[i][j] = ch                   # 回溯
-        if not node:                       # 这条分支的词都找完了：剪掉，之后不再进入
+        # 这条分支的词都找完了：剪掉，之后不再进入
+        if not node:
             del parent[ch]
 
     for i in range(m):
@@ -49,13 +53,13 @@ def find_words(board: list[list[str]], words: list[str]) -> list[str]:
     return found
 ```
 
-运行：示例 1 → `['eat', 'oath']`，示例 2 → `[]`，`[["a"]]` 找 `["a"]` → `['a']`，`[["a","a"]]` 找 `["a"]` → `['a']`；`12 x 12` 随机 `a/b/c` 盘面、`30000` 个长 `5..10` 的不同单词 → 找到 `28153` 个，约 `40 ms`；全 `a` 的 `12 x 12` 盘面、单词 `"a"` 到 `"a" * 10` → `10` 个，瞬间完成。
+运行：示例 1 → `['oath', 'eat']`（顺序任意），示例 2 → `[]`，`[["a"]]` 找 `["a"]` → `['a']`，`[["a","a"]]` 找 `["a"]` → `['a']`；`12 x 12` 随机 `a/b/c` 盘面、`30000` 个长 `5..10` 的不同单词 → 找到约 `2.8` 万个，约 `40 ms`；全 `a` 的 `12 x 12` 盘面、单词 `"a"` 到 `"a" * 10` → `10` 个，瞬间完成。
 
 **复杂度。** 时间最坏 `O(mn · 3^L)`（`L` 为最长单词，每格出发最多沿 `4 → 3` 个方向走 `L` 步），字典树剪枝后远小于它；空间 `O(总字符数)` 存字典树，加递归深度 `O(L)`。
 
 **易错点。**
 - 找到单词不摘掉：`board = [["a","a"]]`、`words = ["a"]`，从两个格子各找到一次，返回 `['a', 'a']`，正确是 `['a']`。
-- 不剪空分支：全 `a` 的 `12 x 12` 盘面、单词 `"a"` 到 `"a" * 10`，单词早就找全了，不剪枝还要把剩下的路径全部走一遍，耗时 `0.364 s`，剪掉则几乎为 `0`。
+- 不剪空分支：全 `a` 的 `12 x 12` 盘面、单词 `"a"` 到 `"a" * 10`，单词早就找全了，不剪枝还要把剩下的路径全部走一遍，耗时约 `0.5 s`，剪掉则几乎为 `0`。
 - 回溯时忘了还原格子（`board[i][j] = ch`）：后续起点看到的盘面被破坏，漏掉单词。
 
 **追问。**

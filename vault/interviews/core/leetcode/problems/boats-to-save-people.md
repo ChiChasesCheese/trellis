@@ -17,10 +17,12 @@ slug: boats-to-save-people
 
 ```python
 def num_rescue_boats(people: list[int], limit: int) -> int:
-    people = sorted(people)              # 排序后最轻的在左端，最重的在右端
+    # 排序后最轻的在左端，最重的在右端
+    people = sorted(people)
     lo, hi = 0, len(people) - 1
     boats = 0
-    while lo <= hi:                      # lo == hi 时只剩一个人，也要一艘船
+    # lo == hi 时只剩一个人，也要一艘船
+    while lo <= hi:
         if people[lo] + people[hi] <= limit:
             lo += 1                      # 最轻的人和最重的人同船
         hi -= 1                          # 最重的人一定上船

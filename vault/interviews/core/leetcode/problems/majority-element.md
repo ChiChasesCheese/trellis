@@ -19,7 +19,8 @@ slug: majority-element
 def majority_element(nums: list[int]) -> int:
     candidate, count = nums[0], 0
     for x in nums:
-        if count == 0:                     # 票数抵消光了：换一个新候选人
+        # 票数抵消光了：换一个新候选人
+        if count == 0:
             candidate = x
         count += 1 if x == candidate else -1
     return candidate

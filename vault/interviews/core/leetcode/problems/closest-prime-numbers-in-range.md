@@ -21,11 +21,13 @@ from math import isqrt
 
 
 def closest_primes(left: int, right: int) -> list[int]:
-    sieve = bytearray([1]) * (right + 1)       # sieve[i] == 1 表示 i 目前被认为是质数
+    # sieve[i] == 1 表示 i 目前被认为是质数
+    sieve = bytearray([1]) * (right + 1)
     sieve[:2] = b"\x00\x00"                    # 0 和 1 不是质数
     for p in range(2, isqrt(right) + 1):
         if sieve[p]:
-            # 从 p*p 起，p 的倍数全部划掉；切片赋值在 C 层完成，比 Python 循环快一个量级
+            # 从 p*p 起，p 的倍数全部划掉；切片赋值在 C 层完成，比 Pytho
+            # n 循环快一个量级
             sieve[p * p :: p] = bytes(len(range(p * p, right + 1, p)))
     primes = [p for p in range(left, right + 1) if sieve[p]]
     if len(primes) < 2:

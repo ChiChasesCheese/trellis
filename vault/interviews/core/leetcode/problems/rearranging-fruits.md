@@ -21,14 +21,18 @@ from collections import Counter
 
 def min_cost(basket1: list[int], basket2: list[int]) -> int:
     diff = Counter(basket1)
-    diff.subtract(basket2)                       # 每种水果在两个篮子里的数量差
-    extra: list[int] = []                        # 需要换走的水果（两个篮子的多余部分合在一起）
+    # 每种水果在两个篮子里的数量差
+    diff.subtract(basket2)
+    # 需要换走的水果（两个篮子的多余部分合在一起）
+    extra: list[int] = []
     for fruit, d in diff.items():
-        if d % 2:                                # 某种水果总数为奇数，永远无法平分
+        # 某种水果总数为奇数，永远无法平分
+        if d % 2:
             return -1
         extra.extend([fruit] * (abs(d) // 2))
     extra.sort()
-    cheapest = min(min(basket1), min(basket2))   # 全局最便宜的水果，可作为「中转」
+    # 全局最便宜的水果，可作为「中转」
+    cheapest = min(min(basket1), min(basket2))
     # extra 一半在篮 1、一半在篮 2，把最小的一半各配一个对手：
     # 直接交换花 x，或借 cheapest 交换两次花 2 * cheapest，取小
     return sum(min(x, 2 * cheapest) for x in extra[: len(extra) // 2])
@@ -40,7 +44,7 @@ def min_cost(basket1: list[int], basket2: list[int]) -> int:
 
 **拓展优化。**
 - 不排序整个 `extra`，用 `heapq.nsmallest(len(extra) // 2, extra)` 取较小的一半，复杂度同阶；用快速选择可到 `O(n)`。
-- 先判断偶数性可以用 `Counter` 的总和一次完成，提前返回 `-1`。
+- 一发现某种水果的数量差为奇数就提前返回 `-1`，不必再构造 `extra`（代码里已是这样做的）。
 
 **易错点。**
 - 忘记「借中转」：`basket1 = [100,100,1]`, `basket2 = [200,200,1]` 用最便宜的 `1` 换两次只花 `2`，只算直接交换得到 `100`。

@@ -20,7 +20,8 @@ def jump(nums: list[int]) -> int:
     jumps = cur_end = farthest = 0
     for i in range(len(nums) - 1):      # 最后一格不用再跳，所以不扫它
         farthest = max(farthest, i + nums[i])
-        if i == cur_end:                # 当前这一跳的范围走完了，必须再跳一次
+        # 当前这一跳的范围走完了，必须再跳一次
+        if i == cur_end:
             jumps += 1
             cur_end = farthest          # 下一层的右边界
     return jumps
@@ -32,7 +33,7 @@ def jump(nums: list[int]) -> int:
 
 **易错点。**
 - 循环范围写成 `range(len(nums))`：扫到最后一格时 `i == cur_end` 会多计一跳。`[2,3,1,1,4]` 错成 `3`（正确 `2`）。
-- 以为「每次跳到 `nums[j]` 最大的格子」就最优：应比较 `j + nums[j]`（能到多远）。`[2,1,1,0]` 按值挑会走 `0→1→2→3` 得 `3`，正确是 `0→2→3` 得 `2`。
+- 以为「每次跳到 `nums[j]` 最大的格子」就最优：应比较 `j + nums[j]`（能到多远）。`[3,3,1,2,1,1]` 按值挑会走 `0→1→3→5` 得 `3`（先挑值为 `3` 的下标 `1`，只能到下标 `4`），正确是 `0→3→5` 得 `2`。
 - 单元素数组答案是 `0`，不是 `1`。
 
 **追问。**

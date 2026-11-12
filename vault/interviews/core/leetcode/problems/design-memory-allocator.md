@@ -24,28 +24,32 @@ slug: design-memory-allocator
 ```python
 class Allocator:
     def __init__(self, n: int) -> None:
-        self.mem = [0] * n             # mem[i] 是占用该单元的 mID；mID >= 1，所以 0 表示空闲
+        # mem[i] 是占用该单元的 mID；mID >= 1，所以 0 表示空闲
+        self.mem = [0] * n
 
     def allocate(self, size: int, mID: int) -> int:
         run = 0                        # 当前连续空闲单元的个数
         for i, owner in enumerate(self.mem):
             run = run + 1 if owner == 0 else 0
-            if run == size:            # 第一次凑够 size 个，就是最左侧的块
+            # 第一次凑够 size 个，就是最左侧的块
+            if run == size:
                 start = i - size + 1
-                self.mem[start:i + 1] = [mID] * size   # 切片赋值，一次写入整块
+                # 切片赋值，一次写入整块
+                self.mem[start:i + 1] = [mID] * size
                 return start
         return -1
 
     def freeMemory(self, mID: int) -> int:
         freed = 0
         for i, owner in enumerate(self.mem):
-            if owner == mID:           # 同一个 mID 可能分散在多个块里，全部释放
+            # 同一个 mID 可能分散在多个块里，全部释放
+            if owner == mID:
                 self.mem[i] = 0
                 freed += 1
         return freed
 ```
 
-运行：`示例的 11 个调用` → `[None, 0, 1, 2, 1, 3, 1, 6, 3, -1, 0]`，`n=5：同一 mID 分到两个块，再一次性释放` → `[None, 0, 2, 3, 4]`，`n=1000 一次占满，再分配 1 个` → `[None, 0, -1]`。
+运行：示例的 10 个调用 → `[0, 1, 2, 1, 3, 1, 6, 3, -1, 0]`（构造函数无返回值）；`Allocator(5)`：`allocate(1,1)`、`allocate(1,2)`、`allocate(1,1)`、`freeMemory(1)` → `[0, 1, 2, 2]`；`Allocator(1000)`：`allocate(1000,1)`、`allocate(1,2)` → `[0, -1]`。
 
 **复杂度。** `allocate` 与 `freeMemory` 都是 `O(n)`：一遍扫描整个数组；`1000` 次调用总计约 `10^6` 次单元访问。空间 `O(n)`。
 

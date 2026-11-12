@@ -20,9 +20,11 @@ def compute_area(ax1: int, ay1: int, ax2: int, ay2: int,
                  bx1: int, by1: int, bx2: int, by2: int) -> int:
     area_a = (ax2 - ax1) * (ay2 - ay1)
     area_b = (bx2 - bx1) * (by2 - by1)
-    overlap_w = max(0, min(ax2, bx2) - max(ax1, bx1))   # x 方向交集宽度，不相交时为负，取 0
+    # x 方向交集宽度，不相交时为负，取 0
+    overlap_w = max(0, min(ax2, bx2) - max(ax1, bx1))
     overlap_h = max(0, min(ay2, by2) - max(ay1, by1))
-    return area_a + area_b - overlap_w * overlap_h        # 容斥：重叠部分被算了两次
+    # 容斥：重叠部分被算了两次
+    return area_a + area_b - overlap_w * overlap_h
 ```
 
 运行：示例 1 → `45`，示例 2 → `16`；不相交的 `(0,0,1,1)` 与 `(2,2,3,3)` → `2`；只在边上接触 `(0,0,1,1)` 与 `(1,0,2,1)` → `2`。
@@ -36,15 +38,23 @@ def compute_area(ax1: int, ay1: int, ax2: int, ay2: int,
 from itertools import pairwise
 
 
-def rectangles_union_area(rects: list[tuple[int, int, int, int]]) -> int:
-    xs = sorted({x for x1, _, x2, _ in rects for x in (x1, x2)})   # 压缩后的 x 坐标
+def rectangles_union_area(
+    rects: list[tuple[int, int, int, int]],
+) -> int:
+    # 压缩后的 x 坐标
+    xs = sorted({x for x1, _, x2, _ in rects for x in (x1, x2)})
     area = 0
-    for left, right in pairwise(xs):             # 每个竖条 [left, right) 内，覆盖它的矩形集合不变
-        spans = sorted((y1, y2) for x1, y1, x2, y2 in rects if x1 <= left and right <= x2)
+    # 每个竖条 [left, right) 内，覆盖它的矩形集合不变
+    for left, right in pairwise(xs):
+        spans = sorted(
+            (y1, y2) for x1, y1, x2, y2 in rects
+            if x1 <= left and right <= x2
+        )
         covered = 0
         top = -10**9                             # 已合并区间的右端
         for y1, y2 in spans:
-            y1 = max(y1, top)                    # 与已计入的部分重叠的那截不重复算
+            # 与已计入的部分重叠的那截不重复算
+            y1 = max(y1, top)
             if y2 > y1:
                 covered += y2 - y1
                 top = y2

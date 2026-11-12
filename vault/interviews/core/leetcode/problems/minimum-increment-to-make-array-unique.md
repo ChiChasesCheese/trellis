@@ -18,9 +18,12 @@ slug: minimum-increment-to-make-array-unique
 ```python
 def min_increment_for_unique(nums: list[int]) -> int:
     moves = 0
-    nxt = 0                                      # 下一个还没被占用的最小值
-    for x in sorted(nums):                       # 升序处理：小的数先占位
-        target = max(x, nxt)                     # 比 nxt 小的数必须抬到 nxt，否则留在原地
+    # 下一个还没被占用的最小值
+    nxt = 0
+    # 升序处理：小的数先占位
+    for x in sorted(nums):
+        # 比 nxt 小的数必须抬到 nxt，否则留在原地
+        target = max(x, nxt)
         moves += target - x
         nxt = target + 1
     return moves
@@ -35,16 +38,19 @@ def min_increment_for_unique(nums: list[int]) -> int:
 
 ```python
 def min_increment_for_unique_counting(nums: list[int]) -> int:
-    top = max(nums) + len(nums)                  # 最终最大值不超过 max + n
+    # 最终最大值不超过 max + n
+    top = max(nums) + len(nums)
     cnt = [0] * (top + 1)
     for x in nums:
         cnt[x] += 1
-    moves = carry = 0                            # carry：从前面顺延过来、还没落座的数
+    # carry：从前面顺延过来、还没落座的数
+    moves = carry = 0
     for v in range(top + 1):
         carry += cnt[v]
         if carry:
             carry -= 1                           # 一个数落在 v
-        moves += carry                           # 其余的都得再往后挪一格
+        # 其余的都得再往后挪一格
+        moves += carry
     return moves
 ```
 

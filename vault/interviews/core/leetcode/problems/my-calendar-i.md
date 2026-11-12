@@ -24,7 +24,8 @@ class MyCalendarBrute:
 
     def book(self, startTime: int, endTime: int) -> bool:
         for s, e in self.events:
-            if startTime < e and s < endTime:    # 半开区间重叠的充要条件
+            # 半开区间重叠的充要条件
+            if startTime < e and s < endTime:
                 return False
         self.events.append((startTime, endTime))
         return True
@@ -40,14 +41,19 @@ from bisect import bisect_left
 
 class MyCalendar:
     def __init__(self) -> None:
-        self.starts: list[int] = []              # 按开始时间升序；日程互不重叠，所以 ends 也升序
+        # 按开始时间升序；日程互不重叠，所以 ends 也升序
+        self.starts: list[int] = []
         self.ends: list[int] = []
 
     def book(self, startTime: int, endTime: int) -> bool:
-        i = bisect_left(self.starts, endTime)    # starts[:i] 都 < endTime，starts[i:] 都 >= endTime
-        if i and self.ends[i - 1] > startTime:   # 前一个日程结束得晚于新日程开始：重叠
-            return False                         # 更早的日程结束得更早，不用看
-        self.starts.insert(i, startTime)         # 插入位置保证两个列表仍然有序
+        # starts[:i] 都 < endTime，starts[i:] 都 >= endTime
+        i = bisect_left(self.starts, endTime)
+        # 前一个日程结束得晚于新日程开始：重叠
+        if i and self.ends[i - 1] > startTime:
+            # 更早的日程结束得更早，不用看
+            return False
+        # 插入位置保证两个列表仍然有序
+        self.starts.insert(i, startTime)
         self.ends.insert(i, endTime)
         return True
 ```
@@ -66,13 +72,16 @@ from collections import defaultdict
 
 class MyCalendarThree:
     def __init__(self) -> None:
-        self.delta: defaultdict[int, int] = defaultdict(int)   # 时间点 -> 同时进行的日程数的变化量
+        # 时间点 -> 同时进行的日程数的变化量
+        self.delta: defaultdict[int, int] = defaultdict(int)
 
     def book(self, startTime: int, endTime: int) -> int:
-        self.delta[startTime] += 1               # 开始时+1，结束时-1（半开区间，结束时刻已空闲）
+        # 开始时+1，结束时-1（半开区间，结束时刻已空闲）
+        self.delta[startTime] += 1
         self.delta[endTime] -= 1
         running = best = 0
-        for t in sorted(self.delta):             # 按时间扫描，running 就是当前重叠数
+        # 按时间扫描，running 就是当前重叠数
+        for t in sorted(self.delta):
             running += self.delta[t]
             best = max(best, running)
         return best                              # 返回目前最大重叠数

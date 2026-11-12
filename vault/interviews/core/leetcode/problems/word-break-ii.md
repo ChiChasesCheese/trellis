@@ -24,9 +24,11 @@ def word_break(s: str, word_dict: list[str]) -> list[str]:
     max_len = max(map(len, words))
 
     @cache
-    def sentences(i: int) -> tuple[str, ...]:   # s[i:] 的所有拆法；空元组 = 拆不了
+    # s[i:] 的所有拆法；空元组 = 拆不了
+    def sentences(i: int) -> tuple[str, ...]:
         if i == len(s):
-            return ('',)                        # 走到末尾：一种拆法，后面什么也不接
+            # 走到末尾：一种拆法，后面什么也不接
+            return ('',)
         found: list[str] = []
         for j in range(i + 1, min(len(s), i + max_len) + 1):
             if (word := s[i:j]) in words:
@@ -48,7 +50,7 @@ def word_break(s: str, word_dict: list[str]) -> list[str]:
 
 **追问。**
 - 只问有没有（LC 139）或有多少种：把 `sentences` 换成布尔或计数，`ways(i) = sum(ways(j) ...)`；`"a" * 20` 的例子计数是 `521472`。
-- 先用 LC 139 的 DP 判断能不能拆：不能拆就直接返回，或者回溯时只走「后缀一定能拆」的分支，避免无效搜索（见另一种解法）。
+- 先用 LC 139 的 DP 判断能不能拆：不能拆就直接返回，或者回溯时只走「后缀一定能拆」的分支，避免无效搜索（记忆化已经隐含了这一点：拆不了的后缀只展开一次）。
 - 字典很大、单词很长：用字典树（trie）沿 `s[i:]` 一路走，遇到单词结尾就分叉，不用为每个结束点构造切片。
 
 **同模式。** LC 139 单词拆分、LC 472 连接词、LC 93 复原 IP 地址、LC 131 分割回文串、LC 17 电话号码的字母组合。

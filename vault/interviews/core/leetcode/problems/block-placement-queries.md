@@ -28,7 +28,8 @@ def get_results(queries: list[list[int]]) -> list[bool]:
         if op == 1:
             insort(obstacles, x)
         else:
-            pts = [0, *obstacles[:bisect_right(obstacles, x)], x]   # 原点、范围内障碍物、查询终点
+            # 原点、范围内障碍物、查询终点
+            pts = [0, *obstacles[:bisect_right(obstacles, x)], x]
             ans.append(any(b - a >= rest[0] for a, b in pairwise(pts)))
     return ans
 ```
@@ -43,7 +44,8 @@ from bisect import bisect_left, bisect_right
 
 def get_results(queries: list[list[int]]) -> list[bool]:
     size = max(q[1] for q in queries) + 1
-    tree = [0] * (2 * size)             # 迭代线段树（区间最大值）：叶子 x = 以障碍物 x 结尾的空隙长度
+    # 迭代线段树（区间最大值）：叶子 x = 以障碍物 x 结尾的空隙长度
+    tree = [0] * (2 * size)
 
     def update(pos: int, val: int) -> None:
         pos += size
@@ -69,14 +71,19 @@ def get_results(queries: list[list[int]]) -> list[bool]:
     ans: list[bool] = []
     for op, x, *rest in queries:
         if op == 1:
-            k = bisect_left(obstacles, x)               # obstacles[k-1] 是前驱，obstacles[k] 是后继
-            update(x, x - obstacles[k - 1])             # x 左边的空隙：x 到前驱
-            if k < len(obstacles):                      # 后继的空隙被 x 截短
+            # obstacles[k-1] 是前驱，obstacles[k] 是后继
+            k = bisect_left(obstacles, x)
+            # x 左边的空隙：x 到前驱
+            update(x, x - obstacles[k - 1])
+            # 后继的空隙被 x 截短
+            if k < len(obstacles):
                 update(obstacles[k], obstacles[k] - x)
             obstacles.insert(k, x)
         else:
-            p = obstacles[bisect_right(obstacles, x) - 1]   # [0, x] 内最右的障碍物
-            ans.append(max(query_max(p), x - p) >= rest[0])  # 之前的最大空隙，或最后一段 [p, x]
+            # [0, x] 内最右的障碍物
+            p = obstacles[bisect_right(obstacles, x) - 1]
+            # 之前的最大空隙，或最后一段 [p, x]
+            ans.append(max(query_max(p), x - p) >= rest[0])
     return ans
 ```
 
@@ -95,7 +102,8 @@ def get_results(queries: list[list[int]]) -> list[bool]:
     for q in queries:
         if q[0] == 1:
             present[q[1]] = True                   # 先放上所有障碍物
-    parent = list(range(m + 1))                    # find(i) = 不超过 i 的最右障碍物
+    # find(i) = 不超过 i 的最右障碍物
+    parent = list(range(m + 1))
     for i in range(1, m + 1):
         if not present[i]:
             parent[i] = i - 1
@@ -108,12 +116,14 @@ def get_results(queries: list[list[int]]) -> list[bool]:
             parent[i], i = root, parent[i]
         return root
 
-    tree = [0] * (m + 2)                           # 树状数组：下标 p + 1 存「右端点 <= p 的空隙」的最大值
+    # 树状数组：下标 p + 1 存「右端点 <= p 的空隙」的最大值
+    tree = [0] * (m + 2)
 
     def update(p: int, v: int) -> None:
         i = p + 1
         while i <= m + 1:
-            tree[i] = max(tree[i], v)              # 倒序时空隙只会变大，取大更新就够
+            # 倒序时空隙只会变大，取大更新就够
+            tree[i] = max(tree[i], v)
             i += i & -i
 
     def prefix_max(p: int) -> int:
@@ -123,7 +133,8 @@ def get_results(queries: list[list[int]]) -> list[bool]:
             i -= i & -i
         return res
 
-    prv, nxt = [0] * (m + 2), [-1] * (m + 2)       # 当前所有障碍物的双向链表
+    # 当前所有障碍物的双向链表
+    prv, nxt = [0] * (m + 2), [-1] * (m + 2)
     last = 0
     for p in range(1, m + 1):
         if present[p]:
@@ -133,7 +144,8 @@ def get_results(queries: list[list[int]]) -> list[bool]:
 
     ans: list[bool] = []
     for q in reversed(queries):
-        if q[0] == 1:                              # 倒序里的「建」= 删除 x，前后两个空隙合并
+        # 倒序里的「建」= 删除 x，前后两个空隙合并
+        if q[0] == 1:
             x = q[1]
             a, b = prv[x], nxt[x]
             parent[x] = x - 1
@@ -143,7 +155,8 @@ def get_results(queries: list[list[int]]) -> list[bool]:
                 update(b, b - a)                   # 后继的空隙变长
         else:
             x, sz = q[1], q[2]
-            p = find(x)                            # [0, x] 内最右的障碍物
+            # [0, x] 内最右的障碍物
+            p = find(x)
             ans.append(max(prefix_max(p), x - p) >= sz)
     return ans[::-1]
 ```
@@ -158,5 +171,6 @@ def get_results(queries: list[list[int]]) -> list[bool]:
 
 **追问。**
 - 还要支持删除障碍物：线段树同样能改回更大的空隙，找前驱后继的有序集合也要支持删除。
+- 坐标到 `10^9`：线段树改成动态开点，或离线收集所有 `x` 离散化；Python 里的有序列表 `insert` 退化为 `O(k)`，换成 `SortedList`。
 
 **同模式。** LC 307 区域和检索——数组可修改、LC 315 计算右侧小于当前元素的个数（树状数组）、LC 218 天际线问题、LC 729 我的日程安排表 I、LC 699 掉落的方块。

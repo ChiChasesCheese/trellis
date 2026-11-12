@@ -19,7 +19,8 @@ slug: consecutive-numbers-sum
 def consecutive_numbers_sum(n: int) -> int:
     count = 0
     k = 1                                        # k：连续整数的个数
-    while k * (k + 1) // 2 <= n:                 # 首项至少为 1 时，k 项之和至少是 1+2+...+k
+    # 首项至少为 1 时，k 项之和至少是 1+2+...+k
+    while k * (k + 1) // 2 <= n:
         # n = k*a + k(k-1)/2，其中 a 是首项；a 必须是正整数
         if (n - k * (k - 1) // 2) % k == 0:
             count += 1
@@ -36,17 +37,20 @@ def consecutive_numbers_sum(n: int) -> int:
 
 ```python
 def consecutive_numbers_sum_odd_divisors(n: int) -> int:
-    while n % 2 == 0:                            # 答案 = n 的奇因数个数，先去掉所有因子 2
+    # 答案 = n 的奇因数个数，先去掉所有因子 2
+    while n % 2 == 0:
         n //= 2
     count, p = 1, 3
-    while p * p <= n:                            # 质因数分解，因数个数 = Π(指数 + 1)
+    # 质因数分解，因数个数 = Π(指数 + 1)
+    while p * p <= n:
         exp = 0
         while n % p == 0:
             n //= p
             exp += 1
         count *= exp + 1
         p += 2
-    return count * 2 if n > 1 else count         # 剩下一个大于 1 的质数，指数为 1
+    # 剩下一个大于 1 的质数，指数为 1
+    return count * 2 if n > 1 else count
 ```
 
 **易错点。**
