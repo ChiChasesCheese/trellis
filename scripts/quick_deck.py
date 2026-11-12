@@ -35,7 +35,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from trellis.build import NOTE_BLOCK, NOTE_FIELDS  # noqa: E402
+from trellis.build import NOTE_BLOCK, NOTE_FIELDS, note_fields  # noqa: E402
 
 HOME = Path(os.environ.get("QUICK_HOME") or ROOT / "sources/local/quick")
 DECK = "碎片速刷"
@@ -493,6 +493,8 @@ MATCH_A = (HEAD % "配对" + '<div class="q">{{Question}}</div><div class="mine"
 def templates() -> dict[str, tuple[str, str]]:
     """Front and back per model key. `quick.autoflip: false` in the plan config leaves turning the card to the usual tap."""
     out = {k: (front, back) for k, (_n, _f, front, back, _c) in MODELS.items()}
+    if not note_fields():  # the collection has no note fields yet
+        out = {k: (front, back.replace(NOTE_BLOCK, "")) for k, (front, back) in out.items()}
     if not config().get("autoflip", True):
         cut = TOOLS[TOOLS.index("function flip"):]
         out = {k: (front.replace(cut, NO_FLIP), back) for k, (front, back) in out.items()}
@@ -638,7 +640,7 @@ def package(cards: list[dict], path: Path) -> dict[str, dict]:
     from trellis.build import _stable_id
 
     sides = templates()
-    models = {k: genanki.Model(_stable_id(f"trellis:model:{name}"), name, fields=[{"name": f} for f in (*names, *NOTE_FIELDS)],
+    models = {k: genanki.Model(_stable_id(f"trellis:model:{name}"), name, fields=[{"name": f} for f in (*names, *note_fields())],
                                templates=[{"name": name.split()[-1], "qfmt": sides[k][0], "afmt": sides[k][1]}], css=css(),
                                **({"model_type": genanki.Model.CLOZE} if cloze else {}))
               for k, (name, names, _front, _back, cloze) in MODELS.items()}
@@ -648,7 +650,7 @@ def package(cards: list[dict], path: Path) -> dict[str, dict]:
         key, vals = fields(c, c["_point"])
         ident = f"quick.{c['kp']}"
         tags = [TAG, f"{TAG}::{c['_point']['day']}", f"kp::{c['kp']}", f"fmt::{c['fmt']}", f"id::{ident}"]
-        deck.add_note(genanki.Note(model=models[key], fields=vals + [""] * len(NOTE_FIELDS), guid=genanki.guid_for(f"trellis:{ident}"), tags=tags,
+        deck.add_note(genanki.Note(model=models[key], fields=vals + [""] * len(note_fields()), guid=genanki.guid_for(f"trellis:{ident}"), tags=tags,
                                    due=c["_point"]["rank"] + 1))
         built[ident] = {"fields": dict(zip(MODELS[key][1], vals)), "model": MODELS[key][0], "tags": tags}
     genanki.Package([deck]).write_to_file(path)
@@ -658,6 +660,8 @@ def package(cards: list[dict], path: Path) -> dict[str, dict]:
 def push(dry: bool, verified_only: bool) -> int:
     from anki_refresh import call
 
+    from anki_refresh import match_note_fields
+    match_note_fields()
     cards, problems = all_cards(verified_only)
     for p in problems:
         print("  ", p)

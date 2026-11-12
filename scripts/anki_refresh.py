@@ -13,6 +13,7 @@ trimmed to them, so they keep the package's deal order and a deleted card outsid
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import sqlite3
 import subprocess
@@ -41,6 +42,12 @@ def call(action: str, **params):
             raise RuntimeError(f"{action}: {out['error']}")
         return out["result"]
     raise RuntimeError("Anki stayed busy")
+
+
+def match_note_fields() -> None:
+    """Build note types with the Note fields only once the collection has them (the migration needs one full sync)."""
+    from trellis.build import NOTE_FIELDS
+    os.environ["TRELLIS_NOTE_FIELDS"] = "1" if NOTE_FIELDS[0] in call("modelFieldNames", modelName="Trellis QA") else "0"
 
 
 def built_notes(domain: str, folder: Path) -> dict[str, dict]:
@@ -155,6 +162,7 @@ def main() -> int:
         i = args.index("--add")
         add = args[i + 1]
         del args[i:i + 2]
+    match_note_fields()
     if args == ["--style"]:
         style()
         return 0

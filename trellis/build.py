@@ -11,6 +11,7 @@ Stability guarantees that make re-import safe:
 from __future__ import annotations
 
 import hashlib
+import os
 import re
 from pathlib import Path
 from urllib.parse import quote
@@ -769,6 +770,14 @@ def _related_notes(used: dict[str, tuple[str, str]], links: dict) -> str:
 # scripts/card_notes.py writes the explanation into NoteAnswer, also for a card he only starred (tag `marked`).
 # No build or refresh ever writes either of them.
 NOTE_FIELDS = ("Note", "NoteAnswer")
+
+
+def note_fields() -> tuple[str, ...]:
+    """The note fields, or none while a collection still waits for the one-time field migration (TRELLIS_NOTE_FIELDS=0):
+    an import whose note type has fields the collection lacks would create a second copy of the note type."""
+    return () if os.environ.get("TRELLIS_NOTE_FIELDS") == "0" else NOTE_FIELDS
+
+
 NOTE_BLOCK = ('{{#NoteAnswer}}<div class="qnote">{{#Note}}<div class="qn"><b class="qk">疑问</b>{{Note}}</div>{{/Note}}'
               '<div class="qn-a"><b class="qk">{{#Note}}解答{{/Note}}{{^Note}}讲解{{/Note}}</b>{{NoteAnswer}}</div></div>{{/NoteAnswer}}'
               '{{^NoteAnswer}}{{#Note}}<div class="qnote"><div class="qn"><b class="qk">疑问</b>{{Note}}</div>'
@@ -781,11 +790,11 @@ def _qa_model() -> genanki.Model:
     return genanki.Model(
         _stable_id("trellis:model:qa"),
         "Trellis QA",
-        fields=[{"name": f} for f in ("Question", "Answer", "Crumb", *NOTE_FIELDS)],
+        fields=[{"name": f} for f in ("Question", "Answer", "Crumb", *note_fields())],
         templates=[{
             "name": "QA",
             "qfmt": '<div class="crumb">{{Crumb}}</div>{{Question}}',
-            "afmt": '{{FrontSide}}<hr id="answer">{{Answer}}' + NOTE_BLOCK + _GRADE,
+            "afmt": '{{FrontSide}}<hr id="answer">{{Answer}}' + (NOTE_BLOCK if note_fields() else "") + _GRADE,
         }],
         css=CSS,
     )
@@ -796,11 +805,11 @@ def _cloze_model() -> genanki.Model:
         _stable_id("trellis:model:cloze"),
         "Trellis Cloze",
         model_type=genanki.Model.CLOZE,
-        fields=[{"name": f} for f in ("Text", "Crumb", *NOTE_FIELDS)],
+        fields=[{"name": f} for f in ("Text", "Crumb", *note_fields())],
         templates=[{
             "name": "Cloze",
             "qfmt": '<div class="crumb">{{Crumb}}</div>{{cloze:Text}}',
-            "afmt": '<div class="crumb">{{Crumb}}</div>{{cloze:Text}}' + NOTE_BLOCK + _GRADE,
+            "afmt": '<div class="crumb">{{Crumb}}</div>{{cloze:Text}}' + (NOTE_BLOCK if note_fields() else "") + _GRADE,
         }],
         css=CSS,
     )
@@ -887,7 +896,7 @@ def build_package(
         if card.type == "qa":
             note = genanki.Note(
                 model=qa_model,
-                fields=[_html(question), _html(answer, related, own, fold=skeleton.fold, fold_code=skeleton.fold_code, links=links, node=card.node) + index.get(card.id, "") + footer, crumb, "", ""],
+                fields=[_html(question), _html(answer, related, own, fold=skeleton.fold, fold_code=skeleton.fold_code, links=links, node=card.node) + index.get(card.id, "") + footer, crumb, *[""] * len(note_fields())],
                 guid=genanki.guid_for(f"trellis:{card.id}"),
                 tags=tags,
                 due=position,
@@ -895,7 +904,7 @@ def build_package(
         else:
             note = genanki.Note(
                 model=cloze_model,
-                fields=[_html(question) + footer, crumb, "", ""],
+                fields=[_html(question) + footer, crumb, *[""] * len(note_fields())],
                 guid=genanki.guid_for(f"trellis:{card.id}"),
                 tags=tags,
                 due=position,
