@@ -4,69 +4,35 @@ slug: subsets
 ## Q
 **LC 78 子集**｜Medium
 
-给一个整数数组 `nums`，其中元素**互不相同**，返回它所有可能的子集（幂集）。解集不能包含重复的子集，可以按任意顺序返回。`1 <= nums.length <= 10`，`-10 <= nums[i] <= 10`。例：`nums = [1,2,3]` → `[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]`；`nums = [0]` → `[[],[0]]`。
-
-给出完整的最优解答：识别、推导、代码、复杂度、易错点、追问。
+给元素互不相同的整数数组 `nums`，返回它的所有子集（幂集），顺序任意。
 
 ## A
-**一句话。** 回溯（backtracking）：递归树的**每个节点**都是一个子集，进入节点时记录当前路径的快照；然后只从 `start` 往后依次选下一个元素，选完递归、再撤销选择。因为只往后选，每个子集只会按下标递增的顺序出现一次。共 `2^n` 个子集，`O(n * 2^n)`。
-
-**识别。** 「返回**所有**子集 / 组合 / 排列」是回溯的信号：答案本身就是指数规模，不存在多项式解，目标是不重不漏地枚举。`n <= 10` 本身就暗示输出是 `2^10 = 1024` 个子集。「元素互不相同」说明不需要去重。
-
-**推导。** 每个元素“选或不选”，共 `2^n` 种；最直接的想法是用 `n` 位二进制掩码枚举。换成递归思路：路径上已经选了一些元素，下一步从还没考虑的元素里挑。若每次都从 `0` 开始挑，同一个子集会按不同顺序出现多次（变成排列）；规定“只能挑下标比上一个选的更大的元素”，每个子集就只有一种出现方式，不需要额外的去重结构。
+**一句话。** 回溯：递归树每个节点都是一个子集，进入时记录快照，只从 `start` 往后选，选完再撤销。
 
 ```python
-def subsets(nums: list[int]) -> list[list[int]]:
-    res: list[list[int]] = []
-    path: list[int] = []
+def subsets(nums):
+    res, path = [], []
 
-    def dfs(start: int) -> None:
-        # 每个节点都是一个子集：进来先记一份快照
-        res.append(path[:])
-        # 只往后选，保证同一个子集不会按不同顺序出现两次
+    def dfs(start):
+        res.append(path[:])       # 每个节点都是一个子集
         for i in range(start, len(nums)):
             path.append(nums[i])
-            dfs(i + 1)
-            path.pop()                      # 回溯：撤销选择
+            dfs(i + 1)            # 只往后选，不会重复
+            path.pop()            # 撤销选择
 
     dfs(0)
     return res
 ```
 
-运行：`[1,2,3]` → `[[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]`（共 8 个），`[0]` → `[[], [0]]`，长度 10 的数组 → `1024` 个子集。
-
-**复杂度。** 时间 `O(n * 2^n)`：共 `2^n` 个子集，每个拷贝 `O(n)`；空间除结果外 `O(n)`（递归深度和 `path`）。
-
-**拓展优化。**
-- 位掩码（bitmask）：选或不选对应 `0 .. 2^n - 1` 的二进制数，第 `i` 位为 `1` 就选 `nums[i]`，没有递归。
-
-```python
-def subsets(nums: list[int]) -> list[list[int]]:
-    n = len(nums)
-    # mask 的第 i 位为 1：选 nums[i]
-    return [[nums[i] for i in range(n) if mask >> i & 1]
-            for mask in range(1 << n)]
-```
-
-- 标准库 `itertools`：按大小逐个调 `combinations`，适合只要大小为 `k` 的子集（LC 77）。
-
-```python
-from itertools import chain, combinations
-
-def subsets(nums: list[int]) -> list[list[int]]:
-    # 大小 0..n 的组合依次拼起来 = 全部子集，共 2^n 个
-    sizes = range(len(nums) + 1)
-    groups = (combinations(nums, r) for r in sizes)
-    return [list(c) for c in chain.from_iterable(groups)]
-```
+**复杂度。** 时间 `O(n·2ⁿ)`，空间 `O(n)`。
 
 **易错点。**
-- 记录时不拷贝：`res.append(path)` 存的是同一个列表对象，之后被不断 `append` / `pop`，最终 `[1,2,3]` 得到 `[[], [], [], [], [], [], [], []]`（8 个空列表）。要用 `path[:]`。
-- 递归写成 `dfs(i)` 而不是 `dfs(i + 1)`：同一个元素被反复选，永不停止，抛 `RecursionError`。
-- 循环从 `0` 开始并用 `in path` 跳过已选：会生成排列，`[1,2,3]` 得到 `16` 个“子集”（`[1,2]` 和 `[2,1]` 都在），正确是 `8`。
+- 记录时不拷贝：`res.append(path)` 存的是同一个列表，最终 `[1,2,3]` 得到 8 个 `[]`。
+- 递归写成 `dfs(i)`：同一元素被反复选，抛 `RecursionError`。
+- 循环从 `0` 开始并用 `in path` 去重：生成排列，`[1,2,3]` 得 `16` 个，应为 `8`。
 
 **追问。**
-- 含重复元素（LC 90）：先排序，循环里 `if i > start and nums[i] == nums[i - 1]: continue`，跳过同一层的重复选择。
-- 只要大小为 `k` 的子集（LC 77 组合）：当 `len(path) == k` 时记录并返回，也可以直接用 `itertools.combinations`。
+- 含重复元素（LC 90）？：先排序，循环里 `i > start and nums[i] == nums[i-1]` 就跳过。
+- 只要大小为 `k` 的子集（LC 77）？：`len(path) == k` 时记录并返回。
 
-**同模式。** LC 90 子集 II、LC 77 组合、LC 46 全排列、LC 39 / 40 组合总和、LC 17 电话号码的字母组合。
+**同模式。** LC 90 子集 II、LC 77 组合、LC 46 全排列、LC 39 组合总和

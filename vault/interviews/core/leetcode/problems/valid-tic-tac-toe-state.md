@@ -4,52 +4,42 @@ slug: valid-tic-tac-toe-state
 ## Q
 **LC 794 有效的井字游戏**｜Medium
 
-给你一个字符串数组 `board` 表示井字游戏的棋盘。当且仅当在井字游戏过程中，棋盘有可能达到 `board` 所显示的状态时，才返回 `true`。棋盘是 `3 x 3`，由字符 `' '`（空位）、`'X'`、`'O'` 组成。规则：玩家轮流把字符放入空位，玩家 1 总是放 `'X'`，玩家 2 总是放 `'O'`；只能放在空位里；当有 3 个相同（且非空）的字符填满任何行、列或对角线时，游戏结束；所有位置非空时也算游戏结束；游戏结束后不允许再放。`board.length == 3`，`board[i].length == 3`，`board[i][j]` 为 `'X'`、`'O'` 或 `' '`。例：`["O  ","   ","   "]` → `false`（玩家 1 先放 `X`）；`["XOX"," X ","   "]` → `false`（没有轮流）；`["XOX","O O","XOX"]` → `true`。
-
-给出完整的最优解答：识别、推导、代码、复杂度、易错点、追问。
+`3 x 3` 棋盘（`' '`、`'X'`、`'O'`），`X` 先手轮流落子，有人连成三个或棋盘满则结束，结束后不能再落。判断该棋盘是否可能在游戏中出现。例：`["XOX"," X ","   "]` → `false`。
 
 ## A
-**一句话。** 只检查三条必要且充分的条件：`X` 的个数是 `O` 的个数或多 1；`X` 赢则 `X` 必须刚好多 1；`O` 赢则两者必须一样多（同时赢必然矛盾）。
-
-**识别。** 「判断一个状态是否可达」，状态空间极小（`3^9`），但不用搜索：从游戏规则推出不变量（先手比后手多 0 或 1 子，赢的一方一定是最后落子的一方），逐条验证。
-
-**推导。** 不必搜索 `3^9` 种落子顺序：先手 `X` 先落子，所以任何时刻 `O <= X <= O + 1`；游戏在某方连线的那一刻结束，所以哪一方赢，就决定了最后一子是谁落的、两方子数差必须是多少。满足这三条的盘面总能排出一个合法的落子顺序，所以它们既必要又充分。
+**一句话。** 只查三条：`X` 个数等于 `O` 或比 `O` 多 1；`X` 赢则必须多 1；`O` 赢则必须一样多。
 
 ```python
-def valid_tic_tac_toe(board: list[str]) -> bool:
+def valid_tic_tac_toe(board):
     x = sum(row.count("X") for row in board)
     o = sum(row.count("O") for row in board)
-    if not (o <= x <= o + 1):
-        return False                             # X 先手：任何时刻 X 比 O 多 0 或 1 子
+    if not (o <= x <= o + 1):   # X 先手
+        return False
 
-    lines = [list(row) for row in board]                              # 3 行
-    lines += [list(col) for col in zip(*board)]                       # 3 列
-    lines += [[board[i][i] for i in range(3)], [board[i][2 - i] for i in range(3)]]   # 2 条对角线
+    lines = [list(row) for row in board]            # 行
+    lines += [list(col) for col in zip(*board)]     # 列
+    lines += [[board[i][i] for i in range(3)],      # 对角线
+              [board[i][2 - i] for i in range(3)]]
 
-    def wins(p: str) -> bool:
+    def wins(p):
         return any(line == [p, p, p] for line in lines)
 
-    if wins("X") and x != o + 1:
-        return False                             # X 赢 = X 刚落完最后一子；若 x == o，说明 X 赢后 O 还在落子
-    if wins("O") and x != o:
-        return False                             # O 赢 = O 刚落完最后一子；若 x == o + 1，说明 O 赢后 X 还在落子
-    return True                                  # X、O 同时赢时 x == o + 1 与 x == o 互斥，必被上面拦下
+    if wins("X") and x != o + 1:    # X 赢后 O 还在落子
+        return False
+    if wins("O") and x != o:        # O 赢后 X 还在落子
+        return False
+    return True     # 两方同时赢时两个条件互斥，必被拦下
 ```
 
-运行：`["O  ","   ","   "]` → `False`，`["XOX"," X ","   "]` → `False`，`["XOX","O O","XOX"]` → `True`；`["XXX","OO ","   "]` → `True`，`["XXX","OOO","   "]` → `False`，`["XXX","OO ","O  "]` → `False`，`["   ","   ","   "]` → `True`。
-
-**复杂度。** 时间 `O(1)`（棋盘大小固定），空间 `O(1)`。
-
-**拓展优化。**
-- 推广到 `n x n` 棋盘、连成 `n` 个获胜：8 条线换成 `2n + 2` 条线，数量条件不变，但要多查一条：赢的一方必须存在一个「最后落下的子」，去掉它之后这一方不再连线（同一方有两条互不相交的线不可能出现）；`3 x 3` 里两条平行线要 `6` 个同色子，数量条件已经拦下。
+**复杂度。** 时间 `O(1)`，空间 `O(1)`。
 
 **易错点。**
-- 只检查数量：`["XXX","OOO","   "]` 数量相等，得到 `True`，正确是 `False`（两方不可能同时赢）。
-- `X` 赢了却只要求 `x >= o`：`["XXX","OO ","O  "]` 数量 `3 : 3`，得到 `True`，正确是 `False`（`X` 赢后 `O` 还在落子）。
-- `O` 赢时也只要求 `o <= x <= o + 1`：`["OOO","XX ","XX "]` 数量 `4 : 3`，得到 `True`，正确是 `False`（`O` 连线后 `X` 又落了子）。
+- 只检查数量：`["XXX","OOO","   "]` 数量相等得 `True`，两方不可能同时赢。
+- `X` 赢只要求 `x >= o`：`["XXX","OO ","O  "]` 得 `True`，应为 `False`（`X` 赢后 `O` 还在落子）。
+- `O` 赢也只要求数量合法：`["OOO","XX ","XX "]` 得 `True`，应为 `False`。
 
 **追问。**
-- 判断某一步之后的胜负（LC 1275）：落子后只检查这一步所在的行、列、对角线。
-- 给出一种具体的落子顺序：取赢家所有获胜线的公共格子作为最后一子，其余的子按 `X`、`O` 交替回放，最后落下它。
+- 判断某一步后的胜负（LC 1275）？：落子后只检查该步所在的行、列、对角线。
+- 给出一种具体落子顺序？：取赢家获胜线的公共格子作最后一子，其余交替回放。
 
-**同模式。** LC 1275 找出井字棋的获胜者、LC 348 设计井字棋、LC 36 有效的数独、LC 37 解数独、LC 289 生命游戏。
+**同模式。** LC 1275 找出井字棋的获胜者、LC 348 设计井字棋、LC 36 有效的数独、LC 289 生命游戏

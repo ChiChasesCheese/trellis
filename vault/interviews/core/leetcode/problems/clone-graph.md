@@ -4,67 +4,34 @@ slug: clone-graph
 ## Q
 **LC 133 克隆图**｜Medium
 
-给无向**连通**图中一个节点的引用，返回该图的**深拷贝**（deep copy，所有节点都是新建的）。每个节点有整数 `val` 和邻居列表 `neighbors`（`Node` 类：`val: int`，`neighbors: list[Node]`）。给定节点永远是 `val = 1` 的那个。节点数在 `[0, 100]`，`1 <= Node.val <= 100` 且互不相同，无重复边、无自环。例：邻接表 `[[2,4],[1,3],[2,4],[1,3]]` 克隆后结构相同；`[[]]`（单节点无邻居）→ `[[]]`；空图 `[]` → 空。
-
-给出完整的最优解答：识别、推导、代码、复杂度、易错点、追问。
+给无向连通图中一个节点，返回整张图的深拷贝（节点含 `val` 和 `neighbors`）。
 
 ## A
-**一句话。** 递归 DFS，用一个哈希表 `copies: 原节点 → 拷贝` 同时承担「已访问」和「找到对应拷贝」两个职责：第一次见到节点就建拷贝并登记，再递归克隆它的每个邻居；遇到已经登记的节点直接复用，环就在这里断开。`O(V + E)`。
-
-**识别。** 「复制一个带环的结构」：环意味着不能无脑递归，必须记录哪些节点已经复制过；而新节点之间的连边又需要通过「原节点 → 拷贝」的映射得到，所以同一张表既是 visited 又是映射。同类信号：随机指针链表、对象图拷贝。
-
-**推导。** 朴素递归「克隆自己 + 对每个邻居递归克隆」遇到环 `1-2-1-…` 无限递归 → 加 visited 集合避免死循环，但拿不到已建好的拷贝来连边 → 把 visited 升级成字典，值就是拷贝。DFS 版：进入节点先建拷贝并登记，再用递归结果给它挂上所有邻居的拷贝；每个节点只展开一次、每条边各处理一次。
+**一句话。** 递归 DFS，哈希表 `copies` 既当 visited 又存「原节点 → 拷贝」，环在这里断开。
 
 ```python
-def clone_graph(node: Node | None) -> Node | None:
-    copies: dict[Node, Node] = {}              # 原节点 -> 它的拷贝，同时充当 visited
+def clone_graph(node):
+    copies = {}                    # 原节点 -> 拷贝
 
-    def dfs(cur: Node) -> Node:
+    def dfs(cur):
         if cur in copies:
-            return copies[cur]                 # 已经克隆过：直接复用，环到这里就断了
-        copies[cur] = clone = Node(cur.val)    # 先登记再递归邻居，遇到环才不会死循环
+            return copies[cur]
+        copies[cur] = clone = Node(cur.val)   # 先登记再递归
         clone.neighbors = [dfs(nb) for nb in cur.neighbors]
         return clone
 
     return dfs(node) if node else None
 ```
 
-运行：`[[2,4],[1,3],[2,4],[1,3]]` → `[[2,4],[1,3],[2,4],[1,3]]`（所有节点都是新对象），`[[]]` → `[[]]`，`[[2],[1]]` → `[[2],[1]]`，空图 → `None`。
-
-**复杂度。** 时间 `O(V + E)`；空间 `O(V)`（哈希表加递归栈，栈深至多 `V`）。
-
-**拓展优化。**
-- BFS：没有递归，链状大图（`1500` 个节点）也不会 `RecursionError`。入队前先登记拷贝，出队时给当前拷贝挂上邻居的拷贝：
-
-```python
-from collections import deque
-
-
-def clone_graph_bfs(node: Node | None) -> Node | None:
-    if node is None:
-        return None
-    copies = {node: Node(node.val)}            # 入队前就登记：每个节点只入队一次
-    queue = deque([node])
-    while queue:
-        cur = queue.popleft()
-        for nb in cur.neighbors:
-            if nb not in copies:
-                copies[nb] = Node(nb.val)
-                queue.append(nb)
-            copies[cur].neighbors.append(copies[nb])   # 拷贝之间连边
-    return copies[node]
-```
+**复杂度。** 时间 `O(V + E)`，空间 `O(V)`。
 
 **易错点。**
-- 没有「原节点 → 拷贝」映射、每次都新建：相邻节点互为邻居，递归永远走不完。`[[2],[1]]` 抛 `RecursionError`。
-- 忘记判空：`[]` 的入参是 `None`，直接 `node.val` 会 `AttributeError`。
-- 先递归、后登记：`clone = Node(...); clone.neighbors = [dfs(nb) ...]` 之后才写 `copies[cur] = clone`，环上的节点会无限递归；登记必须在递归邻居之前。
-- 深度：递归深度最坏等于图里最长的一条路径。题目限定至多 `100` 个节点，没有问题；节点上千的链状图（例如 `1500` 个节点）会超过 CPython 默认递归上限（约 `1000`）而抛 `RecursionError`，要么调高 `sys.setrecursionlimit`，要么改用 BFS（见拓展优化）。
-- 直接 `copies[cur].neighbors = cur.neighbors`：新图的邻居还指向旧节点，只是「浅拷贝」。
+- 没有映射、每次都新建：`[[2],[1]]` 互为邻居，递归无限，抛 `RecursionError`。
+- 先递归后登记：环上节点会无限递归，登记必须在递归邻居之前。
+- 忘记判空：入参 `None` 时 `node.val` 报 `AttributeError`。
 
 **追问。**
-- 为什么 BFS 里也要在入队前登记：出队时才登记的话，同一节点会被多个邻居重复入队、建出多份拷贝，图结构就错了。
-- 图不连通、只给了节点列表：对每个未复制的节点各跑一次同样的流程，共用同一张 `copies`。
-- 一行调用：`copy.deepcopy(node)` 自带 memo 能处理环，但面试要求手写。
+- BFS 为什么要在入队前登记？：出队才登记会让同一节点被多次入队，建出多份拷贝。
+- 链状图上千节点会怎样？：超出递归上限，改用 BFS 或调高 `setrecursionlimit`。
 
-**同模式。** LC 138 随机链表的复制、LC 207 课程表（环检测）、LC 797 所有可能的路径、LC 399 除法求值。
+**同模式。** LC 138 随机链表的复制、LC 207 课程表、LC 797 所有可能的路径、LC 399 除法求值

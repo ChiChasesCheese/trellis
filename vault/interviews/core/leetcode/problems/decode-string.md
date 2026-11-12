@@ -4,101 +4,38 @@ slug: decode-string
 ## Q
 **LC 394 字符串解码**｜Medium
 
-给一个编码后的字符串 `s`，返回解码后的字符串。编码规则 `k[encoded_string]` 表示方括号内部的 `encoded_string` 正好重复 `k` 次，`k` 为正整数。输入总是有效的，没有额外空格，方括号总是合法的；原始数据不含数字，数字只表示重复次数（不会出现 `3a` 或 `2[4]`）；测试用例保证输出长度不超过 `10^5`。`1 <= s.length <= 30`，`s` 由小写英文字母、数字和方括号 `[]` 组成，`s` 中所有整数的取值范围为 `[1, 300]`。例：`"3[a]2[bc]"` → `"aaabcbc"`；`"3[a2[c]]"` → `"accaccacc"`；`"2[abc]3[cd]ef"` → `"abcabccdcdcdef"`。
-
-给出完整的最优解答：识别、推导、代码、复杂度、易错点、追问。
+解码 `k[encoded]`（括号内重复 `k` 次，可嵌套，`k` 可为多位数），如 `"3[a2[c]]"` → `"accaccacc"`。
 
 ## A
-**一句话。** 用栈保存「外层的状态」：读到 `[` 就把「已拼好的前缀」和「重复次数」压栈并清空当前层；读到 `]` 就弹栈，把当前层重复 `times` 次接在前缀后面。一遍扫描，`O(输出长度)`。
-
-**识别。** 「括号嵌套 + 先里后外」是栈或递归的信号：最内层先展开，结果再交给外层使用，后进先出。`k` 可能有多位数（范围到 300），要累加解析。
-
-**推导。** 暴力：反复用正则替换最内层的 `k[...]`，直到没有括号——每一轮都要重新扫描整个字符串 → 浪费：嵌套越深重复扫描越多 → 括号配对的顺序就是栈的出入顺序。
+**一句话。** 栈保存外层状态：遇 `[` 压入（前缀、次数）并清空当前层，遇 `]` 弹出并把当前层重复后接在前缀后。
 
 ```python
-def decode_string(s: str) -> str:
-    # (进入 [ 之前已拼好的前缀, 这一层的重复次数)
-    stack: list[tuple[str, int]] = []
+def decode_string(s):
+    stack = []                   # (进入 [ 前的前缀, 重复次数)
     cur, num = "", 0
     for ch in s:
         if ch.isdigit():
-            num = num * 10 + int(ch)      # 次数可能是多位数
+            num = num * 10 + int(ch)   # 次数可能多位
         elif ch == "[":
             stack.append((cur, num))
-            cur, num = "", 0              # 进入新的一层，从空串重新拼
+            cur, num = "", 0           # 新的一层
         elif ch == "]":
             prev, times = stack.pop()
-            # 把这一层重复 times 次接到前缀后面
             cur = prev + cur * times
         else:
             cur += ch
     return cur
 ```
 
-运行：`"3[a]2[bc]"` → `"aaabcbc"`，`"3[a2[c]]"` → `"accaccacc"`，`"2[abc]3[cd]ef"` → `"abcabccdcdcdef"`，`"abc3[cd]xyz"` → `"abccdcdcdxyz"`，`"10[a]"` → `"aaaaaaaaaa"`，`"a"` → `"a"`。
-
-**复杂度。** 时间 `O(输出长度)`（嵌套里的重复串被复制多次，总复制量与最终输出同量级）；空间 `O(嵌套深度 + 输出长度)`。
-
-**拓展优化。**
-- 递归下降（recursive descent）：`parse(i)` 解析到 `]` 或末尾，深度等于嵌套层数，`s.length <= 30` 不会爆栈。
-
-```python
-def decode_string_recursive(s: str) -> str:
-    def parse(i: int) -> tuple[str, int]:
-        out: list[str] = []
-        # 遇到 ] 说明这一层结束，交还给调用者
-        while i < len(s) and s[i] != "]":
-            if s[i].isdigit():
-                j = i
-                while s[j].isdigit():
-                    j += 1
-                times = int(s[i:j])                # 多位数的重复次数
-                # 跳过 [，递归解内层；i 停在对应的 ]
-                inner, i = parse(j + 1)
-                out.append(inner * times)
-                i += 1                             # 跳过 ]
-            else:
-                out.append(s[i])
-                i += 1
-        return "".join(out), i
-
-    return parse(0)[0]
-```
-
-- 只要解码后的长度：栈里存整数长度，拼接换成乘加，不分配内存；`"300[300[300[a]]]"` 的长度是 `27000000`。
-
-```python
-def decoded_length(s: str) -> int:
-    # (进入 [ 之前的长度, 这一层的重复次数)
-    stack: list[tuple[int, int]] = []
-    # cur：当前层已解码的长度
-    cur, num = 0, 0
-    for ch in s:
-        if ch.isdigit():
-            num = num * 10 + int(ch)               # 多位数的次数
-        elif ch == "[":
-            # 保存外层现场，进入内层从 0 开始数
-            stack.append((cur, num))
-            cur, num = 0, 0
-        elif ch == "]":
-            prev, times = stack.pop()
-            # 字符串拼接换成长度的乘加
-            cur = prev + cur * times
-        else:
-            # 一个普通字母贡献长度 1
-            cur += 1
-    return cur
-```
+**复杂度。** 时间 `O(输出长度)`，空间 `O(输出长度)`。
 
 **易错点。**
-- 次数是多位数：用 `num = num * 10 + int(ch)`。写成 `num = int(ch)` 时，`"10[a]"` 得到空串 `""`，正确是 `"aaaaaaaaaa"`。
-- 前缀必须压栈：只压次数、丢掉前缀时，`"ab2[c]"` 得到 `"cc"`，正确是 `"abcc"`。
-- 进入 `[` 后要把 `num` 清零：否则 `"3[a]2[bc]"` 里的 `2` 会接在上一个 `3` 后面变成 `32`，输出长度 `67` 而不是 `7`。
+- 次数写成 `num = int(ch)`：`"10[a]"` 得空串，应为十个 `a`。
+- 前缀没压栈：`"ab2[c]"` 得 `"cc"`，应为 `"abcc"`。
+- 进 `[` 后没清零 `num`：`"3[a]2[bc]"` 的 `2` 接成 `32`。
 
 **追问。**
-- 要第 `k` 个字符（LC 880）：从后往前反推，不展开字符串。
-- 为什么主解里 `cur * times` 不会拖慢？每个字符最终在输出里出现多少次，就被复制多少次，总复制量和输出长度同阶；真正要小心的是「中间结果」不会比最终输出更大，所以空间也是 `O(输出长度)`。
-- 输出会爆炸（如 `300[300[300[a]]]` 有 `2.7 * 10^7` 个字符）怎么办？用 `decoded_length` 只算长度，或做成生成器按需产出，避免一次性拼成大字符串。
-- 括号嵌套很深时哪个更稳？栈版没有递归深度限制；递归版深度等于嵌套层数，本题 `s.length <= 30` 不会爆栈，一般输入要改栈版。
+- 只要第 `k` 个字符（LC 880）？：不展开，从后往前按长度反推。
+- 输出会爆炸怎么办？：只算长度，或做成生成器按需产出。
 
-**同模式。** LC 224 基本计算器、LC 227 基本计算器 II、LC 726 原子的数量、LC 20 有效的括号。
+**同模式。** LC 224 基本计算器、LC 227 基本计算器 II、LC 726 原子的数量、LC 20 有效的括号

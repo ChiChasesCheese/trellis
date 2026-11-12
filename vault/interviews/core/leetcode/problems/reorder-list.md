@@ -4,80 +4,36 @@ slug: reorder-list
 ## Q
 **LC 143 重排链表**｜Medium
 
-给定一个单链表 `L` 的头节点 `head`，单链表 `L` 表示为 `L0 → L1 → … → Ln-1 → Ln`。请将其重新排列后变为 `L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → …`。不能只是单纯地改变节点内部的值，而是需要实际地进行节点交换。函数原地修改链表，不需要返回值。链表的长度范围为 `[1, 5 * 10^4]`，`1 <= node.val <= 1000`。
-
-例：`head = [1,2,3,4]` → `[1,4,2,3]`；`head = [1,2,3,4,5]` → `[1,5,2,4,3]`。
-
-给出完整的最优解答：考点、识别、推导、代码、复杂度、易错点。
+把链表 `L0→L1→…→Ln` 原地重排成 `L0→Ln→L1→Ln-1→…`，必须改指针，不能改值。
 
 ## A
-**考点：** 链表三件套组合：快慢指针找中点 + 反转后半段 + 交错合并（merge alternately）。
-
-**一句话。** 把链表从中间切成两半，后半段反转，然后两段交替取结点串起来。
-
-**识别。** 新顺序是「头、尾、头、尾……」，也就是前半段和反转后的后半段交替；单链表没法从尾部往前取，所以必须反转后半段。`n <= 5 * 10^4`，线性。
-
-**推导。** 如果能随机访问就简单了：下标 `i` 与 `n-1-i` 交替。链表不行。把前半段 `L0..Lm` 看成正序序列，后半段 `Lm+1..Ln` 反转成 `Ln..Lm+1`，两个序列轮流各取一个就是答案。所以只需要三个已经会的子程序。
-
-**简单解法。** 把所有结点放进数组，用下标双指针重连（空间 `O(n)`）：
-```python
-def reorder_list_array(head: ListNode | None) -> None:
-    nodes: list[ListNode] = []
-    while head:
-        nodes.append(head)
-        head = head.next
-    i, j = 0, len(nodes) - 1
-    while i < j:
-        nodes[i].next = nodes[j]    # 头接尾
-        i += 1
-        if i == j:
-            break
-        nodes[j].next = nodes[i]    # 尾接下一个头
-        j -= 1
-    nodes[i].next = None            # 收尾，防止成环
-```
-
-**最优解：** 找中点、反转、交错，空间 `O(1)`。
+**一句话。** 快慢指针找中点切开，反转后半段，再和前半段交替穿插。
 
 ```python
-def reorder_list(head: ListNode | None) -> None:
-    if not head or not head.next:
-        return
-    # 1. 快慢指针：slow 停在前半段最后一个结点
-    #    （奇数长时中间结点归前半段）
+def reorder_list(head):
     slow = fast = head
-    while fast.next and fast.next.next:
+    while fast.next and fast.next.next:   # slow 停在前半段末尾
         slow, fast = slow.next, fast.next.next
-    # 2. 断开两半（必须断，否则前半段尾巴还连着后半段），
-    #    并反转后半段
-    second, slow.next = slow.next, None
+    second, slow.next = slow.next, None   # 必须断开
     prev = None
-    while second:
-        second.next, prev, second = prev, second, second.next
-    second = prev                  # 反转后的后半段，从原来的尾开始
-    # 3. 交错合并：first 取一个，second 取一个
-    first = head
-    while second:
-        nxt1, nxt2 = first.next, second.next
-        first.next = second
-        second.next = nxt1
-        first, second = nxt1, nxt2
+    while second:                         # 反转后半段
+        nxt = second.next
+        second.next, prev, second = prev, second, nxt
+    first, second = head, prev
+    while second:                         # 交替穿插
+        n1, n2 = first.next, second.next
+        first.next, second.next = second, n1
+        first, second = n1, n2
 ```
 
-**运行。** `[1,2,3,4]` → `[1, 4, 2, 3]`；`[1,2,3,4,5]` → `[1, 5, 2, 4, 3]`；`[1]` → `[1]`；`[1,2]` → `[1, 2]`。
-
-**复杂度。** 时间 `O(n)`：找中点、反转、合并各扫一遍；空间 `O(1)`：只改指针，不借助数组或栈。
-
-**拓展优化。**
-- 递归写法：用递归栈当「从尾部往前取」的工具，回溯到第 `i` 层时取出对应的尾部结点，空间 `O(n)`，深度会触到 CPython 约 1000 的递归上限。
+**复杂度。** 时间 `O(n)`，空间 `O(1)`。
 
 **易错点。**
-- 没有断开前半段：`[1,2,3,4]` 中 `2.next` 仍指向 `3`，合并最后一步又把 `3.next` 接回 `3`，形成自环，遍历永远不结束。
-- 反转完直接用 `second`：循环结束时 `second` 已是 `None`，合并循环一次不进，`[1,2,3,4]` 只剩 `[1, 2]`（后半段已被断开丢掉），正确是 `[1, 4, 2, 3]`；要用 `prev`（后半段新头）。
+- 没断开前半段：`[1,2,3,4]` 里 `2.next` 仍指着 `3`，合并后成环，遍历不终止。
+- 反转完还用 `second`：此时它已是 `None`，要用 `prev`（后半段新头）。
 
 **追问。**
-- 面试里先怎么答？先说数组版：结点放进数组，双指针按下标重连，`O(n)` 时间 `O(n)` 空间；再说「找中点 + 反转 + 交错」把空间降到 `O(1)`。
-- 递归版行不行？行（回溯时取尾部结点），但栈深 `O(n)`，`n = 5 * 10^4` 在 CPython 默认限制下会 `RecursionError`，所以不作为主解。
-- 奇数长度怎么收尾？中间结点归前半段，合并循环以 `second` 为准，`first` 多出的那个结点自然留在最后：`[1,2,3]` → `[1, 3, 2]`。
+- 面试先怎么答？：先说放数组、双指针重连，`O(n)` 空间；再优化成找中点加反转加穿插。
+- 奇数长度怎么收尾？：中点归前半段，`second` 先耗尽，`[1,2,3]` 得 `[1,3,2]`。
 
-**同模式。** LC 234 回文链表、LC 206 反转链表、LC 21 合并两个有序链表、LC 876 链表的中间结点。
+**同模式。** LC 234 回文链表、LC 206 反转链表、LC 21 合并两个有序链表、LC 876 链表的中间结点

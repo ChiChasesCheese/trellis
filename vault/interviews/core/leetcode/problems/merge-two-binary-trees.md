@@ -4,61 +4,31 @@ slug: merge-two-binary-trees
 ## Q
 **LC 617 合并二叉树**｜Easy
 
-给两棵二叉树 `root1` 和 `root2`。把其中一棵盖到另一棵上，重叠的节点值相加，只在一棵树里存在的节点原样保留；合并必须从两棵树的根节点开始，返回合并后的二叉树。两棵树的节点数都在 `[0, 2000]`，`-10^4 <= Node.val <= 10^4`。例：`root1 = [1,3,2,5]`，`root2 = [2,1,3,null,4,null,7]` → `[3,4,5,5,4,null,7]`；`root1 = [1]`，`root2 = [1,2]` → `[2,2]`。
-
-给出完整的最优解答：识别、推导、代码、复杂度、易错点、追问。
+把两棵二叉树叠在一起，重叠节点值相加，只在一棵里的节点原样保留，返回合并后的树。
 
 ## A
-**一句话。** 同步遍历两棵树：两个对应节点都存在，就把值加到 `root1` 的节点上并继续比较它们的左右孩子；只有一边存在，就把那一侧的整棵子树直接挂过来。写成递归：`merge(a, b)` 一边为空返回另一边，否则值相加再递归合并左右孩子。`O(min(n1, n2))`。
-
-**识别。** 「两棵树按位置对应」是**同步遍历**（parallel traversal）的信号，同类有 LC 100 相同的树、LC 101 对称二叉树。「一边为空就整棵搬过去」让工作量只取决于重叠部分。节点数最多 2000，递归一遍就够；链状树深度可达 2000，超过 Python 默认递归深度 1000，见易错点。
-
-**推导。** 朴素想法：把两棵树各自展开成数组再按下标相加——树形不规则，下标对不上。递归最直观：`merge(a, b)` 中任一为空就返回另一个；否则 `a.val += b.val`，`a.left = merge(a.left, b.left)`，`a.right = merge(a.right, b.right)`。每个重叠节点访问一次，`O(min(n1, n2))`。直接把结果写在 `root1` 的节点上，不新建节点；一边为空时整棵子树原样返回，不必再走进去。
+**一句话。** 同步递归，一边为空就返回另一边，否则值相加再合并左右孩子。
 
 ```python
-def merge_trees(root1: TreeNode | None, root2: TreeNode | None) -> TreeNode | None:
-    if root1 is None:                        # 一边为空：另一边整棵子树原样保留（可能也是 None）
+def merge_trees(root1, root2):
+    if root1 is None:       # 另一边整棵子树原样保留
         return root2
     if root2 is None:
         return root1
-    root1.val += root2.val                   # 两边都有：值相加，写在 root1 的节点上
+    root1.val += root2.val
     root1.left = merge_trees(root1.left, root2.left)
     root1.right = merge_trees(root1.right, root2.right)
     return root1
 ```
 
-运行：`[1,3,2,5], [2,1,3,null,4,null,7]` → `[3,4,5,5,4,null,7]`，`[1], [1,2]` → `[2,2]`，`[], []` → `[]`，`[1], []` → `[1]`，`两条 2000 个节点的链` 在默认递归上限下抛 `RecursionError`，调高上限后合并出 `2000` 个节点。
-
-**复杂度。** 时间 `O(min(n1, n2))`：只访问两棵树的重叠部分，其余子树整棵挂接；空间 `O(h)`：递归栈，`h` 为重叠部分的高度，链状树时 `O(n)`。
+**复杂度。** 时间 `O(min(n1, n2))`，空间 `O(h)`。
 
 **易错点。**
-- 一边为空时要把另一侧子树**返回**（挂上去）。写成「两边都存在才处理」、一边为空就返回 `None`，会丢掉 `root2` 独有的子树：`[1]` 与 `[1,2]` 得到 `[2]`（正确 `[2,2]`）。
-- 根节点也要先判空，否则 `root1` 为 `None` 时 `root1.val` 直接报 `AttributeError`。
-- 递归深度：两条 2000 个节点的链深度就是 2000，CPython 默认递归上限约 1000，会抛 `RecursionError`；要么 `sys.setrecursionlimit` 调高，要么改成显式栈（见追问）。结果会复用 `root2` 的子树（节点共享）并改动 `root1`，需要保留输入时见追问。
+- 一边为空时返回 `None` 而不是另一边：丢掉独有的子树，`[1]` 与 `[1,2]` 得 `[2]`，应为 `[2,2]`。
+- 根节点没先判空：`root1` 为 `None` 时 `root1.val` 抛 `AttributeError`。
 
 **追问。**
-- 不允许修改输入：递归新建节点 `TreeNode(a.val + b.val, …)`，缺失一侧当作值 0、空孩子处理。
-- 树很深（递归受深度限制）：调高 `sys.setrecursionlimit` 只是补丁，面试里说明深度问题并给显式栈。栈里放「一对对应节点」，两边孩子都在才入栈，一边为空就直接把另一边挂上去：
-```python
-def merge_trees_stack(root1: TreeNode | None, root2: TreeNode | None) -> TreeNode | None:
-    if root1 is None:
-        return root2
-    if root2 is None:
-        return root1
-    stack = [(root1, root2)]                 # 每项是一对位置相同、都存在的节点
-    while stack:
-        a, b = stack.pop()
-        a.val += b.val                       # 合并结果直接写在 root1 的节点上
-        if a.left is None:
-            a.left = b.left                  # root1 缺左孩子：整棵挂过来（可能为 None）
-        elif b.left is not None:
-            stack.append((a.left, b.left))   # 两边都有：继续往下合并
-        if a.right is None:
-            a.right = b.right
-        elif b.right is not None:
-            stack.append((a.right, b.right))
-    return root1
-```
-- 合并 k 棵树：逐棵两两合并，总代价 `O(Σ n_i)`（每次只走重叠部分）。
+- 不许修改输入？：新建节点 `TreeNode(a.val + b.val)`，缺失一侧当作空。
+- 树很深怎么办？：显式栈存一对对应节点，一边缺孩子就直接挂另一边。
 
-**同模式。** LC 100 相同的树、LC 101 对称二叉树、LC 226 翻转二叉树、LC 572 另一棵树的子树。
+**同模式。** LC 100 相同的树、LC 101 对称二叉树、LC 226 翻转二叉树、LC 572 另一棵树的子树

@@ -4,59 +4,32 @@ slug: minimum-size-subarray-sum
 ## Q
 **LC 209 长度最小的子数组**｜Medium
 
-给一个含 `n` 个**正整数**的数组 `nums` 和一个正整数 `target`，找出和大于等于 `target` 的长度最小的连续子数组，返回它的长度；不存在则返回 `0`。`1 <= target <= 10^9`，`1 <= nums.length <= 10^5`，`1 <= nums[i] <= 10^4`。进阶：做出 `O(n)` 解后，再设计一个 `O(n log n)` 的解。例：`target = 7`，`nums = [2,3,1,2,4,3]` → `2`（`[4,3]`）；`target = 4`，`nums = [1,4,4]` → `1`；`target = 11`，`nums = [1,1,1,1,1,1,1,1]` → `0`。
-
-给出完整的最优解答：识别、推导、代码、复杂度、易错点、追问。
+给正整数数组 `nums` 和 `target`，求和 `>= target` 的最短连续子数组的长度，不存在返回 `0`。
 
 ## A
-**一句话。** 可变长滑动窗口：右端逐个吃进元素累加窗口和；只要和 `>= target` 就记录长度并缩左端，缩到不满足为止。元素都是正数，窗口和随右端增大、随左端增大而减小，所以两个端点都只前进、不回退，`O(n)`。
-
-**识别。** 「连续子数组」「和 `>= target`」「长度**最小**」三者并列是滑动窗口信号；关键条件是**全是正数**，保证“窗口越大和越大”的单调性。`n = 10^5` 排除 `O(n^2)`。同一个条件还给出第二条路：前缀和严格递增，可以二分，这就是进阶的 `O(n log n)`。
-
-**推导。** 暴力：枚举所有起点终点，累加求和，`O(n^3)`；前缀和优化后 `O(n^2)`。浪费：固定右端 `r` 后，满足条件的最大起点 `l(r)` 随 `r` 增大只会不降（正数使和单调），对每个 `r` 从头找起点是重复劳动。所以右端前进时，窗口和够了就一路缩左端并记录，缩到刚好不够为止；下一个右端接着用这个左端。每个下标进出窗口各一次，`O(n)`。
+**一句话。** 可变长滑动窗口：和够了就一路缩左端，每缩一步都是候选答案；元素为正，两端只前进。
 
 ```python
-def min_sub_array_len(target: int, nums: list[int]) -> int:
-    best = len(nums) + 1                    # 哨兵：比任何合法长度都大
+def min_sub_array_len(target, nums):
+    best = len(nums) + 1          # 哨兵：比任何合法长度都大
     left = total = 0
     for right, x in enumerate(nums):
-        total += x                          # 右端吃进 x
-        while total >= target:              # 窗口和够了：尽量缩左端，每缩一步都是一个候选答案
+        total += x
+        while total >= target:    # 够了：缩左端
             best = min(best, right - left + 1)
             total -= nums[left]
             left += 1
     return best if best <= len(nums) else 0
 ```
 
-运行：`(7, [2,3,1,2,4,3])` → `2`，`(4, [1,4,4])` → `1`，`(11, [1,1,1,1,1,1,1,1])` → `0`，`(1, [1])` → `1`。
-
-**复杂度。** 时间 `O(n)`：`right` 走 `n` 步，`left` 总共最多走 `n` 步；空间 `O(1)`。
-
-**拓展优化。**
-- 进阶 `O(n log n)`：前缀和严格递增，对每个起点二分找最近的合格终点：
-```python
-from bisect import bisect_left
-from itertools import accumulate
-
-
-def min_sub_array_len_bisect(target: int, nums: list[int]) -> int:
-    pre = list(accumulate(nums, initial=0))         # pre[j] - pre[i] = nums[i:j] 的和，严格递增
-    n = len(nums)
-    best = n + 1
-    for i in range(n):
-        j = bisect_left(pre, pre[i] + target, i + 1)   # 最小的 j 使 pre[j] >= pre[i] + target
-        if j <= n:
-            best = min(best, j - i)
-    return best if best <= n else 0
-```
+**复杂度。** 时间 `O(n)`，空间 `O(1)`。
 
 **易错点。**
-- 缩左端必须用 `while`，写成 `if` 只缩一步：`target = 9`，`nums = [1,1,1,9]` 得到 `4`，正确是 `1`（单独的 `[9]`）。
-- 没有答案时要返回 `0`，用哨兵 `len(nums) + 1` 区分，别把初始值写成 `0` 再 `min`（`min(0, ...)` 永远是 `0`）。
-- 滑动窗口依赖正数。含负数时窗口和不再单调：`target = 167`，`nums = [84,-37,32,40,95]`，本解法返回 `5`，正确是 `3`（`[32,40,95]`）。
+- 缩左端写成 `if`：`target=9`、`[1,1,1,9]` 得 `4`，应为 `1`。
+- 初值写 `0` 再取 `min`：永远是 `0`，要用哨兵。
 
 **追问。**
-- 含负数怎么办：前缀和不再单调，要用单调双端队列维护候选起点（LC 862 和至少为 K 的最短子数组）。
-- 返回子数组本身：更新答案时同时记下起点 `left`。
+- 含负数怎么办？：窗口和不再单调，用单调双端队列维护前缀和，见 LC 862。
+- 要 `O(n log n)` 的解？：前缀和单调递增，对每个右端二分查找左端。
 
-**同模式。** LC 3 无重复字符的最长子串、LC 76 最小覆盖子串、LC 713 乘积小于 K 的子数组、LC 862 和至少为 K 的最短子数组。
+**同模式。** LC 3 无重复字符的最长子串、LC 76 最小覆盖子串、LC 713 乘积小于 K 的子数组、LC 862 和至少为 K 的最短子数组
