@@ -1139,9 +1139,10 @@ def run(apply_to_anki: bool) -> None:
         p.picked = capped(ahead, cfg.get("family_caps", {}), {c.id: c.topic for c in cards})[:int(cfg["daily_new"])]
         carried = [i for i in carried if i in set(p.picked)]  # the sequence already puts what is left first; nothing is added on top
     # weak spots a real mock exposed come before coverage and the sprint: the plan's weights alone never reach them
-    first = cfg.get("weak_order", [])  # the latest mock's topics can go ahead of older ones; the rest keep skeleton order
-    weak = [c.id for c in sorted(cards, key=lambda c: first.index(c.topic) if c.topic in first else len(first))
-            if tree.top(c.topic) == "s00" and c.id in anki and c.id not in set(carried)
+    # weak_order holds topics, and single cards too: the core cards of the question a mock was about, in answer order
+    pos = {k: i for i, k in enumerate(cfg.get("weak_order", []))}  # the latest mock's go first; the rest keep skeleton order
+    weak = [c.id for c in sorted(cards, key=lambda c: pos.get(c.id, pos.get(c.topic, len(pos))))
+            if (tree.top(c.topic) == "s00" or c.id in pos) and c.id in anki and c.id not in set(carried)
             and anki[c.id]["queue"] == 0 and not (traces.get(c.id) and traces[c.id].reps)][: int(cfg.get("weak_per_day", 20))]
     # the quick deck (碎片速刷) is planned from the same answers: its order and number, and the points missed there,
     # whose full cards come next here. It is local material, so a checkout without it skips the step.
