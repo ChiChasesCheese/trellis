@@ -77,3 +77,6 @@ vault/interviews/companies/headlands/
 research/companies/headlands/
 vault/interviews/core/*/headlands/
 skeleton/headlands.yaml
+
+# mock interviews recorded by the sysdesign-board tool: personal, never public
+vault/system_design_mocks/
