@@ -6,6 +6,7 @@
 # 完整调研过程与大纲标题到叶子节点的映射见 vault/domains/snowflake/BUILD.md。
 domain: snowflake
 title: Snowflake 原理
+deck: "📦 其他::Snowflake 原理"
 lang: zh
 vault: domains/snowflake
 nodes:

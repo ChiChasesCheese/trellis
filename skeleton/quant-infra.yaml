@@ -5,6 +5,7 @@
 # live stack. Asset-class and factor-family knowledge lives in `markets`.
 domain: quant-infra
 title: Quant Infrastructure
+deck: "📦 其他::Quant Infrastructure"
 lang: en
 vault: domains/quant-infra
 nodes:

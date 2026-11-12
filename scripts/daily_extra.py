@@ -41,8 +41,8 @@ from lc_data import call  # noqa: E402
 
 OUT = ROOT / "sources/local/plan"
 HOMES = OUT / "homes.json"
-DECK = "今日计划"
-LC_DECK, LLD_DECK = "今日算法", "今日低层设计"  # LeetCode and low-level design each have a daily deck of their own (Chi 2026-11-11)
+DECK = "1 今日计划"  # the number sorts the daily decks first in Anki's alphabetical deck list
+LC_DECK, LLD_DECK = "2 今日算法", "3 今日低层设计"  # LeetCode and low-level design each have a daily deck of their own (Chi 2026-11-11)
 DAILY = (DECK, LC_DECK, LLD_DECK)
 CARRIED = "0 昨天没学完"  # what was dealt and not learned comes first the next day
 LLD_ROOT, SD_ROOT = "低层设计（LLD）", "系统设计"

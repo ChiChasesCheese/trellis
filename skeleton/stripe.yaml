@@ -4,6 +4,7 @@
 # them lives in vault/interviews/companies/stripe/.
 domain: stripe
 title: Stripe
+deck: "📦 其他::Stripe"
 lang: zh
 vault: interviews/companies/stripe/deck
 nodes:

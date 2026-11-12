@@ -4,6 +4,7 @@
 # Platform engineering and research methodology live in a sibling skeleton.
 domain: markets
 title: Markets & Factors
+deck: "📦 其他::Markets & Factors"
 lang: en
 vault: domains/markets
 nodes:

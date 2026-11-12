@@ -38,7 +38,8 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from trellis.build import NOTE_BLOCK, NOTE_FIELDS, note_fields  # noqa: E402
 
 HOME = Path(os.environ.get("QUICK_HOME") or ROOT / "sources/local/quick")
-DECK = "碎片速刷"
+DECK = "4 碎片速刷"  # the number sorts it with the daily decks
+PRESET = "碎片速刷"  # its preset kept the old name
 TAG = "quick"
 FORMATS = ("cloze", "mc", "flaw", "qa", "order", "match")
 KIND = {"cloze": "填空", "mc": "选择", "flaw": "找错", "qa": "快问", "order": "排序", "match": "配对"}
@@ -721,10 +722,10 @@ def preset(call) -> None:
     """The deck's own preset: `per_day` new cards a day to start with, the learning steps of the system-design deck so the two can be compared."""
     cfg = config()
     conf = call("getDeckConfig", deck=DECK)
-    if conf["name"] != DECK:
+    if conf["name"] != PRESET:
         known_file = HOME / "preset.json"
         cid = json.loads(known_file.read_text())["id"] if known_file.exists() else \
-            call("cloneDeckConfigId", name=DECK, cloneFrom=call("getDeckConfig", deck="系统设计")["id"])
+            call("cloneDeckConfigId", name=PRESET, cloneFrom=call("getDeckConfig", deck="系统设计")["id"])
         if not cid:
             raise RuntimeError(f"could not create preset {DECK}")
         known_file.write_text(json.dumps({"id": cid}))

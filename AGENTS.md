@@ -191,6 +191,10 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   too, at the end, or its notes have nowhere for Chi's questions. Adding a field to a note type that exists forces a
   one-way full sync. AnkiConnect refuses a full sync, so the upload is done once in the desktop app. Importing a whole
   package over existing notes (`anki-push`) would blank both fields.
+- Anki lists decks only alphabetically. The daily decks carry numbers so they sort first (1 今日计划, 2 今日算法,
+  3 今日低层设计, 4 碎片速刷); their presets kept the old names (`PLAN_PRESET`, `quick_deck.PRESET`). Rarely used
+  domains live under `📦 其他` through their skeleton's `deck:`. Rename a deck with Anki closed (`col.decks.rename`):
+  AnkiConnect cannot, and a running Anki keeps the old names.
 - A leaf is weak only on cards with a verdict (taken / slipped); young cards are not evidence, and a weak leaf whose grown
   cards are unreviewed is *settling* and is not a `grow` target (ADR 0009).
 

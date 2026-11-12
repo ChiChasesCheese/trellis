@@ -10,6 +10,7 @@
 # real cross-branch prerequisites.
 domain: code-core
 title: Code Core
+deck: "📦 其他::Code Core"
 lang: en
 vault: interviews/rounds/code-core
 nodes:

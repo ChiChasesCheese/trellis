@@ -4,6 +4,7 @@
 # Strategy research, backtest validity and portfolio construction live in `quant-infra`; asset classes in `markets`.
 domain: hft
 title: HFT 低延迟交易系统
+deck: "📦 其他::HFT 低延迟交易系统"
 lang: zh
 vault: domains/hft
 study:

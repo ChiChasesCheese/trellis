@@ -27,7 +27,7 @@ def main() -> int:
     known = set(by_num.values())
     members["TikTok_近半年"] = sorted(s for s in set(recent_slugs("TikTok")) | set(recent_slugs("ByteDance")) if s in known)
 
-    nids = call("findNotes", query='"deck:LeetCode Tops" OR "deck:今日计划" OR "deck:今日算法"')  # the daily decks borrow cards
+    nids = call("findNotes", query='"deck:LeetCode Tops" OR "deck:1 今日计划" OR "deck:2 今日算法"')  # the daily decks borrow cards
     ident_note = {}
     for i in range(0, len(nids), 500):
         for n in call("notesInfo", notes=nids[i:i + 500]):

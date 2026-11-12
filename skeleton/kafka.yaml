@@ -3,6 +3,7 @@
 # reading list, not a defect.
 domain: kafka
 title: Kafka
+deck: "📦 其他::Kafka"
 lang: zh
 vault: domains/kafka
 # How this domain is studied in Anki (ADR 0010). `core: true` below marks what

@@ -49,7 +49,8 @@ from trellis.traces import Trace  # noqa: E402
 
 DOMAIN = "sysdesign"
 OUT = ROOT / "sources/local/plan"
-DECK = "今日计划"
+DECK = "1 今日计划"
+PLAN_PRESET = "今日计划"  # the preset kept its name when the deck got its number
 OLD_DECK = "今日 100（面试轮廓）"
 DONE_TAG = "今日计划::已学"
 REPORT_TAG = "plan::report"
@@ -915,8 +916,8 @@ def preset(cfg):
         call("deleteDecks", decks=empty, cardsToo=True)
         names = [d for d in names if d not in empty]
     current = call("getDeckConfig", deck=DECK)
-    if current["name"] != DECK:
-        cid = call("cloneDeckConfigId", name=DECK, cloneFrom=call("getDeckConfig", deck="系统设计")["id"])
+    if current["name"] != PLAN_PRESET:
+        cid = call("cloneDeckConfigId", name=PLAN_PRESET, cloneFrom=call("getDeckConfig", deck="系统设计")["id"])
         call("setDeckConfigId", decks=names, configId=cid)
         current = call("getDeckConfig", deck=DECK)
     parts = list(daily_extra.SUBJECT_DECK.values())
@@ -928,7 +929,7 @@ def preset(cfg):
     known = json.loads(presets_file.read_text(encoding="utf-8")) if presets_file.exists() else {}
     for prefix in daily_extra.SUBJECT_DECK.values():
         name = prefix.split("::")[-1]
-        title = (name[2:] if name[:1].isdigit() else name.removeprefix("今日")) + "每日"  # 「1 系统设计」, 「今日算法」 -> 系统设计每日, 算法每日
+        title = re.sub(r"^\d+ ", "", name).removeprefix("今日") + "每日"  # 「1 系统设计」, 「今日算法」 -> 系统设计每日, 算法每日
         decks = [d for d in names if d == prefix or d.startswith(prefix + "::")]
         if not decks:
             continue

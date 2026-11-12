@@ -3,6 +3,7 @@
 # Cards first; the build record is research/domains/pl/BUILD.md.
 domain: pl
 title: 编程语言原理：Go · Java · Rust · Python · C++
+deck: "📦 其他::编程语言原理：Go · Java · Rust · Python · C++"
 lang: zh
 vault: domains/pl
 study:

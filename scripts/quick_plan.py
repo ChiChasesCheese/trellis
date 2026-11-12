@@ -275,8 +275,8 @@ def waiting_deck(call) -> None:
     if WAIT not in call("deckNames"):
         call("createDeck", deck=WAIT)
     conf = call("getDeckConfig", deck=WAIT)
-    if conf["name"] != WAIT:
-        cid = call("cloneDeckConfigId", name=WAIT, cloneFrom=call("getDeckConfig", deck=qd.DECK)["id"])
+    if conf["name"] != f"{qd.PRESET}::后备":  # the preset kept the deck's old name
+        cid = call("cloneDeckConfigId", name=f"{qd.PRESET}::后备", cloneFrom=call("getDeckConfig", deck=qd.DECK)["id"])
         if not cid:
             raise RuntimeError(f"could not create preset {WAIT}")
         call("setDeckConfigId", decks=[WAIT], configId=cid)

@@ -4,6 +4,7 @@
 # committed) after the skeleton file itself was not.
 domain: cdn-content
 title: CDN Content
+deck: "📦 其他::CDN Content"
 lang: en
 vault: domains/cdn-content
 nodes:
