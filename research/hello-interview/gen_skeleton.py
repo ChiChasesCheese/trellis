@@ -263,6 +263,9 @@ def main() -> None:
                 pid, zh = f"{tid}.{sec}.{p['page']}", ZH.get(key, p["title"])
                 # Chi (2026-11-03): every chapter is summary cards, then questions from the page, then questions beyond it
                 kids = [{"id": f"{pid}.{part}", "title": f"{label} · {zh}", "summary": why} for part, label, why in PAGE_PARTS]
+                if (cards_dir / "premium/answer" / p["page"]).is_dir():  # Chi (2026-11-12): the best-practice answer, with flowcharts
+                    kids.insert(0, {"id": f"{pid}.answer", "title": f"完整答案 · {zh}",
+                                    "summary": "最佳实践的完整答案：架构图、每条路径的流程图、每个深挖的机制与故障处理。"})
                 if (cards_dir / "premium/mock" / p["page"]).is_dir():  # Chi (2026-11-05): the round as it is spoken, step by step
                     kids.append({"id": f"{pid}.mock", "title": f"模拟面试 · {zh}", "summary": "按面试的真实进程一问一答：每一步说什么、白板画到哪。"})
                 if (cards_dir / "premium/sdx" / f"{pid}.more").is_dir():

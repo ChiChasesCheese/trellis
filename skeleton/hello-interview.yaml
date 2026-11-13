@@ -2263,6 +2263,9 @@ nodes:
       title: 视频平台（YouTube）
       summary: Hello Interview：Design a Video Streaming Platform Like YouTube。
       children:
+      - id: sd.problem-breakdowns.youtube.answer
+        title: 完整答案 · 视频平台（YouTube）
+        summary: 最佳实践的完整答案：架构图、每条路径的流程图、每个深挖的机制与故障处理。
       - id: sd.problem-breakdowns.youtube.notes
         title: 摘要 · 视频平台（YouTube）
         summary: 按小节总结这一章的核心内容。
