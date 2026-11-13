@@ -70,8 +70,40 @@ nodes:
     title: 推理服务在做什么：一次请求的一生
     summary: 用户的请求经 API 进入服务，排队、和别的请求凑成批、在加速器上做前向计算、把生成的 token 流式返回；推理服务就是把这件事做快、做省、做对。
     requires: [basics.generation-loop, basics.hardware-memory]
-- id: transformer
+- id: ml
   order: 1
+  core: true
+  title: 机器学习基础面试题（ML Fundamentals）
+  summary: SDET 面试也会问的机器学习基础：损失与优化、过拟合与正则、数据划分、分类指标、常见网络部件。建立在「从零开始」之上。
+  requires: [basics]
+  children:
+  - id: ml.loss-gradient
+    title: 损失函数与梯度下降：学习率、批量与随机梯度
+    summary: 损失衡量预测和答案差多少；梯度指出参数往哪调；学习率太大发散、太小太慢；mini-batch SGD。
+  - id: ml.optimizers
+    title: 优化器：SGD、Momentum、Adam
+    summary: 动量平滑方向，Adam 给每个参数自适应步长；为什么大模型训练多用 AdamW。
+    requires: [ml.loss-gradient]
+  - id: ml.backprop
+    title: 反向传播的直觉：链式法则逐层传梯度
+    summary: 从输出往回逐层用链式法则算每个参数的梯度；梯度消失与爆炸。
+    requires: [ml.loss-gradient]
+  - id: ml.overfitting
+    title: 过拟合、欠拟合与偏差方差
+    summary: 训练集好、新数据差就是过拟合；训练集、验证集、测试集各自的用途；数据泄漏。
+  - id: ml.regularization
+    title: 正则化：L1 与 L2、Dropout、早停
+    summary: L1 让权重稀疏、L2 让权重变小；dropout 随机丢神经元；早停看验证集。
+    requires: [ml.overfitting]
+  - id: ml.classification-metrics
+    title: 分类指标：准确率、精确率、召回率、F1、ROC 与 AUC
+    summary: 混淆矩阵四格；类别不平衡时准确率失效；精确率与召回率的取舍。
+  - id: ml.building-blocks
+    title: 常见网络部件：激活函数、归一化、残差、softmax 与交叉熵
+    summary: ReLU 与 GELU、LayerNorm 与 BatchNorm、残差连接为什么让深网络能训练、softmax 加交叉熵损失。
+    requires: [ml.backprop]
+- id: transformer
+  order: 2
   core: true
   title: Transformer 推理（Transformer Inference）
   summary: 一次前向计算做了什么：嵌入、注意力、前馈、层叠、输出 logits，以及分词与对话模板。
@@ -89,7 +121,7 @@ nodes:
     summary: BPE、特殊 token、增量反分词（多字节字符）、chat template 不一致带来的输出错误。
     requires: [transformer.forward-pass]
 - id: phases
-  order: 2
+  order: 3
   core: true
   title: 推理阶段与显存（Phases & Memory）
   summary: 预填充与解码为什么性质不同、KV 缓存的大小与管理、显存预算。
@@ -106,7 +138,7 @@ nodes:
     summary: 一个模型能不能放进一张卡（或一片晶圆）：权重字节 + KV 缓存 + 激活与工作区。
     requires: [phases.kv-cache]
 - id: serving
-  order: 3
+  order: 4
   core: true
   title: 服务端优化（Serving Optimisations）
   summary: 批处理、投机解码、量化、并行切分、混合专家、预填充与解码分离。
@@ -131,7 +163,7 @@ nodes:
     title: 预填充与解码分离部署
     summary: 把 prefill 和 decode 放到不同机器，KV 缓存跨机传输；为什么能同时改善首 token 延迟和吞吐。
 - id: stack
-  order: 4
+  order: 5
   title: 服务栈与接口（Serving Stack & API）
   summary: 推理引擎的内部结构、OpenAI 兼容接口及其测试。
   children:
@@ -143,7 +175,7 @@ nodes:
     summary: chat completions、SSE 流式、stop、max_tokens、usage、错误码；测试流式顺序、截断、计费字段与并发。
     requires: [stack.engines]
 - id: metrics
-  order: 5
+  order: 6
   core: true
   title: 指标与基准（Metrics & Benchmarking）
   summary: 延迟与吞吐指标、怎么做可信的推理基准、发布前的性能门限。
@@ -160,7 +192,7 @@ nodes:
     summary: 每个模型、批大小、上下文长度一条基线，多次运行取分布，超过阈值即阻断发布。
     requires: [metrics.benchmarking]
 - id: numerics
-  order: 6
+  order: 7
   core: true
   title: 数值与正确性（Numerics & Correctness）
   summary: 数值格式、非确定性、精度验证、新模型上线验证、常见推理缺陷。
@@ -184,7 +216,7 @@ nodes:
     title: 经典推理缺陷：EOS 与 stop、位置 id、模板错配、截断、反分词
     summary: 不停止或提前停止、位置 id 错位、模板不一致、上下文截断、多字节字符被切开。
 - id: accelerators
-  order: 7
+  order: 8
   core: true
   title: AI 加速器（Accelerators）
   summary: GPU 架构、屋顶线模型、晶圆级引擎与它为什么推理快、权重流式执行、主机与设备之间的数据通路。
@@ -212,7 +244,7 @@ nodes:
     title: 主机与设备：PCIe、DMA、RDMA 与集合通信
     summary: 数据从主机到设备的通路、DMA、RDMA / RoCE / InfiniBand，以及 all-reduce 等集合通信。
 - id: compiler
-  order: 8
+  order: 9
   title: 编译器、运行时与内核（Compiler, Runtime & Kernels）
   summary: ML 编译器的流水线、kernel 与算子融合、运行时的职责、软硬件集成与它们的测试方法。
   children:

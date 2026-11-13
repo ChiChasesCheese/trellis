@@ -259,6 +259,14 @@ nodes:
       - id: performance.amortized
         title: Amortized & Lazy Techniques
         summary: Amortized reasoning for a heap with stale entries, incremental maintenance instead of recomputation, and caching a derived value safely.
+      - id: performance.numeric-arrays
+        title: Numeric Arrays & Cache-Friendly Loops
+        summary: Dot products, matrix multiply and why loop order changes speed, blocking / tiling, 2D prefix sums, sparse vectors as a dict or CSR, and handing the inner loop to numpy.
+        requires: [performance.budget]
+      - id: performance.parallel-split
+        title: Splitting Array Work Across Workers
+        summary: Chunking an array over threads or processes, why the GIL makes threads useless for pure-Python math, `concurrent.futures`, the two-pass parallel prefix sum, merging partial results, and checking against a serial reference.
+        requires: [performance.numeric-arrays]
 
   - id: python
     order: 10

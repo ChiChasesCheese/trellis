@@ -71,7 +71,9 @@ def deal() -> int:
     for part in plan:  # labels carry their own numbers and may nest ("03 AI 从零开始::01 模型是什么")
         for i in part["ids"]:
             want.setdefault(i, f"{d}::{part['label']}")
-    tagged = call("findNotes", query=" OR ".join(f'"tag:id::{i}"' for i in want)) if want else []
+    keys, tagged = list(want), []
+    for k in range(0, len(keys), 300):  # one OR per id: Anki's SQL caps the expression depth at 1000
+        tagged += call("findNotes", query=" OR ".join(f'"tag:id::{i}"' for i in keys[k:k + 300]))
     by_ident: dict[str, list[dict]] = defaultdict(list)
     cards = _info(call("findCards", query=f"nid:{','.join(map(str, tagged))}")) if tagged else []
     for cid, ident in _ident(cards).items():
