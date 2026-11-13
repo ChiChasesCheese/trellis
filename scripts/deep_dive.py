@@ -5,7 +5,7 @@ study_plan.py calls `pick` during the daily run; the cards it returns go into th
 Order (Chi, 2026-11-12: by exam-point coverage). Every question done before counts as held. The next question is the
 one whose cards, once held, add the most exam-point weight to what is held. The deck names, per question, the share of
 all exam-point weight held once it is learnt and how much it adds. A question stays until every one of its cards has
-been seen; then the next one is chosen.
+been seen; then the next one is chosen. Questions in the plan config's `deep_dive.paused` are skipped for now.
 
 The questions are the design problems (s05, without the collection of real systems) and TikTok's system-design
 questions (tt.sd.*). State lives in
@@ -28,6 +28,13 @@ NOT_A_QUESTION = {"q.in-the-wild"}  # 真实系统案例: a collection of real s
 
 def is_question(top: str, topic: str) -> bool:
     return (top == "s05" or topic.startswith("tt.sd.")) and topic not in NOT_A_QUESTION
+
+
+def paused() -> set[str]:
+    """Questions set aside for now (plan config `deep_dive.paused`): skipped, and left if one is in progress."""
+    f = ROOT / "sources/local/plan/config.json"
+    cfg = json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+    return set(cfg.get("deep_dive", {}).get("paused", []))
 
 
 def load() -> dict:
@@ -54,7 +61,10 @@ def pick(cards, model, card_mastery: dict[str, float], top, title, seen: set[str
 
     for q in state["done"]:
         hold(q)
+    skip = paused()
     cur = state.get("current")
+    if cur in skip:  # set aside: not done, just not now
+        cur = None
     if cur and cur in by_q and all(c.id in seen for c in by_q[cur]):  # learnt: on to the next one
         state["done"].append(cur)
         hold(cur)
@@ -67,7 +77,7 @@ def pick(cards, model, card_mastery: dict[str, float], top, title, seen: set[str
             trial.update({c.id: 1.0 for c in by_q[q]})
             return model.coverage(trial) - base
 
-        left = [q for q in by_q if q not in state["done"]]
+        left = [q for q in by_q if q not in state["done"] and q not in skip]
         if not left:
             return None
         cur = max(left, key=gain)
@@ -78,7 +88,7 @@ def pick(cards, model, card_mastery: dict[str, float], top, title, seen: set[str
     return {"state": state, "question": cur, "title": title(cur),
             "cards": [c.id for c in by_q[cur] if c.id not in seen or c.id in due],
             "reviews": [c.id for q in state["done"] for c in by_q.get(q, []) if c.id in due],
-            "coverage": covered, "gain": covered - base, "left": len([q for q in by_q if q not in state["done"]]) - 1}
+            "coverage": covered, "gain": covered - base, "left": len([q for q in by_q if q not in state["done"] and q not in skip]) - 1}
 
 
 def stage(d: dict) -> str:
