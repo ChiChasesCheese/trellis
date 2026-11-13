@@ -7,8 +7,8 @@
 Chi (2026-11-13): the cards stay in their own domains (the single source of truth); this deck only borrows
 them, in the order the prep plan ranks them (80/20 by how likely and how central). Plan config `company`:
 {"deck": "6 <company>", "plan": "<path to plan.json>", "new_per_day": 60}. plan.json is
-[{"label": "公司与岗位", "ids": ["<card id>", …]}, …]: one numbered sub-deck per entry, dealt in that order (the preset
-gathers new cards by deck order). Cards keep their reviews here until `release`.
+[{"label": "01 公司与岗位::01 业务", "ids": ["<card id>", …]}, …]: one sub-deck per entry, named as given, so the
+labels' numbers set the order the preset gathers new cards in (deck order). Cards keep their reviews here until `release`.
 
 study_plan.py leaves these cards alone: they are read (so mastery is right) but never dealt into 今日计划 or the deep dive.
 """
@@ -68,9 +68,9 @@ def deal() -> int:
     c, d = cfg(), deck()
     plan = json.loads((ROOT / c["plan"]).read_text(encoding="utf-8"))
     want: dict[str, str] = {}  # ident -> sub-deck, first part wins
-    for n, part in enumerate(plan, 1):
+    for part in plan:  # labels carry their own numbers and may nest ("03 AI 从零开始::01 模型是什么")
         for i in part["ids"]:
-            want.setdefault(i, f"{d}::{n:02d} {part['label']}")
+            want.setdefault(i, f"{d}::{part['label']}")
     tagged = call("findNotes", query=" OR ".join(f'"tag:id::{i}"' for i in want)) if want else []
     by_ident: dict[str, list[dict]] = defaultdict(list)
     cards = _info(call("findCards", query=f"nid:{','.join(map(str, tagged))}")) if tagged else []
