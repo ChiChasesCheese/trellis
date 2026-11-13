@@ -69,7 +69,8 @@ def pick(cards, model, card_mastery: dict[str, float], top, title, seen: set[str
     if cur in skip:  # set aside: not done, just not now
         cur = None
     if cur and cur in by_q and all(c.id in seen for c in by_q[cur]):  # learnt: on to the next one
-        state["done"].append(cur)
+        if cur not in state["done"]:  # a done question comes back when a mock adds cards to it
+            state["done"].append(cur)
         hold(cur)
         cur = None
     base = model.coverage(held)

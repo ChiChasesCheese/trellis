@@ -2,6 +2,7 @@
 
     uv run python scripts/study_plan.py report          # compute and write the report + dashboard, change nothing in Anki
     uv run python scripts/study_plan.py daily           # report, then rebuild the 今日计划 deck and its report card
+    uv run python scripts/study_plan.py deep            # deal 系统设计高频题 again, nothing else
     uv run python scripts/study_plan.py serve --host <tailnet ip> [--minutes 30]   # the dashboard, live, then stop
 
 The model is trellis/plan.py (weight x not-yet-held x readiness). This script is the adapter: it reads the merged
@@ -1084,7 +1085,9 @@ def drop_old_deck():
 # ---------------------------------------------------------------- main
 
 
-def run(apply_to_anki: bool) -> None:
+def run(apply_to_anki: bool, deep_only: bool = False) -> None:
+    """The daily plan. With `deep_only`, only the deck 系统设计高频题 is dealt again; every other deck, the report and the
+    history stay as they were (after a mock adds cards to today's question, or a question is switched by hand)."""
     cfg = config()
     now = datetime.now()
     sprint_day = plan_sprint.apply(cfg, now.date())
@@ -1163,7 +1166,7 @@ def run(apply_to_anki: bool) -> None:
     quick, deep = {}, []
     if model and (quick_plan.qd.HOME / "points.json").exists():
         try:
-            quick = quick_plan.plan(call, apply_to_anki, model, now)
+            quick = quick_plan.plan(call, apply_to_anki and not deep_only, model, now)
             unseen_rank = {c.id: c.rank for c in cards if c.id in anki and c.id not in set(carried) | set(weak)
                            and anki[c.id]["queue"] == 0 and not (traces.get(c.id) and traces[c.id].reps)}
             deep = quick_plan.full_cards(quick["missed"], kp_state["points"].card, unseen_rank, quick_plan.settings()["deepen_per_day"])
@@ -1215,7 +1218,7 @@ def run(apply_to_anki: bool) -> None:
         for c in cards:
             topic_sum[c.topic] += c.weight
         sd_value = {c.id: tw.get(c.topic, 0.0) * c.weight / (topic_sum[c.topic] or 1.0) for c in cards}
-    if apply_to_anki:  # today's LeetCode analysis: mastery, slips and similar problems read from fresh numbers
+    if apply_to_anki and not deep_only:  # today's LeetCode analysis: mastery, slips and similar problems read from fresh numbers
         import lc_analysis
         lc_analysis.main()
     extra = daily_extra.prepare(cfg, sd_value, carry=carry, points=kp_state.get("model"),
@@ -1231,6 +1234,14 @@ def run(apply_to_anki: bool) -> None:
         body += f"<p>{html.escape(quick_plan.line(quick))}" + (f" · 其中 {len(deep)} 个考点的完整卡排进了今天" if deep else "") + "</p>"
     summary["extra"] = {"lc_new": len(extra.lc_new), "lc_similar": len(extra.lc_similar), "lld_new": len(extra.lld_new), "work_new": len(extra.work_new), "reviews": len(extra.reviews),
                         "backlog": extra.backlog}
+    if deep_only:  # the deep dive alone: the rest of today's plan stays as dealt
+        deal_deep(extra.deep)
+        preset(cfg)
+        if dd:
+            deep_dive.save(dd)
+        call("sync")
+        print(f"系统设计高频题 dealt again: {len(extra.deep)} cards")
+        return
     OUT.mkdir(parents=True, exist_ok=True)
     hist_file.write_text("".join(json.dumps(h, ensure_ascii=False) + "\n" for h in history), encoding="utf-8")
     state = {"date": summary["date"], "held": p.held, "picked": p.picked,
@@ -1260,6 +1271,34 @@ def run(apply_to_anki: bool) -> None:
         subprocess.run([sys.executable, str(ROOT / "scripts/study_map.py")], cwd=ROOT, check=False)  # the map site follows the plan
         call("sync")
         print("Anki: 今日计划 rebuilt")
+
+
+def deal_deep(items: list[dict]) -> None:
+    """Deal the deck 系统设计高频题 alone. What sits in it and is not wanted today goes home; today's cards come in, each
+    remembering its home deck (the skeleton's deck for a card borrowed by another daily deck)."""
+    deck = daily_extra.DEEP_DECK
+    home = daily_extra.homes()
+    want = {x["card"] for x in items}
+    back = defaultdict(list)
+    for cid in call("findCards", query=f'"deck:{deck}"'):
+        if cid not in want and str(cid) in home:
+            back[home.pop(str(cid))].append(cid)
+    for d, ids in back.items():
+        call("changeDeck", cards=ids, deck=d)
+    info = {c["cardId"]: c for c in call("cardsInfo", cards=sorted(want))} if want else {}
+    tags = {n["noteId"]: n["tags"] for n in call("notesInfo", notes=sorted({c["note"] for c in info.values()}))} if info else {}
+    built = built_decks()
+    for cid, c in info.items():
+        if c["deckName"].startswith(deck):
+            continue
+        if daily_extra.in_daily(c["deckName"]):
+            ident = next(t[4:] for t in tags[c["note"]] if t.startswith("id::"))
+            home[str(cid)] = built[ident]
+        else:
+            home[str(cid)] = c["deckName"]
+    for st in dict.fromkeys(x["stage"] for x in items):
+        call("changeDeck", cards=[x["card"] for x in items if x["stage"] == st], deck=f"{deck}::{st}")
+    daily_extra.HOMES.write_text(json.dumps(home, ensure_ascii=False, indent=0), encoding="utf-8")
 
 
 def sprint_plan(cfg, tree, cards, p, traces, edges, gen, sprint_day, now) -> dict | None:
@@ -1300,7 +1339,7 @@ def main() -> int:
         minutes = int(args[args.index("--minutes") + 1]) if "--minutes" in args else 30
         serve(host, minutes)
         return 0
-    if cmd != "daily":
+    if cmd not in ("daily", "deep"):
         run(apply_to_anki=False)
         return 0
     # one rebuild at a time: a late scheduled run and a run by hand would otherwise move the same cards between decks together
@@ -1310,7 +1349,7 @@ def main() -> int:
         except BlockingIOError:
             print("another daily run holds the lock; nothing done")
             return 1
-        run(apply_to_anki=True)
+        run(apply_to_anki=True, deep_only=cmd == "deep")
     return 0
 
 
