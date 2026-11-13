@@ -13,11 +13,69 @@ study:
   new_per_day: 25
   reviews_per_day: 150
 nodes:
+- id: basics
+  order: 0
+  core: true
+  title: 从零开始：模型、神经网络与大语言模型
+  summary: 写给完全没学过 AI 的人：模型是什么、神经网络怎么算、训练和推理的区别、语言模型怎么一个字一个字地生成，以及推理服务在做什么。之后的每一节都建立在这里。
+  children:
+  - id: basics.what-is-a-model
+    title: 模型是什么：带参数的函数
+    summary: 模型就是一个把输入变成输出的函数，里面有大量可调的数字（参数、权重）；参数由训练得到，推理时固定不变。
+  - id: basics.vectors-matrices
+    title: 向量、矩阵与张量：AI 的计算几乎都是矩阵乘法
+    summary: 向量是一串数，矩阵是一张数表，张量是更多维的数组；神经网络的一层基本就是"输入向量 × 权重矩阵"，所以算力花在乘加上。
+    requires: [basics.what-is-a-model]
+  - id: basics.neural-network
+    title: 神经网络：层、权重、激活函数与前向计算
+    summary: 一层 = 矩阵乘法 + 非线性激活函数，多层叠起来；输入从第一层算到最后一层叫前向计算（forward pass）。
+    requires: [basics.vectors-matrices]
+  - id: basics.training-vs-inference
+    title: 训练与推理：学参数与用参数
+    summary: 训练用损失函数、反向传播和梯度下降反复调整参数，很贵；推理只用训练好的参数做前向计算，是面向用户的部分。
+    requires: [basics.neural-network]
+  - id: basics.hardware-memory
+    title: 硬件常识：CPU 与 GPU、算力与内存带宽、存储层级
+    summary: GPU 有成千上万个并行乘加单元；FLOPs 衡量算力，GB/s 衡量搬数据的速度；寄存器、SRAM、HBM/DRAM 越近越快越小。
+    requires: [basics.vectors-matrices]
+  - id: basics.tokens
+    title: Token 与词表：模型眼里的文字
+    summary: 文字先被切成 token（词或词的一部分），每个 token 对应词表里的一个编号；模型只处理编号，输出时再转回文字。
+    requires: [basics.what-is-a-model]
+  - id: basics.language-model
+    title: 语言模型：预测下一个 token 的概率
+    summary: 语言模型输入一段 token，输出词表上每个 token 作为"下一个"的概率；logits 经 softmax 变成概率。
+    requires: [basics.tokens, basics.neural-network]
+  - id: basics.generation-loop
+    title: 生成循环：一次一个 token，自回归
+    summary: 生成文字就是反复"预测下一个 token、选一个、接到末尾再预测"，直到遇到结束符或长度上限；选法叫采样（贪心、温度）。
+    requires: [basics.language-model]
+  - id: basics.embeddings
+    title: 嵌入：把 token 变成向量
+    summary: 每个 token 编号查表得到一个几千维的向量（embedding），意思相近的词向量也相近；模型内部全程处理这些向量。
+    requires: [basics.tokens, basics.vectors-matrices]
+  - id: basics.attention
+    title: 注意力机制的直觉：每个 token 看其他 token
+    summary: 为了理解上下文，每个位置用查询（Q）去和所有位置的键（K）比相似度，按相似度加权汇总值（V）。
+    requires: [basics.embeddings]
+  - id: basics.transformer-block
+    title: Transformer：注意力 + 前馈网络，堆几十层
+    summary: 一个 Transformer 块 = 注意力 + 前馈网络 + 残差连接 + 归一化；大模型就是几十到上百个这样的块叠起来。
+    requires: [basics.attention, basics.neural-network]
+  - id: basics.llm-lifecycle
+    title: 大模型从哪来：预训练、微调、对齐与参数规模
+    summary: 先在海量文本上预训练，再指令微调和对齐（RLHF 等）成对话模型；7B、70B 指参数个数，决定显存和速度。
+    requires: [basics.transformer-block, basics.training-vs-inference]
+  - id: basics.inference-serving
+    title: 推理服务在做什么：一次请求的一生
+    summary: 用户的请求经 API 进入服务，排队、和别的请求凑成批、在加速器上做前向计算、把生成的 token 流式返回；推理服务就是把这件事做快、做省、做对。
+    requires: [basics.generation-loop, basics.hardware-memory]
 - id: transformer
   order: 1
   core: true
   title: Transformer 推理（Transformer Inference）
   summary: 一次前向计算做了什么：嵌入、注意力、前馈、层叠、输出 logits，以及分词与对话模板。
+  requires: [basics.inference-serving]
   children:
   - id: transformer.forward-pass
     title: 一次前向计算：嵌入、注意力、MLP、logits
