@@ -1,0 +1,179 @@
+# How a large language model is served and how it runs on hardware: transformer inference, serving optimisations,
+# the serving stack and its API, metrics and benchmarking, numerics and correctness, accelerators (GPU and wafer-scale),
+# compilers, runtimes and kernels. Serving-system design questions (ChatGPT, chatbot) stay in hello-interview; tool
+# internals (tokenizer, sampling, paged KV, prefix cache) in under-the-hood. Study order is top to bottom.
+domain: llm-inference
+title: LLM 推理与 AI 加速器
+deck: "📦 其他::LLM 推理与 AI 加速器"
+lang: zh
+vault: domains/llm-inference
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 25
+  reviews_per_day: 150
+nodes:
+- id: transformer
+  order: 1
+  core: true
+  title: Transformer 推理（Transformer Inference）
+  summary: 一次前向计算做了什么：嵌入、注意力、前馈、层叠、输出 logits，以及分词与对话模板。
+  children:
+  - id: transformer.forward-pass
+    title: 一次前向计算：嵌入、注意力、MLP、logits
+    summary: token 进入嵌入层，逐层经过注意力和前馈网络，最后投影成词表大小的 logits，再采样出下一个 token。
+  - id: transformer.attention-variants
+    title: 注意力变体：MHA、MQA、GQA 与位置编码 RoPE
+    summary: 多头、多查询、分组查询注意力对 KV 缓存大小的影响；旋转位置编码和长上下文扩展。
+    requires: [transformer.forward-pass]
+  - id: transformer.tokenization
+    title: 分词、反分词与对话模板
+    summary: BPE、特殊 token、增量反分词（多字节字符）、chat template 不一致带来的输出错误。
+    requires: [transformer.forward-pass]
+- id: phases
+  order: 2
+  core: true
+  title: 推理阶段与显存（Phases & Memory）
+  summary: 预填充与解码为什么性质不同、KV 缓存的大小与管理、显存预算。
+  children:
+  - id: phases.prefill-decode
+    title: 预填充与解码：算力受限与带宽受限
+    summary: prefill 一次处理整段输入，矩阵乘法吃满算力；decode 每步一个 token，要把全部权重读一遍，受内存带宽限制。
+  - id: phases.kv-cache
+    title: KV 缓存：大小计算、分页、淘汰与抢占
+    summary: 每 token 的 KV 字节数公式、PagedAttention 分块、显存不够时的抢占与重算。
+    requires: [phases.prefill-decode]
+  - id: phases.memory-budget
+    title: 显存预算：权重、KV、激活
+    summary: 一个模型能不能放进一张卡（或一片晶圆）：权重字节 + KV 缓存 + 激活与工作区。
+    requires: [phases.kv-cache]
+- id: serving
+  order: 3
+  core: true
+  title: 服务端优化（Serving Optimisations）
+  summary: 批处理、投机解码、量化、并行切分、混合专家、预填充与解码分离。
+  children:
+  - id: serving.batching
+    title: 批处理：静态、动态、连续批处理与分块预填充
+    summary: continuous batching 每步重组批、chunked prefill 让长输入不阻塞解码；批大小与延迟的取舍。
+  - id: serving.speculative
+    title: 投机解码：起草、验证与接受率
+    summary: 小模型或多 token 头起草、大模型一次验证；接受率决定加速比；输出分布必须与原模型一致。
+  - id: serving.quantization
+    title: 量化：INT8、INT4、FP8，权重与激活，KV 量化
+    summary: 只量化权重与权重加激活的区别、KV 缓存量化、精度损失怎么测、什么时候不能量化。
+  - id: serving.parallelism
+    title: 并行切分：张量、流水线、数据、专家、序列并行
+    summary: TP 切矩阵、PP 切层、EP 切专家、SP 切序列；每种的通信量和适用场景。
+  - id: serving.moe
+    title: 混合专家（MoE）：路由、top-k、负载均衡
+    summary: 每个 token 只激活少数专家，参数多、计算少；路由不均与专家并行的通信代价。
+    requires: [serving.parallelism]
+  - id: serving.disaggregation
+    title: 预填充与解码分离部署
+    summary: 把 prefill 和 decode 放到不同机器，KV 缓存跨机传输；为什么能同时改善首 token 延迟和吞吐。
+- id: stack
+  order: 4
+  title: 服务栈与接口（Serving Stack & API）
+  summary: 推理引擎的内部结构、OpenAI 兼容接口及其测试。
+  children:
+  - id: stack.engines
+    title: 推理引擎架构：API 服务、调度器、执行器（vLLM、TensorRT-LLM、SGLang）
+    summary: 请求进入 API 层，调度器每步决定哪些请求进批，模型执行器跑前向；三家引擎的差异。
+  - id: stack.openai-api
+    title: OpenAI 兼容接口与它的测试
+    summary: chat completions、SSE 流式、stop、max_tokens、usage、错误码；测试流式顺序、截断、计费字段与并发。
+    requires: [stack.engines]
+- id: metrics
+  order: 5
+  core: true
+  title: 指标与基准（Metrics & Benchmarking）
+  summary: 延迟与吞吐指标、怎么做可信的推理基准、发布前的性能门限。
+  children:
+  - id: metrics.latency-throughput
+    title: TTFT、TPOT / ITL、端到端延迟、吞吐与 goodput
+    summary: 首 token 延迟、每 token 延迟、总吞吐、满足 SLO 的有效吞吐（goodput）各自衡量什么。
+  - id: metrics.benchmarking
+    title: 推理服务基准：长度分布、并发扫描与工具
+    summary: 输入输出长度分布、并发或请求率扫描画出延迟-吞吐曲线；vllm bench、genai-perf、MLPerf Inference。
+    requires: [metrics.latency-throughput]
+  - id: metrics.perf-gates
+    title: 发布性能门限：按模型与配置的基线、噪声与阈值
+    summary: 每个模型、批大小、上下文长度一条基线，多次运行取分布，超过阈值即阻断发布。
+    requires: [metrics.benchmarking]
+- id: numerics
+  order: 6
+  core: true
+  title: 数值与正确性（Numerics & Correctness）
+  summary: 数值格式、非确定性、精度验证、新模型上线验证、常见推理缺陷。
+  children:
+  - id: numerics.formats
+    title: 数值格式：FP32、BF16、FP16、FP8 与累加精度
+    summary: 指数位与尾数位的取舍、累加用高精度、浮点加法不满足结合律。
+  - id: numerics.nondeterminism
+    title: 推理的非确定性：批大小、归约顺序、原子操作
+    summary: 同一输入在不同批大小或并行度下输出不同的原因；批不变（batch invariance）与种子。
+    requires: [numerics.formats]
+  - id: numerics.accuracy-validation
+    title: 模型发布的精度验证：评测集、logits 对比、top-1 一致率、KL
+    summary: lm-eval 等评测、与参考实现逐 token 比 logits、top-1 一致率与 KL 散度、阈值怎么定。
+    requires: [numerics.nondeterminism]
+  - id: numerics.model-qualification
+    title: 新模型上线验证：权重转换、长上下文、对话模板、多模态
+    summary: 检查点转换、配置字段、长上下文与位置编码、chat template、多模态输入各自要测什么。
+    requires: [numerics.accuracy-validation]
+  - id: numerics.classic-bugs
+    title: 经典推理缺陷：EOS 与 stop、位置 id、模板错配、截断、反分词
+    summary: 不停止或提前停止、位置 id 错位、模板不一致、上下文截断、多字节字符被切开。
+- id: accelerators
+  order: 7
+  core: true
+  title: AI 加速器（Accelerators）
+  summary: GPU 架构、屋顶线模型、晶圆级引擎与它为什么推理快、权重流式执行、主机与设备之间的数据通路。
+  children:
+  - id: accelerators.gpu
+    title: GPU 架构基础：SM、HBM、Tensor Core、内存层级
+    summary: 计算单元、片上 SRAM 与 HBM 的容量和带宽差距、Tensor Core 做的矩阵乘法。
+  - id: accelerators.roofline
+    title: 屋顶线模型：算术强度、算力受限与带宽受限
+    summary: 每字节做多少次运算决定 kernel 受算力还是带宽限制；用它解释 prefill 与 decode。
+    requires: [accelerators.gpu]
+  - id: accelerators.wafer-scale
+    title: 晶圆级引擎：WSE-3 与 CS-3
+    summary: 整片晶圆做成一块芯片：核数、片上 SRAM 容量与带宽、片上互连，以及整机系统 CS-3。
+    requires: [accelerators.gpu]
+  - id: accelerators.why-fast
+    title: 晶圆级推理为什么快：权重留在片上 SRAM、层在多片晶圆间流水
+    summary: decode 受带宽限制，权重放在片上 SRAM 带宽高几个数量级；模型大于一片时按层切到多片晶圆流水执行。
+    requires: [accelerators.wafer-scale, accelerators.roofline]
+  - id: accelerators.weight-streaming
+    title: 权重流式执行：MemoryX 与 SwarmX
+    summary: 训练和超大模型时权重放在外部存储 MemoryX、逐层流入晶圆，SwarmX 负责广播与梯度归约。
+    requires: [accelerators.wafer-scale]
+  - id: accelerators.host-device
+    title: 主机与设备：PCIe、DMA、RDMA 与集合通信
+    summary: 数据从主机到设备的通路、DMA、RDMA / RoCE / InfiniBand，以及 all-reduce 等集合通信。
+- id: compiler
+  order: 8
+  title: 编译器、运行时与内核（Compiler, Runtime & Kernels）
+  summary: ML 编译器的流水线、kernel 与算子融合、运行时的职责、软硬件集成与它们的测试方法。
+  children:
+  - id: compiler.pipeline
+    title: ML 编译流水线：图捕获、IR 下降、融合、放置与代码生成
+    summary: 从 PyTorch 图到中间表示（MLIR / XLA），算子融合、在芯片上的放置与路由、生成可执行代码。
+  - id: compiler.kernels
+    title: Kernel：算子融合、FlashAttention、分块
+    summary: 一个 kernel 是什么、为什么融合能减少内存往返、FlashAttention 的分块思路。
+    requires: [compiler.pipeline]
+  - id: compiler.runtime
+    title: 运行时：主机与设备、内存分配、调度与数据搬运
+    summary: 运行时加载编译产物、分配设备内存、调度执行、在主机和设备间搬数据，以及它在推理路径上的故障点。
+    requires: [compiler.pipeline]
+  - id: compiler.hw-sw-integration
+    title: 软硬件集成测试：模拟器与硅片、上板、版本错配
+    summary: 模拟器能测什么、上板（bring-up）才暴露什么；固件、驱动、运行时、编译器版本错配的测试。
+    requires: [compiler.runtime]
+  - id: compiler.testing
+    title: 测试编译器与 kernel：参考对比、形状与类型扫描、随机程序
+    summary: 与参考实现数值对比、按形状和数据类型扫描、边界形状、IR 黄金测试、随机程序生成的差分测试。
+    requires: [compiler.kernels]

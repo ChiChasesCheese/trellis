@@ -40,6 +40,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 import daily_extra  # noqa: E402
+import company_deck  # noqa: E402
 import deep_dive  # noqa: E402
 import plan_kp  # noqa: E402
 import plan_sprint  # noqa: E402
@@ -609,6 +610,8 @@ def topic_boost(tree: Tree, topics: set[str], boost: dict[str, float]) -> dict[s
 
 def anki_state(ids: set[str]):
     q = f'"deck:系统设计" OR "deck:{DECK}" OR "deck:{OLD_DECK}" OR "deck:{daily_extra.DEEP_DECK}"'  # the deep dive borrows them too
+    if company_deck.deck():  # so does a company sprint deck (company_deck.py)
+        q += f' OR "deck:{company_deck.deck()}"'
     cids = call("findCards", query=q)
     info = []
     for i in range(0, len(cids), 500):
@@ -1153,7 +1156,13 @@ def run(apply_to_anki: bool, deep_only: bool = False) -> None:
         today_n = daily_extra.anki_today()
         due = {i for i, c in anki.items() if c["queue"] == 1 or (c["queue"] in (2, 3) and c["due"] <= today_n)}
         dd = deep_dive.pick(cards, model, p.card_mastery, tree.top, tree.title, seen, due, now.strftime("%Y-%m-%d"), tree.node)
-    dive = set(dd["cards"]) | set(dd["reviews"]) if dd else set()
+    sprint_held = company_deck.reserved()  # a company sprint deck owns its cards: not dealt here
+    if dd and sprint_held:
+        dd["cards"] = [i for i in dd["cards"] if i not in sprint_held]
+        dd["reviews"] = [i for i in dd["reviews"] if i not in sprint_held]
+        dd["parts"] = [{**x, "cards": [i for i in x["cards"] if i not in sprint_held]} for x in dd["parts"]]
+        dd["parts"] = [x for x in dd["parts"] if x["cards"]]
+    dive = (set(dd["cards"]) | set(dd["reviews"]) if dd else set()) | sprint_held
     carried = [i for i in carried if i not in dive]
     # weak spots a real mock exposed come before coverage and the sprint: the plan's weights alone never reach them
     # weak_order holds topics, and single cards too: the core cards of the question a mock was about, in answer order

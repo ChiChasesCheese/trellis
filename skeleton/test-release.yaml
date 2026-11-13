@@ -1,0 +1,221 @@
+# Software testing and release engineering at system level: what an SDET on a release / integration team is asked beyond
+# unit tests. Code-level testing (test levels, partitioning, doubles, coverage, debugging method) lives in
+# low-level-design (testing.*, debugging.*). Study order is top to bottom; `requires` only points backwards.
+domain: test-release
+title: 软件测试与发布工程
+deck: "📦 其他::软件测试与发布工程"
+lang: zh
+vault: domains/test-release
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 25
+  reviews_per_day: 150
+nodes:
+- id: strategy
+  order: 1
+  core: true
+  title: 测试策略（Test Strategy）
+  summary: 一个新功能或一次发布要测什么、测到什么程度、什么不测：测试计划、风险驱动、分层与跨组件集成。
+  children:
+  - id: strategy.test-plan
+    title: 写测试计划：范围、风险、准入与准出
+    summary: 测试计划（test plan）的骨架：目标与范围、风险清单、测试类型与环境、准入准出标准（entry / exit criteria）、排期与负责人。
+  - id: strategy.risk-based
+    title: 风险驱动测试（Risk-Based Testing）
+    summary: 按"出错概率 × 影响"排序测试；变更风险、历史缺陷密度、用户面暴露；明确决定什么不测并说明理由。
+  - id: strategy.levels
+    title: 漏测之后：缺的测试该补在哪一层
+    summary: 一次逃逸缺陷（escaped defect）之后，判断该补单元、集成还是端到端测试：最低能稳定抓到它的那一层。
+    requires: [strategy.test-plan]
+  - id: strategy.integration
+    title: 跨组件集成测试：接口、契约与跨栈缝隙
+    summary: 集成测试测的是组件之间的约定：契约测试（contract test）、版本错配、数据格式与时序假设，以及跨栈（框架→运行时→编译器→硬件）的缝隙。
+  - id: strategy.how-would-you-test
+    title: "「你怎么测 X」的答题框架"
+    summary: 面试题"怎么测一个 API / 缓存 / 推理服务"的固定答法：澄清需求、功能、边界、故障、性能、兼容、可观测，再排优先级。
+    requires: [strategy.risk-based]
+- id: regression
+  order: 2
+  core: true
+  title: 回归体系（Regression）
+  summary: 回归套件放什么、分几档、每次改动跑哪些：让主干和发布分支的信号又快又准。
+  children:
+  - id: regression.tiers
+    title: 套件分档：冒烟、提交前、提交后、夜间、发布验证
+    summary: smoke / presubmit / postsubmit / nightly / release-qualification 各自的目的、时长预算和失败后的处理。
+  - id: regression.suite-design
+    title: 回归套件设计：什么进、什么出
+    summary: 功能测试如何"晋升"进发布回归、怎么修剪重复和低价值用例、每条用例要有负责人和失败时的明确含义。
+    requires: [regression.tiers]
+  - id: regression.test-selection
+    title: 测试选择与影响分析（Test Impact Analysis）
+    summary: 按改动和依赖图只跑受影响的测试；漏选的风险与兜底（定期全量、夜间跑全集）。
+    requires: [regression.tiers]
+- id: flaky
+  order: 3
+  core: true
+  title: 不稳定测试治理（Flaky Tests）
+  summary: 时好时坏的测试从哪来、怎么量化、怎么隔离、什么时候重试是合理的。
+  children:
+  - id: flaky.causes
+    title: 不稳定的根因：时序、顺序、共享状态、资源、非确定性
+    summary: 等待写成 sleep、测试间相互依赖、共享机器和端口、外部依赖、随机数与浮点非确定性。
+  - id: flaky.management
+    title: 量化与管理：重跑统计、隔离区、负责人与时限
+    summary: 用重跑判定 flaky、按 flake rate 排序、隔离（quarantine）而不是删除、给负责人和修复时限（SLA）。
+    requires: [flaky.causes]
+  - id: flaky.retries
+    title: 盲目重试为什么会掩盖缺陷
+    summary: 自动重试把真实的竞态和间歇性产品缺陷藏起来；什么时候重试合理（已知基础设施抖动），重试要记录并计数。
+    requires: [flaky.management]
+- id: oracles
+  order: 4
+  core: true
+  title: 测试判定（Test Oracles）
+  summary: 怎么判断输出"对"：参考实现对比、浮点容差、黄金文件、蜕变关系。
+  children:
+  - id: oracles.differential
+    title: 差分测试：和参考实现对比
+    summary: 判定难写时，用另一个实现（CPU 参考、PyTorch、上一版本）当判据；对比什么、差异如何归因。
+  - id: oracles.float-tolerance
+    title: 浮点比较：绝对与相对容差、ULP、allclose
+    summary: 为什么不能用 ==；atol 与 rtol 的组合、ULP 距离、numpy/torch 的 allclose 语义、容差怎么定。
+    requires: [oracles.differential]
+  - id: oracles.golden-files
+    title: 黄金文件与快照测试
+    summary: 黄金输出的生成、评审与更新流程，以及黄金文件漂移（drift）和"一键更新"带来的风险。
+  - id: oracles.metamorphic
+    title: 蜕变测试与不变量
+    summary: 没有标准答案时测输入变换与输出变化之间的关系（如批大小变化不改变单条结果），以及基于性质的测试。
+- id: reliability
+  order: 5
+  title: 可靠性测试（Reliability Testing）
+  summary: 主动制造故障，验证系统在故障下的行为：故障注入、混沌、长稳、故障切换。
+  children:
+  - id: reliability.fault-injection
+    title: 故障注入：注入什么、怎么注入
+    summary: 杀进程、网络分区、延迟、磁盘满、设备报错；在哪一层注入、如何确认系统按预期降级与恢复。
+  - id: reliability.soak-stress
+    title: 压力、长稳与耐久测试
+    summary: 长时间运行暴露内存泄漏、句柄耗尽、碎片和性能衰减；监控什么、跑多久、怎样算通过。
+  - id: reliability.failover-testing
+    title: 多节点服务的故障切换与恢复测试
+    summary: 主备切换、副本丢失、节点重启后的状态恢复；验证数据不丢、请求不重复、恢复时间在目标内。
+    requires: [reliability.fault-injection]
+- id: performance
+  order: 6
+  title: 性能测试（Performance Testing）
+  summary: 负载模型、分位数、基准方法、容量与性能回归检测。
+  children:
+  - id: performance.load-design
+    title: 负载测试设计：工作负载模型、开环与闭环
+    summary: 真实流量分布、开环（open loop）与闭环（closed loop）、爬坡、思考时间，以及协调遗漏（coordinated omission）。
+  - id: performance.regression-detection
+    title: 性能回归检测：基线、噪声与统计阈值
+    summary: 每个配置的基线、多次重复取分布、按统计显著性而不是单次差值判定回归、噪声来源的控制。
+    requires: [performance.load-design]
+- id: test-infra
+  order: 7
+  core: true
+  title: 测试基础设施（Test Infrastructure）
+  summary: 测试框架的分层架构、稀缺硬件的调度、分片并行、隔离可复现、测试环境与结果流水线。
+  children:
+  - id: test-infra.framework-architecture
+    title: 测试框架架构：资源、驱动、测试逻辑、报告分层
+    summary: 把环境与资源管理、被测系统驱动、测试逻辑、断言与报告分开；插件与配置让新特性加测试只写一层。
+  - id: test-infra.resource-orchestration
+    title: 多节点与硬件测试的编排：租用、调度、清理
+    summary: 稀缺设备的租约（lease）、按资源类型排队、超时回收、测试后清理与健康检查、坏机器自动下线。
+    requires: [test-infra.framework-architecture]
+  - id: test-infra.sharding
+    title: 分片与并行执行
+    summary: 按历史耗时装箱（bin packing）分片、pytest-xdist、并行带来的隔离问题、尾部最长分片决定总时长。
+  - id: test-infra.hermetic
+    title: 隔离、可复现的测试（Hermetic Tests）
+    summary: 固定依赖版本、沙箱、无共享状态、确定性种子；同一提交在任何机器上结果相同。
+  - id: test-infra.environments
+    title: 测试环境：模拟器、仿真器、真实硬件
+    summary: simulator / emulator / 真实硬件实验室各自能发现什么、成本与速度，按风险把测试放到合适的环境。
+  - id: test-infra.results
+    title: 结果流水线：JUnit XML、历史库、看板与分诊界面
+    summary: 结果标准化上报、按测试的历史曲线、失败聚合视图，让分诊从"看日志"变成"看趋势"。
+- id: ci
+  order: 8
+  title: 持续集成与构建（CI & Build）
+  summary: 流水线的阶段设计、快速反馈、缓存与制品、常见 CI 系统的概念。
+  children:
+  - id: ci.pipeline-design
+    title: CI 流水线设计：阶段、快速反馈、提交前与提交后
+    summary: 先跑最快最可能失败的；presubmit 与 postsubmit 的分工；缓存、制品复用；Jenkins / GitHub Actions 的 runner、触发与制品。
+  - id: ci.build-systems
+    title: 构建系统与制品：依赖、增量构建、可复现
+    summary: 依赖图与增量构建、远程缓存、可复现构建，以及制品版本如何和测试结果绑定。
+- id: release
+  order: 9
+  core: true
+  title: 发布工程（Release Engineering）
+  summary: 分支模型、保持主干健康、发布候选的生命周期、准入准出、阻断项和兼容性。
+  children:
+  - id: release.branching
+    title: 分支模型：主干开发、发布分支、git-flow
+    summary: trunk-based 与长期发布分支的取舍；merge 与 rebase、revert 的机制；发布分支什么时候切、活多久。
+  - id: release.branch-health
+    title: 保持主干常绿：先回滚、值班、合并队列
+    summary: revert-first 规则、构建值班（build cop / sheriff）、合并队列（merge queue）、主干健康度指标。
+    requires: [release.branching]
+  - id: release.cherry-picks
+    title: 挑拣与回移（Cherry-Pick, Backport）
+    summary: 修复如何进入发布分支、风险评估、在分支上重新验证，以及漏回移的常见事故。
+    requires: [release.branching]
+  - id: release.rc-lifecycle
+    title: 发布候选的生命周期：切版、稳定、冻结、签发
+    summary: RC 切出、稳定期、代码冻结（code freeze）、阻断清单、发布签发（sign-off）的每一步和负责人。
+    requires: [release.branching]
+  - id: release.qualification-gates
+    title: 发布准入与准出：基于证据的放行决策
+    summary: 发布验证的门槛：哪些套件必须绿、性能与精度门限、已知问题的豁免，以及 go / no-go 怎么用证据说话。
+    requires: [release.rc-lifecycle]
+  - id: release.blockers
+    title: 发布阻断项分诊：严重度、优先级与豁免
+    summary: 什么问题阻断发布、severity 与 priority 的区别、豁免（waiver）的条件和记录。
+    requires: [release.qualification-gates]
+  - id: release.compatibility
+    title: 多组件协同发布与兼容矩阵
+    summary: 框架、运行时、编译器、固件版本之间的兼容矩阵；版本错配（version skew）测试；扩展-收缩式变更。
+- id: triage
+  order: 10
+  core: true
+  title: 分诊与根因（Triage & RCA）
+  summary: 失败出现后的第一轮处理：复现、去重、分类、指派、二分定位、失败签名与根因分析。
+  children:
+  - id: triage.first-pass
+    title: 第一轮失败分诊：复现、去重、指派、升级
+    summary: 拿到红灯后的固定流程：确认可复现、查是否已知、收集证据、找到负责组件和负责人、该升级时升级。
+  - id: triage.classification
+    title: 失败分类：产品回归、不稳定、环境、测试缺陷
+    summary: 区分产品回归、flaky、基础设施或环境问题、测试本身的缺陷；每类的证据和处理方式不同。
+    requires: [triage.first-pass]
+  - id: triage.bisect
+    title: 二分定位：git bisect 与按构建二分
+    summary: 在提交区间或夜间构建之间二分找到引入回归的变更；自动化 culprit finding 与多变更合并时的处理。
+    requires: [triage.classification]
+  - id: triage.signatures
+    title: 失败签名与自动归类
+    summary: 用栈和日志的指纹（fingerprint）把失败自动归到已知问题，减少重复分诊。
+    requires: [triage.classification]
+  - id: triage.bug-reports
+    title: 缺陷报告与缺陷生命周期
+    summary: 一份能直接行动的缺陷报告包含什么；缺陷从提出到关闭的状态与回归测试。
+- id: metrics
+  order: 11
+  title: 质量指标（Quality Metrics）
+  summary: 用数字说明发布质量和测试信号的质量。
+  children:
+  - id: metrics.release-quality
+    title: 发布质量指标：通过率、不稳定率、逃逸缺陷、MTTD 与 MTTR
+    summary: 哪些指标反映发布质量、DORA 四指标、指标被"刷"的方式，以及怎么用指标推动改进。
+  - id: metrics.branch-health
+    title: 主干与 CI 健康度：看板与信号质量目标
+    summary: 主干红灯时长、修复时间、flaky 占比、排队时间；给测试信号定 SLO。
+    requires: [metrics.release-quality]
