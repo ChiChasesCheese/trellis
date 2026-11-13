@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 STATE = ROOT / "sources/local/plan/deepdive.json"
 DECK = "5 系统设计高频题"
 REVIEW = "9 复习"
+MOCK_FIX = "-mockfix-"  # card ids written from a real mock of the question: dealt first, as part 0
 
 
 NOT_A_QUESTION = {"q.in-the-wild"}  # 真实系统案例: a collection of real systems, not one problem to design
@@ -105,13 +106,20 @@ def parts(q: str, todo: list, node: dict | None, name: str) -> list[dict]:
         return path[i + 1] if 0 <= i < len(path) - 1 else q
 
     out: dict[str, list] = {}
+    mock = [c.id for c in sorted(todo, key=lambda c: c.rank) if MOCK_FIX in c.id]  # weak spots a mock of this question exposed
+    if mock:
+        out[MOCK_FIX] = mock
     for c in sorted(todo, key=lambda c: (kids.index(child(c)) if child(c) in kids else len(kids), c.rank)):
-        out.setdefault(child(c), []).append(c.id)
+        if MOCK_FIX not in c.id:
+            out.setdefault(child(c), []).append(c.id)
     def label(k: str) -> str:
+        if k == MOCK_FIX:
+            return "模拟面试补强"
         t = node[k].title.replace(f" · {name}", "") if node and k in node else "其他"
         return "八股关联" if t == name else t  # the links node carries the question's own title
 
-    return [{"label": f"{n} {label(k)}", "cards": ids} for n, (k, ids) in enumerate(out.items(), 1)]
+    start = 0 if mock else 1  # the mock's part is 0, before the skeleton's parts
+    return [{"label": f"{n} {label(k)}", "cards": ids} for n, (k, ids) in enumerate(out.items(), start)]
 
 
 def stage(d: dict) -> str:
