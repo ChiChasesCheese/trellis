@@ -607,7 +607,7 @@ def topic_boost(tree: Tree, topics: set[str], boost: dict[str, float]) -> dict[s
 
 
 def anki_state(ids: set[str]):
-    q = f'"deck:系统设计" OR "deck:{DECK}" OR "deck:{OLD_DECK}"'
+    q = f'"deck:系统设计" OR "deck:{DECK}" OR "deck:{OLD_DECK}" OR "deck:{daily_extra.DEEP_DECK}"'  # the deep dive borrows them too
     cids = call("findCards", query=q)
     info = []
     for i in range(0, len(cids), 500):
@@ -1149,7 +1149,7 @@ def run(apply_to_anki: bool) -> None:
     if model:
         today_n = daily_extra.anki_today()
         due = {i for i, c in anki.items() if c["queue"] == 1 or (c["queue"] in (2, 3) and c["due"] <= today_n)}
-        dd = deep_dive.pick(cards, model, p.card_mastery, tree.top, tree.title, seen, due, now.strftime("%Y-%m-%d"))
+        dd = deep_dive.pick(cards, model, p.card_mastery, tree.top, tree.title, seen, due, now.strftime("%Y-%m-%d"), tree.node)
     dive = set(dd["cards"]) | set(dd["reviews"]) if dd else set()
     carried = [i for i in carried if i not in dive]
     # weak spots a real mock exposed come before coverage and the sprint: the plan's weights alone never reach them
@@ -1221,7 +1221,8 @@ def run(apply_to_anki: bool) -> None:
     extra = daily_extra.prepare(cfg, sd_value, carry=carry, points=kp_state.get("model"),
                                 skip={anki[i]["cardId"] for i in dive if i in anki})
     if dd:
-        extra.deep = [{"card": anki[i]["cardId"], "stage": deep_dive.stage(dd)} for i in dd["cards"] if i in anki]
+        extra.deep = [{"card": anki[i]["cardId"], "stage": f"{deep_dive.stage(dd)}::{part['label']}"}
+                      for part in dd["parts"] for i in part["cards"] if i in anki]
         extra.deep += [{"card": anki[i]["cardId"], "stage": deep_dive.REVIEW} for i in dd["reviews"] if i in anki]
         body += (f"<p><b>系统设计高频题</b>：{html.escape(dd['title'])}，{len(dd['cards'])} 张卡，另有 {len(dd['reviews'])} 张之前的题到期复习；"
                  f"学完考点覆盖 {dd['coverage']:.1%}（+{dd['gain']:.1%}），之后还有 {dd['left']} 道。</p>")

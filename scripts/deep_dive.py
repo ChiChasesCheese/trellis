@@ -41,9 +41,11 @@ def load() -> dict:
     return json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else {"current": None, "since": None, "done": []}
 
 
-def pick(cards, model, card_mastery: dict[str, float], top, title, seen: set[str], due: set[str], day: str) -> dict | None:
+def pick(cards, model, card_mastery: dict[str, float], top, title, seen: set[str], due: set[str], day: str,
+         node: dict | None = None) -> dict | None:
     """Today's question, its cards to study (unseen, or seen and due) in teaching order, the due cards of earlier
-    questions, and the coverage once it is learnt. `cards` are the plan's cards; `top(topic)` the top node of a topic."""
+    questions, and the coverage once it is learnt. `cards` are the plan's cards; `top(topic)` the top node of a topic;
+    `node` the skeleton's nodes by id, whose order under the question is the order the cards are dealt in."""
     state = load()
     by_q: dict[str, list] = defaultdict(list)
     for c in cards:
@@ -85,10 +87,31 @@ def pick(cards, model, card_mastery: dict[str, float], top, title, seen: set[str
     after = dict(held)
     after.update({c.id: 1.0 for c in by_q[cur]})
     covered = model.coverage(after)
-    return {"state": state, "question": cur, "title": title(cur),
-            "cards": [c.id for c in by_q[cur] if c.id not in seen or c.id in due],
+    todo = [c for c in by_q[cur] if c.id not in seen or c.id in due]
+    return {"state": state, "question": cur, "title": title(cur), "parts": parts(cur, todo, node, title(cur)),
+            "cards": [c.id for c in todo],
             "reviews": [c.id for q in state["done"] for c in by_q.get(q, []) if c.id in due],
             "coverage": covered, "gain": covered - base, "left": len([q for q in by_q if q not in state["done"] and q not in skip]) - 1}
+
+
+def parts(q: str, todo: list, node: dict | None, name: str) -> list[dict]:
+    """Today's cards in the skeleton's order, one part per child of the question (摘要, 考点, 拓展 …): Anki deals a
+    deck by import position, which follows import batches, so only sub-decks in this order keep the teaching order."""
+    kids = [k.id for k in node[q].children] if node and q in node else []
+
+    def child(c) -> str:
+        path = [x.id for x in node[c.leaf].path()] if node and c.leaf in node else []
+        i = path.index(q) if q in path else -1
+        return path[i + 1] if 0 <= i < len(path) - 1 else q
+
+    out: dict[str, list] = {}
+    for c in sorted(todo, key=lambda c: (kids.index(child(c)) if child(c) in kids else len(kids), c.rank)):
+        out.setdefault(child(c), []).append(c.id)
+    def label(k: str) -> str:
+        t = node[k].title.replace(f" · {name}", "") if node and k in node else "其他"
+        return "八股关联" if t == name else t  # the links node carries the question's own title
+
+    return [{"label": f"{n} {label(k)}", "cards": ids} for n, (k, ids) in enumerate(out.items(), 1)]
 
 
 def stage(d: dict) -> str:
