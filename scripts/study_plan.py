@@ -39,6 +39,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 import daily_extra  # noqa: E402
+import deep_dive  # noqa: E402
 import plan_kp  # noqa: E402
 import plan_sprint  # noqa: E402
 import quick_plan  # noqa: E402
@@ -927,7 +928,7 @@ def preset(cfg):
     # each subject has its own limit; the top deck only adds them up
     presets_file = OUT / "presets.json"
     known = json.loads(presets_file.read_text(encoding="utf-8")) if presets_file.exists() else {}
-    for prefix in daily_extra.SUBJECT_DECK.values():
+    for prefix in [*daily_extra.SUBJECT_DECK.values(), daily_extra.DEEP_DECK]:
         name = prefix.split("::")[-1]
         title = re.sub(r"^\d+ ", "", name).removeprefix("今日") + "每日"  # 「1 系统设计」, 「今日算法」 -> 系统设计每日, 算法每日
         decks = [d for d in names if d == prefix or d.startswith(prefix + "::")]
@@ -1143,11 +1144,19 @@ def run(apply_to_anki: bool) -> None:
         ahead = [i for i in plan_sprint.deal_today(sprint, seen, int(cfg["daily_new"]) + 60) if i in anki]
         p.picked = capped(ahead, cfg.get("family_caps", {}), {c.id: c.topic for c in cards})[:int(cfg["daily_new"])]
         carried = [i for i in carried if i in set(p.picked)]  # the sequence already puts what is left first; nothing is added on top
+    # 系统设计高频题 (Chi, 2026-11-12): one question a day in a deck of its own; its cards leave every other part
+    dd = None
+    if model:
+        today_n = daily_extra.anki_today()
+        due = {i for i, c in anki.items() if c["queue"] == 1 or (c["queue"] in (2, 3) and c["due"] <= today_n)}
+        dd = deep_dive.pick(cards, model, p.card_mastery, tree.top, tree.title, seen, due, now.strftime("%Y-%m-%d"))
+    dive = set(dd["cards"]) | set(dd["reviews"]) if dd else set()
+    carried = [i for i in carried if i not in dive]
     # weak spots a real mock exposed come before coverage and the sprint: the plan's weights alone never reach them
     # weak_order holds topics, and single cards too: the core cards of the question a mock was about, in answer order
     pos = {k: i for i, k in enumerate(cfg.get("weak_order", []))}  # the latest mock's go first; the rest keep skeleton order
     weak = [c.id for c in sorted(cards, key=lambda c: pos.get(c.id, pos.get(c.topic, len(pos))))
-            if (tree.top(c.topic) == "s00" or c.id in pos) and c.id in anki and c.id not in set(carried)
+            if (tree.top(c.topic) == "s00" or c.id in pos) and c.id in anki and c.id not in set(carried) and c.id not in dive
             and anki[c.id]["queue"] == 0 and not (traces.get(c.id) and traces[c.id].reps)][: int(cfg.get("weak_per_day", 20))]
     # the quick deck (碎片速刷) is planned from the same answers: its order and number, and the points missed there,
     # whose full cards come next here. It is local material, so a checkout without it skips the step.
@@ -1160,8 +1169,9 @@ def run(apply_to_anki: bool) -> None:
             deep = quick_plan.full_cards(quick["missed"], kp_state["points"].card, unseen_rank, quick_plan.settings()["deepen_per_day"])
         except Exception as e:  # the main plan never fails for the quick deck's sake
             print(f"quick deck plan skipped: {type(e).__name__}: {e}")
+    deep = [i for i in deep if i not in dive]
     first_part = set(carried) | set(weak) | set(deep)
-    rest = [i for i in p.picked if i not in first_part]
+    rest = [i for i in p.picked if i not in first_part and i not in dive]
     p.picked = carried + weak + deep + rest[: max(0, int(cfg.get("daily_new", 100)) - len(first_part))]
     stages = defaultdict(list)
     topic_of = {c.id: c.topic for c in cards}
@@ -1208,7 +1218,13 @@ def run(apply_to_anki: bool) -> None:
     if apply_to_anki:  # today's LeetCode analysis: mastery, slips and similar problems read from fresh numbers
         import lc_analysis
         lc_analysis.main()
-    extra = daily_extra.prepare(cfg, sd_value, carry=carry, points=kp_state.get("model"))
+    extra = daily_extra.prepare(cfg, sd_value, carry=carry, points=kp_state.get("model"),
+                                skip={anki[i]["cardId"] for i in dive if i in anki})
+    if dd:
+        extra.deep = [{"card": anki[i]["cardId"], "stage": deep_dive.stage(dd)} for i in dd["cards"] if i in anki]
+        extra.deep += [{"card": anki[i]["cardId"], "stage": deep_dive.REVIEW} for i in dd["reviews"] if i in anki]
+        body += (f"<p><b>系统设计高频题</b>：{html.escape(dd['title'])}，{len(dd['cards'])} 张卡，另有 {len(dd['reviews'])} 张之前的题到期复习；"
+                 f"学完考点覆盖 {dd['coverage']:.1%}（+{dd['gain']:.1%}），之后还有 {dd['left']} 道。</p>")
     body += points_report(p, cards) + extra_report(extra)
     if quick:
         body += f"<p>{html.escape(quick_plan.line(quick))}" + (f" · 其中 {len(deep)} 个考点的完整卡排进了今天" if deep else "") + "</p>"
@@ -1224,6 +1240,8 @@ def run(apply_to_anki: bool) -> None:
     (OUT / "index.html").write_text(dashboard(tree, p, cards, titles, edges, history, gen), encoding="utf-8")
     print(f"held {p.held * 100:.1f}% · seen {summary['seen']}/{len(cards)} · picked {len(p.picked)} "
           f"({', '.join(f'{k} {len(v)}' for k, v in sorted(stages.items()))}) · topics {len(p.topics)} · edges {len(edges)}")
+    if dd:
+        print(f"系统设计高频题: {dd['title']} · {len(dd['cards'])} cards + {len(dd['reviews'])} reviews · coverage {dd['coverage']:.1%} (+{dd['gain']:.1%})")
     print(f"LeetCode {len(extra.lc_new)} new + {len(extra.lc_similar)} similar · LLD {len(extra.lld_new)} new · reviews {len(extra.reviews)} taken, "
           f"{extra.backlog} waiting · {extra.by_deck}")
     if apply_to_anki:
@@ -1236,6 +1254,8 @@ def run(apply_to_anki: bool) -> None:
         preset(cfg)
         drop_old_deck()
         dealt_on.write_text(now.strftime("%Y-%m-%d"))
+        if dd:
+            deep_dive.save(dd)
         subprocess.run([sys.executable, str(ROOT / "scripts/study_map.py")], cwd=ROOT, check=False)  # the map site follows the plan
         call("sync")
         print("Anki: 今日计划 rebuilt")

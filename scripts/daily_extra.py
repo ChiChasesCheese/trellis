@@ -44,7 +44,8 @@ OUT = ROOT / "sources/local/plan"
 HOMES = OUT / "homes.json"
 DECK = "1 今日计划"  # the number sorts the daily decks first in Anki's alphabetical deck list
 LC_DECK, LLD_DECK = "2 今日算法", "3 今日低层设计"  # LeetCode and low-level design each have a daily deck of their own (Chi 2026-11-11)
-DAILY = (DECK, LC_DECK, LLD_DECK)
+DEEP_DECK = "5 系统设计高频题"  # one system-design question a day (deep_dive.py)
+DAILY = (DECK, LC_DECK, LLD_DECK, DEEP_DECK)
 CARRIED = "0 昨天没学完"  # what was dealt and not learned comes first the next day
 LLD_ROOT, SD_ROOT = "低层设计（LLD）", "系统设计"
 SUBJECT_DECK = {SD_ROOT: f"{DECK}::1 系统设计", LLD_ROOT: LLD_DECK, "LeetCode Tops": LC_DECK}  # each subject: its deck and budget
@@ -77,6 +78,7 @@ class Extra:
     lc_new: list[dict] = field(default_factory=list)       # {card, slug, title, why}
     lc_similar: list[dict] = field(default_factory=list)   # {card, slug, title, why, due_now}: no longer dealt
     lc_focus: list[str] = field(default_factory=list)      # the topics today's problems come from
+    deep: list[dict] = field(default_factory=list)         # {card, stage}: 系统设计高频题, filled by study_plan
     lld_new: list[dict] = field(default_factory=list)      # {card, title, carried}
     work_new: list[dict] = field(default_factory=list)     # {card, part, carried}: a private work deck, configured locally
     reviews: list[dict] = field(default_factory=list)      # {card, home, score}
@@ -223,7 +225,8 @@ def work_order(cfg: dict, home: dict, points) -> list[dict]:
     return out
 
 
-def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, carry: bool = True, points=None) -> Extra:
+def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, carry: bool = True, points=None,
+            skip: set[int] = frozenset()) -> Extra:
     """Pick today's LeetCode problems, low-level design cards and reviews. Reads Anki, writes nothing. With `carry`, new cards
     dealt on an earlier day and not learned stay first, counted in the day's budget."""
     import lc_analysis as lca
@@ -323,7 +326,7 @@ def prepare(cfg: dict, sd_value: dict[str, float], now_ms: int | None = None, ca
     raw = []
     for c in due:
         h = home.get(str(c["cardId"]), c["deckName"])
-        if in_daily(h):  # dealt by the system-design plan today; it is already in the deck
+        if in_daily(h) or c["cardId"] in skip:  # dealt by the system-design plan or the deep dive today
             continue
         root = h.split("::")[0]
         idn = due_ident.get(c["cardId"], "")
@@ -405,7 +408,7 @@ def release(keep: set[int]) -> int:
 
 def deal(ex: Extra) -> None:
     home = homes()
-    info = {c["cardId"]: c for c in call("cardsInfo", cards=[x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.work_new + ex.reviews])}
+    info = {c["cardId"]: c for c in call("cardsInfo", cards=[x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.work_new + ex.reviews + ex.deep])}
     lc, lld = SUBJECT_DECK["LeetCode Tops"], SUBJECT_DECK[LLD_ROOT]
     plan = []
     for n, topic in enumerate(ex.lc_focus, 1):
@@ -426,6 +429,7 @@ def deal(ex: Extra) -> None:
         plan.append((f"{lld}::{t}", [x for x in lld_items if topic_of(x["card"]) == t]))
     plan += [(f"{WORK_PART}::{part}", [x for x in ex.work_new if x["part"] == part]) for part in dict.fromkeys(x["part"] for x in ex.work_new)]
     plan += [(f"{d}::9 到期复习", [x for x in ex.reviews if x["root"] == r]) for r, d in SUBJECT_DECK.items() if r != LLD_ROOT]
+    plan += [(f"{DEEP_DECK}::{st}", [x for x in ex.deep if x["stage"] == st]) for st in dict.fromkeys(x["stage"] for x in ex.deep)]
     for stage, items in plan:
         ids = [x["card"] for x in items if x["card"] in info]
         for i in ids:
@@ -440,7 +444,7 @@ def deal(ex: Extra) -> None:
 
 
 def keep_ids(ex: Extra) -> set[int]:
-    return {x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.work_new + ex.reviews}
+    return {x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.work_new + ex.reviews + ex.deep}
 
 
 def main() -> int:

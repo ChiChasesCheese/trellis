@@ -195,6 +195,10 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   3 今日低层设计, 4 碎片速刷); their presets kept the old names (`PLAN_PRESET`, `quick_deck.PRESET`). Rarely used
   domains live under `📦 其他` through their skeleton's `deck:`. Rename a deck with Anki closed (`col.decks.rename`):
   AnkiConnect cannot, and a running Anki keeps the old names.
+- `5 系统设计高频题` (scripts/deep_dive.py, run inside `study_plan.py daily`): one design question a day, all its cards
+  in teaching order, plus due cards of questions done before. The next question is the one adding the most exam-point
+  coverage; its sub-deck names the coverage once learnt. Its cards leave every other part of the plan. State:
+  `sources/local/plan/deepdive.json`.
 - A leaf is weak only on cards with a verdict (taken / slipped); young cards are not evidence, and a weak leaf whose grown
   cards are unreviewed is *settling* and is not a `grow` target (ADR 0009).
 
