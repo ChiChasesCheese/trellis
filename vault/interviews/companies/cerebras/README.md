@@ -35,6 +35,7 @@
 | 团队在哪、RIT 管什么、一周做什么、用什么工具 | [02-role-and-team.md](02-role-and-team.md) |
 | 每一轮的形式、考什么、怎么准备 | [03-loop.md](03-loop.md) |
 | **经理面打法**：自我介绍、三个为什么、项目深挖、测试策略、AI 缺口 | [04-hm-screen.md](04-hm-screen.md) |
+| **三轮技术面**：每轮考什么、45 分钟怎么分、出过的题和追问、允许用 AI 的轮次、带回家题详解 | [06-technical-rounds.md](06-technical-rounds.md) |
 | 简历逐条对 JD：强项、相邻、缺口 | [fit.md](fit.md) |
 | 反问：经理、工程师、CEO | [05-questions-to-ask.md](05-questions-to-ask.md) |
 | 故事全文（S1、S3、S5、S6、S7、S8、S10、R1） | [Headlands 故事](../headlands/behavioral/stories/S3_silent-null-root-cause.md) 同目录 |
