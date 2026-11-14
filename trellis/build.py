@@ -331,14 +331,8 @@ td, th { border: 1px solid var(--rule); padding: 5px 10px; }
 .kpidx p { margin: 3px 0; }
 .kpidx b { font-weight: 600; margin-right: 6px; color: var(--ink); }
 
-.fig { margin: 12px 0; text-align: center; cursor: zoom-in; }
+.fig { margin: 12px 0; text-align: center; }
 .fig svg { max-width: 100%; height: auto; color: var(--ink); }
-.fig::after { content: "点图放大"; display: block; font-size: 11px; color: var(--dim); }
-/* tap a diagram: it fills the screen at twice the width and pans; tap again to close */
-.fig.zoom { position: fixed; inset: 0; z-index: 99; margin: 0; padding: 12px; overflow: auto; background: var(--paper);
-  -webkit-overflow-scrolling: touch; cursor: zoom-out; text-align: left; }
-.fig.zoom svg { max-width: none; width: 200%; }
-.fig.zoom::after { content: "再点一下还原"; position: fixed; top: 6px; right: 12px; }
 video.clip, img.clip { display: block; width: 100%; max-width: 560px; margin: 8px auto; border-radius: 10px; background: #000; }
 details.sec { margin: 6px 0; border-left: 1px solid var(--rule); padding: 0 0 0 10px; }
 details.sec > summary { cursor: pointer; font-weight: 600; list-style-position: outside; }
@@ -748,7 +742,7 @@ def _html(text: str, related: dict | None = None, own: set[int] | None = None, f
     _MD.reset()
     html = _MD.convert(_blank_before_lists(text))
     for i, svg in enumerate(svgs):
-        html = html.replace(f"<p>TRELLISSVG{i}</p>", f'<div class="fig tappable" onclick="this.classList.toggle(\'zoom\')">{svg}</div>')
+        html = html.replace(f"<p>TRELLISSVG{i}</p>", f'<div class="fig">{svg}</div>')
     html = _TITLE.sub(lambda m: f'<p class="title">{m.group(1)}<span class="meta">{m.group(2)}</span></p>', html, count=1)
     html = _LABEL.sub(lambda m: f'<p><span class="label">{m.group(1)}</span>', html)
     html = _fold_examples(html)

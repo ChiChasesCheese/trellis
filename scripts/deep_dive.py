@@ -135,11 +135,11 @@ def pick(cards, model, card_mastery: dict[str, float], top, title, seen: set[str
     after = dict(held)
     after.update({c.id: 1.0 for c in by_q[cur]})
     covered = model.coverage(after)
-    later = dict(held)  # the questions after this one, so their answers can be written ahead (MOCK_FIX_DAILY, ANSWER_AGENT)
+    later = dict(held)  # the next 8 questions, so their answers can be written ahead (MOCK_FIX_DAILY, ANSWER_AGENT)
     later.update({c.id: 1.0 for c in by_q[cur]})
     rest = [q for q in by_q if q not in state["done"] and q not in skip and q != cur]
     upcoming = []
-    for _ in range(3):
+    for _ in range(8):
         if not rest:
             break
         b = model.coverage(later)
