@@ -2183,6 +2183,9 @@ nodes:
       title: Facebook 信息流
       summary: Hello Interview：Design Facebook's News Feed。
       children:
+      - id: sd.problem-breakdowns.fb-news-feed.answer
+        title: 完整答案 · Facebook 信息流
+        summary: 最佳实践的完整答案：架构图、每条路径的流程图、每个深挖的机制与故障处理。
       - id: sd.problem-breakdowns.fb-news-feed.notes
         title: 摘要 · Facebook 信息流
         summary: 按小节总结这一章的核心内容。
@@ -2231,6 +2234,9 @@ nodes:
       title: 即时通讯（WhatsApp）
       summary: Hello Interview：Design a Messaging App Like WhatsApp。
       children:
+      - id: sd.problem-breakdowns.whatsapp.answer
+        title: 完整答案 · 即时通讯（WhatsApp）
+        summary: 最佳实践的完整答案：架构图、每条路径的流程图、每个深挖的机制与故障处理。
       - id: sd.problem-breakdowns.whatsapp.notes
         title: 摘要 · 即时通讯（WhatsApp）
         summary: 按小节总结这一章的核心内容。
@@ -2247,6 +2253,9 @@ nodes:
       title: 分布式限流器
       summary: Hello Interview：Design a Distributed Rate Limiter。
       children:
+      - id: sd.problem-breakdowns.distributed-rate-limiter.answer
+        title: 完整答案 · 分布式限流器
+        summary: 最佳实践的完整答案：架构图、每条路径的流程图、每个深挖的机制与故障处理。
       - id: sd.problem-breakdowns.distributed-rate-limiter.notes
         title: 摘要 · 分布式限流器
         summary: 按小节总结这一章的核心内容。
@@ -2442,6 +2451,9 @@ nodes:
       title: 在线拍卖（eBay）
       summary: Hello Interview：Design an Online Auction Platform Like eBay。
       children:
+      - id: sd.problem-breakdowns.online-auction.answer
+        title: 完整答案 · 在线拍卖（eBay）
+        summary: 最佳实践的完整答案：架构图、每条路径的流程图、每个深挖的机制与故障处理。
       - id: sd.problem-breakdowns.online-auction.notes
         title: 摘要 · 在线拍卖（eBay）
         summary: 按小节总结这一章的核心内容。
@@ -2455,6 +2467,9 @@ nodes:
       title: 分布式任务调度（Airflow）
       summary: Hello Interview：Design a Distributed Job Scheduler Like Airflow。
       children:
+      - id: sd.problem-breakdowns.job-scheduler.answer
+        title: 完整答案 · 分布式任务调度（Airflow）
+        summary: 最佳实践的完整答案：架构图、每条路径的流程图、每个深挖的机制与故障处理。
       - id: sd.problem-breakdowns.job-scheduler.notes
         title: 摘要 · 分布式任务调度（Airflow）
         summary: 按小节总结这一章的核心内容。
@@ -2513,6 +2528,9 @@ nodes:
       title: 股票交易（Robinhood）
       summary: Hello Interview：Design a Stock Trading Platform Like Robinhood。
       children:
+      - id: sd.problem-breakdowns.robinhood.answer
+        title: 完整答案 · 股票交易（Robinhood）
+        summary: 最佳实践的完整答案：架构图、每条路径的流程图、每个深挖的机制与故障处理。
       - id: sd.problem-breakdowns.robinhood.notes
         title: 摘要 · 股票交易（Robinhood）
         summary: 按小节总结这一章的核心内容。
@@ -2558,6 +2576,9 @@ nodes:
       title: 指标监控（Datadog）
       summary: Hello Interview：Design a Metrics Monitoring Platform like Datadog。
       children:
+      - id: sd.problem-breakdowns.metrics-monitoring.answer
+        title: 完整答案 · 指标监控（Datadog）
+        summary: 最佳实践的完整答案：架构图、每条路径的流程图、每个深挖的机制与故障处理。
       - id: sd.problem-breakdowns.metrics-monitoring.notes
         title: 摘要 · 指标监控（Datadog）
         summary: 按小节总结这一章的核心内容。
