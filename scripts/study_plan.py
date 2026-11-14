@@ -610,8 +610,8 @@ def topic_boost(tree: Tree, topics: set[str], boost: dict[str, float]) -> dict[s
 
 def anki_state(ids: set[str]):
     q = f'"deck:系统设计" OR "deck:{DECK}" OR "deck:{OLD_DECK}" OR "deck:{daily_extra.DEEP_DECK}"'  # the deep dive borrows them too
-    if company_deck.deck():  # so does a company sprint deck (company_deck.py)
-        q += f' OR "deck:{company_deck.deck()}"'
+    for d in company_deck.decks():  # so do the sprint decks (company_deck.py)
+        q += " OR " + company_deck.in_deck(d)
     cids = call("findCards", query=q)
     info = []
     for i in range(0, len(cids), 500):

@@ -1,6 +1,7 @@
 """A company sprint deck: the cards one interview needs, from whatever domain holds them, in one daily deck.
 
-    uv run python scripts/company_deck.py deal      # move the plan's cards in (idempotent; run again after the plan changes)
+    uv run python scripts/company_deck.py deal      # every sprint deck: move its plan's cards in (idempotent)
+    uv run python scripts/company_deck.py --deck "7 Cerebras 力扣" status     # one sprint deck (status, release, rename, deal)
     uv run python scripts/company_deck.py status    # per part: cards, new, seen
     uv run python scripts/company_deck.py release   # the interview is over: every card goes back to its home deck
     uv run python scripts/company_deck.py rename "6 AI Infra SDET"   # same cards, scheduling and order, new deck name
@@ -31,12 +32,27 @@ PLAN = ROOT / "sources/local/plan"
 HOMES = PLAN / "company_homes.json"
 
 
+SELECTED: str | None = None  # --deck <name>: which sprint deck a command acts on (default: the first, or all for deal)
+
+
+def sprints() -> list[dict]:
+    """Plan config `company`: one sprint deck {deck, plan, new_per_day}, or a list of them (a company deck, its LeetCode
+    deck, …). Each borrows its own cards; a card belongs to the first sprint deck whose plan names it."""
+    c = json.loads((PLAN / "config.json").read_text(encoding="utf-8")).get("company") or []
+    return c if isinstance(c, list) else [c]
+
+
 def cfg() -> dict:
-    return json.loads((PLAN / "config.json").read_text(encoding="utf-8")).get("company") or {}
+    s = sprints()
+    return next((x for x in s if x["deck"] == SELECTED), s[0] if s else {})
 
 
 def deck() -> str | None:
     return cfg().get("deck")
+
+
+def decks() -> list[str]:
+    return [x["deck"] for x in sprints()]
 
 
 def in_deck(name: str) -> str:
@@ -65,21 +81,27 @@ def _ident(cards: list[dict]) -> dict[int, str]:
 
 
 def reserved() -> set[str]:
-    """Card idents in the company deck now: study_plan.py does not deal them elsewhere."""
-    d = deck()
-    if not d:
-        return set()
-    return set(_ident(_info(call("findCards", query=in_deck(d)))).values()) - {""}
+    """Card idents in any sprint deck now: study_plan.py does not deal them elsewhere."""
+    out: set[str] = set()
+    for d in decks():
+        out |= set(_ident(_info(call("findCards", query=in_deck(d)))).values())
+    return out - {""}
 
 
 def deal() -> int:
     import daily_extra
     c, d = cfg(), deck()
     plan = json.loads((ROOT / c["plan"]).read_text(encoding="utf-8"))
+    claimed = set()  # a card belongs to the first sprint deck whose plan names it
+    for other in sprints():
+        if other["deck"] == d:
+            break
+        claimed |= {i for part in json.loads((ROOT / other["plan"]).read_text(encoding="utf-8")) for i in part["ids"]}
     want: dict[str, str] = {}  # ident -> sub-deck, first part wins
     for part in plan:  # labels carry their own numbers and may nest ("03 AI 从零开始::01 模型是什么")
         for i in part["ids"]:
-            want.setdefault(i, f"{d}::{part['label']}")
+            if i not in claimed:
+                want.setdefault(i, f"{d}::{part['label']}")
     keys, tagged = list(want), []
     for k in range(0, len(keys), 300):  # one OR per id: Anki's SQL caps the expression depth at 1000
         tagged += call("findNotes", query=" OR ".join(f'"tag:id::{i}"' for i in keys[k:k + 300]))
@@ -157,9 +179,11 @@ def rename(new: str) -> int:
         call("changeDeck", cards=ids, deck=sub)
     f = PLAN / "config.json"
     c = json.loads(f.read_text(encoding="utf-8"))
-    c["company"]["deck"] = new
+    entries = c["company"] if isinstance(c["company"], list) else [c["company"]]
+    entry = next(x for x in entries if x["deck"] == old)
+    entry["deck"] = new
     f.write_text(json.dumps(c, ensure_ascii=False, indent=1), encoding="utf-8")
-    _preset(new, c["company"].get("new_per_day", 60))
+    _preset(new, entry.get("new_per_day", 60))
     olds = sorted((x for x in call("deckNames") if x == old or x.startswith(old + "::")), key=len, reverse=True)
     call("deleteDecks", decks=[x for x in olds if not call("findCards", query=in_deck(x))], cardsToo=True)
     print(f"{old} -> {new}: {sum(len(v) for v in moves.values())} cards")
@@ -183,6 +207,16 @@ def release() -> int:
 
 if __name__ == "__main__":
     a = sys.argv[1:]
+    if "--deck" in a:
+        i = a.index("--deck")
+        SELECTED = a[i + 1]
+        del a[i:i + 2]
     if a[:1] == ["rename"] and len(a) == 2:
         sys.exit(rename(a[1]))
+    if a[:1] == ["deal"] and SELECTED is None:  # every sprint deck, in config order
+        rc = 0
+        for d in decks():
+            SELECTED = d
+            rc |= deal()
+        sys.exit(rc)
     sys.exit({"deal": deal, "status": status, "release": release}.get(a[0] if a else "", lambda: print(__doc__) or 2)())

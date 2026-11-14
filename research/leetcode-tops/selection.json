@@ -4482,5 +4482,41 @@
   ],
   "old_branch": "greedy",
   "branch": "greedy"
+ },
+ {
+  "slug": "high-five",
+  "title": "High Five",
+  "difficulty": "Easy",
+  "score": 0.0,
+  "rank": null,
+  "lists": [
+   "公司题单补充"
+  ],
+  "old_branch": "heap-priority-queue",
+  "branch": "heap-priority-queue"
+ },
+ {
+  "slug": "analyze-user-website-visit-pattern",
+  "title": "Analyze User Website Visit Pattern",
+  "difficulty": "Medium",
+  "score": 0.0,
+  "rank": null,
+  "lists": [
+   "公司题单补充"
+  ],
+  "old_branch": "arrays-hashing",
+  "branch": "arrays-hashing"
+ },
+ {
+  "slug": "remove-all-occurrences-of-a-substring",
+  "title": "Remove All Occurrences of a Substring",
+  "difficulty": "Medium",
+  "score": 0.0,
+  "rank": null,
+  "lists": [
+   "公司题单补充"
+  ],
+  "old_branch": "stack",
+  "branch": "stack"
  }
 ]

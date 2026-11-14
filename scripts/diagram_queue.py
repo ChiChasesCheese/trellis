@@ -58,7 +58,7 @@ def studied_next() -> list[str]:
     import company_deck
     import daily_extra
     from anki_refresh import call
-    decks = list(daily_extra.DAILY) + ([company_deck.deck()] if company_deck.deck() else [])
+    decks = list(daily_extra.DAILY) + company_deck.decks()
     q = "(" + " OR ".join(company_deck.in_deck(d) for d in decks) + ") (is:new OR is:learn) -is:suspended"
     cids = call("findCards", query=q)
     info = []

@@ -6,7 +6,6 @@ deck: LeetCode Tops
 lang: zh
 vault: interviews/core/leetcode/tops
 examples_from: interviews/core/leetcode/problems
-fold: bullets
 study:
   order: core-first
   mix: new-first
@@ -208,6 +207,9 @@ nodes:
   - id: arrays-hashing.encode-and-decode-strings
     title: LC 271 Encode and Decode Strings
     summary: Medium；全公司热度第 737 名；Blind 75、NeetCode 150。
+  - id: arrays-hashing.analyze-user-website-visit-pattern
+    title: LC 1152 Analyze User Website Visit Pattern
+    summary: Medium；题单题；公司题单补充。
 - id: two-pointers
   order: 2
   title: 双指针（two pointers）
@@ -465,6 +467,9 @@ nodes:
   - id: stack.car-fleet
     title: LC 853 车队（Car Fleet）
     summary: Medium；全公司热度第 386 名；NeetCode 150。
+  - id: stack.remove-all-occurrences-of-a-substring
+    title: LC 1910 删除一个字符串中所有出现的给定子字符串（Remove All Occurrences of a Substring）
+    summary: Medium；题单题；公司题单补充。
 - id: binary-search
   order: 5
   title: 二分查找（binary search）
@@ -832,6 +837,9 @@ nodes:
   - id: heap-priority-queue.ipo
     title: LC 502 IPO
     summary: Hard；全公司热度第 641 名；Top Interview 150。
+  - id: heap-priority-queue.high-five
+    title: LC 1086 High Five
+    summary: Easy；题单题；公司题单补充。
 - id: backtracking
   order: 10
   title: 回溯（backtracking）
