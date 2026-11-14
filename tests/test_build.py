@@ -22,7 +22,7 @@ def test_full_width_semicolons_break_lines_outside_code():
 def test_svg_fence_becomes_inline_figure_and_keeps_semicolons():
     from trellis.build import _html
     html = _html('**结构。** 树。\n\n```svg\n<svg viewBox="0 0 10 10"><text>a；b</text></svg>\n```\n')
-    assert '<div class="fig"><svg viewBox="0 0 10 10"><text>a；b</text></svg></div>' in html
+    assert '<div class="fig tappable" onclick="this.classList.toggle(\'zoom\')"><svg viewBox="0 0 10 10"><text>a；b</text></svg></div>' in html
 
 
 def test_example_section_is_folded_to_the_end():

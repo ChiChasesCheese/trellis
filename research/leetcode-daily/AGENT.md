@@ -56,3 +56,6 @@ patterns (2026-11-11): every card is short. Copy the shape of
   ≥ 300 random small inputs in `/tmp/daily_<slug>/`. Never write the testing process on the card. Chinese prose,
   English terms in parentheses only when they help recall.
 
+## Diagram baseline
+
+- **Diagrams (Chi, 2026-11-13): at least 25% of a deck's cards carry one, aim for 30%.** A ```mermaid flowchart / sequenceDiagram / stateDiagram-v2 or a ```svg block wherever a flow, architecture, state machine, layout or comparison is the point. Render-check each mermaid; measure with `uv run python scripts/diagram_share.py <domain>` (exit 1 below 25%).
