@@ -48,5 +48,6 @@ def calc_equation(equations, values, queries):
 **追问。**
 - 在线加方程并检测矛盾？：同根时检查 `ratio[a] / ratio[b]` 与 `v` 是否 `math.isclose`。
 - 变量少、查询多怎么办？：Floyd–Warshall 预处理所有点对，`O(V^3)` 后每次查询 `O(1)`。
+- 反复查询、方程还在线新增，怎么缓存？：缓存 `(x, y)` 并顺手存 `(y, x) = 1 / ans`；加方程时已知的比值不会变，只清掉缓存的 `-1.0`。
 
 **同模式。** LC 990 等式方程的可满足性、LC 547 省份数量、LC 721 账户合并、LC 684 冗余连接

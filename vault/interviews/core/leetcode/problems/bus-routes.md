@@ -47,5 +47,6 @@ def num_buses_to_destination(routes, source, target):
 **追问。**
 - 换乘有不同代价？：不再是无权图，改用 Dijkstra。
 - 如何加速搜索？：双向 BFS，从 `source` 和 `target` 同时出发，中间相遇。
+- 有班次时刻表、求最早到达？：边权变成等车加乘车的时间，改 Dijkstra，状态是 `(站, 时刻)`。
 
 **同模式。** LC 127 单词接龙、LC 752 打开转盘锁、LC 1091 二进制矩阵中的最短路径、LC 787 K 站中转内最便宜的航班
