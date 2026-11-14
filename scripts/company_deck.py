@@ -39,6 +39,11 @@ def deck() -> str | None:
     return cfg().get("deck")
 
 
+def in_deck(name: str) -> str:
+    """An Anki search for one deck: quotes and backslashes in the name are escaped."""
+    return '"deck:' + name.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
 def homes() -> dict[str, str]:
     return json.loads(HOMES.read_text(encoding="utf-8")) if HOMES.exists() else {}
 
@@ -64,7 +69,7 @@ def reserved() -> set[str]:
     d = deck()
     if not d:
         return set()
-    return set(_ident(_info(call("findCards", query=f'"deck:{d}"'))).values()) - {""}
+    return set(_ident(_info(call("findCards", query=in_deck(d)))).values()) - {""}
 
 
 def deal() -> int:
@@ -84,7 +89,7 @@ def deal() -> int:
         by_ident[ident].append(next(x for x in cards if x["cardId"] == cid))
     missing = [i for i in want if i not in by_ident]
     home, daily_home = homes(), daily_extra.homes()
-    inside = _info(call("findCards", query=f'"deck:{d}"'))
+    inside = _info(call("findCards", query=in_deck(d)))
     keep = {x["cardId"] for xs in by_ident.values() for x in xs}
     back = defaultdict(list)
     for x in inside:  # dropped from the plan: home again
@@ -105,7 +110,7 @@ def deal() -> int:
     HOMES.write_text(json.dumps(home, ensure_ascii=False, indent=0), encoding="utf-8")
     daily_extra.HOMES.write_text(json.dumps(daily_home, ensure_ascii=False, indent=0), encoding="utf-8")
     _preset(d, c.get("new_per_day", 60))
-    empty = sorted((x for x in call("deckNames") if x.startswith(d + "::") and not call("findCards", query=f'"deck:{x}"')), key=len, reverse=True)
+    empty = sorted((x for x in call("deckNames") if x.startswith(d + "::") and not call("findCards", query=in_deck(x))), key=len, reverse=True)
     if empty:
         call("deleteDecks", decks=empty, cardsToo=True)
     print(f"{d}: {len(keep)} cards in {len(plan)} parts, {sum(len(v) for v in moves.values())} moved in, "
@@ -134,7 +139,7 @@ def _preset(d: str, per_day: int) -> None:
 def status() -> int:
     d = deck()
     by = defaultdict(lambda: [0, 0])
-    for x in _info(call("findCards", query=f'"deck:{d}"')):
+    for x in _info(call("findCards", query=in_deck(d))):
         part = x["deckName"].split("::")[1] if "::" in x["deckName"] else "-"
         by[part][0] += 1
         by[part][1] += x["reps"] > 0
@@ -146,7 +151,7 @@ def status() -> int:
 def rename(new: str) -> int:
     old = deck()
     moves = defaultdict(list)
-    for x in _info(call("findCards", query=f'"deck:{old}"')):
+    for x in _info(call("findCards", query=in_deck(old))):
         moves[new + x["deckName"][len(old):]].append(x["cardId"])
     for sub, ids in moves.items():
         call("changeDeck", cards=ids, deck=sub)
@@ -156,7 +161,7 @@ def rename(new: str) -> int:
     f.write_text(json.dumps(c, ensure_ascii=False, indent=1), encoding="utf-8")
     _preset(new, c["company"].get("new_per_day", 60))
     olds = sorted((x for x in call("deckNames") if x == old or x.startswith(old + "::")), key=len, reverse=True)
-    call("deleteDecks", decks=[x for x in olds if not call("findCards", query=f'"deck:{x}"')], cardsToo=True)
+    call("deleteDecks", decks=[x for x in olds if not call("findCards", query=in_deck(x))], cardsToo=True)
     print(f"{old} -> {new}: {sum(len(v) for v in moves.values())} cards")
     call("sync")
     return 0
@@ -165,7 +170,7 @@ def rename(new: str) -> int:
 def release() -> int:
     home = homes()
     back = defaultdict(list)
-    for x in _info(call("findCards", query=f'"deck:{deck()}"')):
+    for x in _info(call("findCards", query=in_deck(deck()))):
         if str(x["cardId"]) in home:
             back[home.pop(str(x["cardId"]))].append(x["cardId"])
     for h, ids in back.items():

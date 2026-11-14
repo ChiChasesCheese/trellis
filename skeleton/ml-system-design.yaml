@@ -229,6 +229,6 @@ nodes:
     title: 设计广告点击率预测
     summary: 海量稀疏特征、校准、在线学习、延迟与新鲜度。
   - id: classic.feed-and-people
-    title: 设计个性化信息流与"你可能认识的人"
+    title: 设计个性化信息流与「你可能认识的人」
     summary: 信息流排序的多目标、图特征与好友推荐、去重与多样性。
     requires: [classic.two-stage]
