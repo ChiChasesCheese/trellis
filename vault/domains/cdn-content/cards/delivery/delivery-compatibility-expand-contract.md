@@ -9,6 +9,16 @@ How should a fleet migrate from cache metadata v1 to v2 while old and new worker
 ## A
 Expand first: deploy readers that accept v1 and v2 while writers continue v1. Then enable v2 writes gradually, observe mixed-fleet behavior, and backfill only if required. After all readers are v2-capable and rollback windows close, contract by removing v1 writes and later v1 reads. Version the metadata explicitly; do not infer format from deployment time.
 
+```mermaid
+flowchart TB
+  A["expand：读 v1 和 v2"] --> B["writer 仍写 v1"]
+  B --> C["逐步打开 v2 写入"]
+  C --> D["观察新旧混跑"]
+  D --> E["回滚窗口关闭"]
+  E --> F["contract：先删 v1 写"]
+  F --> G["再删 v1 读"]
+```
+
 ## Q zh
 当 old 和 new worker 同时运行时，fleet 应如何从 cache metadata v1 迁移到 v2？
 

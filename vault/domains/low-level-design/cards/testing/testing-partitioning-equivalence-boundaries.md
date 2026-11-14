@@ -20,6 +20,29 @@ step: 1
 | 缺省 | 不传 | 按 256 处理 |
 | 类型错 | `"10"`、`10.5`、`null`、`true` | 400 错误 |
 
+```svg
+<svg viewBox="0 0 360 120" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12" fill="currentColor" stroke="currentColor">
+  <line x1="10" y1="50" x2="350" y2="50" stroke-width="1.5"/>
+  <rect x="100" y="40" width="160" height="20" fill="none" stroke-width="1.5"/>
+  <text x="55" y="30" text-anchor="middle" stroke="none">无效：400</text>
+  <text x="180" y="30" text-anchor="middle" stroke="none">有效：接受</text>
+  <text x="305" y="30" text-anchor="middle" stroke="none">无效：400</text>
+  <circle cx="80" cy="50" r="4" stroke="none"/>
+  <circle cx="100" cy="50" r="4" stroke="none"/>
+  <circle cx="180" cy="50" r="4" stroke="none"/>
+  <circle cx="260" cy="50" r="4" stroke="none"/>
+  <circle cx="280" cy="50" r="4" stroke="none"/>
+  <circle cx="45" cy="50" r="4" stroke="none"/>
+  <text x="45" y="78" text-anchor="middle" stroke="none">-1</text>
+  <text x="80" y="78" text-anchor="middle" stroke="none">0</text>
+  <text x="100" y="96" text-anchor="middle" stroke="none">1</text>
+  <text x="180" y="78" text-anchor="middle" stroke="none">256</text>
+  <text x="260" y="96" text-anchor="middle" stroke="none">4096</text>
+  <text x="280" y="78" text-anchor="middle" stroke="none">4097</text>
+  <text x="180" y="114" text-anchor="middle" stroke="none">边界两侧都测：0、1、4096、4097</text>
+</svg>
+```
+
 ```python
 @pytest.mark.parametrize("value, ok", [
     (1, True), (256, True), (4096, True),

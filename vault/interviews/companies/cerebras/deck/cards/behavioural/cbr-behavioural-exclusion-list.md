@@ -12,6 +12,17 @@ step: 2
 2. **The suggestion**: add that payment type to the check's **exclusion list** so the alert goes quiet.
 3. **My position**: no — the fees were **genuinely missing**; excluding it would turn a **loud** detector **silent**.
 4. **How I argued**: with **numbers anyone could re-run**: a control group with the field set had fees; the affected rows were **0% at every age**, so it wasn't lateness.
+
+```mermaid
+flowchart TB
+  H["健康检查：结算了没费用"] --> Q{"加进排除名单？"}
+  Q -->|加| S["告警安静，费用照样缺"]
+  Q -->|不加| E["对照组和年龄分桶"]
+  E --> Z["每个年龄段都是 0%"]
+  Z --> R["不是延迟，是真缺失"]
+  R --> F["修代码，补端到端测试"]
+```
+
 5. **Outcome**: the check stayed; root cause found (NULL plus a wrong overload); an end-to-end test added.
 6. **Lesson**: "A check that fires on **missing data** is worth defending; the fix goes in the code, not the alert."
 

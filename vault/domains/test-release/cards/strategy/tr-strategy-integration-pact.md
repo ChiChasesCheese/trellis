@@ -14,6 +14,23 @@ step: 1
 3. **提供方验证**：提供方（订单服务）的 CI 从 Broker 拉取所有消费者的契约，用真实的服务回放这些请求，检查响应是否满足期望，再把验证结果发布回 Broker。
 4. **部署前检查**：部署前运行 `pact-broker can-i-deploy --pacticipant <名字> --version <版本> --to-environment production`，Broker 根据矩阵（哪个版本的消费者和哪个版本的提供方验证通过）返回是否可部署，用退出码阻断流水线。
 
+```mermaid
+sequenceDiagram
+  %%{init: {'sequence': {'actorMargin': 16, 'width': 104, 'messageMargin': 28}}}%%
+  autonumber
+  participant C as 消费者 CI
+  participant B as Pact Broker
+  participant P as 提供方 CI
+  participant D as 部署流水线
+  C->>C: 对着模拟提供方跑测试
+  C->>B: 发布 pact 文件
+  P->>B: 拉取所有契约
+  P->>P: 真实服务回放请求
+  P->>B: 发布验证结果
+  D->>B: can-i-deploy？
+  B-->>D: 退出码：能或不能
+```
+
 **解决的问题**：
 - **不需要同时部署所有组件**：每方在自己的流水线里独立验证，比搭一套完整环境快且稳定。
 - **只验证真正被用到的部分**：提供方能知道改哪个字段会破坏哪个消费者。

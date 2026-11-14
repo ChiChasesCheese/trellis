@@ -18,4 +18,15 @@ Cerebras 的主要竞争对手有哪些？哪些既是对手又是伙伴？
 | **AWS Trainium** | 亚马逊自研芯片 | 分离式推理里的伙伴 |
 | **云与新云** | AWS、Azure、GCP、Oracle、CoreWeave | 卖推理服务的对手 |
 
+```mermaid
+flowchart TB
+  C["Cerebras"]
+  N["Nvidia"] -->|最大对手，授权 Groq 设计| C
+  G["Groq、SambaNova"] -->|直接对手| C
+  T["Google TPU"] -->|对手| C
+  K["云与新云"] -->|卖推理的对手| C
+  A["AMD"] -->|对手，也做预填充| C
+  W["AWS Trainium"] -->|伙伴：做预填充| C
+```
+
 - **CUDA**：Nvidia 的 GPU 编程平台，大多数 AI 软件建在它上面。Cerebras 不用 CUDA，模型要经过自家编译器，所以每个新模型都要做大量集成验证。

@@ -16,6 +16,19 @@ step: 2
    - pending rows never asserted the field;
    - nothing spanned **promote → fee**.
 4. **What changed**: one function instead of two overloads; old signature **dropped** in a versioned migration; a new **end-to-end test across the whole chain**.
+
+```mermaid
+flowchart TB
+  G["端到端测试全绿"] --> M["费用静默缺失"]
+  M --> H["每日健康检查抓到"]
+  H --> W["四个漏洞"]
+  W --> W1["只断言路由"]
+  W --> W2["fixture 是卡支付"]
+  W --> W3["pending 行没断言"]
+  W --> W4["没有跨阶段测试"]
+  W4 -->|promote → fee| T["跨阶段端到端测试"]
+```
+
 5. **Rule**: "The fixture must look like the **real population**; assert on the **output**; an unmappable input must **fail loudly**."
 6. **Bridge**: "That's why I care about integration tests: each stage was green on its own."
 

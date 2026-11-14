@@ -15,4 +15,15 @@ Cerebras 的「允许用 AI 的面试轮」怎么进行、怎么评分、怎么�
   1. 先读代码、说出计划，再让 AI 动手。
   2. 每次生成后读 diff、跑测试、自己补一个边界用例。
   3. 说出哪些部分**没有**交给 AI、为什么。
+
+```mermaid
+flowchart TB
+  A["读需求，问 2–3 个问题"] --> B["读代码，说出计划"]
+  B --> C["一小步交给 AI"]
+  C --> D["读 diff、跑测试"]
+  D --> E["自己补一个边界用例"]
+  E -->|下一步| C
+  E --> F["讲清没交给 AI 的部分"]
+```
+
 - **你的真实习惯**："Plan with the agent, write the test first in each phase, and let CI and thresholds gate it; in money code I read every diff."

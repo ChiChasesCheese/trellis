@@ -13,6 +13,17 @@ step: 1
   2. Six append-only streams, six `MERGE`s, two **validators**; **idempotent at three layers**.
   3. "**Bad data is recorded, never dropped**"; a mismatch **halts and pages** on-call — me.
   4. About **22M** Amex transactions in half a year.
+
+```mermaid
+flowchart TB
+  F["Amex 文件"] --> S["六个只追加 stream"]
+  S --> M["六个 MERGE"]
+  M --> V["两个校验器"]
+  V -->|一致| FE["费用"]
+  V -->|不一致| H["停管线，呼叫值班"]
+  S -.->|坏数据| E["记录下来，不丢"]
+```
+
 - **Second choice, S7 — nobody asked**:
   1. "**No ticket, no owner**": tests collided on one shared schema.
   2. V1 → V2 with three ADRs; slots cloned from the **deployed commit** in about **2 seconds**.

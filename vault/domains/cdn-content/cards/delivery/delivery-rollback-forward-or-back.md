@@ -9,6 +9,15 @@ A new writer has emitted metadata the old reader cannot parse. Is rollback still
 ## A
 Not automatically. Rolling back the reader may deepen the outage if incompatible state already exists. Freeze further writes, quantify affected state, and choose among a compatibility shim, roll-forward fix, or restoring versioned data. This is why releases should use expand-contract and backward-readable formats: operational rollback must remain a valid transition, not a wish.
 
+```mermaid
+flowchart TB
+  N["旧 reader 读不懂新数据"] --> F["冻结后续写入"]
+  F --> Q["量化受影响的状态"]
+  Q --> S["兼容垫片 shim"]
+  Q --> R["roll-forward 修复"]
+  Q --> V["恢复带版本的数据"]
+```
+
 ## Q zh
 新 writer 已经写出旧 reader 无法 parse 的 metadata。rollback 仍然是最安全响应吗？
 

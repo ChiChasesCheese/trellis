@@ -20,5 +20,13 @@ Cerebras 2026 年有哪些大事？按时间说出 6 件。
 | 10 月 | 博客讲约 3 万亿参数模型部署到 59 块晶圆 |
 | 11 月 | Q3 财报：收入 $210.8M、RPO $26.1B；WSE-5 在系统测试；接入 Oracle |
 
+```mermaid
+timeline TD
+  title Cerebras 2026
+  1–3 月 : OpenAI 750 MW : H 轮融资、Codex-Spark : AWS Trainium 预填充
+  5–8 月 : 上市 CBRS、Multi-LoRA : AMD 分离式推理 : CS-4、GPT-5.6 Sol
+  9–11 月 : Inference Core 招 RIT : 59 块晶圆部署 : Q3 财报、WSE-5 系统测试
+```
+
 - **LoRA**：一种轻量微调，只训练一小块附加参数；Multi-LoRA = 同一个底座模型同时挂多个客户的定制小块。
 - **用法**：经理问"你了解我们最近在做什么"时，挑 CS-4、分离式推理、RIT 招聘三件，和岗位连起来。

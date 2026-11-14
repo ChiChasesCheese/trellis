@@ -26,6 +26,15 @@ with torch.inference_mode():
     logits = model(input_ids).logits
 ```
 
+```mermaid
+flowchart TB
+  M["拿模型做推理"] --> E{"调了 eval()？"}
+  E -->|没调| E1["Dropout 开着：时好时坏"]
+  E -->|调了| G{"inference_mode？"}
+  G -->|没开| G1["记中间结果：显存涨、OOM"]
+  G -->|开了| OK["输出稳定、显存正常"]
+```
+
 **测试建议：**
 - 同一输入连续跑两次，输出逐位相同（在关闭随机采样的前提下），能抓住漏掉 `eval()`。
 - 记录峰值显存 `torch.cuda.max_memory_allocated()`，和基线比，能抓住漏掉 `inference_mode()`。

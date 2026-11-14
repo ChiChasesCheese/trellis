@@ -11,6 +11,17 @@ step: 1
 1. **Situation**: I wanted to know how much of a **good-looking backtest** survives realistic costs — with no course and no team to ask.
 2. **Approach — learn by building**: I built the research platform and made each concept a **component with tests**: point-in-time data, purged cross-validation, Deflated Sharpe, PBO.
 3. **Keep myself honest**: an **append-only ledger** of **340+ experiments**, so I couldn't record only the winners.
+
+```mermaid
+flowchart TB
+  C["一个统计概念"] --> M["写成带测试的组件"]
+  M --> X["跑实验"]
+  X --> L["只追加的实验账本"]
+  L --> G{"过两道门？"}
+  G -->|否| D["多数想法死在这里"]
+  G -->|是| P["纸面交易"]
+```
+
 4. **Result**: one strategy cleared **both gates** — **1.39** excess Sharpe after **10 bps** costs — now on **paper trading**; most ideas died at the gates.
 5. **How I'd learn here**: "Same method for inference: learn **in order**, turn each concept into something I can **test**, and **pair with the engineers** who own each layer."
 

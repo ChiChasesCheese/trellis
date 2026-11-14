@@ -14,6 +14,18 @@ step: 5
 2. **Problem**: integration tests ran migrations against **one shared schema**.
 3. **V1 failed**: slots cloned the shared schema, whose state depended on **who migrated last** — not reproducible.
 4. **V2**: a `MAIN` synced to the **production-deployed commit**; each slot a **zero-copy clone**, about **2 seconds**.
+
+```mermaid
+flowchart TB
+  subgraph V1["V1：不可复现"]
+    S1["共享 schema"] -->|谁最后迁移| C1["克隆的槽位"]
+  end
+  subgraph V2["V2：确定"]
+    P["生产部署的提交"] --> M["MAIN"]
+    M -->|零拷贝克隆 约 2 秒| C2["每个槽位"]
+  end
+```
+
 5. **Result**: several agent sessions run migrations and tests **concurrently**; three **ADRs**.
 6. **Lesson**: "Test state must be **deterministic** — derived from what's deployed, never from who ran last. That kills a whole class of **flaky** tests."
 

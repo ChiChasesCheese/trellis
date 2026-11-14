@@ -14,4 +14,11 @@ step: 1
 4. **How I learn**: "I taught myself backtest statistics by **building** the platform and **testing each piece**. For ML I'm going **in order** — basics, inference, serving, numerics — and I'd **pair with feature engineers** in the first month."
 5. **What transfers**: parity testing → **reference comparison**; quality gates → **readiness gates**; on-call RCA → **cross-stack triage**.
 
+```mermaid
+flowchart TB
+  A["行为一致性测试"] --> A2["对参考实现比较"]
+  B["数据质量门"] --> B2["发布就绪门"]
+  C["值班根因分析"] --> C2["跨栈分诊"]
+```
+
 > 中文提示：不要编 ML 项目；不要用解释不了下一层的术语。说完第 2 条可以停，看他想不想往下问。

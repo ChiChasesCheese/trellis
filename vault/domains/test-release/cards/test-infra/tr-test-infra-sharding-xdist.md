@@ -20,6 +20,20 @@ step: 2
 - **同一个端口**：两个进程都起服务监听 8000 端口。→ 用端口 0 让系统分配，或按 `worker_id` 计算端口。
 - **同一个文件或目录**：都写 `/tmp/out.json`。→ 用 `tmp_path` fixture，每条测试一个独立临时目录。
 - **同一个数据库或设备**：→ 每个进程一个独立的库名（例如 `test_db_gw3`），或用 `xdist_group` 把它们串行。
+
+```mermaid
+flowchart TB
+  S["pytest -n auto"] --> W0["gw0"]
+  S --> W1["gw1"]
+  S --> W2["gw2"]
+  W0 --> P{"共享资源？"}
+  W1 --> P
+  W2 --> P
+  P -->|端口| A["端口 0 或 worker_id"]
+  P -->|文件| B["tmp_path"]
+  P -->|数据库、设备| C["每进程一个库"]
+```
+
 - **session 级 fixture 被执行 N 次**：每个工作进程各执行一次。要全局只做一次（例如下载一个大文件），用 `tmp_path_factory.getbasetemp().parent` 下的文件加文件锁协调。
 
 ```python

@@ -14,6 +14,17 @@ step: 7
 2. **Observability**: transaction tracing with **Sentry** and **Datadog**, so one fee can be followed across stages.
 3. **Incident**: an infra release failed in QA; root cause in **7 minutes** — `outbound_privileges` was unset, so Terraform never revoked dependent grants; same-day deploy to **three environments**.
 4. **Then the class**: I **scanned the repo** — **42 of 79** similar resources lacked it; **two** real risks in another module, **flagged** to the owner.
+
+```mermaid
+flowchart TB
+  A["QA 里发布失败"] --> B["7 分钟找到根因"]
+  B --> C["当天部署三个环境"]
+  C --> D["扫描整个仓库"]
+  D --> E["79 个里 42 个缺这项"]
+  E --> F["另一模块 2 个真风险"]
+  F --> G["带证据交给负责人"]
+```
+
 5. **Lesson**: "Fixing one and **eliminating the class** are different jobs; keep claims as narrow as what I checked."
 
 > 中文提示：你只是被 cc，不是被指派；先问再推 PR。追问陌生故障怎么下手：时间线 → 切片 → 一个具体案例 → 逐阶段回溯。

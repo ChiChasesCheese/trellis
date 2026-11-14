@@ -11,6 +11,17 @@ step: 1
 1. **Situation**: a large marketplace merchant reported roughly **$4M** of Amex payouts "missing"; a formal incident; I was named **one of three** fix owners.
 2. **My authority piece**: a senior teammate said he lacked context on the US SLA and **deferred to me**; I established that **T+7 is our internal SLA** and we pay out only after Amex settles to us — separating **expected latency** from the **real regression**.
 3. **The disagreement**: the regression was an EU-compliance date change that shifted US payouts by a day. **Revert** was fast; I argued for a **region conditional** so EU and US keep **independent semantics**.
+
+```mermaid
+flowchart TB
+  R["欧盟合规改了日期"] --> U["美国出款晚一天"]
+  U --> Q{"怎么修？"}
+  Q -->|快| V["回滚 revert"]
+  Q -->|稳| C["按地区加条件"]
+  C --> S["欧美各自独立语义"]
+  S --> D["书面写清取舍，组里选它"]
+```
+
 4. **How**: the trade-off in writing — fast vs robust — and the group chose the conditional.
 5. **Boundary**: teammates deployed it; I **stayed out of the deploy step**. Closed in **three days**.
 6. **Lesson**: "Settle the **boundary** first; then the conflict mostly dissolves."
