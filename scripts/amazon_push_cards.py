@@ -27,9 +27,9 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import PythonLexer
 
 CARDS = Path(__file__).resolve().parents[1] / "research/companies/amazon/cards"
-PARENT = "LeetCode Tops"
+PARENT = "Under the Hood"  # LeetCode Tops was renamed 2026-11-14; Amazon problems themselves now live on the tree
 SETS = {
-    "recent": (["coding.json"], f"{PARENT}::22 Amazon 近一月原题（2026-10）", "Amazon 近一月原题",
+    "recent": (["coding.json"], f"{PARENT}::22 Amazon 近一月原题（2026-10）", "Amazon 近一月原题",  # retired: one card per problem
                "leetcode-tops::amazon-recent-1m"),
     "patterns": (["patterns_*.json"], f"{PARENT}::23 Amazon 模式强化（patterns）", "Amazon 模式强化",
                  "leetcode-tops::amazon-patterns"),
@@ -85,6 +85,9 @@ def tags(card: dict) -> list[str]:
 
 
 def main(argv: list[str]) -> int:
+    if "patterns" not in argv:  # 2026-11-14: a problem has one card, on the LeetCode tree (research/leetcode-unify)
+        print("retired: problems are on the tree; only `--set patterns` still pushes (into Under the Hood)")
+        return 1
     global DECK, CRUMB, TAG_BRANCH
     dry = "--dry-run" in argv
     name = argv[argv.index("--set") + 1] if "--set" in argv else "recent"

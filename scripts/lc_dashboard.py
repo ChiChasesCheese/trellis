@@ -36,12 +36,11 @@ from leetcode_daily import gql  # noqa: E402
 OUT = ROOT / "sources/local/dashboard"
 DAY = 86400
 SUBJECT = {
-    "deck_root": "LeetCode Tops",
+    "deck_root": "算法知识树（灵神题单）",  # one card per problem since 2026-11-14 (research/leetcode-unify)
     "items": ROOT / "vault/interviews/core/leetcode/problems",
     "groups_skeleton": ROOT / "skeleton/leetcode-tops.yaml",  # top-level branches = groups
     # the decks shown in the per-deck panel: label -> regex on the Anki deck name
-    "decks": {"Tops 01–17": r"^LeetCode Tops::(0\d|1[0-7]) ", "TikTok 整题 24": r"^LeetCode Tops::24 ",
-              "TikTok 拆分 25": r"^LeetCode Tops::25 ", "通用核心 27": r"^LeetCode Tops::27 ", "Daily 28": r"^LeetCode Tops::28 "},
+    "decks": {"知识树": r"^算法知识树", "今日算法": r"^2 今日算法", "今日计划": r"^1 今日计划", "冲刺": r"^\d+ \S+ 力扣"},
 }
 
 
@@ -86,7 +85,7 @@ def collect_anki() -> dict:
     sel = {p["slug"]: p for p in json.loads((ROOT / "research/leetcode-tops/selection.json").read_text(encoding="utf-8"))}
     tt = json.loads((ROOT / "research/companies/tiktok/index.json").read_text(encoding="utf-8"))
 
-    cids = anki("findCards", query=f'"deck:{SUBJECT["deck_root"]}*"')
+    cids = anki("findCards", query='"tag:id::lct-*" -"tag:id::lct-learn-*"')  # every problem's card, wherever it is dealt
     info = []
     for i in range(0, len(cids), 500):
         info += anki("cardsInfo", cards=cids[i:i + 500])
@@ -101,6 +100,9 @@ def collect_anki() -> dict:
         reviews.update(anki("getReviewsOfCards", cards=[str(c) for c in seen_ids[i:i + 400]]))
 
     def slug_of(c: dict) -> str:
+        for t in tags.get(c["note"], []):
+            if t.startswith("id::lct-") and t[8:] in probs:
+                return t[8:]
         for t in tags.get(c["note"], []):
             last = t.split("::")[-1]
             if not t.startswith(("id::", "trellis::")) and (last in probs or last in sel or last in tt):

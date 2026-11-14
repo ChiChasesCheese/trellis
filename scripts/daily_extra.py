@@ -48,18 +48,17 @@ DEEP_DECK = "5 系统设计高频题"  # one system-design question a day (deep_
 DAILY = (DECK, LC_DECK, LLD_DECK, DEEP_DECK)
 CARRIED = "0 昨天没学完"  # what was dealt and not learned comes first the next day
 LLD_ROOT, SD_ROOT = "低层设计（LLD）", "系统设计"
-SUBJECT_DECK = {SD_ROOT: f"{DECK}::1 系统设计", LLD_ROOT: LLD_DECK, "LeetCode Tops": LC_DECK}  # each subject: its deck and budget
-REVIEWS = {SD_ROOT: 150, LLD_ROOT: 80, "LeetCode Tops": 0}  # LeetCode: new problems only, its backlog is left alone
+TREE_ROOT = "算法知识树（灵神题单）"  # the knowledge tree's own deck: a learning card per leaf, then its problems
+SUBJECT_DECK = {SD_ROOT: f"{DECK}::1 系统设计", LLD_ROOT: LLD_DECK, TREE_ROOT: LC_DECK}  # each subject: its deck and budget
+REVIEWS = {SD_ROOT: 150, LLD_ROOT: 80, TREE_ROOT: 0}  # LeetCode: new problems only, its backlog is left alone
 LLD_FOUNDATIONS = ("低层设计答题框架", "并发", "低层设计跨题模式")
 DAY_MS = 86_400_000
 URGENCY_CAP = 2.0  # how far overdue-ness can raise a review: urgency is 1 + min(cap, days overdue / interval)
 VALUE_FLOOR = 0.3  # a review of the least valuable card in a deck still counts this much
-TREE_ROOT = "算法知识树（灵神题单）"  # the knowledge tree's own deck: a learning card per leaf, then its problems
-LC_ROOTS = ("LeetCode Tops", TREE_ROOT)
-SOLVED_DECK = "LeetCode Tops::28 Daily"
+LC_ROOTS = (TREE_ROOT,)  # one card per problem, on the tree (2026-11-14)
 LC_DEFAULTS = {"since": "2026-11-12T04:00", "per_topic": 5, "per_section": 1}
 PREFER = ("lct-{s}", "tlc-tops-{s}-0-whole", "tlc-{s}-0-whole", "tlc-core-{s}", "lca-{s}", "tlc-daily-{s}-0-whole")
-DEFAULT_DECKS = {"系统设计": 1.0, "LeetCode Tops": 1.0, "低层设计（LLD）": 0.6, "Kafka": 0.5, "Python": 0.5,
+DEFAULT_DECKS = {"系统设计": 1.0, TREE_ROOT: 1.0, "Under the Hood": 0.3, "低层设计（LLD）": 0.6, "Kafka": 0.5, "Python": 0.5,
                  "Code Core": 0.5, "Narrative Round": 0.4, "编程语言原理：Go · Java · Rust · Python · C++": 0.3,
                  "Snowflake 原理": 0.3, "HFT 低延迟交易系统": 0.2, "CDN Content": 0.2, "Stripe": 0.2, "篮球（Basketball）": 0.2,
                  "Headlands": 0.1, "Markets & Factors": 0.1, "Quant Infrastructure": 0.1}
@@ -409,7 +408,7 @@ def release(keep: set[int]) -> int:
 def deal(ex: Extra) -> None:
     home = homes()
     info = {c["cardId"]: c for c in call("cardsInfo", cards=[x["card"] for x in ex.lc_new + ex.lc_similar + ex.lld_new + ex.work_new + ex.reviews + ex.deep])}
-    lc, lld = SUBJECT_DECK["LeetCode Tops"], SUBJECT_DECK[LLD_ROOT]
+    lc, lld = SUBJECT_DECK[TREE_ROOT], SUBJECT_DECK[LLD_ROOT]
     plan = []
     for n, topic in enumerate(ex.lc_focus, 1):
         for sec in dict.fromkeys(x["section"] for x in ex.lc_new if x["topic"] == topic):

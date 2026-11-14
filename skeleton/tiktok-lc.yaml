@@ -2,7 +2,7 @@
 # research/companies/tiktok/tools/gen_skeleton.py from index.json; re-run to regenerate.
 domain: tiktok-lc
 title: TikTok 字节高频 LeetCode · 整题答案
-deck: LeetCode Tops::24 TikTok 字节高频 · 整题答案（whole answers）
+deck: Under the Hood::02 解题模式与 Python 技巧（TikTok）
 lang: zh
 vault: interviews/core/leetcode/tiktok
 examples_from: interviews/core/leetcode/problems

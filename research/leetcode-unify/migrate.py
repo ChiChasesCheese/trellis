@@ -20,7 +20,18 @@ from anki.collection import Collection
 
 ARCHIVE = "LeetCode Tops::99"
 TRASH = "📦 其他::待删除 · 旧 LeetCode 副本"
-COPY = re.compile(r"^(?:tlc-tops-(.+)-0-whole|tlc-daily-(.+)-0-whole|tlc-must-(.+)-0-whole|tlc-core-(.+)|tlc-(.+)-0-whole|lca-(.+)|lcb-(.+))$")
+DONE = "📦 其他::待删除"  # copies already moved on an earlier run are skipped
+COPY = [re.compile(p) for p in (r"^tlc-tops-(.+)-0-whole$", r"^tlc-daily-(.+)-0-whole$", r"^tlc-must-(.+)-0-whole$",
+                                 r"^tlc-core-(.+)$", r"^tlc-(.+)-0-whole$", r"^lca-(.+)$", r"^lcb-(.+)$")]
+
+
+def copy_of(ident: str, bodies: set) -> str | None:
+    """The problem a copy's id names; prefixes overlap (tlc-daily-temperatures is LC 739's copy), so the slug must exist."""
+    for p in COPY:
+        m = p.match(ident)
+        if m and m.group(1) in bodies:
+            return m.group(1)
+    return None
 
 
 def main() -> int:
@@ -33,7 +44,7 @@ def main() -> int:
     for nid in col.find_notes('"tag:id::*"'):
         note = col.get_note(nid)
         ident = next((t[4:] for t in note.tags if t.startswith("id::")), "")
-        cards = note.cards()
+        cards = [c for c in note.cards() if not deck_name.get(c.did, "").startswith(DONE)]
         if not cards:
             continue
         if ident.startswith("lct-") and not ident.startswith("lct-learn-") and ident[4:] in bodies:
@@ -42,11 +53,9 @@ def main() -> int:
             if not home.startswith(ARCHIVE):
                 canon[ident[4:]] = c
             continue
-        m = COPY.match(ident)
-        if m:
-            slug = next(g for g in m.groups() if g)
-            if slug in bodies:
-                copies.setdefault(slug, []).extend(cards)
+        slug = copy_of(ident, bodies)
+        if slug:
+            copies.setdefault(slug, []).extend(cards)
     trash = col.decks.id(TRASH)
     moved = transferred = merged_logs = 0
     moved_ids: list[int] = []

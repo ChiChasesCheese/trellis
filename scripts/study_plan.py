@@ -1059,7 +1059,7 @@ def extra_report(ex) -> str:
     return "".join(out)
 
 
-OWNED = ("系统设计", "LeetCode Tops")  # new cards in these decks come only through the plan
+OWNED = ("系统设计", "Under the Hood")  # new cards in these decks come only through the plan
 
 
 def exclusive_presets(cfg) -> None:

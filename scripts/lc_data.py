@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 LC = ROOT / "vault/interviews/core/leetcode"
 OUT = ROOT / "sources/local/lc"
-DECKS = ["LeetCode Tops", "算法知识树（灵神题单）"]
+DECKS = ["Under the Hood", "算法知识树（灵神题单）"]  # patterns and tool internals; the tree with one card per problem
 PLAN_DECK = "1 今日计划"
 PLAN_DECKS = (PLAN_DECK, "2 今日算法", "3 今日低层设计")  # the daily decks borrow cards from their home decks
 GH = OUT / "github/leetcode-company-wise-problems"
