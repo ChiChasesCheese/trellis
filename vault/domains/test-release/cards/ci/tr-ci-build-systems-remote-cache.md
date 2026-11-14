@@ -14,6 +14,15 @@ Bazel 这类构建系统的远程缓存（remote cache）是怎么工作的？�
 2. **查缓存**：远程缓存是一个按内容寻址的存储（content-addressable storage），key 命中就直接下载输出文件，不执行。
 3. **不命中才执行**，执行完把输出上传。
 
+```mermaid
+flowchart TB
+  A["一个构建动作 action"] --> K["key = 哈希<br/>命令行 + 输入内容 + 环境变量 + 工具链"]
+  K --> Q{"远程缓存命中?"}
+  Q -->|命中| D["下载输出 不执行"]
+  Q -->|不命中| E["执行动作"]
+  E --> U["把输出上传到缓存"]
+```
+
 用法：`bazel build //... --remote_cache=grpc://cache.internal:9092`；本机磁盘缓存用 `--disk_cache=~/.cache/bazel-disk`。更进一步的远程执行（remote execution）把不命中的动作直接派到构建集群上执行。
 
 **测试结果也能缓存**：测试也是一个动作。测试程序和它的所有输入都没变，结果必然相同，Bazel 直接显示 `(cached) PASSED`，不再执行。改一行代码，只有依赖它的测试会重跑，这就是天然的测试影响分析。需要强制重跑时用 `--nocache_test_results`；依赖外部系统的测试打 `external` 标签，不缓存。

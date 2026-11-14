@@ -13,6 +13,16 @@ step: 3
 - **不稳定（flaky）**：失败后重试通过；
 - **失败**：所有尝试都失败。
 
+```mermaid
+flowchart LR
+  R["第一次运行"] --> P{"通过?"}
+  P -->|是| OK["通过 PASSED"]
+  P -->|否| T["重试"]
+  T --> Q{"某次重试通过?"}
+  Q -->|是| FL["不稳定 FLAKY"]
+  Q -->|全部失败| F["失败 FAILED"]
+```
+
 Bazel 就是这样报告的：测试设置 `flaky = True` 或用 `--flaky_test_attempts` 允许重试后，重试才通过的测试显示为 `FLAKY`，而不是 `PASSED`。
 
 **为什么不能当普通通过**：

@@ -20,6 +20,29 @@ step: 1
 
 **组合**：`|actual − expected| ≤ atol + rtol × |expected|`。大数靠相对项，接近 0 时靠绝对项兜底。这正是 `numpy.allclose` 和 `torch.testing.assert_close` 使用的公式。
 
+三种判据随期望值大小的变化（粗线是组合公式）：
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 230">
+<g font-family="sans-serif" font-size="12" fill="none" stroke="currentColor">
+<line x1="50" y1="190" x2="310" y2="190"/>
+<line x1="50" y1="190" x2="50" y2="20"/>
+<line x1="50" y1="150" x2="300" y2="150" stroke-dasharray="5 4"/>
+<line x1="50" y1="190" x2="300" y2="70" stroke-dasharray="2 3"/>
+<line x1="50" y1="150" x2="300" y2="30" stroke-width="2.5"/>
+</g>
+<g font-family="sans-serif" font-size="12" fill="currentColor">
+<text x="180" y="212" text-anchor="middle">|expected|</text>
+<text x="18" y="105" text-anchor="middle" transform="rotate(-90 18 105)">允许的误差</text>
+<text x="44" y="154" text-anchor="end">atol</text>
+<text x="44" y="194" text-anchor="end">0</text>
+<text x="220" y="168">只用 atol</text>
+<text x="236" y="122">只用 rtol</text>
+<text x="60" y="40">粗线：atol + rtol×|expected|</text>
+</g>
+</svg>
+```
+
 **例**：`rtol=1e-5, atol=1e-8`：期望 1000.0 时允许误差约 0.01；期望 0.0 时允许误差 1e-8。
 
 **注意不对称**：公式只用 `expected` 的绝对值缩放，所以 `allclose(a, b)` 和 `allclose(b, a)` 结果可能不同；参数顺序要固定为"实际、期望"。Python 的 `math.isclose` 则用两者中较大的绝对值，是对称的。

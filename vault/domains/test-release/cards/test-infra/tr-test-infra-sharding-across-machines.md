@@ -16,6 +16,20 @@ step: 3
 - 优点：自动平衡，慢机器少领、快机器多领；机器挂了，它没跑完的测试回到队列。
 - 缺点：需要一个队列服务；每条测试在哪台机器跑不固定，顺序依赖类的问题更难复现；每领一次有调度开销，测试很短时不划算（可以一次领一批）。
 
+```mermaid
+flowchart LR
+  subgraph S["静态分片"]
+    H["历史耗时"] --> L["开跑前算好<br/>每片的测试列表"]
+    L --> M1["机器 1 跑第 1 片"]
+    L --> M2["机器 2 跑第 2 片"]
+  end
+  subgraph D["动态队列"]
+    Q["中心队列"] -->|"领一条"| N1["机器 1"]
+    Q -->|"领一条"| N2["机器 2"]
+    N2 -.->|"挂了 没跑完的退回"| Q
+  end
+```
+
 **静态分片的常见实现**：
 - **pytest-split**：先 `pytest --store-durations` 跑一遍全集，生成 `.test_durations` 文件；之后每台机器跑 `pytest --splits 4 --group 2`（组号从 1 开始）。`--splitting-algorithm least_duration` 每次把测试放进当前最轻的组，比默认的 `duration_based_chunks` 更均衡。
 - **Bazel**：测试目标写 `shard_count = 4`，Bazel 把测试启动 4 次，用环境变量 `TEST_TOTAL_SHARDS` 和 `TEST_SHARD_INDEX`（从 0 开始）告诉测试程序自己是第几片，测试程序据此只跑自己那份。

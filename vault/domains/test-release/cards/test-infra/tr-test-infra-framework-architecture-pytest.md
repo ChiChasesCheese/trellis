@@ -34,4 +34,13 @@ def test_returns_n_tokens(client, n):
     assert len(client.generate("hi", max_tokens=n).tokens) == n
 ```
 
+```mermaid
+flowchart TB
+  T["test_returns_n_tokens<br/>parametrize n = 1 16 512"] --> C["client fixture<br/>驱动层 InferenceClient"]
+  C --> S["server fixture scope=session<br/>资源层 launch_server"]
+  S --> O{"--target"}
+  O -->|sim| SIM["模拟器"]
+  O -->|hw| HW["真机"]
+```
+
 `max_tokens` 是最多生成多少个 token；token 是模型处理文字的最小单位，约等于一个词或词的一部分。同一套用例用 `--target=hw` 就能在真机上跑，测试函数不改。

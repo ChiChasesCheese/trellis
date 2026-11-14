@@ -39,6 +39,22 @@ def test_crash_between_write_and_rename(monkeypatch):
     assert read_final() == b"old"
 ```
 
+上面的测试按下面的顺序执行：
+
+```mermaid
+sequenceDiagram
+  participant T as 测试
+  participant W as write_checkpoint
+  participant FS as 文件系统
+  T->>W: 打开 after_tmp_before_rename 后调用
+  W->>FS: write_tmp 写临时文件
+  W->>W: failpoint 抛出 RuntimeError
+  Note over W,FS: os.replace 没有执行
+  W-->>T: RuntimeError
+  T->>FS: read_final
+  FS-->>T: 仍是 old
+```
+
 成熟的实现会支持概率触发、第 N 次触发、延迟而不是报错，并能通过环境变量或管理接口开关，例如 Go 的 `pingcap/failpoint`、FreeBSD 和 Linux 内核的故障注入框架。
 
 **搭配使用**：进程内故障点验证每个关键状态转换的处理逻辑；进程外注入验证整个系统在真实故障下的行为。

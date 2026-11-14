@@ -38,4 +38,12 @@ jobs:
       - run: uv run pytest -m hardware --junitxml=report.xml
 ```
 
+```mermaid
+flowchart LR
+  T["on: pull_request"] --> W["workflow"]
+  W --> B["job build<br/>ubuntu-latest"]
+  B -->|"artifact dist"| H["job hw-test<br/>self-hosted hw-a<br/>needs: build"]
+  H --> R["report.xml"]
+```
+
 `concurrency` 让同一个 PR 推了新提交时取消旧的运行，省下稀缺的硬件 runner；`needs: build` 保证硬件测试用的是同一份构建产物。

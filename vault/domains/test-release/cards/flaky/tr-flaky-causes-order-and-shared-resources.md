@@ -9,6 +9,18 @@ step: 1
 
 ## A
 **第一类：测试顺序依赖（test order dependency）**。某条测试留下了状态（改了模块级变量、单例、环境变量、缓存目录里的文件），另一条测试恰好依赖或被这个状态破坏。顺序一变，结果就变。
+
+```mermaid
+sequenceDiagram
+  participant A as 测试 A
+  participant G as 模块级变量 环境变量
+  participant B as 测试 B
+  A->>G: 修改 没有清理
+  B->>G: 读取
+  G-->>B: A 留下的值
+  Note over B: 先 A 后 B 失败<br/>只跑 B 或先 B 后 A 通过
+```
+
 - **确认**：装 pytest-randomly，它会打乱模块、类和函数的执行顺序，并在开头打印种子。失败后用 `pytest --randomly-seed=<种子>` 精确重现同一顺序，再用 `pytest --randomly-seed=last` 重复上一次。临时恢复原顺序用 `-p no:randomly`。确认后把可疑的两条测试单独组合运行，缩小到"先 A 后 B 必失败"。
 - **修**：每条测试自己建立和清理状态；用 fixture 的 `yield` 做清理；`monkeypatch.setenv` 代替直接改 `os.environ`，测试结束自动还原。
 

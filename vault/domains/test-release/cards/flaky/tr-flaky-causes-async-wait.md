@@ -28,6 +28,20 @@ def wait_until(cond, timeout=30.0, interval=0.05):
 wait_until(lambda: http_ok("http://127.0.0.1:%d/health" % port))
 ```
 
+```mermaid
+sequenceDiagram
+  participant T as 测试
+  participant S as 服务
+  T->>S: 启动
+  loop 每 0.05 秒 截止 30 秒
+    T->>S: GET /health
+    S-->>T: 还没就绪
+  end
+  T->>S: GET /health
+  S-->>T: 200 就绪
+  Note over T: 立刻继续 不再白等
+```
+
 - 条件满足就立刻继续，快机器上只等几十毫秒；
 - 截止时间设得远大于正常耗时（例如正常 2 秒，截止 30 秒），只在真的出问题时才失败，且失败信息说明等的是什么；
 - 用 `time.monotonic()` 计时，不受系统校时影响。
