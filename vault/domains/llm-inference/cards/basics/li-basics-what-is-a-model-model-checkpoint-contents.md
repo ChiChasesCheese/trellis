@@ -15,6 +15,15 @@ step: 4
 - **分词器文件：`tokenizer.json`、`tokenizer_config.json`。** 模型只认数字编号，这些文件定义文字和编号怎么互转，以及对话格式模板（chat template）。
 - **`generation_config.json`：生成时的默认设置。** 比如结束标记的编号、默认随机程度。
 
+```mermaid
+flowchart LR
+    C["config.json"] --> M["搭出空的计算结构"]
+    W["*.safetensors"] --> L["加载好的模型"]
+    M --> L
+    T["tokenizer.json 等"] --> S["文字 ↔ 编号, 对话模板"]
+    G["generation_config.json"] --> D["结束标记, 默认随机程度"]
+```
+
 出错的后果各不相同：
 
 - **配置和权重不匹配：** 加载时报"形状不对"，这是好情况，至少暴露了。

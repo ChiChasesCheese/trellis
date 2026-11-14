@@ -18,4 +18,34 @@ step: 1
 - **静态：** 这批要跑 100 步。第 10 步后请求 A 已完成，但它的位置空着，一直到第 100 步。100 步里实际产出 10 + 20 + 50 + 100 = 180 个 token，而 4 个位置 × 100 步 = 400 个位置，利用率 **45%**。新请求要等 100 步才能开始，首 token 延迟很高。
 - **连续：** 第 10 步 A 离开，下一步就有新请求补进来；第 20 步 B 离开，又补一个。只要队列不空，4 个位置几乎一直满着，利用率接近 **100%**。
 
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 182" font-family="sans-serif" font-size="11">
+<text x="30" y="13" fill="currentColor">静态：等最长的跑完 100 步，利用率 45%</text>
+<text x="22" y="28" text-anchor="end" fill="currentColor">A</text>
+<rect x="30" y="20" width="30" height="10" stroke="currentColor" fill="currentColor" fill-opacity="0.45"/>
+<rect x="60" y="20" width="270" height="10" fill="none" stroke="currentColor" stroke-dasharray="3 2"/>
+<text x="22" y="42" text-anchor="end" fill="currentColor">B</text>
+<rect x="30" y="34" width="60" height="10" stroke="currentColor" fill="currentColor" fill-opacity="0.45"/>
+<rect x="90" y="34" width="240" height="10" fill="none" stroke="currentColor" stroke-dasharray="3 2"/>
+<text x="22" y="56" text-anchor="end" fill="currentColor">C</text>
+<rect x="30" y="48" width="150" height="10" stroke="currentColor" fill="currentColor" fill-opacity="0.45"/>
+<rect x="180" y="48" width="150" height="10" fill="none" stroke="currentColor" stroke-dasharray="3 2"/>
+<text x="22" y="70" text-anchor="end" fill="currentColor">D</text>
+<rect x="30" y="62" width="300" height="10" stroke="currentColor" fill="currentColor" fill-opacity="0.45"/>
+<text x="30" y="95" fill="currentColor">连续：完成就离开，新请求下一步补进来，接近 100%</text>
+<text x="22" y="110" text-anchor="end" fill="currentColor">A</text>
+<rect x="30" y="102" width="30" height="10" stroke="currentColor" fill="currentColor" fill-opacity="0.45"/>
+<rect x="60" y="102" width="270" height="10" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/>
+<text x="22" y="124" text-anchor="end" fill="currentColor">B</text>
+<rect x="30" y="116" width="60" height="10" stroke="currentColor" fill="currentColor" fill-opacity="0.45"/>
+<rect x="90" y="116" width="240" height="10" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/>
+<text x="22" y="138" text-anchor="end" fill="currentColor">C</text>
+<rect x="30" y="130" width="150" height="10" stroke="currentColor" fill="currentColor" fill-opacity="0.45"/>
+<rect x="180" y="130" width="150" height="10" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/>
+<text x="22" y="152" text-anchor="end" fill="currentColor">D</text>
+<rect x="30" y="144" width="300" height="10" stroke="currentColor" fill="currentColor" fill-opacity="0.45"/>
+<text x="30" y="176" fill="currentColor">深色 = A–D 生成中；浅色 = 新请求；虚线框 = 空着</text>
+</svg>
+```
+
 **连续批处理的前提：** 每个请求的 KV 缓存（保存历史 token 每层的键、值向量）必须能随时独立分配和释放，所以它和分页式缓存管理（PagedAttention，把缓存切成固定小块按需分配）是一起出现的。已发表的 vLLM 论文报告，在相同延迟下吞吐比当时的系统高 2–4 倍。

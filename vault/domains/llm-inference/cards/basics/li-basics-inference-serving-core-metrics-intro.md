@@ -14,6 +14,35 @@ step: 2
 - **吞吐（throughput）：** 整台机器每秒总共生成多少 token，或每秒完成多少请求。决定成本。
 - **有效吞吐（goodput）：** 只统计**满足延迟目标**的那部分吞吐。例如要求 TTFT < 1 秒且 TPOT < 50 毫秒，超标的请求不算数。
 
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 138" font-family="sans-serif" font-size="11">
+<text x="60" y="16" text-anchor="middle" fill="currentColor">TTFT（排队 + 预填充）</text>
+<line x1="10" y1="26" x2="110" y2="26" stroke="currentColor"/>
+<line x1="10" y1="22" x2="10" y2="30" stroke="currentColor"/>
+<line x1="110" y1="22" x2="110" y2="30" stroke="currentColor"/>
+<line x1="10" y1="60" x2="330" y2="60" stroke="currentColor"/>
+<line x1="10" y1="52" x2="10" y2="68" stroke="currentColor"/>
+<text x="10" y="80" fill="currentColor">发请求</text>
+<circle cx="110" cy="60" r="4" fill="currentColor"/>
+<circle cx="140" cy="60" r="4" fill="currentColor"/>
+<circle cx="170" cy="60" r="4" fill="currentColor"/>
+<circle cx="200" cy="60" r="4" fill="currentColor"/>
+<circle cx="230" cy="60" r="4" fill="currentColor"/>
+<circle cx="260" cy="60" r="4" fill="currentColor"/>
+<circle cx="290" cy="60" r="4" fill="currentColor"/>
+<circle cx="320" cy="60" r="4" fill="currentColor"/>
+<line x1="110" y1="88" x2="140" y2="88" stroke="currentColor"/>
+<line x1="110" y1="84" x2="110" y2="92" stroke="currentColor"/>
+<line x1="140" y1="84" x2="140" y2="92" stroke="currentColor"/>
+<text x="125" y="104" text-anchor="middle" fill="currentColor">TPOT</text>
+<text x="330" y="80" text-anchor="end" fill="currentColor">● = 一个输出 token</text>
+<line x1="10" y1="116" x2="320" y2="116" stroke="currentColor"/>
+<line x1="10" y1="112" x2="10" y2="120" stroke="currentColor"/>
+<line x1="320" y1="112" x2="320" y2="120" stroke="currentColor"/>
+<text x="165" y="132" text-anchor="middle" fill="currentColor">端到端延迟 ≈ TTFT + TPOT × (输出 token 数 − 1)</text>
+</svg>
+```
+
 **单用户速度和总吞吐是一对矛盾：** 多个请求凑成一批，读一次参数服务多人，总吞吐上升；但每一步算得更久，每个人的 TPOT 变长。所以只报一个数字没有意义，必须说明"在多少并发下"。
 
 **测量时的注意点：**

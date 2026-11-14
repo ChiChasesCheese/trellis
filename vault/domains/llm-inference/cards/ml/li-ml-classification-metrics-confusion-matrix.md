@@ -19,6 +19,25 @@ step: 1
 
 真实有害共 20 条，无害 80 条。
 
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 186" font-family="sans-serif" font-size="11">
+<text x="150" y="22" text-anchor="middle" fill="currentColor">真实有害</text>
+<text x="250" y="22" text-anchor="middle" fill="currentColor">真实无害</text>
+<text x="94" y="59" text-anchor="end" fill="currentColor">预测有害</text>
+<text x="94" y="109" text-anchor="end" fill="currentColor">预测无害</text>
+<rect x="100" y="30" width="100" height="50" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/>
+<text x="150" y="59" text-anchor="middle" fill="currentColor">TP = 8</text>
+<rect x="200" y="30" width="100" height="50" fill="none" stroke="currentColor"/>
+<text x="250" y="59" text-anchor="middle" fill="currentColor">FP = 2（误报）</text>
+<rect x="100" y="80" width="100" height="50" fill="none" stroke="currentColor"/>
+<text x="150" y="109" text-anchor="middle" fill="currentColor">FN = 12（漏报）</text>
+<rect x="200" y="80" width="100" height="50" fill="none" stroke="currentColor"/>
+<text x="250" y="109" text-anchor="middle" fill="currentColor">TN = 78</text>
+<text x="10" y="156" fill="currentColor">精确率 = TP / 第一行 = 8 / 10 = 0.80</text>
+<text x="10" y="176" fill="currentColor">召回率 = TP / 第一列 = 8 / 20 = 0.40</text>
+</svg>
+```
+
 **四个指标：**
 - **准确率 = (TP + TN) / 全部** = (8 + 78) / 100 = **0.86**。所有判断里对了多少。
 - **精确率 = TP / (TP + FP)** = 8 / 10 = **0.80**。模型说"有害"的那些里，真有害的比例。回答的是"报警可信吗"。

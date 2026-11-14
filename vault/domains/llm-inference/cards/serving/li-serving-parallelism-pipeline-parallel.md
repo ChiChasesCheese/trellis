@@ -19,6 +19,53 @@ step: 2
 - 时刻 2：阶段 1 算 B 组，阶段 2 算 A 组；
 - 时刻 4 之后：4 个阶段同时在算 4 组不同的请求。
 
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 166" font-family="sans-serif" font-size="11">
+<text x="84" y="14" text-anchor="end" fill="currentColor">阶段（层）</text>
+<text x="90" y="14" fill="currentColor">时刻 →</text>
+<text x="107" y="28" text-anchor="middle" fill="currentColor">1</text>
+<text x="141" y="28" text-anchor="middle" fill="currentColor">2</text>
+<text x="175" y="28" text-anchor="middle" fill="currentColor">3</text>
+<text x="209" y="28" text-anchor="middle" fill="currentColor">4</text>
+<text x="243" y="28" text-anchor="middle" fill="currentColor">5</text>
+<text x="277" y="28" text-anchor="middle" fill="currentColor">6</text>
+<text x="311" y="28" text-anchor="middle" fill="currentColor">7</text>
+<text x="84" y="51" text-anchor="end" fill="currentColor">1–20 层</text>
+<rect x="90" y="36" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="107" y="51" text-anchor="middle" fill="currentColor">A</text>
+<rect x="124" y="36" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="141" y="51" text-anchor="middle" fill="currentColor">B</text>
+<rect x="158" y="36" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="175" y="51" text-anchor="middle" fill="currentColor">C</text>
+<rect x="192" y="36" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="209" y="51" text-anchor="middle" fill="currentColor">D</text>
+<rect x="226" y="36" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="243" y="51" text-anchor="middle" fill="currentColor">E</text>
+<rect x="260" y="36" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="277" y="51" text-anchor="middle" fill="currentColor">F</text>
+<rect x="294" y="36" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="311" y="51" text-anchor="middle" fill="currentColor">G</text>
+<text x="84" y="77" text-anchor="end" fill="currentColor">21–40 层</text>
+<rect x="90" y="62" width="34" height="22" fill="none" stroke="currentColor" stroke-dasharray="3 2"/>
+<rect x="124" y="62" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="141" y="77" text-anchor="middle" fill="currentColor">A</text>
+<rect x="158" y="62" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="175" y="77" text-anchor="middle" fill="currentColor">B</text>
+<rect x="192" y="62" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="209" y="77" text-anchor="middle" fill="currentColor">C</text>
+<rect x="226" y="62" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="243" y="77" text-anchor="middle" fill="currentColor">D</text>
+<rect x="260" y="62" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="277" y="77" text-anchor="middle" fill="currentColor">E</text>
+<rect x="294" y="62" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="311" y="77" text-anchor="middle" fill="currentColor">F</text>
+<text x="84" y="103" text-anchor="end" fill="currentColor">41–60 层</text>
+<rect x="90" y="88" width="34" height="22" fill="none" stroke="currentColor" stroke-dasharray="3 2"/>
+<rect x="124" y="88" width="34" height="22" fill="none" stroke="currentColor" stroke-dasharray="3 2"/>
+<rect x="158" y="88" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="175" y="103" text-anchor="middle" fill="currentColor">A</text>
+<rect x="192" y="88" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="209" y="103" text-anchor="middle" fill="currentColor">B</text>
+<rect x="226" y="88" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="243" y="103" text-anchor="middle" fill="currentColor">C</text>
+<rect x="260" y="88" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="277" y="103" text-anchor="middle" fill="currentColor">D</text>
+<rect x="294" y="88" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="311" y="103" text-anchor="middle" fill="currentColor">E</text>
+<text x="84" y="129" text-anchor="end" fill="currentColor">61–80 层</text>
+<rect x="90" y="114" width="34" height="22" fill="none" stroke="currentColor" stroke-dasharray="3 2"/>
+<rect x="124" y="114" width="34" height="22" fill="none" stroke="currentColor" stroke-dasharray="3 2"/>
+<rect x="158" y="114" width="34" height="22" fill="none" stroke="currentColor" stroke-dasharray="3 2"/>
+<rect x="192" y="114" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="209" y="129" text-anchor="middle" fill="currentColor">A</text>
+<rect x="226" y="114" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="243" y="129" text-anchor="middle" fill="currentColor">B</text>
+<rect x="260" y="114" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="277" y="129" text-anchor="middle" fill="currentColor">C</text>
+<rect x="294" y="114" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="311" y="129" text-anchor="middle" fill="currentColor">D</text>
+<text x="4" y="160" fill="currentColor">A–G 是不同的请求组；虚线框是空闲的气泡</text>
+</svg>
+```
+
 只要在途的组数 ≥ 阶段数，每个阶段都不闲着。**在途请求数 ≈ 阶段数 × 每组大小**。
 
 **气泡（bubble）：** 在途组数不足时，部分阶段空闲。流量低时利用率差；各阶段工作量不均衡时，最慢的阶段决定整条流水线的节奏。

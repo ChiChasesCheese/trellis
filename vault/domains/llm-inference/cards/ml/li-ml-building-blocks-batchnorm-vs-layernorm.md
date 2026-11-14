@@ -15,6 +15,61 @@ BatchNorm 和 LayerNorm（以及 RMSNorm）有什么区别？为什么 Transform
 - **LayerNorm：** 对每个样本，沿特征方向（D 个数）算均值和方差。每个样本独立处理，与批里有谁无关。
 - **RMSNorm：** LayerNorm 的简化，不减均值，只除以均方根 `sqrt(mean(x²) + ε)`。计算更省，效果相当，Llama 系列使用。
 
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150" font-family="sans-serif" font-size="11">
+<text x="75" y="14" text-anchor="middle" fill="currentColor">BatchNorm</text>
+<text x="245" y="14" text-anchor="middle" fill="currentColor">LayerNorm</text>
+<text x="30" y="30" fill="currentColor">D 个特征 →</text>
+<text x="200" y="30" fill="currentColor">D 个特征 →</text>
+<text x="4" y="74" fill="currentColor">B ↓</text>
+<text x="174" y="74" fill="currentColor">B ↓</text>
+<rect x="30" y="34" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="48" y="34" width="18" height="18" stroke="currentColor" fill="currentColor" fill-opacity="0.35"/>
+<rect x="66" y="34" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="84" y="34" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="102" y="34" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="30" y="52" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="48" y="52" width="18" height="18" stroke="currentColor" fill="currentColor" fill-opacity="0.35"/>
+<rect x="66" y="52" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="84" y="52" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="102" y="52" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="30" y="70" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="48" y="70" width="18" height="18" stroke="currentColor" fill="currentColor" fill-opacity="0.35"/>
+<rect x="66" y="70" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="84" y="70" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="102" y="70" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="30" y="88" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="48" y="88" width="18" height="18" stroke="currentColor" fill="currentColor" fill-opacity="0.35"/>
+<rect x="66" y="88" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="84" y="88" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="102" y="88" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="200" y="34" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="218" y="34" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="236" y="34" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="254" y="34" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="272" y="34" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="200" y="52" width="18" height="18" stroke="currentColor" fill="currentColor" fill-opacity="0.35"/>
+<rect x="218" y="52" width="18" height="18" stroke="currentColor" fill="currentColor" fill-opacity="0.35"/>
+<rect x="236" y="52" width="18" height="18" stroke="currentColor" fill="currentColor" fill-opacity="0.35"/>
+<rect x="254" y="52" width="18" height="18" stroke="currentColor" fill="currentColor" fill-opacity="0.35"/>
+<rect x="272" y="52" width="18" height="18" stroke="currentColor" fill="currentColor" fill-opacity="0.35"/>
+<rect x="200" y="70" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="218" y="70" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="236" y="70" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="254" y="70" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="272" y="70" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="200" y="88" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="218" y="88" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="236" y="88" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="254" y="88" width="18" height="18" fill="none" stroke="currentColor"/>
+<rect x="272" y="88" width="18" height="18" fill="none" stroke="currentColor"/>
+<text x="75" y="126" text-anchor="middle" fill="currentColor">每个特征沿批算</text>
+<text x="75" y="142" text-anchor="middle" fill="currentColor">依赖同批其他样本</text>
+<text x="245" y="126" text-anchor="middle" fill="currentColor">每个样本沿特征算</text>
+<text x="245" y="142" text-anchor="middle" fill="currentColor">与批里有谁无关</text>
+</svg>
+```
+
 **BatchNorm 的麻烦：**
 - **训练和推理行为不同：** 训练时用当前批的统计量；推理时用训练期间累计的"滑动平均"统计量（`running_mean`、`running_var`）。忘了 `model.eval()`，推理就会用当前批的统计量，结果随批的组成变化。
 - **批很小时不稳定：** 批大小为 1 时方差无法估计。

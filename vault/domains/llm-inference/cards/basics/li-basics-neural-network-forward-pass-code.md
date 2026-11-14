@@ -30,6 +30,14 @@ print(sum(p.numel() for p in m.parameters()))   # 约 9019 万
 y = m(torch.randn(8, 4096))                     # 8 个输入一起算
 ```
 
+```mermaid
+flowchart LR
+    X["x: [batch, 4096]"] --> U["up: Linear 4096 → 11008"]
+    U --> A["act: SiLU"]
+    A --> D["down: Linear 11008 → 4096"]
+    D --> Y["输出: [batch, 4096]"]
+```
+
 逐行说明：
 
 - **`nn.Linear(4096, 11008)`：** 一个"全连接层"，内部是形状 `[11008, 4096]` 的权重矩阵加长度 11008 的偏置。

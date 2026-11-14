@@ -28,6 +28,15 @@ prompt = (
 
 **模板放在哪：** Hugging Face 模型目录的 `tokenizer_config.json` 里有 `chat_template` 字段，是一段 Jinja 模板。代码里用 `tok.apply_chat_template(messages, add_generation_prompt=True)` 生成文本。
 
+```mermaid
+flowchart LR
+    M["消息 JSON: role, content"] --> T["apply_chat_template"]
+    J["tokenizer_config.json 里的 chat_template"] --> T
+    T --> X["文本, 停在助手开始说话处"]
+    X --> K["token 序列"]
+    K --> G["模型从这里续写"]
+```
+
 **为什么拼错很危险：**
 - **不报错：** 模型对任何 token 序列都能算出输出，只是质量变差。
 - **退化是隐蔽的：** 简单问题照样答对，复杂指令、多轮对话、工具调用的成功率下降几个到几十个百分点。
