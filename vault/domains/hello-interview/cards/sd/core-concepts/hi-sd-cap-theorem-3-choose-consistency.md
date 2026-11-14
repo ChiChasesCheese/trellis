@@ -15,6 +15,20 @@ step: 3
 - 电商库存：只剩一支牙刷却对多人显示可买，会超卖
 - 金融交易：订单簿过期，会按错误价格成交
 
+```mermaid
+sequenceDiagram
+    participant A as 用户 A
+    participant N1 as 节点 1
+    participant N2 as 节点 2
+    participant B as 用户 B
+    A->>N1: 订 6A
+    N1--xN2: 分区，更新传不过去
+    B->>N2: 查 6A
+    N2-->>B: 仍空闲
+    B->>N2: 也订 6A
+    Note over A,B: 两人拿着同一个座位
+```
+
 **设计手段。**
 - 分布式事务（两阶段提交等），让缓存、数据库等多个存储同步更新；代价是复杂度和更高延迟
 - 单节点方案：只用一个数据库实例，没有传播问题，但扩展性受限

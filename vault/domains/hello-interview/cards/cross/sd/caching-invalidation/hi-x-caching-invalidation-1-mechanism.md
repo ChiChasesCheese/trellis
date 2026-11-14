@@ -17,4 +17,19 @@ step: 1
 2. **缓存失效时保护数据库：** 并发回源合并（singleflight、带 TTL 的重建锁、逻辑过期）防击穿；缓存空值或布隆过滤器防穿透；TTL 抖动、多级缓存、限流降级防雪崩。
 3. **热点不落在单个节点：** 本地缓存吃掉大部分热点读，必要时复制热 key。
 
+```mermaid
+sequenceDiagram
+    participant A as 应用
+    participant D as 数据库
+    participant C as 缓存
+    participant L as 变更日志
+    A->>D: 写：先更新数据库
+    A->>C: 再删除缓存
+    D->>L: CDC、binlog
+    L->>C: 二次失效
+    Note over C: 条目带 TTL 加随机抖动
+    A->>C: 读：未命中
+    A->>D: 并发回源合并（singleflight）
+```
+
 **不变量。** 数据库是真相，缓存随时可以丢弃并重建；每类数据要明说能容忍多旧，价格、库存、权限这类强一致的读绕过缓存直接读主库。

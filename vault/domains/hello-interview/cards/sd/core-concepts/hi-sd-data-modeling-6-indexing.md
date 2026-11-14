@@ -15,6 +15,13 @@ step: 6
 - `posts.created_at`：按时间加载最新帖子。
 - **复合索引** `(user_id, created_at)`：高效加载某用户的最近帖子。
 
+```mermaid
+flowchart LR
+    Q1["找某用户的所有帖子"] --> I1["posts.user_id"]
+    Q2["按时间加载最新帖子"] --> I2["posts.created_at"]
+    Q3["加载某用户的最近帖子"] --> I3["复合索引 (user_id, created_at)"]
+```
+
 **为什么。** 索引不是越多越好：每个索引都增加写入开销和存储。要和 API 挂钩：「`GET /users/{id}/posts` 需要 `posts.user_id` 上的索引」，展示你在考虑真实查询性能。
 
 **补充。** 索引的内部实现（B 树、哈希索引等）是另一个主题，这里只讲为哪些列建索引。
