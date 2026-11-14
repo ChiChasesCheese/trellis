@@ -373,7 +373,7 @@ _MCQ_RE = re.compile(r"\bwhich of the (?:following|options|below)\b",
 # has settled around a median of ~100 words and re-litigating that is a
 # content decision, not a lint. This catches the genuine outliers only.
 MAX_ANSWER_WORDS = 250
-_DIAGRAM_FENCE_RE = re.compile(r"^```(?:mermaid|svg)[ \t]*\n.*?^```[ \t]*$", re.S | re.M)
+_DIAGRAM_FENCE_RE = re.compile(r"^```(?:mermaid|svg)[ \t]*\n.*?^```[ \t]*$|^<svg\b.*?</svg>[ \t]*$", re.S | re.M)
 
 
 def not_self_contained(card: "Card") -> list[str]:
