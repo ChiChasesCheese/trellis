@@ -1,5 +1,5 @@
 """LeetCode data, before any analysis: where the problems live, the public frequency statistics, the classic lists and
-the AnkiConnect client. Nothing here reads the learner's reviews; lc_analysis.py does that, and lc_lists.py only shapes the
+the AnkiConnect client. Nothing here reads the learner's reviews; lc_analysis.py does that, and lc_tags.py only shapes the
 deck from these fixed inputs.
 """
 from __future__ import annotations

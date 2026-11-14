@@ -1,41 +1,49 @@
-# Daily LeetCode deck — what the daily session does
+# Daily LeetCode — what the daily session does
 
-Domain `leetcode-daily`, deck `LeetCode Tops::28 Daily（按知识点）`, one sub-deck per knowledge point. Chi (2026-10-31): every problem he solves on
-LeetCode becomes one card, so that years later he can pick up the core idea again without the original context.
+Chi (2026-10-31): every problem he solves on LeetCode becomes a card, so that years later he can pick up the core idea
+again. Since 2026-11-14 every problem has exactly **one** card, on its leaf of the LeetCode knowledge tree (domain
+`leetcode-tree`, deck 算法知识树（灵神题单）, card id `lct-<slug>`); lists, companies, "solved" and "must-read" are tags
+on that card (see `research/leetcode-unify/README.md`). `skeleton/leetcode-daily.yaml` stays only as the ledger of what
+he solved; its deck is retired (`anki_via: leetcode-tree`), so never anki-push it.
 
 ## Steps (one session per day; stop early when there is nothing new)
 
 1. `cd /Users/chiserver/sessions/trellis && git pull -q --rebase`.
-2. `uv run python scripts/leetcode_daily.py fetch` (new accepted problems → leaves in `skeleton/leetcode-daily.yaml`,
-   statements in `sources/local/leetcode-daily/<slug>.txt`). Then `uv run python scripts/leetcode_daily.py pending`.
-   If nothing is pending, stop (no commit, no push).
-3. For each pending leaf whose shared body `vault/interviews/core/leetcode/problems/<slug>.md` already exists (another
-   deck wrote it), only file it (below). Otherwise write the body (rules below) to that path, then file it:
-   `uv run python scripts/leetcode_daily.py place <slug> <point-id>` (`points` lists them; they are the TikTok deck's
-   pattern branches). When none fits, open a new one: `place <slug> <new-id> "中文标题"` (Chi, 2026-10-31: sub-decks are
-   knowledge points or new groups, never dates). Nothing may stay in `inbox`. More than 6 pending: split the leaves among up to 3 `sonnet`
-   subagents, each told to read this file; otherwise write them yourself.
-4. Gate: `python3 scripts/check_daily_refs.py` (every printed line is a wrong LC number or name; fix it), `uv run python research/companies/tiktok/tools/gate_cards.py vault/interviews/core/leetcode/problems/<new slugs>.md`
-   (0 problems), `uv run python scripts/plain_style.py <new cards>` ok, `uv run trellis --domain leetcode-daily validate`
-   0 errors.
-5. `uv run trellis --domain leetcode-daily anki-push` (desktop Anki must be running; if AnkiConnect does not answer,
-   skip this step and say so — the next run pushes).
-6. Commit only `skeleton/leetcode-daily.yaml`, `vault/interviews/core/leetcode/daily/` and the new files in `vault/interviews/core/leetcode/problems/`, message
-   `Daily LeetCode deck: <n> card(s)`, then
-   `git pull -q --rebase && git push -q git@github.com:ChiChasesCheese/trellis.git HEAD:main`. `git checkout uv.lock`
+2. `uv run python scripts/leetcode_daily.py fetch` (new accepted problems → the ledger, statements in
+   `sources/local/leetcode-daily/<slug>.txt`). Then `uv run python scripts/leetcode_daily.py pending`.
+   If nothing is pending, skip to the last step.
+3. For each pending problem whose body `vault/interviews/core/leetcode/problems/<slug>.md` already exists, only file
+   it (below). Otherwise write the body (rules below), then file it:
+   `uv run python scripts/leetcode_daily.py place <slug> <point-id>` (this only records it in the ledger; `points`
+   lists the ids, and `place <slug> <new-id> "中文标题"` opens one). Nothing may stay in `inbox`.
+4. Put each new problem on the tree, following `research/leetcode-unify/PLACEMENT.md`:
+   - run `uv run python scripts/lc_analysis.py`;
+   - a problem on one of 0x3F's lists lands on its leaf by itself;
+   - any other goes into `sources/local/lc/expand.json` under the best leaf, or a leaf of ours in
+     `sources/local/lc/our_leaves.json`;
+   - then run `uv run python scripts/lc_tree.py --write` and check that `vault/interviews/core/leetcode/tree/cards/**/lct-<slug>.md` exists.
+5. Gate:
+   - `python3 scripts/check_daily_refs.py` must print nothing;
+   - `uv run python scripts/plain_style.py <new bodies>` must be ok;
+   - `uv run trellis --domain leetcode-tree validate` and `uv run trellis --domain leetcode-tops validate` must show 0 errors (the second checks the shared bodies).
+6. Anki (desktop Anki must be running; if AnkiConnect does not answer, skip this step and say so):
+   - `uv run python scripts/anki_refresh.py --add lct- leetcode-tree` adds the new cards;
+   - `uv run python scripts/lc_tags.py --apply` refreshes the list and company tags.
+7. Commit only `skeleton/leetcode-daily.yaml` and the new files in `vault/interviews/core/leetcode/problems/`. The tree
+   (skeleton and cards) is local. Use the message `Daily LeetCode: <n> problem(s)`, then
+   `git pull -q --rebase && git push -q git@github.com:ChiChasesCheese/trellis.git HEAD:main`. Run `git checkout uv.lock`
    if uv touched it. Never commit `sources/local/`.
 
 ## Every run, last step (even when nothing was pending)
 
-`uv run python scripts/lc_mustread.py` rebuilds `LeetCode Tops::00 必读（每天自动更新）` from Chi's latest Anki history and
-recent solves, pushes it and drops what left the list. Its files are gitignored (personal stats); never commit them.
+Run `uv run python scripts/lc_mustread.py`. It moves the tag `必读` onto the problems to review today, computed from Chi's
+latest Anki history and recent solves.
 
 ## The card
 
 One body per problem, shared by every deck (Chi, 2026-11-01): write `vault/interviews/core/leetcode/problems/<slug>.md`
-with frontmatter `slug: <slug>` only. `place` then writes this deck's stub
-`vault/interviews/core/leetcode/daily/cards/tlc-daily-<slug>-0-whole.md` (id, node, `body:`, `meta:`); never copy a
-body into a deck folder, and improve an existing body in place instead of writing a second one. Chi memorises
+with frontmatter `slug: <slug>` only. Its one card is the tree stub `lct-<slug>` that `lc_tree.py --write`
+writes; never copy a body into a deck folder, and improve an existing body in place instead of writing a second one. Chi memorises
 patterns (2026-11-11): every card is short. Copy the shape of
 `vault/interviews/core/leetcode/problems/rotting-oranges.md` exactly.
 

@@ -63,7 +63,8 @@ def main() -> None:
             leaves.append(leaf)
         nodes.append({"id": bid, "order": i, "title": title,
                       "summary": f"{title}：按全公司出题频率从高到低，频率相近时先易后难；每题一张整题卡。", "children": leaves})
-    sk = {"domain": "leetcode-tops", "title": "LeetCode Tops", "deck": "LeetCode Tops", "lang": "zh",
+    sk = {"anki_via": "leetcode-tree",  # retired 2026-11-14: its problems' one card lives in the knowledge tree
+          "domain": "leetcode-tops", "title": "LeetCode Tops", "deck": "LeetCode Tops", "lang": "zh",
           "vault": "interviews/core/leetcode/tops",
           "examples_from": "interviews/core/leetcode/problems",
           # no per-day limits: the root preset is shared with decks 18-20 and stays as Chi set it

@@ -1,6 +1,7 @@
 # LeetCode problems Chi solved, one whole-answer card each, one branch per knowledge point.
 # Leaves are added by scripts/leetcode_daily.py fetch / place; cards follow research/leetcode-daily/AGENT.md.
 domain: leetcode-daily
+anki_via: leetcode-tree  # retired 2026-11-14: one card per problem lives in the knowledge tree (research/leetcode-unify)
 title: LeetCode Daily：按知识点
 deck: LeetCode Tops::28 Daily（按知识点）
 lang: zh

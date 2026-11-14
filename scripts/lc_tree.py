@@ -103,10 +103,36 @@ def parse(name: str) -> dict:
 def leaves(node: dict, path: tuple = ()) -> list[tuple[tuple, dict]]:
     """Every heading with problems under it, in order, with its path of titles."""
     path = path + (node["title"],)
-    out = [(path, node)] if node.get("candidates") else []
+    out = [(path, node)] if node.get("candidates") or node.get("ours") else []
     for c in node["children"]:
         out += leaves(c, path)
     return out
+
+
+def find_node(nodes: list[dict], nid: str) -> dict | None:
+    for n in nodes:
+        if n["id"] == nid:
+            return n
+        hit = find_node(n["children"], nid)
+        if hit:
+            return hit
+    return None
+
+
+def add_our_leaves(lists: list[dict]) -> None:
+    """Our own leaves (Chi, 2026-11-14): a point his lists do not cover gets a leaf of ours under the closest heading.
+    sources/local/lc/our_leaves.json is {"<parent node id>": [{"id": "<slug>", "title": "…", "summary": "…"}]}; the leaf's
+    id is <parent>.our-<slug>, and problems reach it through expand.json like any thin leaf."""
+    f = LC / "our_leaves.json"
+    for parent, kids in (json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}).items():
+        node = find_node(lists, parent)
+        if node is None:
+            raise SystemExit(f"our_leaves.json: no node {parent}")
+        for k in kids:
+            nid = f"{parent}.our-{k['id']}"
+            if not any(c["id"] == nid for c in node["children"]):
+                node["children"].append({"title": k["title"], "id": nid, "children": [], "articles": [], "candidates": [],
+                                         "ours": True, "text": k.get("summary", "")})
 
 
 def build() -> dict:
@@ -114,6 +140,7 @@ def build() -> dict:
     probs = analysis["problems"]
     tech = {t["id"]: t for t in json.loads((LC / "taxonomy.json").read_text(encoding="utf-8"))["techniques"]}
     lists = [parse(n) for n in ORDER if (POSTS / f"{n}.md").exists()]
+    add_our_leaves(lists)
     found: dict[str, list[tuple[str, tuple]]] = {}
     for lst in lists:
         for path, leaf in leaves(lst):
@@ -190,7 +217,7 @@ def write(t: dict) -> int:
     def node(n: dict, path: tuple, top: str) -> dict | None:
         path = path + (n["title"],)
         kids = [k for c in n["children"] if (k := node(c, path, top))]
-        mine = problems(n) if n.get("candidates") else []
+        mine = problems(n) if n.get("candidates") or n.get("ours") else []
         if not kids and not mine:
             return None  # no problem of ours here: left empty
         if mine:
