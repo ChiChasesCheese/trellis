@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 桶号 = `hash(key) % 桶数`，而 `std::hash<int>` 是恒等函数。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">key 全是 97 的倍数, 桶数 97</text>
 <rect x="10" y="26" width="40" height="22" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -52,7 +51,6 @@ step: 3
 <polygon points="246,80 240.0,82.7 240.0,77.3" style="fill:var(--accent,#3b6fd4)"/>
 <text x="8" y="180" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">全落进同一个桶: 每次查找沿链扫 n 个节点 = O(n)</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 5
 
 **结构。** 函数的局部变量放在栈帧里的一个数组，编译时每个名字就分好了下标，运行时按下标取，不查字典。字节码里对应 `LOAD_FAST` 和 `STORE_FAST`；模块顶层则是 `LOAD_NAME` 和 `STORE_NAME`，按名字查字典。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="10" y="20" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">2000000 次循环 CPython 3.14.8 实测</text>
 <text x="10" y="50" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">模块级  LOAD_NAME 查字典</text>
@@ -25,7 +24,6 @@ step: 5
 <text x="133" y="144" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">23.1 ms</text>
 <text x="170" y="188" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">同样的循环 快了约 1.9 倍</text>
 </svg>
-```
 
 **细节。**
 

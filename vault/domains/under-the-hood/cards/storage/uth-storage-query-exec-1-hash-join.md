@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 哈希连接（hash join）：先扫较小的那张表（内表），把每一行按连接键放进内存里的哈希表；再逐行扫另一张表，用它的键去哈希表里查（探测，probe），一次 O(1)。总共 O(n + m)。这和两数之和是同一招：先把见过的值记进哈希表，再用 `target - x` 去查。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 142">
 <rect x="8" y="34" width="76" height="60" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="46" y="60" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">内表</text>
@@ -37,7 +36,6 @@ step: 1
 <polygon points="226,81 232.0,78.0 232.0,84.0" stroke="currentColor" stroke-width="0.5" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)"/>
 <text x="170" y="134" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">放不下就分批, 批数是 2 的幂</text>
 </svg>
-```
 
 **细节。**
 

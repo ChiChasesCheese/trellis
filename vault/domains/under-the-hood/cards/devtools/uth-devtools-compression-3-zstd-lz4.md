@@ -14,7 +14,6 @@ step: 3
 
 **结构。** LZ4 的压缩块由若干“序列”组成，每个序列是：1 字节 token（高 4 位是后面原样字节的个数，低 4 位是匹配长度减 4）、原样字节（字面量）、2 字节偏移（往回多远）。例（示意）：`abcabcabc` 写成 token 3|2，原样 `abc`，偏移 3；解压时先抄出 `abc`，再往回 3 个、复制 4+2 = 6 个字节。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 196">
 <text x="60" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">token</text>
 <text x="142" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">原样字节</text>
@@ -55,7 +54,6 @@ step: 3
 <text x="170" y="174" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">先抄 abc 再往回 3 个复制 6 个</text>
 <text x="170" y="190" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">解压只有读 抄 复制 三步</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 红黑树（red-black tree，自动保持平衡的二叉查找树）：每个节点有 `left`、`right`、`parent` 和颜色，中序遍历就是升序。`ceilingKey(k)` 从根往下走：小于当前节点往左，大于往右，等于直接返回；树高 O(log n)。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <line x1="170" y1="54" x2="100" y2="92" stroke-width="1.2" stroke="currentColor"/>
 <line x1="170" y1="54" x2="240" y2="92" stroke-width="1.2" style="stroke:var(--accent,#3b6fd4)"/>
@@ -31,7 +30,6 @@ step: 3
 <text x="170" y="172" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">floorKey(25) = 20</text>
 <text x="170" y="192" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">中序遍历 = 升序</text>
 </svg>
-```
 
 **细节。**
 

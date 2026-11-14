@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 片段表（piece table）：原文件缓冲区加一个只追加的新增缓冲区，文档是一串片段。VS Code 把片段放进红黑树，叫 piece tree。例：原文 `the quick fox`，在第 10 个字符后插入 `brown `：文档 = 原文前 10 个字符 + 新增缓冲区的 `brown ` + 原文剩下的 3 个字符，原文一个字节都没动。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 230">
 <text x="20" y="16" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">原文缓冲区 不再改动</text>
 <rect x="20" y="22" width="182" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -33,7 +32,6 @@ step: 2
 <text x="20" y="198" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">片段 2  新增 从 0 起 长 6</text>
 <text x="20" y="214" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">片段 3  原文 从 10 起 长 3</text>
 </svg>
-```
 
 **细节。**
 

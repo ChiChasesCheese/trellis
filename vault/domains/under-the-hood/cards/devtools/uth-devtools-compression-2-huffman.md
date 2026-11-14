@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 哈夫曼编码：把符号按频率放进最小堆（总能取出最小元素的结构），反复弹出最小的两个合并成新节点，直到只剩一棵树；从根往下，左走 0、右走 1，路径就是编码，高频符号离根近。例：c+d 合成 2，再与 b 合成 4，再与 a 合成 9；码为 a=0、b=10、c=110、d=111，共 5×1 + 2×2 + 1×3 + 1×3 = 15 位，比固定 2 位的 18 位少。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 236">
 <circle cx="170" cy="26" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="170" y="30" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">9</text>
@@ -49,7 +48,6 @@ step: 2
 <text x="14" y="174" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">d = 111</text>
 <text x="170" y="228" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">每次合并最小的两个 高频离根近</text>
 </svg>
-```
 
 **细节。**
 

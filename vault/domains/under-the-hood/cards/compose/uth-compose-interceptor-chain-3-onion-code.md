@@ -16,7 +16,6 @@ step: 3
 - `proceed()` 返回之后才执行的收尾，顺序和进入相反：它们排在调用栈里，先进后出，叫洋葱模型
 - 一次调用一个调用对象，游标是它私有的；列表建好后只读，可以被很多次调用共享
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176">
 <text x="170" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">进入: 前处理 先 A 后 B</text>
 <rect x="24" y="34" width="70" height="44" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -37,7 +36,6 @@ step: 3
 <text x="170" y="132" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">A 前 B 前 目标 B 后 A 后</text>
 <text x="170" y="156" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">先进后出 像剥洋葱 一层层返回</text>
 </svg>
-```
 
 **核心代码。**
 

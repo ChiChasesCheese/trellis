@@ -12,7 +12,6 @@ workqueue 由哪三个结构搭成？`Add`、`Get`、`Done` 各碰哪几个？
 ## A
 **结构。** 一个 `queue`（先进先出的 key 列表，只管顺序），两个 `set`（集合）：`dirty` 记"还欠一次处理"的 key，`processing` 记"正被 worker 处理"的 key。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 250">
 <rect x="10" y="22" width="320" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
 <text x="18" y="38" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">queue: 先进先出的 key 列表, 只管顺序</text>
@@ -53,7 +52,6 @@ workqueue 由哪三个结构搭成？`Add`、`Get`、`Done` 各碰哪几个？
 <text x="10" y="228" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">Get: 出队, 进 processing, 从 dirty 删除</text>
 <text x="10" y="246" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">Done: 离开 processing; 仍在 dirty 就重新入队</text>
 </svg>
-```
 
 | 操作 | 碰哪几个结构 | 复杂度 |
 |---|---|---|

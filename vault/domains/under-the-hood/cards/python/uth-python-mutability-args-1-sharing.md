@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 调用 `f(lst)` 等于在函数里先执行一次 `xs = lst`：形参 `xs` 是一个新名字，贴在调用方同一个对象上（叫按共享传递，call by sharing）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 222">
 <text x="150" y="20" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">xs.append(9)  调用方看得见</text>
 <rect x="10" y="30" width="40" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -48,7 +47,6 @@ step: 1
 <line x1="50" y1="189" x2="248" y2="190" stroke-width="1.2" style="stroke:var(--accent,#3b6fd4)"/>
 <polygon points="248.0,190.0 242.0,193.0 242.0,187.0" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)" stroke-width="0.5"/>
 </svg>
-```
 
 **细节。**
 

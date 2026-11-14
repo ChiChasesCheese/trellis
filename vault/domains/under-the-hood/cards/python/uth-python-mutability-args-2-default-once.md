@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 函数对象里有个 `__defaults__` 字段（一个元组），`def` 执行时把默认值对象存进去。之后每次调用缺参数，就从元组里取，取到的永远是同一个对象。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <rect x="10" y="28" width="130" height="84" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="75" y="46" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">函数对象 add</text>
@@ -40,7 +39,6 @@ step: 2
 <text x="170" y="168" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">两次调用拿到的是同一个列表</text>
 <text x="170" y="188" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">所以结果是 [1, 2]</text>
 </svg>
-```
 
 **细节。**
 

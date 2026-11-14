@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 三样东西：`_ready` 是现在就能跑的回调队列（`deque`）；`_scheduled` 是按触发时间排的最小堆，堆顶最早；`selector` 是向操作系统问「哪些网络连接有数据了」，可以阻塞等待。例：`sleep(3)` 就是往堆里放一项「3 秒后唤醒我」；下一轮 `_ready` 空，就等 3 秒，到期后移进 `_ready` 执行。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="80" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">_scheduled 最小堆</text>
 <circle cx="80" cy="44" r="15" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
@@ -45,7 +44,6 @@ step: 1
 <text x="108" y="126" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">timeout</text>
 <text x="170" y="202" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每轮只跑此刻 _ready 里的回调</text>
 </svg>
-```
 
 **细节。**
 

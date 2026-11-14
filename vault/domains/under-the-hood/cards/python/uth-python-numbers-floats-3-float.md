@@ -14,7 +14,6 @@ step: 3
 
 **结构。** IEEE 754（浮点数的国际标准）双精度（binary64）：1 位符号 + 11 位指数 + 52 位尾数，再加一个隐含的首位 1，共 53 位有效数字，值 ≈ ±1.尾数 × 2^指数。`0.1` 存成 3602879701896397 / 2^55，比真值多一点点；`0.2` 同理；相加后再取最近的近似，得到 `0.30000000000000004`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="34.0" y="22" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">1 位</text>
 <rect x="15" y="28" width="38" height="32" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -31,7 +30,6 @@ step: 3
 <text x="170" y="152" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">= 0.1000000000000000055511...</text>
 <text x="170" y="178" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">0.1 + 0.2 = 0.30000000000000004</text>
 </svg>
-```
 
 **细节。**
 

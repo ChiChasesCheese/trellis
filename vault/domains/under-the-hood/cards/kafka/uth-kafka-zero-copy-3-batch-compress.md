@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 生产者按分区攒批（`RecordBatch`）。批是网络传输、磁盘存储、压缩的共同单位：整批压缩，broker 解压校验后仍以压缩态落盘，消费者才解压。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 118">
 <rect x="10" y="24" width="24" height="20" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <rect x="40" y="24" width="24" height="20" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -34,7 +33,6 @@ step: 3
 <text x="294" y="50.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">落盘/网络</text>
 <text x="170" y="108" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">满 batch.size 或等满 linger.ms 就发</text>
 </svg>
-```
 
 **细节。**
 

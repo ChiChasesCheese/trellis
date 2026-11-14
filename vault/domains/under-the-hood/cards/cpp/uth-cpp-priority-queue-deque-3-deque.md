@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 块指针数组，每个指针指向一块固定大小的连续内存。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170">
 <text x="8" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">块指针数组(map)</text>
 <rect x="12" y="24" width="40" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
@@ -50,7 +49,6 @@ step: 3
 <text x="192" y="138" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">↑ 尾</text>
 <text x="170" y="160" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">两头增长只需新增一块,旧块不搬</text>
 </svg>
-```
 
 **细节。**
 

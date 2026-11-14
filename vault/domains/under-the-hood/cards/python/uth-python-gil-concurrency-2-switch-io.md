@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 想要 GIL 的线程先等一段时间：默认 5 毫秒（`sys.getswitchinterval()` 返回 `0.005`）。超时了还没拿到，就给持有者挂一个「请放手」的标记。持有者只在固定的检查点看这个标记：函数入口、循环往回跳（`JUMP_BACKWARD`）、调用返回之后，并不是每条指令都看。另外，阻塞调用（读写 socket 和文件、`time.sleep`）进去之前，线程会主动放手，返回后再去抢。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -49,7 +48,6 @@ step: 2
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

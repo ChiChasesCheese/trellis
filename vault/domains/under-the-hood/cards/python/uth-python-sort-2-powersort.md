@@ -14,7 +14,6 @@ Timsort 把数据切成许多 run，什么时候合并、先合并哪两个？3.
 
 **结构。** 发现的 run 先放进一个栈里；发现新 run 时先合并栈顶相邻的 run，再入栈。3.11 起用 Powersort（Munro 与 Wild）决定合并哪两个：给每对相邻 run 的分界算一个 power，即它在一棵想象的、对半切分的二叉归并树里的深度。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <rect x="30" y="110" width="84" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="72" y="127" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">6</text>
@@ -47,7 +46,6 @@ Timsort 把数据切成许多 run，什么时候合并、先合并哪两个？3.
 <text x="170" y="192" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">power 越大 分界越深 越先合并</text>
 <text x="170" y="40" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor"></text>
 </svg>
-```
 
 **细节。**
 

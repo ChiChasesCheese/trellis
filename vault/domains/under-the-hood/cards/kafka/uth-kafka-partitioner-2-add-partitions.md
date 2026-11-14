@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 下图把 hash 从 0 排到 13，对比 `% 6` 和 `% 7`：只有 0 到 5 的结果相同，之后全不一样。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 136">
 <text x="8" y="17" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">hash</text>
 <text x="8" y="40" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">% 6</text>
@@ -92,7 +91,6 @@ step: 2
 <text x="170" y="106" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">hash 0-5 不变, 其余都换了分区</text>
 <text x="170" y="126" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每 42 个 hash 只有 6 个不变</text>
 </svg>
-```
 
 **细节。**
 

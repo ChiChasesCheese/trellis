@@ -14,7 +14,6 @@ Go 1.24 换了新的 `map` 实现，查找为什么更快？
 
 **结构。** 瑞士表（Swiss table）：每 8 个槽一组，带一个 8 字节控制字；开放寻址，组间二次探测。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">Go 1.24: 目录 → 若干张小表 → 每组 8 槽</text>
 <rect x="10" y="26" width="100" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -38,7 +37,6 @@ Go 1.24 换了新的 `map` 实现，查找为什么更快？
 <text x="8" y="170" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">控制字每字节 = 槽状态 + 哈希低 7 位, 一次比对 8 槽</text>
 <text x="8" y="188" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">只扩容一张小表, 不会整个 map 一次性重新哈希</text>
 </svg>
-```
 
 **细节。**
 

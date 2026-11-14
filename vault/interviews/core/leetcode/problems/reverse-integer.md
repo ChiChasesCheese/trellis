@@ -9,6 +9,20 @@ slug: reverse-integer
 ## A
 **一句话。** 逐位取个位接到结果末尾，接之前先判断这一步会不会溢出。
 
+**图解。** 每接一位前先判断会不会超界，超界直接返回 `0`。
+
+```mermaid
+flowchart TB
+    a["x = 123，rev = 0"] --> b["弹出个位 d"]
+    b --> c{"rev·10 + d 超界？"}
+    c -->|是| z["返回 0"]
+    c -->|否| d["rev = rev·10 + d"]
+    d -->|"x 还有位：3 → 32"| b
+    d -->|x 为 0| e["返回 sign·321"]
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class c hot
+```
+
 ```python
 def reverse(x):
     sign = -1 if x < 0 else 1

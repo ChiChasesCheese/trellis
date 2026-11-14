@@ -14,7 +14,6 @@ step: 4
 
 **结构。** `with` 要求对象有两个方法：`__enter__`（进门，返回值绑给 `as` 后面的名字）和 `__exit__`（出门，只要 `__enter__` 成功返回就一定会调用）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 130">
 <text x="52" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">进门</text>
 <text x="288" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">一定会调用</text>
@@ -31,7 +30,6 @@ step: 4
 <text x="10" y="92" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">正常离开 传 (None, None, None)</text>
 <text x="10" y="114" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">抛异常离开 传 (类型, 异常, 回溯)</text>
 </svg>
-```
 
 **细节。**
 

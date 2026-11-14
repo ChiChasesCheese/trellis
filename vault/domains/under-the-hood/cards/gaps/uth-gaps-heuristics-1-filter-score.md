@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 贪心（greedy）：每次只管眼前这一个 Pod。过滤（filter）：装不下的机器淘汰。打分（score）：给剩下的每台打 0 到 100 分。选分最高的。默认打分 `LeastAllocated`：每种资源得分 =（容量 − 放入后已用）× 100 ÷ 容量，CPU 和内存各算一次，按权重（默认各 1）取平均。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 216">
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">每台 4 核  浅色 = 已用  P = 新 Pod (要 1 核)</text>
 <text x="12" y="50" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">A</text>
@@ -44,7 +43,6 @@ step: 1
 <text x="170" y="184" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">取最高分的节点: A</text>
 <text x="170" y="206" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">分数 = (容量 - 放入后已用) x 100 / 容量</text>
 </svg>
-```
 
 **细节。**
 

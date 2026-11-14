@@ -17,7 +17,6 @@ Cerebras 45 分钟的经理面，时间怎么分配？每段的目标是什么�
 | 35–40 | 为什么 | 三句话，不背稿 |
 | 40–45 | 你的问题 | 挑 3 个 |
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 162" font-family="sans-serif" font-size="11">
 <text x="84" y="20" text-anchor="end" fill="currentColor">分钟</text>
 <text x="90" y="20" text-anchor="middle" fill="currentColor">0</text>
@@ -40,7 +39,6 @@ Cerebras 45 分钟的经理面，时间怎么分配？每段的目标是什么�
 <text x="84" y="151" text-anchor="end" fill="currentColor">你的问题</text>
 <rect x="303" y="140" width="27" height="14" stroke="currentColor" fill="currentColor" fill-opacity="0.25"/>
 </svg>
-```
 
 - **三条规则**：
   - 先说结论，再说过程。

@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 思路：把每个对象的计数减去「来自被检查对象集合内部的引用」，剩下还大于 0 的，说明被集合外面引用着，是活的；从它们能走到的也是活的，其余就是垃圾。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210">
 <text x="90" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">只被彼此引用</text>
 <circle cx="50" cy="70" r="22" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -44,7 +43,6 @@ step: 2
 <text x="270" y="124" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">C 走得到</text>
 <text x="236" y="196" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">都是活的</text>
 </svg>
-```
 
 **细节。**
 

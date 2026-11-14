@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 位图不是独立类型，就是普通字符串，第 0 位是第一个字节的最高位。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 195">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">位图 = 普通字符串, 一位表示一个用户</text>
 <rect x="10" y="28" width="18" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
@@ -58,7 +57,6 @@ step: 3
 <text x="8" y="164" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">否则用 0x55555555 等三个掩码分三步折叠</text>
 <text x="8" y="186" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">坑: 第一次 SETBIT 很大的偏移要一次分配全部内存</text>
 </svg>
-```
 
 **细节。**
 

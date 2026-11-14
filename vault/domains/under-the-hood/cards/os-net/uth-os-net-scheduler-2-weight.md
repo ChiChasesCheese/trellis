@@ -14,7 +14,6 @@ nice 值只差 1，两个任务分到的 CPU 差多少？一棵树怎么同时�
 
 **结构。** 每个任务有一个权重，`vruntime += 实际运行时间 × 1024 / 权重`，权重越大涨得越慢。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 212">
 <line x1="40" y1="20" x2="40" y2="172" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <line x1="40" y1="172" x2="262" y2="172" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -28,7 +27,6 @@ nice 值只差 1，两个任务分到的 CPU 差多少？一棵树怎么同时�
 <text x="60" y="60" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">权重 820 涨得快</text>
 <text x="170" y="206" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">涨得慢 排得靠左 被选得更多</text>
 </svg>
-```
 
 **细节。**
 

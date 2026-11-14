@@ -21,7 +21,6 @@ step: 1
 
 风险分数落在 5×5 的矩阵上，颜色越深测得越深：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 310">
 <g font-family="sans-serif" font-size="12" fill="currentColor">
 <g stroke="currentColor" stroke-width="0.8">
@@ -78,7 +77,6 @@ step: 1
 <text x="40" y="298">粗框：新kernel 4×5=20，日志格式 3×1=3</text>
 </g>
 </svg>
-```
 
 **例**：同一版本里，"新 kernel 算错数"可能性 4、影响 5（静默错误：结果错了但不报错），得 20；"日志格式调整"可能性 3、影响 1，得 3。前者分配大部分硬件时间，后者只看冒烟。
 

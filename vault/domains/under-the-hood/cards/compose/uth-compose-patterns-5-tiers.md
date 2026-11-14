@@ -14,7 +14,6 @@ step: 5
 
 **结构。** 每张表代表一个级别，查询从高级往低级找，数据只往高处搬。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 196">
 <text x="14" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">Spring 单例: 造出 -&gt; 暴露 -&gt; 完工</text>
 <rect x="14" y="24" width="88" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -47,7 +46,6 @@ step: 5
 <text x="282.0" y="158.0" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">protected</text>
 <text x="170" y="190" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">数据一级级往上升 每一级规则不同</text>
 </svg>
-```
 
 **细节。**
 

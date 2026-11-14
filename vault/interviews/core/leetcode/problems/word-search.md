@@ -9,6 +9,41 @@ slug: word-search
 ## A
 **一句话。** 回溯（DFS）：每格作起点逐字符匹配，走过的格临时标成 `"#"`，回溯时还原。
 
+**图解。** 从起点沿相邻格逐字匹配，走过的格暂记 `#`，这条路失败就还原。
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 130">
+<rect x="20" y="14" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="37.0" y="35.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">A</text>
+<rect x="54" y="14" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="71.0" y="35.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">B</text>
+<rect x="88" y="14" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="105.0" y="35.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">C</text>
+<rect x="122" y="14" width="34" height="34" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="139.0" y="35.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">E</text>
+<rect x="20" y="48" width="34" height="34" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="37.0" y="69.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">S</text>
+<rect x="54" y="48" width="34" height="34" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="71.0" y="69.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">F</text>
+<rect x="88" y="48" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="105.0" y="69.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">C</text>
+<rect x="122" y="48" width="34" height="34" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="139.0" y="69.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">S</text>
+<rect x="20" y="82" width="34" height="34" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="37.0" y="103.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">A</text>
+<rect x="54" y="82" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="71.0" y="103.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">D</text>
+<rect x="88" y="82" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="105.0" y="103.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">E</text>
+<rect x="122" y="82" width="34" height="34" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="139.0" y="103.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">E</text>
+<polyline points="37.0,40.0 71.0,40.0 105.0,40.0 105.0,74.0 105.0,108.0 71.0,108.0" fill="none" stroke-width="1.6" style="stroke:var(--accent,#3b6fd4)"/>
+<polygon points="71.0,108.0 77.0,105.0 77.0,111.0" style="fill:var(--accent,#3b6fd4)"/>
+<text x="176" y="32" text-anchor="start" font-size="12" font-family="ui-monospace,Menlo,monospace" fill="currentColor">word = ABCCED</text>
+<text x="176" y="56" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">逐字走相邻格</text>
+<text x="176" y="78" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">走过的格暂记 #</text>
+<text x="176" y="100" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">这条路失败就还原</text>
+</svg>
+
 ```python
 def exist(board, word):
     rows, cols = len(board), len(board[0])

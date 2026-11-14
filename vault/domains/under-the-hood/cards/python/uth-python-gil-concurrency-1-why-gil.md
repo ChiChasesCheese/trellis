@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 默认构建里，引用计数加一就是一条普通的 `ob_refcnt = ob_refcnt + 1`，不是原子操作。下图里两个线程同时读到 5、各自写回 6：加了两次，只记了一次，计数偏小，对象会被提前释放。CPython 的办法是一把全局大锁，GIL（global interpreter lock）：同一时刻，只有持有 GIL 的线程能执行 Python 字节码。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 195">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -48,7 +47,6 @@ step: 1
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

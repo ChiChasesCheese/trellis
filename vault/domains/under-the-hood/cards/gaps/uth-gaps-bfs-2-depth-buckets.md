@@ -12,7 +12,6 @@ step: 2
 ## A
 **结构。** 调度器里是一个字典：每个优先级一个先进先出的桶，永远先从优先级最高的非空桶里取。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 178">
 <text x="14" y="45" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">深度 0</text>
 <rect x="82" y="30" width="26" height="22" rx="3" stroke="currentColor" stroke-width="1.8" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
@@ -34,7 +33,6 @@ step: 2
 <text x="310" y="154" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">后取</text>
 <text x="14" y="168" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">优先级 = 负的深度 浅的桶先出</text>
 </svg>
-```
 
 **细节。**
 

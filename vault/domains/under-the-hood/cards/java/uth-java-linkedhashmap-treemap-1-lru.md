@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 就是 `HashMap`，只是每个节点多了 `before`、`after` 两个指针，把所有节点串成一条双向链表，链表头是最久没用的。例：放入 a、b、c，`get(a)` 把 a 摘下接到链表尾，顺序变成 `b, c, a`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210">
 <text x="60" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">head 最久没用</text>
 <text x="270" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">tail 最新</text>
@@ -48,7 +47,6 @@ step: 1
 <polygon points="278.0,130.0 272.6,131.6 273.5,126.6" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)" stroke-width="0.5"/>
 <text x="170" y="190" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">a 被摘下 接到链表尾</text>
 </svg>
-```
 
 **细节。**
 

@@ -9,6 +9,21 @@ slug: subsets-ii
 ## A
 **一句话。** 排序后回溯，同一层循环里相同的数只选第一个，每个子集恰好生成一次。
 
+**图解。** 回溯树里每个节点都是一个子集；同一层的第二个 `2` 被跳过（虚线），所以不会重复。
+
+```mermaid
+flowchart TB
+    r["[ ]"] --> a["[1]"]
+    r --> b["[2]"]
+    r -.-> x["第二个 2：跳过"]
+    a --> c["[1,2]"]
+    a -.-> y["第二个 2：跳过"]
+    c --> d["[1,2,2]"]
+    b --> e["[2,2]"]
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class r,a,b,c,d,e hot
+```
+
 ```python
 def subsets_with_dup(nums):
     nums.sort()                    # 相同的数相邻，才能同层去重

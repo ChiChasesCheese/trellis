@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 虚拟机是栈式的：每条指令从一个「操作数栈」里取数，再把结果放回去。用 `dis.dis(f)` 可以把字节码打印出来。以 `a = 3, b = 4` 为例，栈里一步步是这样的：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 185">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -58,7 +57,6 @@ step: 1
 </g>
 </g>
 </svg>
-```
 
 ```
 LOAD_FAST_BORROW   0 (a)

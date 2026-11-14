@@ -14,7 +14,6 @@ step: 4
 
 **结构。** Go 的扫描器（scanner）用切片 `parseState` 当显式栈，记录当前嵌套在哪几层括号里：遇到 `[` 或 `{` 压一格，遇到 `]` 或 `}` 弹一格。压栈时检查长度，超过 `maxNestingDepth = 10000` 就报错 `exceeded max depth`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 206">
 <line x1="96" y1="40" x2="324" y2="40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="4 3" style="stroke:var(--accent,#3b6fd4)"/>
 <text x="210" y="32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">超过 10000 层: exceeded max depth</text>
@@ -36,7 +35,6 @@ step: 4
 <text x="212" y="160" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">遇到 ] 或 }</text>
 <text x="212" y="178" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">弹一格</text>
 </svg>
-```
 
 **细节。**
 

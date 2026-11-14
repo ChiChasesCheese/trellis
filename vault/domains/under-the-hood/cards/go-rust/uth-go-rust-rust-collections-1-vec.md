@@ -14,7 +14,6 @@ Rust 的 `Vec::push` 容量不够时，新容量是多少？
 
 **结构。** `Vec` 是“指针、长度、容量”三个字段，底下由 `RawVec` 管理一块连续堆内存。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 185">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">Vec&lt;i32&gt;: 三个字段 + 一块堆内存</text>
 <rect x="10" y="26" width="60" height="26" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="1"/>
@@ -48,7 +47,6 @@ Rust 的 `Vec::push` 容量不够时，新容量是多少？
 <rect x="290" y="132" width="36" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
 <text x="8" y="176" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">4 → 8 → 16 → 32 ...: 严格翻倍, 没有逐步降到 1.25 倍</text>
 </svg>
-```
 
 **细节。**
 

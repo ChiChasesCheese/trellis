@@ -14,7 +14,6 @@ step: 5
 
 **结构。** 声明 `__slots__` 之后，实例不再有 `__dict__`，对象里按声明的顺序留出固定的格子；类里为每个名字放一个成员描述符（`member_descriptor`），读写属性就是按偏移量取格子。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 175">
 <text x="10" y="20" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">4 个属性 每实例占用 CPython 3.14.8 实测</text>
 <text x="10" y="48" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">普通实例 约 104 字节</text>
@@ -24,7 +23,6 @@ step: 5
 <text x="180" y="132" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">省约 40 字节</text>
 <text x="170" y="164" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">64 = GC 头 16 + 对象头 16 + 4 格 x 8</text>
 </svg>
-```
 
 **细节。**
 

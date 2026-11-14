@@ -14,7 +14,6 @@ step: 1
 
 **结构。** Nginx 的做法：每台服务器按权重在 2^32 的环上放 `160 × weight` 个点（虚拟节点；对主机、端口和上一个点的哈希做 crc32），点排成有序数组。请求取 crc32 后在数组里二分，找第一个不小于它的点。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <circle cx="170" cy="100" r="70" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <circle cx="182.155" cy="31.0635" r="5" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -41,7 +40,6 @@ step: 1
 <text x="150" y="96" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">顺时针</text>
 <text x="150" y="112" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">第一个点</text>
 </svg>
-```
 
 **细节。**
 

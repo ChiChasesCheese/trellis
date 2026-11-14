@@ -14,7 +14,6 @@ B+ 树为什么三四层就能存下上亿行？InnoDB 的一个内部页能放�
 
 **结构。** B+ 树把每个节点做成恰好一页，里面不放两个指针，而放几百个：内部页只放“键 + 子页号”，整行只放在最底下的叶子页。一页能指向的孩子个数叫扇出（fanout）。扇出约 900，高度就从 20 层降到 3 层：每层读一页，找一行只要读 3 页。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 184">
 <text x="8" y="38" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">1 页</text>
 <text x="8" y="92" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">约 900 页</text>
@@ -41,7 +40,6 @@ B+ 树为什么三四层就能存下上亿行？InnoDB 的一个内部页能放�
 <line x1="200" y1="102" x2="240" y2="132" stroke="currentColor" stroke-width="1.2" style="stroke:var(--dim,#6b7280)"/>
 <text x="200" y="176" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每个叶页约 15 行</text>
 </svg>
-```
 
 **细节。**
 

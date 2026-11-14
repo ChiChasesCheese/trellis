@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 一个 `Object[] elementData` 加一个 `size`；满了就 `Arrays.copyOf` 到更大的新数组。例：容量 10 的数组放满，再 `add` 一个，搬进容量 15 的新数组（复制 10 个），之后 5 次 `add` 都不用搬。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="20" y="20" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">旧数组 容量 10 已满</text>
 <rect x="20" y="28" width="20" height="24" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -69,7 +68,6 @@ step: 1
 <rect x="300" y="120" width="20" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="170" y="172" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">接下来 4 次 add 都不用搬</text>
 </svg>
-```
 
 **细节。**
 

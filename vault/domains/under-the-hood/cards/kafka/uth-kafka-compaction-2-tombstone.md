@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 把“删除”也写成一条消息：同 key、value 为 `null`，叫墓碑（tombstone）。它是这个 key 的最新值，压实时盖掉前面所有旧值。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 178">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">写入顺序</text>
 <rect x="8" y="20" width="76" height="26" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -44,7 +43,6 @@ step: 3
 <rect x="176" y="144" width="76" height="26" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3" style="stroke:var(--dim,#6b7280)"/>
 <text x="214" y="161.2" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">已删除</text>
 </svg>
-```
 
 **细节。**
 

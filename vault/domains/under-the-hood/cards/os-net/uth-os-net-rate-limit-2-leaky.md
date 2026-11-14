@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 每个客户端只存两样：`excess`（桶里的水，单位是千分之一个请求）和上次到达的时间。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 196">
 <text x="170" y="12" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">每个请求 excess +1000</text>
 <line x1="140" y1="20" x2="140" y2="49" fill="none" stroke="currentColor" stroke-width="1.8" style="stroke:var(--accent,#3b6fd4)"/>
@@ -33,7 +32,6 @@ step: 2
 <path d="M170.0,176.0 L166.7,169.2 L173.3,169.2 Z" stroke="none" style="fill:var(--accent,#3b6fd4)"/>
 <text x="180" y="172" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">按 rate 漏出</text>
 </svg>
-```
 
 **细节。**
 

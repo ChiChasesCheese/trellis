@@ -20,7 +20,6 @@ step: 1
 | 缺省 | 不传 | 按 256 处理 |
 | 类型错 | `"10"`、`10.5`、`null`、`true` | 400 错误 |
 
-```svg
 <svg viewBox="0 0 360 120" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12" fill="currentColor" stroke="currentColor">
   <line x1="10" y1="50" x2="350" y2="50" stroke-width="1.5"/>
   <rect x="100" y="40" width="160" height="20" fill="none" stroke-width="1.5"/>
@@ -41,7 +40,6 @@ step: 1
   <text x="280" y="78" text-anchor="middle" stroke="none">4097</text>
   <text x="180" y="114" text-anchor="middle" stroke="none">边界两侧都测：0、1、4096、4097</text>
 </svg>
-```
 
 ```python
 @pytest.mark.parametrize("value, ok", [

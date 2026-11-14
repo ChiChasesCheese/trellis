@@ -14,7 +14,6 @@ step: 2
 
 **结构。** Python 在建类时就给每个类算好一个固定的查找顺序，叫方法解析顺序（MRO，method resolution order），存在 `__mro__` 里。查方法就是按这个顺序逐个看每个类的字典，第一个有这个名字的就用。菱形的结果是 `D → B → C → A → object`：祖先一定排在它的所有子类后面。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -56,7 +55,6 @@ step: 2
 </g>
 </g>
 </svg>
-```
 
 ```python
 class A:

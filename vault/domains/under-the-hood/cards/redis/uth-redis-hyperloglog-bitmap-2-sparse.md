@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 先用稀疏编码（sparse）：对寄存器做游程编码。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">稀疏编码: 对 16384 个寄存器做游程压缩</text>
 <text x="8" y="38" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">空的 HLL:</text>
@@ -35,7 +34,6 @@ step: 2
 <text x="8" y="164" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">VAL: 值 1 到 32, 重复 1 到 4 次</text>
 <text x="8" y="186" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">超过 3000 字节或寄存器值 &gt; 32, 转稠密</text>
 </svg>
-```
 
 **细节。**
 

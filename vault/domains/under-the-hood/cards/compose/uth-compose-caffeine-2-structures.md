@@ -10,7 +10,6 @@ step: 2
 Caffeine 把查值、淘汰、估频率、过期各交给一个结构。它们怎样连在一起，每个操作碰哪几个？
 
 ## A
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 236">
 <rect x="10" y="8" width="320" height="28" rx="3" stroke-width="1.2" stroke="currentColor" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="170.0" y="26.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">data 哈希表 key -&gt; Node</text>
@@ -57,7 +56,6 @@ Caffeine 把查值、淘汰、估频率、过期各交给一个结构。它们�
 <polygon points="288,160 291.0,166.0 285.0,166.0" fill="currentColor"/>
 <text x="296" y="178" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">到期删</text>
 </svg>
-```
 
 **结构。** 哈希表里的 `Node` 同时直接串在某条队列里（节点自带前后指针），查到就能 O(1) 摘下来重排。读缓冲、写缓冲只是「先记一笔」，后台批量再改队列和草图。
 

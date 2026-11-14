@@ -14,7 +14,6 @@ step: 4
 
 **结构。** `res.append(path)` 放进去的是这个列表的指针，不是当前内容，`res` 里每个格子指着同一个对象。`path[:]` 新建一个列表，装着此刻各元素的指针（浅拷贝），之后 `path` 怎么变，这份快照都不受影响。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 250">
 <text x="10" y="16" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" style="fill:var(--accent,#3b6fd4)">res.append(path)</text>
 <rect x="10" y="26" width="34" height="24" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -54,7 +53,6 @@ step: 4
 <text x="260" y="223" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">[2, 1, 3]</text>
 <text x="170" y="244" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每次拍一张快照</text>
 </svg>
-```
 
 **细节。**
 

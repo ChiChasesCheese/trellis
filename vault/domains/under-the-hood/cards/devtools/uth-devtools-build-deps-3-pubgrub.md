@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 例：`a 2` 需要 `c 1`，`b 2` 需要 `c 2`，而 c 只能选一个版本，就记下“`a 2` 和 `b 2` 不能同时选”。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 196">
 <rect x="34" y="37" width="52" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="60" y="54" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">a 2</text>
@@ -35,7 +34,6 @@ step: 3
 <rect x="26" y="28" width="68" height="124" rx="3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="4 3" style="stroke:var(--accent,#3b6fd4)"/>
 <text x="180" y="178" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">记下 a 2 和 b 2 不能同时选</text>
 </svg>
-```
 
 **细节。**
 

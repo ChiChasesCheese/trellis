@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 粘性分区（sticky）：一直写同一个分区，累计写满 `batch.size` 字节才换。3.3 起默认带自适应：换分区时按各分区待发队列的长短做加权随机，队列短（说明那台 broker 处理得快）的更容易被选中。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 216">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">轮流: 每个批次都攒不满</text>
 <text x="8" y="31" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">p0</text>
@@ -48,7 +47,6 @@ step: 3
 <rect x="34" y="200" width="30" height="11" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
 <text x="244" y="210" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">概率高</text>
 </svg>
-```
 
 **细节。**
 

@@ -12,7 +12,6 @@ step: 2
 ## A
 **结构。** 先算「最后 − 第一」，再从头扫一遍样本：只要某个值比前一个小，就认定中间重启过，把变小前的那个值补回去。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176">
 <line x1="20" y1="150" x2="300" y2="150" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
 <line x1="34" y1="60" x2="88" y2="51" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -31,7 +30,6 @@ step: 2
 <text x="250" y="168" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">15</text>
 <text x="172" y="78" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">重启 归零</text>
 </svg>
-```
 
 ```python
 total = last - first

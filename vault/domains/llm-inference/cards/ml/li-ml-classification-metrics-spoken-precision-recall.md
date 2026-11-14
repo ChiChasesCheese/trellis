@@ -13,7 +13,6 @@ step: 4
 - **先画混淆矩阵：** 预测和真实交叉成四格：真阳性、假阳性（误报）、假阴性（漏报）、真阴性。所有指标都从这四个数来。
 - **两个定义：** 精确率 = TP /（TP + FP），模型报出来的里面有多少是真的；召回率 = TP /（TP + FN），真的里面有多少被报出来了。F1 是两者的调和平均，偏向较低的那个。
 
-```svg
 <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="13" fill="currentColor" stroke="currentColor">
   <text x="200" y="18" text-anchor="middle" stroke="none">真实</text>
   <text x="150" y="40" text-anchor="middle" stroke="none">阳性</text>
@@ -30,7 +29,6 @@ step: 4
   <text x="150" y="160" text-anchor="middle" stroke="none">FN 漏报</text>
   <text x="250" y="160" text-anchor="middle" stroke="none">TN 真阴性</text>
 </svg>
-```
 
 - **为什么不看准确率：** 类别不平衡时会骗人。1% 是阳性的数据，全猜阴性就有 99% 准确率，召回率却是 0。
 - **取舍靠阈值和业务成本：** 降低阈值，召回率升、精确率降；反之亦然。漏报代价高的场景（癌症筛查、欺诈、安全过滤）要高召回；误报代价高的场景（自动封号、自动阻断发布）要高精确。需要单一数字时，用 Fβ，β 大于 1 偏向召回。不依赖阈值的排序能力看 ROC-AUC，严重不平衡时看 PR-AUC。

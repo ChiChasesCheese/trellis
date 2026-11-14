@@ -12,7 +12,6 @@ step: 4
 ## A
 **背景。** 事务、`@Async`、切面靠代理（proxy，包住原对象、在调用前后加料的替身）实现，代理由后处理器在 Bean 初始化完成之后生成：A 的最终形态是代理。而 B 向 A 要对象时，A 还没走到那一步。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 192">
 <text x="14" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">B 手里该拿哪个 A</text>
 <rect x="12" y="70" width="50" height="30" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -29,7 +28,6 @@ step: 4
 <text x="120" y="152" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">三层: 拿到代理</text>
 <text x="170" y="182" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">拿到原对象 调用就绕过切面</text>
 </svg>
-```
 
 | 方案 | 后果 |
 |---|---|

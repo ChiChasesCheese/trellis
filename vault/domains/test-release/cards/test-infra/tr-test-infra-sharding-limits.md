@@ -18,7 +18,6 @@ step: 4
 
 最慢分片的时长：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180">
 <g font-family="sans-serif" font-size="12">
 <text x="10" y="29" fill="currentColor">4 片</text>
@@ -42,7 +41,6 @@ step: 4
 <text x="200" y="156" fill="currentColor">最慢分片的测试</text>
 </g>
 </svg>
-```
 
 **限制收益的因素**：
 - **固定开销**：分片越多，开销占比越大。用预装依赖的镜像、缓存把它压低，是加分片之前该先做的。

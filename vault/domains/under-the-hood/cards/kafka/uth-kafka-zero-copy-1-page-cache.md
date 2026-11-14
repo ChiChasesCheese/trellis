@@ -14,7 +14,6 @@ Kafka broker 为什么不在 JVM 堆里缓存消息，而是把读写都交给�
 
 **结构。** 操作系统本来就会把读写过的磁盘内容留在空闲内存里，叫页缓存。Kafka 写消息只是追加到文件，数据先停在页缓存，由操作系统异步写回磁盘。`log.flush.interval.messages` 默认是 `Long.MAX_VALUE`：Kafka 自己不主动 `fsync`（强制落盘），持久性靠多副本。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 130">
 <rect x="8" y="18" width="80" height="28" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="48" y="36.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">生产者写</text>
@@ -33,7 +32,6 @@ Kafka broker 为什么不在 JVM 堆里缓存消息，而是把读写都交给�
 <text x="247" y="98" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">内核异步刷盘</text>
 <text x="170" y="122" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">Kafka 自己不 fsync, 也不在堆里缓存</text>
 </svg>
-```
 
 **细节。**
 

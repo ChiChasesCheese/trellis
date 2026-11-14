@@ -9,6 +9,48 @@ slug: product-of-array-except-self
 ## A
 **一句话。** 先把前缀积写进答案，再从右往左乘上滚动的后缀积。
 
+**图解。** `answer[i]` = 左边所有数的积 × 右边所有数的积。
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 180">
+<rect x="100" y="14" width="40" height="26" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="120.0" y="31.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="140" y="14" width="40" height="26" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="160.0" y="31.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">2</text>
+<rect x="180" y="14" width="40" height="26" rx="2" style="fill:var(--dim,#6b7280);fill-opacity:0.16" stroke="currentColor" stroke-width="1.2"/>
+<text x="200.0" y="31.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">3</text>
+<rect x="220" y="14" width="40" height="26" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="240.0" y="31.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">4</text>
+<text x="92" y="31" text-anchor="end" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">nums</text>
+<rect x="100" y="50" width="40" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="120.0" y="67.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="140" y="50" width="40" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="160.0" y="67.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="180" y="50" width="40" height="26" rx="2" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="200.0" y="67.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">2</text>
+<rect x="220" y="50" width="40" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="240.0" y="67.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">6</text>
+<text x="92" y="67" text-anchor="end" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">前缀积</text>
+<rect x="100" y="86" width="40" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="120.0" y="103.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">24</text>
+<rect x="140" y="86" width="40" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="160.0" y="103.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">12</text>
+<rect x="180" y="86" width="40" height="26" rx="2" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="200.0" y="103.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">4</text>
+<rect x="220" y="86" width="40" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="240.0" y="103.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<text x="92" y="103" text-anchor="end" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">后缀积</text>
+<rect x="100" y="122" width="40" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="120.0" y="139.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">24</text>
+<rect x="140" y="122" width="40" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="160.0" y="139.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">12</text>
+<rect x="180" y="122" width="40" height="26" rx="2" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="200.0" y="139.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">8</text>
+<rect x="220" y="122" width="40" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="240.0" y="139.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">6</text>
+<text x="92" y="139" text-anchor="end" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">answer</text>
+<text x="100" y="170" text-anchor="start" font-size="10" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">i = 2：左边 1·2 = 2，右边 4，2 × 4 = 8</text>
+</svg>
+
 ```python
 def product_except_self(nums):
     n = len(nums)

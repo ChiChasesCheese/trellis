@@ -14,7 +14,6 @@ step: 3
 
 **结构。** `select` 先随机洗牌（shuffle）出轮询顺序，再按 channel 地址给所有 channel 排序加锁。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">select 同时有 3 个 case 就绪</text>
 <text x="8" y="38" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">① 轮询顺序: 随机洗牌, 每个就绪的 case 机会相同</text>
@@ -45,7 +44,6 @@ step: 3
 <text x="183" y="152" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">0x30</text>
 <text x="8" y="176" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">所有 select 都按同一顺序加锁, 就不会互相等待</text>
 </svg>
-```
 
 **细节。**
 

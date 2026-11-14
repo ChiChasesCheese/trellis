@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 动态规划（dynamic programming）：按「已拼进几张表」一层层往上，每个「表的集合」只记下最便宜的拼法，高一层直接用。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 214">
 <line x1="80" y1="158" x2="115" y2="134" fill="none" stroke="currentColor" stroke-width="1.2" style="stroke:var(--dim,#6b7280)"/>
 <line x1="150" y1="158" x2="115" y2="134" fill="none" stroke="currentColor" stroke-width="1.2" style="stroke:var(--dim,#6b7280)"/>
@@ -54,7 +53,6 @@ step: 1
 <text x="185" y="30" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">1 2 3 4</text>
 <text x="170" y="206" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">每个集合只记下最便宜的拼法 更高层直接用</text>
 </svg>
-```
 
 **细节。**
 

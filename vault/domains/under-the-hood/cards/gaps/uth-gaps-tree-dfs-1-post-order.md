@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 后序遍历（post-order）：先走进子目录，等里面全算完得到一个总数，回到父目录时把总数加进来，自己最后算。每个文件只读一次，每个目录离开时恰好报一次大小，所以 `du` 的输出里子目录总在父目录之前。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 214">
 <line x1="170" y1="38" x2="95" y2="80" fill="none" stroke="currentColor" stroke-width="1.2" style="stroke:var(--dim,#6b7280)"/>
 <line x1="170" y1="38" x2="245" y2="80" fill="none" stroke="currentColor" stroke-width="1.2" style="stroke:var(--dim,#6b7280)"/>
@@ -38,7 +37,6 @@ step: 1
 <text x="281" y="96" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">合计 9</text>
 <text x="170" y="204" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">方框里是自己占的大小 先算完子目录再加到父目录</text>
 </svg>
-```
 
 **细节。**
 

@@ -17,7 +17,6 @@ step: 3
 - 推理：只存参数本身。FP16 每个 2 字节，7B 共 **14 GB**。另外加上每个请求的中间缓存。
 - 训练（混合精度 + Adam 优化器的常见做法）：FP16 参数 2 字节 + FP16 梯度 2 字节 + FP32 主参数 4 字节 + Adam 的两个统计量各 4 字节，共 **16 字节每参数**，7B 约 112 GB，还不算中间结果。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 132" font-family="sans-serif" font-size="11">
 <text x="4" y="14" fill="currentColor">每个参数占几字节（训练: FP16 参数和梯度, FP32 主参数, Adam 两个统计量）</text>
 <text x="4" y="45" fill="currentColor">推理</text>
@@ -37,7 +36,6 @@ step: 3
 <text x="292" y="96" text-anchor="middle" fill="currentColor">Adam 4</text>
 <text x="40" y="124" fill="currentColor">16 字节 → 7B 约 112 GB（不含中间结果）</text>
 </svg>
-```
 
 **为什么推理成了独立的工程问题。** 训练是一次性的大成本；推理是每个用户每次提问都要付的成本，持续发生，而且有人在等结果。所以推理关心的是另一组指标：
 

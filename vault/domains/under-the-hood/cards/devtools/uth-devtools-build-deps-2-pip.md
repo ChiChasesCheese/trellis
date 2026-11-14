@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 本质是约束满足问题（和 SAT 同类，NP 完全）：为每个包选一个版本。pip 的求解器来自 resolvelib 库，是通用的回溯算法；pip 只负责提供候选版本和它们的依赖。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 196">
 <rect x="65" y="50" width="50" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="90" y="66" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">a 2</text>
@@ -37,7 +36,6 @@ step: 2
 <text x="250" y="152" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">成功</text>
 <text x="170" y="184" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">每层选一个版本 冲突就回退一步</text>
 </svg>
-```
 
 **细节。**
 

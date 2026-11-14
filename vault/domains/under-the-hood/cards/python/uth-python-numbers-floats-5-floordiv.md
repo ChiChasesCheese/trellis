@@ -14,7 +14,6 @@ C++、Java 里 `-7 / 2` 是 `-3`，Python 里 `-7 // 2` 却是 `-4`；`-7 % 3` �
 
 **结构。** Python 的 `//` 向下取整，`%` 的结果和除数同号，两者满足 `x == (x // y) * y + x % y`。CPython 先做 C 风格的截断除法，若余数与除数异号，就把余数加一个除数、商减 1。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 140">
 <line x1="20" y1="74" x2="320" y2="74" stroke-width="1.2" stroke="currentColor"/>
 <line x1="60" y1="68" x2="60" y2="80" stroke-width="1.2" stroke="currentColor"/>
@@ -33,7 +32,6 @@ C++、Java 里 `-7 / 2` 是 `-3`，Python 里 `-7 // 2` 却是 `-4`；`-7 % 3` �
 <text x="110" y="114" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">-7 / 2 = -3.5</text>
 <text x="170" y="134" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">负数时两种取整差 1</text>
 </svg>
-```
 
 | 表达式 | Python | C++ / Java / Go / Rust |
 |---|---|---|

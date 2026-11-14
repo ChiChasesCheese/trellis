@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 外部排序（external sort）：每攒满 `work_mem`（默认 4 MB）的元组，就在内存里快排成一段有序的 run，写进临时文件；最后把所有 run 做 k 路归并，也就是同时从 k 段里各取最小的那个往外输出。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 140">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每攒满 work_mem 排成一个 run</text>
 <rect x="8" y="22" width="100" height="26" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -38,7 +37,6 @@ step: 2
 <text x="291" y="74.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">有序输出</text>
 <text x="170" y="134" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">临时文件里的 run 一路读一路归并</text>
 </svg>
-```
 
 **细节。** 归并路数 = `work_mem / (2 × 8 KB + 256 KB)`，下限 6、上限 500；默认 4 MB 得 15 路。
 

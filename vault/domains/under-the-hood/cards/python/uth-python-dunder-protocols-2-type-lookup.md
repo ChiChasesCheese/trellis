@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `len(c)` 这类隐式调用只在**类**上找特殊方法，完全不看实例字典。实现上，类里定义的 `__len__` 会被装进这个类型的「长度槽位」（`sq_length`），槽位里的转接函数用 `type(c)` 去查 `__len__`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -49,7 +48,6 @@ step: 2
 </g>
 </g>
 </svg>
-```
 
 ```python
 class C: pass

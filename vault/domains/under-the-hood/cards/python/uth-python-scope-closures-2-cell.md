@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 编译器发现 `n` 被内层函数用到，就把它放进一个单独的小对象：cell（单元格，里面只有一个指针）。外层和内层函数各自持有这个 cell，改的是 cell 里的指针，所以彼此看得见。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <rect x="10" y="40" width="120" height="64" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="70" y="66" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">make_counter</text>
@@ -33,7 +32,6 @@ step: 2
 <line x1="130" y1="56" x2="168" y2="56" stroke-width="1.2" stroke="currentColor" stroke-dasharray="4 3"/>
 <text x="170" y="196" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">外层返回后 cell 仍被 inc 引用</text>
 </svg>
-```
 
 **细节。**
 

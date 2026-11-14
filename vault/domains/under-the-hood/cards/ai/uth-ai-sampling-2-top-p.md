@@ -14,7 +14,6 @@ step: 2
 
 **结构。** top-k：只保留分数最高的 `k` 个词。top-p（又叫核采样，nucleus sampling）：把词按概率从大到小排好，一个个累加概率，加到总和达到 `p` 就停，留下已经加进去的词。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 214">
 <rect x="34" y="28" width="34" height="76" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="2"/>
 <text x="51" y="23" text-anchor="middle" font-size="11" font-family="sans-serif" fill="currentColor">0.50</text>
@@ -45,7 +44,6 @@ step: 2
 <line x1="206" y1="198" x2="206" y2="202" stroke="currentColor" stroke-width="1"/>
 <text x="34" y="194" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">top-p=0.9: 累加到 0.95 才够, 留前 4 个</text>
 </svg>
-```
 
 **细节。**
 

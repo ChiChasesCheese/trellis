@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 一边连续赢 `MIN_GALLOP = 7` 次，就切到 galloping（疾驰）模式：用指数加二分查找（先跳 1、3、7、15 个……，越界后在最后一段里二分）找到边界，再整块拷贝。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <rect x="26" y="70" width="18" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <rect x="44" y="70" width="18" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -54,7 +53,6 @@ step: 3
 <line x1="206" y1="66" x2="206" y2="128" stroke-width="1.2" stroke="currentColor" stroke-dasharray="4 3"/>
 <text x="242" y="152" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">二分找边界</text>
 </svg>
-```
 
 **细节。**
 

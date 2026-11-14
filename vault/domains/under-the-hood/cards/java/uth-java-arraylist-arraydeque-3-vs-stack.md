@@ -14,7 +14,6 @@ step: 3
 
 **结构。** `Stack` 继承 `Vector`，方法都带 `synchronized`（加锁）；`LinkedList` 每个元素一个 `Node`（`item`、`next`、`prev`）；`ArrayDeque` 是一个连续数组。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="20" y="22" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">ArrayDeque 一块连续数组</text>
 <rect x="40" y="32" width="48" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -42,7 +41,6 @@ step: 3
 <text x="282" y="126" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">Node</text>
 <text x="170" y="174" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">Stack 每次调用还要 synchronized</text>
 </svg>
-```
 
 **细节。**
 

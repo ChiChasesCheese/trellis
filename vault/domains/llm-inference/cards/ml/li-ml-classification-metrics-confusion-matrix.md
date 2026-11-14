@@ -19,7 +19,6 @@ step: 1
 
 真实有害共 20 条，无害 80 条。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 186" font-family="sans-serif" font-size="11">
 <text x="150" y="22" text-anchor="middle" fill="currentColor">真实有害</text>
 <text x="250" y="22" text-anchor="middle" fill="currentColor">真实无害</text>
@@ -36,7 +35,6 @@ step: 1
 <text x="10" y="156" fill="currentColor">精确率 = TP / 第一行 = 8 / 10 = 0.80</text>
 <text x="10" y="176" fill="currentColor">召回率 = TP / 第一列 = 8 / 20 = 0.40</text>
 </svg>
-```
 
 **四个指标：**
 - **准确率 = (TP + TN) / 全部** = (8 + 78) / 100 = **0.86**。所有判断里对了多少。

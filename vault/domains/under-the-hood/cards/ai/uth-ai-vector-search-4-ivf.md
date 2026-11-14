@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 倒排表（inverted file，IVF）：建索引时用 k-means（反复把点分给最近的中心，再把中心移到这一堆的平均位置）算出 `lists` 个中心，每个向量归入最近中心的桶。查询先比中心，再扫最近 `probes` 个桶里的向量。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 242">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" fill="currentColor" stroke="currentColor">
 <circle cx="70" cy="70" r="46" style="fill:none;stroke-width:1;stroke-dasharray:4,3"/>
@@ -48,7 +47,6 @@ step: 4
 <text x="170" y="233" stroke="none">只在蓝圈里的点中找, 其余桶跳过</text>
 </g>
 </svg>
-```
 
 **细节。**
 

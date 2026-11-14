@@ -9,6 +9,18 @@ slug: number-of-connected-components-in-an-undirected-graph
 ## A
 **一句话。** 并查集：初始 `n` 个分量，两端的根不同才合并，并让计数减一。
 
+**图解。** 箭头是 `parent` 指针；每条边两端的根不同才合并，分量数减一。
+
+```mermaid
+flowchart TB
+    n0["0"] -->|"① 边 0-1"| n1["1"]
+    n1 -->|"② 边 1-2"| n2["2 · 根"]
+    n3["3"] -->|"③ 边 3-4"| n4["4 · 根"]
+    n2 ~~~ c["分量 5→4→3→2"]
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class n2,n4 hot
+```
+
 ```python
 def count_components(n, edges):
     parent = list(range(n))

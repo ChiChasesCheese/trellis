@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 对象库就是键值存储：键是 SHA-1（对 `"blob <字节数>\0"` 加内容计算），值是 zlib 压缩后的内容，存在 `.git/objects/<前2位>/<后38位>`。例：`a.txt` 和 `b.txt` 内容都是 `hello`，只存一个 blob（git 里表示“文件内容”的对象）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176">
 <text x="75" y="22" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">tree 目录</text>
 <text x="270" y="22" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">blob 内容</text>
@@ -32,7 +31,6 @@ step: 1
 <text x="170" y="130" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">名字 = SHA-1(内容)</text>
 <text x="170" y="154" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">内容相同 只存一份</text>
 </svg>
-```
 
 **细节。**
 

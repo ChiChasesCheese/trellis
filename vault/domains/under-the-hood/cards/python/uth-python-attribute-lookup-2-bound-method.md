@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 函数对象实现了 `__get__`（定义了 `__get__` 的对象叫描述符，放在类里时，取属性会调用它）。通过实例取时，`__get__` 返回一个绑定方法对象，里面存着 `__self__`（实例）和 `__func__`（原函数）；调用它就是 `func(self, *args)`。通过类取，则直接得到原函数。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 195">
 <rect x="10" y="56" width="62" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="41" y="73" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">d.bark</text>
@@ -36,7 +35,6 @@ step: 2
 <text x="170" y="148" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">Dog.bark 取到原函数 不绑定</text>
 <text x="170" y="172" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">d.bark() 就是 bark(d)</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 哈希表的 value 直接存链表节点；链表按使用时间排，表头最久没用。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="14" y="18" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">哈希表: key 直接指向节点</text>
 <rect x="40" y="28" width="56" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -45,7 +44,6 @@ step: 1
 <text x="248" y="150" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">最近用过</text>
 <text x="170" y="178" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">双向链表 = 使用顺序  头尾都能 O(1) 增删</text>
 </svg>
-```
 
 | 操作 | 做法 | 复杂度 |
 |---|---|---|

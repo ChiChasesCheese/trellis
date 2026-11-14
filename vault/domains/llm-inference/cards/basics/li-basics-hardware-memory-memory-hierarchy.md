@@ -18,7 +18,6 @@ step: 3
 | 主机内存（DRAM） | CPU 那边的内存条 | 几百 GB 到 2 TB | 经 PCIe 5.0 x16 约 64 GB/s 每方向 |
 | NVMe SSD | 磁盘 | 几 TB | 约 7 GB/s |
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 194" font-family="sans-serif" font-size="11">
 <text x="170" y="13" text-anchor="middle" fill="currentColor">离计算单元越近：越快、越小、越贵</text>
 <rect x="105" y="22" width="130" height="28" rx="3" fill="none" stroke="currentColor"/>
@@ -32,7 +31,6 @@ step: 3
 <rect x="5" y="158" width="330" height="28" rx="3" fill="none" stroke="currentColor"/>
 <text x="170" y="176" text-anchor="middle" fill="currentColor">NVMe SSD · 几 TB · 约 7 GB/s</text>
 </svg>
-```
 
 **SRAM 是什么：** 静态随机存储器（static RAM），用晶体管直接做在计算芯片上，速度极快，但占面积大，所以一块 GPU 上只有几十 MB。**HBM/DRAM** 是动态存储器，密度高、容量大，但在芯片外面，要经过接口才能读到。
 

@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `str` 和 `bytes` 的哈希是带密钥的 SipHash（3.14 默认 `siphash13`），密钥在进程启动时随机生成。哈希变了，元素落进的槽就变了，遍历顺序随之改变。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="14" y="48" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">第1次</text>
 <rect x="70" y="30" width="30" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -46,7 +45,6 @@ step: 2
 <text x="190" y="146" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">遍历顺序 c a d b</text>
 <text x="170" y="182" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">密钥每次启动随机 同样的词落进不同的槽</text>
 </svg>
-```
 
 **细节。**
 

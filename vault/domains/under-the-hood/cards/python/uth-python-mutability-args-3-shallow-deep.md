@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 浅拷贝（shallow copy）新建外层容器，里面装着和原来相同的元素指针，元素本身不复制：`a.copy()`、`a[:]`、`list(a)`、`copy.copy(a)` 都是。深拷贝（deep copy）则递归复制每一层。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 245">
 <text x="10" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">a = [[0]]</text>
 <text x="120" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">b = a.copy()  浅拷贝</text>
@@ -62,7 +61,6 @@ step: 3
 <polygon points="208.0,213.0 202.0,216.0 202.0,210.0" fill="currentColor" stroke="currentColor" stroke-width="0.5"/>
 <text x="285" y="190" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">各一份</text>
 </svg>
-```
 
 **细节。**
 

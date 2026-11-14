@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 扩容时逐个把旧块元素构造到新块里，用的是 `move_if_noexcept`：只有确认移动不会抛异常才用移动。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <rect x="100" y="10" width="140" height="28" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="1"/>
 <text x="170" y="28.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">扩容:搬每个元素</text>
@@ -36,7 +35,6 @@ step: 3
 <text x="265" y="160" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">旧块完好,可回滚</text>
 <text x="170" y="192" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">move_if_noexcept:怕搬到一半抛异常</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 2
 
 **结构。** ziplist 的每个元素开头记“前一个元素的长度”（1 到 5 字节）；listpack 把长度挪到元素末尾，只记自己的长度。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">ziplist: 每个元素开头记「前一个元素的长度」</text>
 <text x="8" y="36" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">之前</text>
@@ -46,7 +45,6 @@ step: 2
 <text x="8" y="192" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">listpack: 长度挪到元素末尾, 每个元素只记自己的,</text>
 <text x="8" y="208" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">没有连锁, 倒着遍历依然成立</text>
 </svg>
-```
 
 **细节。**
 

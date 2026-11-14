@@ -14,7 +14,6 @@ step: 2
 
 **结构。** GiST（通用搜索树，Generalized Search Tree）是平衡树。叶子存每行的范围，上层每个条目存「盖住下面所有范围的最小范围」。先问上层：你盖住的范围和我重叠吗？不重叠，整棵子树跳过。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170">
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">查询 [15,16)</text>
 <rect x="28" y="28" width="80" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
@@ -39,7 +38,6 @@ step: 2
 <text x="68" y="158" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">不重叠 整棵跳过</text>
 <text x="240" y="158" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">重叠 往下查</text>
 </svg>
-```
 
 **细节。**
 

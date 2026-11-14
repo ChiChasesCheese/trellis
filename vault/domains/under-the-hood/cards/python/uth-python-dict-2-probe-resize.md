@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `dict` 用开放寻址（open addressing）：不挂链表，冲突了就在表里按公式换一个槽。公式 `i = (i*5 + perturb + 1) & mask` 每次跳得很远；`perturb` 一开始是完整哈希值，每轮右移 5 位，让高位也逐步参与。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <rect x="26" y="78" width="36" height="30" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="44" y="126" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">0</text>
@@ -47,7 +46,6 @@ step: 2
 <text x="170" y="156" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">8 槽最多放 5 个 放第 6 个就扩容</text>
 <text x="170" y="178" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">新表长 = 已用数 x 3 取 2 的幂</text>
 </svg>
-```
 
 **细节。**
 

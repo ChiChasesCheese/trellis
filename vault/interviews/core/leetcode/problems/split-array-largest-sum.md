@@ -9,6 +9,51 @@ slug: split-array-largest-sum
 ## A
 **一句话。** 二分答案（每段和的上限 `cap`），贪心数最少要几段，段数 `<= k` 就够用。
 
+**图解。** 二分的是上限 `cap`：`cap` 越大段数越少，满足「段数 ≤ k」的最小 `cap` 就是答案。
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 175">
+<rect x="30.0" y="38" width="94.54545454545455" height="16" rx="0" style="fill:var(--dim,#6b7280);fill-opacity:0.16" stroke="currentColor" stroke-width="1.2"/>
+<rect x="124.54545454545455" y="38" width="165.45454545454544" height="16" rx="0" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<line x1="30" y1="54" x2="290" y2="54" stroke-width="1" stroke="currentColor"/>
+<line x1="30.0" y1="36" x2="30.0" y2="56" stroke-width="1" stroke="currentColor"/>
+<text x="30.0" y="70" text-anchor="middle" font-size="11" font-family="sans-serif" fill="currentColor">10</text>
+<line x1="124.54545454545455" y1="36" x2="124.54545454545455" y2="56" stroke-width="1.6" style="stroke:var(--accent,#3b6fd4)"/>
+<text x="124.54545454545455" y="70" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">18</text>
+<line x1="290.0" y1="36" x2="290.0" y2="56" stroke-width="1" stroke="currentColor"/>
+<text x="290.0" y="70" text-anchor="middle" font-size="11" font-family="sans-serif" fill="currentColor">32</text>
+<text x="30.0" y="32" text-anchor="start" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">max = 10</text>
+<text x="290.0" y="32" text-anchor="end" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">sum = 32</text>
+<text x="77.27272727272728" y="50" text-anchor="middle" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">段数 &gt; k</text>
+<text x="207.27272727272728" y="50" text-anchor="middle" font-size="10" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">段数 ≤ k</text>
+<rect x="110" y="96" width="28" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="124.0" y="112.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">7</text>
+<rect x="138" y="96" width="28" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="152.0" y="112.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">2</text>
+<rect x="166" y="96" width="28" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="180.0" y="112.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">5</text>
+<rect x="194" y="96" width="28" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="208.0" y="112.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">10</text>
+<rect x="222" y="96" width="28" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="236.0" y="112.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">8</text>
+<line x1="194" y1="92" x2="194" y2="124" stroke-width="3" style="stroke:var(--accent,#3b6fd4)"/>
+<line x1="222" y1="92" x2="222" y2="124" stroke-width="3" style="stroke:var(--accent,#3b6fd4)"/>
+<text x="102" y="112" text-anchor="end" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">cap = 17</text>
+<text x="258" y="112" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">3 段 ✗</text>
+<rect x="110" y="132" width="28" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="124.0" y="148.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">7</text>
+<rect x="138" y="132" width="28" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="152.0" y="148.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">2</text>
+<rect x="166" y="132" width="28" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="180.0" y="148.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">5</text>
+<rect x="194" y="132" width="28" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="208.0" y="148.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">10</text>
+<rect x="222" y="132" width="28" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="236.0" y="148.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">8</text>
+<line x1="194" y1="128" x2="194" y2="160" stroke-width="3" style="stroke:var(--accent,#3b6fd4)"/>
+<text x="102" y="148" text-anchor="end" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">cap = 18</text>
+<text x="258" y="148" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">2 段 ✓</text>
+</svg>
+
 ```python
 def split_array(nums, k):
     def groups(cap):           # 每段和 <= cap 时最少几段

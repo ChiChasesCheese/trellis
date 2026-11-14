@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 一个 `Node[]` 桶数组，每个桶是一条链表（冲突多时转红黑树）；桶下标 = `(n - 1) & hash`，`n` 是数组长度。例：长 16 的数组，`hash = 37`，`37 & 15 = 5`，放进第 5 个桶；再来一个也算到 5 的 key，接在它后面。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <text x="20" y="18" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">Node[16] 桶数组</text>
 <rect x="18" y="40" width="19" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -48,7 +47,6 @@ step: 1
 <text x="172" y="134" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">串成链表</text>
 <text x="170" y="194" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">下标 = hash &amp; (n-1)</text>
 </svg>
-```
 
 **细节。**
 

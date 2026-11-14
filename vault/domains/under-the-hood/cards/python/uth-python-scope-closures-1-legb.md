@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 查找顺序是 LEGB：局部（Local，当前函数）→ 外层函数（Enclosing）→ 全局（Global，本模块）→ 内置（Built-in，如 `len`）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 250">
 <rect x="6" y="6" width="328" height="206" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="14" y="24" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">B 内置  len  enumerate</text>
@@ -28,7 +27,6 @@ step: 1
 <text x="50" y="172" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">len 在 B  由内向外逐层找</text>
 <text x="170" y="238" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">都找不到就是 NameError</text>
 </svg>
-```
 
 **细节。**
 

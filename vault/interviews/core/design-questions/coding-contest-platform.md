@@ -48,7 +48,6 @@ kind: system-design
   - `GET /contests/{id}/leaderboard?page=&limit=`。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 294">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -82,7 +81,6 @@ kind: system-design
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="252" font-size="11">客户端每秒轮询提交状态</text></g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="268" font-size="11">榜单前 N 名缓存 1-2 秒</text></g>
 </g></svg>
-```
 1. 浏览题目：无状态 API 服务读题库（文档型数据库或带索引的关系库），题目内容几乎不变，放 CDN 与应用内存缓存。
 2. 提交：API 服务校验后把代码写入对象存储、插入状态为 QUEUED 的提交记录、向队列投递一条只含 submission_id 的消息，立即返回。
 3. 判题 worker：按语言分池，从队列拉取任务，在沙箱中编译并逐个运行测试点，将结果以条件更新（状态为 QUEUED/RUNNING 才可写）写回提交表，再更新排行榜。

@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 每次采集存一个（时间，累计值）。累计值就是前缀和（prefix sum）。一段时间的增量 = 窗口里最后一个值 − 第一个值，一次减法，中间丢几次采集都不影响。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 166">
 <line x1="20" y1="140" x2="276" y2="140" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
 <line x1="34" y1="129" x2="88" y2="112.5" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -42,7 +41,6 @@ step: 1
 <text x="300" y="94" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">增量</text>
 <text x="300" y="110" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">120</text>
 </svg>
-```
 
 例：`100, 130, 150, 190, 220`，增量 = 220 − 100 = 120，平均每秒 120 / 60 = 2 个。
 

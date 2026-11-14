@@ -9,6 +9,37 @@ slug: kth-largest-element-in-an-array
 ## A
 **一句话。** 快速选择（quickselect）：随机 pivot 三路划分，只钻进答案所在的那一堆。
 
+**图解。** 按 pivot 三路划分，只钻进第 `k` 大所在的那一段。
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 158">
+<text x="10" y="14" text-anchor="start" font-size="10" font-family="ui-monospace,Menlo,monospace" style="fill:var(--dim,#6b7280)">nums = [3, 2, 1, 5, 6, 4]，k = 2</text>
+<text x="72" y="53" text-anchor="end" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">pivot 4</text>
+<rect x="80" y="36" width="28" height="24" rx="2" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="94.0" y="52.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">5</text>
+<rect x="108" y="36" width="28" height="24" rx="2" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="122.0" y="52.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">6</text>
+<text x="108" y="31" text-anchor="middle" font-size="9" font-family="sans-serif" style="fill:var(--dim,#6b7280)">大于</text>
+<rect x="148" y="36" width="28" height="24" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="162.0" y="52.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">4</text>
+<text x="162" y="31" text-anchor="middle" font-size="9" font-family="sans-serif" style="fill:var(--dim,#6b7280)">等于</text>
+<rect x="188" y="36" width="28" height="24" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="202.0" y="52.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">3</text>
+<rect x="216" y="36" width="28" height="24" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="230.0" y="52.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">2</text>
+<rect x="244" y="36" width="28" height="24" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="258.0" y="52.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<text x="230" y="31" text-anchor="middle" font-size="9" font-family="sans-serif" style="fill:var(--dim,#6b7280)">小于</text>
+<text x="80" y="80" text-anchor="start" font-size="10" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">k = 2 ≤ 2 个更大 → 只钻进大于段</text>
+<text x="72" y="115" text-anchor="end" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">pivot 5</text>
+<rect x="80" y="98" width="28" height="24" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="94.0" y="114.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">6</text>
+<text x="94" y="93" text-anchor="middle" font-size="9" font-family="sans-serif" style="fill:var(--dim,#6b7280)">大于</text>
+<rect x="120" y="98" width="28" height="24" rx="2" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="134.0" y="114.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">5</text>
+<text x="134" y="93" text-anchor="middle" font-size="9" font-family="sans-serif" style="fill:var(--dim,#6b7280)">等于</text>
+<text x="80" y="142" text-anchor="start" font-size="10" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">k = 2 落在等于段 → 答案 5</text>
+</svg>
+
 ```python
 def find_kth_largest(nums, k):
     while True:

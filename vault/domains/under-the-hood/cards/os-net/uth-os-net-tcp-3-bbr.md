@@ -14,7 +14,6 @@ CUBIC 靠丢包判断拥塞，BBR 靠什么调速度？
 
 **结构。** BBR 持续估计两个量：瓶颈带宽 = 最近 10 个往返里测到的最大交付速率（只看最近一段里的最大值，windowed max），最小 RTT = 最近 10 秒里的最小值。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 224">
 <line x1="50" y1="18" x2="50" y2="90" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <line x1="50" y1="90" x2="322" y2="90" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -30,7 +29,6 @@ CUBIC 靠丢包判断拥塞，BBR 靠什么调速度？
 <text x="250" y="132" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">瓶颈带宽</text>
 <text x="322" y="212" text-anchor="end" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">在途数据</text>
 </svg>
-```
 
 **细节。**
 

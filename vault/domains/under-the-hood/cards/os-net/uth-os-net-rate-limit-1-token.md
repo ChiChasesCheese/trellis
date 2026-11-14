@@ -14,7 +14,6 @@ Guava 的 `RateLimiter` 没有后台线程往桶里加令牌，它怎么知道�
 
 **结构。** 令牌数其实是时间的函数：只要记住“上次是什么时候”，来请求时按流逝的时间一次算出该补多少（惰性补充）。`SmoothBursty` 只存两个值：`storedPermits`（桶里的令牌）和 `nextFreeTicketMicros`（下一张票最早能发放的时间）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <line x1="40" y1="20" x2="40" y2="156" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <line x1="40" y1="156" x2="322" y2="156" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -31,7 +30,6 @@ Guava 的 `RateLimiter` 没有后台线程往桶里加令牌，它怎么知道�
 <text x="150" y="176" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">没有定时器 用到时才按时间补</text>
 <text x="100" y="112" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">按速率回升</text>
 </svg>
-```
 
 **细节。**
 

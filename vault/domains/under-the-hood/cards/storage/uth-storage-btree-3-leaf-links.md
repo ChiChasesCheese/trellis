@@ -14,7 +14,6 @@ step: 3
 
 **结构。** InnoDB 把同一层的页用 `FIL_PAGE_PREV` / `FIL_PAGE_NEXT` 连成双向链表，读完一页直接跳到下一页。SQLite 的 b-tree 页没有兄弟指针：游标读完叶子的最后一格，就 `moveToParent` 回到父页，再进下一个子页（`btreeNext`）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 208">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">InnoDB: 叶子页双向链表</text>
 <rect x="13" y="22" width="62" height="24" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -54,7 +53,6 @@ step: 3
 <line x1="212" y1="118" x2="296" y2="154" stroke="currentColor" stroke-width="1.2" style="stroke:var(--dim,#6b7280)"/>
 <text x="170" y="200" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">每跨一页都要回父页一趟</text>
 </svg>
-```
 
 **细节。** SQLite 表的 b-tree 数据全在叶子，内部页只存 64 位整数键。
 

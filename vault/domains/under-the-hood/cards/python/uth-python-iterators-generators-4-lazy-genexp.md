@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 把 `[...]` 换成 `(...)` 就是生成器表达式：它不存结果，外面每要一个，才算一个。它本身也是一个生成器对象。`sum`、`any`、`max`、`next` 都是这样逐个拉取。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -58,7 +57,6 @@ step: 4
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

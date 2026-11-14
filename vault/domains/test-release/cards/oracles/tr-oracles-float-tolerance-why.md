@@ -22,7 +22,6 @@ step: 1
 
 三种判据随期望值大小的变化（粗线是组合公式）：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 230">
 <g font-family="sans-serif" font-size="12" fill="none" stroke="currentColor">
 <line x1="50" y1="190" x2="310" y2="190"/>
@@ -41,7 +40,6 @@ step: 1
 <text x="60" y="40">粗线：atol + rtol×|expected|</text>
 </g>
 </svg>
-```
 
 **例**：`rtol=1e-5, atol=1e-8`：期望 1000.0 时允许误差约 0.01；期望 0.0 时允许误差 1e-8。
 

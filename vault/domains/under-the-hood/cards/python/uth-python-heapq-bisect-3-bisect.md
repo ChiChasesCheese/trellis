@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 在有序 `list` 上不断缩小查找区间 `[lo, hi)`，不额外分配内存（`bisect.py` 是纯 Python，另有 C 加速版）。有重复值时，「该插在哪」有两个答案：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170">
 <rect x="45" y="70" width="50" height="32" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="70" y="90" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
@@ -46,7 +45,6 @@ step: 3
 <text x="245" y="40" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">bisect_right = 4</text>
 <text x="170" y="150" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">线上的数字是插入位置</text>
 </svg>
-```
 
 **细节。**
 

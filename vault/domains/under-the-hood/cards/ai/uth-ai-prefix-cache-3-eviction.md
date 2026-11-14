@@ -17,7 +17,6 @@ step: 3
 - vLLM：每个块有引用计数 `ref_cnt`。降到 0 的块不立刻丢，放回空闲队列末尾，哈希还在，仍可命中；分配新块从队首取，这时才抹掉哈希。命中时 `ref_cnt` 加 1，并从队列中间摘走
 - SGLang：只淘汰叶子，可淘汰的叶子放进最小堆，按最后访问时间弹出最老的；父节点没有孩子了，也入堆
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170">
 <text x="12" y="18" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">一个请求结束, 它的块倒着放回空闲队列</text>
 <rect x="20" y="50" width="56" height="30" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="2"/>
@@ -40,7 +39,6 @@ step: 3
 <text x="170" y="134" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">开头的块人人都用, 留到最后</text>
 <text x="170" y="160" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">块被别的请求命中时, 从队列中摘走</text>
 </svg>
-```
 
 **细节。**
 

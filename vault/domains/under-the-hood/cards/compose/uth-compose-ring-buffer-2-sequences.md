@@ -12,7 +12,6 @@ step: 2
 ## A
 **结构。** 一个定长数组 `buf`，加两个只增不减的整数（序号，sequence）：`write`（已写入的总个数）和 `read`（已读走的总个数）。第 `n` 个元素放在 `buf[n & mask]`，`mask` 是容量减 1，所以容量必须是 2 的幂。`write - read` 是 0 就是空，等于容量就是满，不会混淆。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 214">
 <path d="M 296 30 C 296 4, 44 4, 44 30" fill="none" style="stroke:var(--accent,#3b6fd4)" stroke-width="1" stroke-dasharray="4 3"/>
 <line x1="44" y1="24" x2="44.0" y2="26.0" style="stroke:var(--accent,#3b6fd4)" stroke-width="1"/>
@@ -48,7 +47,6 @@ step: 2
 <text x="170" y="180" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">槽里的数字是序号, 方格上方是下标</text>
 <text x="170" y="198" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">已用 = write - read = 3, 满 = 8</text>
 </svg>
-```
 
 | 操作 | 碰哪几个结构 | 复杂度 |
 |---|---|---|

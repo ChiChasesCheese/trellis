@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 这就是倒排索引（inverted index）：每个词（term）对应一个升序的文档号列表（postings）。搜两个词同时出现，就是对两个有序列表求交集：两个指针各指一个列表，小的那边前进，相等就是命中，不用把列表全展开。图里 kafka 和 timing 的交集是 7 和 20。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 128">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每个词: 升序的文档号列表</text>
 <text x="8" y="58" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">kafka</text>
@@ -39,7 +38,6 @@ step: 1
 <line x1="223" y1="46" x2="131" y2="72" stroke="currentColor" stroke-width="1.2" style="stroke:var(--accent,#3b6fd4)"/>
 <text x="170" y="122" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">AND = 双指针求交集: 7, 20</text>
 </svg>
-```
 
 **细节。**
 

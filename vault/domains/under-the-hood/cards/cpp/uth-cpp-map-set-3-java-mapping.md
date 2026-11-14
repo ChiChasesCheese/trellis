@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 同一棵红黑树，向下找 x 的最近邻居；C++ 返回迭代器（指向元素的游标），Java 直接返回键。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176">
 <rect x="20" y="22" width="50" height="28" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
 <text x="45" y="40.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">10</text>
@@ -41,7 +40,6 @@ step: 3
 <text x="169" y="144" text-anchor="middle" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">floor: prev(upper_bound)</text>
 <text x="169" y="158" text-anchor="middle" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">ceiling: lower_bound</text>
 </svg>
-```
 
 **细节。**
 

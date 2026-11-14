@@ -14,7 +14,6 @@ step: 2
 
 **结构。** CPython 的 `int` 乘法默认就是竖式；两个数都超过 70 位（70 × 30 = 2100 个二进制位，约 630 个十进制数字）时，改用 Karatsuba 算法：把每个数劈成高低两半，用 3 次半长乘法代替 4 次。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176">
 <text x="80" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">竖式 4 次乘法</text>
 <text x="260" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">Karatsuba 3 次</text>
@@ -36,7 +35,6 @@ step: 2
 <text x="260" y="135" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">省掉 1 次</text>
 <text x="170" y="166" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每次乘的数只有原来一半长</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 每个工作线程一个双端队列（deque）：环形数组，初始 64 个槽，数组长度是 2 的幂。主人在一端（`top`）放入、取出，后进先出（LIFO）；小偷从另一端（`base`）用 CAS 取走最老的任务，先进先出（FIFO）。例：线程 A 的队列有 4 个任务，线程 B 空了，B 从 A 的队尾偷走最老的那个，A 照常从队头取。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="170" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">线程 A 的双端队列</text>
 <rect x="30" y="40" width="34" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -43,7 +42,6 @@ step: 1
 <polygon points="94.0,150.0 94.9,156.6 89.3,154.7" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)" stroke-width="0.5"/>
 <text x="250" y="190" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">主人 LIFO 小偷 FIFO</text>
 </svg>
-```
 
 **细节。**
 

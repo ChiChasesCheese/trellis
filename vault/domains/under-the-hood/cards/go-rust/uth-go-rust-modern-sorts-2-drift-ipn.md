@@ -14,7 +14,6 @@ Rust 1.81 换掉了标准库的排序，稳定与不稳定的分别是什么？
 
 **结构。** 稳定的 `sort` 是 driftsort；不稳定的 `sort_unstable` 是 ipnsort（快排加堆排序兜底）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">driftsort: 先找输入里已有的顺序段 (run)</text>
 <rect x="10" y="26" width="70" height="28" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -41,7 +40,6 @@ Rust 1.81 换掉了标准库的排序，稳定与不稳定的分别是什么？
 <text x="95" y="166.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">A+B</text>
 <text x="8" y="192" text-anchor="start" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">ipnsort (不稳定): 整个数组是一整段升序/降序就 O(n) 结束</text>
 </svg>
-```
 
 **细节。**
 

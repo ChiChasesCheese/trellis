@@ -14,7 +14,6 @@ Kafka 在映射进内存（mmap）的 `.index` 里查找时，为什么不直接
 
 **结构。** `AbstractIndex` 把索引最后 8192 字节划为暖区（warm section，偏移量索引即 1024 项）：目标落在暖区，就只在暖区里二分；否则才去前面二分。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 116">
 <text x="332" y="14" text-anchor="end" font-size="12" font-family="sans-serif" fill="currentColor">追上进度的读者几乎只查这里</text>
 <line x1="290" y1="20" x2="290" y2="36" stroke="currentColor" stroke-width="1.2" style="stroke:var(--accent,#3b6fd4)"/>
@@ -28,7 +27,6 @@ Kafka 在映射进内存（mmap）的 `.index` 里查找时，为什么不直接
 <polygon points="100,70 103.0,76.0 97.0,76.0" fill="currentColor" stroke="currentColor" stroke-width="0.5"/>
 <text x="112" y="100" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">目标不在暖区才来这里二分</text>
 </svg>
-```
 
 **细节。** 追上进度的消费者和 follower（备份副本）几乎只查最新位置，所以暖区那几页一直留在页缓存（操作系统缓存磁盘内容的内存）里。
 

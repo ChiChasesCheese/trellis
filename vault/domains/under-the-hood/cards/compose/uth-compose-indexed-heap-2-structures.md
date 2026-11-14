@@ -10,7 +10,6 @@ step: 2
 要让取消和改期也是 O(log n)，该给堆配什么结构？每个操作碰哪几个结构？
 
 ## A
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 244">
 <line x1="157.3" y1="30.0" x2="112.7" y2="58.0" stroke-width="1.2" stroke="currentColor"/>
 <line x1="182.7" y1="30.0" x2="227.3" y2="58.0" stroke-width="1.2" stroke="currentColor"/>
@@ -66,7 +65,6 @@ step: 2
 <polygon points="113,178 116.0,184.0 110.0,184.0" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)"/>
 <text x="121" y="196" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">按 key 查到下标</text>
 </svg>
-```
 
 **结构。** 两个结构互相指：堆数组存元素，`pos` 表存「key → 它在数组里的下标」。有了下标，取消和改期就从「找人」变成「直接去那一格修」。
 

@@ -14,7 +14,6 @@ FROM 里有多少项时，PostgreSQL 不再逐层 DP？换成什么办法找连�
 
 **结构。** `geqo_threshold` 默认 12：FROM 里有 12 项或更多，就改用基因算法（GEQO，genetic query optimization）。它把连接顺序当成旅行商问题，用整数串表示：`4-1-3-2` 是先连 4 和 1，再并入 3，再并入 2。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 206">
 <rect x="40" y="12" width="240" height="28" rx="3" stroke="currentColor" stroke-width="1.8" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
 <text x="160" y="30" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">随机造一批顺序  如 4-1-3-2</text>
@@ -36,7 +35,6 @@ FROM 里有多少项时，PostgreSQL 不再逐层 DP？换成什么办法找连�
 <path d="M284,26 L290,23 L290,29 Z" stroke="none" style="fill:var(--accent,#3b6fd4)"/>
 <text x="160" y="198" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">重复到看过预设个数的顺序 取见过最好的</text>
 </svg>
-```
 
 **细节。**
 

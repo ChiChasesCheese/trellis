@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 一个 `dict`（key 到链表节点）加一条带哨兵节点 `root` 的环形双向链表（C 实现）。例（`maxsize=2`）：调用 `f(1)`、`f(2)`、`f(1)`（命中，挪到最新）、`f(3)`（满了，丢最旧的 2）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="122" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">最旧</text>
 <text x="226" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">最新</text>
@@ -40,7 +39,6 @@ step: 1
 <text x="326" y="160" text-anchor="end" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">淘汰 2</text>
 <text x="170" y="190" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">容量 2 每次命中或新增都放到最新一端</text>
 </svg>
-```
 
 **细节。**
 

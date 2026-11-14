@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 事件循环（event loop）：一个线程反复“等 I/O 就绪 → 处理命令 → 跑定时任务”，等 I/O 靠操作系统的多路复用。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">一个线程反复转圈</text>
 <rect x="20" y="30" width="130" height="30" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="1"/>
@@ -38,7 +37,6 @@ step: 1
 <text x="8" y="178" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">io-threads 默认 1; 调大后套接字读写交给 I/O 线程</text>
 <text x="8" y="196" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">一个慢命令 (KEYS *) 会让所有客户端排队</text>
 </svg>
-```
 
 **细节。**
 

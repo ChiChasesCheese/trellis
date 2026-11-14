@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 三代（generation）的分代 GC：新对象进第 0 代，扛过一次回收就晋升到下一代。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170">
 <rect x="10" y="30" width="90" height="34" rx="3" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
 <text x="55" y="51" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">第 0 代</text>
@@ -36,7 +35,6 @@ step: 3
 <text x="285" y="104" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">超过 10 次</text>
 <text x="170" y="150" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">扛过一次回收就往后一代 越老查得越少</text>
 </svg>
-```
 
 **细节。**
 

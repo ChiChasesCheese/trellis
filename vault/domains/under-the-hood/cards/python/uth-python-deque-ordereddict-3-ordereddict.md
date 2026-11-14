@@ -14,7 +14,6 @@ step: 3
 
 **结构。** `dict` 之外再挂一条双向链表记顺序；另有一个数组镜像 `dict` 的条目顺序，存每个 key 的节点指针，用来 O(1) 从 key 找到节点。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="56" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">dict</text>
 <text x="215" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">双向链表</text>
@@ -52,7 +51,6 @@ step: 3
 <text x="262" y="130" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">队尾 最新</text>
 <text x="170" y="172" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">move_to_end(a): 摘下接到队尾</text>
 </svg>
-```
 
 **细节。**
 

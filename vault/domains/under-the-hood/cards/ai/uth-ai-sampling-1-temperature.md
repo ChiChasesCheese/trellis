@@ -14,7 +14,6 @@ step: 1
 
 **结构。** softmax：每个分数先取指数 `e^x`，再除以总和，得到加起来为 1 的概率。温度 `T` 只多做一步：softmax 之前，先把所有分数除以 `T`（源码就是 `scores / temperature`）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="84" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">温度 1</text>
 <rect x="18" y="75.6" width="26" height="64.4" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="2"/>
@@ -45,7 +44,6 @@ step: 1
 <line x1="10" y1="140" x2="330" y2="140" stroke="currentColor" stroke-width="1"/>
 <text x="170" y="178" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">分数相同, 只改温度, 分布变尖或变平</text>
 </svg>
-```
 
 **细节。**
 

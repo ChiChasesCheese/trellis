@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 链地址法（separate chaining）：每个元素是堆上单独分配的节点，桶数组指向节点链。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">例: 桶数 5, hash("cat") = 7</text>
 <text x="8" y="32" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">7 % 5 = 2 → 放进 2 号桶</text>
@@ -44,7 +43,6 @@ step: 1
 <text x="118" y="167.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">ant</text>
 <text x="170" y="192" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每个节点单独 malloc, 查找要多跳几次</text>
 </svg>
-```
 
 **细节。**
 

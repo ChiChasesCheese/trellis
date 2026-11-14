@@ -14,7 +14,6 @@ step: 4
 
 **结构。** `property` 是数据描述符，里面存着 `fget`、`fset`、`fdel`，读 `obj.area` 就调用 `fget(obj)`。`cached_property` 只定义了 `__get__`，是非数据描述符：第一次读算出值，写进实例的 `__dict__['area']`；以后再读，实例字典优先于非数据描述符，根本不会再进 `__get__`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="10" y="18" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" style="fill:var(--accent,#3b6fd4)">property</text>
 <rect x="10" y="28" width="56" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -45,7 +44,6 @@ step: 4
 <text x="240" y="169" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">不再进 __get__</text>
 <text x="170" y="204" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">第二次读起 字典先于非数据描述符</text>
 </svg>
-```
 
 **细节。**
 

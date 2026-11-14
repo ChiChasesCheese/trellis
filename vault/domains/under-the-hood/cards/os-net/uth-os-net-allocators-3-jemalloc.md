@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 以 64 位、16 字节对齐为例：16 一档排到 128，之后 160、192、224、256，再 320、384、448、512 ……每翻一倍分 4 档。slab 内用一张位图（每格一位）记录哪些格子在用。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150">
 <rect x="14" y="60" width="34" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="31" y="77" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">128</text>
@@ -43,7 +42,6 @@ step: 3
 <path d="M67.0,58.0 L59.9,55.7 L64.4,51.0 Z" stroke="none" style="fill:var(--accent,#3b6fd4)"/>
 <text x="170" y="142" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">取不小于请求的最小一档 浪费 30 字节</text>
 </svg>
-```
 
 **细节。**
 

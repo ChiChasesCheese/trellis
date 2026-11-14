@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 每个对象开头都有一个固定的头：引用计数（reference count，有多少个名字或容器指着它）和类型指针（指向它的类型对象）。64 位、有 GIL 的普通构建里，头共 16 字节。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="6" y="20" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">整数 1 在内存里</text>
 <rect x="6" y="52" width="30" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -40,7 +39,6 @@ step: 2
 <polygon points="120.0,146.0 119.8,139.3 125.2,141.8" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)" stroke-width="0.5"/>
 <text x="190" y="164" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">类型指针指向它</text>
 </svg>
-```
 
 **细节。**
 

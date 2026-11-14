@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 词典分块存在 `.tim`（默认每块 25–48 个词），索引 `.tip` 只记各块的前缀。Lucene 10.2 及之前，这个索引是 FST（有限状态转换器，finite state transducer）：把共享前缀、后缀的词压成一个自动机，沿着边走到终点，输出块的文件位置；10.3 起换成专用的前缀树（trie，沿字符一层层往下走的树）。下图是前缀树的样子：查 tip 沿 t、i、p 走三步。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 188">
 <line x1="162.1" y1="26.3" x2="100.5" y2="60.2" stroke="currentColor" stroke-width="1.2" style="stroke:var(--dim,#6b7280)"/>
 <line x1="177.9" y1="26.3" x2="239.5" y2="60.2" stroke="currentColor" stroke-width="1.2" style="stroke:var(--accent,#3b6fd4)"/>
@@ -44,7 +43,6 @@ step: 3
 <text x="8" y="20" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">词典</text>
 <text x="170" y="182" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">沿边逐字节走: 查 tip 只走 3 步</text>
 </svg>
-```
 
 **细节。**
 

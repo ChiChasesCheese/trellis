@@ -10,7 +10,6 @@ step: 2
 一次 `execute` 会碰哪几个结构？按什么顺序决定任务的去向？
 
 ## A
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 236">
 <rect x="10" y="8" width="120" height="28" rx="3" stroke-width="1.2" stroke="currentColor" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="70.0" y="26.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">execute(task)</text>
@@ -42,7 +41,6 @@ step: 2
 <polygon points="60,190 57.0,184.0 63.0,184.0" fill="currentColor"/>
 <text x="68" y="178" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">4 满了</text>
 </svg>
-```
 
 **结构。** 三个结构各管一件事（core 是常驻线程数，max 是线程数上限）：`ctl`（一个原子整数）同时存运行状态和线程数；`workQueue` 存还没人取的任务；`workers`（`HashSet`）存所有工人线程，改它要先拿 `mainLock`。
 

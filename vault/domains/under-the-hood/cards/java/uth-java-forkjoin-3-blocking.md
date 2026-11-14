@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 公共池线程数固定（约等于核数）；线程在 `sleep` 时就占着位置，其余任务只能排队。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 232">
 <text x="20" y="18" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">默认 11 个线程 8 个任务 一轮</text>
 <rect x="30" y="28" width="100" height="7" rx="3" stroke="currentColor" stroke-width="0.8" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -42,7 +41,6 @@ step: 3
 <text x="130" y="224" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">0.5 s</text>
 <text x="230" y="224" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">1 s</text>
 </svg>
-```
 
 **细节。**
 

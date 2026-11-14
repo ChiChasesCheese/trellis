@@ -48,7 +48,6 @@ kind: low-level-design
 用到的模式：策略模式（`SpotAllocator`、`FeePolicy`，两个变化最多的点）、门面（`ParkingLot` 隐藏分配与计费细节）、枚举加兼容表（新增车位或车型只改表）。原因：最常见的追问是"再加一种计费规则 / 再加电动车位"，策略和表让这类变化只增加代码，不修改已有流程。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 294">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -80,7 +79,6 @@ kind: low-level-design
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="252" font-size="11">分配与释放在同一把锁内</text></g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="268" font-size="11">离场幂等, 不重复释放</text></g>
 </g></svg>
-```
 - 入场：向分配器取车位，生成票据，写入未结束票据表。
 - 离场：查票据，调用计费策略算费，缴费成功后移除票据并释放车位；缴费失败时保持占用，用户可重试。
 

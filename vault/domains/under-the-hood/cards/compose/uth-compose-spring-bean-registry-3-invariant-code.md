@@ -16,7 +16,6 @@ step: 3
 - 两张依赖表互为转置：`b` 在 `dependents[a]` 里，当且仅当 `a` 在 `dependencies[b]` 里
 - 销毁一个 Bean 之前，依赖它的 Bean 已经销毁；销毁后把它从别人的依赖记录里清掉
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176">
 <text x="82" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">dependencies 我依赖谁</text>
 <text x="256" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">dependents 谁依赖我</text>
@@ -36,7 +35,6 @@ step: 3
 <text x="170" y="144" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">关闭: A 和 C 先销毁 B 最后</text>
 <text x="170" y="164" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">销毁后把自己从别人的记录里清掉</text>
 </svg>
-```
 
 **核心代码。** 关闭时按注册顺序反着走；每个 Bean 先带走自己的依赖者，所以注册顺序和依赖顺序不一致也不会出错。
 

@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 每个分区一个 leader（负责读写）加若干 follower（向 leader 拉取数据来复制）。ISR（in-sync replicas）是跟得上 leader 的副本集合；高水位（high watermark）是 ISR 内所有副本都已经有的最远位置，也就是各副本日志末端（LEO，下一条要写的位置）的最小值，消费者只能读到它之前的消息。图中三份日志的末端是 8、7、6，高水位就是 6。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 130">
 <text x="228" y="14" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">高水位 HW = 6</text>
 <text x="8" y="40" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">leader</text>
@@ -68,7 +67,6 @@ step: 1
 <line x1="228" y1="20" x2="228" y2="106" stroke="currentColor" stroke-width="2" style="stroke:var(--accent,#3b6fd4)"/>
 <text x="170" y="122" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">消费者只能读到 HW 之前</text>
 </svg>
-```
 
 **细节。**
 

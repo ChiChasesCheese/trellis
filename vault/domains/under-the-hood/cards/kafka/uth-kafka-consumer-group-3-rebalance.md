@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 经典协议里，协调者收齐成员后，由其中一个消费者在客户端算出分配方案，再下发给大家。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 184">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">急切 (eager)</text>
 <text x="8" y="31" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">C0</text>
@@ -43,7 +42,6 @@ step: 4
 <rect x="184" y="146" width="144" height="11" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="169" y="174" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">只停搬走的分区</text>
 </svg>
-```
 
 **细节。**
 

@@ -9,6 +9,23 @@ slug: all-nodes-distance-k-in-binary-tree
 ## A
 **一句话。** 先遍历给每个结点补上父指针，把树变成无向图，再从 `target` 做 `k` 层 BFS，最后一层就是答案。
 
+**图解。** 补上父指针后从目标 `5` 一层层向外扩，第 2 层 `7, 4, 1` 就是答案。
+
+```mermaid
+flowchart TB
+    n3["3 · 距 1"] --> n5["5 · 目标"]
+    n3 --> n1["1 · 距 2"]
+    n5 --> n6["6 · 距 1"]
+    n5 --> n2["2 · 距 1"]
+    n2 --> n7["7 · 距 2"]
+    n2 --> n4["4 · 距 2"]
+    n1 --> n0["0"]
+    n1 --> n8["8"]
+    n5 -.->|父指针| n3
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class n7,n4,n1 hot
+```
+
 ```python
 def distance_k(root, target, k):
     parent = {root: None}

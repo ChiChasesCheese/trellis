@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 红黑树（red-black tree）是能自动保持平衡的二叉搜索树：每个节点存父、左、右三个指针和一位颜色（红或黑）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <rect x="6" y="6" width="84" height="44" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
 <text x="48" y="22" text-anchor="middle" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">头节点</text>
@@ -72,7 +71,6 @@ step: 1
 <text x="278" y="175.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">7</text>
 <text x="170" y="204" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">中序遍历 1 2 3 … 7: 自然有序</text>
 </svg>
-```
 
 **细节。**
 

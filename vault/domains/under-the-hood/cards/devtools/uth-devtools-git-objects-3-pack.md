@@ -14,7 +14,6 @@ step: 3
 
 **结构。** `git pack-objects` 把对象排序，在滑动窗口内找最相似的对象当基，只存差量：`OFS_DELTA` 记基对象的相对偏移，`REF_DELTA` 记基对象的哈希。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 220">
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">差量链 最长 50 层</text>
 <rect x="14" y="28" width="80" height="28" rx="3" stroke="currentColor" stroke-width="1.8" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
@@ -48,7 +47,6 @@ step: 3
 <line x1="255" y1="144" x2="255" y2="160" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.45"/>
 <text x="170" y="208" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">新版本 = 复制旧的 加 插入新的</text>
 </svg>
-```
 
 **细节。**
 

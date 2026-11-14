@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 每个键只存一个 24 位的访问时间戳（精度 1 秒）；淘汰时随机采样，不维护全局顺序。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">不维护全局顺序: 随机抽 5 个, 淘汰空闲最久的</text>
 <rect x="10" y="30" width="58" height="40" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -49,7 +48,6 @@ step: 1
 <text x="8" y="164" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">精确 LRU 要给每个键多存链表指针,</text>
 <text x="8" y="180" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每次读还要挪节点; 采样读时只写时间戳</text>
 </svg>
-```
 
 **细节。**
 

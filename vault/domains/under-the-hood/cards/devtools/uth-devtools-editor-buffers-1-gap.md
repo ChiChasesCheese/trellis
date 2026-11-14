@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 一块连续内存，光标处留一段空白（gap），文本被它分成前后两段。例：`he`、空位、`llo`，在光标处打一个字符，就是写进空位的第一格，不用搬任何字符。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 206">
 <text x="35" y="24" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">空位留在光标处 在 he 和 llo 之间</text>
 <rect x="35" y="32" width="30" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -69,7 +68,6 @@ step: 1
 <rect x="155" y="156" width="30" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.8" style="stroke:var(--accent,#3b6fd4)"/>
 <rect x="185" y="156" width="30" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.8" style="stroke:var(--accent,#3b6fd4)"/>
 </svg>
-```
 
 **细节。**
 

@@ -15,7 +15,6 @@ BatchNorm 和 LayerNorm（以及 RMSNorm）有什么区别？为什么 Transform
 - **LayerNorm：** 对每个样本，沿特征方向（D 个数）算均值和方差。每个样本独立处理，与批里有谁无关。
 - **RMSNorm：** LayerNorm 的简化，不减均值，只除以均方根 `sqrt(mean(x²) + ε)`。计算更省，效果相当，Llama 系列使用。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150" font-family="sans-serif" font-size="11">
 <text x="75" y="14" text-anchor="middle" fill="currentColor">BatchNorm</text>
 <text x="245" y="14" text-anchor="middle" fill="currentColor">LayerNorm</text>
@@ -68,7 +67,6 @@ BatchNorm 和 LayerNorm（以及 RMSNorm）有什么区别？为什么 Transform
 <text x="245" y="126" text-anchor="middle" fill="currentColor">每个样本沿特征算</text>
 <text x="245" y="142" text-anchor="middle" fill="currentColor">与批里有谁无关</text>
 </svg>
-```
 
 **BatchNorm 的麻烦：**
 - **训练和推理行为不同：** 训练时用当前批的统计量；推理时用训练期间累计的"滑动平均"统计量（`running_mean`、`running_var`）。忘了 `model.eval()`，推理就会用当前批的统计量，结果随批的组成变化。

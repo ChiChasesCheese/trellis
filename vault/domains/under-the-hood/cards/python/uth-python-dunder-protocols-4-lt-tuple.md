@@ -14,7 +14,6 @@ step: 4
 
 **结构。** `a < b` 先调 `a.__lt__(b)`；它返回 `NotImplemented`（意思是「我不会比」）时，再试 `b.__gt__(a)`；都不会就 `TypeError`。比较元组时，从左到右用 `==` 找到第一个不相等的位置，再只对这个位置用 `<`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -48,7 +47,6 @@ step: 4
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

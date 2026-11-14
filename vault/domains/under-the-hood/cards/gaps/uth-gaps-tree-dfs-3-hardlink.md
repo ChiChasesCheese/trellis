@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 树里出现了「多条路通到同一个点」，其实是图。`du` 对每个 `st_nlink > 1`（有多个名字）的非目录文件，把（设备号，inode 号）放进哈希集合：已在集合里就跳过，否则数它并记下。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 206">
 <rect x="10" y="30" width="106" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="63" y="46" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">/data/a.iso</text>
@@ -37,7 +36,6 @@ step: 3
 <text x="14" y="178" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">第 1 个名字 数一次 并记入集合</text>
 <text x="14" y="198" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">第 2 个名字 已在集合里 跳过</text>
 </svg>
-```
 
 **细节。**
 

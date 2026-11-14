@@ -14,7 +14,6 @@ step: 2
 
 **结构。** rustc 把每个未知类型变量放进 `ena` 这个并查集库。`find` 顺父指针走到根，`union` 把一个根挂到另一个根下面。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 206">
 <text x="85" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">find 之前</text>
 <text x="255" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">find(?C) 之后</text>
@@ -44,7 +43,6 @@ step: 2
 <text x="255" y="146" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">下次一步到位</text>
 <text x="170" y="198" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">find(?C) 走到根 并把 ?C 改成直接指向根</text>
 </svg>
-```
 
 **细节。**
 

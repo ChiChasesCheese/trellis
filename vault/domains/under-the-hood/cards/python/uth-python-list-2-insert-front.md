@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `insert(0)` 把后面所有指针逐个后移一格；`pop(0)` 用一次 `memmove`（整块内存一口气搬）前移一格。都是 O(n)。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 232">
 <text x="20" y="20" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">insert(0, x)</text>
 <rect x="40" y="30" width="40" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -66,7 +65,6 @@ step: 2
 <text x="260" y="197" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">x</text>
 <text x="170" y="226" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">只写末尾一格</text>
 </svg>
-```
 
 **细节。** 本机实测（100 万元素）：
 

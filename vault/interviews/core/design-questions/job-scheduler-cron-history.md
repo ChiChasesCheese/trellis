@@ -49,7 +49,6 @@ kind: system-design
   - worker 内部协议：`lease`（拉取并领取租约）、`heartbeat`、`complete`、`fail`，每次都带 run_id 与 attempt，作为围栏令牌（fencing token）。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 344">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -85,7 +84,6 @@ kind: system-design
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="302" font-size="11">热表只放待定与运行中</text></g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="318" font-size="11">CAS 保证同一次触发只分发一次</text></g>
 </g></svg>
-```
 图中从上到下：API 层写入任务定义和第一个待定 Run；调度器分片每 30 秒左右按索引范围扫描"未来几分钟内到期"的 Run，装进内存里的时间堆；到点后用比较并交换（Compare And Swap，CAS）把状态从 SCHEDULED 改为 QUEUED 并投进工作队列；worker 拉取、领租约、执行、心跳；终态写回并同步到历史库。
 
 1. 写入路径。API 层校验 cron 表达式，计算出第一个触发时间，同事务写入 Job 与一条 SCHEDULED 状态的 Run。cron 任务永远只物化"下一次"这一条 Run：它被分发的同一个事务里再算出再下一次并插入。这样 5 百万个 cron 任务也只占 5 百万行，而不是把未来一年的触发点全部展开。

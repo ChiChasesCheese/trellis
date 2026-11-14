@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 布隆过滤器（Bloom filter）给每个 SST 配一个很小的内存结构：一个位数组加 k 个哈希函数。加入 key：算出 k 个位置，全部置 1。查询：算同样的 k 个位置，只要有一位是 0，这个 key 就一定不在；全是 1 才是“可能在”。图里 a、b 写入之后，c 的第三个位置是 0，这个文件就不用读了。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 108">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">写入 a, b 之后的位数组 (k = 3)</text>
 <rect x="26" y="22" width="18" height="22" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -58,7 +57,6 @@ step: 1
 <text x="170" y="80" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">查 c: 它的 3 个位置是 1 1 0</text>
 <text x="170" y="100" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">有一位是 0: 一定不在, 不用读这个文件</text>
 </svg>
-```
 
 **细节。**
 

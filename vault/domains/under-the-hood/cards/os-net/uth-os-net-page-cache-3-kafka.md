@@ -14,7 +14,6 @@ Kafka 把消息直接写文件，不在 JVM 里缓存，读还会快吗？
 
 **结构。** Broker（Kafka 的服务进程）的日志只是一个文件目录：写入先进内核页缓存，读取也走页缓存；发给消费者用 `sendfile`（让内核直接把文件数据送到网卡，不经过应用程序）从页缓存送到网卡。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170">
 <rect x="12" y="56" width="72" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="48" y="76" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">磁盘文件</text>
@@ -33,7 +32,6 @@ Kafka 把消息直接写文件，不在 JVM 里缓存，读还会快吗？
 <text x="176" y="112" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">只发命令</text>
 <text x="16" y="24" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">消息不经过用户态拷贝</text>
 </svg>
-```
 
 **细节。**
 

@@ -9,6 +9,31 @@ slug: rotting-oranges
 ## A
 **一句话。** 所有烂橘子同时入队做多源 BFS，一层就是一分钟。
 
+**图解。** 格中数字是第几分钟烂掉，同一层 BFS 同一分钟，最后一层是答案。
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 130">
+<rect x="24" y="14" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.5" stroke="currentColor" stroke-width="1.2"/>
+<text x="41.0" y="35.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="58" y="14" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.38" stroke="currentColor" stroke-width="1.2"/>
+<text x="75.0" y="35.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="92" y="14" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.27" stroke="currentColor" stroke-width="1.2"/>
+<text x="109.0" y="35.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">2</text>
+<rect x="24" y="48" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.38" stroke="currentColor" stroke-width="1.2"/>
+<text x="41.0" y="69.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="58" y="48" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.27" stroke="currentColor" stroke-width="1.2"/>
+<text x="75.0" y="69.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">2</text>
+<rect x="92" y="48" width="34" height="34" rx="1" style="fill:var(--dim,#6b7280);fill-opacity:0.16" stroke="currentColor" stroke-width="1.2"/>
+<rect x="24" y="82" width="34" height="34" rx="1" style="fill:var(--dim,#6b7280);fill-opacity:0.16" stroke="currentColor" stroke-width="1.2"/>
+<rect x="58" y="82" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.17" stroke="currentColor" stroke-width="1.2"/>
+<text x="75.0" y="103.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">3</text>
+<rect x="92" y="82" width="34" height="34" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.09" stroke="currentColor" stroke-width="1.2"/>
+<text x="109.0" y="103.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">4</text>
+<text x="150" y="32" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">格中数字：第几分钟烂掉</text>
+<text x="150" y="54" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">0 是一开始就烂的</text>
+<text x="150" y="76" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">灰格是空地</text>
+<text x="150" y="102" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">最后一层 = 4 分钟</text>
+</svg>
+
 ```python
 def oranges_rotting(grid):
     m, n = len(grid), len(grid[0])

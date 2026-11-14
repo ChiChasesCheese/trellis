@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 所有 key 争同一条探测序列，每次插入都要先走过前面已占的槽。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210">
 <line x1="40" y1="170" x2="320" y2="170" stroke-width="1.2" stroke="currentColor"/>
 <line x1="40" y1="170" x2="40" y2="24" stroke-width="1.2" stroke="currentColor"/>
@@ -31,7 +30,6 @@ step: 3
 <text x="60" y="68" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">耗时 x4</text>
 <text x="40" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">__hash__ 恒为 1 插入 n 个 key</text>
 </svg>
-```
 
 **细节。**
 

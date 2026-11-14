@@ -14,7 +14,6 @@ step: 1
 
 **结构。** `def add(...)` 执行时，造出一个函数对象，再把名字 `add` 绑定到它。函数对象和别的对象一样：名字可以改指别处，也可以放进字典、列表，当参数传入，当返回值返回。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 256">
 <text x="10" y="18" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">ops 字典 键 → 函数对象</text>
 <rect x="10" y="28" width="34" height="24" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -53,7 +52,6 @@ step: 1
 <text x="246" y="212" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">__closure__</text>
 <text x="170" y="240" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">代码 全局表 默认值 闭包</text>
 </svg>
-```
 
 **细节。**
 

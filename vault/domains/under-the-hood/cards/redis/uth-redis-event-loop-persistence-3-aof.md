@@ -14,7 +14,6 @@ AOF 记录每条写命令，文件会无限变长，Redis 怎么重写它？
 
 **结构。** 7.0 起是多文件 AOF（Multi Part AOF）：一个清单文件（manifest），一个 BASE 基础快照，加若干个 INCR 增量文件。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">多文件 AOF (7.0 起)</text>
 <rect x="10" y="28" width="90" height="26" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -34,7 +33,6 @@ AOF 记录每条写命令，文件会无限变长，Redis 怎么重写它？
 <text x="8" y="174" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">完成后旧的 BASE 和 INCR 变成历史文件, 自动删除</text>
 <text x="8" y="192" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">appendfsync 默认 everysec: 每秒 fsync 一次</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 三根指针（begin、end、end_of_storage）指向一整块连续堆内存。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="8" y="14" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">实心 = 旧元素, 蓝框 = 新元素, 虚线 = 余量</text>
 <text x="8" y="40" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">cap 1</text>
@@ -42,7 +41,6 @@ step: 1
 <text x="170" y="160" text-anchor="middle" font-size="11" font-family="sans-serif" fill="currentColor">搬运总数 1+2+…+n/2 &lt; n, 均摊每次 O(1)</text>
 <text x="170" y="178" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">若每次只加固定的 k, 总搬运 ≈ n²/2k</text>
 </svg>
-```
 
 **细节。**
 

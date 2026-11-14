@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `_siftup`：每层只比较两个孩子，把较小的孩子上移一格，让空位一路走到叶子，再把原来的末尾元素放在那里，往上浮回去。例：堆 `[1,3,2,5,4,8,7]` 取走 1：2 上移，8 上移，空位到了叶子；7 放进去，比父亲 8 小，换上去，比 2 大，停。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 220">
 <line x1="158.454" y1="33.9174" x2="111.546" y2="66.0826" stroke-width="1.2" stroke="currentColor"/>
 <line x1="181.546" y1="33.9174" x2="228.454" y2="66.0826" stroke-width="1.2" style="stroke:var(--accent,#3b6fd4)"/>
@@ -38,7 +37,6 @@ step: 2
 <text x="170" y="176" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">到叶子 再把末尾元素 7 从那里上浮</text>
 <text x="170" y="200" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">比较次数少 因为 7 通常留在底部</text>
 </svg>
-```
 
 **细节。**
 

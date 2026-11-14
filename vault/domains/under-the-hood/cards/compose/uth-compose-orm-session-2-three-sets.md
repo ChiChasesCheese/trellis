@@ -12,7 +12,6 @@ Session 内部用哪几个结构来满足这些要求？它们怎样互相指向
 ## A
 **结构。** 一张身份映射（identity map）：`(类, 主键) → 对象`，保证同一行只有一个对象。再加三个集合记账：`new`（待 INSERT）、`dirty`（已加载且被改过，待 UPDATE）、`deleted`（待 DELETE）。集合里放的就是身份映射里的那些对象本身，不是拷贝。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 252">
 <rect x="8" y="24" width="150" height="92" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
 <text x="83" y="40" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">identity map</text>
@@ -45,7 +44,6 @@ Session 内部用哪几个结构来满足这些要求？它们怎样互相指向
 <rect x="140.0" y="228" width="60" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
 <text x="170" y="242.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">DB</text>
 </svg>
-```
 
 | 操作 | 碰哪几个结构 | 复杂度 |
 |---|---|---|

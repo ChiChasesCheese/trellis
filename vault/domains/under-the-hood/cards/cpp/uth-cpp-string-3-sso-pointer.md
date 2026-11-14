@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 短字符串存在 `string` 对象内部，`data()` 指向对象自己；长字符串在堆上。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 212">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">vector&lt;string&gt; 扩容: 对象被搬到新块</text>
 <rect x="10" y="24" width="132" height="60" rx="3" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
@@ -48,7 +47,6 @@ step: 3
 <text x="8" y="190" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">p1 指着旧块里的内联字符: 搬走就悬空</text>
 <text x="8" y="204" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">长串的字符还在原处, 指针仍有效</text>
 </svg>
-```
 
 **细节。**
 

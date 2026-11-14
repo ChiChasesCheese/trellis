@@ -14,7 +14,6 @@ step: 4
 
 **结构。** `super()` 的意思是：在 `type(self)` 的 MRO 里找到当前这个类，取它**后面**的那个类。`M` 的 MRO 是 `M L R Base object`，所以 `L` 里的 `super()` 指向 `R`，不是 `Base`。实测创建 `M()` 依次打印 `M`、`L`、`R`、`Base`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -56,7 +55,6 @@ step: 4
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

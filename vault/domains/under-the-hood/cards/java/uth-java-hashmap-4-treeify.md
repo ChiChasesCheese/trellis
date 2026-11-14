@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 不一定马上转。转树要同时满足链长够长（`TREEIFY_THRESHOLD = 8`）和表长至少 64（`MIN_TREEIFY_CAPACITY`）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210">
 <rect x="90" y="14" width="160" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="170" y="32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">链表长度达到 8</text>
@@ -35,7 +34,6 @@ step: 4
 <text x="256" y="146" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">转成红黑树</text>
 <text x="256" y="164" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">树节点约 2 倍大</text>
 </svg>
-```
 
 **细节。**
 

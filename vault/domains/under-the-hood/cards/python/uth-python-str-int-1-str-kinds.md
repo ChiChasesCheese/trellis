@@ -14,7 +14,6 @@ step: 1
 
 **结构。** CPython 的办法（PEP 393）：一个字符串里所有字符共用同一种宽度，按最宽的那个字符选 1、2 或 4 字节。全是英文就 1 字节，混进一个 emoji，整串都变成每字符 4 字节。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="10" y="48" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">ASCII</text>
 <rect x="64" y="30" width="22" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -39,7 +38,6 @@ step: 1
 <text x="284" y="139" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">4B</text>
 <text x="170" y="176" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">整串按最宽的字符统一宽度 s[i] 一步取到</text>
 </svg>
-```
 
 **细节。**
 

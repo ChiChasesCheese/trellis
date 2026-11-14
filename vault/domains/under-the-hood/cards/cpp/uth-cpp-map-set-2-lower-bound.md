@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 成员函数 `s.lower_bound(x)` 沿红黑树从根往下走；全局算法 `std::lower_bound` 只拿到一对迭代器，只会一格一格往后挪，不知道底下是树。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 220">
 <text x="8" y="16" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">成员函数 lower_bound:沿树下降</text>
 <line x1="159.71" y1="46.1739" x2="120.29" y2="69.8261" stroke="currentColor" stroke-width="1"/>
@@ -66,7 +65,6 @@ step: 2
 <text x="306" y="182.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">70</text>
 <text x="170" y="212" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">查 50:树走 3 步,链表要走 5 步</text>
 </svg>
-```
 
 **细节。**
 

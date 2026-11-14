@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 基本类型数组用双轴快速排序（`DualPivotQuicksort`，原地、不稳定）；对象数组用 `TimSort`（有比较器）或 `ComparableTimSort`（稳定，要额外内存）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <rect x="110" y="14" width="120" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="170" y="32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">Arrays.sort</text>
@@ -32,7 +31,6 @@ step: 1
 <text x="251" y="142" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">稳定 要额外内存</text>
 <text x="170" y="180" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">对象要稳定 基本类型不需要</text>
 </svg>
-```
 
 **细节。**
 

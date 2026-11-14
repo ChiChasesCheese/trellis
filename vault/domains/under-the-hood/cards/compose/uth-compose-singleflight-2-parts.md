@@ -12,7 +12,6 @@ step: 2
 ## A
 **结构。** 一张表 `m`：key → `call`（一次进行中的调用），由一把锁 `mu` 保护。`call` 里有一个 `WaitGroup`（计数器：计数归零之前，调用 `Wait` 的线程都睡眠）、结果 `val` 和 `err`，以及后到者个数 `dups`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 240">
 <rect x="120" y="22" width="210" height="128" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
 <text x="128" y="38" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">m: key -> call (锁 mu 保护)</text>
@@ -38,7 +37,6 @@ step: 2
 <text x="10" y="194" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">B, C: 查到 call, 在 wg 上等待</text>
 <text x="10" y="212" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">fn 结束: 写 val, err; wg.Done 唤醒; 删 m[k]</text>
 </svg>
-```
 
 | 操作 | 碰哪几个结构 | 复杂度 |
 |---|---|---|

@@ -9,6 +9,42 @@ slug: number-of-islands
 ## A
 **一句话。** 扫描网格，每遇到一块未处理的陆地就计数加一，再用 DFS 把整座岛沉成 `'0'`。
 
+**图解。** 行优先扫描，遇到新陆地计数加一，再用 DFS 把整座岛沉掉。
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140">
+<rect x="20" y="16" width="28" height="28" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="34.0" y="34.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="48" y="16" width="28" height="28" rx="1" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="62.0" y="34.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="76" y="16" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="104" y="16" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="132" y="16" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="20" y="44" width="28" height="28" rx="1" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="34.0" y="62.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="48" y="44" width="28" height="28" rx="1" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="62.0" y="62.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="76" y="44" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="104" y="44" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="132" y="44" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="20" y="72" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="48" y="72" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="76" y="72" width="28" height="28" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="90.0" y="90.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">2</text>
+<rect x="104" y="72" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="132" y="72" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="20" y="100" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="48" y="100" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="76" y="100" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="104" y="100" width="28" height="28" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="118.0" y="118.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">3</text>
+<rect x="132" y="100" width="28" height="28" rx="1" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="146.0" y="118.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">3</text>
+<text x="176" y="36" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">格中数字：第几座岛</text>
+<text x="176" y="60" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">深色：扫到它时计数 +1</text>
+<text x="176" y="84" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">浅色：被这次 DFS 沉掉</text>
+<text x="176" y="112" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" font-weight="600">答案 3</text>
+</svg>
+
 ```python
 def num_islands(grid):
     rows, cols = len(grid), len(grid[0])

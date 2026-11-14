@@ -14,7 +14,6 @@ step: 3
 
 **结构。** List 是 quicklist：双向链表，每个节点是一个 listpack。纯整数 Set 是 intset：有序的整数数组。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">quicklist: 双向链表, 每个节点一个 listpack</text>
 <rect x="10" y="26" width="84" height="30" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -49,7 +48,6 @@ step: 3
 <text x="232" y="187.85" text-anchor="middle" font-size="11" font-family="sans-serif" fill="currentColor">70000</text>
 <text x="8" y="210" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">只升不降; 查找用二分</text>
 </svg>
-```
 
 **细节。**
 

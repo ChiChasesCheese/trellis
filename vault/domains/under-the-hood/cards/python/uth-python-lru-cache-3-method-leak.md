@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 缓存挂在函数上，不在实例上；缓存的 `dict` 持有 key，也就持有了 `self`，实例的引用计数（有几个地方指着它）不会归零。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <rect x="20" y="40" width="56" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="48" y="58" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">变量 a</text>
@@ -33,7 +32,6 @@ step: 3
 <text x="202" y="98" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">key 里握着 self</text>
 <text x="250" y="54" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">仍活着</text>
 </svg>
-```
 
 **细节。**
 

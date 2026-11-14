@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 这张位图叫 `fd_set`，长度固定，`FD_SETSIZE` 是 1024 位，所以 fd 编号不能超过 1023。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 160">
 <text x="26" y="20" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">fd_set 定长位图 1024 位</text>
 <rect x="26" y="30" width="18" height="22" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -61,7 +60,6 @@ step: 2
 <text x="232" y="124" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">只取就绪的</text>
 <text x="170" y="152" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">select 返回后用户态还要再扫一遍位图</text>
 </svg>
-```
 
 **细节。**
 

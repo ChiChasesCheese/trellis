@@ -17,7 +17,6 @@ step: 5
 - httprouter：注册时禁止两者并存，查找一条路走到底
 - Gin 和 LC 211：都允许。先试精确分支，失败就退回岔路口再试通配分支。Gin 用 `skippedNodes` 栈记下岔路口，LC 211 用递归（DFS）自然退回
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 222">
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">请求 GET /files/new/edit</text>
 <rect x="133.0" y="28" width="74" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
@@ -45,7 +44,6 @@ step: 5
 <text x="252" y="192" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">2 退回再试参数分支</text>
 <text x="252" y="208" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">id = new, 命中</text>
 </svg>
-```
 
 **细节。**
 

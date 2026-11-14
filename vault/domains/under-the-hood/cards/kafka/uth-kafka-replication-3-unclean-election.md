@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 由 `unclean.leader.election.enable` 决定，默认 `false`（0.11.0.0 起）：只有 ISR 成员有资格当 leader；设为 `true` 则允许落后副本“最后一搏”。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 112">
 <text x="8" y="38" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">旧 leader</text>
 <text x="8" y="72" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">落后副本</text>
@@ -56,7 +55,6 @@ step: 3
 <text x="293" y="76" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">7-9 会丢</text>
 <text x="170" y="104" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">它当 leader 后, 7-9 永远找不回</text>
 </svg>
-```
 
 **细节。**
 

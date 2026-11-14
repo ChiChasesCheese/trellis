@@ -14,7 +14,6 @@ step: 3
 
 **结构。** `StringBuilder` 内部是一个可变的字符数组，只在里面追加；满了才扩容，复制摊到许多次追加上。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210">
 <text x="20" y="18" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">s += x  每次新建 复制全部旧内容</text>
 <rect x="20" y="28" width="40" height="14" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -40,7 +39,6 @@ step: 3
 <rect x="305" y="136" width="19" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="170" y="184" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">容量 16 满了才扩为 2n+2</text>
 </svg>
-```
 
 **细节。**
 

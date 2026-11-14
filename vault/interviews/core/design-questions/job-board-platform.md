@@ -45,7 +45,6 @@ kind: low-level-design
 - 雇主和求职者不用继承：行为差异只是权限，用角色字段加权限检查更简单。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 278">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -76,7 +75,6 @@ kind: low-level-design
 </g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="252" font-size="11">规格可用 and or 组合, 新增筛选只加类</text></g>
 </g></svg>
-```
 - 发布：`post_job` 写入职位。
 - 搜索：把「开放且未过期」规格和用户选的规格一起逐个判断，按发布时间倒序，用 `(posted_at, job_id)` 作游标分页；数据量大时先用倒排索引缩小候选集（逐步扩展 3）。
 - 投递：同一把锁内检查职位状态、唯一性、写入申请。

@@ -14,7 +14,6 @@ step: 2
 
 **结构。** tree 记录每个条目的（模式、名字、子对象哈希）；commit 记录根 tree 的哈希、父提交的哈希（可以有多个）、作者和说明。整段历史是默克尔（Merkle）有向无环图：用哈希把节点连起来的 DAG。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 216">
 <circle cx="40" cy="70" r="13" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="40" y="74" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">A</text>
@@ -47,7 +46,6 @@ step: 2
 <text x="250" y="176" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">合并提交 M</text>
 <text x="250" y="192" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">有两个父</text>
 </svg>
-```
 
 **细节。**
 

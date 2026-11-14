@@ -4,7 +4,7 @@
     uv run python scripts/diagram_share.py test-release    # some domains; exit 1 if one is below the floor
     uv run python scripts/diagram_share.py --below         # only domains under the floor
 
-A diagram is a ```mermaid or ```svg block, or an embedded image (![[…]] or ![…](…)) in the card's answer.
+A diagram is a ```mermaid block, an <svg> block (bare, or fenced as ```svg), or an embedded image (![[…]] or ![…](…)) in the card's answer.
 """
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 FLOOR = 0.25
-DIAGRAM = re.compile(r"^```(?:mermaid|svg)\b|!\[\[[^\]]+\.(?:png|jpe?g|svg|gif|webp)\]\]|!\[[^\]]*\]\([^)]+\)", re.M)
+DIAGRAM = re.compile(r"^```(?:mermaid|svg)\b|^<svg\b|!\[\[[^\]]+\.(?:png|jpe?g|svg|gif|webp)\]\]|!\[[^\]]*\]\([^)]+\)", re.M)
 
 
 def share(domain: str) -> tuple[int, int] | None:

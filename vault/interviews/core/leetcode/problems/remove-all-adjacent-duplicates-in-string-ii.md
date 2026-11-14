@@ -9,6 +9,39 @@ slug: remove-all-adjacent-duplicates-in-string-ii
 ## A
 **一句话。** 栈存 `(字符, 连续次数)`，与栈顶相同就计数加一，达到 `k` 整项弹出。
 
+**图解。** 栈里每项是「字符·连续次数」，次数凑够 `k` 就整项弹出，两侧自动接拢。
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 214">
+<text x="10" y="14" text-anchor="start" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">读到</text>
+<text x="122" y="14" text-anchor="start" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">栈：字符·次数（k = 3）</text>
+<text x="10" y="39" text-anchor="start" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">deee</text>
+<rect x="122" y="22" width="40" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="142" y="38" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">d·1</text>
+<text x="214" y="39" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">e·3 弹出</text>
+<text x="10" y="70" text-anchor="start" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">deeedbb</text>
+<rect x="122" y="53" width="40" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="142" y="69" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">d·2</text>
+<rect x="164" y="53" width="40" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="184" y="69" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">b·2</text>
+<text x="10" y="101" text-anchor="start" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">deeedbbccc</text>
+<rect x="122" y="84" width="40" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="142" y="100" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">d·2</text>
+<rect x="164" y="84" width="40" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="184" y="100" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">b·2</text>
+<text x="214" y="101" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">c·3 弹出</text>
+<text x="10" y="132" text-anchor="start" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">deeedbbcccb</text>
+<rect x="122" y="115" width="40" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="142" y="131" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">d·2</text>
+<text x="214" y="132" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">b·3 弹出</text>
+<text x="10" y="163" text-anchor="start" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">deeedbbcccbd</text>
+<text x="126" y="163" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">空</text>
+<text x="214" y="163" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">d·3 弹出</text>
+<text x="10" y="194" text-anchor="start" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">deeedbbcccbdaa</text>
+<rect x="122" y="177" width="40" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="142" y="193" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">a·2</text>
+<text x="214" y="194" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">结果 aa</text>
+</svg>
+
 ```python
 def remove_duplicates(s, k):
     stack = []                       # (字符, 连续次数)

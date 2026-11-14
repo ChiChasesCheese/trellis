@@ -9,6 +9,39 @@ slug: range-sum-query-2d-immutable
 ## A
 **一句话。** 预处理二维前缀和 `P[i][j]`（左上 `i` 行 `j` 列之和），查询用容斥：大块减上、减左、加回左上。
 
+**图解。** 二维前缀和的容斥：整块减上、减左，被减了两次的左上角加回一次。
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
+<rect x="20" y="20" width="150" height="60" rx="0" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<rect x="20" y="20" width="60" height="150" rx="0" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<rect x="20" y="20" width="60" height="60" rx="0" style="fill:var(--dim,#6b7280);fill-opacity:0.16" stroke="currentColor" stroke-width="1.2"/>
+<rect x="80" y="80" width="90" height="90" rx="0" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<line x1="20" y1="20" x2="20" y2="170" stroke-width="0.5" style="stroke:var(--dim,#6b7280)"/>
+<line x1="20" y1="20" x2="170" y2="20" stroke-width="0.5" style="stroke:var(--dim,#6b7280)"/>
+<line x1="50" y1="20" x2="50" y2="170" stroke-width="0.5" style="stroke:var(--dim,#6b7280)"/>
+<line x1="20" y1="50" x2="170" y2="50" stroke-width="0.5" style="stroke:var(--dim,#6b7280)"/>
+<line x1="80" y1="20" x2="80" y2="170" stroke-width="0.5" style="stroke:var(--dim,#6b7280)"/>
+<line x1="20" y1="80" x2="170" y2="80" stroke-width="0.5" style="stroke:var(--dim,#6b7280)"/>
+<line x1="110" y1="20" x2="110" y2="170" stroke-width="0.5" style="stroke:var(--dim,#6b7280)"/>
+<line x1="20" y1="110" x2="170" y2="110" stroke-width="0.5" style="stroke:var(--dim,#6b7280)"/>
+<line x1="140" y1="20" x2="140" y2="170" stroke-width="0.5" style="stroke:var(--dim,#6b7280)"/>
+<line x1="20" y1="140" x2="170" y2="140" stroke-width="0.5" style="stroke:var(--dim,#6b7280)"/>
+<line x1="170" y1="20" x2="170" y2="170" stroke-width="0.5" style="stroke:var(--dim,#6b7280)"/>
+<line x1="20" y1="170" x2="170" y2="170" stroke-width="0.5" style="stroke:var(--dim,#6b7280)"/>
+<rect x="20" y="20" width="150" height="150" rx="0" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="50" y="54" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">角</text>
+<text x="125.0" y="54" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">上</text>
+<text x="50" y="129.0" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">左</text>
+<text x="125.0" y="129.0" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" font-weight="600">所求</text>
+<text x="186" y="34" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">所求 = 全 − 上 − 左 + 角</text>
+<text x="186" y="62" text-anchor="start" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">全 = P[r2+1][c2+1]</text>
+<text x="186" y="84" text-anchor="start" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">上 = P[r1][c2+1]</text>
+<text x="186" y="106" text-anchor="start" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">左 = P[r2+1][c1]</text>
+<text x="186" y="128" text-anchor="start" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">角 = P[r1][c1]</text>
+<text x="186" y="160" text-anchor="start" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">角被减了两次，加回一次</text>
+<text x="95.0" y="186" text-anchor="middle" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">全 = 左上角到右下角整块</text>
+</svg>
+
 ```python
 class NumMatrix:
     def __init__(self, matrix):

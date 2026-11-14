@@ -14,7 +14,6 @@ step: 1
 
 **结构。** Dijkstra：起点先进树；每次从候选（已发现、最短路还没定的路由器）里取离起点最近的一台进树，再看它的邻居能否给出更短的路；取空为止。结果是以自己为根的最短路径树，到某网段的下一跳（next hop）就是树上从根出发的第一步。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 226">
 <line x1="52.5" y1="91.7" x2="117.5" y2="48.3" fill="none" stroke="currentColor" stroke-width="2.6" style="stroke:var(--accent,#3b6fd4)"/>
 <line x1="52.5" y1="108.3" x2="117.5" y2="151.7" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
@@ -40,7 +39,6 @@ step: 1
 <text x="240" y="74" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">距离 4</text>
 <text x="170" y="216" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">粗线 = 最短路径树 A 去 D 先走 B</text>
 </svg>
-```
 
 例：A 到 C，直连代价 4，经 B 是 1 + 2 = 3，更短，所以 C 的下一跳是 B。
 

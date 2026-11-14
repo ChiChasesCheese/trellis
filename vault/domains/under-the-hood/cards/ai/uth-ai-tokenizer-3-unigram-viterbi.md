@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 动态规划（DP）：`best[i]` 是前 `i` 个字符的最优得分，等于所有以 `i` 结尾的片段里 `best[i - 片段长度] + 片段得分` 的最大值；记下来源，最后往回读出切法。这就是维特比算法（Viterbi），也是单词拆分的 DP。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 196">
 <path d="M 30 82 Q 142.5 -42 255 82" style="fill:none;stroke:var(--accent,#3b6fd4)" stroke-width="2"/>
 <text x="142.5" y="15" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">hug 4</text>
@@ -45,7 +44,6 @@ step: 3
 <text x="330" y="150" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">6</text>
 <text x="180" y="184" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">节点下的数字: 到这里的最小总代价</text>
 </svg>
-```
 
 **细节。**
 

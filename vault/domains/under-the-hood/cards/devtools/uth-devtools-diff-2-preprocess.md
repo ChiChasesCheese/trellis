@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 先把每一行映射成一个整数，之后比较两行只是比较两个整数；再剪头去尾，并丢掉“注定对不上”的行，核心算法只面对剩下的一小段。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 244">
 <text x="120" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">旧</text>
 <text x="220" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">新</text>
@@ -51,7 +50,6 @@ step: 2
 <text x="10" y="122" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">直接判删</text>
 <text x="170" y="236" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">每行先映射成一个整数 再比较整数</text>
 </svg>
-```
 
 **细节。**
 

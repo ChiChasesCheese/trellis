@@ -14,7 +14,6 @@ step: 1
 
 **结构。** Java 9 起，`String` 内部是 `byte[] value` 加一个标志 `coder`：`LATIN1`（每字符 1 字节）或 `UTF16`（每字符 2 字节），整串统一。字符都在 Latin-1 范围内就用 1 字节，混进一个超出范围的字符，整串都改成 2 字节。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="20" y="24" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">hello  coder = LATIN1</text>
 <rect x="26" y="34" width="24" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -49,7 +48,6 @@ step: 1
 <rect x="290" y="116" width="24" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="170" y="168" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">6 个字符 12 字节 一个 € 让整串变宽</text>
 </svg>
-```
 
 **细节。**
 

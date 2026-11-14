@@ -44,7 +44,6 @@ kind: low-level-design
 - 关键接口：`place_order(location, drink)`、`on_brewed(order_id, ok)`、`pickup(order_id, code)`；扩展里再加 `menu(location)`、`refill`。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 328">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -79,7 +78,6 @@ kind: low-level-design
 </g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="302" font-size="11">订单与库存各有状态机</text></g>
 </g></svg>
-```
 - 下单：`OrderService` 选机器，调用 `Inventory.reserve`；成功才创建订单并返回取货码，失败则换下一台或提示不可点。
 - 制作：机器的制作队列串行消费（一次一杯）；`MachineController` 调硬件，完成后回调 `on_brewed`。
 - 取货：顾客输入取货码，匹配且状态为 `READY` 才开门，同时标记 `PICKED_UP`。

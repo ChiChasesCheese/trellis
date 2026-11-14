@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 构建图是 DAG（有向无环图）：节点是文件，边是构建命令。Ninja 的 `RecomputeNodeDirty` 从目标出发做深度优先遍历（DFS），沿途用一个栈检测环。例：改了 `util.h`，沿箭头的两个 `.o` 和最终的 `app` 都变“脏”（需要重做），`main.c`、`util.c` 不用动。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210">
 <rect x="22" y="27" width="68" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="56" y="44" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">main.c</text>
@@ -42,7 +41,6 @@ step: 1
 <path d="M250.0,104.0 L245.4,109.9 L242.5,104.1 Z" stroke="none" style="fill:var(--accent,#3b6fd4)"/>
 <text x="170" y="198" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">改了 util.h 沿箭头的三个文件都要重做</text>
 </svg>
-```
 
 **细节。**
 

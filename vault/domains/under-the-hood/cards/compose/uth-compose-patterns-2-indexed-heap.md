@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 加一张哈希表：key → 数组下标，堆里每次交换都同步改它。取消 = 与末尾换位，再上浮或下沉；改优先级 = 原地改值，再上浮或下沉。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 206">
 <text x="14" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">堆数组 (key 优先级) 与下标</text>
 <text x="48.0" y="33" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">0</text>
@@ -49,7 +48,6 @@ step: 2
 <text x="170" y="182" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">换到末尾 再上浮或下沉 O(log n)</text>
 <text x="170" y="198" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每次交换 都要同步改表里的下标</text>
 </svg>
-```
 
 | 操作 | 做法 | 复杂度 |
 |---|---|---|

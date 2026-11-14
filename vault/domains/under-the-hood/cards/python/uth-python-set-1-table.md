@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 直接存条目的开放寻址表（冲突了在表里另找空位），条目只有 `key` 和缓存的 `hash`，没有 value，也没有 `dict` 的索引数组。例：8 格的表依次放 3、8、11，3 去第 3 格，8 去第 0 格，11 也算到第 3 格，被占了，就在相邻格里线性往后找，落在第 4 格。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170">
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">8 格的表 依次放 3 8 11</text>
 <rect x="26" y="56" width="36" height="30" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -42,7 +41,6 @@ step: 1
 <polygon points="182.0,124.0 176.0,127.0 176.0,121.0" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)" stroke-width="0.5"/>
 <text x="170" y="150" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">11&amp;7 也是 3 被占了 顺延到 4</text>
 </svg>
-```
 
 **细节。**
 

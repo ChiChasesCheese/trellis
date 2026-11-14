@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 每个函数、模块、类体编译后得到一个代码对象（code object），`f.__code__` 就是它。它里面有：`co_code`（指令序列）、`co_consts`（常量表）、`co_varnames`（局部变量名）、`co_stacksize`（操作数栈最深有多少格，提前算好）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 235">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -56,7 +55,6 @@ step: 2
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

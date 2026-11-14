@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 前缀和（prefix sum）加扫描：随机数 `r` 乘以概率总和得到目标值，从头累加每个词的概率，第一次累加到不小于目标就停，停在谁就选谁。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 140">
 <rect x="20" y="56" width="193.2" height="26" rx="0" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
 <text x="116.6" y="100" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">好</text>
@@ -33,7 +32,6 @@ step: 4
 <text x="260" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">r = 0.80</text>
 <text x="170" y="136" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每个词占一段, 长度就是概率; 扔个点, 落在谁的段里选谁</text>
 </svg>
-```
 
 **细节。**
 

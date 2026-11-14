@@ -17,7 +17,6 @@ Spring 的单例缓存由哪几个结构组成？一个 Bean 从开始创建到�
 - `singletonFactories`：三级，名字 → 工厂（一段能产出早期引用的代码）
 - `singletonsCurrentlyInCreation`：集合，正在创建的名字
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 206">
 <rect x="12" y="40" width="86" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="55.0" y="58.0" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">三级 工厂</text>
@@ -44,7 +43,6 @@ Spring 的单例缓存由哪几个结构组成？一个 Bean 从开始创建到�
 <text x="170.0" y="175.0" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">正在创建的名字 Set</text>
 <text x="170.0" y="188.0" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">开始创建时加入 完成后移出</text>
 </svg>
-```
 
 | 操作 | 碰哪几个结构 | 复杂度 |
 |---|---|---|

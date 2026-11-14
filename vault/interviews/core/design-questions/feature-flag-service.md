@@ -48,7 +48,6 @@ kind: system-design
   - 数据面：`GET /sdk/config?env=` 返回整份规则集快照（带 ETag）；`GET /sdk/stream?env=` 服务端推送（SSE）变更；客户端用的 `POST /eval` 提交用户上下文，返回该用户的全部开关取值。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 278">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -89,7 +88,6 @@ kind: system-design
 </g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="252" font-size="11">控制面宕机时 SDK 沿用最后快照</text></g>
 </g></svg>
-```
 1. 控制面：管理 API 写入关系库（PostgreSQL），每次修改生成新的不可变版本；校验规则语法与引用关系，生产环境可要求审批；写库成功后发布"新快照"事件。
 2. 发布：快照生成服务把环境的完整规则集序列化为一个文件（JSON 或 protobuf，压缩），带版本号写入对象存储，经 CDN 分发；同时通过流服务推送"版本号变了"的通知。
 3. 服务端 SDK：启动时拉一次快照放入内存，建立到流服务的长连接，收到通知后拉取新快照（或增量差异）并原子替换；连接断开时退回到每 30 秒轮询。取值就是对内存里的规则集求值，不发网络请求。

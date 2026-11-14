@@ -54,7 +54,6 @@ kind: low-level-design
   - REST：`GET /documents/{id}` 取快照加增量，`POST /documents/{id}/export` 导出为位图或 SVG。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 294">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -86,7 +85,6 @@ kind: low-level-design
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="252" font-size="11">预览与瞬时状态不进历史</text></g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="268" font-size="11">拖拽过程只广播 presence</text></g>
 </g></svg>
-```
 1. 输入：指针事件进入当前工具，工具只更新「最新位置」；浏览器每帧回调（`requestAnimationFrame`）调用一次 `on_frame`，把一帧内的多个事件合并为一次预览更新。
 2. 预览：修改场景图后标记脏区域（受影响对象包围盒的并集），渲染器只重绘脏区域。
 3. 提交：抬起时生成一组操作，写入撤销栈并放入发送缓冲。

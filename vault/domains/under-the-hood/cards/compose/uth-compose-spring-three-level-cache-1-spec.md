@@ -21,7 +21,6 @@ Spring 创建单例 Bean（容器里只保留一份的对象）A 时要先有 B�
 
 **难点。** 只有一张成品表：创建 A → 要 B → 创建 B → 要 A，表里还没有 A，于是又去创建 A，无限递归。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 178">
 <text x="14" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">只有一张成品表时</text>
 <rect x="12" y="30" width="64" height="30" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -44,7 +43,6 @@ Spring 创建单例 Bean（容器里只保留一份的对象）A 时要先有 B�
 <text x="170" y="140" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">加个集合只能发现环 解决不了</text>
 <text x="170" y="160" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">B 此刻就要 A 这个对象</text>
 </svg>
-```
 
 加一个“正在创建”的集合只能发现环并报错；B 此刻要的就是 A 这个对象，必须把造到一半的 A 先借出去。成品表要快读、不加锁，不能混进半成品，所以半成品另开一张表。
 

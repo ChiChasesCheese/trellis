@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 不经过任何缓冲：值在两个 goroutine 的栈（各自的一小块私有内存）之间直接拷贝一次（`sendDirect` / `recvDirect`），再唤醒睡着的一方。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">make(chan int): 没有缓冲, 两边必须碰头</text>
 <rect x="10" y="30" width="90" height="30" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -30,7 +29,6 @@ step: 2
 <text x="8" y="150" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">再让睡着的发送者把值放进刚空的那一格</text>
 <text x="8" y="178" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">发送返回 = 对方已经收到</text>
 </svg>
-```
 
 **细节。**
 

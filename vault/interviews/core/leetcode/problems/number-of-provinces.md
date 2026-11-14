@@ -9,6 +9,21 @@ slug: number-of-provinces
 ## A
 **一句话。** 求连通分量个数：对每个未访问的城市做一次递归 DFS，启动次数就是省份数。
 
+**图解。** 每次从未访问的城市启动 DFS，会走完整个连通块；启动 2 次就是 2 个省份。
+
+```mermaid
+flowchart TB
+    subgraph P1["第 1 次 dfs：从 0 出发"]
+        c0["城市 0"] --- c1["城市 1"]
+        c1 --- c2["城市 2"]
+    end
+    subgraph P2["第 2 次 dfs：从 3 出发"]
+        c3["城市 3"]
+    end
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class c0,c3 hot
+```
+
 ```python
 def find_circle_num(is_connected):
     n = len(is_connected)

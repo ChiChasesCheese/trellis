@@ -9,6 +9,17 @@ slug: redundant-connection
 ## A
 **一句话。** 并查集按顺序加边，第一条两端已连通的边就是闭合环的那条。
 
+**图解。** 按顺序加边并合并；边 `2-3` 加入时两端已同根，它就是闭合环的那条。
+
+```mermaid
+flowchart TB
+    n1["1"] -->|"边 1-2：p[1]=2"| n2["2"]
+    n2 -->|"边 1-3：p[2]=3"| n3["3 · 根"]
+    e["边 2-3<br>两端的根都是 3"] -.->|已连通 → 冗余| n3
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class e hot
+```
+
 ```python
 def find_redundant_connection(edges):
     p = list(range(len(edges) + 1))   # 编号 1..n

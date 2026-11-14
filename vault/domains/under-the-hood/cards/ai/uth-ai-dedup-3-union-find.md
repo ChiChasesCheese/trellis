@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 并查集（union-find）：每篇文章起初自成一组；读到一对重复，就把两组合并；最后每组有一个「根」。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 182">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" fill="currentColor" stroke="currentColor">
 <ellipse cx="105" cy="75" rx="95" ry="52" style="fill:none;stroke-width:1;stroke-dasharray:4,3"/>
@@ -39,7 +38,6 @@ step: 3
 <text x="170" y="170" style="stroke:none;fill:var(--dim,#6b7280)">实心=留下(根), 虚线=删除</text>
 </g>
 </svg>
-```
 
 **细节。**
 

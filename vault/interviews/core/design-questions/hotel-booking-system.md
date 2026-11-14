@@ -50,7 +50,6 @@ kind: system-design
   - 供应商回调：`POST /webhooks/inventory`、`POST /webhooks/reservations`。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 244">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -84,7 +83,6 @@ kind: system-design
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="202" font-size="11">搜索读预聚合, 下单扣减库存行</text></g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="218" font-size="11">库存变更事件异步刷新搜索摘要</text></g>
 </g></svg>
-```
 1. 搜索路径（读）：地理与静态条件（城市、设施、评分）走搜索引擎（Elasticsearch）得到几百个候选酒店；再对这些候选酒店批量查询"日期范围内的可订性与最低价"，来源是一张预聚合的 `availability_summary(hotel_id, date, min_price, rooms_left)` 表，放 Redis 或只读副本；过滤、排序后返回。静态索引变化慢，动态摘要由库存变更事件异步刷新，所以搜索允许最多几十秒到分钟的过期。
 2. 下单路径（写）：对房型库存行做原子扣减，创建 HELD 状态的预订并设置保留到期时间（例如 10 分钟）；用户支付成功后转为 CONFIRMED；支付失败或超时，由清理任务把库存释放。
 3. 外部同步：供应商的 webhook 与 API 推送先写入 Kafka，规范化服务解析后用"来源时间戳更晚才覆盖"的规则更新库存与价格（旧事件被丢弃，防止乱序），再产生事件刷新搜索摘要。30 分钟一次的数据转储用差异导入：与上次对比，只更新变化的行。

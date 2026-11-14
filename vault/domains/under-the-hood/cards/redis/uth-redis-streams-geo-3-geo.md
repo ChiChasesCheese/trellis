@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 就是 ZSET：经纬度编码成 52 位 geohash 整数，当作分数，成员名是地点。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">经纬度的二进制位交错拼成 52 位整数</text>
 <rect x="10" y="26" width="46" height="36" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
@@ -43,7 +42,6 @@ step: 3
 <text x="8" y="178" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">纬度限制在 ±85.05112878</text>
 <text x="8" y="196" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">地理上相邻的两点 geohash 可能差很远, 所以要查邻居格</text>
 </svg>
-```
 
 **细节。**
 

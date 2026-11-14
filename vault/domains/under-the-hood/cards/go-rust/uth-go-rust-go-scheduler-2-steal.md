@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 工作窃取（work stealing）：空闲 P 随机挑别的 P，从它的本地队列里偷走一半。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">P2 的队列空了, 随机挑 P1 去偷</text>
 <text x="8" y="40" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">P1 本地队列</text>
@@ -40,7 +39,6 @@ step: 2
 <text x="8" y="140" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">找活最多重试 4 轮, 最后一轮才偷对方的 runnext</text>
 <text x="8" y="158" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">每调度 61 次, 先看一眼全局队列, 免得它饿死</text>
 </svg>
-```
 
 **细节。**
 

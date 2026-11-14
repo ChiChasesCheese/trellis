@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 最小哈希（MinHash）：给所有片段随机排一次队，每篇文章只记「自己的片段里排最前的那个」。换一种排法再记一个，共记 112 次，一篇文章就压成 112 个数的签名。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 258">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" fill="currentColor" stroke="currentColor">
 <text x="100" y="18" font-size="13" font-weight="bold" stroke="none">A=abcd</text>
@@ -51,7 +50,6 @@ step: 1
 <text x="170" y="246" font-size="13" font-weight="bold" stroke="none">5次里相同3次 = 0.6 = 相似度</text>
 </g>
 </svg>
-```
 
 **细节。**
 

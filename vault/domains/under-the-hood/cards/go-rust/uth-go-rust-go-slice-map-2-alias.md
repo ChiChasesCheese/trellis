@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 子切片和原切片共用同一个底层数组，只是长度、容量不同。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 185">
 <text x="8" y="14" text-anchor="start" font-size="11" font-family="sans-serif" font-weight="bold" fill="currentColor">a := []int{1,2,3,4}; b := a[:2]; b = append(b, 99)</text>
 <rect x="40" y="40" width="50" height="28" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -37,7 +36,6 @@ step: 2
 <text x="8" y="156" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">a 与 b 共用同一个底层数组, 所以 a 变成 [1 2 99 4]</text>
 <text x="8" y="174" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">a[:2:2] 把容量也限成 2, 下次 append 就复制到新数组</text>
 </svg>
-```
 
 **细节。**
 

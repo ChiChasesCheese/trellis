@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 内省排序（introsort）：快排为主，发现递归太深（说明被带偏了）就换成堆排序兜底，小区间留给插入排序收尾。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 245">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">例: 枢轴取 5</text>
 <rect x="10" y="22" width="30" height="22" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="2"/>
@@ -63,7 +62,6 @@ step: 1
 <text x="85" y="217" text-anchor="middle" font-size="13" font-family="sans-serif" fill="currentColor">整体插入排序</text>
 <text x="85" y="232" text-anchor="middle" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">收尾, 数组已近乎有序</text>
 </svg>
-```
 
 **细节。**
 

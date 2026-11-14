@@ -9,6 +9,22 @@ slug: analyze-user-website-visit-pattern
 ## A
 **一句话。** 按时间排序后按用户分组，每人枚举所有三元组并用集合去重，计数后取「次数最大、字典序最小」。
 
+**图解。** 排序分组后，每人的三元组先用 `set` 去重再计数，取次数最多、字典序最小的模式。
+
+```mermaid
+flowchart TB
+    s["按时间排序"] --> g["按用户分组"]
+    g --> j["joe：a b c"]
+    g --> m["mary：a b c"]
+    g --> k["james：a d e a"]
+    j --> c["每人三元组进 set<br>再计数"]
+    m --> c
+    k --> c
+    c --> r["(a,b,c) 2 人最多<br>并列取字典序小"]
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class r hot
+```
+
 ```python
 def most_visited_pattern(username, timestamp, website):
     visits = defaultdict(list)

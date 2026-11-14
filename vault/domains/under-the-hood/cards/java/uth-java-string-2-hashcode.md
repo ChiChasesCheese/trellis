@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 多项式哈希：`h = 31*h + 字符`，从左到右累加，即 `s[0]*31^(n-1) + … + s[n-1]`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <rect x="14" y="26" width="44" height="28" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="36" y="44" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">Aa</text>
@@ -34,7 +33,6 @@ step: 2
 <polygon points="248.0,88.0 243.7,91.6 242.5,86.8" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)" stroke-width="0.5"/>
 <text x="170" y="172" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">h = 31*h + 字符 不同的串可能撞</text>
 </svg>
-```
 
 **细节。**
 

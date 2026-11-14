@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 现代 RocksDB 的布隆过滤器先用一次哈希选定一个 64 字节（512 位）的缓存行，k 次探测全落在这一行里，一次内存访问就够。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 156">
 <text x="12" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">经典: 6 次探测落在 6 处</text>
 <rect x="12" y="28" width="316" height="20" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -36,7 +35,6 @@ step: 2
 <line x1="209" y1="106" x2="209" y2="134" stroke="currentColor" stroke-width="2" style="stroke:var(--accent,#3b6fd4)"/>
 <text x="192" y="148" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1 次 cache miss</text>
 </svg>
-```
 
 **细节。**
 

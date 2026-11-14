@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 执行 `class Dog(Animal): ...` 时，Python 先把类体当一段代码跑一遍，所有名字收进一个字典，再调用 `type("Dog", (Animal,), 那个字典)`，得到类对象 `Dog`。于是有三层：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -54,7 +53,6 @@ step: 1
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

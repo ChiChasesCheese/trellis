@@ -10,7 +10,6 @@ step: 2
 HikariCP 的 `ConcurrentBag` 用哪几个结构分层？借和还各碰哪几个？
 
 ## A
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 240">
 <rect x="76" y="10" width="190" height="36" rx="3" stroke-width="1.2" stroke="currentColor" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="171.0" y="27.0" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1 线程本地列表</text>
@@ -41,7 +40,6 @@ HikariCP 的 `ConcurrentBag` 用哪几个结构分层？借和还各碰哪几个
 <polygon points="266,144 272.0,141.0 272.0,147.0" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)"/>
 <text x="286" y="180" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">有人等</text>
 </svg>
-```
 
 **结构。** 三层结构，加每个连接自带的状态：
 

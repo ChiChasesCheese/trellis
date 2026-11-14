@@ -14,7 +14,6 @@ InnoDB 同样是 MVCC，旧版本放在哪？一致性读（consistent read）�
 
 **结构。** 聚簇索引里的行永远是最新版本，每行多 6 字节 `DB_TRX_ID`（最后改它的事务）和 7 字节 `DB_ROLL_PTR`（指向 undo 记录的指针）。旧版本放在回滚段的 undo 记录里，串成一条链。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 126">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">聚簇索引行 (最新)</text>
 <rect x="8" y="22" width="118" height="68" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -34,7 +33,6 @@ InnoDB 同样是 MVCC，旧版本放在哪？一致性读（consistent read）�
 <text x="291" y="76" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">旧版本 2</text>
 <text x="170" y="118" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">按读视图往回走, 直到版本可见</text>
 </svg>
-```
 
 **细节。**
 

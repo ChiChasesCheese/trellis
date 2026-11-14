@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 范围类型（range type）把一段时间存成一个值，例如 `tsrange`；运算符 `&&` 判断两段是否重叠；排他约束（exclusion constraint）规定：表里任意两行用 `&&` 比较，结果都不能为真。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180">
 <rect x="100" y="28" width="70" height="78" stroke="none" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <rect x="30" y="34" width="140" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -32,7 +31,6 @@ step: 1
 <line x1="310" y1="148" x2="310" y2="156" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
 <text x="310" y="172" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">16:00</text>
 </svg>
-```
 
 ```sql
 CREATE TABLE reservation (

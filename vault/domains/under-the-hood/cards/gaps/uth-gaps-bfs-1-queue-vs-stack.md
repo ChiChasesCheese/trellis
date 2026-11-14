@@ -12,7 +12,6 @@ step: 1
 ## A
 **背景。** 待抓清单有两种取法。后进先出（LIFO，栈）：先取刚发现的，顺着一条链接一路钻到底再回头，叫深度优先（DFS）。先进先出（FIFO，队列）：先取最早发现的，于是先把离首页 1 次点击的页面抓完，再抓 2 次点击的，叫广度优先（BFS）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 172">
 <text x="88" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">先进先出 BFS</text>
 <line x1="80.2" y1="45.1" x2="57.8" y2="70.9" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
@@ -53,7 +52,6 @@ step: 1
 <text x="290" y="128" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">6</text>
 <text x="252" y="160" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">钻到底再回头</text>
 </svg>
-```
 
 **结构。** Scrapy 默认后进先出，所以默认是 DFS，官方说这通常最方便。要改成 BFS 得设三项：
 

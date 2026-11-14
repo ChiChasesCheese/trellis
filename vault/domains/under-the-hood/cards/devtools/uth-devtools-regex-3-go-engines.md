@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 编译后按情况选：onepass（模式没有歧义，每一步只有一种走法，一遍扫完）→ 位状态回溯（bitstate backtracker，回溯，但记住走过的状态）→ NFA 模拟（并行推进所有候选）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176">
 <rect x="150" y="14" width="170" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="235" y="32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">模式无歧义?</text>
@@ -42,7 +41,6 @@ step: 3
 <text x="235" y="144" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">NFA 并行模拟</text>
 <text x="235" y="170" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">兜底 保证线性</text>
 </svg>
-```
 
 **细节。**
 

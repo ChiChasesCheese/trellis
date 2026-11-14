@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 解释器对「热」指令做运行时改写（PEP 659 的自适应特化）：指令后面预留几格缓存（inline cache）；执行几次之后，解释器看到两边总是 `int`，就把这条指令原地换成 `BINARY_OP_ADD_INT`，只检查「是不是 `int`」就直接加。哪次传来了 `float`，就退回通用版本，重新计数。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -57,7 +56,6 @@ step: 4
 </g>
 </g>
 </svg>
-```
 
 ```
 # f(a, b) = a * 2 + b，调用 3 次后 dis(f, adaptive=True)

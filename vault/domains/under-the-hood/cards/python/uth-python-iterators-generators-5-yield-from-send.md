@@ -25,7 +25,6 @@ def outer():
 - 实测 `await x` 和 `yield from s` 都编译成 `SEND` 加 `YIELD_VALUE` 的循环；协程对象（`async def` 调用的结果）和生成器共用「冻结的栈帧」这套机制。
 - asyncio 的 `Task` 每走一步就是调一次 `coro.send(None)`：协程跑到 `await` 一个没完成的 `Future`，就把它一路交还给事件循环；`Future` 完成后，事件循环再 `send` 一次，协程从原处继续。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -66,7 +65,6 @@ def outer():
 </g>
 </g>
 </svg>
-```
 
 **为什么。** 协程挂起时，栈帧和局部变量都还在，所以事件循环不需要为每个等待的任务开一个线程。
 

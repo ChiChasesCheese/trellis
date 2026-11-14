@@ -14,7 +14,6 @@ step: 1
 
 **结构。** `list` 就是这样一块连续的格子（指针数组），每格 8 字节，只存「指向元素的指针」，元素本身在别处。办法是搬家时多要几个空位：容量 4 放满 `1,2,3,4`，加第 5 个时搬进容量 8 的新块，再加 3 个都不用搬。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="20" y="24" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">旧块 容量 4</text>
 <rect x="20" y="32" width="34" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -44,14 +43,12 @@ step: 1
 <rect x="258" y="132" width="34" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="214" y="178" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">再加 3 个都不用搬</text>
 </svg>
-```
 
 **细节。**
 
 - 对象里记两个数：已放几个（`size`）、一共几格（`allocated`）。
 - 新容量 ≈ `n + n/8 + 6`，再向下取整到 4 的倍数；实测逐个 append，容量依次是 `0 → 4 → 8 → 16 → 24 → 32 → 40 → 52 → 64 → 76`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <line x1="20" y1="150" x2="326" y2="150" stroke-width="1.2" stroke="currentColor"/>
 <rect x="24" y="144.4" width="26" height="5.6" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -75,7 +72,6 @@ step: 1
 <text x="170" y="174" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">allocated 每次约涨 12.5% 再取整</text>
 <text x="30" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">capacity</text>
 </svg>
-```
 
 **为什么。** 只多留约 12.5%（Java `ArrayList` 是 1.5 倍），省内存；容量始终按当前大小的比例增长，所以偶尔一次的搬家摊到后面许多次 `append` 上，平均每次仍是常数时间，叫均摊（amortized）O(1)。
 

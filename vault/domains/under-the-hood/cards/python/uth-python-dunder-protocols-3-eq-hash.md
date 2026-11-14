@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 查键分两步：先用 `hash(key)` 定位格子；格子里的键如果就是同一个对象，或者哈希值相同且 `==` 为真，就算命中。所以规则只有一条：**相等的对象，哈希值必须相同**，否则两个「相等」的键会落进不同格子，互相找不到。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -58,7 +57,6 @@ step: 3
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

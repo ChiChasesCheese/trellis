@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 关键片段 `.*(?:.*=.*)`：在没有 `=` 的长串上，两个 `.*` 要试遍所有切分点，n 个字符就是约 n²/2 种组合，而且每个起点都要重来一遍。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 214">
 <text x="162" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">第一个 .* 停在哪</text>
 <text x="8" y="52" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">第二个 .*</text>
@@ -49,7 +48,6 @@ step: 2
 <circle cx="246" cy="160" r="5" stroke="currentColor" stroke-width="1.8" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
 <text x="170" y="198" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">每一对都要失败一次 n 个字符约 n^2/2 次</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 8 格的表，`hash(key) & mask`（`mask` = 7）得槽号。键 `a` 算出 5，就去第 5 格。3.6 起 `dict` 拆成两个数组：小整数的**索引数组**当哈希表，槽里只存一个编号；真正的（hash、key、value）按插入顺序追加在**条目数组**里。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 236">
 <text x="40" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">indices</text>
 <text x="236" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">entries 按插入顺序</text>
@@ -68,7 +67,6 @@ step: 1
 <text x="236" y="206" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">查找 hash &amp; mask 得槽</text>
 <text x="236" y="224" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">槽里只存条目下标</text>
 </svg>
-```
 
 **细节。**
 

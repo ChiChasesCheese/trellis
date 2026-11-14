@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 编码分两步：正则切词，再对每个词单独做 BPE。空格归后面的词，所以 `strawberry` 和带前导空格的 `_strawberry`（`_` 表示空格）是两个不同的词，各有各的切法。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="12" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">strawberry: 3 个编号</text>
 <rect x="12" y="24" width="40" height="26" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -35,7 +34,6 @@ step: 2
 <text x="126" y="161.5" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">78</text>
 <text x="170" y="192" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">_ 表示空格; 空格归后面的词</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 每次修改是树上的一个状态；撤销是回到父节点；撤销后再改，就从那个节点长出一条新分支，旧分支原样保留。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <line x1="80" y1="43" x2="80" y2="67" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <line x1="80" y1="93" x2="80" y2="117" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -32,7 +31,6 @@ step: 3
 <text x="100" y="34" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">原文</text>
 <text x="170" y="176" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">撤销 2 步再改 栈会丢掉 1 2 树保留</text>
 </svg>
-```
 
 **细节。**
 

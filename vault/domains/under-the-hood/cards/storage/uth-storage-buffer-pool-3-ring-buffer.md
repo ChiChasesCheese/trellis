@@ -14,7 +14,6 @@ PostgreSQL 顺序扫描一张比缓冲池还大的表，会不会把池里的热
 
 **结构。** 不会。大表的顺序扫描改用一个小的环形缓冲（ring buffer）：只在这几个缓冲区里循环复用，淘汰也在环内完成，不碰共享缓冲区里的热页。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 130">
 <rect x="8" y="12" width="110" height="24" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="63" y="28.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">大表顺序扫描</text>
@@ -32,7 +31,6 @@ PostgreSQL 顺序扫描一张比缓冲池还大的表，会不会把池里的热
 <text x="262" y="100" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">256 KB 环形缓冲</text>
 <text x="262" y="120" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">只在环内复用</text>
 </svg>
-```
 
 **细节。**
 

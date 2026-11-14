@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 公共池 `ForkJoinPool.commonPool()`，`CompletableFuture` 的默认池也是它（`asyncCommonPool`）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <rect x="10" y="28" width="134" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="77" y="46" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">parallelStream</text>
@@ -45,7 +44,6 @@ step: 2
 <text x="260" y="128" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">并行度 = 核数 - 1</text>
 <text x="170" y="174" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">全进程共享一个池</text>
 </svg>
-```
 
 **细节。**
 

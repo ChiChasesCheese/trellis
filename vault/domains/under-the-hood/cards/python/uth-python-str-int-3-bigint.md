@@ -14,7 +14,6 @@ Python 的 `int` 没有溢出，`2**1000` 底下是什么？两个 8000 位的�
 
 **结构。** 数位数组（digit array），每个数位 30 位，放在 32 位字里；数越大数组越长。例：`2**60` 要 3 个数位。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170">
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">2**60 = 3 个数位</text>
 <rect x="40" y="34" width="80" height="34" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -29,7 +28,6 @@ Python 的 `int` 没有溢出，`2**1000` 底下是什么？两个 8000 位的�
 <text x="170" y="114" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每个数位 30 位 放在 32 位字里</text>
 <text x="170" y="140" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">值 = 1 x (2^30)^2</text>
 </svg>
-```
 
 **细节。**
 

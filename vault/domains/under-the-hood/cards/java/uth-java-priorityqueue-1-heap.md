@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 数组上的二叉最小堆（binary heap）：`queue[n]` 的两个孩子是 `queue[2n+1]` 和 `queue[2n+2]`，最小的在 `queue[0]`。新元素放末尾，比父亲小就换上去（上浮）。例：依次放 5、3、8、1、9、2。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 230">
 <line x1="158.454" y1="31.9174" x2="111.546" y2="64.0826" stroke-width="1.2" stroke="currentColor"/>
 <line x1="181.546" y1="31.9174" x2="228.454" y2="64.0826" stroke-width="1.2" stroke="currentColor"/>
@@ -53,7 +52,6 @@ step: 1
 <text x="260" y="188" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">5</text>
 <text x="170" y="214" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">打印 = 数组顺序 只保证父不大于子</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 1
 
 **结构。** `len(x)` 就是 `type(x).__len__(x)`。只要类里有这个名字的方法，Python 不关心它是什么类型，这叫鸭子类型（duck typing）：走起来像鸭子，就当鸭子。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -44,7 +43,6 @@ step: 1
 </g>
 </g>
 </svg>
-```
 
 | 你写的 | 实际调用 |
 |---|---|

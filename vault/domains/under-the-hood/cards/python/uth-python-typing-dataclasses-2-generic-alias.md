@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `list[int]` 调用的是 `list.__class_getitem__(int)`，得到一个 `types.GenericAlias` 对象（3.9 起），只记录 `__origin__ = list` 和 `__args__ = (int,)`。`int | None` 调用 `type.__or__`（3.10 起），得到一个联合类型对象；3.14 起它的类型就是 `typing.Union`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 152">
 <rect x="8" y="22" width="96" height="30" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="56" y="42" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">list[int]</text>
@@ -34,7 +33,6 @@ step: 2
 <text x="140" y="130" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">(int, NoneType)</text>
 <text x="56" y="148" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">只是标签</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 只有两个动作：`iter(x)` 拿到游标（迭代器，iterator）；对游标反复调用 `next()`，直到它抛出 `StopIteration`，`for` 接住这个异常，循环就结束。能被 `iter()` 的东西叫可迭代对象（iterable，有 `__iter__`）；游标自己有 `__next__`，并且 `iter(游标)` 返回它自己。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -50,7 +49,6 @@ step: 1
 </g>
 </g>
 </svg>
-```
 
 ```python
 it = iter([10, 20, 30])

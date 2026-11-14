@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 分层近邻图（HNSW，Hierarchical Navigable Small World）：所有点都在最底层，少数点还出现在上一层，层越高点越少。先在稀疏的上层大步走，再下到底层细找，和跳表（skip list）的快车道是同一个思路。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 228">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" fill="currentColor" stroke="currentColor">
 <text x="6" y="20" text-anchor="start" style="stroke:none;fill:var(--dim,#6b7280)">上层 稀疏</text>
@@ -56,7 +55,6 @@ step: 1
 <text x="170" y="218" style="stroke:none;fill:var(--dim,#6b7280)">只走底层要5到12到25到33, 共3步</text>
 </g>
 </svg>
-```
 
 **细节。**
 

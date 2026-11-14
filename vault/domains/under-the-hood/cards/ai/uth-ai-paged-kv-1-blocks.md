@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 把 KV 缓存切成固定大小的块，写到哪分到哪；每个请求有一张块表（block table），记着第几个逻辑块在哪个物理块。这就是操作系统的分页：块是页，token 是字节，请求是进程。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 250">
 <text x="12" y="16" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">连续预留: 按最长 16 格占位</text>
 <rect x="20" y="24" width="18" height="24" rx="0" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -65,7 +64,6 @@ step: 1
 <polygon points="266,168 258.6,166.3 262.2,161.4" style="fill:var(--accent,#3b6fd4)"/>
 <text x="170" y="240" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">浪费最多只在每个请求的最后一块里</text>
 </svg>
-```
 
 **细节。**
 

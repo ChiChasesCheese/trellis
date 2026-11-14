@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 折中：双向链表，每个节点不放一个元素，而是一整块 64 个槽（`BLOCKLEN = 64`），两端各记一个块内下标。在头尾增删只改端点块里的一个槽，满了才挂一个新块。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170">
 <rect x="14" y="50" width="88" height="40" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <rect x="18" y="58" width="10" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="0.8"/>
@@ -60,7 +59,6 @@ step: 1
 <text x="257" y="154" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">rightindex</text>
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">双向链表 每个节点是一整块</text>
 </svg>
-```
 
 **细节。**
 

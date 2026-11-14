@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 每个 epoll 实例（`struct eventpoll`）里有两样东西：红黑树 `rbr`（一种保持平衡的有序树，增删查都是 O(log n)）存全部登记过的 fd；就绪链表 `rdllist` 只存已有数据的 fd。例：登记了 fd 5 和 fd 10，10 号来了数据，它被挂进 `rdllist`，`epoll_wait` 只返回它。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 184">
 <line x1="170" y1="43" x2="110" y2="53" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <line x1="170" y1="43" x2="230" y2="53" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -53,7 +52,6 @@ step: 1
 <path d="M258.0,160.0 L251.2,163.3 L251.2,156.7 Z" fill="currentColor" stroke="none"/>
 <text x="262" y="164" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">epoll_wait</text>
 </svg>
-```
 
 **细节。**
 

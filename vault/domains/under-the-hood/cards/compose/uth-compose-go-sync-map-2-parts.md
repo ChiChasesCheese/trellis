@@ -12,7 +12,6 @@ step: 2
 ## A
 **结构。** `read`（原子指针，指向一张发布后不再增删 key 的表）；`dirty`（要持锁才能改的表，含 `read` 的全部有效项和新 key）；`misses`（读不到 `read` 而去查 `dirty` 的次数）；标志 `amended`（`dirty` 里有 `read` 没有的 key）。两张表装的是同一批 `entry`（值的原子指针），改值不必改两处。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 252">
 <rect x="10" y="22" width="150" height="128" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
 <text x="18" y="40" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">read</text>
@@ -40,7 +39,6 @@ step: 2
 <text x="10" y="224" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">Load: 先看 read; 没中且 amended 才加锁查 dirty</text>
 <text x="10" y="242" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">misses >= len(dirty): dirty 整体变成 read</text>
 </svg>
-```
 
 | 操作 | 碰哪几个结构 | 复杂度 |
 |---|---|---|

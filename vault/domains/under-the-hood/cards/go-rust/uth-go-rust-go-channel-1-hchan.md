@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 一个 `hchan` 结构：一把锁、一个环形缓冲区（数组首尾相接，用两个下标分别记读、写位置），外加接收和发送两条等待队列。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">make(chan int, 3): 环形缓冲, 容量 3</text>
 <rect x="30" y="28" width="44" height="28" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -37,7 +36,6 @@ step: 1
 <text x="10" y="176" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">缓冲有数据: 接收者直接取走; 没数据: 挂进 recvq 睡眠</text>
 <text x="10" y="192" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">缓冲满了: 发送者挂进 sendq 睡眠</text>
 </svg>
-```
 
 **细节。**
 

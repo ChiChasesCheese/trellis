@@ -14,7 +14,6 @@ step: 5
 
 **结构。** 三条链：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -61,7 +60,6 @@ step: 5
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

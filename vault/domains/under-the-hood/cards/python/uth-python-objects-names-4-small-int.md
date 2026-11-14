@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 解释器预先备好 -5 到 256 共 262 个整数对象，放在一张固定的表里；要这个范围内的整数，直接指向现成的那个，不再新建。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="20" y="20" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">预先备好 -5 到 256 共 262 个整数</text>
 <rect x="20" y="30" width="44" height="24" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -55,7 +54,6 @@ step: 4
 <text x="180" y="160" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">int("257") 两次</text>
 <text x="180" y="180" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">各建一个  is 假</text>
 </svg>
-```
 
 **细节。**
 

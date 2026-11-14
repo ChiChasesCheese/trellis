@@ -13,7 +13,6 @@ step: 2
 - **验证集（validation set）：** 用来做"人的决定"：选模型结构、调学习率等超参数（人设定的配置）、决定何时停止训练。通常 10%–15%。
 - **测试集（test set）：** 所有决定都做完之后，**只用一次**，报告最终表现。通常 10%–15%。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 128" font-family="sans-serif" font-size="11">
 <rect x="10" y="10" width="240" height="30" fill="currentColor" fill-opacity="0.15" stroke="currentColor"/>
 <text x="130" y="29" text-anchor="middle" fill="currentColor">训练集</text>
@@ -25,7 +24,6 @@ step: 2
 <text x="10" y="90" fill="currentColor">验证集 10%–15%：选结构、调超参数、决定何时停</text>
 <text x="10" y="112" fill="currentColor">测试集 10%–15%：所有决定做完后只用一次</text>
 </svg>
-```
 
 **为什么要三份：** 如果用测试集来挑超参数，试了 50 组配置、挑测试分数最高的那组，这组分数就被"挑"高了，不再代表模型在新数据上的真实表现。验证集承担反复挑选的工作，测试集保持"没被看过"。这和软件测试的道理一样：用来调代码的测试用例，不能再用来证明代码没问题。
 

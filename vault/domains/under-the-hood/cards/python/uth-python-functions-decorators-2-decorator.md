@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `@deco` 写在 `def` 上，等价于定义完函数后执行 `f = deco(f)`：装饰器就是「收一个函数、返回一个函数」的函数，名字 `f` 从此指向返回的新函数。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="10" y="18" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">装饰前  def fib 之后</text>
 <rect x="10" y="28" width="40" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -39,7 +38,6 @@ step: 2
 <text x="170" y="184" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">递归里写的 fib(n - 1)</text>
 <text x="170" y="204" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">现在查到的是 wrapper</text>
 </svg>
-```
 
 **细节。**
 

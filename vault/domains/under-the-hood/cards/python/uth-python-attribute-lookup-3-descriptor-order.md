@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 取 `d.x` 的步骤如下（CPython 的 `object.__getattribute__`）：先在类和父类里找名字，找到数据描述符就直接用它，否则才看实例字典。数据描述符是定义了 `__set__` 或 `__delete__` 的对象，如 `property`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 250">
 <rect x="10" y="8" width="320" height="32" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="20" y="29" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">1 在类和父类里找这个名字</text>
@@ -35,7 +34,6 @@ step: 3
 <rect x="10" y="200" width="320" height="32" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="20" y="221" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">5 都没有 AttributeError</text>
 </svg>
-```
 
 **细节。**
 

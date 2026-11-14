@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 堆摊在数组里：下标 i 的孩子在 2i+1、2i+2，没有指针。`std::priority_queue` 只是 `vector` 加 `push_heap` / `pop_heap` 的一层包装。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 236">
 <line x1="159.136" y1="31.1393" x2="110.864" y2="62.8607" style="stroke:var(--accent,#3b6fd4)" stroke-width="2"/>
 <line x1="180.864" y1="31.1393" x2="229.136" y2="62.8607" stroke="currentColor" stroke-width="1"/>
@@ -69,7 +68,6 @@ step: 1
 <text x="305" y="210.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">10</text>
 <text x="305" y="230" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">7</text>
 </svg>
-```
 
 **细节。**
 

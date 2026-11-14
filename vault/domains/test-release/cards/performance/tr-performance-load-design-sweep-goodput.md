@@ -14,7 +14,6 @@ step: 2
 3. 每级记录吞吐、p50 和 p99 延迟、错误率、排队长度；
 4. 画"负载 – 延迟"曲线：低负载时延迟基本平坦，接近容量时 p99 开始快速上升，超过容量后排队无限增长、延迟发散。**拐点**就是 p99 开始陡升的位置。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 225">
 <g font-family="sans-serif" font-size="12">
 <line x1="50" y1="190" x2="320" y2="190" stroke="currentColor"/>
@@ -32,7 +31,6 @@ step: 2
 <text x="280" y="128" fill="currentColor">超标</text>
 </g>
 </svg>
-```
 
 `vllm bench serve` 也支持在一次运行中逐步加压：`--ramp-up-strategy linear --ramp-up-start-rps 1 --ramp-up-end-rps 20`；但分级运行、每级单独统计更容易分析。
 

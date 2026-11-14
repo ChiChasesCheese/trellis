@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 不是这样。每个非空的格（bucket）被放进一个 `DelayQueue`（按到期时间排序、没到期就取不出来的队列）；线程用 `poll` 阻塞到最早的格到期，再把时钟直接推进到那一格的起点。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 162">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">时间轮的格 (灰色 = 非空)</text>
 <rect x="26" y="20" width="24" height="22" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -46,7 +45,6 @@ step: 2
 <text x="78" y="134" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">poll 睡到最早的格到期</text>
 <text x="8" y="154" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">DelayQueue: 按到期时间排序</text>
 </svg>
-```
 
 **细节。**
 

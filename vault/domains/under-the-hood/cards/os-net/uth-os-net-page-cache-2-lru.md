@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 文件页挂在不活跃和活跃两条链表上（`LRU_INACTIVE_FILE` 与 `LRU_ACTIVE_FILE`），回收优先从不活跃链表的尾部下手。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176">
 <text x="70" y="34" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">不活跃链表</text>
 <text x="70" y="112" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">活跃链表</text>
@@ -38,7 +37,6 @@ step: 2
 <text x="92" y="162" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">头</text>
 <text x="224" y="162" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">尾</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `du` 在一个循环里不停向遍历库要「下一个条目」，自己只维护数组 `dulvl[层号]`：每层两个累加器，一个是这一层条目之和，一个是已离开的子目录合计。深度变化时：往下走，新层清零；往上回一层，就把下层的合计加进上层。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="147" y="24" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">本层条目</text>
 <text x="223" y="24" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">子目录合计</text>
@@ -39,7 +38,6 @@ step: 2
 <path d="M223,62 L226,68 L220,68 Z" stroke="none" style="fill:var(--accent,#3b6fd4)"/>
 <text x="170" y="190" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">回到上一层时 下层的合计加进上层的 subdir</text>
 </svg>
-```
 
 **细节。**
 

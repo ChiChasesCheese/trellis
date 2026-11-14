@@ -14,7 +14,6 @@ step: 5
 
 **结构。** `class C(B, metaclass=Meta): ...` 的最后一步是调用 `Meta("C", (B,), 命名空间字典)`。不写 `metaclass` 时，取所有父类的元类里「最派生」的那个，默认是 `type`；父类的元类互不相关就 `TypeError`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -45,7 +44,6 @@ step: 5
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 编译器扫描函数体：只要某个名字在函数里被赋值过（参数、`=`、`for` 的循环变量……），它就是局部变量，被编上号放进栈帧里的一个数组，`LOAD_FAST 1` 就是「取数组第 1 格」。其他名字编译成 `LOAD_GLOBAL`，先查模块的全局字典，找不到再查内置字典。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -55,7 +54,6 @@ step: 3
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

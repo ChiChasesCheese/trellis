@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 小字符串优化（Small String Optimization，SSO）：对象里留一小段缓冲，字符串够短就直接存在里面，否则存堆指针。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">短串: 字符就在对象里 (libstdc++ 32 字节)</text>
 <rect x="10" y="26" width="54" height="26" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="1"/>
@@ -39,7 +38,6 @@ step: 1
 <text x="159" y="177.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">堆上的 40+ 字节 (一次 malloc)</text>
 <text x="8" y="202" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">libc++: 对象 24 字节, 内联 22 字符</text>
 </svg>
-```
 
 **细节。**
 

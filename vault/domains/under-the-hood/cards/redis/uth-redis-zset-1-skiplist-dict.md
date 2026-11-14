@@ -14,7 +14,6 @@ Redis 的 ZSET 底层是什么？`ZSCORE` 和 `ZRANGE` 为什么都很快？
 
 **结构。** 一张哈希表（成员 → 分数）加一个跳表（按分数排序），两者共用同一份成员字符串。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 232">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">哈希表: 成员 → 分数 (查分数 O(1))</text>
 <rect x="10" y="24" width="64" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -66,7 +65,6 @@ Redis 的 ZSET 底层是什么？`ZSCORE` 和 `ZRANGE` 为什么都很快？
 <text x="8" y="202" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">两个结构共用同一份成员字符串, 各管一种查询</text>
 <text x="8" y="220" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">只有跳表: 按成员找分数要 O(n); 只有哈希表: 没有顺序</text>
 </svg>
-```
 
 **细节。**
 

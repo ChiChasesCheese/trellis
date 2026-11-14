@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 和 `HashMap` 一样的桶数组加链表或红黑树，但并发控制细到**单个桶**：目标桶为空，用 CAS（比较并交换：确认它还是空的才写入，否则重试）直接放入新节点，不加锁；桶非空，只锁这个桶的头节点。例：线程甲写桶 3、线程乙写桶 7，互不干扰。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="20" y="20" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">桶数组</text>
 <rect x="20" y="28" width="44" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -43,7 +42,6 @@ step: 1
 <text x="206" y="108" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">只锁头节点</text>
 <text x="206" y="172" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">get 不加锁</text>
 </svg>
-```
 
 **细节。**
 

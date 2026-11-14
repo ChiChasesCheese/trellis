@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 队列 `queue` 管先后；`dirty` 记还没处理的 key；`processing` 记正在处理的 key。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 206">
 <text x="14" y="28" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">队列 queue</text>
 <text x="14" y="74" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">dirty 待处理</text>
@@ -41,7 +40,6 @@ step: 4
 <text x="170" y="174" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">正在处理的 key 只进 dirty 不入队</text>
 <text x="170" y="192" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">Done: dirty 里又有它 再入队 (k5)</text>
 </svg>
-```
 
 | 动作 | 规则 |
 |---|---|

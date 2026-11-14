@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 先查 `sys.modules` 缓存；没有，再按顺序问三位「找人的」（`sys.meta_path`）：内置模块、冻结模块（启动必需的核心模块，如 `os`，字节码已编译进解释器），最后是 `PathFinder`，沿 `sys.path` 这个目录列表从前往后找，第一个命中就停。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <rect x="14" y="18" width="204" height="28" rx="3" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
 <text x="24" y="37" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">1  脚本所在目录 有 random.py</text>
@@ -31,7 +30,6 @@ step: 3
 <text x="258" y="106" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">就停</text>
 <text x="170" y="176" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">内置模块 如 sys 在查 sys.path 之前就命中</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ InnoDB 按二级索引（比如 `name`）查整行要走几棵 B+ 树？为什�
 
 **结构。** 聚簇索引（clustered index）就是按主键组织的 B+ 树，叶子页存整行。二级索引的叶子只存“二级键 + 主键值”。按 `name` 查整行：先在二级索引找到主键，再到聚簇索引按主键查一次，这一步叫回表，共 2 次树查找。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 148">
 <text x="73" y="14" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">二级索引 (name)</text>
 <text x="267" y="14" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">聚簇索引 (主键)</text>
@@ -29,7 +28,6 @@ InnoDB 按二级索引（比如 `name`）查整行要走几棵 B+ 树？为什�
 <text x="170" y="92" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">回表</text>
 <text x="170" y="138" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">找 1 行要查 2 棵 B+ 树</text>
 </svg>
-```
 
 **细节。**
 

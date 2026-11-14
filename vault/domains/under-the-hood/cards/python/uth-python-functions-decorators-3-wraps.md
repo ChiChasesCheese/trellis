@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 在 wrapper 上加 `@wraps(f)`：把原函数 `f` 的元信息逐项复制过来，再设置 `__wrapped__` 指回 `f`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <rect x="10" y="28" width="122" height="92" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="71" y="46" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">fib 原函数</text>
@@ -39,7 +38,6 @@ step: 3
 <text x="170" y="178" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">只复制元信息 行为不变</text>
 <text x="170" y="198" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">__wrapped__ 指回原函数</text>
 </svg>
-```
 
 **细节。**
 

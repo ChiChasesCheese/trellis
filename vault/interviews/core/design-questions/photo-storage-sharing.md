@@ -50,7 +50,6 @@ kind: system-design
   - `POST /collections`、`PATCH /collections/{id} {name, parentId}`、`DELETE /collections/{id}`、`POST /collections/{id}/items`。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 294">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -86,7 +85,6 @@ kind: system-design
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="252" font-size="11">集合与成员关系同分片</text></g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="268" font-size="11">分析不碰线上库</text></g>
 </g></svg>
-```
 1. 上传：客户端先在本地计算内容哈希，请求上传会话；服务端若发现该用户已有相同哈希则直接返回已有照片（去重，省带宽）；否则返回预签名地址，客户端分片直传对象存储，完成后调用 complete。
 2. 异步处理：对象存储的新对象事件触发处理流水线：校验格式、提取 EXIF（拍摄时间、地点、尺寸）、生成多档缩略图（例如 256、1024 像素的 WebP）、写入元数据库把状态改为 READY。用户在处理完成前就能看到本地预览。
 3. 元数据服务：按 owner_id 哈希分片的关系库，一个用户的照片、集合、成员记录在同一分片，保证集合操作的事务不跨分片。

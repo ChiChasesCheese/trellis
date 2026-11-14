@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 所以不删：只给句柄打上已取消的标记，仍留在堆里，这叫惰性删除（lazy deletion）。轮到它当堆顶时再丢掉。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">最小堆 (call_later 句柄)</text>
 <line x1="170" y1="58" x2="100" y2="78" stroke-width="1.2" stroke="currentColor"/>
@@ -43,7 +42,6 @@ step: 2
 <rect x="20" y="168" width="14" height="14" rx="3" fill="none" stroke-width="1.2" stroke-dasharray="4 3" style="stroke:var(--accent,#3b6fd4)"/>
 <text x="42" y="179" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">cancel() 只打标记 仍留在堆里</text>
 </svg>
-```
 
 **细节。**
 

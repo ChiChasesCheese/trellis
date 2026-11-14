@@ -12,7 +12,6 @@ step: 2
 ## A
 **结构。** 三张表：`items`（key → 对象，唯一存放对象的地方）、`indexers`（索引名 → 索引函数，从对象算出它属于哪些分组）、`indices`（索引名 → 分组值 → key 集合）。索引里只存 key，不存对象。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 244">
 <rect x="10" y="22" width="320" height="70" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
 <text x="18" y="38" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">items: key -> 对象 (对象只存这一份)</text>
@@ -42,7 +41,6 @@ step: 2
 <text x="10" y="204" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">索引只存 key: 先拿到 key 集合, 再回主表取对象</text>
 <text x="10" y="222" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">写一个对象: 主表和每个索引都要改</text>
 </svg>
-```
 
 | 操作 | 碰哪几个结构 | 复杂度 |
 |---|---|---|

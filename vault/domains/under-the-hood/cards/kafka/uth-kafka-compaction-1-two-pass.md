@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 压实（compaction）只扫两遍。第一遍从头扫“脏段”（上次清理之后追加的段，不含正在写的活动段），用哈希表（一张 key 到数据的小表，查一次是 O(1)）记下每个 key 最后一次出现的偏移量（offset，消息在日志里的序号）。第二遍重写段文件，只留下偏移量不小于表中记录的消息。图里 A 出现了三次，清理后只剩 A:5。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 158">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">脏段 (追加的消息, key:偏移)</text>
 <rect x="8" y="20" width="48" height="26" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3" style="stroke:var(--dim,#6b7280)"/>
@@ -50,7 +49,6 @@ step: 1
 <rect x="273" y="124" width="48" height="26" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
 <text x="297" y="141.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">A:5</text>
 </svg>
-```
 
 **为什么。** 两遍各扫一次，代价只和日志长度成正比；表里只记最新位置，不用把整条消息装进内存。
 

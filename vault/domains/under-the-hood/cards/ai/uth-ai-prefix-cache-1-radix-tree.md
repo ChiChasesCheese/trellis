@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 基数树（radix tree）：前缀树（trie）的压缩版，每条边是一段 token，节点挂着这段的 KV 缓存。从根出发，沿着与新请求相同的边往下走，走到的深度就是命中长度；只匹配半条边时，在分叉处把边劈成两条。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210">
 <circle cx="170" cy="20" r="9" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
 <text x="170" y="24" text-anchor="middle" font-size="11" font-family="sans-serif" fill="currentColor">根</text>
@@ -37,7 +36,6 @@ step: 1
 <text x="170" y="184" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">虚线: 最久没用的叶子, 先淘汰</text>
 <text x="170" y="202" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每条边是一段 token, 共同开头只存一份</text>
 </svg>
-```
 
 **细节。**
 

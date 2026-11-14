@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 名字 → 对象的指针表，模块级的名字就存在一个 `dict` 里（`globals()`）。`b = a` 只是在表里再添一条「`b` → 同一个对象」，不复制任何东西。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="130" y="24" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">b = a  同一个对象</text>
 <rect x="12" y="36" width="34" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -45,7 +44,6 @@ step: 1
 <polygon points="128.0,140.0 122.1,143.2 121.9,137.2" fill="currentColor" stroke="currentColor" stroke-width="0.5"/>
 <text x="170" y="184" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">赋值只贴标签 copy() 才造新对象</text>
 </svg>
-```
 
 **细节。**
 

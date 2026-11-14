@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `fork()` 出子进程：子进程看到 fork 那一刻的内存，慢慢写盘；父进程照常服务。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">fork 之后: 父子两个进程共用同样的内存页</text>
 <rect x="10" y="26" width="320" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="1"/>
@@ -42,7 +41,6 @@ step: 2
 <text x="8" y="182" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">父进程要改页 2: 先复制一份给自己, 再改副本</text>
 <text x="8" y="200" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">谁改哪一页才复制那一页; 子进程的页 2 不变</text>
 </svg>
-```
 
 **细节。**
 

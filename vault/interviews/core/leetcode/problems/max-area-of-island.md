@@ -9,6 +9,39 @@ slug: max-area-of-island
 ## A
 **一句话。** 连通块 DFS：遇到 `1` 就沉岛（改成 `0`），返回自己加四个方向的面积。
 
+**图解。** DFS 每沉一格返回 1 加四邻面积，整座岛的面积一次求出。
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140">
+<rect x="20" y="16" width="28" height="28" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="34.0" y="34.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="48" y="16" width="28" height="28" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="62.0" y="34.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">4</text>
+<rect x="76" y="16" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="104" y="16" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="132" y="16" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="20" y="44" width="28" height="28" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="34.0" y="62.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">2</text>
+<rect x="48" y="44" width="28" height="28" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="62.0" y="62.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">3</text>
+<rect x="76" y="44" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="104" y="44" width="28" height="28" rx="1" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<rect x="132" y="44" width="28" height="28" rx="1" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<rect x="20" y="72" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="48" y="72" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="76" y="72" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="104" y="72" width="28" height="28" rx="1" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<rect x="132" y="72" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="20" y="100" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="48" y="100" width="28" height="28" rx="1" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<rect x="76" y="100" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="104" y="100" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<rect x="132" y="100" width="28" height="28" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="176" y="34" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">数字：沉岛顺序</text>
+<text x="176" y="56" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">dfs 返回 1 + 四邻之和</text>
+<text x="176" y="80" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">三座岛面积 4、3、1</text>
+<text x="176" y="106" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)" font-weight="600">答案 4</text>
+</svg>
+
 ```python
 def max_area_of_island(grid):
     m, n = len(grid), len(grid[0])

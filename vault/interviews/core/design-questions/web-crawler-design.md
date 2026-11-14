@@ -44,7 +44,6 @@ kind: system-design
 - 接口：系统本身不是面向用户的服务，边界是"输入种子，输出文本"。作业型变体有三个接口：`POST /jobs`（种子数组，返回 job_id）、`GET /jobs/{id}/status`（已完成与进行中的种子数）、`GET /jobs/{id}/results`（种子到图片 URL 列表的映射）。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 344">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -82,7 +81,6 @@ kind: system-design
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="302" font-size="11">去重后的新链接回到前沿</text></g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="318" font-size="11">主机按哈希固定归属下载节点</text></g>
 </g></svg>
-```
 1. 前沿（frontier）：URL 队列，分两层。前层按优先级（站点权重、深度、更新频率）分队列；后层每个主机一个队列，并有一个按"下次允许访问时间"排序的堆。取 URL 时先从堆里取出到点的主机，再从该主机队列取一条，访问后把该主机的下次时间推后 Crawl-delay（至少 1 秒）。这样天然做到每主机串行、全局并行。
 2. 下载器：按主机名哈希把主机分配给固定的下载节点，该节点本地持有这些主机的队列、robots 缓存和礼貌计时，不需要全局锁。下载器带本地 DNS 缓存，请求设置超时与最大响应体积，先查 robots.txt 再请求，响应原样写入对象存储，往解析队列投一条只含 URL 指纹的消息。
 3. 解析器：从对象存储读取 HTML，提取文本、链接、图片，文本写回对象存储，更新元数据库；新链接经规范化后去重，再回到前沿。

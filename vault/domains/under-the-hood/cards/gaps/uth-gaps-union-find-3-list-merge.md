@@ -12,7 +12,6 @@ step: 3
 ## A
 **结构。** 没有。每个等价类就是一个成员链表，合并时把一个类的链表接到另一个后面（`list_concat`），再把被并的类从类列表里摘掉。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 188">
 <text x="14" y="38" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">ec1</text>
 <rect x="44" y="22" width="54" height="24" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -43,7 +42,6 @@ step: 3
 <text x="268" y="108" text-anchor="end" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">ec_merged</text>
 <text x="170" y="178" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">类 ec2 留下指向 ec1 的指针 别处的旧引用仍能找到它</text>
 </svg>
-```
 
 **细节。**
 

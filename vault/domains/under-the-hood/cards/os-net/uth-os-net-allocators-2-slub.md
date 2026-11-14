@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 每种大小一个缓存（名字像 `kmalloc-128`），缓存里是若干 slab 页。内核 7.3 里 slab 分配器只剩 SLUB 一种实现。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 212">
 <text x="20" y="16" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">kmalloc 大小档</text>
 <rect x="19" y="26" width="54" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -52,7 +51,6 @@ step: 2
 <path d="M236.0,166.0 L232.5,172.6 L228.6,167.3 Z" stroke="none" style="fill:var(--accent,#3b6fd4)"/>
 <text x="170" y="204" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">空闲格子体内存着下一个空闲格子的指针</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 1
 
 **结构。** listpack：一整段连续内存，6 字节头部（总字节数 + 元素个数），后面依次排着元素。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">listpack: 一整段连续内存</text>
 <rect x="10" y="26" width="52" height="30" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -46,7 +45,6 @@ step: 1
 <text x="8" y="170" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">超过阈值才转成哈希表 / 跳表:</text>
 <text x="8" y="186" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">Hash 512 条, ZSET 128 条, 单个值超 64 字节</text>
 </svg>
-```
 
 **细节。**
 

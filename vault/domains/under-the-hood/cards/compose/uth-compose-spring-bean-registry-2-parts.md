@@ -12,7 +12,6 @@ Spring 的 Bean 注册表由哪几个结构组成？它们之间怎么互相指�
 ## A
 **结构。** 定义放在 `DefaultListableBeanFactory`，依赖和销毁记录放在它的祖先类 `DefaultSingletonBeanRegistry`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 232">
 <text x="84" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">定义注册表</text>
 <text x="256" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">依赖记录</text>
@@ -40,7 +39,6 @@ Spring 的 Bean 注册表由哪几个结构组成？它们之间怎么互相指�
 <text x="170.0" y="191.0" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">按创建的顺序 关闭时反序走</text>
 <text x="170" y="222" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">销毁一个 Bean: 先销毁 dependentBeanMap 里的依赖者</text>
 </svg>
-```
 
 | 操作 | 碰哪几个结构 | 复杂度 |
 |---|---|---|

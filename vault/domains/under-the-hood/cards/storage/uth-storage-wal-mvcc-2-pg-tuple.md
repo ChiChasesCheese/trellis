@@ -14,7 +14,6 @@ PostgreSQL 里 `UPDATE` 一行，旧数据去哪了？读事务为什么不用�
 
 **结构。** 堆表里每个元组（tuple，一行记录的一个版本）带 23 字节的头：`t_xmin`（创建它的事务号）、`t_xmax`（删除或锁定它的事务号）、`t_ctid`（指向新版本的指针）。`UPDATE` = 写一个新元组，并把旧元组的 `xmax` 设成当前事务。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 146">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">旧元组</text>
 <rect x="12" y="20" width="102" height="26" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -34,7 +33,6 @@ PostgreSQL 里 `UPDATE` 一行，旧数据去哪了？读事务为什么不用�
 <polygon points="275,82 272.0,76.0 278.0,76.0" stroke="currentColor" stroke-width="0.5" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)"/>
 <text x="170" y="140" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">UPDATE: 写新元组, 旧的 xmax 设为 105</text>
 </svg>
-```
 
 **细节。**
 

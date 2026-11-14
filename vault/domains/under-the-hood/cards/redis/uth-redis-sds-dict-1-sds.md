@@ -14,7 +14,6 @@ Redis 的字符串底层 SDS（Simple Dynamic String）和 C 的 `char*` 比，�
 
 **结构。** 一段连续内存，头部存 `len`（已用）、`alloc`（容量）、`flags`（类型），指针指向头部之后的字符数据。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">SDS: 头部 + 字符数据</text>
 <rect x="10" y="28" width="50" height="30" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="1"/>
@@ -43,7 +42,6 @@ Redis 的字符串底层 SDS（Simple Dynamic String）和 C 的 `char*` 比，�
 <text x="8" y="150" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">长度 O(1) 读出; 内容里可以有 \0 (二进制安全)</text>
 <text x="8" y="172" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">C 字符串求长度要扫一遍, 追加要反复 realloc</text>
 </svg>
-```
 
 **细节。**
 

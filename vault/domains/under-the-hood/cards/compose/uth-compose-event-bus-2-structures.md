@@ -10,7 +10,6 @@ step: 2
 Guava 的订阅表怎样组织，才能让发布时不加锁、登记时也不出错？`post` 碰哪几个结构？
 
 ## A
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 214">
 <rect x="10" y="8" width="130" height="28" rx="3" stroke-width="1.2" stroke="currentColor" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="75.0" y="26.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">post(OrderPaid)</text>
@@ -52,7 +51,6 @@ Guava 的订阅表怎样组织，才能让发布时不加锁、登记时也不�
 <text x="10" y="140" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">ConcurrentMap</text>
 <text x="10" y="156" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">类型 -&gt; 写时复制集合</text>
 </svg>
-```
 
 **结构。** 一张并发表 `ConcurrentMap<Class, CopyOnWriteArraySet<Subscriber>>`：键是事件类型，值是订阅者集合。`CopyOnWriteArraySet` 是写时复制（copy-on-write）集合：每次增删都复制出一份新数组再换上，读者手里始终是一份完整的旧数组。
 

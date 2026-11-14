@@ -14,7 +14,6 @@ step: 1
 
 **结构。** Python、Java、PCRE 是回溯匹配器。RE2 和 Go 的 `regexp` 用自动机（Thompson 提出的 NFA 模拟），逐字符推进状态集合。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170">
 <text x="85" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" font-weight="bold">回溯</text>
 <text x="255" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" font-weight="bold">自动机</text>
@@ -52,7 +51,6 @@ step: 1
 <line x1="264" y1="74" x2="296" y2="104" fill="none" stroke="currentColor" stroke-width="1.8" style="stroke:var(--accent,#3b6fd4)"/>
 <text x="255" y="152" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">同时走所有分支 线性</text>
 </svg>
-```
 
 **细节。**
 

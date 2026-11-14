@@ -39,7 +39,6 @@ kind: system-design
 - 接口：`GET /top-k?window=1h|1d|1m|all&k=100&region=` 返回 `[{id, count}]`。事件不走在线 API 写入，假设上游已经把事件写进一个按对象 ID 分区的 Kafka 主题。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 328">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -74,7 +73,6 @@ kind: system-design
 </g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="302" font-size="11">读路径只读缓存, 不碰数据库</text></g>
 </g></svg>
-```
 1. 事件进入 Kafka，按对象 ID 分区，这样同一对象的所有事件落在同一个消费者上。
 2. **Flink 分钟级本地聚合：** 流处理作业（Flink）对每个对象按分钟做本地聚合，设置约 30 秒的乱序容忍水位线（watermark），把"每次播放一条写入"压缩成"每个对象每分钟一条写入"，写入量通常降低 2 到 100 倍。
 3. 聚合结果写入按对象 ID 分片的存储，保存"窗口桶 + 对象 → 计数"。

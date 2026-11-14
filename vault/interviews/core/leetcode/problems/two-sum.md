@@ -9,6 +9,32 @@ slug: two-sum
 ## A
 **一句话。** 哈希表存「值→下标」，一遍扫描时先查 `target - x` 是否出现过，再存 `x`。
 
+**图解。** 扫到 `7` 时，`9 - 7 = 2` 已在表里，直接配对。
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150">
+<rect x="60" y="40" width="40" height="28" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="80.0" y="58.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">2</text>
+<rect x="100" y="40" width="40" height="28" rx="2" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="120.0" y="58.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">7</text>
+<rect x="140" y="40" width="40" height="28" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="160.0" y="58.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">11</text>
+<rect x="180" y="40" width="40" height="28" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="200.0" y="58.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">15</text>
+<text x="52" y="58" text-anchor="end" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">nums</text>
+<text x="80.0" y="82" text-anchor="middle" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">0</text>
+<text x="120.0" y="82" text-anchor="middle" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">1</text>
+<text x="160.0" y="82" text-anchor="middle" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">2</text>
+<text x="200.0" y="82" text-anchor="middle" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">3</text>
+<polyline points="120.0,24 120.0,40" fill="none" stroke-width="1.4" style="stroke:var(--accent,#3b6fd4)"/>
+<polygon points="120.0,40.0 117.0,34.0 123.0,34.0" style="fill:var(--accent,#3b6fd4)"/>
+<text x="120.0" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">i</text>
+<text x="232" y="58" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">target = 9</text>
+<rect x="60" y="96" width="104" height="26" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="112" y="113" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">seen = {2: 0}</text>
+<text x="176" y="113" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">9 − 7 = 2 在表里</text>
+<text x="176" y="136" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">→ 返回 [0, 1]</text>
+</svg>
+
 ```python
 def two_sum(nums, target):
     seen = {}                    # 值 -> 下标

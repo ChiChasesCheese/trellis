@@ -14,7 +14,6 @@ GPU 每一步最多处理固定数量的 token。很多请求在排队：有的�
 
 **结构。** 每一步从 `token_budget`（默认等于 `max_num_batched_tokens`）往下扣：先给正在运行的请求各分一份（正在生成的通常只差 1 个 token），再按先来先到（默认 `fcfs`）从等待队列队首取请求，给它「需要的和剩余预算里较小的」个 token，预算用完就停。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 160">
 <text x="170" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">一步的 token 预算 (一步最多处理的 token 数)</text>
 <rect x="20" y="30" width="300" height="32" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -33,7 +32,6 @@ GPU 每一步最多处理固定数量的 token。很多请求在排队：有的�
 <line x1="300" y1="64" x2="300" y2="112" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3" style="stroke:var(--dim,#6b7280)"/>
 <path d="M300,118 L297,112 L303,112 Z" stroke="none" style="fill:var(--dim,#6b7280)"/>
 </svg>
-```
 
 **细节。**
 

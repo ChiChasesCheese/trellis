@@ -18,7 +18,6 @@ step: 1
 | CUDA Graph 和运行时开销 | 约 1 GB | 预先录制的批大小数量；CUDA 上下文本身约几百 MB |
 | KV 缓存 | 剩下的约 52 GB | 每 token 字节数 × 能装的 token 数 |
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 122" font-family="sans-serif" font-size="11">
 <text x="10" y="18" fill="currentColor">80 GB 显存（Llama 3.1 8B，BF16）</text>
 <rect x="10" y="28" width="32" height="30" fill="none" stroke="currentColor" stroke-dasharray="3 2"/>
@@ -33,7 +32,6 @@ step: 1
 <text x="100" y="88" fill="currentColor">激活 1–3 GB + 运行时开销约 1 GB</text>
 <text x="10" y="112" fill="currentColor">权重是固定成本；KV 缓存决定能服务多少人</text>
 </svg>
-```
 
 **名词：**
 - **激活值（activation）：** 前向计算过程中每层产生的临时结果。推理时用完即丢，所以只需按"一步里同时处理的 token 数"留出峰值空间，不像训练那样要全部保存。

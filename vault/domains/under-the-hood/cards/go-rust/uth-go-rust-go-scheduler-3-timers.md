@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 每个 P 持有一个定时器最小堆，堆顶就是最近要触发的定时器；而且是四叉堆（4-ary heap，每个节点 4 个孩子）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">每个 P 一个定时器堆, 四叉堆 (4-ary)</text>
 <circle cx="170" cy="40" r="13" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="2"/>
@@ -53,7 +52,6 @@ step: 3
 <text x="8" y="182" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">堆顶 = 最近要触发的定时器, 调度循环每轮看一眼</text>
 <text x="8" y="198" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">层数只有二叉堆的一半; 4 个孩子在数组里相邻</text>
 </svg>
-```
 
 **细节。**
 

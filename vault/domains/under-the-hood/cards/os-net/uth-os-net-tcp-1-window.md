@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 把要发的字节流想成一排格子：已确认 | 已发未确认 | 可发 | 暂不能发。窗口覆盖中间两段，大小 = min(rwnd, cwnd)：接收窗口 rwnd 是对方说“我的缓冲区还能收多少”，拥塞窗口 cwnd 是自己估计“网络能承受多少”。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150">
 <rect x="26" y="44" width="24" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
 <text x="38" y="61" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">1</text>
@@ -52,7 +51,6 @@ step: 1
 <path d="M138.0,116.0 L131.2,119.3 L131.2,112.7 Z" stroke="none" style="fill:var(--accent,#3b6fd4)"/>
 <text x="144" y="120" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">收到 ACK 左边界右移</text>
 </svg>
-```
 
 **细节。**
 

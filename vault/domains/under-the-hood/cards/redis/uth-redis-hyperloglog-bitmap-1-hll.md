@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 16384 个寄存器，每个 6 位，共 12288 字节；元素先哈希成 64 位。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">元素 → 64 位哈希</text>
 <rect x="10" y="24" width="190" height="26" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -46,7 +45,6 @@ step: 1
 <text x="8" y="182" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">PFMERGE: 逐个寄存器取最大值</text>
 <text x="8" y="200" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">不存元素本身: 只能估数量, 不能查某个元素在不在</text>
 </svg>
-```
 
 **细节。**
 

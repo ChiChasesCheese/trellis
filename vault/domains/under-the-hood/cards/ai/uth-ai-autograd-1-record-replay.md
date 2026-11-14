@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 前向计算时，每做一次运算，PyTorch 就记下一个节点（`grad_fn`）：输入是谁、反向怎么算，连成一张有向无环图。`backward()` 从损失出发沿图往回走，每个节点把收到的梯度乘上自己的局部导数，传给它的输入。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 244">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" fill="currentColor" stroke="currentColor">
 <rect x="8" y="28" width="44" height="28" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke-width:1"/>
@@ -47,7 +46,6 @@ step: 1
 <text x="170" y="234" stroke="none">a收到1和3, 相加得4; b收到2</text>
 </g>
 </svg>
-```
 
 **细节。**
 

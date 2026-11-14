@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 权重 a=5、b=1、c=1，总权重 7。下表是每轮加完权重后的得分，框出的是被选中的：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 236">
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">每轮先加权重 再选最大的 选中后减 7</text>
 <text x="70" y="38" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" font-weight="bold">轮</text>
@@ -59,7 +58,6 @@ step: 2
 <text x="270" y="195" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">0</text>
 <text x="170" y="228" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">选中的依次是 a a b a c a a</text>
 </svg>
-```
 
 **细节。**
 

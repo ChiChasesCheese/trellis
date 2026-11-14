@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 同样是有序结构：平衡树靠旋转保持平衡，跳表靠随机分层。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">ZRANGE 取排名 3 到 5: 定位起点, 再顺着 L0 走</text>
 <rect x="26" y="92" width="32" height="20" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -59,7 +58,6 @@ step: 3
 <text x="8" y="190" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">升层概率可调, 内存能比 B 树更省</text>
 <text x="8" y="208" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">范围查询把它当链表顺序遍历, 缓存局部性不比平衡树差</text>
 </svg>
-```
 
 **细节。**
 

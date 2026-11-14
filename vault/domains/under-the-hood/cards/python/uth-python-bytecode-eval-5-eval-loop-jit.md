@@ -14,7 +14,6 @@ CPython 主循环的最内层长什么样？3.14 的「尾调用解释器」和 
 
 **结构。** CPython 的主循环（`_PyEval_EvalFrameDefault`）在支持的编译器（GCC、Clang）上默认用「计算跳转」（computed goto）：每条指令的处理代码末尾，自己直接跳向下一条的处理代码，分支预测可以按指令分别学习。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -63,7 +62,6 @@ CPython 主循环的最内层长什么样？3.14 的「尾调用解释器」和 
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

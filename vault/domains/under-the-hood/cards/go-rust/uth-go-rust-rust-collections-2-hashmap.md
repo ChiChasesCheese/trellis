@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 直接用 hashbrown 的瑞士表（SwissTable）：控制字节数组加槽位数组，开放寻址，二次探测。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">hashbrown: 控制字节 + 槽位, 一次扫一整组</text>
 <rect x="10" y="26" width="32" height="22" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="2"/>
@@ -50,7 +49,6 @@ step: 2
 <polygon points="250,150 252.7,156.0 247.3,156.0" style="fill:var(--accent,#3b6fd4)"/>
 <text x="8" y="198" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">负载因子 7/8; 默认哈希 SipHash 1-3, 每个 map 随机种子</text>
 </svg>
-```
 
 **细节。**
 

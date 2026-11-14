@@ -22,7 +22,6 @@ class P:
 # P(1) -> P(x=1, y=0)
 ```
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 152">
 <rect x="8" y="20" width="92" height="74" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="54" y="40" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">读字段名单</text>
@@ -42,7 +41,6 @@ class P:
 <polygon points="240,57 234.0,60.0 234.0,54.0" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)" stroke-width="0.5"/>
 <text x="170" y="126" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">生成的是普通函数 之后和手写的一样</text>
 </svg>
-```
 
 **细节。**
 

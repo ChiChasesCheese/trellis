@@ -14,7 +14,6 @@ step: 1
 
 **结构。** PostgreSQL 把这样的一组叫等价类（EquivalenceClass）。例：`{a.x, b.y}` 和 `{c.z, 5}` 被 `b.y = c.z` 并成一组。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 238">
 <text x="170" y="14" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">WHERE a.x = b.y AND b.y = c.z AND c.z = 5</text>
 <rect x="20" y="26" width="130" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3" style="stroke:var(--dim,#6b7280)"/>
@@ -55,7 +54,6 @@ step: 1
 <text x="270" y="202" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">c.z = 5</text>
 <text x="170" y="230" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">每张表扫描时就只读等于 5 的行</text>
 </svg>
-```
 
 **细节。**
 

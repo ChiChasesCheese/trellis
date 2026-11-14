@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 每个文件（inode）有一个 `address_space`，它的 `i_pages` 是一棵 XArray：每个节点 64 个槽，每层取页号的 6 位当下标。例：页号 70 = 1×64 + 6，根节点取下标 1，下一层取下标 6，就找到了。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 188">
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">页号 70 = 1 和 6 每层取 6 位</text>
 <rect x="100" y="30" width="22" height="22" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -44,7 +43,6 @@ step: 1
 <rect x="146" y="148" width="84" height="24" rx="3" stroke="currentColor" stroke-width="1.8" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
 <text x="188" y="164" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">页 70</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 3
 
 **结构。** B 树（B-tree）：每个节点是一段连续数组，装 B-1 到 2B-1 个键，`B = 6`，也就是每节点最多 11 个。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 212">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">B 树: 每个节点是一段连续数组</text>
 <rect x="80" y="24" width="180" height="26" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="1"/>
@@ -43,7 +42,6 @@ step: 3
 <text x="8" y="182" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">比较次数比二叉树多, 但分配次数约 1/B, 缓存未命中少</text>
 <text x="8" y="198" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">二叉树: 每个元素一个堆节点, 每次比较都可能缓存未命中</text>
 </svg>
-```
 
 **细节。**
 

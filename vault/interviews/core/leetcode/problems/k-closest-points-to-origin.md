@@ -9,6 +9,18 @@ slug: k-closest-points-to-origin
 ## A
 **一句话。** 维护大小为 `k` 的大根堆，堆顶是候选里最远的，超出就弹掉。
 
+**图解。** 大小为 `k` 的大根堆：新点入堆后超出 `k`，就把堆顶最远的弹掉。
+
+```mermaid
+flowchart TB
+    new["新点 d²=2"] -->|push| top["堆顶 d²=10<br>候选里最远"]
+    top --> l["d²=5"]
+    top --> r["d²=8"]
+    top -->|"大小 4 超过 k=3"| out["pop：踢掉 d²=10"]
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class new hot
+```
+
 ```python
 def k_closest(points, k):
     heap = []                         # 距离取负：大根堆

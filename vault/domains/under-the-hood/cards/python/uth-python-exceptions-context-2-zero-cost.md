@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 3.11 起改成编译时记账：编译器把「哪一段字节码（解释器执行的指令序列）归哪个 `except` 管」写成一张表，存在函数的 `co_exceptiontable` 里。`try` 本身不再生成登记指令，没出错时解释器根本不看这张表；出错时才查表，找到处理者就跳过去，找不到就去调用者的帧里再查。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176">
 <text x="16" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">字节码 从左到右</text>
 <rect x="16" y="26" width="64" height="28" rx="3" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
@@ -35,7 +34,6 @@ step: 2
 <text x="109" y="133" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">L3  except KeyError</text>
 <text x="170" y="166" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">没出错不看表 出错才查表</text>
 </svg>
-```
 
 ```python
 def f():

@@ -9,6 +9,18 @@ slug: course-schedule-ii
 ## A
 **一句话。** 拓扑排序（Kahn）：入度为 0 的先入队，出队顺序即学习顺序，出队数不足则有环。
 
+**图解。** 圈中序号是出队顺序：课 3 要等两门先修都出队，入度才降到 0。
+
+```mermaid
+flowchart TB
+    a["① 课 0：入度 0"] --> b["② 课 1"]
+    a --> c["③ 课 2"]
+    b -->|"课 3 入度 2→1"| d["④ 课 3"]
+    c -->|"1→0，入队"| d
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class a,b,c,d hot
+```
+
 ```python
 def find_order(num_courses, prerequisites):
     graph = [[] for _ in range(num_courses)]

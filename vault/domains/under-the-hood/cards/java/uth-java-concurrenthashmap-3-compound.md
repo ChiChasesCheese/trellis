@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 每个桶头节点一把 `synchronized` 锁；函数在持锁期间执行。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <rect x="55" y="22" width="230" height="32" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="170" y="42" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">computeIfAbsent(5) 持桶锁</text>
@@ -29,7 +28,6 @@ step: 3
 <text x="182" y="72" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">函数在持锁时运行</text>
 <text x="182" y="130" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">占位节点检测到重入</text>
 </svg>
-```
 
 **细节。**
 

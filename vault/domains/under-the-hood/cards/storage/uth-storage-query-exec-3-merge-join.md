@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 归并连接（merge join）：两侧各一个游标，较小的一侧前进，相等就输出，像合并两个有序数组。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 158">
 <text x="8" y="40" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">外侧</text>
 <text x="8" y="116" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">内侧</text>
@@ -42,7 +41,6 @@ step: 3
 <polygon points="82,126 85.0,132.0 79.0,132.0" stroke="currentColor" stroke-width="0.5" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)"/>
 <text x="94" y="150" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">mark</text>
 </svg>
-```
 
 **细节。**
 

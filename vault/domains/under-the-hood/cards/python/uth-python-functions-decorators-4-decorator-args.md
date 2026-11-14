@@ -14,7 +14,6 @@ step: 4
 
 **结构。** `@lru_cache(maxsize=None)` 先执行 `lru_cache(maxsize=None)`，它返回一个装饰器 `decorating_function`，再用这个装饰器去装饰函数。一共三层：参数层、装饰器层、wrapper 层。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 195">
 <rect x="20" y="14" width="300" height="28" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="170" y="32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">lru_cache(maxsize=None)</text>
@@ -30,7 +29,6 @@ step: 4
 <text x="170" y="148" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">wrapper 替换 f 的新函数</text>
 <text x="170" y="184" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">参数层  装饰器层  wrapper 层</text>
 </svg>
-```
 
 **细节。**
 

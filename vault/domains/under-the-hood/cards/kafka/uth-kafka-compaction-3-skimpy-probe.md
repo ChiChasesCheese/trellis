@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 这张表用开放寻址（open addressing）：冲突了就换一个槽接着找空位，找槽的过程叫探测（probe）。整张表是一块连续的 `ByteBuffer`，每槽 24 字节（MD5 16 字节 + 偏移量 8 字节），没有指针、没有链表。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 140">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">探测 n 取 MD5 的第 n 到 n+3 字节, 对槽数取模</text>
 <rect x="12" y="62" width="36" height="30" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -51,7 +50,6 @@ step: 4
 <polygon points="261,40 255.0,43.0 255.0,37.0" fill="currentColor" stroke="currentColor" stroke-width="0.5"/>
 <text x="170" y="128" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">每槽 24 字节: MD5 16 + 偏移 8</text>
 </svg>
-```
 
 **细节。**
 

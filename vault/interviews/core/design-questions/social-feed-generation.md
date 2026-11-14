@@ -44,7 +44,6 @@ kind: system-design
   - 用户身份来自登录态，不放在请求参数里。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 278">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -81,7 +80,6 @@ kind: system-design
 </g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="252" font-size="11">排序失败时降级为时间序</text></g>
 </g></svg>
-```
 1. 发帖：帖子服务把帖子写入帖子库（按 post_id 分片的 KV 或宽列库），媒体在对象存储；随后向 Kafka 发布 `PostCreated` 事件。
 2. 扇出（fan-out）服务消费事件：查作者的粉丝列表，对粉丝数不超过阈值（例如 10 万）的作者，把 post_id 追加到每个粉丝的收件箱（Redis 有序列表，按时间排序，超过 800 条裁掉旧的）。粉丝数超过阈值的名人，不做扩散写入，只写入作者自己的"近期帖子"列表。
 3. 读取信息流：信息流服务取用户的收件箱（候选一）；对用户关注的名人，实时拉取其近期帖子列表（候选二）；再从推荐服务取非关注内容（候选三）；合并去重后进入排序。

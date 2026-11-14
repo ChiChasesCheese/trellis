@@ -14,7 +14,6 @@ step: 1
 
 **结构。** `import b` 做三步：先查 `sys.modules`（一个 `dict`：模块名 → 模块对象），有就直接用；没有就按 `sys.path` 找到 `b.py`，造一个空模块对象并**先登记进 `sys.modules`**；最后在这个模块里把 `b.py` 从头执行一遍。所以 `b.py` 的顶层代码只跑一次，之后的 `import b` 都只是查表。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 214">
 <rect x="125" y="6" width="90" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="170" y="24" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">import b</text>
@@ -41,7 +40,6 @@ step: 1
 <rect x="80" y="172" width="180" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="170" y="190" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">在模块里从头执行 b.py</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 预先建好并共享的不可变对象：小整数缓存 -5 到 256，以及驻留（interning）字符串表，里面每个字符串只存一份。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="20" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">256 在缓存范围内</text>
 <rect x="20" y="28" width="36" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -43,7 +42,6 @@ step: 2
 <polygon points="150.0,180.0 144.0,183.0 144.0,177.0" fill="currentColor" stroke="currentColor" stroke-width="0.5"/>
 <text x="222" y="166" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">is 为 False</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ Go 调度器里的 G、M、P 各是什么？可运行的 goroutine 存在哪种�
 
 **结构。** G 是 goroutine，M 是系统线程，P 是调度上下文（数量即 `GOMAXPROCS`，默认逻辑核数）；每个 P 自带一个本地运行队列。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 225">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">G = goroutine, M = 系统线程, P = 调度上下文</text>
 <rect x="10" y="26" width="70" height="22" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -56,7 +55,6 @@ Go 调度器里的 G、M、P 各是什么？可运行的 goroutine 存在哪种�
 <text x="170" y="179.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">全局队列 (溢出区, 本地队列放满时搬一半过来)</text>
 <text x="8" y="210" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每个 P 各管各的队列, 平时几乎不抢锁</text>
 </svg>
-```
 
 **细节。**
 

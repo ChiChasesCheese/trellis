@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 调度器不检查全部：并行检查，一找到足够多台「可行」的机器就停，只给这些打分。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 138">
 <text x="170" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">按顺序检查 找够 N 个可行节点就停</text>
 <rect x="16" y="40" width="20" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3" style="stroke:var(--dim,#6b7280)"/>
@@ -39,7 +38,6 @@ step: 2
 <text x="268" y="98" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">下次从这开始</text>
 <text x="170" y="128" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">蓝框 = 可行  黑框 = 不可行  虚线 = 没检查</text>
 </svg>
-```
 
 **细节。**
 

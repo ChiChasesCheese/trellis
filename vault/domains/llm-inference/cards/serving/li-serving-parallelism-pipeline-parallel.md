@@ -19,7 +19,6 @@ step: 2
 - 时刻 2：阶段 1 算 B 组，阶段 2 算 A 组；
 - 时刻 4 之后：4 个阶段同时在算 4 组不同的请求。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 166" font-family="sans-serif" font-size="11">
 <text x="84" y="14" text-anchor="end" fill="currentColor">阶段（层）</text>
 <text x="90" y="14" fill="currentColor">时刻 →</text>
@@ -64,7 +63,6 @@ step: 2
 <rect x="294" y="114" width="34" height="22" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="311" y="129" text-anchor="middle" fill="currentColor">D</text>
 <text x="4" y="160" fill="currentColor">A–G 是不同的请求组；虚线框是空闲的气泡</text>
 </svg>
-```
 
 只要在途的组数 ≥ 阶段数，每个阶段都不闲着。**在途请求数 ≈ 阶段数 × 每组大小**。
 

@@ -14,7 +14,6 @@ Redis Stream 的 `XADD` 追加消息、`XRANGE` 按 ID 范围读，底下是什�
 
 **结构。** 基数树，键是 128 位的消息 ID，值是一个 listpack，每个 listpack 装一批消息。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">键 = 128 位消息 ID (毫秒 + 序号), 值 = 一批消息</text>
 <rect x="120" y="26" width="100" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="1"/>
@@ -38,7 +37,6 @@ Redis Stream 的 `XADD` 追加消息、`XRANGE` 按 ID 范围读，底下是什�
 <text x="8" y="172" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">一个 listpack 默认最多 100 条或 4096 字节, 满了开新节点</text>
 <text x="8" y="190" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">追加只动最后一个节点; 范围读先定位, 再顺序扫</text>
 </svg>
-```
 
 **细节。**
 

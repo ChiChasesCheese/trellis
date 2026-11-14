@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 预写日志（WAL，write-ahead log）：先把“改了什么”按顺序追加到一个日志文件，提交就是追加一条提交记录；数据页留在原处，由检查点（checkpoint）批量写回。崩溃后从最近的检查点开始重放日志，把没写回的改动补上。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 156">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">日志 (顺序追加)</text>
 <rect x="8" y="22" width="48" height="24" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -45,7 +44,6 @@ step: 1
 <text x="188" y="108.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">页 D</text>
 <text x="170" y="148" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">崩溃后: 从检查点起重放日志</text>
 </svg>
-```
 
 **细节。**
 

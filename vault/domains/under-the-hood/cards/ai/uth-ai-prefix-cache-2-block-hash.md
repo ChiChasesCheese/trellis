@@ -14,7 +14,6 @@ vLLM 的 KV 缓存按固定大小的块存放，没有树。新请求来了，�
 
 **结构。** 链式哈希：块 `i` 的哈希 = hash(块 `i-1` 的哈希，本块 token，额外信息)，每个哈希都「指纹」了从开头到这一块的全部内容。只给装满的块算，哈希表把哈希映射到物理块。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <rect x="12" y="40" width="64" height="34" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="2"/>
 <text x="44" y="61" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">块0</text>
@@ -45,7 +44,6 @@ vLLM 的 KV 缓存按固定大小的块存放，没有树。新请求来了，�
 <text x="170" y="150" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">h2 = 哈希(h1, 块2 的 token)</text>
 <text x="170" y="178" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">前三块查表命中, 第四块起重新算</text>
 </svg>
-```
 
 **细节。**
 

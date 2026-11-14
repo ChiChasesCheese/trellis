@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 选两个轴点 `pivot1 ≤ pivot2`，一趟分成三段：小于 `pivot1`、介于两者之间、大于 `pivot2`，再递归。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180">
 <rect x="22" y="40" width="80" height="34" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="62" y="61" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">小于 p1</text>
@@ -36,7 +35,6 @@ step: 2
 <text x="170" y="120" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">三段各自递归</text>
 <text x="170" y="150" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">递归超过 384 层 切到堆排序</text>
 </svg>
-```
 
 **细节。**
 

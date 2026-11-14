@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 长列表里夹着两级跳转数据（skip data）：第 0 级在每个 256 项的块之前，第 1 级每 32 个块一条，覆盖 8192 篇文档。求交集时以最短的列表为主，对其他列表说“直接跳到不小于这个文档号的位置”（`advance(目标文档号)`）：先用第 1 级跳过整段 8192 篇，再用第 0 级跳过块，最后只解码一个块。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 146">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">第 1 级: 每条覆盖 32 块 = 8192 篇</text>
 <rect x="12" y="20" width="100" height="24" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -43,7 +42,6 @@ step: 2
 <text x="170" y="136" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">只解码目标所在的那一块</text>
 <text x="8" y="82" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">第 0 级: 每块 256 篇</text>
 </svg>
-```
 
 **细节。**
 

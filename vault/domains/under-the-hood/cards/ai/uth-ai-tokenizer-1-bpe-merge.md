@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 字节对编码（BPE，byte pair encoding）。训练：数相邻两块出现的次数，把最多的一对粘成新块，编号依次往后排，重复到词表够大；编号先后就是合并优先级（序号，rank）。编码：每轮合并序号最小的一对，直到没有可合的。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 226">
 <rect x="12" y="10" width="32" height="26" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
 <text x="28" y="27.5" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">l</text>
@@ -63,7 +62,6 @@ step: 1
 <text x="236" y="187.5" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">lo+w 序号 259</text>
 <text x="170" y="218" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每轮合并序号最小的相邻对</text>
 </svg>
-```
 
 **细节。**
 

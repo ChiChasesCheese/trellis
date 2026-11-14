@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 官方 FAQ 的清单：`L.append(x)`、`x = L[i]`、`D[x] = y` 是原子的；`i = i + 1`、`D[x] = D[x] + 1` 不是。读、改、写这类复合操作，必须自己加锁 `threading.Lock`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -48,7 +47,6 @@ step: 3
 </g>
 </g>
 </svg>
-```
 
 ```python
 lock = threading.Lock()

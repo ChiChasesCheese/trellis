@@ -14,7 +14,6 @@ Python 怎么知道一个对象没人用了？`del x` 真的释放对象吗？
 
 **结构。** 对象头里有一个引用计数（reference count），多一个引用加 1，少一个减 1，归零立刻释放。例：`a = []` 后计数是 1（`sys.getrefcount` 会再算上函数参数，显示 2）；`b = a` 变 2；`del b` 回到 1。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180">
 <rect x="10" y="30" width="34" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="27" y="46" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">a</text>
@@ -44,7 +43,6 @@ Python 怎么知道一个对象没人用了？`del x` 真的释放对象吗？
 <polygon points="186.0,86.0 180.0,89.0 180.0,83.0" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)" stroke-width="0.5"/>
 <text x="170" y="160" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">计数归零的那一刻立刻释放</text>
 </svg>
-```
 
 **细节。**
 

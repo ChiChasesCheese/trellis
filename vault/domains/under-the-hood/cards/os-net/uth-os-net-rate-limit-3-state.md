@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 红黑树负责“按 IP 找到状态”，LRU 队列负责“谁最久没用”。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 206">
 <line x1="170" y1="50" x2="110" y2="58" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <line x1="170" y1="50" x2="230" y2="58" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -56,7 +55,6 @@ step: 3
 <path d="M275.0,192.0 L271.7,185.2 L278.3,185.2 Z" stroke="none" style="fill:var(--accent,#3b6fd4)"/>
 <text x="283" y="196" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">满了淘汰</text>
 </svg>
-```
 
 **细节。**
 

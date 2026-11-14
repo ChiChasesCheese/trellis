@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 实现里往一侧扫描时不检查越界，靠遇到“不该排前面”的元素（哨兵）停下。`<=` 让相等元素也算“排前面”，扫描指针停不下来，一路越过数组边界。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 175">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">a &lt;= b: 扫描指针不会在 7 上停</text>
 <rect x="12" y="24" width="36" height="26" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -45,7 +44,6 @@ step: 3
 <text x="198" y="139.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">7</text>
 <text x="30" y="166" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">7 &lt; 7 为假, 停</text>
 </svg>
-```
 
 **细节。**
 

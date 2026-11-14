@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 每个格子是一个 8 字节的指针。`[x] * n` 只是把同一个指针复制 n 份，三个格子指向同一个内层列表。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 236">
 <text x="20" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">a = [[0]] * 3</text>
 <rect x="30" y="26" width="34" height="24" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -47,7 +46,6 @@ step: 3
 <text x="115" y="215" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">[0]</text>
 <text x="190" y="214" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">各有自己的内层</text>
 </svg>
-```
 
 **细节。**
 

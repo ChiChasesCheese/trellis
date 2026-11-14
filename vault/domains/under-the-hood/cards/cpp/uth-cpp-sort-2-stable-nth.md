@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `stable_sort` 是归并排序（merge sort：把两段各自排好的数据合并成一段）；`nth_element` 是快速选择（quickselect：像快排那样划分，但只往含第 n 位的一侧继续）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 225">
 <text x="8" y="16" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">nth_element: 每轮只处理含第 n 位的一侧</text>
 <rect x="10" y="28" width="300" height="20" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -39,7 +38,6 @@ step: 2
 <text x="250" y="186" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">先来先走</text>
 <text x="250" y="202" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">所以稳定</text>
 </svg>
-```
 
 **细节。**
 

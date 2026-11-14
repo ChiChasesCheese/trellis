@@ -14,7 +14,6 @@ step: 3
 
 **结构。** `.timeindex` 是第二张稀疏索引，每项 12 字节（8 字节时间戳 + 4 字节相对偏移），和 `.index` 同时追加。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 184">
 <text x="170" y="14" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">目标时间 T</text>
 <line x1="170" y1="20" x2="170" y2="26" stroke="currentColor" stroke-width="1.2" style="stroke:var(--accent,#3b6fd4)"/>
@@ -32,7 +31,6 @@ step: 3
 <rect x="12" y="144" width="316" height="32" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
 <text x="170" y="164.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">.log  从该位置起顺序扫</text>
 </svg>
-```
 
 **细节。**
 

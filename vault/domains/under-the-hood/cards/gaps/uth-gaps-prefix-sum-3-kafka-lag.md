@@ -12,7 +12,6 @@ step: 3
 ## A
 **结构。** 分区是只追加的日志，每条消息有个递增编号，叫偏移量（offset）：0、1、2……「写到哪了」是末尾偏移量（log end offset）；「读到哪了」是消费组提交的偏移量（committed offset，即下一条要读的编号）。两者都是累计位置，和计数器同理：积压 = 末尾 − 已提交。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 168">
 <text x="170" y="22" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">一个分区 只追加的日志</text>
 <rect x="30" y="44" width="28" height="28" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -46,7 +45,6 @@ step: 3
 <line x1="310" y1="133" x2="310" y2="143" fill="none" stroke="currentColor" stroke-width="1.8" style="stroke:var(--accent,#3b6fd4)"/>
 <text x="254" y="158" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">lag = 10 - 6 = 4</text>
 </svg>
-```
 
 **细节。**
 

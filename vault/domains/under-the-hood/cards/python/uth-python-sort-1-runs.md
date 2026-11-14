@@ -14,7 +14,6 @@ Python 的 `sort` 是怎么排的？对已经有序、完全倒序、完全随�
 
 **结构。** Timsort 先扫一遍，找出数据里已有的升序段或严格降序段（run，降序段原地翻转），太短的段用二分插入排序补长，再把相邻的 run 归并。例（示意，真实数据要长得多）：`1 3 5 9 | 8 6 4 | 7 10`：三段，中间一段翻成 `4 6 8`，再合并成 `1 3 4 5 6 7 8 9 10`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <rect x="35" y="22" width="30" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="50" y="39" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
@@ -69,7 +68,6 @@ Python 的 `sort` 是怎么排的？对已经有序、完全倒序、完全随�
 <text x="290" y="137" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">10</text>
 <text x="170" y="176" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">已有的顺序直接利用 不从头切</text>
 </svg>
-```
 
 **细节。**
 

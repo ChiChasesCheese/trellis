@@ -32,7 +32,6 @@ step: 1
 
 两种分法的分片耗时（分钟，虚线是 20 分钟下限）：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <g font-family="sans-serif" font-size="12" fill="currentColor">
 <path fill-opacity="0.12" stroke="currentColor" stroke-width="0.8" d="M40,26h180v20h-180zM40,50h135v20h-135zM175,50h45v20h-45zM40,74h90v20h-90zM130,74h72v20h-72zM202,74h18v20h-18zM40,126h180v20h-180zM220,126h72v20h-72zM40,150h135v20h-135zM175,150h45v20h-45zM40,174h90v20h-90zM130,174h18v20h-18z"/>
@@ -61,7 +60,6 @@ step: 1
 <text x="330" y="190" text-anchor="end">总时长28</text>
 </g>
 </svg>
-```
 
 **两个下限**：总时长 ≥ 总耗时 ÷ 分片数（这里 60 ÷ 3 = 20），也 ≥ 最长的单条测试。要突破第二个下限只能拆那条测试本身。
 

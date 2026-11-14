@@ -9,6 +9,18 @@ slug: linked-list-cycle
 ## A
 **一句话。** 快慢指针（Floyd 判圈）：慢走一步、快走两步，有环则快指针必追上慢指针。
 
+**图解。** 慢指针每次走 1 步、快指针走 2 步，第 3 步两者在 `-4` 相遇，说明有环。
+
+```mermaid
+flowchart TB
+    n3["3：两指针起点"] --> n2["2"]
+    n2 --> n0["0"]
+    n0 --> n4["-4：第 3 步相遇"]
+    n4 -->|成环| n2
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class n4 hot
+```
+
 ```python
 def has_cycle(head):
     slow = fast = head

@@ -9,6 +9,64 @@ slug: set-matrix-zeroes
 ## A
 **一句话。** 用首行首列当标记，另用两个布尔值记首行首列自己原本有没有 `0`。
 
+**图解。** 首行首列当记事本：原有的 0 把标记写到行首和列首，再按标记置零。
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 140">
+<rect x="14" y="20" width="26" height="26" rx="1" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="27.0" y="37.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="40" y="20" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="53.0" y="37.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="66" y="20" width="26" height="26" rx="1" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="79.0" y="37.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="92" y="20" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="105.0" y="37.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="14" y="46" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="27.0" y="63.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="40" y="46" width="26" height="26" rx="1" style="fill:var(--dim,#6b7280);fill-opacity:0.16" stroke="currentColor" stroke-width="1.2"/>
+<text x="53.0" y="63.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="66" y="46" width="26" height="26" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="79.0" y="63.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="92" y="46" width="26" height="26" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="105.0" y="63.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="14" y="72" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="27.0" y="89.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="40" y="72" width="26" height="26" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="53.0" y="89.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="66" y="72" width="26" height="26" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="79.0" y="89.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="92" y="72" width="26" height="26" rx="1" style="fill:var(--dim,#6b7280);fill-opacity:0.16" stroke="currentColor" stroke-width="1.2"/>
+<text x="105.0" y="89.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<polyline points="130,59 156,59" fill="none" stroke-width="1.4" style="stroke:var(--accent,#3b6fd4)"/>
+<polygon points="156.0,59.0 150.0,62.0 150.0,56.0" style="fill:var(--accent,#3b6fd4)"/>
+<rect x="166" y="20" width="26" height="26" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="179.0" y="37.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="192" y="20" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="205.0" y="37.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="218" y="20" width="26" height="26" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="231.0" y="37.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1</text>
+<rect x="244" y="20" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="257.0" y="37.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="166" y="46" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="179.0" y="63.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="192" y="46" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="205.0" y="63.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="218" y="46" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="231.0" y="63.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="244" y="46" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="257.0" y="63.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="166" y="72" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="179.0" y="89.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="192" y="72" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="205.0" y="89.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="218" y="72" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="231.0" y="89.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<rect x="244" y="72" width="26" height="26" rx="1" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="257.0" y="89.32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">0</text>
+<text x="66" y="112" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">记到首行首列</text>
+<text x="218" y="112" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">按标记置零</text>
+<text x="145" y="134" text-anchor="middle" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">灰：原有的 0　深色：标记 / 置零</text>
+</svg>
+
 ```python
 def set_zeroes(matrix):
     m, n = len(matrix), len(matrix[0])

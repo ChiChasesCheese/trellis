@@ -14,7 +14,6 @@ broker 里同时挂着成千上万个带超时的请求（等副本确认的生�
 
 **结构。** 时间轮（timing wheel）像一个钟面：一圈若干格，每格代表一小段时间，同一段时间到期的任务串在这一格的链表里。登记 = 算出格子编号、挂上链表，O(1)；取消 = 从链表摘掉，O(1)。默认每格 1 ms、共 20 格；一圈放不下的任务交给上一层，上一层每格的跨度正好是下一层的整圈（20 ms、400 ms、8 s……），像里程表进位。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 144">
 <text x="60" y="16" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">第 2 层: 每格 20 ms</text>
 <rect x="60" y="22" width="13" height="22" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -62,7 +61,6 @@ broker 里同时挂着成千上万个带超时的请求（等副本确认的生�
 <rect x="307" y="96" width="13" height="22" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="60" y="136" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">第 1 层: 每格 1 ms, 共 20 格</text>
 </svg>
-```
 
 **细节。**
 

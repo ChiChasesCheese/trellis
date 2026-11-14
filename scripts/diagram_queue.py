@@ -19,7 +19,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 SKIP = ROOT / "sources/local/plan/diagram_skip.txt"
-DIAGRAM = re.compile(r"^```(?:mermaid|svg)\b|!\[\[[^\]]+\.(?:png|jpe?g|svg|gif|webp)\]\]|!\[[^\]]*\]\([^)]+\)", re.M)
+DIAGRAM = re.compile(r"^```(?:mermaid|svg)\b|^<svg\b|!\[\[[^\]]+\.(?:png|jpe?g|svg|gif|webp)\]\]|!\[[^\]]*\]\([^)]+\)", re.M)
 FLOOR = 0.25
 NO_DIAGRAMS = {"basketball"}  # video clips carry these cards
 # among domains equally far below the floor, the ones he studies most come first

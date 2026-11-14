@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 每个 listpack 的开头有一条主条目（master entry），记下字段名；后面的消息只存相对它的差值。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">一个 listpack 里的消息</text>
 <rect x="10" y="26" width="310" height="40" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="1"/>
@@ -36,7 +35,6 @@ step: 2
 <text x="8" y="176" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">字段与主条目完全相同: 字段名和个数都省掉</text>
 <text x="8" y="194" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">删除只打标记, 整个节点的消息删光才回收</text>
 </svg>
-```
 
 **细节。**
 

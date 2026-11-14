@@ -12,7 +12,6 @@ step: 2
 ## A
 **结构。** 每一层先试「上一层的结果 + 一张单表」（单表放在内侧或外侧两个方向），再试「两个较小的结果拼在一起」，后者叫浓密树（bushy plan）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 198">
 <text x="85" y="14" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">直线式</text>
 <text x="255" y="14" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">浓密树 (bushy)</text>
@@ -58,7 +57,6 @@ step: 2
 <text x="305" y="146" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">4</text>
 <text x="170" y="190" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">同一层 两种拼法都要比成本</text>
 </svg>
-```
 
 **细节。**
 

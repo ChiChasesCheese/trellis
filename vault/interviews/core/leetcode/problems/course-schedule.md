@@ -9,6 +9,19 @@ slug: course-schedule
 ## A
 **一句话。** 先修关系建有向图，Kahn 拓扑排序反复取入度为 0 的点，取出数等于总数才无环。
 
+**图解。** 入度为 0 的课先被取出；环上的课入度永远降不到 0，取出数不足。
+
+```mermaid
+flowchart TB
+    c0["课 0：入度 0，取出"] --> c3["课 3：入度 1→0，取出"]
+    c0 --> c1["课 1：入度 2→1"]
+    c1 --> c2["课 2：入度 1"]
+    c2 --> c1
+    c2 -.-> r["环上入度降不到 0<br>→ False"]
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class c0,c3 hot
+```
+
 ```python
 def can_finish(num_courses, prerequisites):
     graph = [[] for _ in range(num_courses)]

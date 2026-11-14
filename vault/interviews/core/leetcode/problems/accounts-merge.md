@@ -9,6 +9,19 @@ slug: accounts-merge
 ## A
 **一句话。** 并查集：账户为结点，邮箱第一次出现处记为主人，再遇到就合并，最后按根分组、排序。
 
+**图解。** 邮箱 `b` 第一次出现记主人 0，账户 1 再遇到 `b` 就并到 0；同名的账户 3 没有共同邮箱，不合并。
+
+```mermaid
+flowchart TB
+    a0["账户 0 John：a b"] -->|"b 首见，主人 0"| o["owner[b] = 0"]
+    a1["账户 1 John：b c"] -->|"再遇 b：并到 0"| o
+    o --> m["John：a b c"]
+    a2["账户 2 Mary：d"] --> m2["Mary：d"]
+    a3["账户 3 John：e"] --> m3["John：e，另一人"]
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class m hot
+```
+
 ```python
 def accounts_merge(accounts):
     parent = list(range(len(accounts)))

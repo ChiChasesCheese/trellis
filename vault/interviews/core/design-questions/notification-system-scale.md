@@ -49,7 +49,6 @@ kind: system-design
   - 回调：`POST /webhooks/{provider}` 接收推送、短信、邮件服务商的送达与退信回执。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 344">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -95,7 +94,6 @@ kind: system-design
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="302" font-size="11">每层都检查 expires_at</text></g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="318" font-size="11">两条池物理隔离</text></g>
 </g></svg>
-```
 1. 接入层：鉴权、业务方限流、幂等键去重（Redis `SET NX`），校验后写入 Kafka。按优先级分成两个主题：`critical` 与 `bulk`，各自有独立的消费者组与机器池。
 2. 群发扩展（fan-out）服务：读取 `bulk` 活动，按页拉取受众（每页几千人），为每个用户生成一条投递任务写入促销投递主题，按配置的速率推进游标。游标存数据库，扩展服务重启后从游标继续，活动被中止时停止推进。
 3. 处理流水线（两条池结构相同）：

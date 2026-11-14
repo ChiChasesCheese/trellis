@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 环形数组（circular array）：`head` 指向队首元素，`tail` 指向下一个空位，下标走到头就绕回 0。例：长 8 的数组，`head = 6`、`tail = 2`，队里的元素在格 6、7、0、1。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">长 8 的环形数组 走到末尾绕回 0</text>
 <rect x="26" y="70" width="36" height="30" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -47,7 +46,6 @@ step: 2
 <polygon points="116.0,124.0 119.0,130.0 113.0,130.0" fill="currentColor" stroke="currentColor" stroke-width="0.5"/>
 <text x="116" y="176" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">tail</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 3
 
 **结构。** Envoy 的 least request 在各主机权重相同时就是 P2C，挑选个数默认 2，复杂度 O(1)。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 204">
 <text x="20" y="16" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">各后端的活跃请求数</text>
 <rect x="40" y="90" width="24" height="60" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -38,7 +37,6 @@ step: 3
 <line x1="30" y1="150" x2="330" y2="150" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="170" y="192" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">随机挑 2 台 取请求少的那台</text>
 </svg>
-```
 
 **细节。**
 

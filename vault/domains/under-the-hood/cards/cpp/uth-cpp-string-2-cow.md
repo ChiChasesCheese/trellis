@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 写时复制（Copy-On-Write，COW）：拷贝只共享缓冲，谁先修改谁再复制一份。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">COW:拷贝只加引用计数</text>
 <rect x="10" y="24" width="40" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -41,7 +40,6 @@ step: 2
 <rect x="150" y="156" width="110" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
 <text x="205" y="172.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">旧缓冲 abc</text>
 </svg>
-```
 
 **细节。**
 

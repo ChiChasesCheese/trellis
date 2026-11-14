@@ -42,6 +42,8 @@ _CODE_OR_TAG = re.compile(r"(<pre>.*?</pre>|<code>.*?</code>|<svg.*?</svg>|<[^>]
 # A fenced ```svg block is a diagram: it goes into the card as inline SVG, so it can use the theme's colours.
 _SVG_FENCE = re.compile(r"^```svg[ \t]*\n(.*?)^```[ \t]*$", re.S | re.M)
 _MERMAID_FENCE = re.compile(r"^```mermaid[ \t]*\n(.*?)^```[ \t]*$", re.S | re.M)
+# A bare <svg>…</svg> block (not fenced) is a diagram too: Obsidian draws it as it stands, so a card reads the same there.
+_SVG_BLOCK = re.compile(r"^(<svg\b.*?</svg>)[ \t]*$", re.S | re.M)
 _MERMAID_CACHE = Path(__file__).resolve().parents[1] / "sources/local/mermaid-cache"
 
 
@@ -726,6 +728,7 @@ def _html(text: str, related: dict | None = None, own: set[int] | None = None, f
         svgs.append(m.group(1).strip())
         return f"\n\nTRELLISSVG{len(svgs) - 1}\n\n"
     text = _SVG_FENCE.sub(_stash, text)
+    text = _SVG_BLOCK.sub(_stash, text)
 
     def _mermaid(m: re.Match) -> str:
         svg = _mermaid_svg(m.group(1))

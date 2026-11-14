@@ -9,6 +9,25 @@ slug: maximize-amount-after-two-days-of-conversions
 ## A
 **一句话。** 每天的汇率图无矛盾无环，两种货币间的换算比唯一，所以每天 DFS 一遍算出 1 个初始货币能换多少个 `c`，答案取 `day1[c] / day2[c]` 的最大值。
 
+**图解。** 两天各从初始货币 DFS 一遍算出比率，第 2 天把 `c` 换回去要除以 `d2[c]`。
+
+```mermaid
+flowchart TB
+    subgraph D2["第 2 天：同样从 EUR"]
+        e2["EUR 1"] -->|×1/6| c2["CHF 1/6"]
+        c2 -->|×1/5| u2["USD 1/30"]
+        u2 -->|×1/4| j2["JPY 1/120"]
+    end
+    subgraph D1["第 1 天：从 EUR 出发"]
+        e1["EUR 1"] -->|×2| u1["USD 2"]
+        u1 -->|×3| j1["JPY 6"]
+    end
+    D1 --> ans["JPY 6×120 = 720"]
+    D2 --> ans
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class ans hot
+```
+
 ```python
 def maxAmount(src, pairs1, rates1, pairs2, rates2):
     def rates_from(pairs, rates):

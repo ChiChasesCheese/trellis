@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 扰动函数（spread）把高 16 位异或进低 16 位，让高位也参与桶的选择。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="10" y="44" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">h</text>
 <rect x="70" y="26" width="120" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -33,7 +32,6 @@ step: 2
 <text x="250" y="143" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">低 异或 高</text>
 <text x="250" y="172" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">桶下标 取最低几位</text>
 </svg>
-```
 
 **细节。**
 

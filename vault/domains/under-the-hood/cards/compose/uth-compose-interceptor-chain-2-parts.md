@@ -12,7 +12,6 @@ step: 2
 ## A
 **结构。** 有序列表 `interceptorsAndDynamicMethodMatchers` 存各环；每次调用新建一个 `ReflectiveMethodInvocation`，里面有游标 `currentInterceptorIndex`（初值 -1）和目标方法。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 196">
 <text x="8" y="46" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">列表 chain</text>
 <rect x="4" y="52" width="248" height="44" rx="3" fill="none" stroke-width="1.2" stroke-dasharray="4 3" style="stroke:var(--dim,#6b7280)"/>
@@ -38,7 +37,6 @@ step: 2
 <text x="14" y="158" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">某一环不调用 proceed(): 后面的全被拦下</text>
 <text x="14" y="176" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">游标属于这一次调用 不属于列表</text>
 </svg>
-```
 
 | 操作 | 碰哪几个结构 | 复杂度 |
 |---|---|---|

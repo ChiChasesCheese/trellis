@@ -25,8 +25,9 @@ studies them in). Repo: `/Users/chiserver/sessions/trellis`.
    - quote every label that contains Chinese, spaces or punctuation: `A["对象存储"]`;
    - `flowchart LR` for wide-but-short flows and `TB` for tall ones;
    - no styling or colours. The card theme handles that.
-   - A ```svg block is fine for simple geometric pictures: a matrix, a grid, a timeline, memory layers. Use
-     `viewBox`, `currentColor` and no fixed width.
+   - A bare `<svg>` block is fine for simple geometric pictures: a matrix, a grid, a timeline, memory layers. Use
+     `viewBox`, `currentColor` and no fixed width. Write it bare, never in a ```svg fence: a blank line before and
+     after, none inside. Obsidian draws bare svg but shows a fence as code.
 5. Render-check every mermaid diagram:
    `uv run python -c "import sys; from trellis.build import _mermaid_svg; print(bool(_mermaid_svg(open(sys.argv[1]).read())))" /tmp/x.mmd`
    must print True. Fix it or drop it otherwise.

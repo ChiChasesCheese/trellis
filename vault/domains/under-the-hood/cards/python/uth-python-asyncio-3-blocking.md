@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 回调不返回，就进不了下一轮；到期的定时器要等下一轮才被取出。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <line x1="30" y1="150" x2="320" y2="150" stroke-width="1.2" stroke="currentColor"/>
 <polygon points="320.0,150.0 314.0,153.0 314.0,147.0" fill="currentColor" stroke="currentColor" stroke-width="0.5"/>
@@ -30,7 +29,6 @@ step: 3
 <polygon points="160.6,148.0 157.6,142.0 163.6,142.0" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)" stroke-width="0.5"/>
 <text x="168.64" y="125" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">实际 0.52 s 才醒</text>
 </svg>
-```
 
 **细节。**
 

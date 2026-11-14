@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 每个节点的每一层，除了指向下一个节点的指针，还记一个跨度（span）：这一跳越过了多少个元素。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 225">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">每条边上的数字 = 跨度 span: 这一跳越过几个元素</text>
 <rect x="26" y="92" width="32" height="20" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -67,7 +66,6 @@ step: 2
 <text x="8" y="190" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">ZRANGE 按排名取元素, 也沿 span 跳, 不必逐个数</text>
 <text x="8" y="208" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">升层概率 1/4: 模拟一百万次平均层数约 1.33, P = 1/2 约 2</text>
 </svg>
-```
 
 **细节。**
 

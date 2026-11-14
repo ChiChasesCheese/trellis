@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 双向链表（doubly linked list）：每个块自带 `prev_free_block` 和 `next_free_block`，头尾各放一个永远不会被取走的哨兵（sentinel）块，省掉空表和边界的特判。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <rect x="12" y="60" width="36" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
 <text x="30" y="78" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">头</text>
@@ -55,7 +54,6 @@ step: 2
 <text x="204" y="134" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">命中: 把 5 号从中间摘走</text>
 <text x="170" y="180" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">双向链表加头尾哨兵: 两端取放和中间摘除都是 O(1)</text>
 </svg>
-```
 
 **细节。**
 

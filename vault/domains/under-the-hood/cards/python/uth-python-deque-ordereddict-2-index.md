@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 按下标取元素要从离目标近的那一端，沿块链表一块块数过去，每块 64 个。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">d[k] 要沿链表数块</text>
 <rect x="10" y="30" width="48" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -59,7 +58,6 @@ step: 2
 <text x="300" y="141" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">append(5)</text>
 <text x="170" y="184" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">满了 append 会从另一端丢弃</text>
 </svg>
-```
 
 **细节。**
 

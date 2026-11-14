@@ -15,7 +15,6 @@ step: 3
 
 **变点检测的做法**：把一个基准配置按提交顺序排成一条时间序列，用算法寻找"分布发生了持续改变"的位置，例如前 50 个点在 100 毫秒附近波动，之后稳定在 106 毫秒附近。变点就是这个台阶出现的提交。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 228">
 <g font-family="sans-serif" font-size="12" fill="currentColor">
 <path fill="none" stroke="currentColor" d="M50,15V180H330"/>
@@ -34,7 +33,6 @@ step: 3
 </g>
 </g>
 </svg>
-```
 
 - 它看的是**持续的水平变化**，单个离群点不会被当成变点；
 - 能发现缓慢累积后的整体台阶（对比更长时间范围）；

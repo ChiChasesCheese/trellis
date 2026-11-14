@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 两张表互为反向，每次增删都在同一个方法里把两边一起改。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="14" y="18" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">数组: 下标指向值</text>
 <text x="326" y="18" text-anchor="end" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">字典: 值指向下标</text>
@@ -43,7 +42,6 @@ step: 3
 <text x="170" y="160" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">改一边 必须同时改另一边</text>
 <text x="170" y="180" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">Spring: 谁依赖我 / 我依赖谁</text>
 </svg>
-```
 
 **细节。**
 

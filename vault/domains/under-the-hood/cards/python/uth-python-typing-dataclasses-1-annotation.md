@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 注解（annotation）就是贴在变量、参数上的便签：解释器把它存下来（放进 `__annotations__`），之后再不看。真正检查类型的是外部工具（mypy、pyright、IDE），它们在运行之前读这些便签。`f("abc")`、`x: int = "hello"` 都照常运行。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 160">
 <rect x="8" y="58" width="74" height="40" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="45" y="74" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">源码</text>
@@ -30,7 +29,6 @@ step: 1
 <text x="226" y="121" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">mypy / pyright / IDE</text>
 <text x="226" y="139" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">运行之前读便签 报类型错</text>
 </svg>
-```
 
 **细节。**
 

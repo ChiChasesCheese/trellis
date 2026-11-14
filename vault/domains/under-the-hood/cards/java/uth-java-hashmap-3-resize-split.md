@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 不用重算。新容量多出一位，节点只可能去两个位置：留在原下标 `j`，或移到 `j + oldCap`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="14" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">旧表 桶 5 的链</text>
 <rect x="30" y="26" width="40" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -51,7 +50,6 @@ step: 3
 <polygon points="86.0,191.0 82.0,193.0 82.0,189.0" fill="currentColor" stroke="currentColor" stroke-width="0.5"/>
 <text x="150" y="196" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">否则去 桶 5 + 16</text>
 </svg>
-```
 
 **细节。**
 

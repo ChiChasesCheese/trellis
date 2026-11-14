@@ -14,7 +14,6 @@ step: 6
 
 **结构。** 数组首尾相接成环，再用两个只增不减的序号：`in` 是写入过的总数，`out` 是读走的总数。元素的位置是序号对容量取余。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 206">
 <text x="14" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">容量 8  out=11  in=14</text>
 <rect x="26" y="66" width="34" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -46,7 +45,6 @@ step: 6
 <text x="170" y="180" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">满: in - out == 容量   空: in == out</text>
 <text x="170" y="198" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">序号只增不减 不浪费一格</text>
 </svg>
-```
 
 | 操作 | 做法 | 复杂度 |
 |---|---|---|

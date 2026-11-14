@@ -9,6 +9,37 @@ slug: make-string-a-subsequence-using-cyclic-increments
 ## A
 **一句话。** 双指针贪心判子序列：`str1` 的字符本身或它的下一个字母等于 `str2[j]` 就匹配，`j` 前进。
 
+**图解。** `str1` 每个字符可用本身或 `+1` 后的字母去配 `str2[j]`，配上就让 `j` 前进。
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 160">
+<rect x="70" y="16" width="36" height="26" rx="2" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="88.0" y="33.32" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,monospace" fill="currentColor">a</text>
+<rect x="106" y="16" width="36" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="124.0" y="33.32" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,monospace" fill="currentColor">b</text>
+<rect x="142" y="16" width="36" height="26" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1.2"/>
+<text x="160.0" y="33.32" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,monospace" fill="currentColor">c</text>
+<rect x="70" y="50" width="36" height="22" rx="2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="88.0" y="64.96" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" style="fill:var(--dim,#6b7280)">b</text>
+<rect x="106" y="50" width="36" height="22" rx="2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="124.0" y="64.96" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" style="fill:var(--dim,#6b7280)">c</text>
+<rect x="142" y="50" width="36" height="22" rx="2" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="160.0" y="64.96" text-anchor="middle" font-size="11" font-family="ui-monospace,Menlo,monospace" fill="currentColor">d</text>
+<rect x="70" y="116" width="36" height="26" rx="2" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="88.0" y="133.32" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,monospace" fill="currentColor">a</text>
+<rect x="106" y="116" width="36" height="26" rx="2" style="fill:var(--accent,#3b6fd4);fill-opacity:0.32" stroke="currentColor" stroke-width="1.2"/>
+<text x="124.0" y="133.32" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,monospace" fill="currentColor">d</text>
+<text x="62" y="33" text-anchor="end" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">str1</text>
+<text x="62" y="65" text-anchor="end" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">+1</text>
+<text x="62" y="133" text-anchor="end" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">str2</text>
+<polyline points="78.0,42 78.0,116" fill="none" stroke-width="1.4" style="stroke:var(--accent,#3b6fd4)"/>
+<polygon points="78.0,116.0 75.0,110.0 81.0,110.0" style="fill:var(--accent,#3b6fd4)"/>
+<polyline points="160.0,72 124.0,116" fill="none" stroke-width="1.4" style="stroke:var(--accent,#3b6fd4)"/>
+<polygon points="124.0,116.0 125.5,109.5 130.1,113.3" style="fill:var(--accent,#3b6fd4)"/>
+<text x="190" y="33" text-anchor="start" font-size="10" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">a = a，j → 1</text>
+<text x="190" y="65" text-anchor="start" font-size="10" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">c+1 = d，j → 2</text>
+<text x="190" y="92" text-anchor="start" font-size="10" font-family="sans-serif" style="fill:var(--dim,#6b7280)">b、b+1 都不是 d，跳过</text>
+</svg>
+
 ```python
 def can_make_subsequence(str1, str2):
     j = 0

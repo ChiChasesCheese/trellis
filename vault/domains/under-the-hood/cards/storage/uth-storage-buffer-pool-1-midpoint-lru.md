@@ -14,7 +14,6 @@ step: 1
 
 **结构。** InnoDB 把这条 LRU 链表分成前面的新段（young）和后面的老段（old）。新读入的页不放队头，而是插在中点，即老段的头；老段占 3/8。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 142">
 <text x="176" y="22" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">再访问且距首次超过 1 秒: 晋升</text>
 <path d="M250 62 Q160 14 70 56" fill="none" stroke="currentColor" stroke-width="1.2" style="stroke:var(--accent,#3b6fd4)"/>
@@ -29,7 +28,6 @@ step: 1
 <text x="12" y="108" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">表头</text>
 <text x="332" y="108" text-anchor="end" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">尾部淘汰</text>
 </svg>
-```
 
 **细节。**
 

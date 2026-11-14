@@ -12,7 +12,6 @@ step: 4
 ## A
 **背景。** LEFT JOIN 要保留 `a` 的每一行，右边配不上就补 NULL。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 204">
 <text x="60" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">表 a</text>
 <text x="280" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">表 b</text>
@@ -32,7 +31,6 @@ step: 4
 <text x="14" y="170" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">错 扫描 a 时就丢掉 7 和 9 结果会少两行</text>
 <text x="14" y="192" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">对 扫描 b 时丢掉 y = 5 它配不上任何行</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 2
 
 **结构。** Swiss table：一整块数组，先是每槽一字节的控制字节（记录这个槽是空的，还是存了哈希值的低 7 位），后面是紧挨着的槽位。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 165">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">控制字节 (每槽 1 字节)</text>
 <rect x="10" y="22" width="32" height="22" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="2"/>
@@ -50,7 +49,6 @@ step: 2
 <rect x="262" y="98" width="32" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
 <text x="8" y="150" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">只对命中的槽比较 key; 空槽 ff 不用读</text>
 </svg>
-```
 
 **细节。**
 

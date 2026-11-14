@@ -14,7 +14,6 @@ step: 3
 
 **结构。** Range 按主题逐个分：每个主题里，分区数除以消费者数取整，前面的消费者多拿一个。RoundRobin 把所有主题的分区排成一队，像发牌一样轮流发。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 142">
 <text x="8" y="40" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">Range</text>
 <text x="8" y="86" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">RoundRobin</text>
@@ -48,7 +47,6 @@ step: 3
 <text x="162" y="124.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">C1</text>
 <text x="192" y="124" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">两个消费者, 两个主题</text>
 </svg>
-```
 
 **细节。**
 

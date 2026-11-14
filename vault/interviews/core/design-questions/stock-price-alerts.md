@@ -44,7 +44,6 @@ kind: system-design
 - 接口：`POST /subscriptions {symbol}`、`DELETE /subscriptions/{symbol}`、`POST /alerts {symbol, type, threshold, direction, cooldown}`、`GET /alerts`、`DELETE /alerts/{id}`；价格输入不是用户接口，由行情适配器写入消息队列。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 294">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -76,7 +75,6 @@ kind: system-design
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="252" font-size="11">判断路径不查数据库</text></g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="268" font-size="11">规则库用于启动加载与管理</text></g>
 </g></svg>
-```
 1. 行情适配器：对接外部数据源，规范化为统一格式，丢弃明显异常的报价（相对上一价偏离过大、时间戳倒退），写入 Kafka，按 symbol 分区，保证同一只股票的更新有序。
 2. 合并（conflation）：判断节点对每只股票只保留最新价，按固定周期（例如 100 毫秒）处理一次，而不是每个报价都处理；中间被越过的阈值不会漏，因为判断是针对"当前价"的范围查询。
 3. 判断节点：按 symbol 分区消费，内存里保存本分区股票的状态机和用户阈值结构；价格到来时只做 O(log n) 的结构查询，不访问数据库。

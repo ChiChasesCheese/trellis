@@ -14,7 +14,6 @@ LFU 要记访问频率，Redis 只用 8 位，怎么区分访问 1 千次和 100
 
 **结构。** 同样是那 24 位字段：高 16 位存最近访问的分钟数，低 8 位是对数计数器（最大 255）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">同一个 24 位字段</text>
 <rect x="10" y="24" width="200" height="30" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -49,7 +48,6 @@ LFU 要记访问频率，Redis 只用 8 位，怎么区分访问 1 千次和 100
 <text x="287" y="163.85" text-anchor="middle" font-size="11" font-family="sans-serif" fill="currentColor">255 饱和</text>
 <text x="8" y="196" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">新键从 5 开始; 每 lfu-decay-time (默认 1) 分钟减 1</text>
 </svg>
-```
 
 **细节。**
 

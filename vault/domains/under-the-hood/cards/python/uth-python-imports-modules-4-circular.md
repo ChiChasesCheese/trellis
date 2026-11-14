@@ -14,7 +14,6 @@ step: 4
 
 **结构。** `from a import fa` 要在模块 a 里取名字 `fa`。a 还停在第 1 行，`def fa` 没执行，取不到，就抛 `ImportError`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 216">
 <text x="80" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">a.py</text>
 <text x="260" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">b.py</text>
@@ -35,7 +34,6 @@ step: 4
 <text x="14" y="190" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">1 import a: 登记 a, 执行第 1 行, 去导入 b</text>
 <text x="14" y="208" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">2 b 要 a 的 fa, a 还没执行到 def: 报错</text>
 </svg>
-```
 
 **细节。**
 

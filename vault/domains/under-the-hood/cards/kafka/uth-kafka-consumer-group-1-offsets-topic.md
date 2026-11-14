@@ -14,7 +14,6 @@ step: 2
 
 **结构。** Kafka 用自己存：写进内部主题 `__consumer_offsets`，key 是（组、主题、分区），value 是位点。这个主题开了压实（只留每个 key 的最新值），所以表不会无限变长。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150">
 <rect x="8" y="18" width="76" height="28" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="46" y="36.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">groupId</text>
@@ -37,7 +36,6 @@ step: 2
 <polygon points="190,94 196.0,91.0 196.0,97.0" fill="currentColor" stroke="currentColor" stroke-width="0.5"/>
 <text x="170" y="134" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">__consumer_offsets: 50 个分区, 开压实</text>
 </svg>
-```
 
 **细节。**
 

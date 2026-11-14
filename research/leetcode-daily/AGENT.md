@@ -66,4 +66,4 @@ patterns (2026-11-11): every card is short. Copy the shape of
 
 ## Diagram baseline
 
-- **Diagrams (Chi, 2026-11-13): at least 25% of a deck's cards carry one, aim for 30%.** A ```mermaid flowchart / sequenceDiagram / stateDiagram-v2 or a ```svg block wherever a flow, architecture, state machine, layout or comparison is the point. Render-check each mermaid; measure with `uv run python scripts/diagram_share.py <domain>` (exit 1 below 25%).
+- **Diagrams (Chi, 2026-11-13): at least 25% of a deck's cards carry one, aim for 30%.** A ```mermaid flowchart / sequenceDiagram / stateDiagram-v2 or a bare `<svg>` block wherever a flow, architecture, state machine, layout or comparison is the point. Render-check each mermaid; measure with `uv run python scripts/diagram_share.py <domain>` (exit 1 below 25%). (write svg as a bare `<svg …>…</svg>` block with blank lines around it and none inside, never fenced: Obsidian draws bare svg but shows a ```svg fence as code)

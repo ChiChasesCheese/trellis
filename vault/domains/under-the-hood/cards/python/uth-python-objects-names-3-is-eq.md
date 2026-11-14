@@ -14,7 +14,6 @@ step: 3
 
 **结构。** `is` 比较两个名字指向的是不是同一个对象，就是一次指针比较（CPython 里 `Py_Is(x, y)` 就是 `(x) == (y)`），任何类都不能改写它。`==` 会去调 `type(a).__eq__(a, b)`，类想怎么定义「相等」都行。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180">
 <text x="85" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">a = [1]  b = a</text>
 <text x="255" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">a = [1]  b = [1]</text>
@@ -45,7 +44,6 @@ step: 3
 <line x1="170" y1="28" x2="170" y2="130" stroke-width="1.2" stroke="currentColor" stroke-dasharray="4 3"/>
 <text x="170" y="170" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">is 比地址  == 比内容</text>
 </svg>
-```
 
 **细节。**
 

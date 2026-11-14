@@ -14,7 +14,6 @@ step: 1
 
 **结构。** Myers 算法：画一张编辑图，向右走是删一行，向下走是插一行，两边相同的行走对角线、不花代价；目标是用最少的横纵步，从左上走到右下。它按步数 D = 0, 1, 2 … 逐层推进，每条对角线只记走得最远的点。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 228">
 <line x1="70" y1="52" x2="70" y2="196" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
 <line x1="120" y1="52" x2="120" y2="196" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
@@ -67,7 +66,6 @@ step: 1
 <circle cx="270" cy="196" r="2.2" stroke="none" style="fill:var(--accent,#3b6fd4)"/>
 <text x="170" y="218" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">右 = 删 下 = 插 虚线斜边 = 相同 免费</text>
 </svg>
-```
 
 **细节。**
 

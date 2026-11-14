@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 实例有自己的属性表（`__dict__`），类有一张表（里面放方法），查不到还会继续往父类走。常见情形下，`d.x` 是先查实例，再沿着类、父类逐个查。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <rect x="10" y="18" width="200" height="36" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
 <text x="20" y="33" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">d.__dict__</text>
@@ -36,7 +35,6 @@ step: 1
 <text x="222" y="172" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">d.eat 在这里</text>
 <text x="170" y="210" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">数据在实例里 方法只存一份在类里</text>
 </svg>
-```
 
 **细节。**
 

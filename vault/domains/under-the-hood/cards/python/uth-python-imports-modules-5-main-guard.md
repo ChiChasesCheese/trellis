@@ -16,7 +16,6 @@ step: 5
 
 **坑。** 入口文件在 `sys.modules` 里登记的名字是 `__main__`，不是 `m`。如果别的模块又 `import m`，会再加载一遍：同一个文件有了两个模块对象，顶层代码跑两遍。`python m.py` 里再 `import m`，先后打印「run as __main__」「run as m」。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 160">
 <text x="10" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">sys.modules</text>
 <rect x="10" y="26" width="110" height="30" rx="3" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
@@ -34,7 +33,6 @@ step: 5
 <text x="170" y="128" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">同一个文件 两个模块对象</text>
 <text x="170" y="148" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">顶层代码跑两次</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 规则：函数体里任何位置对一个名字赋值，这个名字在整个函数里都是局部变量；编译时扫一遍函数体就定了，与执行顺序无关。`nonlocal best` 声明「这个名字就是外层函数的那个 cell」，赋值写进 cell；`global` 同理，指向模块级。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <rect x="10" y="20" width="320" height="64" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="22" y="46" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">print(x)</text>
@@ -30,7 +29,6 @@ step: 3
 <text x="22" y="188" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">x += 1</text>
 <text x="110" y="188" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">读写的都是 cell</text>
 </svg>
-```
 
 **细节。**
 

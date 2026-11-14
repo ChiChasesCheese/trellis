@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 迭代器本质上就是指向连续数组的指针。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 192">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">扩容前</text>
 <rect x="60" y="22" width="32" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -56,7 +55,6 @@ step: 2
 <text x="220" y="176.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">5</text>
 <text x="8" y="176" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">新块</text>
 </svg>
-```
 
 **细节。**
 

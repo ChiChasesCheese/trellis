@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 生成器（generator）就是「暂停的函数调用」。调用带 `yield` 的函数时，函数体一行都不跑，只造出一个生成器对象，里面嵌着这次调用的栈帧（frame：局部变量、下一条要执行的指令位置、求值栈）。`next()` 把栈帧接回去跑到下一个 `yield`，交出值，栈帧随即冻结。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 235">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -54,7 +53,6 @@ step: 3
 </g>
 </g>
 </svg>
-```
 
 ```python
 def count():

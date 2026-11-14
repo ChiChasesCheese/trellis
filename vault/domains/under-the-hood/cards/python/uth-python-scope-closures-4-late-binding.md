@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 整个循环只有一个变量 `i`，所有 lambda 共用同一个 cell。lambda 被调用时才去读 cell，那时循环早已结束，cell 里是最后一个值 2。这叫晚绑定（late binding）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 235">
 <text x="10" y="16" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" style="fill:var(--accent,#3b6fd4)">lambda: i</text>
 <rect x="10" y="26" width="60" height="22" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -54,7 +53,6 @@ step: 4
 <polygon points="98.0,221.0 92.0,224.0 92.0,218.0" fill="currentColor" stroke="currentColor" stroke-width="0.5"/>
 <text x="240" y="190" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">定义时就存好</text>
 </svg>
-```
 
 **细节。**
 

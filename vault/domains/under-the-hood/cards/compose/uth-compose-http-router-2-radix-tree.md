@@ -12,7 +12,6 @@ httprouter 的路由表由哪几块结构拼成？它们怎样互相指向？
 ## A
 **结构。** 外层一张表：HTTP 方法 → 这个方法自己的树根，每个方法各一棵基数树（radix tree，把公共前缀合并成一个节点的前缀树）。节点存一小段路径 `path`、孩子数组 `children`、各孩子首字节连成的字符串 `indices`、可选的处理函数 `handle`。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 236">
 <text x="34" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">trees</text>
 <rect x="8.0" y="28" width="52" height="24" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="2"/>
@@ -50,7 +49,6 @@ httprouter 的路由表由哪几块结构拼成？它们怎样互相指向？
 <text x="148" y="207" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">占位符节点</text>
 <text x="170" y="226" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">GET /search  GET /support  GET /user/:id</text>
 </svg>
-```
 
 | 操作 | 碰哪几个结构 | 复杂度 |
 |---|---|---|

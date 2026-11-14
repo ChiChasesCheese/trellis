@@ -14,7 +14,6 @@ step: 1
 
 **结构。** DEFLATE（gzip、zip、PNG 用的格式）分两步：先用 LZ77 在最近 32 KB 里找重复串，换成（距离，长度）；再对没被替换的原字符和这些（距离，长度）做哈夫曼编码（让常出现的符号用更短的码）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 214">
 <rect x="44" y="66" width="28" height="28" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="58" y="84" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">a</text>
@@ -48,7 +47,6 @@ step: 1
 <text x="220" y="178" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">往回 3 复制 6</text>
 <text x="170" y="208" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">9 个字符变成 3 个字符加一对数</text>
 </svg>
-```
 
 **细节。**
 

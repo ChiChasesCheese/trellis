@@ -14,7 +14,6 @@ PostgreSQL 的共享缓冲区（shared buffers）为什么不维护一条 LRU �
 
 **结构。** 缓冲区是一个固定数组，一个环形指针循环扫描；每个缓冲区有使用计数 `usage_count`，取值 0 到 5（`BM_MAX_USAGE_COUNT`）。页每被使用一次，计数加 1，封顶 5；淘汰指针扫过时，计数非 0 就减 1 继续走，遇到计数为 0 且没人用的，就是牺牲者。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170">
 <circle cx="100" cy="32" r="15" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="100" y="36.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">2</text>
@@ -40,7 +39,6 @@ PostgreSQL 的共享缓冲区（shared buffers）为什么不维护一条 LRU �
 <text x="196" y="96" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">遇到 0 且没人用:</text>
 <text x="196" y="116" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">就是牺牲者</text>
 </svg>
-```
 
 **细节。**
 

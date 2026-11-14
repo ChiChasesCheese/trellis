@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 空闲页按阶（order）挂在 0 到 10 共 11 条链表上，第 k 阶的块是 2^k 个连续页。例：要 4 页（2 阶），只剩一块 8 页（3 阶）：对半切，`pfn` 0 起的 4 页给你，另外 4 页放回 2 阶链表。释放时反过来：两半都空闲，就并回 8 页。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176">
 <text x="98" y="24" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">k=2 块 pfn 0</text>
 <text x="242" y="24" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">伙伴 pfn 4</text>
@@ -41,7 +40,6 @@ step: 1
 <rect x="26" y="134" width="288" height="28" rx="3" stroke="currentColor" stroke-width="1.8" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
 <text x="170" y="152" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">两块都空闲 合并成 k=3 块 pfn 0</text>
 </svg>
-```
 
 **细节。**
 

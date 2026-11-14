@@ -14,7 +14,6 @@ step: 5
 
 **结构。** 两步走：先把右边所有表达式从左到右算完，得到一组值；再按从左到右的顺序，把值逐个赋给左边的目标。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 235">
 <text x="10" y="18" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">1 → 2 → 3 反转第一步 head 指向节点 1</text>
 <text x="10" y="44" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" style="fill:var(--accent,#3b6fd4)">对</text>
@@ -30,7 +29,6 @@ step: 5
 <text x="30" y="208" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">1) head = 节点2 (head 已经换了)</text>
 <text x="30" y="228" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">2) head.next = None (改到了节点2)</text>
 </svg>
-```
 
 **细节。**
 

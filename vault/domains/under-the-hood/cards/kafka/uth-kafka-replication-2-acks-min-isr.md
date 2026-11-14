@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `acks=all` 要求当前 ISR 里的副本全部确认；`min.insync.replicas` 规定 ISR 至少要有几个，不够就拒绝写入。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 158">
 <text x="8" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">挂 1 台</text>
 <circle cx="30" cy="38" r="15" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -36,7 +35,6 @@ step: 2
 <text x="170" y="118" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">拒绝写入</text>
 <text x="170" y="150" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">min.insync.replicas = 2</text>
 </svg>
-```
 
 **细节。**
 

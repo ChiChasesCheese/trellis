@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 配了相同 `group.id` 的消费者自动组成消费者组（consumer group），Kafka 保证每个分区在同一时刻只分给组内一个消费者。成员加入或离开时，由协调者（coordinator，某一台 broker）发现，重新分配分区，叫再平衡（rebalance）。每个消费者会记下自己读到哪了（位点，offset），换人之后新负责人从那里接着读。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 160">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">3 个分区, 2 个消费者</text>
 <rect x="8" y="22" width="120" height="34" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -44,7 +43,6 @@ step: 1
 <text x="284" y="119.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">p2</text>
 <text x="170" y="154" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">每个分区同一时刻只有一个读者</text>
 </svg>
-```
 
 **为什么。** 分区数就是组内并行读的上限；“一个分区一个读者”换来分区内有序。
 

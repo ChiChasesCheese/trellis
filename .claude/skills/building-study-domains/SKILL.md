@@ -54,7 +54,8 @@ finished step, and the next action. A new session resumes from it.
    - Leaf without one: `trellis grow --leaf <domain>:<leaf> -o prompt.md` → JSON →
      `trellis grow --import answer.json --leaf <domain>:<leaf>` (scaffold carries no language rules).
    - Orchestration: see **Card agents** below.
-   - Diagrams: at least 25% of the domain's cards carry a ```mermaid or ```svg diagram (aim 30%); check with
+   - Diagrams: at least 25% of the domain's cards carry a ```mermaid block or a bare `<svg>` block (never fenced, so
+     Obsidian draws it), aim 30%; check with
      `uv run python scripts/diagram_share.py <domain>`.
    *Done when* `stats` shows every leaf with cards and `validate` reports 0 errors and no
    `not_self_contained` or `leans_on_source` warnings.

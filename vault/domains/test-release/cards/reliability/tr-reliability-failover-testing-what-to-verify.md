@@ -17,7 +17,6 @@ step: 1
 
 前三件事在一条时间线上的位置：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <g font-family="sans-serif" font-size="12">
 <rect x="70" y="72" width="80" height="16" fill="currentColor" fill-opacity="0.15"/>
@@ -44,7 +43,6 @@ step: 1
 <text x="220.0" y="203" text-anchor="middle" fill="currentColor">RTO 恢复时间</text>
 </g>
 </svg>
-```
 
 **场景矩阵**：
 - **主节点崩溃**（`kill -9`）与**主节点正常停机**（滚动升级）；

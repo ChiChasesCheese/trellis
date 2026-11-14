@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 仍是红黑树，按 `deadline` 排序；每个节点还记着自己子树里最小的 `vruntime`（增强红黑树）。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="16" y="58" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" font-weight="bold">A</text>
 <rect x="80" y="46" width="200" height="16" rx="2" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -33,7 +32,6 @@ step: 3
 <text x="20" y="178" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">左端 vruntime 右端 deadline</text>
 <text x="20" y="194" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">先看合格 再取最早的截止</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 一个 `baseCount` 加一个 `CounterCell[]` 数组：先 CAS 更新 `baseCount`；失败说明有竞争，就按线程随机探针选一个 `CounterCell` 单独累加。这就是 `LongAdder` 的思路。`size()` 把它们加起来。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <rect x="12" y="28" width="44" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="34" y="45" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">T1</text>
@@ -41,7 +40,6 @@ step: 2
 <text x="150" y="80" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">竞争 分散累加</text>
 <text x="170" y="184" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">size() = baseCount + 所有 cell 之和</text>
 </svg>
-```
 
 **细节。**
 

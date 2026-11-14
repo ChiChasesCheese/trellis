@@ -19,7 +19,6 @@ step: 2
 - 真实相似度为 s 的两篇，14 段里至少一段全相同的概率是 1 − (1 − s⁸)¹⁴
 - s = 0.5 时约 5%，0.7 时约 56%，0.8 时约 92%，0.9 时约 99.96%，拐点约在 0.72
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 212">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" fill="currentColor" stroke="currentColor">
 <path d="M44 24V170H320" fill="none"/>
@@ -37,7 +36,6 @@ step: 2
 <text x="176" y="150.2" text-anchor="end" style="stroke:none;fill:var(--dim,#6b7280)">0.5: 5%</text>
 </g>
 </svg>
-```
 
 - datatrove 不建哈希表：每段的签名写成已排序的文件，合并时相邻两条签名相同，就记为一对重复
 

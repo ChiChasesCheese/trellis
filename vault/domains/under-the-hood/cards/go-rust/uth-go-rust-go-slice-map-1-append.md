@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 切片是“指针、长度、容量”三元组；容量不够时 `growslice` 新开一块、拷贝、换指针。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 212">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">连续 append, cap 的变化 (条长 = 容量)</text>
 <rect x="10" y="28" width="23" height="18" rx="2" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -37,7 +36,6 @@ step: 1
 <text x="8" y="188" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">小于 256 翻倍; 之后每轮加 (cap+768)/4</text>
 <text x="8" y="204" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">越大越接近 1.25 倍</text>
 </svg>
-```
 
 **细节。**
 

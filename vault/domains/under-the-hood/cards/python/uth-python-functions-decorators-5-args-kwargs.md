@@ -14,7 +14,6 @@ step: 5
 
 **结构。** 定义时：`*args` 把多出来的位置参数收成一个元组，`**kwargs` 把多出来的关键字参数收成一个字典。调用时：`f(*seq)` 把序列拆成一个个位置参数，`f(**d)` 把字典拆成关键字参数。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <text x="10" y="18" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">matrix</text>
 <rect x="10" y="28" width="70" height="24" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -44,7 +43,6 @@ step: 5
 <text x="170" y="162" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">def f(*args) 把多出的位置参数收成元组</text>
 <text x="170" y="184" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">def f(**kw) 把多出的关键字参数收成字典</text>
 </svg>
-```
 
 **细节。**
 

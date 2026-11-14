@@ -14,7 +14,6 @@ step: 5
 
 **结构。** PEP 703 的做法：每个对象记一个「所有者线程」（`ob_tid`）。所有者增减引用走本地计数 `ob_ref_local`，是普通加减，很快；其他线程走共享计数 `ob_ref_shared`，用原子操作，慢一点。这叫偏向引用计数（biased reference counting）。内置的 `list`、`dict` 等则各带一把 1 字节的小锁（`ob_mutex`），代替 GIL 保护自己。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 230">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -54,7 +53,6 @@ step: 5
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

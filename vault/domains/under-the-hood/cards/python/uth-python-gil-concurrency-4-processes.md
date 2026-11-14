@@ -14,7 +14,6 @@ CPU 密集的任务怎样才能用满多个核？多进程要付出什么代价�
 
 **结构。** 多进程（`multiprocessing`、`ProcessPoolExecutor`）里，每个子进程是一个独立的 Python 进程，真并行。代价是内存不共享：参数和结果要先序列化（pickle）成字节，经管道传过去；启动一个进程也比启动线程慢得多。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -58,7 +57,6 @@ CPU 密集的任务怎样才能用满多个核？多进程要付出什么代价�
 </g>
 </g>
 </svg>
-```
 
 **细节。**
 

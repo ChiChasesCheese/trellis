@@ -14,7 +14,6 @@ RocksDB 的内存表默认用什么数据结构？为什么不用红黑树？
 
 **结构。** 默认 `SkipListFactory`：跳表（skip list）。底层是一条有序链表，上面叠几层“快车道”：每个元素以 1/4 的概率长到上一层（`branching_factor = 4`），最多 12 层，平均每个元素约 1.33 个指针。查找从最高层出发，大步往前，走过头了就下一层，像图里找 40。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 174">
 <text x="8" y="16" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每层以 1/4 的概率再长高一层</text>
 <text x="2" y="140" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">L1</text>
@@ -72,7 +71,6 @@ RocksDB 的内存表默认用什么数据结构？为什么不用红黑树？
 <polygon points="172,124 169.5,119.0 174.5,119.0" stroke="currentColor" stroke-width="0.5" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)"/>
 <text x="170" y="168" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">查 40: 高层大步走, 逐层下降</text>
 </svg>
-```
 
 **细节。**
 

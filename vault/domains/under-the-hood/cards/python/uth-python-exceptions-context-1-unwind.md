@@ -14,7 +14,6 @@ step: 1
 
 **结构。** Python 用异常（exception）：出错处创建一个异常对象，解释器从当前帧开始问「这里有 `try` 管吗」，没有就丢掉这一帧，退回上一层再问，直到有人接住；没人接，就退到最外层，打印回溯（traceback）并结束程序。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 192">
 <rect x="20" y="14" width="130" height="34" rx="3" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
 <text x="85" y="36" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">a   try: b()</text>
@@ -37,7 +36,6 @@ step: 1
 <text x="204" y="40" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">a 有 except 接住</text>
 <text x="170" y="184" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">没人接就一直退到最外层</text>
 </svg>
-```
 
 **细节。**
 

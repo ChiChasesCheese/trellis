@@ -13,7 +13,6 @@ step: 1
 - 允许重试 2 次（最多跑 3 次）：三次全失败的概率是 0.1³ = 0.001，即 99.9% 的运行显示绿灯。
 - 这个竞态在线上会以 10% 的概率出现在真实请求上，但测试几乎永远是绿的。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150">
 <g font-family="sans-serif" font-size="12">
 <text x="10" y="47" fill="currentColor">不重试</text>
@@ -29,7 +28,6 @@ step: 1
 <text x="170" y="16" text-anchor="middle" fill="currentColor">真实竞态 每次 10% 失败</text>
 </g>
 </svg>
-```
 
 **掩盖的三种方式**：
 - **真实的间歇性产品缺陷**：竞态、超时设置太紧、资源泄漏导致的偶发失败，本来就是"有时出错"的，重试正好把它们过滤掉。

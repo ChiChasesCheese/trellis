@@ -14,7 +14,6 @@ consumer 拉取消息时，broker 为什么几乎不花 CPU 搬数据？开了 T
 
 **结构。** 磁盘上的日志格式和网络上的消息批格式相同，fetch 时不用重新编码，所以直接调 Java 的 `FileChannel.transferTo`，对应 Linux 的 `sendfile`：数据在内核里从页缓存直达网卡。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 134">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">传统: 4 次拷贝</text>
 <rect x="6" y="20" width="56" height="26" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -48,7 +47,6 @@ consumer 拉取消息时，broker 为什么几乎不花 CPU 搬数据？开了 T
 <polygon points="278,95 272.0,98.0 272.0,92.0" stroke="currentColor" stroke-width="0.5" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)"/>
 <text x="204" y="124" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">数据在内核里直达网卡</text>
 </svg>
-```
 
 **细节。**
 

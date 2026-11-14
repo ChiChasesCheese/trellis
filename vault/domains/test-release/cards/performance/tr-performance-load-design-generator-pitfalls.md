@@ -18,7 +18,6 @@ step: 3
 
 协同遗漏：开环测试按计划时间均匀发请求，服务卡住时客户端也停发：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180">
 <g font-family="sans-serif" font-size="12">
 <rect x="148" y="14" width="104" height="96" fill="currentColor" fill-opacity="0.12"/>
@@ -48,7 +47,6 @@ step: 3
 <text x="200" y="170" text-anchor="middle" fill="currentColor">按计划时间计时：等待都算进延迟</text>
 </g>
 </svg>
-```
 
 **排除方法**：
 - **核对实际速率**：压测输出中的实际请求速率、实际并发，与设定值对比；`vllm bench serve` 的输出会给出实际的请求吞吐。

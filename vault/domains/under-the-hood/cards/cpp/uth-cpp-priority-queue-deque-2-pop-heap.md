@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 标准库把空出的堆顶当成“洞”，让较大的孩子一路上移补洞，一直走到叶子（最底层、没有孩子的节点），再把原来的末尾元素放进洞里，从下往上浮。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <line x1="139.542" y1="35.7226" x2="95.4576" y2="68.2774" stroke="currentColor" stroke-width="1"/>
 <line x1="160.458" y1="35.7226" x2="204.542" y2="68.2774" style="stroke:var(--accent,#3b6fd4)" stroke-width="2"/>
@@ -42,7 +41,6 @@ step: 2
 <text x="250" y="150" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">末尾 4</text>
 <text x="170" y="188" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每层只比 1 次, 末尾的 4 再从洞里往上浮</text>
 </svg>
-```
 
 **细节。**
 

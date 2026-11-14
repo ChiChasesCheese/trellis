@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 用哈希函数（把任意内容算成一个整数的函数）：分区号 = `toPositive(murmur2(keyBytes)) % numPartitions`。同一个 key 每次算出同一个整数，取余后分区号永远一样；每个生产者各自算，不用互相打听。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 158">
 <rect x="8" y="18" width="72" height="28" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="44" y="36.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">key u7</text>
@@ -37,7 +36,6 @@ step: 1
 <text x="170" y="134" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">示意数字: 真实哈希值是个大整数</text>
 <text x="170" y="152" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">同一个 key 每次都进 p2</text>
 </svg>
-```
 
 **细节。**
 

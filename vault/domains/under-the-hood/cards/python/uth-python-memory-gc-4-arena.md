@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 小对象归 pymalloc 管：64 位下向系统要 1 MiB 的竞技场（arena），切成 16 KiB 的内存页（pool）按大小分配。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="120" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">竞技场 1 MiB = 若干 16 KiB 内存页</text>
 <rect x="14" y="34" width="26" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -49,7 +48,6 @@ step: 4
 <text x="236" y="160" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor"></text>
 <text x="170" y="182" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">虚线 = 已释放的页</text>
 </svg>
-```
 
 **细节。**
 

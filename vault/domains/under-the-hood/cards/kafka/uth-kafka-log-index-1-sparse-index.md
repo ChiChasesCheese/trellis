@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 稀疏索引（sparse index）：每追加超过 `index.interval.bytes`（默认 4096）字节，才记一项（4 字节相对偏移 + 4 字节文件位置）。找 N 分两步：先在索引里二分（每次砍掉一半）找出不大于 N 的最后一项，再从它指的文件位置顺序扫，只需扫不到 4 KB。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 204">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">段按首条偏移排序 (跳表 floorEntry)</text>
 <rect x="8" y="20" width="96" height="26" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -46,7 +45,6 @@ step: 1
 <polygon points="180,166 183.0,172.0 177.0,172.0" stroke="currentColor" stroke-width="0.5" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)"/>
 <text x="180" y="196" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">N=800</text>
 </svg>
-```
 
 **细节。**
 

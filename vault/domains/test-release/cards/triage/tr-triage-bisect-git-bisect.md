@@ -12,7 +12,6 @@ step: 1
 
 例：提交 0 是好、16 是坏，问题由 11 引入；阴影是剩下的候选，粗框是这次检出的中点：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 250">
 <g font-family="sans-serif" font-size="11" fill="currentColor">
 <g stroke="currentColor" stroke-width="0.6">
@@ -35,7 +34,6 @@ step: 1
 <text x="243" y="220">第一个坏提交11</text>
 </g>
 </svg>
-```
 
 **次数**：约 log₂(N) 次。1,000 个提交约 10 次（2¹⁰ = 1024）；100 个约 7 次。如果每次构建加测试要 20 分钟，10 次就是 3 个多小时，比人工逐个看快得多，而且可以完全自动。
 

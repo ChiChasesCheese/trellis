@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 堆存在一个普通 `list` 里，当作一棵「从上到下、从左到右排满」的二叉树：下标 `i` 的子节点是 `2i+1`、`2i+2`，父节点是 `(i-1)>>1`，不要指针。例：往堆 `[3,5,8]` 里放 1，先放末尾（成为 5 的孩子），比父亲 5 小就换上去，再比 3 小再换，1 到了堆顶。这叫上浮。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 236">
 <line x1="158.454" y1="33.9174" x2="111.546" y2="66.0826" stroke-width="1.2" stroke="currentColor"/>
 <line x1="181.546" y1="33.9174" x2="228.454" y2="66.0826" stroke-width="1.2" stroke="currentColor"/>
@@ -60,7 +59,6 @@ step: 1
 <text x="170" y="214" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">下标 i 的孩子是 2i+1 和 2i+2</text>
 <text x="170" y="230" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor"></text>
 </svg>
-```
 
 **细节。**
 

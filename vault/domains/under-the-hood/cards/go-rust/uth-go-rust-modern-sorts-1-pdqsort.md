@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 快速排序加一套“情况不对就换招”的检查，另有堆排序兜底。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">pdqsort: 先看输入像什么模式</text>
 <rect x="8" y="26" width="140" height="28" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -48,7 +47,6 @@ step: 1
 <rect x="164" y="170" width="166" height="28" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)" stroke-width="1"/>
 <text x="247" y="187.85" text-anchor="middle" font-size="11" font-family="sans-serif" fill="currentColor">改用堆排序</text>
 </svg>
-```
 
 **细节。**
 

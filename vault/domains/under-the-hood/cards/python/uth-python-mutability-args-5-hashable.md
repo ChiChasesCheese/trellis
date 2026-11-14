@@ -14,7 +14,6 @@ step: 5
 
 **结构。** 这要求键的哈希值一辈子不变。列表的内容随时会变，哈希若跟着变，键放进去之后就再也找不到了，所以 `list` 的哈希函数被直接禁用。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 205">
 <text x="10" y="20" text-anchor="start" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">桶 (哈希表按哈希值选桶)</text>
 <rect x="14" y="120" width="48" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -41,7 +40,6 @@ step: 5
 <text x="268" y="92" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">改后 → 桶 4</text>
 <text x="170" y="176" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">内容一变桶就变 键放进去就找不到了</text>
 </svg>
-```
 
 **细节。**
 

@@ -12,7 +12,6 @@ step: 3
 - 语言模型的任务是预测下一个 token，如果训练时能偷看后面的字，就是作弊，学不到东西。
 - 实现：在 softmax 之前，把"后面位置"的分数设为负无穷，softmax 之后权重恰好为 0。对长度 4 的序列，第 2 个位置只能看位置 1、2。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 206" font-family="sans-serif" font-size="11">
 <text x="138" y="14" text-anchor="middle" fill="currentColor">被看的位置 →</text>
 <text x="4" y="34" fill="currentColor">当前位置 ↓</text>
@@ -42,7 +41,6 @@ step: 3
 <rect x="172" y="142" width="34" height="34" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/><text x="189" y="163" text-anchor="middle" fill="currentColor">看</text>
 <text x="4" y="198" fill="currentColor">看 = 可以看；−∞ = softmax 之后权重为 0</text>
 </svg>
-```
 
 - **对推理的重要后果：** 因为前面的 token 永远看不到后面的 token，**前面位置的计算结果不会因为后面追加了新 token 而改变**。所以生成时，旧 token 的中间结果算一次就可以存起来反复用。这就是 KV 缓存（把旧 token 每层的键、值向量存起来反复用）能成立的前提。
 

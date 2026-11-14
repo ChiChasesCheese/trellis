@@ -14,7 +14,6 @@ RocksDB 写一条数据时发生了什么？数据怎样从内存一路沉到最
 
 **结构。** 写先追加到 WAL（预写日志，顺序写，崩溃后靠它恢复），再插入内存表（memtable，一块按 key 排好序的内存结构）。内存表满 64 MB（`write_buffer_size`）就冻结，刷成一个有序、不可变的磁盘文件 SST，放进第 0 层（L0）。文件越攒越多，后台把它们合并（compaction）：多路归并，同一个 key 只留最新的，结果放进下一层。例：依次写 a=1、b=2、a=3，内存表里 a 只剩 a=3，刷出的 SST 是有序的 a=3、b=2。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 192">
 <rect x="34" y="18" width="120" height="26" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="94" y="35.2" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">1 WAL 顺序追加</text>
@@ -39,7 +38,6 @@ RocksDB 写一条数据时发生了什么？数据怎样从内存一路沉到最
 <text x="8" y="176" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">L2</text>
 <rect x="34" y="160" width="296" height="26" fill="none" stroke="currentColor" stroke-width="1.2"/>
 </svg>
-```
 
 **细节。**
 

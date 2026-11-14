@@ -48,7 +48,6 @@ kind: low-level-design
 - 类的职责：`BookingService` 编排流程，`TicketType` 封装库存的原子操作（数据库版是仓储层的一条条件 `UPDATE`），`PaymentGateway` 是外部支付的接口（可换成假实现），`HoldSweeper` 定时释放过期保留，`RateLimiter` 是接口层的令牌桶。
 
 **整体设计。**
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 328">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -83,7 +82,6 @@ kind: low-level-design
 </g>
 <g style="fill:var(--dim,#6b7280)"><text x="170" y="302" font-size="11">状态迁移都用条件更新</text></g>
 </g></svg>
-```
 - 保留：事务内执行下面的条件更新并插入 `reservation`（HELD，带过期时间）。受影响行数为 0 就是售罄或未开售。
 - 购买：事务一用条件更新把保留从 HELD 改成 PAYING（要求未过期），改成功才继续；提交后调用支付网关（带预订号作幂等键）；事务二把 `held` 转为 `sold`，保留改为 CONFIRMED，插入 `booking`。付款失败改回 HELD。付款途中或确认之前崩溃，保留停在 PAYING，由对账任务用幂等键查询支付状态：成功就确认，失败就改回 HELD。
 - 过期：`HoldSweeper` 每几十秒扫描 `HELD` 且过期的记录，用条件更新改为 EXPIRED，成功才释放 `held`。它不碰 PAYING，所以不会出现钱扣了票却被收回。

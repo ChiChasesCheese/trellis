@@ -14,7 +14,6 @@ step: 3
 
 **结构。** patience：把这些唯一行配成对，取它们的最长递增子序列（配对后位置不交叉的最长一组）做锚点；锚点之间的区间递归处理，没有唯一行的区间退回 Myers。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 232">
 <text x="72" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">旧</text>
 <text x="268" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">新</text>
@@ -45,7 +44,6 @@ step: 3
 <text x="170" y="208" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">唯一行配对 取不交叉的最长一组当锚点</text>
 <text x="170" y="224" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">} 不是唯一行 不参与</text>
 </svg>
-```
 
 **细节。**
 

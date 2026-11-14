@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 位数组 m 位、n 个 key、k 次探测时，误判率是 `(1 - e^(-k·n/m))^k`；k 取最优（约 0.69 × m/n）后约化为 0.6185^(m/n)：每多给 1 位/key，误判率乘以约 0.62。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 162">
 <line x1="56" y1="18" x2="56" y2="118" stroke="currentColor" stroke-width="1.2"/>
 <line x1="56" y1="118" x2="332" y2="118" stroke="currentColor" stroke-width="1.2"/>
@@ -34,7 +33,6 @@ step: 3
 <text x="332" y="154" text-anchor="end" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">位/key</text>
 <text x="60" y="154" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor">每多 1 位, 误判率 x 0.62</text>
 </svg>
-```
 
 **细节。**
 

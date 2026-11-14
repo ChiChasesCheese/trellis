@@ -14,7 +14,6 @@ step: 3
 
 **结构。** `set_intersection` 先比较两边大小，**遍历较小的那个**，每个元素去较大的集合里做一次哈希查找。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <text x="46" y="20" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">小 set</text>
 <rect x="30" y="32" width="32" height="28" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -62,7 +61,6 @@ step: 3
 <polygon points="250.0,123.0 244.9,125.4 245.1,120.4" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)" stroke-width="0.5"/>
 <text x="170" y="184" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">遍历小的 每个元素去大的里哈希查一次</text>
 </svg>
-```
 
 **细节。**
 

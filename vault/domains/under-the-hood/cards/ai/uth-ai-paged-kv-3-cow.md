@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 引用计数（reference count）：每个物理块记着有几个答案在用它。两个答案的块表指向同一批物理块，计数是 2。往共享块里写时才复制（写时复制，copy-on-write）：计数大于 1，就先申请新块、拷贝内容、旧块计数减 1，再写新块；计数为 1 直接写。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 236">
 <text x="12" y="16" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">同一个 prompt 抽 2 个答案</text>
 <rect x="10" y="28" width="130" height="50" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -42,7 +41,6 @@ step: 3
 <polygon points="290,150 287.5,142.8 293.5,143.2" fill="currentColor"/>
 <text x="170" y="222" text-anchor="middle" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">A1 要写最后一块: 引用 2, 先复制到 3 再写</text>
 </svg>
-```
 
 **细节。**
 

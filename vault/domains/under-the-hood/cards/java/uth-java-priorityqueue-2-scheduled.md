@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 任务队列 `DelayedWorkQueue` 是数组上的最小堆，按触发时间排序，时间相同按提交序号（`sequenceNumber`）排，先提交的先跑。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <line x1="89.514" y1="45.276" x2="58.486" y2="72.724" stroke-width="1.2" stroke="currentColor"/>
 <line x1="110.486" y1="45.276" x2="141.514" y2="72.724" stroke-width="1.2" stroke="currentColor"/>
@@ -40,7 +39,6 @@ step: 2
 <text x="170" y="170" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">同为 5 时 先提交的先跑</text>
 <text x="170" y="194" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">每个任务记着自己在堆里的下标</text>
 </svg>
-```
 
 **细节。**
 

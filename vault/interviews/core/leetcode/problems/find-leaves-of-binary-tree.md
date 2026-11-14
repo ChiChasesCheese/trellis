@@ -9,6 +9,19 @@ slug: find-leaves-of-binary-tree
 ## A
 **一句话。** 后序求高度（叶子为 0），节点第几轮被删就等于它的高度，按高度把值放进对应的组，一次遍历完成。
 
+**图解。** 节点高度 = 1 + 子树高度的最大值，叶子为 0；高度相同的节点在同一轮被删。
+
+```mermaid
+flowchart TB
+    n1["1 · 高 2"] --> n2["2 · 高 1"]
+    n1 --> n3["3 · 高 0"]
+    n2 --> n4["4 · 高 0"]
+    n2 --> n5["5 · 高 0"]
+    n1 -.->|按高度分组| r["[4,5,3] [2] [1]"]
+    classDef hot fill:#dbe7fb,stroke:#3b6fd4,color:#1a1a1a
+    class n3,n4,n5 hot
+```
+
 ```python
 def find_leaves(root):
     res = []

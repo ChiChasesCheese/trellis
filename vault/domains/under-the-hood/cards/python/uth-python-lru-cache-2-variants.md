@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 创建时按 `maxsize` 选三个包装函数之一：
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180">
 <rect x="90" y="14" width="160" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <text x="170" y="32" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">lru_cache(maxsize=?)</text>
@@ -37,7 +36,6 @@ step: 2
 <text x="184" y="78" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">0</text>
 <text x="272" y="78" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">n</text>
 </svg>
-```
 
 **细节。**
 

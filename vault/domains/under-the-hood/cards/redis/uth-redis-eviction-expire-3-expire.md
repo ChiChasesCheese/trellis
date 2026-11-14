@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 惰性删除加定期抽查，不给每个键设定时器。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">两条路: 惰性 + 定期抽查, 不给每个键设定时器</text>
 <rect x="10" y="28" width="140" height="26" rx="3" style="fill:var(--chip,rgba(59,111,212,0.12))" stroke="currentColor" stroke-width="1"/>
@@ -38,7 +37,6 @@ step: 3
 <text x="8" y="184" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">总耗时最多占约 25% 的 CPU; 从库不自己删, 等主库发 DEL</text>
 <text x="8" y="202" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">代价: 过期键会暂时占着内存</text>
 </svg>
-```
 
 **细节。**
 

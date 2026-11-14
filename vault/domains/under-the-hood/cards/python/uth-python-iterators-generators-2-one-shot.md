@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 列表这类可迭代对象，每次 `iter()` 都新建一个游标，互不影响。而 `map`、`zip`、文件、生成器本身**就是**游标，`iter()` 它们返回的是它们自己，走完就空了，不会倒带。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <g font-size="12" font-family="sans-serif" text-anchor="middle" stroke-width="1.2">
 <g fill="none" stroke="currentColor">
@@ -55,7 +54,6 @@ step: 2
 </g>
 </g>
 </svg>
-```
 
 ```python
 m = map(str, [1, 2])

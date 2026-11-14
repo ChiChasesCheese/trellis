@@ -14,7 +14,6 @@ step: 2
 
 **结构。** 模块就是一个 `types.ModuleType` 对象，它的全局变量存在自己的 `__dict__` 里。`import json` 只是把当前文件里的名字 `json` 绑到 `sys.modules["json"]` 这个对象上；`from json import dumps` 则是取 `json.dumps`，把函数本身绑到新名字 `dumps` 上。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 172">
 <text x="53" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">a.py 里的名字</text>
 <rect x="8" y="26" width="90" height="26" rx="3" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -34,7 +33,6 @@ step: 2
 <polygon points="182,76 176.6,80.0 175.6,74.1" style="fill:var(--accent,#3b6fd4);stroke:var(--accent,#3b6fd4)" stroke-width="0.5"/>
 <text x="170" y="160" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">from json import dumps 绑的是函数本身</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 查询缓存（`LRUQueryCache`）：命中文档占比达到 1% 用普通位图（`FixedBitSet`，每个文档一位），更稀疏的用 `RoaringDocIdSet`。Roaring 把文档号空间切成每块 65536 个，每块各选最省的格式。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 134">
 <text x="170" y="14" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">文档号每 65536 个分一块, 各块自选容器</text>
 <rect x="8" y="24" width="78" height="28" stroke="currentColor" stroke-width="1.2" style="fill:var(--chip,rgba(59,111,212,0.12))"/>
@@ -35,7 +34,6 @@ step: 4
 <text x="293" y="90" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">不分配</text>
 <text x="170" y="126" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">4096 个 short = 8 KB = 位图大小</text>
 </svg>
-```
 
 **细节。**
 

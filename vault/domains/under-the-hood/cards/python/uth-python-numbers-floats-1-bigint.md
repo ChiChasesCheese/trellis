@@ -14,7 +14,6 @@ C 和 Java 的 `int` 超过 2^31 就绕回负数，Python 的 `2**100` 却能直
 
 **结构。** CPython 的 `int` 就是这样一个数组：把数按 2^30 进制拆成若干「位」（digit），每位放进一个 32 位的格子，只用其中 30 位，留出余量接进位。数变大就多要几格，所以不会溢出。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176">
 <text x="170" y="16" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">2**65 拆成 3 位 每位 30 个二进制位</text>
 <text x="68" y="40" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--dim,#6b7280)">位 0</text>
@@ -32,7 +31,6 @@ C 和 Java 的 `int` 超过 2^31 就绕回负数，Python 的 `2**100` 却能直
 <text x="170" y="130" text-anchor="middle" font-size="12" font-family="sans-serif" style="fill:var(--accent,#3b6fd4)">0 + 0 x 2^30 + 32 x 2^60 = 2^65</text>
 <text x="170" y="156" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor">24 字节头 + 3 位 x 4 字节 = 36 字节</text>
 </svg>
-```
 
 **细节。**
 

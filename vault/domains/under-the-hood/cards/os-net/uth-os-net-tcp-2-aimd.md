@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `cwnd` 的状态机：慢启动（slow start，从小开始成倍增长）→ 拥塞避免（congestion avoidance，接近极限后慢慢加）；丢包时乘性减（直接打折）。例：初始 10 个段（`TCP_INIT_CWND`，段 = 一次发出的数据包），慢启动每个 RTT 翻倍：10、20、40……
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
 <line x1="40" y1="18" x2="40" y2="170" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <line x1="40" y1="170" x2="322" y2="170" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -31,7 +30,6 @@ step: 2
 <text x="130" y="108" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">拥塞避免</text>
 <text x="206" y="54" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">丢包减半</text>
 </svg>
-```
 
 **细节。**
 

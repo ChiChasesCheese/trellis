@@ -14,7 +14,6 @@ step: 3
 
 **结构。** 差别就在 `ep_send_events` 把事件交给用户之后：LT 把节点重新挂回 `rdllist`，ET 不挂。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 168">
 <text x="70" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">到达 10 字节</text>
 <text x="150" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">read 5 字节</text>
@@ -35,7 +34,6 @@ step: 3
 <text x="70" y="90" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">报告</text>
 <text x="70" y="148" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">报告</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 2
 
 **结构。** `dict` 里有两张哈希表和一个游标 `rehashidx`；扩容就是新建大表，再一点一点搬。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 215">
 <text x="8" y="14" text-anchor="start" font-size="12" font-family="sans-serif" font-weight="bold" fill="currentColor">dict: 两张哈希表 + 游标 rehashidx</text>
 <text x="8" y="34" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">旧表 ht[0]</text>
@@ -50,7 +49,6 @@ step: 2
 <text x="8" y="176" text-anchor="start" font-size="11" font-family="sans-serif" fill="currentColor">查找要查两张表; serverCron 每轮再花约 1 毫秒帮忙</text>
 <text x="8" y="198" text-anchor="start" font-size="11" font-family="sans-serif" style="fill:var(--dim,#6b7280)">把 O(n) 的搬迁摊到许多次操作上, 单次只多一个桶</text>
 </svg>
-```
 
 **细节。**
 

@@ -14,7 +14,6 @@ step: 4
 
 **结构。** 垃圾回收控制器（GC）在内存里维护一张图，每个节点记着自己的 `dependents`（以它为属主的节点）。收到「属主已删除」的事件，就把它的每个直接下属放进 `attemptToDelete` 工作队列；worker 取出一个，确认没有别的存活属主就删掉，这次删除又产生事件，下一层再入队。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 196">
 <rect x="120" y="14" width="100" height="26" rx="3" stroke="currentColor" stroke-width="1.8" style="fill:var(--chip,rgba(59,111,212,0.12));stroke:var(--accent,#3b6fd4)"/>
 <text x="170" y="31" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">Deployment</text>
@@ -36,7 +35,6 @@ step: 4
 <path d="M250,134 L246.5,127 L253.5,127 Z" stroke="none" style="fill:var(--accent,#3b6fd4)"/>
 <text x="170" y="186" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">用户只删最上面一个 其余由 GC 逐层排队删</text>
 </svg>
-```
 
 **细节。**
 

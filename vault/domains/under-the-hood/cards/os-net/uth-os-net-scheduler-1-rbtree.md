@@ -14,7 +14,6 @@ step: 1
 
 **结构。** 红黑树（保持平衡的有序二叉树）：可运行任务按 `vruntime` 放进树里，调度器取最左节点（最小的）。例：树里有 20、30、40……的任务，最左的 20 先上 CPU，跑一会儿它的 `vruntime` 变大，再插回树里。
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190">
 <line x1="170" y1="45" x2="110" y2="55" fill="none" stroke="currentColor" stroke-width="1.2"/>
 <line x1="170" y1="45" x2="230" y2="55" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -42,7 +41,6 @@ step: 1
 <text x="20" y="164" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">最左节点 下一个上 CPU</text>
 <text x="20" y="182" text-anchor="start" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">缓存了指针 取走 O(1)</text>
 </svg>
-```
 
 **细节。**
 

@@ -15,7 +15,6 @@ step: 4
 - `LeastAllocated`：（容量 − 放入后已用）× 100 ÷ 容量，越空分越高，结果是摊开
 - `MostAllocated`：放入后已用 × 100 ÷ 容量，越满分越高，结果是塞满（文档称之为装箱，bin packing）
 
-```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180">
 <text x="215" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">摊开</text>
 <text x="295" y="18" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none">塞满</text>
@@ -46,7 +45,6 @@ step: 4
 <text x="170" y="148" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--dim,#6b7280)">新 Pod 要 1 核  每台 4 核  A 已用 2 核</text>
 <text x="170" y="170" text-anchor="middle" font-size="12" font-family="sans-serif" fill="currentColor" stroke="none" style="fill:var(--accent,#3b6fd4)">摊开选 B (更空)  塞满选 A (更满)</text>
 </svg>
-```
 
 **为什么。** 摊开让每台机器留有余量，负载突增时更从容；塞满让 Pod 集中，容易空出整台机器，方便缩容。两种都是贪心，差别只在你想优化什么。
 
