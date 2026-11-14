@@ -122,6 +122,9 @@ class Skeleton:
     # original to keep. Terms of art stay English in any language. The
     # learner reviews in Chinese, so a domain is Chinese unless it says `en`.
     lang: str = "zh"
+    # The language the cards are shown in, when it differs from the one they are written in: an English domain whose
+    # cards all carry a `## zh` translation shows Chinese (`show: zh`, Chi 2026-11-14: everything he studies is Chinese).
+    show: str = ""
     # Where this domain's content lives, relative to vault/. A subject sits
     # under domains/, an interview round under interviews/rounds/; the
     # default is the domain slug itself.
@@ -317,7 +320,7 @@ def load_skeleton(path: str | Path) -> Skeleton:
 
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},
                         include=list(include), deck_depth=deck_depth, deck_moves=deck_moves, anki_via=anki_via,
-                        lang=lang, folder=folder, deck=deck, examples_from=examples_from, fold=data.get("fold") if data.get("fold") == "bullets" else bool(data.get("fold", False)), fold_code=int(data.get("fold_code", 0) or 0),
+                        lang=lang, show=str(data.get("show", "") or ""), folder=folder, deck=deck, examples_from=examples_from, fold=data.get("fold") if data.get("fold") == "bullets" else bool(data.get("fold", False)), fold_code=int(data.get("fold_code", 0) or 0),
                         study=_parse_study(data.get("study"), errors))
     for node in skeleton.walk():
         if node.id in skeleton.by_id:

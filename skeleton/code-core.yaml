@@ -12,324 +12,325 @@ domain: code-core
 title: Code Core
 deck: "📦 其他::Code Core"
 lang: en
+show: zh  # cards carry a ## zh translation; Chi studies in Chinese
 vault: interviews/rounds/code-core
 nodes:
   - id: round
     order: 1
-    title: The Coding Round
+    title: 编程轮（The Coding Round）
     summary: How the hour itself is run and graded — the meta-skill that decides more outcomes than any algorithm.
     children:
       - id: round.formats
-        title: Round Formats & What Each Grades
+        title: 轮次形式与各自评分点（Round Formats & What Each Grades）
         summary: Timed OA, phone screen, machine coding, take-home — what the grader can and cannot see in each, and how that changes what you optimize.
       - id: round.reading
-        title: Reading a Multi-Part Spec
+        title: 读懂多段式题面（Reading a Multi-Part Spec）
         summary: Reading every part before writing a line, and designing the state from the last part so Part N+1 extends rather than rewrites.
       - id: round.time
-        title: Time Budget & Triage
+        title: 时间预算与取舍（Time Budget & Triage）
         summary: Minutes per part, locking a part before starting the next, and what to abandon when the clock beats the spec.
       - id: round.communication
-        title: Talking to the Interviewer
+        title: 和面试官沟通（Talking to the Interviewer）
         summary: Clarifying questions that pay, narrating a decision instead of the syntax, taking a hint gracefully, and disagreeing without stalling.
       - id: round.ambiguity
-        title: Resolving an Ambiguous Rule
+        title: 澄清含糊的规则（Resolving an Ambiguous Rule）
         summary: Deciding between readings of an underspecified rule, stating the assumption in a comment, and keeping the alternative one flag away.
       - id: round.debugging
-        title: Debugging Without a Debugger
+        title: 没有调试器时怎么调试（Debugging Without a Debugger）
         summary: Print-to-stderr discipline, bisecting a failing input, minimizing a repro, and reading a diff of expected vs actual bytes.
       - id: round.hidden-tests
-        title: Inferring the Hidden Tests
+        title: 推测隐藏测试（Inferring the Hidden Tests）
         summary: Reading a statement for what the grader will probe — the exact-threshold case, the empty case, the duplicate, the reversal.
       - id: round.submission
-        title: The Last Five Minutes
+        title: 最后五分钟（The Last Five Minutes）
         summary: The pre-submit sweep — debug output removed, format re-checked against the sample, every part re-run, nothing left half-refactored.
 
   - id: input
     order: 2
-    title: Input & Parsing
+    title: 输入与解析（Input & Parsing）
     summary: Turning bytes on stdin into typed records — the first ten minutes of nearly every OA problem.
     children:
       - id: input.line-protocols
-        title: Line-Oriented Record Protocols
+        title: 按行记录的输入协议（Line-Oriented Record Protocols）
         summary: Dispatching on a leading keyword, mixed record types in one stream, blank lines, and setup lines that apply before events wherever they appear.
       - id: input.delimited
-        title: Delimited Fields & CSV
+        title: 分隔字段与 CSV（Delimited Fields & CSV）
         summary: Splitting on a delimiter versus using `csv`, quoted fields containing the delimiter, header-driven access, and variable-length rows.
       - id: input.numbers
-        title: Parsing Numbers & Literal Shapes
+        title: 解析数字与字面量格式（Parsing Numbers & Literal Shapes）
         summary: Reading ints, decimals and money strings exactly, and dispatching on the *shape* of a literal (`3` vs `1.0`) when the shape carries meaning.
       - id: input.normalization
-        title: Normalizing Text on the Way In
+        title: 输入时规范化文本（Normalizing Text on the Way In）
         summary: Case folding, whitespace stripping, punctuation and suffix removal, Unicode noise — and why normalization belongs at the boundary, once.
       - id: input.malformed
-        title: Malformed & Hostile Rows
+        title: 格式错误与恶意行（Malformed & Hostile Rows）
         summary: Deciding per field whether a bad row is skipped, defaulted or fatal, and keeping the decision in one validator instead of scattered `try` blocks.
       - id: input.structured
-        title: Key-Value, Query-String & JSON Input
+        title: 键值、查询串与 JSON 输入（Key-Value, Query-String & JSON Input）
         summary: "`k=v` pairs, repeated keys, URL-ish query strings, JSON lines, and missing-key policy as an explicit choice."
       - id: input.grammar
-        title: A Tiny Grammar by Hand
+        title: 手写一个小文法（A Tiny Grammar by Hand）
         summary: When rules arrive as nested expressions — tokenizer plus recursive descent, precedence, and why it stays separate from the evaluator.
 
   - id: model
     order: 3
-    title: Modeling in the Small
+    title: 小规模建模（Modeling in the Small）
     summary: The shape of state that makes the later parts cheap — records in dicts, indexes, and streams of events that change earlier answers.
     children:
       - id: model.records
-        title: Records, Dicts & When a Class Earns Its Place
+        title: 记录、字典与何时值得写类（Records, Dicts & When a Class Earns Its Place）
         summary: Plain dicts vs tuples vs dataclasses vs a class with behavior, and the signal that a bag of parallel dicts has become an object.
       - id: model.entity-state
-        title: State Per Entity
+        title: 按实体维护状态（State Per Entity）
         summary: Counters and status kept per id, the derived-vs-stored decision, and re-evaluating exactly the entity an event touched.
         requires: [model.records]
       - id: model.index
-        title: Choosing the Key & Secondary Indexes
+        title: 选主键与二级索引（Choosing the Key & Secondary Indexes）
         summary: Picking the dict key that makes the hot query O(1), maintaining a second index, and the cost of keeping two structures in step.
       - id: model.event-stream
-        title: Event Streams in Order
+        title: 按序处理事件流（Event Streams in Order）
         summary: Processing events in arrival order, what "current" means at each point, and the difference between replaying and incrementally updating.
       - id: model.reversal
-        title: Reversals & Un-applying an Event
+        title: 撤销与回滚一个事件（Reversals & Un-applying an Event）
         summary: Disputes, refunds, cancellations and plan changes that undo an earlier event — subtracting cleanly, and the states that reversal can resurrect.
         requires: [model.entity-state]
       - id: model.idempotency
-        title: Idempotency & De-duplication
+        title: 幂等与去重（Idempotency & De-duplication）
         summary: Repeated ids, replayed events and double frees — recognizing the second occurrence and making the handler a no-op without losing the first.
       - id: model.state-machine
-        title: Commands as a State Machine
+        title: 把命令建成状态机（Commands as a State Machine）
         summary: Explicit states and a transition table, rejecting illegal transitions with the required message, and why boolean soup fails Part 4.
 
   - id: rules
     order: 4
-    title: Business Rules & Money
+    title: 业务规则与金额（Business Rules & Money）
     summary: The arithmetic layer where hidden tests are won and lost — thresholds, grouping, and money that must not drift by a cent.
     children:
       - id: rules.thresholds
-        title: Threshold Semantics
+        title: 阈值语义（Threshold Semantics）
         summary: Strict vs non-strict comparison, count vs ratio thresholds, minimum-volume gates, and reading "exceeds" out of an English sentence.
       - id: rules.grouping
-        title: Group-By & Once-Per-Group Rules
+        title: 分组与每组一次的规则（Group-By & Once-Per-Group Rules）
         summary: Aggregating per key, applying a bonus or penalty once per group rather than per row, and the double-counting bug that follows.
       - id: rules.money
-        title: Money as Integer Minor Units
+        title: 金额用整数最小单位（Money as Integer Minor Units）
         summary: Cents as `int`, `Decimal` with an explicit context, zero-decimal currencies, and why a float ever touching money is a bug.
       - id: rules.rounding
-        title: Rounding Rules & Where to Apply Them
+        title: 舍入规则与在哪一步舍入（Rounding Rules & Where to Apply Them）
         summary: Half-up vs banker's vs floor vs truncation, rounding once at the edge rather than per row, and the `x.xx5` cases graders love.
         requires: [rules.money]
       - id: rules.exact-ratio
-        title: Comparing Ratios Exactly
+        title: 精确比较比例（Comparing Ratios Exactly）
         summary: Cross-multiplying integers instead of dividing, storing a decimal literal as numerator over a power of ten, and `Fraction` as the escape hatch.
       - id: rules.tiers
-        title: Tiered, Metered & Prorated Math
+        title: 阶梯、计量与按比例计费（Tiered, Metered & Prorated Math）
         summary: Graduated vs volume tiers, included allowances, per-unit vs flat bands, and prorating across a mid-period change.
         requires: [rules.money]
       - id: rules.fees
-        title: Percentages, Fees & Splits
+        title: 百分比、费用与分账（Percentages, Fees & Splits）
         summary: Percent-plus-fixed fees, applying a rate to minor units without drift, splitting a total so the parts sum back to it exactly.
         requires: [rules.rounding]
 
   - id: chrono
     order: 5
-    title: Time & Intervals
+    title: 时间与区间（Time & Intervals）
     summary: Timestamps, durations and ranges — the branch where off-by-one and timezone errors hide.
     children:
       - id: chrono.parsing
-        title: Parsing Timestamps
+        title: 解析时间戳（Parsing Timestamps）
         summary: Epoch seconds, ISO-8601, `HH:MM`, day-of-week tokens and naive vs aware datetimes — parsing into one canonical representation.
       - id: chrono.arithmetic
-        title: Duration & Calendar Arithmetic
+        title: 时长与日历运算（Duration & Calendar Arithmetic）
         summary: Adding days and months, month-end clamping, UTC offsets and day wrap, and why calendar math is not duration math.
         requires: [chrono.parsing]
       - id: chrono.windows
-        title: Time Windows & Buckets
+        title: 时间窗口与分桶（Time Windows & Buckets）
         summary: Fixed buckets vs rolling windows, "within the last hour" as a comparison you must pin down, and per-key window state.
         requires: [chrono.arithmetic]
       - id: chrono.intervals
-        title: Intervals, Merging & Gaps
+        title: 区间、合并与空隙（Intervals, Merging & Gaps）
         summary: Inclusive vs half-open endpoints, merging and subtracting ranges, filling gaps, and covered-interval tests on integer domains.
 
   - id: output
     order: 6
-    title: Output & Determinism
+    title: 输出与确定性（Output & Determinism）
     summary: The last stage, where a correct computation still fails the grader — ordering and bytes.
     children:
       - id: output.ordering
-        title: Sort Keys & Full Tie-Breaks
+        title: 排序键与完整的平局规则（Sort Keys & Full Tie-Breaks）
         summary: Naming every tie-break, stable sort as the last resort, descending-plus-ascending composite keys, and lexicographic vs numeric order.
       - id: output.formatting
-        title: Byte-Exact Formatting
+        title: 逐字节精确的格式（Byte-Exact Formatting）
         summary: Fixed decimals, zero padding, separators, currency symbols, trailing newline and trailing space — and formatting in exactly one place.
       - id: output.sentinels
-        title: Sentinels & Empty Results
+        title: 哨兵值与空结果（Sentinels & Empty Results）
         summary: "`NONE` vs a blank line vs no line at all, error strings as part of the contract, and the empty-input case for every part."
 
   - id: toolbox
     order: 7
-    title: Data Structure Toolbox
+    title: 数据结构工具箱（Data Structure Toolbox）
     summary: The handful of structures that solve nearly every timed problem, chosen by the operation that has to be fast.
     children:
       - id: toolbox.hash
-        title: Dicts, Sets & Key Design
+        title: 字典、集合与键设计（Dicts, Sets & Key Design）
         summary: "`defaultdict` and `Counter`, tuple keys, when a set beats a dict, and the hashability rules that decide the key."
       - id: toolbox.heap
-        title: Heaps & Top-K
+        title: 堆与 Top-K（Heaps & Top-K）
         summary: "`heapq` for least-loaded and top-k selection, tuple keys for tie-breaks, max-heaps by negation, and lazy invalidation of stale entries."
       - id: toolbox.deque
-        title: Deques, Stacks & Queues
+        title: 双端队列、栈与队列（Deques, Stacks & Queues）
         summary: "`deque` for sliding windows and BFS frontiers, monotonic stacks and queues, and the cost of `list.pop(0)`."
       - id: toolbox.sorted
-        title: Sorting & Binary Search Structures
+        title: 排序与二分查找结构（Sorting & Binary Search Structures）
         summary: "`sorted` with a key, `bisect` for insertion points and range counts, and keeping a list sorted versus re-sorting."
       - id: toolbox.union-find
-        title: Union-Find
+        title: 并查集（Union-Find）
         summary: Disjoint-set union with path compression and union by size, connected components, and modelling "shared identifier" links as edges.
       - id: toolbox.prefix-trees
-        title: Tries & Prefix Structures
+        title: 字典树与前缀结构（Tries & Prefix Structures）
         summary: Trie construction and lookup, when a sorted list plus `bisect` is enough, and prefix aggregation over a fixed alphabet.
       - id: toolbox.cache
-        title: LRU, TTL & Versioned Maps
+        title: LRU、TTL 与带版本的映射（LRU, TTL & Versioned Maps）
         summary: Recency ordering with an ordered dict, expiry by timestamp, and a key-to-sorted-versions map for point-in-time reads.
         requires: [toolbox.sorted]
       - id: toolbox.graph-repr
-        title: Representing a Graph
+        title: 图的表示（Representing a Graph）
         summary: Adjacency dicts vs edge lists vs matrices, weighted edges, implicit graphs built from records, and reversing an edge set.
 
   - id: algorithms
     order: 8
-    title: Algorithm Patterns
+    title: 算法模式（Algorithm Patterns）
     summary: The pattern library an OA actually draws from — each entered through the problem cue that names it.
     children:
       - id: algorithms.recognition
-        title: Recognizing the Pattern
+        title: 识别模式（Recognizing the Pattern）
         summary: Mapping a problem cue to a technique, the constraint sizes that rule techniques in or out, and the brute force worth writing first.
       - id: algorithms.prefix
-        title: Prefix Sums & Running Aggregates
+        title: 前缀和与累计聚合（Prefix Sums & Running Aggregates）
         summary: Prefix and suffix arrays, best split point with a tie-break, difference arrays, and answering range queries in O(1).
       - id: algorithms.sliding-window
-        title: Two Pointers & Sliding Windows
+        title: 双指针与滑动窗口（Two Pointers & Sliding Windows）
         summary: Fixed vs variable windows, shrinking on a violated invariant, minimal covering window, and windows over timestamps rather than indexes.
         requires: [toolbox.deque]
       - id: algorithms.binary-search
-        title: Binary Search on Index and on Answer
+        title: 在下标上二分与在答案上二分（Binary Search on Index and on Answer）
         summary: The invariant that makes a search correct, searching a monotone predicate over the answer space, and the loop shapes that avoid off-by-one.
       - id: algorithms.greedy
-        title: Greedy & Its Proof Obligation
+        title: 贪心与它的证明义务（Greedy & Its Proof Obligation）
         summary: Exchange arguments, sorting by the right key, when a counterexample kills the greedy, and greedy plus a heap.
       - id: algorithms.graph-traversal
-        title: BFS, DFS & Components
+        title: BFS、DFS 与连通分量（BFS, DFS & Components）
         summary: Iterative traversal without recursion limits, visited discipline, connected components, cycle detection, and layer-by-layer distance.
         requires: [toolbox.graph-repr]
       - id: algorithms.shortest-path
-        title: Shortest Paths & Bounded Hops
+        title: 最短路与跳数限制（Shortest Paths & Bounded Hops）
         summary: Dijkstra with a heap, Bellman-Ford by rounds for a hop limit, product-weight paths, and reconstructing the path with tie-breaks.
         requires: [algorithms.graph-traversal]
       - id: algorithms.topological
-        title: Topological Order & Weighted DAGs
+        title: 拓扑序与带权 DAG（Topological Order & Weighted DAGs）
         summary: Kahn's algorithm, detecting a cycle by shortfall, longest path as earliest-finish time, and the critical path through a schedule.
         requires: [algorithms.graph-traversal]
       - id: algorithms.dp
-        title: Dynamic Programming in a Timed Round
+        title: 限时轮次里的动态规划（Dynamic Programming in a Timed Round）
         summary: Naming the state and the transition out loud, 1-D and 2-D tables, bitmask DP over small sets, and banded DP for bounded edit distance.
       - id: algorithms.backtracking
-        title: Enumeration, Backtracking & Pruning
+        title: 枚举、回溯与剪枝（Enumeration, Backtracking & Pruning）
         summary: Systematic enumeration with a canonical order, pruning that preserves optimality, counting without materializing, and the k-th element by ranking.
       - id: algorithms.strings
-        title: String Algorithms in Practice
+        title: 实用字符串算法（String Algorithms in Practice）
         summary: Digit walks such as Luhn, wildcard expansion, one-edit distance, numeronyms and canonical forms — all as single passes with explicit indices.
       - id: algorithms.settlement
-        title: Matching, Assignment & Settlement
+        title: 匹配、分配与清算（Matching, Assignment & Settlement）
         summary: Netting balances before transferring, minimum transfers to settle debts, FIFO consumption of a queue of lots, and stable assignment under capacity.
 
   - id: performance
     order: 9
-    title: Complexity & Budgets
+    title: 复杂度与预算（Complexity & Budgets）
     summary: Making the perf test pass on the first submission, and knowing before you code whether it will.
     children:
       - id: performance.budget
-        title: Reading the Constraints
+        title: 读约束（Reading the Constraints）
         summary: Translating 10^5 or 10^6 into an allowed complexity class, the operations-per-second budget of an interpreted language, and choosing before coding.
       - id: performance.hot-loop
-        title: Work Hoisted Out of the Loop
+        title: 把工作提到循环外（Work Hoisted Out of the Loop）
         summary: Re-tokenizing, re-sorting and re-scanning inside a loop — the three quadratic blowups that show up in OA solutions, and how to spot them.
       - id: performance.memory
-        title: Memory Footprint
+        title: 内存占用（Memory Footprint）
         summary: The real cost of a Python object, streaming instead of materializing, and staying inside a 256 MB budget on 10^6 records.
       - id: performance.amortized
-        title: Amortized & Lazy Techniques
+        title: 摊还与惰性技巧（Amortized & Lazy Techniques）
         summary: Amortized reasoning for a heap with stale entries, incremental maintenance instead of recomputation, and caching a derived value safely.
       - id: performance.numeric-arrays
-        title: Numeric Arrays & Cache-Friendly Loops
+        title: 数值数组与缓存友好的循环（Numeric Arrays & Cache-Friendly Loops）
         summary: Dot products, matrix multiply and why loop order changes speed, blocking / tiling, 2D prefix sums, sparse vectors as a dict or CSR, and handing the inner loop to numpy.
         requires: [performance.budget]
       - id: performance.parallel-split
-        title: Splitting Array Work Across Workers
+        title: 把数组工作分给多个 worker（Splitting Array Work Across Workers）
         summary: Chunking an array over threads or processes, why the GIL makes threads useless for pure-Python math, `concurrent.futures`, the two-pass parallel prefix sum, merging partial results, and checking against a serial reference.
         requires: [performance.numeric-arrays]
 
   - id: python
     order: 10
-    title: Language Fluency
+    title: 语言熟练度（Language Fluency）
     summary: Python as the timed-round instrument — the stdlib you must not have to look up, written so the ideas port to any language.
     children:
       - id: python.stdlib
-        title: The Stdlib You Must Know Cold
+        title: 必须烂熟的标准库（The Stdlib You Must Know Cold）
         summary: "`collections`, `itertools`, `heapq`, `bisect`, `functools`, `csv`, `json`, `datetime`, `decimal`, `math` — the exact call you need under time pressure."
       - id: python.idioms
-        title: Idioms That Save Minutes
+        title: 省时间的惯用写法（Idioms That Save Minutes）
         summary: Comprehensions, unpacking, `sorted(key=...)`, `cmp_to_key`, `enumerate`/`zip`, f-string formatting, and `dict.setdefault` vs `defaultdict`.
       - id: python.pitfalls
-        title: Traps That Cost a Test Case
+        title: 会丢测试点的陷阱（Traps That Cost a Test Case）
         summary: Mutable default arguments, floor division on negatives, float equality, shallow copies, late-binding closures, and mutation during iteration.
       - id: python.io
-        title: Reading stdin, Writing stdout
+        title: 读 stdin、写 stdout（Reading stdin, Writing stdout）
         summary: Reading the whole input fast, dispatching on a `PART` line, printing exactly, keeping debug output on stderr, and `main()` as a testable seam.
       - id: python.classes
-        title: Classes, Dataclasses & Equality
+        title: 类、dataclass 与相等性（Classes, Dataclasses & Equality）
         summary: "`@dataclass` with ordering, `__eq__`/`__hash__` together, `__slots__` for footprint, and `__repr__` that makes a failure legible."
       - id: python.portability
-        title: Porting the Idiom to Another Language
+        title: 把惯用写法移植到另一种语言（Porting the Idiom to Another Language）
         summary: The Java, Go and TypeScript equivalents of the structures above, and which language costs you minutes in a timed round.
 
   - id: verification
     order: 11
-    title: Correctness Discipline
+    title: 正确性纪律（Correctness Discipline）
     summary: Convincing yourself the code is right before a grader tells you it is not.
     children:
       - id: verification.edge-catalog
-        title: The Universal Edge Catalog
+        title: 通用边界清单（The Universal Edge Catalog）
         summary: Empty, single, duplicate, out-of-order, zero, negative, exactly-at-threshold, maximum — the list you run against every part.
       - id: verification.invariants
-        title: Invariants & Oracles
+        title: 不变量与判定器（Invariants & Oracles）
         summary: Stating what must always hold, asserting it cheaply, and cross-checking against a slow brute force on random inputs.
       - id: verification.tests
-        title: Writing Tests Fast
+        title: 快速写测试（Writing Tests Fast）
         summary: Reproducing the worked example verbatim first, two or three own cases per part, and making sure a test can actually fail.
       - id: verification.determinism
-        title: Determinism & Reproducibility
+        title: 确定性与可复现（Determinism & Reproducibility）
         summary: Seeded randomness, stable hashing for percentage rollouts, iteration order you can rely on, and output that does not depend on dict insertion luck.
 
   - id: transfer
     order: 12
-    title: Transfer to Other Rounds
+    title: 迁移到其他轮次（Transfer to Other Rounds）
     summary: Reusing this core outside the round it was learned in — the branch every new company's assessment attaches to.
     children:
       - id: transfer.stripe-oa
-        title: The Stripe-Shaped Assessment
+        title: Stripe 式的测评（The Stripe-Shaped Assessment）
         summary: One bespoke problem in three to five unlocking parts, parsing to state to rules to exact stdout, payments vocabulary, sixty minutes.
       - id: transfer.snowflake
-        title: The Snowflake-Shaped Rounds
+        title: Snowflake 式的轮次（The Snowflake-Shaped Rounds）
         summary: A HackerRank OA of two to three LeetCode-grade problems, then phone coding with stacked follow-ups and class design that always ends in a concurrency question.
       - id: transfer.amazon
-        title: The Amazon-Shaped Assessment
+        title: Amazon 式的测评（The Amazon-Shaped Assessment）
         summary: Two LeetCode-style problems plus work simulation and leadership-principle questions, and what the debrief actually scores.
       - id: transfer.abnormal
-        title: The Abnormal-Shaped Rounds
+        title: Abnormal 式的轮次（The Abnormal-Shaped Rounds）
         summary: A sixty-minute AI-assisted screen inside an existing Python codebase with Claude Code — explore, then ship an intentionally underspecified feature that fits the system's own abstractions — followed by incident, scale, code-review and judgment rounds.
       - id: transfer.quant
-        title: The Quant-Shaped Assessment
+        title: 量化式的测评（The Quant-Shaped Assessment）
         summary: Probability and expectation under time pressure, simulation over closed form, numerical care, and market-making brainteasers.
       - id: transfer.playbook
-        title: Building a Playbook From One Round
+        title: 从一轮面试总结出打法（Building a Playbook From One Round）
         summary: Turning a sat assessment into reusable material — the general leaf each problem instantiates, what to card, and what to leave as evidence.

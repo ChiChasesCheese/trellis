@@ -181,7 +181,7 @@ def cmd_build(args, project: Project) -> int:
         vault=args.vault_name or vault_name(args.root / "vault"),
         clippings=project.clippings,
         cases=project.cases,
-        lang=args.lang,
+        lang=args.lang or project.skeleton.show,
     )
     print(f"wrote {result['path']}: {result['notes']} notes in {result['decks']} decks")
     return 0

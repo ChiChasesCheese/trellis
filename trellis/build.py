@@ -843,7 +843,8 @@ def _sources_html(
         if link.web_href:
             html += f' <a href="{link.web_href}" class="web" title="open the original online">↗</a>'
         rendered.append(html)
-    return '<div class="sources">Go deeper: ' + " · ".join(rendered) + "</div>"
+    label = "延伸阅读：" if (skeleton.show or skeleton.lang) == "zh" else "Go deeper: "
+    return '<div class="sources">' + label + " · ".join(rendered) + "</div>"
 
 
 def build_package(

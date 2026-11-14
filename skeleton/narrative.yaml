@@ -19,6 +19,7 @@
 # Study order is top-to-bottom; `requires` marks the real cross-branch
 # prerequisites.
 domain: narrative
+anki_via: none  # deck deleted 2026-11-14 at Chi\'s request; kept as text only
 title: Narrative Round
 deck: "📦 其他::Narrative Round"
 lang: en
