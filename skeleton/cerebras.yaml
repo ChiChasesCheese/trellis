@@ -1,0 +1,130 @@
+# Cerebras · AI Inference Core – Senior SDET, Release Integration Testing: the company-specific cards that have no
+# general home. General knowledge (LLM inference, testing and release engineering) lives in the llm-inference and
+# test-release domains. Private prep: this file and the kit are excluded from git through .git/info/exclude.
+# Study order is top to bottom: the company, the role, the loop, the hiring-manager screen, the stories, the questions.
+domain: cerebras
+title: Cerebras
+deck: "📦 其他::Cerebras"
+lang: zh
+vault: interviews/companies/cerebras/deck
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 30
+  reviews_per_day: 200
+nodes:
+- id: company
+  order: 1
+  core: true
+  title: 公司：Cerebras 卖什么、为什么快、怎么赚钱
+  summary: 从零讲 AI 推理和晶圆级芯片，再讲 Cerebras 的产品、客户、OpenAI 合同、竞争对手和最近的新闻。
+  children:
+  - id: company.business
+    title: 公司概况与财务
+    summary: 上市、员工、营收结构（云服务 vs 硬件）、毛利、在手订单、收入指引。
+  - id: company.products
+    title: 产品：芯片、系统与推理云
+    summary: WSE-3 芯片、CS-3 / CS-4 系统、推理云 API、专属端点、训练产品。
+  - id: company.wafer-scale
+    title: 一张图看懂晶圆级推理为什么快
+    summary: 生成一个 token 要把全部参数读一遍；权重放在片上 SRAM，带宽远超 GPU 的 HBM；代价是容量小、大模型要跨多块晶圆。
+    requires: [company.products]
+  - id: company.customers-openai
+    title: 客户集中度与 OpenAI 合同
+    summary: G42 / MBZUAI 曾占大半收入；OpenAI 750 MW、超过 200 亿美元的合同，以及交付与集中度风险。
+    requires: [company.business]
+  - id: company.competitors
+    title: 竞争对手与定位
+    summary: Nvidia（含 Groq 授权）、AMD、Groq、SambaNova、谷歌 TPU、AWS Trainium；Cerebras 赢在哪、弱在哪。
+    requires: [company.wafer-scale]
+  - id: company.news
+    title: 最近一年的新闻
+    summary: IPO、CS-4、WSE-5、AWS 与 AMD 的分离式推理、Inference Core 招聘潮。
+- id: role
+  order: 2
+  core: true
+  title: 岗位：Inference Core 的发布集成测试（RIT）
+  summary: 团队在组织里的位置、RIT 管什么不管什么、要用的工具、一周大概怎么过。
+  children:
+  - id: role.team
+    title: 团队位置：AI Inference Core 与 Release & Feature Qualification
+    summary: 两个推理组织（Core 与 Service）、邻居团队、可能的经理。
+  - id: role.rit
+    title: RIT 是什么：功能验证与发布验证之间的桥
+    summary: 功能团队与 RIT 的分工、新建团队意味着什么、准入门、分支健康、失败分类、首轮排查。
+    requires: [role.team]
+  - id: role.tools
+    title: 工具与技术栈
+    summary: Python 为主，pytest、Kubernetes、PyTorch、模拟器、CI/CD、Prometheus/Grafana、gdb/strace。
+  - id: role.week
+    title: 一周的工作与成功标准
+    summary: 早上看夜间回归、排查失败、补测试、准入评审；JD 里的成功标准怎么对应到你。
+    requires: [role.rit]
+- id: loop
+  order: 3
+  core: true
+  title: 面试流程
+  summary: 每一轮的形式、考什么、怎么准备。
+  children:
+  - id: loop.rounds
+    title: 轮次与形式
+    summary: 招聘官电话、经理面 45 分钟、三轮约 45 分钟的技术面（偏 Python）、反馈与 CEO 签 offer。
+  - id: loop.what-each-tests
+    title: 每一轮考什么
+    summary: 编码、技术深挖（测试、ML 基础、推理）、系统设计、背景问题、允许用 AI 的轮次。
+    requires: [loop.rounds]
+- id: hm
+  order: 4
+  core: true
+  title: 经理面（HM screen）
+  summary: 自我介绍、为什么、项目深挖、"你会怎么测 X"、诚实说 AI 的缺口。
+  requires: [role.rit, loop.rounds]
+  children:
+  - id: hm.self-intro
+    title: 30 秒与 2 分钟自我介绍
+    summary: 用真实经历讲成一个发布集成测试工程师：行为一致性测试、跨阶段端到端测试、质量门、值班根因、每日健康检查、个人项目的测试与 CI。
+  - id: hm.why
+    title: 为什么 Cerebras、为什么 SDET、为什么离开 PayPal
+    summary: 三个"为什么"的答法与追问。
+  - id: hm.deep-dives
+    title: 项目深挖，对着 JD 讲
+    summary: 迁移的行为一致性、静默 NULL 事故、质量门框架、用生产查询验证切换、确定性测试环境、个人项目的测试体系。
+    requires: [hm.self-intro]
+  - id: hm.test-strategy
+    title: 「你会怎么测 X」：推理端点与一次发布
+    summary: 按层次答测试策略：接口契约、正确性、性能、健壮性、发布准入。
+  - id: hm.ai-gap
+    title: 诚实说 AI 的缺口
+    summary: 我是 ML 新手；我已经懂什么、怎么学、怎么把测试功底迁移过来。
+- id: behavioural
+  order: 5
+  title: 背景问题：故事对题
+  summary: 每类常见背景问题用哪个真实故事、按什么顺序讲。
+  requires: [hm.self-intro]
+  children:
+  - id: behavioural.conflict
+    title: 冲突与分歧
+    summary: 和资深同事、和上级意见不同时怎么处理。
+  - id: behavioural.learning
+    title: 在没有结构的情况下学新领域
+    summary: 资料少、没人教的时候怎么快速学会一个领域。
+  - id: behavioural.ownership
+    title: 端到端负责一件事
+    summary: 没人分配也去做、从头负责到上线和值班。
+  - id: behavioural.push-back
+    title: 叫停或推迟一次发布
+    summary: 在进度压力下用证据说"不能上"。
+  - id: behavioural.failure
+    title: 失败与漏掉的缺陷
+    summary: 自己的错、测试没抓到的 bug、事后改了什么。
+- id: ask
+  order: 6
+  title: 反问
+  summary: 问经理、工程师和 CEO 的问题，以及每个问题想听出什么。
+  children:
+  - id: ask.hm
+    title: 问经理
+    summary: 团队成立到哪一步、准入门由谁定、前 90 天、怎么衡量成功。
+  - id: ask.engineers
+    title: 问工程师与 CEO
+    summary: 一次真实的跨层故障、master 有多绿、测试资源怎么分；问 CEO 的方向性问题。
