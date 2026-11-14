@@ -3,6 +3,10 @@
     uv run python scripts/company_deck.py deal      # move the plan's cards in (idempotent; run again after the plan changes)
     uv run python scripts/company_deck.py status    # per part: cards, new, seen
     uv run python scripts/company_deck.py release   # the interview is over: every card goes back to its home deck
+    uv run python scripts/company_deck.py rename "6 AI Infra SDET"   # same cards, scheduling and order, new deck name
+
+The plan usually comes from a role track plus a company overlay (scripts/track_plan.py): to reuse the deck for the next
+role, point the overlay at another track (or drop the company sections), rebuild the plan, `rename`, then `deal`.
 
 Chi (2026-11-13): the cards stay in their own domains (the single source of truth); this deck only borrows
 them, in the order the prep plan ranks them (80/20 by how likely and how central). Plan config `company`:
@@ -139,6 +143,25 @@ def status() -> int:
     return 0
 
 
+def rename(new: str) -> int:
+    old = deck()
+    moves = defaultdict(list)
+    for x in _info(call("findCards", query=f'"deck:{old}"')):
+        moves[new + x["deckName"][len(old):]].append(x["cardId"])
+    for sub, ids in moves.items():
+        call("changeDeck", cards=ids, deck=sub)
+    f = PLAN / "config.json"
+    c = json.loads(f.read_text(encoding="utf-8"))
+    c["company"]["deck"] = new
+    f.write_text(json.dumps(c, ensure_ascii=False, indent=1), encoding="utf-8")
+    _preset(new, c["company"].get("new_per_day", 60))
+    olds = sorted((x for x in call("deckNames") if x == old or x.startswith(old + "::")), key=len, reverse=True)
+    call("deleteDecks", decks=[x for x in olds if not call("findCards", query=f'"deck:{x}"')], cardsToo=True)
+    print(f"{old} -> {new}: {sum(len(v) for v in moves.values())} cards")
+    call("sync")
+    return 0
+
+
 def release() -> int:
     home = homes()
     back = defaultdict(list)
@@ -155,4 +178,6 @@ def release() -> int:
 
 if __name__ == "__main__":
     a = sys.argv[1:]
+    if a[:1] == ["rename"] and len(a) == 2:
+        sys.exit(rename(a[1]))
     sys.exit({"deal": deal, "status": status, "release": release}.get(a[0] if a else "", lambda: print(__doc__) or 2)())

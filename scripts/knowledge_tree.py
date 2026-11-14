@@ -3,6 +3,7 @@
     uv run python scripts/knowledge_tree.py                 # every domain with a skeleton
     uv run python scripts/knowledge_tree.py hello-interview  # some domains
     uv run python scripts/knowledge_tree.py --depth 2 sysdesign   # only the top levels (the merged view holds local-only maps)
+    uv run python scripts/knowledge_tree.py --track tracks/ai-infra-sdet.yaml [-o note.md]   # a role track's study map
 
 The skeleton is the tree; this only draws it, so the map never drifts from the Anki decks. Each node shows its card
 count (cards under it, its subtree included). The note goes to `vault/<skeleton folder>/<title> 知识树.md`; regenerate it
@@ -69,8 +70,38 @@ def write(domain: str, max_depth: int = 0) -> Path | None:
     return out
 
 
+def write_track(spec: Path, out: Path | None) -> Path:
+    """A role track (or a company overlay on one) as a map: sections, then the parts in the order they are dealt."""
+    import yaml
+
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import track_plan
+
+    parts, _ = track_plan.plan(spec)
+    d = yaml.safe_load(spec.read_text(encoding="utf-8"))
+    title = d.get("title") or yaml.safe_load((ROOT / d["track"]).read_text(encoding="utf-8"))["title"]
+    if d.get("deck"):
+        title = f"{d['deck']} · {title}"
+    lines, secs = [f"# {title}", ""], {}
+    for p in parts:
+        sec, name = p["label"].split("::", 1)
+        secs.setdefault(sec, []).append((name, len(p["ids"])))
+    for sec, items in secs.items():
+        lines.append(f"- {sec} · {sum(n for _, n in items)}{FOLD}")
+        lines += [f"  - {name} · {n}" for name, n in items]
+    out = out or ROOT / "vault/interviews/tracks" / f"{title} 知识地图.md"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return out
+
+
 def main() -> int:
     args = sys.argv[1:]
+    if "--track" in args:
+        spec = Path(args[args.index("--track") + 1])
+        out = Path(args[args.index("-o") + 1]) if "-o" in args else None
+        print(write_track(spec, out.resolve() if out else None).relative_to(ROOT))
+        return 0
     depth = 0
     if "--depth" in args:
         i = args.index("--depth")

@@ -1,0 +1,781 @@
+# Role track: AI-infrastructure SDET (testing, integration and release of an AI inference stack).
+# The knowledge such interviews probe, 80/20, in reading order: AI from zero first, then the role's core (test strategy,
+# release engineering), inference, accelerators, ML/LLM system design, Python, debugging, coding, reliability, behaviour.
+# Built from one role's skill map (192 points weighted by how likely and how central). Reuse it for any company with an
+# overlay (scripts/track_plan.py); sibling tracks reorder the same sections for inference-infrastructure or
+# inference-deployment roles.
+track: ai-infra-sdet
+title: AI 基础设施 SDET：推理栈的测试、集成与发布
+fits:
+- AI infrastructure SDET
+- inference release / qualification engineer
+- ML platform test infrastructure
+sections:
+- title: AI 从零开始
+  parts:
+  - node: llm-inference:basics.what-is-a-model
+  - node: llm-inference:basics.vectors-matrices
+  - node: llm-inference:basics.neural-network
+  - node: llm-inference:basics.training-vs-inference
+  - node: llm-inference:basics.hardware-memory
+  - node: llm-inference:basics.tokens
+  - node: llm-inference:basics.language-model
+  - node: llm-inference:basics.generation-loop
+    also:
+    - uth-ai-sampling-1-temperature
+    - uth-ai-sampling-2-top-p
+    - uth-ai-sampling-4-draw
+  - node: llm-inference:basics.embeddings
+  - node: llm-inference:basics.attention
+  - node: llm-inference:basics.transformer-block
+  - node: llm-inference:basics.llm-lifecycle
+  - node: llm-inference:basics.inference-serving
+- title: 机器学习基础
+  parts:
+  - node: llm-inference:ml.loss-gradient
+  - node: llm-inference:ml.optimizers
+  - node: llm-inference:ml.backprop
+  - node: llm-inference:ml.overfitting
+  - node: llm-inference:ml.regularization
+  - node: llm-inference:ml.classification-metrics
+  - node: llm-inference:ml.building-blocks
+- title: 测试策略与判定
+  parts:
+  - node: test-release:strategy.test-plan
+  - node: test-release:strategy.risk-based
+  - node: test-release:strategy.levels
+  - node: test-release:strategy.integration
+    also:
+    - kafka-reliability-app-fault-injection-testing
+    - kafka-streams-testcontainers-vs-embedded-cluster
+    - reliability-testing-real-protocol
+    - runtime-polyglot-contract-first
+  - node: test-release:strategy.how-would-you-test
+    also:
+    - problems-coffee-machine-concurrency-test
+    - hi-c-lld-parking-lot-x07-time-source
+    - reliability-testing-cache-state-matrix
+  - node: test-release:regression.tiers
+  - node: test-release:regression.suite-design
+    also:
+    - reliability-testing-production-fixture
+    - pl-testing-best-practice
+  - node: test-release:regression.test-selection
+  - node: test-release:flaky.causes
+    also:
+    - problems-snake-and-ladder-testing-without-flakes
+    - problems-deck-of-cards-injected-rng-and-scripted-decks
+    - quality-global-state-tests
+    - craft-injected-clock-three-forms-1-why-inject
+    - cc-verification-determinism-seeded-random
+    - pl-conc-datarace-found-race-detector
+    - problems-coffee-machine-concurrency-test
+    - runtime-go-quality-race-vs-load
+    - pl-cpp-concurrency-pitfall-invisible-race
+  - node: test-release:flaky.management
+  - node: test-release:flaky.retries
+  - node: test-release:oracles.differential
+    also:
+    - hft-testing-replay
+    - cc-verification-invariant-brute-force-oracle
+  - node: test-release:oracles.float-tolerance
+    also:
+    - cc-python-pitfalls-float-equality
+    - uth-python-numbers-floats-3-float
+  - node: test-release:oracles.golden-files
+    also:
+    - pl-testing-found-snapshot
+  - node: test-release:oracles.metamorphic
+    also:
+    - pl-testing-found-property
+    - cc-verification-invariant-conservation
+    - hft-testing-replay
+    - pl-fuzz-principle
+    - pl-fuzz-found-coverage-guided
+    - pl-fuzz-found-jazzer-atheris
+    - pl-fuzz-best-practice
+  - label: 测试分层：单元、集成、系统、端到端
+    nodes:
+    - low-level-design:testing.test-levels
+    cards:
+    - pl-testing-principle
+    - reliability-testing-real-protocol
+  - label: 覆盖率能证明什么、不能证明什么
+    nodes:
+    - low-level-design:testing.coverage-limits
+    cards:
+    - pl-testing-principle
+    - pl-fuzz-pitfall-checksum-gate
+  - label: 用例设计：等价类、边界、组合矩阵
+    nodes:
+    - low-level-design:testing.partitioning
+    cards:
+    - test-pytest-parametrize-boundary
+    - cc-verification-edge-exact-threshold-triple
+    - cc-verification-edge-zero-negative-and-max
+    - hi-c-lld-amazon-locker-x04-expiry-boundary
+- title: 发布工程与分诊
+  parts:
+  - node: test-release:release.branching
+    also:
+    - uth-devtools-git-objects-2-merkle
+    - uth-devtools-git-objects-1-content-address
+  - node: test-release:release.branch-health
+  - node: test-release:release.cherry-picks
+  - node: test-release:release.rc-lifecycle
+  - node: test-release:release.qualification-gates
+    also:
+    - delivery-cicd-release-evidence
+    - nr-amz-s6-full
+    - hi-sdx-infra-canary-baseline
+    - hi-sdx-rel-deploy-strategies
+    - delivery-canary-significance
+    - delivery-canary-cohort
+    - hi-sdx-infra-flag-deploy-release
+    - delivery-flags-kill-switch-scope
+    - delivery-shadow-divergence
+    - hi-pt-feature-flag-service-10-fail-static
+    - hi-sdx-infra-rollback-safe
+    - delivery-rollback-forward-or-back
+    - delivery-rollback-state
+    - delivery-rollback-prove-recovery
+  - node: test-release:release.blockers
+  - node: test-release:release.compatibility
+    also:
+    - delivery-compatibility-version-skew
+    - delivery-compatibility-expand-contract
+    - hi-sdx-arch-expand-contract-api
+    - hi-sdx-infra-two-phase-format
+    - hi-sdx-infra-rollback-safe
+  - node: test-release:triage.first-pass
+    also:
+    - reliability-incidents-first-mitigation
+    - reliability-incidents-postmortem-action
+  - node: test-release:triage.classification
+  - node: test-release:triage.bisect
+  - node: test-release:triage.signatures
+  - node: test-release:triage.bug-reports
+  - node: test-release:metrics.release-quality
+  - node: test-release:metrics.branch-health
+  - node: test-release:test-infra.framework-architecture
+    also:
+    - hi-c-lld-design-principles-b03-inject-clock
+    - quality-seams-di
+    - craft-injected-clock-three-forms-1-why-inject
+    - hi-x-injected-clock-testability-4-pitfalls
+  - node: test-release:test-infra.resource-orchestration
+    also:
+    - hi-pt-github-cicd-workflow-3-pull-dispatch
+    - hi-pt-github-cicd-workflow-5-fair-share
+    - hi-pt-github-cicd-workflow-11-cache-artifacts
+    - hi-pt-github-cicd-workflow-6-log-streaming
+  - node: test-release:test-infra.sharding
+  - node: test-release:test-infra.hermetic
+  - node: test-release:test-infra.environments
+    also:
+    - pl-testing-philosophy-doubles
+    - quality-test-doubles
+    - test-mock-side-effect-vs-return-value
+    - reliability-testing-real-protocol
+    - hft-architecture-simulation-other-uses
+    - hft-reliability-deploy-testing-why-canary-after-simulation
+  - node: test-release:test-infra.results
+  - node: test-release:ci.pipeline-design
+    also:
+    - hi-pt-github-cicd-workflow-11-cache-artifacts
+    - delivery-cicd-promote-artifact
+    - hi-pt-github-cicd-workflow-3-pull-dispatch
+    - hi-pt-github-cicd-workflow-2-event-idempotent
+    - hi-pt-github-cicd-workflow-7-burst-scale
+    - hi-pt-github-cicd-workflow-5-fair-share
+    - hi-pt-github-cicd-workflow-1-estimate
+  - node: test-release:ci.build-systems
+    also:
+    - delivery-cicd-promote-artifact
+    - pl-eco-packages-intro-concepts
+    - content-versioning-rollback-pointer
+    - uth-devtools-build-deps-1-topo
+    - pl-cpp-build-modules-found-build-systems
+    - craft-default-forms-6-scales-cycle-detection
+    - packaging-lockfile-reproducibility
+    - delivery-cicd-reproducible
+  - label: 二分定位：git bisect
+    nodes:
+    - low-level-design:debugging.bisect
+    cards:
+    - cc-round-debug-bisect-the-input
+    - cc-round-debug-minimal-repro
+- title: LLM 推理
+  parts:
+  - node: llm-inference:transformer.forward-pass
+    also:
+    - uth-ai-sampling-1-temperature
+    - hi-sdx-llm-kv-cache-why
+  - node: llm-inference:transformer.attention-variants
+    also:
+    - hi-sdx-llm-kv-cache-bytes
+    - hi-sdx-llm-kv-cache-why
+  - node: llm-inference:transformer.tokenization
+    also:
+    - uth-ai-tokenizer-1-bpe-merge
+    - uth-ai-tokenizer-2-pretokenize
+  - node: llm-inference:phases.prefill-decode
+    also:
+    - hi-sdx-llm-kv-cache-why
+    - hi-sdx-llm-prefill-decode-split
+    - hi-sdx-ai-gpu-economics
+    - hi-c-sd-chatgpt-b02-ttft-anatomy
+  - node: llm-inference:phases.kv-cache
+    also:
+    - hi-sdx-llm-kv-cache-why
+    - hi-sdx-llm-kv-cache-bytes
+    - uth-ai-paged-kv-1-blocks
+    - uth-ai-paged-kv-2-free-list
+    - uth-ai-paged-kv-3-cow
+    - uth-ai-prefix-cache-1-radix-tree
+    - uth-ai-prefix-cache-2-block-hash
+    - uth-ai-prefix-cache-3-eviction
+    - hi-pt-chatbot-design-6-prefix-cache
+  - node: llm-inference:phases.memory-budget
+    also:
+    - hi-sdx-llm-kv-cache-bytes
+    - hi-sdx-ai-gpu-economics
+    - uth-ai-autograd-3-saved-tensors
+  - node: llm-inference:serving.batching
+    also:
+    - hi-c-sd-chatgpt-n09-gpu-scheduling
+    - hi-c-sd-chatgpt-n13-why-batching
+    - hi-pt-chatbot-design-8-inference-queue
+    - uth-gaps-heuristics-3-vllm-budget
+  - node: llm-inference:serving.speculative
+    also:
+    - hi-sdx-ai-speculative
+  - node: llm-inference:serving.quantization
+    also:
+    - hi-sdx-ai-quantization
+  - node: llm-inference:serving.parallelism
+    also:
+    - hi-c-sd-chatgpt-n15-extra-deep-dives
+  - node: llm-inference:serving.moe
+  - node: llm-inference:serving.disaggregation
+    also:
+    - hi-sdx-llm-prefill-decode-split
+  - node: llm-inference:stack.engines
+    also:
+    - uth-gaps-heuristics-3-vllm-budget
+    - uth-ai-paged-kv-2-free-list
+    - hi-c-sd-chatgpt-n10-fairness
+    - hi-c-sd-chatgpt-x06-token-reservation
+    - hi-pt-chatbot-design-10-token-limits
+    - hi-pt-chatbot-design-8-inference-queue
+  - node: llm-inference:stack.openai-api
+    also:
+    - hi-sdx-ai-guardrails
+    - hi-pt-chatbot-design-3-sse-choice
+    - hi-c-sd-chatgpt-n06-streaming
+    - hi-c-sd-chatgpt-b01-sse-details
+  - node: llm-inference:metrics.latency-throughput
+    also:
+    - hi-c-sd-chatgpt-b02-ttft-anatomy
+    - hi-sdx-ai-gpu-economics
+  - node: llm-inference:metrics.benchmarking
+  - node: llm-inference:metrics.perf-gates
+  - node: llm-inference:numerics.formats
+    also:
+    - hi-sdx-ai-gpu-economics
+    - hi-sdx-ai-quantization
+  - node: llm-inference:numerics.nondeterminism
+  - node: llm-inference:numerics.accuracy-validation
+    also:
+    - hi-sdx-ai-prompt-versioning
+  - node: llm-inference:numerics.model-qualification
+  - node: llm-inference:numerics.classic-bugs
+- title: 加速器与编译器
+  parts:
+  - node: llm-inference:accelerators.gpu
+    also:
+    - hi-c-sd-numbers-to-know-n02-hardware
+  - node: llm-inference:accelerators.roofline
+    also:
+    - hi-sdx-ai-gpu-economics
+  - node: llm-inference:accelerators.wafer-scale
+  - node: llm-inference:accelerators.why-fast
+    also:
+    - hi-sdx-ai-gpu-economics
+    - hi-sdx-llm-kv-cache-why
+  - node: llm-inference:accelerators.weight-streaming
+  - node: llm-inference:accelerators.host-device
+    also:
+    - hft-os-network-kernel-bypass-mechanism
+  - node: llm-inference:compiler.pipeline
+  - node: llm-inference:compiler.kernels
+  - node: llm-inference:compiler.runtime
+  - node: llm-inference:compiler.hw-sw-integration
+    also:
+    - hft-fpga-dev-tradeoffs-build-and-debug
+  - node: llm-inference:compiler.testing
+- title: ML 与 LLM 系统设计
+  parts:
+  - node: ml-system-design:framework
+  - node: ml-system-design:llm-platform
+  - node: ml-system-design:serving
+  - node: ml-system-design:mlops
+  - node: ml-system-design:evaluation
+  - node: ml-system-design:data
+  - node: ml-system-design:training
+- title: Python 与测试工具
+  parts:
+  - label: pytest 夹具（fixture）
+    nodes:
+    - python:engineering.testing
+    cards:
+    - test-pytest-fixture-isolation
+    - pl-testing-found-pytest
+  - label: pytest 参数化
+    cards:
+    - test-pytest-parametrize-boundary
+    - pl-testing-found-pytest
+    - cc-verification-tests-table-driven
+  - label: GIL 与线程、进程、asyncio 的选择
+    cards:
+    - uth-python-gil-concurrency-1-why-gil
+    - uth-python-gil-concurrency-3-not-atomic
+    - pl-conc-datarace-unique-gil-illusion
+    - choosing-decision-tree-main
+  - label: subprocess：超时、信号、进程组
+    nodes:
+    - python:concurrency.multiprocessing
+  - label: pytest 标记、跳过与选择
+    nodes:
+    - python:engineering.testing
+  - label: pytest 插件与钩子
+    nodes:
+    - python:engineering.testing
+  - label: Mock 与打桩
+    cards:
+    - test-mock-where-to-patch
+    - test-mock-autospec-catches-typo
+    - test-mock-side-effect-vs-return-value
+    - test-mock-decorator-context-manager-restore
+    - quality-test-doubles
+  - label: 装饰器与闭包
+    cards:
+    - pl-meta-annotations-intro-python-decorator
+    - pl-meta-annotations-pitfall-python-wraps
+    - decorator-testability-inject-clock
+  - label: 迭代器、生成器、上下文管理器
+    cards:
+    - with-statement-desugars-to-try-finally
+    - exitstack-lifo-dynamic-resource-count
+    - generator-resumes-in-own-frame-repeatedly
+    - craft-generators-lazy-traversal-3-single-use
+  - label: asyncio：任务、超时、取消
+    cards:
+    - wait-for-timeout-cancels-and-waits
+    - taskgroup-cancels-siblings-on-error-gather-does-not
+    - concurrency-asyncio-gather-taskgroup
+  - label: multiprocessing 与 concurrent.futures
+    cards:
+    - processpool-cpu-vs-threadpool-io
+    - mp-start-methods-tradeoff
+    - mp-queue-vs-pipe
+  - label: 测试运行工具：xdist、超时、重跑、报告
+    nodes:
+    - python:engineering.testing
+  - label: Python 对象模型
+    cards:
+    - shallow-vs-deep-copy-definition
+    - custom-copy-dunder-methods
+    - cc-python-classes-default-factory
+  - label: 异常与健壮性
+    cards:
+    - robust-except-exception-specific-first
+    - craft-exception-family-5-exception-vs-baseexception
+    - pl-errors-exceptions-foundation-checked
+  - label: 类：dataclass、ABC、Protocol、枚举
+    cards:
+    - python-protocol-vs-abc-decision
+    - dataclass-frozen-mechanism-cost
+    - dataclass-mutable-default-raises
+  - label: Python 性能剖析与内存
+    cards:
+    - tracemalloc-start-early-and-frame-cost
+    - profiling-deterministic-vs-sampling
+    - pl-memana-found-python-tracemalloc
+  - label: 日志、配置与命令行工具
+    cards:
+    - logging-three-config-methods
+    - logging-getlogger-name-convention
+    - hi-c-lld-logging-service-b01-stdlib-shape
+  - label: Go 并发：goroutine、channel
+    cards:
+    - pl-conc-channels-csp-found-go-chan
+    - pl-conc-green-threads-found-gmp
+    - pl-conc-green-threads-pitfall-leak
+    - pl-conc-channels-csp-pitfall-deadlock
+  - label: Go 测试
+    cards:
+    - pl-testing-found-go-table
+    - pl-conc-datarace-found-race-detector
+    - pl-fuzz-found-go-fuzz
+    - pl-eco-tooling-intro-go
+- title: 调试、Linux 与 K8s
+  parts:
+  - label: 系统化调试方法
+    cards:
+    - cc-round-debug-minimal-repro
+    - cc-round-debug-bisect-the-input
+    - pl-eng-debugging-best-practice
+  - label: 跨组件日志分析
+    cards:
+    - pl-eng-debugging-found-logging-tracing
+    - hi-sdx-ob-canonical-log
+  - label: core dump 与 gdb
+    nodes:
+    - pl:engineering.debugging
+    cards:
+    - pl-eng-debugging-found-heap-core
+    - pl-eng-debugging-found-debugger
+  - label: 卡住或变慢的 Python：py-spy、faulthandler
+    cards:
+    - pl-eng-debugging-found-thread-dump
+    - pl-eng-debugging-found-debugger
+    - profiling-deterministic-vs-sampling
+  - label: CPU 剖析：perf 与火焰图
+    cards:
+    - pl-prof-found-flamegraph
+    - hft-measurement-profiling-flamegraph
+    - pl-prof-pitfall-off-cpu
+  - label: 挂起与死锁诊断
+    cards:
+    - pl-eng-debugging-found-thread-dump
+  - label: 分布式故障调试
+    cards:
+    - pl-eng-debugging-found-logging-tracing
+    - hi-sdx-ob-trace-sampling
+    - hi-sdx-ob-exemplars
+    - hi-sdx-rel-gray-failure
+  - label: 间歇性故障与海森堡缺陷
+    nodes:
+    - low-level-design:debugging.heisenbugs
+    cards:
+    - pl-cpp-concurrency-pitfall-invisible-race
+  - label: 进程、线程、信号、fork/exec
+    cards:
+    - mp-start-methods-tradeoff
+  - label: 部分失败、超时、重试与幂等
+    cards:
+    - hi-sdx-rel-server-backoff
+  - label: 分布式任务调度与编排
+    cards:
+    - hi-pt-job-scheduler-cron-history-3-fencing-protocol
+    - hi-pt-job-scheduler-cron-history-10-long-multistage
+    - amz-dag-runner-how-asked-and-three-questions
+    - uth-compose-k8s-workqueue-1-need
+  - label: Kubernetes 对象
+    cards:
+    - hi-sdx-infra-k8s-primitives
+    - hi-sdx-infra-requests-limits
+    - uth-gaps-heuristics-1-filter-score
+    - uth-gaps-bfs-4-cascade
+  - label: 指标：Prometheus 模型
+    cards:
+    - uth-gaps-prefix-sum-1-counter
+    - uth-gaps-prefix-sum-2-reset
+    - reliability-metrics-histogram-aggregation
+  - label: 看板、告警、SLO
+    cards:
+    - hi-sdx-rel-error-budget
+    - hi-sdx-rel-burn-rate
+    - hi-sdx-ob-red-use
+    - reliability-alerting-dashboard-decision
+  - label: 内存问题：泄漏、OOM
+    cards:
+    - pl-dyncheck-found-asan
+    - pl-rt-startup-pitfall-container-heap
+  - label: 崩溃与信号：SIGSEGV、退出码 137/139
+    nodes:
+    - pl:engineering.debugging
+    cards:
+    - pl-errors-panics-table
+  - label: 网络调试：tcpdump、ss、curl
+    cards:
+    - net-setup-diagnosis
+  - label: 内存：虚拟内存、页缓存、OOM
+    cards:
+    - hft-machine-tlb-hugepages-explicit-vs-thp
+  - label: CPU 调度、负载、cgroups
+    cards:
+    - uth-os-net-scheduler-1-rbtree
+    - pl-rt-startup-pitfall-container-heap
+    - hft-os-network-cpu-isolation-affinity-vs-isolation
+  - label: 性能排查：USE 方法
+    cards:
+    - hft-measurement-budget-method-use
+    - hi-sdx-ob-red-use
+  - label: DNS、HTTP、TLS、代理与负载均衡
+    cards:
+    - net-setup-diagnosis
+    - uth-os-net-load-balancing-1-ring
+  - label: 故障检测：健康检查、心跳、租约
+    cards:
+    - kafka-consumer-session-timeout-heartbeat-interval-ratio
+    - hi-sdx-rel-gray-failure
+    - hi-sdx-clk-fault-models
+  - label: 背压与限流
+    cards:
+    - hi-x-async-pipeline-backpressure-1-common
+    - hi-x-admission-control-queue-1-common
+  - label: 容器：namespace、cgroup、镜像
+    nodes:
+    - hello-interview:more.infra
+    cards:
+    - pl-rt-deploy-found-container
+    - pl-rt-startup-pitfall-container-heap
+  - label: 探针、滚动更新、资源限制
+    cards:
+    - delivery-kubernetes-probe-choice
+    - delivery-kubernetes-rollout-capacity
+    - hi-sdx-infra-requests-limits
+  - label: 日志与链路追踪
+    cards:
+    - pl-eng-debugging-found-logging-tracing
+    - hi-sdx-ob-trace-sampling
+    - reliability-tracing-tail-sampling
+    - hi-sdx-ob-canonical-log
+- title: 编程题
+  parts:
+  - label: 实用编码：解析日志与测试结果
+    cards:
+    - cc-input-lp-blank-lines-and-spaces
+    - cc-input-lp-dispatch-on-keyword
+    - cc-input-lp-optional-trailing-field
+    - cc-input-lp-part-header
+    - cc-input-lp-setup-before-events
+    - cc-input-del-csv-vs-split
+    - cc-input-del-header-driven
+    - cc-input-del-maxsplit
+    - cc-input-del-variable-length-rows
+    - cc-input-del-writing-back
+    - cc-input-mal-corrupt-row-participates-in-nothing
+    - cc-input-mal-one-validator
+    - cc-input-mal-skip-default-fatal
+    - cc-input-mal-unknown-vocabulary
+    - cc-input-mal-validate-before-mutate
+  - label: 现场给自己的代码写测试
+    cards:
+    - cc-verification-tests-can-it-fail
+    - cc-verification-tests-table-driven
+    - cc-verification-tests-two-or-three-per-part
+    - cc-verification-tests-unit-plus-one-io
+    - cc-verification-tests-worked-example-first
+    - method-self-verification
+  - label: 数组、哈希、字符串
+    cards:
+    - cc-toolbox-hash-counter
+    - cc-toolbox-hash-defaultdict-read-creates
+    - cc-toolbox-hash-insertion-order
+    - cc-toolbox-hash-set-vs-dict
+    - cc-toolbox-hash-tuple-keys
+  - label: 图：BFS/DFS、拓扑排序
+    cards:
+    - cc-algorithms-topological-critical-path
+    - cc-algorithms-topological-cycle-shortfall
+    - cc-algorithms-topological-deterministic-order
+    - cc-algorithms-topological-kahn
+    - cc-algorithms-topological-longest-path
+    - uth-devtools-build-deps-1-topo
+    - amz-dag-runner-how-asked-and-three-questions
+  - label: LLD 练习：LRU、限流器、任务执行器
+    cards:
+    - problems-rate-limiter-fixed-window-boundary-burst
+    - problems-rate-limiter-decision-not-bool
+    - problems-rate-limiter-used-is-the-seam
+    - problems-rate-limiter-token-bucket-lazy-refill
+    - problems-rate-limiter-state-map-must-shrink
+    - problems-rate-limiter-amortised-threshold-trap
+    - problems-rate-limiter-sharded-lock
+    - problems-rate-limiter-composite-two-phase
+    - problems-lru-cache-store-vs-order-split
+    - problems-lru-cache-sentinel-dll-on1
+    - problems-lru-cache-strategy-pattern-python-form
+    - problems-lru-cache-policy-protocol-choice
+    - problems-lru-cache-overwrite-not-insert
+    - problems-lru-cache-lfu-min-freq-pointer
+    - problems-lru-cache-get-is-write
+    - problems-lru-cache-ttl-wrapper-extension
+    - problems-task-scheduler-not-earlier-never-exactly
+    - problems-task-scheduler-fixed-rate-vs-fixed-delay
+    - problems-task-scheduler-cancel-is-a-tombstone
+    - problems-task-scheduler-no-strategy-class-for-two-modes
+    - problems-task-scheduler-two-locks-one-direction
+    - problems-task-scheduler-worker-pool-decoupled-from-timing
+    - problems-task-scheduler-shutdown-drain-vs-abandon
+    - problems-task-scheduler-priority-without-touching-heap
+    - amz-dag-runner-how-asked-and-three-questions
+    - amz-dag-runner-objects-and-their-jobs
+    - amz-dag-runner-stage1-kahn-in-code
+    - amz-dag-runner-cycle-report-walk-prerequisites
+    - amz-dag-runner-decision-kahn-vs-dfs
+    - amz-dag-runner-followup-results-flow-between-steps
+    - amz-dag-runner-code-review-duplicate-edge-indegree
+    - amz-dag-runner-parallel-failure-skips-descendants
+    - amz-dag-runner-common-mistake-no-length-check
+  - label: 并发编码：线程池、阻塞队列
+    cards:
+    - problems-thread-pool-base-exception-in-worker
+    - problems-thread-pool-backpressure-semaphore-not-queue-maxsize
+    - problems-thread-pool-admission-release-on-dequeue
+    - problems-thread-pool-shutdown-wait-false-only-abandons-queued
+    - problems-thread-pool-finish-atomic-check-then-act
+    - problems-thread-pool-priority-queue-tie-break
+    - problems-thread-pool-future-two-state
+    - problems-thread-pool-cpu-vs-io
+    - problems-bounded-blocking-queue-while-not-if
+    - problems-bounded-blocking-queue-two-conditions-vs-one
+    - problems-bounded-blocking-queue-single-notify-lost-signal
+    - problems-bounded-blocking-queue-timeout-raises
+    - problems-bounded-blocking-queue-close-semantics
+    - problems-bounded-blocking-queue-close-no-event
+    - problems-bounded-blocking-queue-drain-reuses-wait
+    - problems-bounded-blocking-queue-waiting-counts-for-tests
+    - concurrency-producer-consumer-queue
+    - concurrency-bounded-queue-invariants
+    - concurrency-threadpool-future
+    - concurrency-thread-pool-backpressure
+    - concurrency-double-checked-locking
+    - concurrency-single-condvar-lost-signal
+  - label: 双指针与滑动窗口
+    cards:
+    - cc-algorithms-sliding-window-covering
+    - cc-algorithms-sliding-window-fixed-vs-variable
+    - cc-algorithms-sliding-window-k-in-window
+    - cc-algorithms-sliding-window-monotone-requirement
+    - cc-algorithms-sliding-window-shrink
+  - label: 区间与排序
+    cards:
+    - cc-chrono-intervals-complement
+    - cc-chrono-intervals-covered-sort
+    - cc-chrono-intervals-endpoints
+    - cc-chrono-intervals-merge-sweep
+    - cc-chrono-intervals-subtract-sweep
+  - label: 堆与 Top-K
+    cards:
+    - cc-toolbox-heap-heapify
+    - cc-toolbox-heap-lazy-invalidation
+    - cc-toolbox-heap-max-negation
+    - cc-toolbox-heap-park-and-restore
+    - cc-toolbox-heap-topk
+    - cc-toolbox-heap-tuple-key
+  - label: 读陌生代码找 bug
+    nodes:
+    - low-level-design:rounds.bug-bash
+  - label: LeetCode 高频题
+    cards:
+    - lct-two-sum
+    - lct-3sum
+    - lct-binary-search
+    - lct-valid-parentheses
+    - lct-minimum-add-to-make-parentheses-valid
+    - lct-search-a-2d-matrix
+    - lct-number-of-submatrices-that-sum-to-target
+    - lct-dot-product-of-two-sparse-vectors
+    - lct-kth-largest-element-in-an-array
+    - lct-flood-fill
+    - lct-number-of-islands
+    - lct-course-schedule
+    - lct-course-schedule-ii
+    - lct-rotting-oranges
+    - lct-max-area-of-island
+    - lct-word-search
+    - lct-number-of-provinces
+    - lct-number-of-connected-components-in-an-undirected-graph
+    - lct-redundant-connection
+    - lct-accounts-merge
+    - lct-continuous-subarray-sum
+    - lct-subsets-ii
+    - lct-best-time-to-buy-and-sell-stock
+    - lct-reverse-words-in-a-string
+    - lct-remove-all-adjacent-duplicates-in-string-ii
+  - label: 数值与并行编程
+    nodes:
+    - code-core:performance.numeric-arrays
+    - code-core:performance.parallel-split
+- title: 可靠性与性能测试
+  parts:
+  - node: test-release:reliability.fault-injection
+    also:
+    - hft-testing-fault-injection
+    - kafka-reliability-app-fault-injection-testing
+    - reliability-load-fault-success
+    - hi-sdx-rel-chaos-fault
+  - node: test-release:reliability.soak-stress
+    also:
+    - pl-dyncheck-found-jcstress
+  - node: test-release:reliability.failover-testing
+    also:
+    - hi-sdx-rel-avoid-fallback
+    - hft-reliability-deploy-testing-why-canary-after-simulation
+  - node: test-release:performance.load-design
+    also:
+    - reliability-load-open-model
+    - hft-measurement-coordinated-omission-fix
+    - hi-sdx-coordinated-omission
+    - hft-measurement-distributions-no-averaging-percentiles
+    - hi-c-sd-metrics-monitoring-x05-percentile-trap
+    - reliability-metrics-histogram-aggregation
+    - hft-measurement-histograms-merge-and-read
+    - hi-c-sd-numbers-to-know-b03-little-law
+    - fnd-capacity-bottleneck
+  - node: test-release:performance.regression-detection
+    also:
+    - delivery-canary-significance
+    - hft-measurement-benchmarking-warmup-fork
+    - pl-bench-principle
+    - hft-measurement-benchmarking-dead-code
+    - pl-bench-found-jmh
+    - compiling-numba-jit-warmup-cost
+- title: 生成式 AI 与经典 ML 设计题
+  parts:
+  - node: ml-system-design:genai
+  - node: ml-system-design:classic
+- title: 行为面方法
+  parts:
+  - label: 自我介绍与为什么
+    nodes:
+    - narrative:bank.why-here
+  - label: 最难的跨栈 bug
+    cards:
+    - nr-amz-s3-senior-4
+  - label: 端到端负责一个质量项目
+    cards:
+    - nr-amz-lp02
+  - label: 顶住压力推迟发布
+    cards:
+    - nr-amz-s6-full
+    - nr-amz-lp13
+  - label: 无职权影响他人
+    nodes:
+    - narrative:themes.influence
+    cards:
+    - nr-amz-lp11
+  - label: 压力与模糊下排优先级
+    nodes:
+    - narrative:themes.prioritization
+    cards:
+    - nr-amz-lp09
+  - label: 一次失败或漏测
+    cards:
+    - nr-amz-s10-full
+    - nr-failure-or-excuse
+  - label: 用数字改进流程或工具
+    cards:
+    - nr-number-survives-followup
+  - label: 用代码评审带人
+    nodes:
+    - narrative:themes.mentoring
+    cards:
+    - nr-amz-lp06
+  - label: 反问与公司常识
+    nodes:
+    - narrative:delivery.questions-back

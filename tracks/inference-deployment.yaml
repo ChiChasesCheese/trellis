@@ -1,0 +1,8 @@
+# Role track: inference deployment / ML platform engineer (shipping models to production and keeping them healthy).
+# The same sections, reordered: serving and platform design, rollout and operations lead; hardware internals follow.
+track: inference-deployment
+title: 推理部署与 ML 平台：模型上线、扩缩容与运维
+fits: [inference deployment engineer, ML platform engineer, ML SRE]
+base: tracks/ai-infra-sdet.yaml
+order: [AI 从零开始, ML 与 LLM 系统设计, LLM 推理, 发布工程与分诊, 调试、Linux 与 K8s, 可靠性与性能测试, 机器学习基础, Python 与测试工具,
+        编程题, 测试策略与判定, 加速器与编译器, 生成式 AI 与经典 ML 设计题, 行为面方法]

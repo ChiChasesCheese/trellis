@@ -1,0 +1,234 @@
+# Machine-learning and LLM system design interviews: the answer framework, data, training, evaluation, serving and
+# MLOps, then the classic ML design questions, the generative-AI questions and the LLM-platform questions that
+# AI-infrastructure, inference and deployment roles ask. Outline surveyed from the ML / GenAI system-design interview
+# books and course outlines, Chip Huyen's "Designing Machine Learning Systems", and public LLM-serving architecture
+# write-ups. Builds on llm-inference (basics, ml): study that first. Study order is top to bottom.
+domain: ml-system-design
+title: ML 与 LLM 系统设计
+deck: "📦 其他::ML 与 LLM 系统设计"
+lang: zh
+vault: domains/ml-system-design
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 25
+  reviews_per_day: 150
+nodes:
+- id: framework
+  order: 0
+  core: true
+  title: ML 系统设计的答题框架
+  summary: 一道 ML 或 LLM 系统设计题怎么在 45–60 分钟里答完：澄清需求、定义成 ML 任务、数据、模型、评估、部署、监控，以及和普通系统设计题的区别。
+  children:
+  - id: framework.steps
+    title: 七步框架：需求 → ML 任务 → 数据 → 模型 → 评估 → 部署 → 监控
+    summary: 每一步要产出什么、花多少分钟、面试官在每一步看什么信号。
+  - id: framework.frame-as-ml
+    title: 把业务问题定义成 ML 任务：输入、输出、标签、目标函数
+    summary: 同一个业务目标可以定义成分类、回归、排序或生成；选法决定数据和评估，定错了后面全错。
+    requires: [framework.steps]
+  - id: framework.vs-classic-sd
+    title: 和普通系统设计题的区别：数据与模型是一等公民
+    summary: 普通题关心存储和扩展；ML 题还要讲标签从哪来、模型怎么评、上线后怎么知道它变差了。
+    requires: [framework.steps]
+  - id: framework.levels
+    title: 各级别的期望：中级、高级、Staff
+    summary: 中级能走完流程，高级能讲清取舍与上线风险，Staff 能主导并讲到组织与成本。
+    requires: [framework.steps]
+- id: data
+  order: 1
+  core: true
+  title: 数据与特征
+  summary: 训练数据从哪来、怎么标注、怎么切分、怎么做特征，以及线上线下特征不一致这个最常见的坑。
+  children:
+  - id: data.collection-labeling
+    title: 数据收集与标注：人工标注、用户行为作隐式标签、弱监督
+    summary: 显式标签贵而准，隐式标签多而噪；标注一致性、标注成本与偏差。
+  - id: data.sampling-imbalance
+    title: 采样与类别不平衡：下采样、上采样、加权
+    summary: 正例极少时的处理方法，以及采样后要把预测概率校准回来。
+    requires: [data.collection-labeling]
+  - id: data.splits-leakage
+    title: 数据切分与数据泄漏：按时间切、按用户切
+    summary: 随机切分在时间序列和用户行为数据上会泄漏未来信息，评估分数虚高。
+  - id: data.features
+    title: 特征工程：数值、类别、文本、嵌入与交叉特征
+    summary: 归一化、分桶、one-hot 与哈希、嵌入向量、特征交叉；特征越多越好吗。
+  - id: data.feature-store
+    title: 特征存储与线上线下一致性（Training-Serving Skew）
+    summary: 训练用离线算的特征、线上实时算的特征不一致，模型线上变差；特征存储如何保证同一份定义。
+    requires: [data.features]
+- id: training
+  order: 2
+  title: 训练流水线
+  summary: 从数据到模型文件的流水线、分布式训练的基本方式、实验管理与可复现。
+  children:
+  - id: training.pipeline
+    title: 训练流水线：数据处理、训练、评估、注册模型
+    summary: 流水线每一步的输入输出与产物，失败重跑与缓存，为什么要和代码一样版本化。
+  - id: training.distributed
+    title: 分布式训练基础：数据并行、模型并行与检查点
+    summary: 数据并行同步梯度、模型太大时按层或张量切分、定期存检查点以便失败后续训。
+    requires: [training.pipeline]
+  - id: training.experiments
+    title: 实验管理与可复现：超参、随机种子、实验追踪
+    summary: 记录数据版本、代码版本、超参与指标；同一配置复跑结果要一致到什么程度。
+    requires: [training.pipeline]
+  - id: training.fine-tuning
+    title: 微调大模型：全量微调、LoRA、指令数据
+    summary: 什么时候微调而不是写提示或用检索；LoRA 只训练少量参数；微调后的回归评测。
+- id: evaluation
+  order: 3
+  core: true
+  title: 评估：离线指标、在线实验与 LLM 评测
+  summary: 模型好不好怎么量：分类、排序、生成各自的离线指标，在线 A/B 实验，以及大模型的评测方法。
+  children:
+  - id: evaluation.offline-metrics
+    title: 离线指标：分类、排序、生成（precision、AUC、NDCG、BLEU、困惑度）
+    summary: 按任务类型选指标；离线指标涨了线上不一定涨的原因。
+  - id: evaluation.online-ab
+    title: 在线实验：A/B 测试、样本量、护栏指标
+    summary: 随机分流、主指标与护栏指标、统计显著性、新奇效应与网络效应。
+    requires: [evaluation.offline-metrics]
+  - id: evaluation.llm-eval
+    title: 大模型评测：基准集、人工评审、LLM 当评委
+    summary: 公开基准、业务评测集、成对比较、用另一个模型打分的偏差，以及评测集被训练数据污染。
+    requires: [evaluation.offline-metrics]
+  - id: evaluation.regression-gates
+    title: 模型上线前的回归门：评测集、阈值与签发
+    summary: 每次换模型或换版本都跑同一套评测，退化超过阈值就阻断；怎么定阈值与豁免。
+    requires: [evaluation.llm-eval]
+- id: serving
+  order: 4
+  core: true
+  title: 部署与服务
+  summary: 模型怎么对外提供预测：批量还是在线、怎么压缩模型、服务架构、缓存与降级。
+  children:
+  - id: serving.batch-vs-online
+    title: 批量预测与在线预测
+    summary: 提前算好存起来与请求来时再算的取舍：新鲜度、延迟、成本与覆盖率。
+  - id: serving.architecture
+    title: 模型服务架构：模型服务器、特征获取、前后处理
+    summary: 一次在线预测经过哪些组件；模型服务器（Triton、TorchServe、vLLM）做什么；同步与异步。
+    requires: [serving.batch-vs-online]
+  - id: serving.compression
+    title: 模型压缩：蒸馏、剪枝、量化
+    summary: 让模型更小更快的三种办法，各自损失什么、怎么验证没变差。
+  - id: serving.edge-vs-cloud
+    title: 端侧与云端推理
+    summary: 放在手机或浏览器上跑与放在服务器上跑的延迟、隐私、成本与更新难度。
+  - id: serving.caching-fallback
+    title: 缓存、超时与降级
+    summary: 结果缓存与语义缓存、模型超时后的兜底（规则、上一版、热门结果）。
+    requires: [serving.architecture]
+- id: mlops
+  order: 5
+  core: true
+  title: MLOps：发布、监控与迭代
+  summary: 模型从注册到上线、上线后怎么发现它变差、怎么回滚与持续改进。
+  children:
+  - id: mlops.registry-cicd
+    title: 模型注册表与 ML 的 CI/CD
+    summary: 模型版本、元数据与血缘；代码、数据、模型三者任一变化都触发流水线。
+  - id: mlops.rollout
+    title: 模型发布：影子部署、金丝雀、A/B 与回滚
+    summary: 影子部署只看不用，金丝雀小流量真用，A/B 比效果；回滚要能秒级切回上一版。
+    requires: [mlops.registry-cicd]
+  - id: mlops.monitoring
+    title: 线上监控：数据漂移、概念漂移、预测分布与业务指标
+    summary: 输入分布变了、输入与答案的关系变了；没有实时标签时用什么代理指标报警。
+  - id: mlops.feedback-retraining
+    title: 反馈闭环与再训练
+    summary: 用线上数据再训练的节奏、反馈回路偏差（模型影响了自己的训练数据）。
+    requires: [mlops.monitoring]
+  - id: mlops.testing-ml
+    title: 测试 ML 系统：数据测试、模型测试、基础设施测试
+    summary: 数据校验（模式、分布）、模型行为测试（不变性、方向性、最低能力）、训练与服务代码的单元和集成测试。
+- id: llm-platform
+  order: 6
+  core: true
+  title: LLM 平台系统设计题
+  summary: 推理与部署岗常考的设计题：LLM 推理服务、多模型多租户网关、GPU 扩缩容、模型发布流水线、评测平台、多区域容量。
+  children:
+  - id: llm-platform.inference-service
+    title: 设计一个 LLM 推理服务（类 OpenAI API）
+    summary: 接口与流式返回、请求调度与批处理、KV 缓存、按 token 计费与限流、扩缩容、可观测性。
+  - id: llm-platform.gateway-routing
+    title: 多模型、多租户网关：路由、配额与限流
+    summary: 按模型和租户路由、按 token 限流、优先级与公平、缓存感知路由（把相同前缀送到同一副本）。
+    requires: [llm-platform.inference-service]
+  - id: llm-platform.autoscaling
+    title: GPU 集群的扩缩容与冷启动
+    summary: 按排队长度和 token 吞吐扩缩、加载几十 GB 权重的冷启动、预热与保底副本、成本与利用率。
+    requires: [llm-platform.inference-service]
+  - id: llm-platform.model-release
+    title: 模型发布流水线：转换、精度验证、性能基准、金丝雀
+    summary: 新模型或新引擎版本从权重转换到全量上线的每一道门，谁签发、失败怎么回滚。
+    requires: [llm-platform.inference-service]
+  - id: llm-platform.eval-platform
+    title: 设计一个模型评测平台
+    summary: 评测任务调度、评测集版本、并行跑数千条样本、结果对比与回归报警。
+  - id: llm-platform.multi-region-capacity
+    title: 多区域部署与容量规划
+    summary: 每秒 token 数到 GPU 数的估算、区域间流量调度、故障区域切流。
+    requires: [llm-platform.autoscaling]
+  - id: llm-platform.observability
+    title: LLM 服务的可观测性与成本
+    summary: TTFT、TPOT、排队时间、批大小、KV 使用率、每百万 token 成本；告警怎么设。
+    requires: [llm-platform.inference-service]
+- id: genai
+  order: 7
+  title: 生成式 AI 系统设计题
+  summary: 生成式 AI 的经典设计题：对话助手、检索增强问答、智能补全、翻译、图像描述、文生图、文生视频。
+  children:
+  - id: genai.chat-assistant
+    title: 设计一个对话助手（ChatGPT 类）
+    summary: 预训练、指令微调、对齐三阶段，多轮上下文管理，安全过滤，流式生成。
+  - id: genai.rag
+    title: 设计一个文档问答系统（检索增强生成 RAG）
+    summary: 文档切块、嵌入与向量索引、检索与重排、把检索结果放进提示、引用与幻觉控制、评测。
+  - id: genai.smart-compose
+    title: 设计邮件智能补全（Smart Compose）
+    summary: 低延迟的小模型、个性化、触发时机、接受率评估。
+  - id: genai.translation
+    title: 设计机器翻译服务
+    summary: 编码器-解码器模型、多语言、BLEU 等评估、领域术语。
+  - id: genai.image-captioning
+    title: 设计图像描述生成
+    summary: 图像编码器加文本解码器、多模态对齐、评估方法。
+  - id: genai.text-to-image
+    title: 设计文生图服务（扩散模型）
+    summary: 扩散模型的去噪过程、文本条件、推理步数与速度、安全过滤。
+  - id: genai.text-to-video
+    title: 设计文生视频服务
+    summary: 时间一致性、计算量估算、分段生成与拼接、排队与异步交付。
+- id: classic
+  order: 8
+  title: 经典 ML 系统设计题
+  summary: 搜索、推荐、广告、内容审核等经典题，以及它们共用的"召回 + 排序"两阶段模式。
+  children:
+  - id: classic.two-stage
+    title: 召回加排序：推荐与搜索的通用两阶段结构
+    summary: 先从百万候选里快速召回几百个，再用重模型精排；为什么不能一步做完。
+  - id: classic.visual-search
+    title: 设计以图搜图
+    summary: 图像嵌入、近似最近邻索引、相似度评估。
+    requires: [classic.two-stage]
+  - id: classic.video-search
+    title: 设计视频搜索
+    summary: 文本与视频的多模态嵌入、文本检索与向量检索融合、排序。
+    requires: [classic.two-stage]
+  - id: classic.harmful-content
+    title: 设计有害内容检测
+    summary: 多模态分类、多标签、人工复审队列、精确率与召回率的取舍。
+  - id: classic.video-recommendation
+    title: 设计视频推荐
+    summary: 协同过滤与内容特征、冷启动、多目标排序、探索与利用。
+    requires: [classic.two-stage]
+  - id: classic.ad-click
+    title: 设计广告点击率预测
+    summary: 海量稀疏特征、校准、在线学习、延迟与新鲜度。
+  - id: classic.feed-and-people
+    title: 设计个性化信息流与"你可能认识的人"
+    summary: 信息流排序的多目标、图特征与好友推荐、去重与多样性。
+    requires: [classic.two-stage]

@@ -1,0 +1,9 @@
+# Role track: inference-infrastructure engineer (serving engines, runtimes, performance of LLM inference).
+# The same sections as the AI-infrastructure SDET track, reordered: inference, hardware and platform design lead;
+# testing and release follow.
+track: inference-infra
+title: 推理基础设施工程师：推理引擎、运行时与性能
+fits: [inference infrastructure engineer, ML systems / serving engineer, inference performance engineer]
+base: tracks/ai-infra-sdet.yaml
+order: [AI 从零开始, LLM 推理, 加速器与编译器, ML 与 LLM 系统设计, 机器学习基础, 调试、Linux 与 K8s, Python 与测试工具, 编程题,
+        可靠性与性能测试, 发布工程与分诊, 测试策略与判定, 生成式 AI 与经典 ML 设计题, 行为面方法]
