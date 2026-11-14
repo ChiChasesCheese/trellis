@@ -18,14 +18,14 @@
   - 类之间的关系（Class Relationships） · 5
   - 接口与抽象基类 · 5
   - 值对象与不可变性（Value Objects） · 5
-- 设计原则（Design Principles） · 21
+- 设计原则（Design Principles） · 20
   - SOLID · 6
   - 组合优于继承 · 5
   - 耦合、内聚与依赖注入 · 5
-  - DRY、KISS、YAGNI · 5
-- 设计模式（Design Patterns） · 50
-  - 策略模式与可替换算法（Strategy） · 6
-  - 观察者与事件（Observer） · 6
+  - DRY、KISS、YAGNI · 4
+- 设计模式（Design Patterns） · 48
+  - 策略模式与可替换算法（Strategy） · 5
+  - 观察者与事件（Observer） · 5
   - 状态模式（State） · 6
   - 命令与撤销重做（Command） · 6
   - 创建型模式（Creational） · 6
@@ -38,11 +38,11 @@
   - 为测试而设计 · 4
   - 适应度函数（Fitness Functions） · 4
   - 错误处理设计 · 6
-- 并发（Concurrency） · 30
+- 并发（Concurrency） · 29
   - 线程、GIL 与内存模型 · 6
   - 同步原语（threading） · 5
   - 死锁及其亲戚 · 6
-  - 并发模式 · 7
+  - 并发模式 · 6
   - asyncio 与协程 · 6
 - API 与程序结构（Program Structure） · 13
   - 进程内 API 设计 · 4
@@ -100,7 +100,7 @@
     - 内存键值存储（In-Memory Key-Value Store） · 8
     - 线程池（Thread Pool） · 8
     - 有界阻塞队列（Bounded Blocking Queue） · 8
-- Amazon 专项（Amazon OOD） · 187
+- Amazon 专项（Amazon OOD） · 184
   - Amazon 的 LLD 轮怎么打（Amazon OOD Round） · 7
   - 增删查最近值（Add / Remove / Closest） · 9
   - 火车线路票价（Train Fare Calculator） · 9
@@ -117,11 +117,21 @@
   - 内存数据库（In-Memory Database） · 9
   - AWS 账单服务（AWS Billing Service）（low priority） · 9
   - 办公室人数追踪（Occupancy Tracker）（low priority） · 9
-  - 限流器（Rate Limiter）（low priority） · 6
-  - 日志框架（Logger）（low priority） · 6
+  - 限流器（Rate Limiter）（low priority） · 5
+  - 日志框架（Logger）（low priority） · 4
   - 分账（Splitwise）（low priority） · 6
   - 任务调度器（Task Scheduler）（low priority） · 6
   - 播放列表与推荐（Playlist DJ）（low priority） · 6
   - 钱包与账户（Wallet / Bank Account）（low priority） · 6
   - DNS 解析器（DNS Resolver）（low priority） · 6
   - 视频目录与续播（Video Catalogue）（low priority） · 6
+- 轮次打法（Round Playbooks） · 11
+  - 排错轮（Bug Bash） · 5
+  - AI 辅助编码轮（AI-Assisted Round） · 6
+- 测试（Testing） · 10
+  - 用例选择（Partitioning & Boundaries） · 3
+  - 测试层级（Unit, Integration, Larger） · 4
+  - 覆盖率的边界（Coverage Limits） · 3
+- 调试（Debugging） · 7
+  - 二分定位改动（Bisect） · 4
+  - 时序与共享状态的 bug（Heisenbugs） · 3

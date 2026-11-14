@@ -1,0 +1,8 @@
+{
+  "one_team":        [["trainer", "dashboard"], ["trainer", "archiver"], ["evaluator", "dashboard"]],
+  "two_teams":       [["ci", "pager"], ["ci", "dashboard"], ["bench", "perfbot"]],
+  "chain":           [["p1", "c1"], ["p2", "c1"], ["p2", "c2"], ["p3", "c2"], ["p3", "c3"]],
+  "matching":        [["p1", "c1"], ["p2", "c2"], ["p3", "c3"], ["p4", "c4"]],
+  "full_block":      [["p1", "c1"], ["p1", "c2"], ["p2", "c1"], ["p2", "c2"]],
+  "crown_3":         [["p1", "c2"], ["p1", "c3"], ["p2", "c1"], ["p2", "c3"], ["p3", "c1"], ["p3", "c2"]]
+}

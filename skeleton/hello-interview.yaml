@@ -3057,3 +3057,9 @@ nodes:
   - id: more.ai-systems
     title: AI 系统：LLM、RAG、推理服务、评测
     summary: 补充：AI 系统：LLM、RAG、推理服务、评测。
+  - id: more.error-tracking
+    title: 错误追踪与异常聚合（Bugsnag、Sentry）
+    summary: 补充：错误追踪与异常聚合（Bugsnag、Sentry）。
+  - id: more.test-platform
+    title: 测试执行平台（稀缺硬件上的大规模测试）
+    summary: 补充：测试执行平台（稀缺硬件上的大规模测试）。

@@ -1,0 +1,5 @@
+ISL,OSL,batch_size,ttft_s,ITL (ms),Tokens/s per user,Throughput,notes
+8000,200,1,1.4067,2.46,407.3,407.3,projection
+8000,200,4,1.7267,2.68,373.3,2389.3,projection
+8000,200,16,3.0067,3.57,280.0,4480.0,projection
+8000,200,64,8.1267,7.14,140.0,8960.0,projection

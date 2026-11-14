@@ -187,6 +187,10 @@ nodes:
     title: 推理服务基准：长度分布、并发扫描与工具
     summary: 输入输出长度分布、并发或请求率扫描画出延迟-吞吐曲线；vllm bench、genai-perf、MLPerf Inference。
     requires: [metrics.latency-throughput]
+  - id: metrics.sweep-verdict
+    title: 读性能扫描表并给出上线结论：按负载判定、异常识别
+    summary: 一张"模型 × 流量画像 × 并发"的性能表怎么读：对照每类负载的延迟与吞吐要求给出能不能上线，并识别吞吐不单调、负载升高首 token 反而变快这类数据异常。
+    requires: [metrics.benchmarking]
   - id: metrics.perf-gates
     title: 发布性能门限：按模型与配置的基线、噪声与阈值
     summary: 每个模型、批大小、上下文长度一条基线，多次运行取分布，超过阈值即阻断发布。
@@ -208,6 +212,10 @@ nodes:
     title: 模型发布的精度验证：评测集、logits 对比、top-1 一致率、KL
     summary: lm-eval 等评测、与参考实现逐 token 比 logits、top-1 一致率与 KL 散度、阈值怎么定。
     requires: [numerics.nondeterminism]
+  - id: numerics.eval-pruning
+    title: 评测集压缩：用最少的样本保住"行不行"的结论
+    summary: 全量评测太贵时，挑出区分度高、覆盖各难度的小样本集；用排名一致性和上线结论一致性验证，留一模型交叉检验，并估计评委噪声的下限。
+    requires: [numerics.accuracy-validation]
   - id: numerics.model-qualification
     title: 新模型上线验证：权重转换、长上下文、对话模板、多模态
     summary: 检查点转换、配置字段、长上下文与位置编码、chat template、多模态输入各自要测什么。

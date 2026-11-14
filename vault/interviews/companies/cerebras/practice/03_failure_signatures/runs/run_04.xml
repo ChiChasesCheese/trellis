@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+  <testsuite name="pytest" tests="10" failures="2" errors="0" skipped="1" timestamp="2026-11-04T03:00:00">
+    <testcase classname="tests.test_math" name="test_add" time="0.280"/>
+    <testcase classname="tests.test_api" name="test_login" time="0.300">
+      <failure message="AssertionError: expected 200, got 500 (request 00000004-1b2c-4d5e-8f90-00000000115c)" type="AssertionError">Traceback (most recent call last):
+  ...
+AssertionError: expected 200, got 500 (request 00000004-1b2c-4d5e-8f90-00000000115c)</failure>
+    </testcase>
+    <testcase classname="tests.test_io" name="test_upload" time="0.310"/>
+    <testcase classname="tests.test_device" name="test_compile" time="0.320"/>
+    <testcase classname="tests.test_model" name="test_logits" time="0.310"/>
+    <testcase classname="tests.test_cache" name="test_eviction" time="0.330">
+      <failure message="KeyError: 'k12' not found in LRU at 0x7f7bbca4c0" type="KeyError">Traceback (most recent call last):
+  ...
+KeyError: 'k12' not found in LRU at 0x7f7bbca4c0</failure>
+    </testcase>
+    <testcase classname="tests.test_tmp" name="test_paths" time="0.300"/>
+    <testcase classname="tests.test_mixed" name="test_infra_then_real" time="0.400"/>
+    <testcase classname="tests.test_gpu" name="test_cuda" time="0.290">
+      <skipped message="no GPU on this runner"></skipped>
+    </testcase>
+    <testcase classname="tests.test_new" name="test_feature" time="0.320"/>
+  </testsuite>
+</testsuites>

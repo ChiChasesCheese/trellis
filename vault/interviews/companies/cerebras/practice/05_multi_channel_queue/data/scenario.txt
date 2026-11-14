@@ -1,0 +1,24 @@
+# One operation per line, replayed by the tests (and handy for tracing by hand).
+#   add <channel> | sub <consumer> <channel> | unsub <consumer> <channel>
+#   pub <producer> <ch1,ch2,...> <payload> | take <consumer> [n]
+add builds
+add evals
+add alerts
+sub dash evals
+sub dash alerts
+sub pager alerts
+sub archive builds
+pub ci builds build-1041-green
+pub evalbot evals,alerts mmlu-drop-2pt
+take dash
+take pager
+add perf
+sub perf-bot perf
+sub dash perf
+pub bench perf p99-up
+unsub dash alerts
+pub watchdog alerts disk-80pct
+take dash
+take pager
+take archive
+take perf-bot 1

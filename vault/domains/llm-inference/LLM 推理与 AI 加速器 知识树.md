@@ -40,14 +40,16 @@
 - 服务栈与接口（Serving Stack & API） · 11
   - 推理引擎架构：API 服务、调度器、执行器（vLLM、TensorRT-LLM、SGLang） · 5
   - OpenAI 兼容接口与它的测试 · 6
-- 指标与基准（Metrics & Benchmarking） · 17
+- 指标与基准（Metrics & Benchmarking） · 21
   - TTFT、TPOT / ITL、端到端延迟、吞吐与 goodput · 6
   - 推理服务基准：长度分布、并发扫描与工具 · 6
+  - 读性能扫描表并给出上线结论：按负载判定、异常识别 · 4
   - 发布性能门限：按模型与配置的基线、噪声与阈值 · 5
-- 数值与正确性（Numerics & Correctness） · 28
+- 数值与正确性（Numerics & Correctness） · 34
   - 数值格式：FP32、BF16、FP16、FP8 与累加精度 · 6
   - 推理的非确定性：批大小、归约顺序、原子操作 · 6
   - 模型发布的精度验证：评测集、logits 对比、top-1 一致率、KL · 6
+  - 评测集压缩：用最少的样本保住"行不行"的结论 · 6
   - 新模型上线验证：权重转换、长上下文、对话模板、多模态 · 5
   - 经典推理缺陷：EOS 与 stop、位置 id、模板错配、截断、反分词 · 5
 - AI 加速器（Accelerators） · 29

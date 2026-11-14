@@ -1,9 +1,9 @@
 # Role track: AI-infrastructure SDET (testing, integration and release of an AI inference stack).
 # The knowledge such interviews probe, 80/20, in reading order: AI from zero first, then the role's core (test strategy,
-# release engineering), inference, accelerators, ML/LLM system design, Python, debugging, coding, reliability, behaviour.
-# Built from one role's skill map (192 points weighted by how likely and how central). Reuse it for any company with an
-# overlay (scripts/track_plan.py); sibling tracks reorder the same sections for inference-infrastructure or
-# inference-deployment roles.
+# release engineering), inference, accelerators, ML/LLM system design, related design questions, Python, debugging,
+# coding, reliability, behaviour. Built from one role's skill map (192 points weighted by how likely and how central).
+# Reuse it for any company with an overlay (scripts/track_plan.py); sibling tracks reorder the same sections for
+# inference-infrastructure or inference-deployment roles.
 track: ai-infra-sdet
 title: AI 基础设施 SDET：推理栈的测试、集成与发布
 fits:
@@ -279,6 +279,7 @@ sections:
     - hi-c-sd-chatgpt-b02-ttft-anatomy
     - hi-sdx-ai-gpu-economics
   - node: llm-inference:metrics.benchmarking
+  - node: llm-inference:metrics.sweep-verdict
   - node: llm-inference:metrics.perf-gates
   - node: llm-inference:numerics.formats
     also:
@@ -288,6 +289,7 @@ sections:
   - node: llm-inference:numerics.accuracy-validation
     also:
     - hi-sdx-ai-prompt-versioning
+  - node: llm-inference:numerics.eval-pruning
   - node: llm-inference:numerics.model-qualification
   - node: llm-inference:numerics.classic-bugs
 - title: 加速器与编译器
@@ -323,6 +325,13 @@ sections:
   - node: ml-system-design:evaluation
   - node: ml-system-design:data
   - node: ml-system-design:training
+- title: 相关系统设计题
+  parts:
+  - node: hello-interview:more.test-platform
+  - node: hello-interview:more.error-tracking
+  - node: hello-interview:qb.sd.github-cicd-workflow
+  - node: hello-interview:sd.problem-breakdowns.metrics-monitoring
+  - node: hello-interview:sd.problem-breakdowns.job-scheduler
 - title: Python 与测试工具
   parts:
   - label: pytest 夹具（fixture）
@@ -545,6 +554,8 @@ sections:
     - hi-sdx-ob-canonical-log
 - title: 编程题
   parts:
+  - node: low-level-design:rounds.bug-bash
+  - node: low-level-design:rounds.ai-assisted
   - label: 实用编码：解析日志与测试结果
     cards:
     - cc-input-lp-blank-lines-and-spaces
@@ -697,6 +708,8 @@ sections:
     - lct-best-time-to-buy-and-sell-stock
     - lct-reverse-words-in-a-string
     - lct-remove-all-adjacent-duplicates-in-string-ii
+    - lct-range-sum-query-2d-immutable
+    - lct-design-linked-list
   - label: 数值与并行编程
     nodes:
     - code-core:performance.numeric-arrays

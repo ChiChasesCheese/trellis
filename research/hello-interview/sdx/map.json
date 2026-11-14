@@ -23,7 +23,9 @@
   "more.multi-region": "多区域部署（Multi-Region）",
   "more.infra": "平台基础设施：容器、服务网格、发布",
   "more.security": "安全：认证、OAuth、密码、授权",
-  "more.ai-systems": "AI 系统：LLM、RAG、推理服务、评测"
+  "more.ai-systems": "AI 系统：LLM、RAG、推理服务、评测",
+  "more.error-tracking": "错误追踪与异常聚合（Bugsnag、Sentry）",
+  "more.test-platform": "测试执行平台（稀缺硬件上的大规模测试）"
  },
  "leaves": {
   "foundations.method": "sd.in-a-hurry.delivery.more",
