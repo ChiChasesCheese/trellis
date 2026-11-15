@@ -155,7 +155,7 @@ def load_related(folder: Path) -> dict[int, tuple[str, str]]:
             continue
         body = q[head.end():].split("\n\n")
         stmt = next((b.strip() for b in body[1:] if b.strip()), "")
-        stmt = re.split(r"(?<=。)", stmt)[0][:220]
+        stmt = stmt[:320]  # the whole statement (one or two lines): its first sentence is often only the setup
         md.reset()
         out[int(head.group(2))] = (head.group(1), md.convert(stmt + "\n\n" + code.group(0)))
     return out
