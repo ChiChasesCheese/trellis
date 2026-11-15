@@ -1,7 +1,7 @@
 # LeetCode problems Chi solved, one whole-answer card each, one branch per knowledge point.
 # Leaves are added by scripts/leetcode_daily.py fetch / place; cards follow research/leetcode-daily/AGENT.md.
 domain: leetcode-daily
-anki_via: leetcode-tree  # retired 2026-11-14: one card per problem lives in the knowledge tree (research/leetcode-unify)
+anki_via: leetcode-tree
 title: LeetCode Daily：按知识点
 deck: LeetCode Tops::28 Daily（按知识点）
 lang: zh
@@ -34,6 +34,9 @@ nodes:
   - id: prefix-sum.count-frequency-staircase-subarrays-i
     title: LC 4094 统计频次阶梯子数组的数目 I（Count Frequency Staircase Subarrays I）
     summary: Medium；。
+  - id: prefix-sum.number-of-sub-arrays-with-odd-sum
+    title: LC 1524 和为奇数的子数组数目（Number of Sub-arrays With Odd Sum）
+    summary: Medium；Array, Math, Dynamic Programming, Prefix Sum。
   core: true
 - id: sliding-window
   order: 3
