@@ -9,6 +9,15 @@ A rolling update changes both cache-key construction and response metadata. Whic
 ## A
 Exercise every supported old/new interaction: old writer with new reader, new writer with old reader, and requests crossing old and new nodes through shared cache. Assert representation safety and rollback, not merely parse success. If mixed versions cannot safely share entries, namespace the cache by policy/deployment version until the fleet converges.
 
+```mermaid
+flowchart LR
+    OW["old writer"] --> SC[("shared cache")]
+    NW["new writer"] --> SC
+    SC --> ORD["old reader"]
+    SC --> NRD["new reader"]
+    SC -.->|"无法安全共享"| NS["按 policy/deployment version<br/>namespace cache"]
+```
+
 ## Q zh
 rolling update 同时改变 cache-key construction 和 response metadata。哪个 version-skew test 必不可少？
 

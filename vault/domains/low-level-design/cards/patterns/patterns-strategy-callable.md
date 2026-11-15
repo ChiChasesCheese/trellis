@@ -21,3 +21,11 @@ def hourly_rate(hours: float) -> float:
 def charge(hours: float, pricing: PricingFn) -> float:
     return pricing(hours)
 ```
+
+```mermaid
+flowchart LR
+    C["调用方"] -->|"hours, pricing"| F["charge()"]
+    F -->|"pricing(hours)"| P{"PricingFn<br/>Callable[[float], float]"}
+    P --> H["hourly_rate"]
+    P --> O1["任何同签名的函数"]
+```

@@ -16,3 +16,14 @@ tags: [grown]
 - `Pizza`：不可变值对象，带构建时定格的单价；配料排序后，同样的披萨相等。
 - `Order`：容器，同样的披萨合并成一行，对外只给快照。
 - `LineRule` / `OrderRule` / `PriceEngine`：只看一行的优惠、看整单的优惠，以及遍历、钳位、记账的引擎。
+
+```mermaid
+flowchart LR
+    M["Menu"] --> B["PizzaBuilder"]
+    B -->|"build() 一次性校验"| P["Pizza"]
+    P --> O1["Order"]
+    O1 --> E["PriceEngine"]
+    L1["LineRule"] --> E
+    R1["OrderRule"] --> E
+    E --> BILL["订单账单"]
+```
