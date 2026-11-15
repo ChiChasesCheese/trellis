@@ -162,11 +162,14 @@ def build() -> dict:
         primary[p["slug"]] = list(path)
     exp = json.loads((LC / "expand.json").read_text(encoding="utf-8")) if (LC / "expand.json").exists() else {}
     body = ROOT / "vault/interviews/core/leetcode/problems"
+    placed = {s for v in home.values() for s in v}  # a problem hangs on one leaf only: its home, else its first expand.json leaf
     for lst in lists:
         for path, leaf in leaves(lst):
             ours = home.get((lst["key"], path), [])
             # problems added to a thin leaf (expand.json) join after ours once their answer body exists
-            leaf["problems"] = ours + [c["slug"] for c in exp.get(leaf["id"], []) if c["slug"] not in ours and (body / f"{c['slug']}.md").exists()]
+            extra = [c["slug"] for c in exp.get(leaf["id"], []) if c["slug"] not in placed and (body / f"{c['slug']}.md").exists()]
+            placed |= set(extra)
+            leaf["problems"] = ours + extra
     weight = {slug: p["importance"] for slug, p in probs.items()}
     weight.update({c["slug"]: c.get("importance", 0.0) for v in exp.values() for c in v})
     lists = prioritize(lists, weight)
@@ -224,6 +227,7 @@ def write(t: dict) -> int:
             folder = CARDS / top / n["id"]
             folder.mkdir(parents=True, exist_ok=True)
             for step, slug in enumerate(mine, 2):  # step 1 is the leaf's learning card
+                written.add(folder / f"lct-{slug}.md")
                 (folder / f"lct-{slug}.md").write_text(
                     f"---\nid: lct-{slug}\nnode: {n['id']}\ntype: qa\nstep: {step}\nbody: interviews/core/leetcode/problems/{slug}\n"
                     f"meta: \"灵神题单 · {' › '.join(path)}\"\n---\n", encoding="utf-8")
@@ -232,6 +236,7 @@ def write(t: dict) -> int:
             out["children"] = kids
         return out
 
+    written: set[Path] = set()
     nodes = []
     for i, lst in enumerate(t["lists"], 1):
         n = node(lst, (), lst["key"])
@@ -241,6 +246,9 @@ def write(t: dict) -> int:
         {"domain": "leetcode-tree", "title": "算法知识树（灵神题单）", "lang": "zh", "vault": "interviews/core/leetcode/tree",
          "examples_from": "interviews/core/leetcode/problems", "fold": "bullets", "nodes": nodes},
         allow_unicode=True, sort_keys=False), encoding="utf-8")
+    for f in CARDS.rglob("lct-*.md"):  # a stub left behind where a problem no longer hangs (moved leaf or step)
+        if not f.name.startswith("lct-learn-") and f not in written and "\nbody: " in f.read_text(encoding="utf-8"):
+            f.unlink()
     return sum(1 for _ in CARDS.rglob("lct-*.md"))
 
 

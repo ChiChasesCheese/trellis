@@ -2230,5 +2230,23 @@
   "title": "Merge Triplets to Form Target Triplet",
   "title_zh": "合并若干三元组以形成目标三元组",
   "difficulty": "Medium"
+ },
+ "high-five": {
+  "id": 1086,
+  "title": "High Five",
+  "title_zh": "High Five",
+  "difficulty": "Easy"
+ },
+ "analyze-user-website-visit-pattern": {
+  "id": 1152,
+  "title": "Analyze User Website Visit Pattern",
+  "title_zh": "Analyze User Website Visit Pattern",
+  "difficulty": "Medium"
+ },
+ "remove-all-occurrences-of-a-substring": {
+  "id": 1910,
+  "title": "Remove All Occurrences of a Substring",
+  "title_zh": "删除一个字符串中所有出现的给定子字符串",
+  "difficulty": "Medium"
  }
 }
