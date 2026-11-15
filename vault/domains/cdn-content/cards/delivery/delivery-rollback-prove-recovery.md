@@ -27,3 +27,16 @@ rollback 后 error rate 下降，但仍高于 baseline。什么能证明 recover
 
 ## A zh
 把 rolled-back cohort 与 unaffected control 和 pre-change baseline 比较，覆盖 user SLI、cache state、origin load 和 security probe。确认 bad version 已消失、queue 正在 drain、cache 不再提供它的 artifact，并且 error-budget burn 在规定 window 内回到 recovery threshold 以下。“graph 下降了”只说明方向，不是证明。
+
+```mermaid
+flowchart LR
+    R["rolled-back cohort"] --> CMP{"对比"}
+    C["unaffected control"] --> CMP
+    B["pre-change baseline"] --> CMP
+    CMP --> S["user SLI · cache state<br/>origin load · security probe"]
+    S --> K1["bad version 已消失"]
+    S --> K2["queue 正在 drain"]
+    S --> K3["cache 不再给它的 artifact"]
+    S --> K4["burn 在 window 内低于 threshold"]
+    K1 & K2 & K3 & K4 --> OK["recovery 得证"]
+```

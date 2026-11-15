@@ -23,3 +23,12 @@ rolling update 同时改变 cache-key construction 和 response metadata。哪�
 
 ## A zh
 覆盖所有支持的 old/new interaction：old writer + new reader、new writer + old reader，以及 request 通过 shared cache 跨越 old/new node。断言 representation safety 和 rollback，而不只是 parse success。如果 mixed version 无法安全共享 entry，就按 policy/deployment version namespace cache，直到 fleet 收敛。
+
+```mermaid
+flowchart LR
+    OW["old writer"] --> SC[("shared cache")]
+    NW["new writer"] --> SC
+    SC --> ORD["old reader"]
+    SC --> NRD["new reader"]
+    SC -.->|"无法安全共享"| NS["按 policy/deployment version<br/>namespace cache"]
+```
