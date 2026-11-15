@@ -27,3 +27,7 @@ vllm serve <目标模型> --speculative-config '{"method": "mtp", "num_speculati
 - 流量以检索问答、代码编辑为主：先试 n-gram，零成本。
 - 模型官方提供 EAGLE 头或 MTP 模块：优先用它们。
 - 高并发时：批已经很大、计算单元已经忙碌，检查多余位置不再"免费"，加速会缩小甚至变成减速。上线前要在目标并发下实测。
+
+**新进展（2026 年 3 月）。** vLLM 加入 P-EAGLE（并行起草）：EAGLE 起草者原来每个草稿 token 要跑一次前向，P-EAGLE 一次前向就产出全部 K 个草稿 token。在 B200 上对 gpt-oss-20B，比普通 EAGLE-3 快 1.05 到 1.69 倍。
+
+<details class="pt"><summary>想一想：一次起草的 token 数 K 为什么不是越大越好？</summary>越靠后的草稿位置越容易和目标模型的分布不符，被拒的概率上升；K 大了验证的成本也增加，收益到某一点之后就不再增长。</details>

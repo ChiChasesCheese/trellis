@@ -32,3 +32,7 @@ OpenAI 兼容的 `/v1/chat/completions` 接口有哪些关键请求参数和响�
 - 停止串被一并返回，或跨两个 token 时没被识别。
 - `usage` 计数和用同一分词器独立计算的结果不一致。
 - 不支持的参数（如 `n=2`）被静默忽略而不是报错。
+
+**新进展（2026 年 1 月）。** OpenAI 联合 NVIDIA、Hugging Face、OpenRouter、Ollama、vLLM 等推出开放规范 Open Responses，基于 Responses API（比 chat/completions 更适合智能体的新接口），让各家不必各写一套适配。
+
+<details class="pt"><summary>想一想：chat/completions 里一次回复是一条 message。智能体要在一次回复里穿插推理、工具调用和文本，接口数据结构该怎么变？</summary>响应改成一串有类型的条目（item），每条有自己的类型，而不是单一的 message。测试也要按条目类型逐条检查，不能只看 content 字段。</details>

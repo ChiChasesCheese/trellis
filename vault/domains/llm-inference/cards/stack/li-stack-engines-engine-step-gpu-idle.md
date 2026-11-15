@@ -29,3 +29,7 @@ step: 2
 - **进程分离：** HTTP 和反分词放在另一个进程，不阻塞调度循环。
 
 **测量：** 用 NVIDIA Nsight Systems（`nsys profile -o step python ...`）抓一段时间线，看 GPU 时间轴上的空隙；空隙多、且对应 CPU 上的 Python 代码，说明瓶颈在主机侧。对比开启和关闭 CUDA Graph（vLLM 的 `--enforce-eager` 会关闭它）的每 token 间隔，能直接看到启动开销的大小。
+
+**新进展（2026 年 1 月）。** vLLM 0.14.0 把异步调度设为默认：调度、准备输入、处理输出与 GPU 计算重叠进行，出问题可用 --no-async-scheduling 关掉；流水线并行等少数配置暂不支持。
+
+<details class="pt"><summary>想一想：异步调度把 CPU 的活藏在 GPU 计算后面。什么情况下藏不住？</summary>当 CPU 的调度加准备时间比一次 GPU 步还长时，比如模型很小、批很小，GPU 仍要等 CPU，重叠的收益就有限。</details>
