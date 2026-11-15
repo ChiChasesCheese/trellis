@@ -1,0 +1,114 @@
+[
+ {
+  "num": 906,
+  "slug": "super-palindromes",
+  "title": "超级回文数",
+  "en": "Super Palindromes",
+  "leaf": "math.7.1",
+  "named_by": [
+   "find-the-closest-palindrome",
+   "sum-of-k-mirror-numbers"
+  ]
+ },
+ {
+  "num": 1589,
+  "slug": "maximum-sum-obtained-of-any-permutation",
+  "title": "所有排列中的最大和",
+  "en": "Maximum Sum Obtained of Any Permutation",
+  "leaf": "greedy.4.3",
+  "named_by": [
+   "maximum-total-importance-of-roads",
+   "reducing-dishes"
+  ]
+ },
+ {
+  "num": 1310,
+  "slug": "xor-queries-of-a-subarray",
+  "title": "子数组异或查询",
+  "en": "XOR Queries of a Subarray",
+  "leaf": "data-structures.1.1",
+  "named_by": [
+   "count-vowel-strings-in-ranges"
+  ]
+ },
+ {
+  "num": 1390,
+  "slug": "four-divisors",
+  "title": "四因数",
+  "en": "Four Divisors",
+  "leaf": "math.1.5",
+  "named_by": [
+   "perfect-number"
+  ]
+ },
+ {
+  "num": 1461,
+  "slug": "check-if-a-string-contains-all-binary-codes-of-size-k",
+  "title": "检查一个字符串是否包含所有长度为 K 的二进制子串",
+  "en": "Check If a String Contains All Binary Codes of Size K",
+  "leaf": "sliding-window.1.2",
+  "named_by": [
+   "maximum-number-of-occurrences-of-a-substring"
+  ]
+ },
+ {
+  "num": 1850,
+  "slug": "minimum-adjacent-swaps-to-reach-the-kth-smallest-number",
+  "title": "邻位交换的最小次数",
+  "en": "Minimum Adjacent Swaps to Reach the Kth Smallest Number",
+  "leaf": "data-structures.8.2",
+  "named_by": [
+   "minimum-number-of-moves-to-make-palindrome"
+  ]
+ },
+ {
+  "num": 1915,
+  "slug": "number-of-wonderful-substrings",
+  "title": "最美子字符串的数目",
+  "en": "Number of Wonderful Substrings",
+  "leaf": "data-structures.1.4",
+  "named_by": [
+   "count-paths-that-can-form-a-palindrome-in-a-tree"
+  ]
+ },
+ {
+  "num": 1952,
+  "slug": "three-divisors",
+  "title": "三除数",
+  "en": "Three Divisors",
+  "leaf": "math.1.5",
+  "named_by": [
+   "perfect-number"
+  ]
+ },
+ {
+  "num": 2136,
+  "slug": "earliest-possible-day-of-full-bloom",
+  "title": "全部开花的最早一天",
+  "en": "Earliest Possible Day of Full Bloom",
+  "leaf": "greedy.1.7",
+  "named_by": [
+   "minimum-initial-energy-to-finish-tasks"
+  ]
+ },
+ {
+  "num": 2867,
+  "slug": "count-valid-paths-in-a-tree",
+  "title": "统计树中的合法路径数目",
+  "en": "Count Valid Paths in a Tree",
+  "leaf": "data-structures.0.2.2",
+  "named_by": [
+   "count-pairs-of-connectable-servers-in-a-weighted-tree-network"
+  ]
+ },
+ {
+  "num": 3373,
+  "slug": "maximize-the-number-of-target-nodes-after-connecting-trees-ii",
+  "title": "连接两棵树后最大目标节点数目 II",
+  "en": "Maximize the Number of Target Nodes After Connecting Trees II",
+  "leaf": "list-tree-backtracking.3.2",
+  "named_by": [
+   "maximize-the-number-of-target-nodes-after-connecting-trees-i"
+  ]
+ }
+]
