@@ -1,0 +1,4861 @@
+[
+ {
+  "num": 296,
+  "slug": "best-meeting-point",
+  "title": "最佳的碰头地点",
+  "en": "Best Meeting Point",
+  "leaf": "greedy.4.5",
+  "named_by": [
+   "maximum-of-absolute-value-expression",
+   "minimum-adjacent-swaps-for-k-consecutive-ones",
+   "minimum-cost-to-make-array-equal",
+   "minimum-moves-to-equal-array-elements-ii",
+   "minimum-moves-to-pick-k-ones",
+   "minimum-number-of-operations-to-move-all-balls-to-each-box",
+   "shortest-distance-from-all-buildings"
+  ]
+ },
+ {
+  "num": 646,
+  "slug": "maximum-length-of-pair-chain",
+  "title": "最长数对链",
+  "en": "Maximum Length of Pair Chain",
+  "leaf": "greedy.2.4",
+  "named_by": [
+   "longest-increasing-subsequence",
+   "maximum-height-by-stacking-cuboids",
+   "maximum-profit-in-job-scheduling",
+   "minimum-number-of-arrows-to-burst-balloons",
+   "non-overlapping-intervals",
+   "number-of-longest-increasing-subsequence",
+   "russian-doll-envelopes"
+  ]
+ },
+ {
+  "num": 241,
+  "slug": "different-ways-to-add-parentheses",
+  "title": "为运算表达式设计优先级",
+  "en": "Different Ways to Add Parentheses",
+  "leaf": "list-tree-backtracking.4.6",
+  "named_by": [
+   "24-game",
+   "expression-add-operators",
+   "generate-parentheses",
+   "scramble-string",
+   "unique-binary-search-trees-ii",
+   "unique-binary-search-trees"
+  ]
+ },
+ {
+  "num": 315,
+  "slug": "count-of-smaller-numbers-after-self",
+  "title": "计算右侧小于当前元素的个数",
+  "en": "Count of Smaller Numbers After Self",
+  "leaf": "data-structures.8.2",
+  "named_by": [
+   "minimum-operations-to-sort-with-locked-indices",
+   "rank-transform-of-an-array",
+   "reverse-pairs",
+   "shu-zu-zhong-de-ni-xu-dui-lcof",
+   "sort-an-array",
+   "tt-die-beats-probability"
+  ]
+ },
+ {
+  "num": 687,
+  "slug": "longest-univalue-path",
+  "title": "最长同值路径",
+  "en": "Longest Univalue Path",
+  "leaf": "list-tree-backtracking.2.6",
+  "named_by": [
+   "binary-tree-longest-consecutive-sequence",
+   "binary-tree-maximum-path-sum",
+   "diameter-of-binary-tree",
+   "number-of-good-leaf-nodes-pairs",
+   "tree-diameter",
+   "tt-max-path-sum-with-path"
+  ]
+ },
+ {
+  "num": 773,
+  "slug": "sliding-puzzle",
+  "title": "滑动谜题",
+  "en": "Sliding Puzzle",
+  "leaf": "graph.1.3",
+  "named_by": [
+   "minimum-genetic-mutation",
+   "open-the-lock",
+   "snakes-and-ladders",
+   "tt-water-jug-shortest-operations",
+   "word-ladder-ii",
+   "word-ladder"
+  ]
+ },
+ {
+  "num": 257,
+  "slug": "binary-tree-paths",
+  "title": "二叉树的所有路径",
+  "en": "Binary Tree Paths",
+  "leaf": "list-tree-backtracking.2.7",
+  "named_by": [
+   "amazon-hierarchical-document-search",
+   "path-sum-ii",
+   "path-sum",
+   "step-by-step-directions-from-a-binary-tree-node-to-another",
+   "sum-root-to-leaf-numbers"
+  ]
+ },
+ {
+  "num": 802,
+  "slug": "find-eventual-safe-states",
+  "title": "找到最终的安全状态",
+  "en": "Find Eventual Safe States",
+  "leaf": "graph.2.1",
+  "named_by": [
+   "codetop-supp-23",
+   "course-schedule-iv",
+   "course-schedule",
+   "find-all-possible-recipes-from-given-supplies",
+   "possible-bipartition"
+  ]
+ },
+ {
+  "num": 933,
+  "slug": "number-of-recent-calls",
+  "title": "最近的请求次数",
+  "en": "Number of Recent Calls",
+  "leaf": "data-structures.4.1",
+  "named_by": [
+   "amazon-rate-limiter",
+   "design-hit-counter",
+   "logger-rate-limiter",
+   "tt-rate-limiter-implementation",
+   "tt-tool-call-success-rate"
+  ]
+ },
+ {
+  "num": 1020,
+  "slug": "number-of-enclaves",
+  "title": "飞地的数量",
+  "en": "Number of Enclaves",
+  "leaf": "grid.1",
+  "named_by": [
+   "count-islands-with-total-value-divisible-by-k",
+   "making-a-large-island",
+   "number-of-closed-islands",
+   "pacific-atlantic-water-flow",
+   "surrounded-regions"
+  ]
+ },
+ {
+  "num": 168,
+  "slug": "excel-sheet-column-title",
+  "title": "Excel 表列名称",
+  "en": "Excel Sheet Column Title",
+  "leaf": "math.7.10",
+  "named_by": [
+   "fizz-buzz",
+   "integer-to-roman",
+   "roman-to-integer",
+   "tt-number-to-string"
+  ]
+ },
+ {
+  "num": 218,
+  "slug": "the-skyline-problem",
+  "title": "天际线问题",
+  "en": "The Skyline Problem",
+  "leaf": "data-structures.5.6",
+  "named_by": [
+   "block-placement-queries",
+   "brightest-position-on-street",
+   "minimum-interval-to-include-each-query",
+   "rectangle-area"
+  ]
+ },
+ {
+  "num": 220,
+  "slug": "contains-duplicate-iii",
+  "title": "存在重复元素 III",
+  "en": "Contains Duplicate III",
+  "leaf": "data-structures.0.1.2",
+  "named_by": [
+   "contains-duplicate-ii",
+   "contains-duplicate",
+   "maximum-gap",
+   "minimum-absolute-difference-between-elements-with-constraint"
+  ]
+ },
+ {
+  "num": 233,
+  "slug": "number-of-digit-one",
+  "title": "数字 1 的个数",
+  "en": "Number of Digit One",
+  "leaf": "dp.10.2",
+  "named_by": [
+   "maximum-number-of-balls-in-a-box",
+   "nth-digit",
+   "numbers-at-most-n-given-digit-set",
+   "rotated-digits"
+  ]
+ },
+ {
+  "num": 307,
+  "slug": "range-sum-query-mutable",
+  "title": "区域和检索 - 数组可修改",
+  "en": "Range Sum Query - Mutable",
+  "leaf": "data-structures.8.1",
+  "named_by": [
+   "block-placement-queries",
+   "longest-substring-of-one-repeating-character",
+   "number-of-adjacent-elements-with-the-same-color",
+   "tt-weighted-sampler-dynamic-update"
+  ]
+ },
+ {
+  "num": 398,
+  "slug": "random-pick-index",
+  "title": "随机数索引",
+  "en": "Random Pick Index",
+  "leaf": "math.6.1",
+  "named_by": [
+   "implement-rand10-using-rand7",
+   "random-pick-with-weight",
+   "shuffle-an-array",
+   "tt-weighted-sampler-dynamic-update"
+  ]
+ },
+ {
+  "num": 448,
+  "slug": "find-all-numbers-disappeared-in-an-array",
+  "title": "找到所有数组中消失的数字",
+  "en": "Find All Numbers Disappeared in an Array",
+  "leaf": "sliding-window.3.5",
+  "named_by": [
+   "find-all-duplicates-in-an-array",
+   "first-missing-positive",
+   "missing-number",
+   "set-mismatch"
+  ]
+ },
+ {
+  "num": 449,
+  "slug": "serialize-and-deserialize-bst",
+  "title": "序列化和反序列化二叉搜索树",
+  "en": "Serialize and Deserialize BST",
+  "leaf": "list-tree-backtracking.2.16",
+  "named_by": [
+   "serialize-and-deserialize-binary-tree",
+   "serialize-and-deserialize-n-ary-tree",
+   "tt-kv-store-snapshot-restore",
+   "verify-preorder-sequence-in-binary-search-tree"
+  ]
+ },
+ {
+  "num": 461,
+  "slug": "hamming-distance",
+  "title": "汉明距离",
+  "en": "Hamming Distance",
+  "leaf": "bits.1",
+  "named_by": [
+   "binary-digit-score",
+   "counting-bits",
+   "number-of-1-bits",
+   "reverse-bits"
+  ]
+ },
+ {
+  "num": 611,
+  "slug": "valid-triangle-number",
+  "title": "有效三角形的个数",
+  "en": "Valid Triangle Number",
+  "leaf": "sliding-window.3.2",
+  "named_by": [
+   "3sum-closest",
+   "3sum-smaller",
+   "largest-perimeter-triangle",
+   "tt-pythagorean-triple-in-array"
+  ]
+ },
+ {
+  "num": 641,
+  "slug": "design-circular-deque",
+  "title": "设计循环双端队列",
+  "en": "Design Circular Deque",
+  "leaf": "data-structures.4.2",
+  "named_by": [
+   "design-circular-queue",
+   "design-linked-list",
+   "implement-queue-using-stacks",
+   "tt-fixed-array-deque-o1"
+  ]
+ },
+ {
+  "num": 668,
+  "slug": "kth-smallest-number-in-multiplication-table",
+  "title": "乘法表中第k小的数",
+  "en": "Kth Smallest Number in Multiplication Table",
+  "leaf": "binary-search.2.6",
+  "named_by": [
+   "find-k-th-smallest-pair-distance",
+   "k-th-smallest-in-lexicographical-order",
+   "kth-smallest-element-in-a-sorted-matrix",
+   "kth-smallest-subarray-sum"
+  ]
+ },
+ {
+  "num": 834,
+  "slug": "sum-of-distances-in-tree",
+  "title": "树中距离之和",
+  "en": "Sum of Distances in Tree",
+  "leaf": "dp.12.4",
+  "named_by": [
+   "minimum-edge-reversals-so-every-node-is-reachable",
+   "minimum-number-of-operations-to-move-all-balls-to-each-box",
+   "number-of-good-leaf-nodes-pairs",
+   "reorder-routes-to-make-all-paths-lead-to-the-city-zero"
+  ]
+ },
+ {
+  "num": 847,
+  "slug": "shortest-path-visiting-all-nodes",
+  "title": "访问所有节点的最短路径",
+  "en": "Shortest Path Visiting All Nodes",
+  "leaf": "dp.9.3",
+  "named_by": [
+   "optimal-account-balancing",
+   "shortest-path-with-alternating-colors",
+   "stickers-to-spell-word",
+   "xun-bao"
+  ]
+ },
+ {
+  "num": 895,
+  "slug": "maximum-frequency-stack",
+  "title": "最大频率栈",
+  "en": "Maximum Frequency Stack",
+  "leaf": "data-structures.3.2",
+  "named_by": [
+   "all-oone-data-structure",
+   "max-stack",
+   "min-stack",
+   "tt-most-frequent-ties-smaller"
+  ]
+ },
+ {
+  "num": 990,
+  "slug": "satisfiability-of-equality-equations",
+  "title": "等式方程的可满足性",
+  "en": "Satisfiability of Equality Equations",
+  "leaf": "data-structures.7.1",
+  "named_by": [
+   "accounts-merge",
+   "evaluate-division",
+   "tt-currency-conversion-queries",
+   "unit-conversion-ii"
+  ]
+ },
+ {
+  "num": 1054,
+  "slug": "distant-barcodes",
+  "title": "距离相等的条形码",
+  "en": "Distant Barcodes",
+  "leaf": "data-structures.5.4",
+  "named_by": [
+   "longest-happy-string",
+   "rearrange-string-k-distance-apart",
+   "reorganize-string",
+   "task-scheduler"
+  ]
+ },
+ {
+  "num": 1202,
+  "slug": "smallest-string-with-swaps",
+  "title": "交换字符串中的元素",
+  "en": "Smallest String With Swaps",
+  "leaf": "greedy.3.1",
+  "named_by": [
+   "accounts-merge",
+   "lexicographically-smallest-generated-string",
+   "make-lexicographically-smallest-array-by-swapping-elements",
+   "tt-currency-conversion-queries"
+  ]
+ },
+ {
+  "num": 2187,
+  "slug": "minimum-time-to-complete-trips",
+  "title": "完成旅途的最少时间",
+  "en": "Minimum Time to Complete Trips",
+  "leaf": "binary-search.2.1",
+  "named_by": [
+   "capacity-to-ship-packages-within-d-days",
+   "koko-eating-bananas",
+   "maximum-running-time-of-n-computers",
+   "minimum-time-to-complete-all-deliveries"
+  ]
+ },
+ {
+  "num": 29,
+  "slug": "divide-two-integers",
+  "title": "两数相除",
+  "en": "Divide Two Integers",
+  "leaf": "bits.1",
+  "named_by": [
+   "maximum-lcci",
+   "powx-n",
+   "tt-hyper-operation"
+  ]
+ },
+ {
+  "num": 203,
+  "slug": "remove-linked-list-elements",
+  "title": "移除链表元素",
+  "en": "Remove Linked List Elements",
+  "leaf": "list-tree-backtracking.1.2",
+  "named_by": [
+   "delete-node-in-a-linked-list",
+   "remove-duplicates-from-sorted-list-ii",
+   "remove-duplicates-from-sorted-list"
+  ]
+ },
+ {
+  "num": 216,
+  "slug": "combination-sum-iii",
+  "title": "组合总和 III",
+  "en": "Combination Sum III",
+  "leaf": "list-tree-backtracking.4.3",
+  "named_by": [
+   "combination-sum-ii",
+   "combination-sum",
+   "combinations"
+  ]
+ },
+ {
+  "num": 284,
+  "slug": "peeking-iterator",
+  "title": "窥视迭代器",
+  "en": "Peeking Iterator",
+  "leaf": "list-tree-backtracking.2.16",
+  "named_by": [
+   "binary-search-tree-iterator",
+   "flatten-nested-list-iterator",
+   "tt-inorder-string-iterator"
+  ]
+ },
+ {
+  "num": 346,
+  "slug": "moving-average-from-data-stream",
+  "title": "数据流中的移动平均值",
+  "en": "Moving Average from Data Stream",
+  "leaf": "data-structures.4.1",
+  "named_by": [
+   "design-circular-queue",
+   "design-hit-counter",
+   "tt-fixed-array-deque-o1"
+  ]
+ },
+ {
+  "num": 370,
+  "slug": "range-addition",
+  "title": "区间加法",
+  "en": "Range Addition",
+  "leaf": "data-structures.2.1.1",
+  "named_by": [
+   "count-the-hidden-sequences",
+   "design-a-stack-with-increment-operation",
+   "minimum-moves-to-make-array-complementary"
+  ]
+ },
+ {
+  "num": 372,
+  "slug": "super-pow",
+  "title": "超级次方",
+  "en": "Super Pow",
+  "leaf": "math.1.12",
+  "named_by": [
+   "consecutive-numbers-sum",
+   "powx-n",
+   "tt-hyper-operation"
+  ]
+ },
+ {
+  "num": 376,
+  "slug": "wiggle-subsequence",
+  "title": "摆动序列",
+  "en": "Wiggle Subsequence",
+  "leaf": "dp.6.2",
+  "named_by": [
+   "number-of-longest-increasing-subsequence",
+   "number-of-zigzag-arrays-i",
+   "wiggle-sort"
+  ]
+ },
+ {
+  "num": 382,
+  "slug": "linked-list-random-node",
+  "title": "链表随机节点",
+  "en": "Linked List Random Node",
+  "leaf": "math.6.1",
+  "named_by": [
+   "generate-random-point-in-a-circle",
+   "random-pick-with-weight",
+   "shuffle-an-array"
+  ]
+ },
+ {
+  "num": 459,
+  "slug": "repeated-substring-pattern",
+  "title": "重复的子字符串",
+  "en": "Repeated Substring Pattern",
+  "leaf": "string.1",
+  "named_by": [
+   "find-the-index-of-the-first-occurrence-in-a-string",
+   "greatest-common-divisor-of-strings",
+   "rotate-string"
+  ]
+ },
+ {
+  "num": 464,
+  "slug": "can-i-win",
+  "title": "我能赢吗",
+  "en": "Can I Win",
+  "leaf": "dp.14",
+  "named_by": [
+   "beautiful-arrangement",
+   "flip-game-ii",
+   "stickers-to-spell-word"
+  ]
+ },
+ {
+  "num": 487,
+  "slug": "max-consecutive-ones-ii",
+  "title": "最大连续1的个数 II",
+  "en": "Max Consecutive Ones II",
+  "leaf": "sliding-window.2.1.2",
+  "named_by": [
+   "longest-subarray-of-1s-after-deleting-one-element",
+   "max-consecutive-ones-iii",
+   "max-consecutive-ones"
+  ]
+ },
+ {
+  "num": 497,
+  "slug": "random-point-in-non-overlapping-rectangles",
+  "title": "非重叠矩形中的随机点",
+  "en": "Random Point in Non-overlapping Rectangles",
+  "leaf": "math.6.1",
+  "named_by": [
+   "generate-random-point-in-a-circle",
+   "random-pick-with-weight",
+   "tt-weighted-sampler-dynamic-update"
+  ]
+ },
+ {
+  "num": 501,
+  "slug": "find-mode-in-binary-search-tree",
+  "title": "二叉搜索树中的众数",
+  "en": "Find Mode in Binary Search Tree",
+  "leaf": "list-tree-backtracking.2.9",
+  "named_by": [
+   "minimum-absolute-difference-in-bst",
+   "minimum-distance-between-bst-nodes",
+   "recover-binary-search-tree"
+  ]
+ },
+ {
+  "num": 539,
+  "slug": "minimum-time-difference",
+  "title": "最小时间差",
+  "en": "Minimum Time Difference",
+  "leaf": "math.7.our-date-time",
+  "named_by": [
+   "day-of-the-week",
+   "maximum-gap",
+   "minimum-absolute-difference"
+  ]
+ },
+ {
+  "num": 566,
+  "slug": "reshape-the-matrix",
+  "title": "重塑矩阵",
+  "en": "Reshape the Matrix",
+  "leaf": "data-structures.0.3",
+  "named_by": [
+   "diagonal-traverse",
+   "sparse-matrix-multiplication",
+   "transpose-matrix"
+  ]
+ },
+ {
+  "num": 576,
+  "slug": "out-of-boundary-paths",
+  "title": "出界的路径数",
+  "en": "Out of Boundary Paths",
+  "leaf": "dp.7.6",
+  "named_by": [
+   "codetop-supp-2",
+   "tt-ring-walk-count",
+   "twisted-mirror-path-count"
+  ]
+ },
+ {
+  "num": 583,
+  "slug": "delete-operation-for-two-strings",
+  "title": "两个字符串的删除操作",
+  "en": "Delete Operation for Two Strings",
+  "leaf": "dp.4.1.1",
+  "named_by": [
+   "edit-distance",
+   "longest-common-subsequence",
+   "maximum-length-of-repeated-subarray"
+  ]
+ },
+ {
+  "num": 652,
+  "slug": "find-duplicate-subtrees",
+  "title": "寻找重复的子树",
+  "en": "Find Duplicate Subtrees",
+  "leaf": "list-tree-backtracking.2.16",
+  "named_by": [
+   "construct-string-from-binary-tree",
+   "serialize-and-deserialize-binary-tree",
+   "subtree-of-another-tree"
+  ]
+ },
+ {
+  "num": 674,
+  "slug": "longest-continuous-increasing-subsequence",
+  "title": "最长连续递增序列",
+  "en": "Longest Continuous Increasing Subsequence",
+  "leaf": "sliding-window.6",
+  "named_by": [
+   "length-of-the-longest-alphabetical-continuous-substring",
+   "longest-consecutive-sequence",
+   "longest-strictly-increasing-or-strictly-decreasing-subarray"
+  ]
+ },
+ {
+  "num": 738,
+  "slug": "monotone-increasing-digits",
+  "title": "单调递增的数字",
+  "en": "Monotone Increasing Digits",
+  "leaf": "greedy.3.1",
+  "named_by": [
+   "maximum-swap",
+   "smallest-subsequence-of-distinct-characters",
+   "tt-largest-number-below-n-from-digits"
+  ]
+ },
+ {
+  "num": 762,
+  "slug": "prime-number-of-set-bits-in-binary-representation",
+  "title": "二进制表示中质数个计算置位",
+  "en": "Prime Number of Set Bits in Binary Representation",
+  "leaf": "math.1.2",
+  "named_by": [
+   "binary-digit-score",
+   "closest-prime-numbers-in-range",
+   "count-primes"
+  ]
+ },
+ {
+  "num": 786,
+  "slug": "k-th-smallest-prime-fraction",
+  "title": "第 K 个最小的质数分数",
+  "en": "K-th Smallest Prime Fraction",
+  "leaf": "data-structures.5.3",
+  "named_by": [
+   "find-k-pairs-with-smallest-sums",
+   "kth-smallest-element-in-a-sorted-matrix",
+   "kth-smallest-subarray-sum"
+  ]
+ },
+ {
+  "num": 792,
+  "slug": "number-of-matching-subsequences",
+  "title": "匹配子序列的单词数",
+  "en": "Number of Matching Subsequences",
+  "leaf": "string.9",
+  "named_by": [
+   "is-subsequence",
+   "longest-word-in-dictionary-through-deleting",
+   "make-string-a-subsequence-using-cyclic-increments"
+  ]
+ },
+ {
+  "num": 865,
+  "slug": "smallest-subtree-with-all-the-deepest-nodes",
+  "title": "具有所有最深节点的最小子树",
+  "en": "Smallest Subtree with all the Deepest Nodes",
+  "leaf": "list-tree-backtracking.2.5",
+  "named_by": [
+   "deepest-leaves-sum",
+   "lowest-common-ancestor-of-a-binary-tree-iv",
+   "lowest-common-ancestor-of-deepest-leaves"
+  ]
+ },
+ {
+  "num": 877,
+  "slug": "stone-game",
+  "title": "石子游戏",
+  "en": "Stone Game",
+  "leaf": "dp.14",
+  "named_by": [
+   "flip-game-ii",
+   "predict-the-winner",
+   "stone-game-ii"
+  ]
+ },
+ {
+  "num": 885,
+  "slug": "spiral-matrix-iii",
+  "title": "螺旋矩阵 III",
+  "en": "Spiral Matrix III",
+  "leaf": "grid.our-matrix-sim",
+  "named_by": [
+   "spiral-matrix-ii",
+   "spiral-matrix",
+   "tt-spiral-matrix-constant-space"
+  ]
+ },
+ {
+  "num": 922,
+  "slug": "sort-array-by-parity-ii",
+  "title": "按奇偶排序数组 II",
+  "en": "Sort Array By Parity II",
+  "leaf": "sliding-window.3.5",
+  "named_by": [
+   "rearrange-array-elements-by-sign",
+   "sort-array-by-parity",
+   "wiggle-sort"
+  ]
+ },
+ {
+  "num": 978,
+  "slug": "longest-turbulent-subarray",
+  "title": "最长湍流子数组",
+  "en": "Longest Turbulent Subarray",
+  "leaf": "sliding-window.6",
+  "named_by": [
+   "arithmetic-slices",
+   "length-of-the-longest-alphabetical-continuous-substring",
+   "longest-strictly-increasing-or-strictly-decreasing-subarray"
+  ]
+ },
+ {
+  "num": 979,
+  "slug": "distribute-coins-in-binary-tree",
+  "title": "在二叉树中分配硬币",
+  "en": "Distribute Coins in Binary Tree",
+  "leaf": "list-tree-backtracking.2.16",
+  "named_by": [
+   "binary-tree-cameras",
+   "make-costs-of-paths-equal-in-a-binary-tree",
+   "super-washing-machines"
+  ]
+ },
+ {
+  "num": 1095,
+  "slug": "find-in-mountain-array",
+  "title": "山脉数组中查找目标值",
+  "en": "Find in Mountain Array",
+  "leaf": "binary-search.4",
+  "named_by": [
+   "find-peak-element",
+   "peak-index-in-a-mountain-array",
+   "valid-mountain-array"
+  ]
+ },
+ {
+  "num": 1109,
+  "slug": "corporate-flight-bookings",
+  "title": "航班预订统计",
+  "en": "Corporate Flight Bookings",
+  "leaf": "data-structures.2.1.1",
+  "named_by": [
+   "car-pooling",
+   "design-a-stack-with-increment-operation",
+   "minimum-moves-to-make-array-complementary"
+  ]
+ },
+ {
+  "num": 1135,
+  "slug": "connecting-cities-with-minimum-cost",
+  "title": "最低成本连通所有城市",
+  "en": "Connecting Cities With Minimum Cost",
+  "leaf": "graph.4",
+  "named_by": [
+   "find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree",
+   "min-cost-to-connect-all-points",
+   "optimize-water-distribution-in-a-village"
+  ]
+ },
+ {
+  "num": 1154,
+  "slug": "day-of-the-year",
+  "title": "一年中的第几天",
+  "en": "Day of the Year",
+  "leaf": "math.7.our-date-time",
+  "named_by": [
+   "count-days-spent-together",
+   "day-of-the-week",
+   "number-of-days-between-two-dates"
+  ]
+ },
+ {
+  "num": 1155,
+  "slug": "number-of-dice-rolls-with-target-sum",
+  "title": "掷骰子等于目标和的方法数",
+  "en": "Number of Dice Rolls With Target Sum",
+  "leaf": "dp.3.4",
+  "named_by": [
+   "k-inverse-pairs-array",
+   "nge-tou-zi-de-dian-shu-lcof",
+   "number-of-people-aware-of-a-secret"
+  ]
+ },
+ {
+  "num": 1166,
+  "slug": "design-file-system",
+  "title": "设计文件系统",
+  "en": "Design File System",
+  "leaf": "data-structures.6.2",
+  "named_by": [
+   "amazon-ai-repository-debugging",
+   "amazon-hierarchical-document-search",
+   "design-in-memory-file-system"
+  ]
+ },
+ {
+  "num": 1275,
+  "slug": "find-winner-on-a-tic-tac-toe-game",
+  "title": "找出井字棋的获胜者",
+  "en": "Find Winner on a Tic Tac Toe Game",
+  "leaf": "grid.our-matrix-sim",
+  "named_by": [
+   "check-if-move-is-legal",
+   "design-tic-tac-toe",
+   "valid-tic-tac-toe-state"
+  ]
+ },
+ {
+  "num": 1306,
+  "slug": "jump-game-iii",
+  "title": "跳跃游戏 III",
+  "en": "Jump Game III",
+  "leaf": "graph.1.1",
+  "named_by": [
+   "frog-jump",
+   "jump-game-iv",
+   "jump-game"
+  ]
+ },
+ {
+  "num": 1312,
+  "slug": "minimum-insertion-steps-to-make-a-string-palindrome",
+  "title": "让字符串成为回文串的最少插入次数",
+  "en": "Minimum Insertion Steps to Make a String Palindrome",
+  "leaf": "dp.8.1",
+  "named_by": [
+   "longest-palindromic-subsequence",
+   "merge-operations-to-turn-array-into-a-palindrome",
+   "valid-palindrome-iii"
+  ]
+ },
+ {
+  "num": 1382,
+  "slug": "balance-a-binary-search-tree",
+  "title": "将二叉搜索树变平衡",
+  "en": "Balance a Binary Search Tree",
+  "leaf": "list-tree-backtracking.2.10",
+  "named_by": [
+   "balanced-binary-tree",
+   "convert-sorted-array-to-binary-search-tree",
+   "convert-sorted-list-to-binary-search-tree"
+  ]
+ },
+ {
+  "num": 1514,
+  "slug": "path-with-maximum-probability",
+  "title": "概率最大的路径",
+  "en": "Path with Maximum Probability",
+  "leaf": "graph.3.1",
+  "named_by": [
+   "maximize-amount-after-two-days-of-conversions",
+   "network-delay-time",
+   "swim-in-rising-water"
+  ]
+ },
+ {
+  "num": 1636,
+  "slug": "sort-array-by-increasing-frequency",
+  "title": "按照频率将数组升序排序",
+  "en": "Sort Array by Increasing Frequency",
+  "leaf": "data-structures.our-hashing",
+  "named_by": [
+   "most-popular-video-creator",
+   "rank-teams-by-votes",
+   "sort-characters-by-frequency"
+  ]
+ },
+ {
+  "num": 1647,
+  "slug": "minimum-deletions-to-make-character-frequencies-unique",
+  "title": "字符频次唯一的最小删除次数",
+  "en": "Minimum Deletions to Make Character Frequencies Unique",
+  "leaf": "greedy.1.1",
+  "named_by": [
+   "minimum-increment-to-make-array-unique",
+   "minimum-operations-to-make-character-frequencies-equal",
+   "rearranging-fruits"
+  ]
+ },
+ {
+  "num": 1671,
+  "slug": "minimum-number-of-removals-to-make-mountain-array",
+  "title": "得到山形数组的最少删除次数",
+  "en": "Minimum Number of Removals to Make Mountain Array",
+  "leaf": "dp.4.2.2",
+  "named_by": [
+   "increasing-triplet-subsequence",
+   "longest-mountain-in-array",
+   "sorting-three-groups"
+  ]
+ },
+ {
+  "num": 1751,
+  "slug": "maximum-number-of-events-that-can-be-attended-ii",
+  "title": "最多可以参加的会议数目 II",
+  "en": "Maximum Number of Events That Can Be Attended II",
+  "leaf": "dp.7.2",
+  "named_by": [
+   "maximum-earnings-from-taxi",
+   "maximum-profit-in-job-scheduling",
+   "two-best-non-overlapping-events"
+  ]
+ },
+ {
+  "num": 1879,
+  "slug": "minimum-xor-sum-of-two-arrays",
+  "title": "两个数组最小的异或值之和",
+  "en": "Minimum XOR Sum of Two Arrays",
+  "leaf": "dp.9.1",
+  "named_by": [
+   "maximize-score-after-n-operations",
+   "minimum-moves-to-spread-stones-over-grid",
+   "minimum-time-to-break-locks-i"
+  ]
+ },
+ {
+  "num": 1962,
+  "slug": "remove-stones-to-minimize-the-total",
+  "title": "移除石子使总数最小",
+  "en": "Remove Stones to Minimize the Total",
+  "leaf": "data-structures.5.1",
+  "named_by": [
+   "last-stone-weight",
+   "maximal-score-after-applying-k-operations",
+   "minimum-cost-to-connect-sticks"
+  ]
+ },
+ {
+  "num": 2034,
+  "slug": "stock-price-fluctuation",
+  "title": "股票价格波动",
+  "en": "Stock Price Fluctuation ",
+  "leaf": "data-structures.5.6",
+  "named_by": [
+   "design-task-manager",
+   "snapshot-array",
+   "time-based-key-value-store"
+  ]
+ },
+ {
+  "num": 2104,
+  "slug": "sum-of-subarray-ranges",
+  "title": "子数组范围和",
+  "en": "Sum of Subarray Ranges",
+  "leaf": "monotonic-stack.3",
+  "named_by": [
+   "sum-of-subarray-minimums",
+   "sum-of-total-strength-of-wizards",
+   "tt-subarray-max-min-plus-max"
+  ]
+ },
+ {
+  "num": 2208,
+  "slug": "minimum-operations-to-halve-array-sum",
+  "title": "将数组和减半的最少操作次数",
+  "en": "Minimum Operations to Halve Array Sum",
+  "leaf": "data-structures.5.1",
+  "named_by": [
+   "maximal-score-after-applying-k-operations",
+   "minimum-cost-to-connect-sticks",
+   "sell-diminishing-valued-colored-balls"
+  ]
+ },
+ {
+  "num": 65,
+  "slug": "valid-number",
+  "title": "有效数字",
+  "en": "Valid Number",
+  "leaf": "data-structures.3.5",
+  "named_by": [
+   "string-to-integer-atoi",
+   "validate-ip-address"
+  ]
+ },
+ {
+  "num": 147,
+  "slug": "insertion-sort-list",
+  "title": "对链表进行插入排序",
+  "en": "Insertion Sort List",
+  "leaf": "list-tree-backtracking.1.3",
+  "named_by": [
+   "insert-into-a-sorted-circular-linked-list",
+   "sort-list"
+  ]
+ },
+ {
+  "num": 214,
+  "slug": "shortest-palindrome",
+  "title": "最短回文串",
+  "en": "Shortest Palindrome",
+  "leaf": "string.1",
+  "named_by": [
+   "find-the-index-of-the-first-occurrence-in-a-string",
+   "longest-palindromic-substring"
+  ]
+ },
+ {
+  "num": 225,
+  "slug": "implement-stack-using-queues",
+  "title": "用队列实现栈",
+  "en": "Implement Stack using Queues",
+  "leaf": "data-structures.4.2",
+  "named_by": [
+   "implement-queue-using-stacks",
+   "yong-liang-ge-zhan-shi-xian-dui-lie-lcof"
+  ]
+ },
+ {
+  "num": 256,
+  "slug": "paint-house",
+  "title": "粉刷房子",
+  "en": "Paint House",
+  "leaf": "dp.7.6",
+  "named_by": [
+   "number-of-ways-to-paint-n-3-grid",
+   "paint-house-iii"
+  ]
+ },
+ {
+  "num": 264,
+  "slug": "ugly-number-ii",
+  "title": "丑数 II",
+  "en": "Ugly Number II",
+  "leaf": "data-structures.5.3",
+  "named_by": [
+   "count-primes",
+   "ugly-number"
+  ]
+ },
+ {
+  "num": 326,
+  "slug": "power-of-three",
+  "title": "3 的幂",
+  "en": "Power of Three",
+  "leaf": "math.1.12",
+  "named_by": [
+   "power-of-two",
+   "ugly-number"
+  ]
+ },
+ {
+  "num": 327,
+  "slug": "count-of-range-sum",
+  "title": "区间和的个数",
+  "en": "Count of Range Sum",
+  "leaf": "data-structures.8.2",
+  "named_by": [
+   "reverse-pairs",
+   "shu-zu-zhong-de-ni-xu-dui-lcof"
+  ]
+ },
+ {
+  "num": 331,
+  "slug": "verify-preorder-serialization-of-a-binary-tree",
+  "title": "验证二叉树的前序序列化",
+  "en": "Verify Preorder Serialization of a Binary Tree",
+  "leaf": "list-tree-backtracking.2.16",
+  "named_by": [
+   "serialize-and-deserialize-n-ary-tree",
+   "verify-preorder-sequence-in-binary-search-tree"
+  ]
+ },
+ {
+  "num": 342,
+  "slug": "power-of-four",
+  "title": "4的幂",
+  "en": "Power of Four",
+  "leaf": "bits.1",
+  "named_by": [
+   "minimum-operations-to-reduce-an-integer-to-0",
+   "power-of-two"
+  ]
+ },
+ {
+  "num": 350,
+  "slug": "intersection-of-two-arrays-ii",
+  "title": "两个数组的交集 II",
+  "en": "Intersection of Two Arrays II",
+  "leaf": "sliding-window.4.1",
+  "named_by": [
+   "find-common-characters",
+   "intersection-of-two-arrays"
+  ]
+ },
+ {
+  "num": 352,
+  "slug": "data-stream-as-disjoint-intervals",
+  "title": "将数据流变为多个不相交区间",
+  "en": "Data Stream as Disjoint Intervals",
+  "leaf": "sliding-window.6",
+  "named_by": [
+   "missing-ranges",
+   "summary-ranges"
+  ]
+ },
+ {
+  "num": 363,
+  "slug": "max-sum-of-rectangle-no-larger-than-k",
+  "title": "矩形区域不超过 K 的最大数值和",
+  "en": "Max Sum of Rectangle No Larger Than K",
+  "leaf": "data-structures.1.2",
+  "named_by": [
+   "max-submatrix-lcci",
+   "number-of-submatrices-that-sum-to-target"
+  ]
+ },
+ {
+  "num": 375,
+  "slug": "guess-number-higher-or-lower-ii",
+  "title": "猜数字大小 II",
+  "en": "Guess Number Higher or Lower II",
+  "leaf": "dp.8.2",
+  "named_by": [
+   "predict-the-winner",
+   "super-egg-drop"
+  ]
+ },
+ {
+  "num": 406,
+  "slug": "queue-reconstruction-by-height",
+  "title": "根据身高重建队列",
+  "en": "Queue Reconstruction by Height",
+  "leaf": "greedy.6",
+  "named_by": [
+   "largest-number",
+   "two-city-scheduling"
+  ]
+ },
+ {
+  "num": 421,
+  "slug": "maximum-xor-of-two-numbers-in-an-array",
+  "title": "数组中两个数的最大异或值",
+  "en": "Maximum XOR of Two Numbers in an Array",
+  "leaf": "bits.5",
+  "named_by": [
+   "amazon-maximize-and-with-budget",
+   "maximum-xor-product"
+  ]
+ },
+ {
+  "num": 429,
+  "slug": "n-ary-tree-level-order-traversal",
+  "title": "N 叉树的层序遍历",
+  "en": "N-ary Tree Level Order Traversal",
+  "leaf": "list-tree-backtracking.2.15",
+  "named_by": [
+   "binary-tree-level-order-traversal-ii",
+   "binary-tree-level-order-traversal"
+  ]
+ },
+ {
+  "num": 444,
+  "slug": "sequence-reconstruction",
+  "title": "序列重建",
+  "en": "Sequence Reconstruction",
+  "leaf": "graph.2.1",
+  "named_by": [
+   "alien-dictionary",
+   "course-schedule-ii"
+  ]
+ },
+ {
+  "num": 447,
+  "slug": "number-of-boomerangs",
+  "title": "回旋镖的数量",
+  "en": "Number of Boomerangs",
+  "leaf": "data-structures.our-design",
+  "named_by": [
+   "detect-squares",
+   "max-points-on-a-line"
+  ]
+ },
+ {
+  "num": 463,
+  "slug": "island-perimeter",
+  "title": "岛屿的周长",
+  "en": "Island Perimeter",
+  "leaf": "grid.1",
+  "named_by": [
+   "flood-fill",
+   "max-area-of-island"
+  ]
+ },
+ {
+  "num": 532,
+  "slug": "k-diff-pairs-in-an-array",
+  "title": "数组中的 k-diff 数对",
+  "en": "K-diff Pairs in an Array",
+  "leaf": "data-structures.our-hashing",
+  "named_by": [
+   "fair-candy-swap",
+   "minimum-absolute-difference"
+  ]
+ },
+ {
+  "num": 535,
+  "slug": "encode-and-decode-tinyurl",
+  "title": "TinyURL 的加密与解密",
+  "en": "Encode and Decode TinyURL",
+  "leaf": "string.our-string-parse",
+  "named_by": [
+   "encode-and-decode-strings",
+   "tt-kv-store-snapshot-restore"
+  ]
+ },
+ {
+  "num": 536,
+  "slug": "construct-binary-tree-from-string",
+  "title": "从字符串生成二叉树",
+  "en": "Construct Binary Tree from String",
+  "leaf": "list-tree-backtracking.2.10",
+  "named_by": [
+   "construct-string-from-binary-tree",
+   "serialize-and-deserialize-n-ary-tree"
+  ]
+ },
+ {
+  "num": 538,
+  "slug": "convert-bst-to-greater-tree",
+  "title": "把二叉搜索树转换为累加树",
+  "en": "Convert BST to Greater Tree",
+  "leaf": "list-tree-backtracking.2.5",
+  "named_by": [
+   "binary-search-tree-to-greater-sum-tree",
+   "kth-smallest-element-in-a-bst"
+  ]
+ },
+ {
+  "num": 541,
+  "slug": "reverse-string-ii",
+  "title": "反转字符串 II",
+  "en": "Reverse String II",
+  "leaf": "sliding-window.3.1",
+  "named_by": [
+   "reverse-string",
+   "reverse-words-in-a-string-iii"
+  ]
+ },
+ {
+  "num": 556,
+  "slug": "next-greater-element-iii",
+  "title": "下一个更大元素 III",
+  "en": "Next Greater Element III",
+  "leaf": "greedy.3.1",
+  "named_by": [
+   "maximum-swap",
+   "next-permutation"
+  ]
+ },
+ {
+  "num": 563,
+  "slug": "binary-tree-tilt",
+  "title": "二叉树的坡度",
+  "en": "Binary Tree Tilt",
+  "leaf": "list-tree-backtracking.2.3",
+  "named_by": [
+   "maximum-product-of-splitted-binary-tree",
+   "most-frequent-subtree-sum"
+  ]
+ },
+ {
+  "num": 630,
+  "slug": "course-schedule-iii",
+  "title": "课程表 III",
+  "en": "Course Schedule III",
+  "leaf": "data-structures.5.5",
+  "named_by": [
+   "maximum-number-of-events-that-can-be-attended",
+   "minimum-number-of-refueling-stops"
+  ]
+ },
+ {
+  "num": 632,
+  "slug": "smallest-range-covering-elements-from-k-lists",
+  "title": "最小区间",
+  "en": "Smallest Range Covering Elements from K Lists",
+  "leaf": "data-structures.5.2",
+  "named_by": [
+   "amazon-lazy-merge-event-streams",
+   "merge-k-sorted-lists"
+  ]
+ },
+ {
+  "num": 635,
+  "slug": "design-log-storage-system",
+  "title": "设计日志存储系统",
+  "en": "Design Log Storage System",
+  "leaf": "data-structures.our-design",
+  "named_by": [
+   "simple-bank-system",
+   "tt-agent-tool-call-tracer"
+  ]
+ },
+ {
+  "num": 653,
+  "slug": "two-sum-iv-input-is-a-bst",
+  "title": "两数之和 IV - 输入二叉搜索树",
+  "en": "Two Sum IV - Input is a BST",
+  "leaf": "list-tree-backtracking.2.9",
+  "named_by": [
+   "two-sum-ii-input-array-is-sorted",
+   "two-sum"
+  ]
+ },
+ {
+  "num": 657,
+  "slug": "robot-return-to-origin",
+  "title": "机器人能否返回原点",
+  "en": "Robot Return to Origin",
+  "leaf": "greedy.8",
+  "named_by": [
+   "robot-bounded-in-circle",
+   "walking-robot-simulation"
+  ]
+ },
+ {
+  "num": 677,
+  "slug": "map-sum-pairs",
+  "title": "键值映射",
+  "en": "Map Sum Pairs",
+  "leaf": "data-structures.6.1",
+  "named_by": [
+   "design-add-and-search-words-data-structure",
+   "replace-words"
+  ]
+ },
+ {
+  "num": 686,
+  "slug": "repeated-string-match",
+  "title": "重复叠加字符串匹配",
+  "en": "Repeated String Match",
+  "leaf": "string.1",
+  "named_by": [
+   "find-the-index-of-the-first-occurrence-in-a-string",
+   "greatest-common-divisor-of-strings"
+  ]
+ },
+ {
+  "num": 688,
+  "slug": "knight-probability-in-chessboard",
+  "title": "骑士在棋盘上的概率",
+  "en": "Knight Probability in Chessboard",
+  "leaf": "dp.15",
+  "named_by": [
+   "champagne-tower",
+   "knight-dialer"
+  ]
+ },
+ {
+  "num": 700,
+  "slug": "search-in-a-binary-search-tree",
+  "title": "二叉搜索树中的搜索",
+  "en": "Search in a Binary Search Tree",
+  "leaf": "list-tree-backtracking.2.9",
+  "named_by": [
+   "delete-node-in-a-bst",
+   "lowest-common-ancestor-of-a-binary-search-tree"
+  ]
+ },
+ {
+  "num": 701,
+  "slug": "insert-into-a-binary-search-tree",
+  "title": "二叉搜索树中的插入操作",
+  "en": "Insert into a Binary Search Tree",
+  "leaf": "list-tree-backtracking.2.11",
+  "named_by": [
+   "delete-node-in-a-bst",
+   "lowest-common-ancestor-of-a-binary-search-tree"
+  ]
+ },
+ {
+  "num": 705,
+  "slug": "design-hashset",
+  "title": "设计哈希集合",
+  "en": "Design HashSet",
+  "leaf": "data-structures.our-design",
+  "named_by": [
+   "design-hashmap",
+   "tt-contiguous-memory-allocator"
+  ]
+ },
+ {
+  "num": 725,
+  "slug": "split-linked-list-in-parts",
+  "title": "分隔链表",
+  "en": "Split Linked List in Parts",
+  "leaf": "list-tree-backtracking.1.1",
+  "named_by": [
+   "odd-even-linked-list",
+   "partition-list"
+  ]
+ },
+ {
+  "num": 730,
+  "slug": "count-different-palindromic-subsequences",
+  "title": "统计不同回文子序列",
+  "en": "Count Different Palindromic Subsequences",
+  "leaf": "dp.7.4",
+  "named_by": [
+   "distinct-subsequences-ii",
+   "longest-palindromic-subsequence"
+  ]
+ },
+ {
+  "num": 731,
+  "slug": "my-calendar-ii",
+  "title": "我的日程安排表 II",
+  "en": "My Calendar II",
+  "leaf": "data-structures.8.5",
+  "named_by": [
+   "design-memory-allocator",
+   "my-calendar-i"
+  ]
+ },
+ {
+  "num": 732,
+  "slug": "my-calendar-iii",
+  "title": "我的日程安排表 III",
+  "en": "My Calendar III",
+  "leaf": "data-structures.2.1.2",
+  "named_by": [
+   "brightest-position-on-street",
+   "my-calendar-i"
+  ]
+ },
+ {
+  "num": 744,
+  "slug": "find-smallest-letter-greater-than-target",
+  "title": "寻找比目标字母大的最小字母",
+  "en": "Find Smallest Letter Greater Than Target",
+  "leaf": "binary-search.1.1",
+  "named_by": [
+   "heaters",
+   "successful-pairs-of-spells-and-potions"
+  ]
+ },
+ {
+  "num": 765,
+  "slug": "couples-holding-hands",
+  "title": "情侣牵手",
+  "en": "Couples Holding Hands",
+  "leaf": "data-structures.7.2",
+  "named_by": [
+   "minimum-swaps-to-sort-by-digit-sum",
+   "regions-cut-by-slashes"
+  ]
+ },
+ {
+  "num": 769,
+  "slug": "max-chunks-to-make-sorted",
+  "title": "最多能完成排序的块",
+  "en": "Max Chunks To Make Sorted",
+  "leaf": "data-structures.8.2",
+  "named_by": [
+   "minimum-operations-to-sort-with-locked-indices",
+   "shortest-unsorted-continuous-subarray"
+  ]
+ },
+ {
+  "num": 797,
+  "slug": "all-paths-from-source-to-target",
+  "title": "所有可能的路径",
+  "en": "All Paths From Source to Target",
+  "leaf": "graph.1.1",
+  "named_by": [
+   "clone-graph",
+   "tt-all-simple-paths"
+  ]
+ },
+ {
+  "num": 811,
+  "slug": "subdomain-visit-count",
+  "title": "子域名访问计数",
+  "en": "Subdomain Visit Count",
+  "leaf": "data-structures.our-hashing",
+  "named_by": [
+   "tt-login-count-per-user-per-day",
+   "tt-tool-call-success-rate"
+  ]
+ },
+ {
+  "num": 813,
+  "slug": "largest-sum-of-averages",
+  "title": "最大平均值和的分组",
+  "en": "Largest Sum of Averages",
+  "leaf": "dp.5.3",
+  "named_by": [
+   "allocate-mailboxes",
+   "minimum-difficulty-of-a-job-schedule"
+  ]
+ },
+ {
+  "num": 821,
+  "slug": "shortest-distance-to-a-character",
+  "title": "字符的最短距离",
+  "en": "Shortest Distance to a Character",
+  "leaf": "greedy.5.6",
+  "named_by": [
+   "candy",
+   "maximize-distance-to-closest-person"
+  ]
+ },
+ {
+  "num": 836,
+  "slug": "rectangle-overlap",
+  "title": "矩形重叠",
+  "en": "Rectangle Overlap",
+  "leaf": "math.5.3",
+  "named_by": [
+   "angle-between-hands-of-a-clock",
+   "rectangle-area"
+  ]
+ },
+ {
+  "num": 837,
+  "slug": "new-21-game",
+  "title": "新 21 点",
+  "en": "New 21 Game",
+  "leaf": "dp.15",
+  "named_by": [
+   "champagne-tower",
+   "nge-tou-zi-de-dian-shu-lcof"
+  ]
+ },
+ {
+  "num": 841,
+  "slug": "keys-and-rooms",
+  "title": "钥匙和房间",
+  "en": "Keys and Rooms",
+  "leaf": "graph.1.1",
+  "named_by": [
+   "detonate-the-maximum-bombs",
+   "remove-methods-from-project"
+  ]
+ },
+ {
+  "num": 844,
+  "slug": "backspace-string-compare",
+  "title": "比较含退格的字符串",
+  "en": "Backspace String Compare",
+  "leaf": "data-structures.3.1",
+  "named_by": [
+   "process-string-with-special-operations-i",
+   "remove-all-adjacent-duplicates-in-string"
+  ]
+ },
+ {
+  "num": 878,
+  "slug": "nth-magical-number",
+  "title": "第 N 个神奇数字",
+  "en": "Nth Magical Number",
+  "leaf": "binary-search.2.6",
+  "named_by": [
+   "minimum-time-to-complete-all-deliveries",
+   "preimage-size-of-factorial-zeroes-function"
+  ]
+ },
+ {
+  "num": 919,
+  "slug": "complete-binary-tree-inserter",
+  "title": "完全二叉树插入器",
+  "en": "Complete Binary Tree Inserter",
+  "leaf": "list-tree-backtracking.2.13",
+  "named_by": [
+   "check-completeness-of-a-binary-tree",
+   "maximum-width-of-binary-tree"
+  ]
+ },
+ {
+  "num": 937,
+  "slug": "reorder-data-in-log-files",
+  "title": "重新排列日志文件",
+  "en": "Reorder Data in Log Files",
+  "leaf": "greedy.1.7",
+  "named_by": [
+   "largest-number",
+   "rank-teams-by-votes"
+  ]
+ },
+ {
+  "num": 947,
+  "slug": "most-stones-removed-with-same-row-or-column",
+  "title": "移除最多的同行或同列石头",
+  "en": "Most Stones Removed with Same Row or Column",
+  "leaf": "data-structures.7.3",
+  "named_by": [
+   "longest-consecutive-sequence",
+   "make-lexicographically-smallest-array-by-swapping-elements"
+  ]
+ },
+ {
+  "num": 951,
+  "slug": "flip-equivalent-binary-trees",
+  "title": "翻转等价二叉树",
+  "en": "Flip Equivalent Binary Trees",
+  "leaf": "list-tree-backtracking.2.3",
+  "named_by": [
+   "same-tree",
+   "symmetric-tree"
+  ]
+ },
+ {
+  "num": 963,
+  "slug": "minimum-area-rectangle-ii",
+  "title": "最小面积矩形 II",
+  "en": "Minimum Area Rectangle II",
+  "leaf": "math.5.3",
+  "named_by": [
+   "minimum-area-rectangle",
+   "valid-square"
+  ]
+ },
+ {
+  "num": 980,
+  "slug": "unique-paths-iii",
+  "title": "不同路径 III",
+  "en": "Unique Paths III",
+  "leaf": "list-tree-backtracking.4.6",
+  "named_by": [
+   "unique-paths",
+   "word-search"
+  ]
+ },
+ {
+  "num": 1008,
+  "slug": "construct-binary-search-tree-from-preorder-traversal",
+  "title": "前序遍历构造二叉搜索树",
+  "en": "Construct Binary Search Tree from Preorder Traversal",
+  "leaf": "list-tree-backtracking.2.10",
+  "named_by": [
+   "construct-binary-tree-from-preorder-and-postorder-traversal",
+   "verify-preorder-sequence-in-binary-search-tree"
+  ]
+ },
+ {
+  "num": 1024,
+  "slug": "video-stitching",
+  "title": "视频拼接",
+  "en": "Video Stitching",
+  "leaf": "greedy.2.1",
+  "named_by": [
+   "jump-game-ii",
+   "minimum-number-of-taps-to-open-to-water-a-garden"
+  ]
+ },
+ {
+  "num": 1039,
+  "slug": "minimum-score-triangulation-of-polygon",
+  "title": "多边形三角剖分的最低得分",
+  "en": "Minimum Score Triangulation of Polygon",
+  "leaf": "dp.8.2",
+  "named_by": [
+   "burst-balloons",
+   "scramble-string"
+  ]
+ },
+ {
+  "num": 1042,
+  "slug": "flower-planting-with-no-adjacent",
+  "title": "不邻接植花",
+  "en": "Flower Planting With No Adjacent",
+  "leaf": "graph.9",
+  "named_by": [
+   "is-graph-bipartite",
+   "possible-bipartition"
+  ]
+ },
+ {
+  "num": 1102,
+  "slug": "path-with-maximum-minimum-value",
+  "title": "得分最高的路径",
+  "en": "Path With Maximum Minimum Value",
+  "leaf": "grid.5",
+  "named_by": [
+   "path-with-minimum-effort",
+   "swim-in-rising-water"
+  ]
+ },
+ {
+  "num": 1105,
+  "slug": "filling-bookcase-shelves",
+  "title": "填充书架",
+  "en": "Filling Bookcase Shelves",
+  "leaf": "dp.5.2",
+  "named_by": [
+   "partition-array-for-maximum-sum",
+   "text-justification"
+  ]
+ },
+ {
+  "num": 1110,
+  "slug": "delete-nodes-and-return-forest",
+  "title": "删点成林",
+  "en": "Delete Nodes And Return Forest",
+  "leaf": "list-tree-backtracking.2.4",
+  "named_by": [
+   "create-binary-tree-from-descriptions",
+   "tt-nested-comment-tree"
+  ]
+ },
+ {
+  "num": 1122,
+  "slug": "relative-sort-array",
+  "title": "数组的相对排序",
+  "en": "Relative Sort Array",
+  "leaf": "binary-search.2.2",
+  "named_by": [
+   "h-index",
+   "maximum-ice-cream-bars"
+  ]
+ },
+ {
+  "num": 1124,
+  "slug": "longest-well-performing-interval",
+  "title": "表现良好的最长时间段",
+  "en": "Longest Well-Performing Interval",
+  "leaf": "data-structures.1.2",
+  "named_by": [
+   "contiguous-array",
+   "maximum-width-ramp"
+  ]
+ },
+ {
+  "num": 1125,
+  "slug": "smallest-sufficient-team",
+  "title": "最小的必要团队",
+  "en": "Smallest Sufficient Team",
+  "leaf": "dp.9.7",
+  "named_by": [
+   "stickers-to-spell-word",
+   "xun-bao"
+  ]
+ },
+ {
+  "num": 1137,
+  "slug": "n-th-tribonacci-number",
+  "title": "第 N 个泰波那契数",
+  "en": "N-th Tribonacci Number",
+  "leaf": "dp.11.6",
+  "named_by": [
+   "fibonacci-number",
+   "first-day-where-you-have-been-in-all-the-rooms"
+  ]
+ },
+ {
+  "num": 1150,
+  "slug": "check-if-a-number-is-majority-element-in-a-sorted-array",
+  "title": "检查一个数是否在数组中占绝大多数",
+  "en": "Check If a Number Is Majority Element in a Sorted Array",
+  "leaf": "binary-search.1.2",
+  "named_by": [
+   "majority-element",
+   "tt-sorted-array-more-than-n-over-3"
+  ]
+ },
+ {
+  "num": 1201,
+  "slug": "ugly-number-iii",
+  "title": "丑数 III",
+  "en": "Ugly Number III",
+  "leaf": "binary-search.2.6",
+  "named_by": [
+   "preimage-size-of-factorial-zeroes-function",
+   "ugly-number"
+  ]
+ },
+ {
+  "num": 1220,
+  "slug": "count-vowels-permutation",
+  "title": "统计元音字母序列的数目",
+  "en": "Count Vowels Permutation",
+  "leaf": "dp.11.6",
+  "named_by": [
+   "knight-dialer",
+   "minimum-cost-good-caption"
+  ]
+ },
+ {
+  "num": 1232,
+  "slug": "check-if-it-is-a-straight-line",
+  "title": "缀点成线",
+  "en": "Check If It Is a Straight Line",
+  "leaf": "math.5.1",
+  "named_by": [
+   "max-points-on-a-line",
+   "valid-square"
+  ]
+ },
+ {
+  "num": 1281,
+  "slug": "subtract-the-product-and-sum-of-digits-of-an-integer",
+  "title": "整数的各位积和之差",
+  "en": "Subtract the Product and Sum of Digits of an Integer",
+  "leaf": "math.1.9",
+  "named_by": [
+   "add-digits",
+   "concatenate-non-zero-digits-and-multiply-by-sum-i"
+  ]
+ },
+ {
+  "num": 1334,
+  "slug": "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance",
+  "title": "阈值距离内邻居最少的城市",
+  "en": "Find the City With the Smallest Number of Neighbors at a Threshold Distance",
+  "leaf": "graph.3.2",
+  "named_by": [
+   "course-schedule-iv",
+   "number-of-possible-sets-of-closing-branches"
+  ]
+ },
+ {
+  "num": 1365,
+  "slug": "how-many-numbers-are-smaller-than-the-current-number",
+  "title": "有多少小于当前数字的数字",
+  "en": "How Many Numbers Are Smaller Than the Current Number",
+  "leaf": "greedy.5.3",
+  "named_by": [
+   "find-target-indices-after-sorting-array",
+   "rank-transform-of-an-array"
+  ]
+ },
+ {
+  "num": 1372,
+  "slug": "longest-zigzag-path-in-a-binary-tree",
+  "title": "二叉树中的最长交错路径",
+  "en": "Longest ZigZag Path in a Binary Tree",
+  "leaf": "list-tree-backtracking.2.2",
+  "named_by": [
+   "tt-longest-zigzag-grid-path",
+   "tt-max-path-sum-with-path"
+  ]
+ },
+ {
+  "num": 1396,
+  "slug": "design-underground-system",
+  "title": "设计地铁系统",
+  "en": "Design Underground System",
+  "leaf": "data-structures.our-design",
+  "named_by": [
+   "simple-bank-system",
+   "tt-agent-tool-call-tracer"
+  ]
+ },
+ {
+  "num": 1446,
+  "slug": "consecutive-characters",
+  "title": "连续字符",
+  "en": "Consecutive Characters",
+  "leaf": "sliding-window.6",
+  "named_by": [
+   "length-of-the-longest-alphabetical-continuous-substring",
+   "longest-substring-of-one-repeating-character"
+  ]
+ },
+ {
+  "num": 1456,
+  "slug": "maximum-number-of-vowels-in-a-substring-of-given-length",
+  "title": "定长子串中元音的最大数目",
+  "en": "Maximum Number of Vowels in a Substring of Given Length",
+  "leaf": "sliding-window.1.1",
+  "named_by": [
+   "count-vowel-substrings-of-a-string",
+   "maximum-average-subarray-i"
+  ]
+ },
+ {
+  "num": 1507,
+  "slug": "reformat-date",
+  "title": "转变日期格式",
+  "en": "Reformat Date",
+  "leaf": "math.7.our-date-time",
+  "named_by": [
+   "angle-between-hands-of-a-clock",
+   "day-of-the-week"
+  ]
+ },
+ {
+  "num": 1551,
+  "slug": "minimum-operations-to-make-array-equal",
+  "title": "使数组中所有元素相等的最小操作数",
+  "en": "Minimum Operations to Make Array Equal",
+  "leaf": "greedy.4.1",
+  "named_by": [
+   "minimum-moves-to-equal-array-elements-iii",
+   "minimum-moves-to-equal-array-elements"
+  ]
+ },
+ {
+  "num": 1644,
+  "slug": "lowest-common-ancestor-of-a-binary-tree-ii",
+  "title": "二叉树的最近公共祖先 II",
+  "en": "Lowest Common Ancestor of a Binary Tree II",
+  "leaf": "list-tree-backtracking.2.8",
+  "named_by": [
+   "lowest-common-ancestor-of-a-binary-tree-iv",
+   "lowest-common-ancestor-of-a-binary-tree"
+  ]
+ },
+ {
+  "num": 1653,
+  "slug": "minimum-deletions-to-make-string-balanced",
+  "title": "使字符串平衡的最少删除次数",
+  "en": "Minimum Deletions to Make String Balanced",
+  "leaf": "dp.6.2",
+  "named_by": [
+   "flip-string-to-monotone-increasing",
+   "separate-black-and-white-balls"
+  ]
+ },
+ {
+  "num": 1658,
+  "slug": "minimum-operations-to-reduce-x-to-zero",
+  "title": "将 x 减到 0 的最小操作数",
+  "en": "Minimum Operations to Reduce X to Zero",
+  "leaf": "sliding-window.2.1.2",
+  "named_by": [
+   "maximum-points-you-can-obtain-from-cards",
+   "minimum-swaps-to-group-all-1s-together-ii"
+  ]
+ },
+ {
+  "num": 1672,
+  "slug": "richest-customer-wealth",
+  "title": "最富有客户的资产总量",
+  "en": "Richest Customer Wealth",
+  "leaf": "data-structures.0.our-scan",
+  "named_by": [
+   "kids-with-the-greatest-number-of-candies",
+   "row-with-maximum-ones"
+  ]
+ },
+ {
+  "num": 1679,
+  "slug": "max-number-of-k-sum-pairs",
+  "title": "K 和数对的最大数目",
+  "en": "Max Number of K-Sum Pairs",
+  "leaf": "data-structures.0.1.1",
+  "named_by": [
+   "container-with-most-water",
+   "widest-possible-fence"
+  ]
+ },
+ {
+  "num": 1685,
+  "slug": "sum-of-absolute-differences-in-a-sorted-array",
+  "title": "有序数组中差绝对值之和",
+  "en": "Sum of Absolute Differences in a Sorted Array",
+  "leaf": "data-structures.1.3",
+  "named_by": [
+   "amazon-circular-node-movement",
+   "minimum-number-of-operations-to-move-all-balls-to-each-box"
+  ]
+ },
+ {
+  "num": 1723,
+  "slug": "find-minimum-time-to-finish-all-jobs",
+  "title": "完成所有工作的最短时间",
+  "en": "Find Minimum Time to Finish All Jobs",
+  "leaf": "dp.9.4",
+  "named_by": [
+   "matchsticks-to-square",
+   "partition-to-k-equal-sum-subsets"
+  ]
+ },
+ {
+  "num": 1749,
+  "slug": "maximum-absolute-sum-of-any-subarray",
+  "title": "任意子数组和的绝对值的最大值",
+  "en": "Maximum Absolute Sum of Any Subarray",
+  "leaf": "dp.1.3",
+  "named_by": [
+   "maximum-frequency-after-subarray-operation",
+   "maximum-subarray-sum-with-one-deletion"
+  ]
+ },
+ {
+  "num": 1857,
+  "slug": "largest-color-value-in-a-directed-graph",
+  "title": "有向图中最大颜色值",
+  "en": "Largest Color Value in a Directed Graph",
+  "leaf": "graph.2.2",
+  "named_by": [
+   "longest-increasing-path-in-a-matrix",
+   "parallel-courses-iii"
+  ]
+ },
+ {
+  "num": 1871,
+  "slug": "jump-game-vii",
+  "title": "跳跃游戏 VII",
+  "en": "Jump Game VII",
+  "leaf": "data-structures.2.1.2",
+  "named_by": [
+   "frog-jump",
+   "zui-xiao-tiao-yue-ci-shu"
+  ]
+ },
+ {
+  "num": 1877,
+  "slug": "minimize-maximum-pair-sum-in-array",
+  "title": "数组中最大数对和的最小值",
+  "en": "Minimize Maximum Pair Sum in Array",
+  "leaf": "greedy.1.2",
+  "named_by": [
+   "array-partition-i",
+   "array-partition"
+  ]
+ },
+ {
+  "num": 1905,
+  "slug": "count-sub-islands",
+  "title": "统计子岛屿",
+  "en": "Count Sub Islands",
+  "leaf": "grid.1",
+  "named_by": [
+   "number-of-distinct-islands-ii",
+   "number-of-distinct-islands"
+  ]
+ },
+ {
+  "num": 1931,
+  "slug": "painting-a-grid-with-three-different-colors",
+  "title": "用三种不同颜色为网格涂色",
+  "en": "Painting a Grid With Three Different Colors",
+  "leaf": "dp.9.5",
+  "named_by": [
+   "maximum-students-taking-exam",
+   "number-of-ways-to-paint-n-3-grid"
+  ]
+ },
+ {
+  "num": 2069,
+  "slug": "walking-robot-simulation-ii",
+  "title": "模拟行走机器人 II",
+  "en": "Walking Robot Simulation II",
+  "leaf": "greedy.8",
+  "named_by": [
+   "robot-bounded-in-circle",
+   "walking-robot-simulation"
+  ]
+ },
+ {
+  "num": 2326,
+  "slug": "spiral-matrix-iv",
+  "title": "螺旋矩阵 IV",
+  "en": "Spiral Matrix IV",
+  "leaf": "grid.our-matrix-sim",
+  "named_by": [
+   "spiral-matrix-ii",
+   "tt-spiral-matrix-constant-space"
+  ]
+ },
+ {
+  "num": 2349,
+  "slug": "design-a-number-container-system",
+  "title": "设计数字容器系统",
+  "en": "Design a Number Container System",
+  "leaf": "data-structures.5.6",
+  "named_by": [
+   "design-bus-seat-booking-system",
+   "power-grid-maintenance"
+  ]
+ },
+ {
+  "num": 2376,
+  "slug": "count-special-integers",
+  "title": "统计特殊整数",
+  "en": "Count Special Integers",
+  "leaf": "dp.10.1",
+  "named_by": [
+   "numbers-at-most-n-given-digit-set",
+   "rotated-digits"
+  ]
+ },
+ {
+  "num": 2390,
+  "slug": "removing-stars-from-a-string",
+  "title": "从字符串中移除星号",
+  "en": "Removing Stars From a String",
+  "leaf": "data-structures.3.1",
+  "named_by": [
+   "remove-all-adjacent-duplicates-in-string-ii",
+   "remove-all-occurrences-of-a-substring"
+  ]
+ },
+ {
+  "num": 2517,
+  "slug": "maximum-tastiness-of-candy-basket",
+  "title": "礼盒的最大甜蜜度",
+  "en": "Maximum Tastiness of Candy Basket",
+  "leaf": "binary-search.2.5",
+  "named_by": [
+   "magnetic-force-between-two-balls",
+   "maximum-value-at-a-given-index-in-a-bounded-array"
+  ]
+ },
+ {
+  "num": 2602,
+  "slug": "minimum-operations-to-make-all-array-elements-equal",
+  "title": "使数组元素全部相等的最少操作次数",
+  "en": "Minimum Operations to Make All Array Elements Equal",
+  "leaf": "data-structures.1.3",
+  "named_by": [
+   "amazon-circular-node-movement",
+   "minimum-number-of-operations-to-move-all-balls-to-each-box"
+  ]
+ },
+ {
+  "num": 38,
+  "slug": "count-and-say",
+  "title": "外观数列",
+  "en": "Count and Say",
+  "leaf": "sliding-window.3.5",
+  "named_by": [
+   "string-compression"
+  ]
+ },
+ {
+  "num": 119,
+  "slug": "pascals-triangle-ii",
+  "title": "杨辉三角 II",
+  "en": "Pascal's Triangle II",
+  "leaf": "math.2.2",
+  "named_by": [
+   "pascals-triangle"
+  ]
+ },
+ {
+  "num": 132,
+  "slug": "palindrome-partitioning-ii",
+  "title": "分割回文串 II",
+  "en": "Palindrome Partitioning II",
+  "leaf": "dp.5.2",
+  "named_by": [
+   "palindrome-partitioning"
+  ]
+ },
+ {
+  "num": 144,
+  "slug": "binary-tree-preorder-traversal",
+  "title": "二叉树的前序遍历",
+  "en": "Binary Tree Preorder Traversal",
+  "leaf": "list-tree-backtracking.2.1",
+  "named_by": [
+   "binary-tree-inorder-traversal"
+  ]
+ },
+ {
+  "num": 145,
+  "slug": "binary-tree-postorder-traversal",
+  "title": "二叉树的后序遍历",
+  "en": "Binary Tree Postorder Traversal",
+  "leaf": "list-tree-backtracking.2.1",
+  "named_by": [
+   "binary-tree-inorder-traversal"
+  ]
+ },
+ {
+  "num": 171,
+  "slug": "excel-sheet-column-number",
+  "title": "Excel 表列序号",
+  "en": "Excel Sheet Column Number",
+  "leaf": "string.10",
+  "named_by": [
+   "roman-to-integer"
+  ]
+ },
+ {
+  "num": 186,
+  "slug": "reverse-words-in-a-string-ii",
+  "title": "反转字符串中的单词 II",
+  "en": "Reverse Words in a String II",
+  "leaf": "sliding-window.3.1",
+  "named_by": [
+   "reverse-words-in-a-string"
+  ]
+ },
+ {
+  "num": 265,
+  "slug": "paint-house-ii",
+  "title": "粉刷房子 II",
+  "en": "Paint House II",
+  "leaf": "dp.7.6",
+  "named_by": [
+   "paint-house-iii"
+  ]
+ },
+ {
+  "num": 266,
+  "slug": "palindrome-permutation",
+  "title": "回文排列",
+  "en": "Palindrome Permutation",
+  "leaf": "greedy.3.2",
+  "named_by": [
+   "longest-palindrome"
+  ]
+ },
+ {
+  "num": 275,
+  "slug": "h-index-ii",
+  "title": "H 指数 II",
+  "en": "H-Index II",
+  "leaf": "binary-search.2.2",
+  "named_by": [
+   "h-index"
+  ]
+ },
+ {
+  "num": 292,
+  "slug": "nim-game",
+  "title": "Nim 游戏",
+  "en": "Nim Game",
+  "leaf": "math.4",
+  "named_by": [
+   "find-the-winner-of-the-circular-game"
+  ]
+ },
+ {
+  "num": 293,
+  "slug": "flip-game",
+  "title": "翻转游戏",
+  "en": "Flip Game",
+  "leaf": "dp.14",
+  "named_by": [
+   "flip-game-ii"
+  ]
+ },
+ {
+  "num": 313,
+  "slug": "super-ugly-number",
+  "title": "超级丑数",
+  "en": "Super Ugly Number",
+  "leaf": "math.1.3",
+  "named_by": [
+   "ugly-number"
+  ]
+ },
+ {
+  "num": 314,
+  "slug": "binary-tree-vertical-order-traversal",
+  "title": "二叉树的垂直遍历",
+  "en": "Binary Tree Vertical Order Traversal",
+  "leaf": "list-tree-backtracking.2.16",
+  "named_by": [
+   "vertical-order-traversal-of-a-binary-tree"
+  ]
+ },
+ {
+  "num": 320,
+  "slug": "generalized-abbreviation",
+  "title": "列举单词的全部缩写",
+  "en": "Generalized Abbreviation",
+  "leaf": "list-tree-backtracking.4.1",
+  "named_by": [
+   "valid-word-abbreviation"
+  ]
+ },
+ {
+  "num": 324,
+  "slug": "wiggle-sort-ii",
+  "title": "摆动排序 II",
+  "en": "Wiggle Sort II",
+  "leaf": "greedy.6",
+  "named_by": [
+   "wiggle-sort"
+  ]
+ },
+ {
+  "num": 333,
+  "slug": "largest-bst-subtree",
+  "title": "最大二叉搜索子树",
+  "en": "Largest BST Subtree",
+  "leaf": "list-tree-backtracking.2.3",
+  "named_by": [
+   "maximum-sum-bst-in-binary-tree"
+  ]
+ },
+ {
+  "num": 356,
+  "slug": "line-reflection",
+  "title": "直线镜像",
+  "en": "Line Reflection",
+  "leaf": "math.5.1",
+  "named_by": [
+   "max-points-on-a-line"
+  ]
+ },
+ {
+  "num": 357,
+  "slug": "count-numbers-with-unique-digits",
+  "title": "统计各位数字都不同的数字个数",
+  "en": "Count Numbers with Unique Digits",
+  "leaf": "dp.10.1",
+  "named_by": [
+   "nth-digit"
+  ]
+ },
+ {
+  "num": 360,
+  "slug": "sort-transformed-array",
+  "title": "有序转化数组",
+  "en": "Sort Transformed Array",
+  "leaf": "sliding-window.3.2",
+  "named_by": [
+   "squares-of-a-sorted-array"
+  ]
+ },
+ {
+  "num": 364,
+  "slug": "nested-list-weight-sum-ii",
+  "title": "嵌套列表加权和 II",
+  "en": "Nested List Weight Sum II",
+  "leaf": "list-tree-backtracking.3.our-nested",
+  "named_by": [
+   "nested-list-weight-sum"
+  ]
+ },
+ {
+  "num": 367,
+  "slug": "valid-perfect-square",
+  "title": "有效的完全平方数",
+  "en": "Valid Perfect Square",
+  "leaf": "binary-search.4",
+  "named_by": [
+   "sqrtx"
+  ]
+ },
+ {
+  "num": 390,
+  "slug": "elimination-game",
+  "title": "消除游戏",
+  "en": "Elimination Game",
+  "leaf": "math.7.10",
+  "named_by": [
+   "find-the-winner-of-the-circular-game"
+  ]
+ },
+ {
+  "num": 397,
+  "slug": "integer-replacement",
+  "title": "整数替换",
+  "en": "Integer Replacement",
+  "leaf": "greedy.4.1",
+  "named_by": [
+   "minimum-operations-to-reduce-an-integer-to-0"
+  ]
+ },
+ {
+  "num": 446,
+  "slug": "arithmetic-slices-ii-subsequence",
+  "title": "等差数列划分 II - 子序列",
+  "en": "Arithmetic Slices II - Subsequence",
+  "leaf": "dp.7.4",
+  "named_by": [
+   "arithmetic-slices"
+  ]
+ },
+ {
+  "num": 454,
+  "slug": "4sum-ii",
+  "title": "四数相加 II",
+  "en": "4Sum II",
+  "leaf": "data-structures.0.1.2",
+  "named_by": [
+   "4sum"
+  ]
+ },
+ {
+  "num": 491,
+  "slug": "non-decreasing-subsequences",
+  "title": "非递减子序列",
+  "en": "Non-decreasing Subsequences",
+  "leaf": "list-tree-backtracking.4.5",
+  "named_by": [
+   "subsets-ii"
+  ]
+ },
+ {
+  "num": 506,
+  "slug": "relative-ranks",
+  "title": "相对名次",
+  "en": "Relative Ranks",
+  "leaf": "data-structures.our-hashing",
+  "named_by": [
+   "rank-transform-of-an-array"
+  ]
+ },
+ {
+  "num": 513,
+  "slug": "find-bottom-left-tree-value",
+  "title": "找树左下角的值",
+  "en": "Find Bottom Left Tree Value",
+  "leaf": "list-tree-backtracking.2.13",
+  "named_by": [
+   "deepest-leaves-sum"
+  ]
+ },
+ {
+  "num": 527,
+  "slug": "word-abbreviation",
+  "title": "单词缩写",
+  "en": "Word Abbreviation",
+  "leaf": "data-structures.6.2",
+  "named_by": [
+   "valid-word-abbreviation"
+  ]
+ },
+ {
+  "num": 549,
+  "slug": "binary-tree-longest-consecutive-sequence-ii",
+  "title": "二叉树最长连续序列 II",
+  "en": "Binary Tree Longest Consecutive Sequence II",
+  "leaf": "list-tree-backtracking.2.6",
+  "named_by": [
+   "binary-tree-longest-consecutive-sequence"
+  ]
+ },
+ {
+  "num": 558,
+  "slug": "logical-or-of-two-binary-grids-represented-as-quad-trees",
+  "title": "四叉树交集",
+  "en": "Logical OR of Two Binary Grids Represented as Quad-Trees",
+  "leaf": "list-tree-backtracking.2.15",
+  "named_by": [
+   "construct-quad-tree"
+  ]
+ },
+ {
+  "num": 559,
+  "slug": "maximum-depth-of-n-ary-tree",
+  "title": "N 叉树的最大深度",
+  "en": "Maximum Depth of N-ary Tree",
+  "leaf": "list-tree-backtracking.2.15",
+  "named_by": [
+   "time-needed-to-inform-all-employees"
+  ]
+ },
+ {
+  "num": 600,
+  "slug": "non-negative-integers-without-consecutive-ones",
+  "title": "不含连续1的非负整数",
+  "en": "Non-negative Integers without Consecutive Ones",
+  "leaf": "dp.10.1",
+  "named_by": [
+   "numbers-at-most-n-given-digit-set"
+  ]
+ },
+ {
+  "num": 609,
+  "slug": "find-duplicate-file-in-system",
+  "title": "在系统中查找重复文件",
+  "en": "Find Duplicate File in System",
+  "leaf": "data-structures.6.2",
+  "named_by": [
+   "design-in-memory-file-system"
+  ]
+ },
+ {
+  "num": 639,
+  "slug": "decode-ways-ii",
+  "title": "解码方法 II",
+  "en": "Decode Ways II",
+  "leaf": "dp.5.2",
+  "named_by": [
+   "decode-ways"
+  ]
+ },
+ {
+  "num": 651,
+  "slug": "4-keys-keyboard",
+  "title": "四个键的键盘",
+  "en": "4 Keys Keyboard",
+  "leaf": "dp.7.1",
+  "named_by": [
+   "2-keys-keyboard"
+  ]
+ },
+ {
+  "num": 654,
+  "slug": "maximum-binary-tree",
+  "title": "最大二叉树",
+  "en": "Maximum Binary Tree",
+  "leaf": "list-tree-backtracking.2.10",
+  "named_by": [
+   "construct-binary-tree-from-inorder-and-postorder-traversal"
+  ]
+ },
+ {
+  "num": 659,
+  "slug": "split-array-into-consecutive-subsequences",
+  "title": "分割数组为连续子序列",
+  "en": "Split Array into Consecutive Subsequences",
+  "leaf": "greedy.8",
+  "named_by": [
+   "hand-of-straights"
+  ]
+ },
+ {
+  "num": 665,
+  "slug": "non-decreasing-array",
+  "title": "非递减数列",
+  "en": "Non-decreasing Array",
+  "leaf": "greedy.1.4",
+  "named_by": [
+   "minimum-operations-to-make-the-array-increasing"
+  ]
+ },
+ {
+  "num": 669,
+  "slug": "trim-a-binary-search-tree",
+  "title": "修剪二叉搜索树",
+  "en": "Trim a Binary Search Tree",
+  "leaf": "list-tree-backtracking.2.11",
+  "named_by": [
+   "delete-node-in-a-bst"
+  ]
+ },
+ {
+  "num": 672,
+  "slug": "bulb-switcher-ii",
+  "title": "灯泡开关 Ⅱ",
+  "en": "Bulb Switcher II",
+  "leaf": "math.7.10",
+  "named_by": [
+   "bulb-switcher"
+  ]
+ },
+ {
+  "num": 676,
+  "slug": "implement-magic-dictionary",
+  "title": "实现一个魔法字典",
+  "en": "Implement Magic Dictionary",
+  "leaf": "data-structures.6.2",
+  "named_by": [
+   "replace-words"
+  ]
+ },
+ {
+  "num": 685,
+  "slug": "redundant-connection-ii",
+  "title": "冗余连接 II",
+  "en": "Redundant Connection II",
+  "leaf": "data-structures.7.2",
+  "named_by": [
+   "redundant-connection"
+  ]
+ },
+ {
+  "num": 690,
+  "slug": "employee-importance",
+  "title": "员工的重要性",
+  "en": "Employee Importance",
+  "leaf": "list-tree-backtracking.3.3",
+  "named_by": [
+   "tt-nested-comment-tree"
+  ]
+ },
+ {
+  "num": 699,
+  "slug": "falling-squares",
+  "title": "掉落的方块",
+  "en": "Falling Squares",
+  "leaf": "data-structures.8.5",
+  "named_by": [
+   "block-placement-queries"
+  ]
+ },
+ {
+  "num": 710,
+  "slug": "random-pick-with-blacklist",
+  "title": "黑名单中的随机数",
+  "en": "Random Pick with Blacklist",
+  "leaf": "math.6.1",
+  "named_by": [
+   "random-pick-with-weight"
+  ]
+ },
+ {
+  "num": 712,
+  "slug": "minimum-ascii-delete-sum-for-two-strings",
+  "title": "两个字符串的最小ASCII删除和",
+  "en": "Minimum ASCII Delete Sum for Two Strings",
+  "leaf": "dp.4.1.1",
+  "named_by": [
+   "edit-distance"
+  ]
+ },
+ {
+  "num": 715,
+  "slug": "range-module",
+  "title": "Range 模块",
+  "en": "Range Module",
+  "leaf": "data-structures.8.5",
+  "named_by": [
+   "design-memory-allocator"
+  ]
+ },
+ {
+  "num": 720,
+  "slug": "longest-word-in-dictionary",
+  "title": "词典中最长的单词",
+  "en": "Longest Word in Dictionary",
+  "leaf": "data-structures.6.1",
+  "named_by": [
+   "longest-common-prefix"
+  ]
+ },
+ {
+  "num": 722,
+  "slug": "remove-comments",
+  "title": "删除注释",
+  "en": "Remove Comments",
+  "leaf": "sliding-window.6",
+  "named_by": [
+   "text-justification"
+  ]
+ },
+ {
+  "num": 727,
+  "slug": "minimum-window-subsequence",
+  "title": "最小窗口子序列",
+  "en": "Minimum Window Subsequence",
+  "leaf": "string.9",
+  "named_by": [
+   "minimum-window-substring"
+  ]
+ },
+ {
+  "num": 734,
+  "slug": "sentence-similarity",
+  "title": "句子相似性",
+  "en": "Sentence Similarity",
+  "leaf": "sliding-window.3.2",
+  "named_by": [
+   "sentence-similarity-iii"
+  ]
+ },
+ {
+  "num": 737,
+  "slug": "sentence-similarity-ii",
+  "title": "句子相似性 II",
+  "en": "Sentence Similarity II",
+  "leaf": "data-structures.7.1",
+  "named_by": [
+   "sentence-similarity-iii"
+  ]
+ },
+ {
+  "num": 750,
+  "slug": "number-of-corner-rectangles",
+  "title": "角矩形的数量",
+  "en": "Number Of Corner Rectangles",
+  "leaf": "math.5.3",
+  "named_by": [
+   "minimum-area-rectangle"
+  ]
+ },
+ {
+  "num": 758,
+  "slug": "bold-words-in-string",
+  "title": "字符串中的加粗单词",
+  "en": "Bold Words in String",
+  "leaf": "greedy.2.5",
+  "named_by": [
+   "add-bold-tag-in-string"
+  ]
+ },
+ {
+  "num": 760,
+  "slug": "find-anagram-mappings",
+  "title": "找出变位映射",
+  "en": "Find Anagram Mappings",
+  "leaf": "greedy.5.3",
+  "named_by": [
+   "group-anagrams"
+  ]
+ },
+ {
+  "num": 768,
+  "slug": "max-chunks-to-make-sorted-ii",
+  "title": "最多能完成排序的块 II",
+  "en": "Max Chunks To Make Sorted II",
+  "leaf": "monotonic-stack.1.2",
+  "named_by": [
+   "shortest-unsorted-continuous-subarray"
+  ]
+ },
+ {
+  "num": 774,
+  "slug": "minimize-max-distance-to-gas-station",
+  "title": "最小化去加油站的最大距离",
+  "en": "Minimize Max Distance to Gas Station",
+  "leaf": "binary-search.2.4",
+  "named_by": [
+   "split-array-largest-sum"
+  ]
+ },
+ {
+  "num": 775,
+  "slug": "global-and-local-inversions",
+  "title": "全局倒置与局部倒置",
+  "en": "Global and Local Inversions",
+  "leaf": "data-structures.8.2",
+  "named_by": [
+   "minimum-operations-to-sort-with-locked-indices"
+  ]
+ },
+ {
+  "num": 780,
+  "slug": "reaching-points",
+  "title": "到达终点",
+  "en": "Reaching Points",
+  "leaf": "greedy.5.4",
+  "named_by": [
+   "water-and-jug-problem"
+  ]
+ },
+ {
+  "num": 805,
+  "slug": "split-array-with-same-average",
+  "title": "数组的均值分割",
+  "en": "Split Array With Same Average",
+  "leaf": "list-tree-backtracking.4.7",
+  "named_by": [
+   "partition-array-into-two-arrays-to-minimize-sum-difference"
+  ]
+ },
+ {
+  "num": 812,
+  "slug": "largest-triangle-area",
+  "title": "最大三角形面积",
+  "en": "Largest Triangle Area",
+  "leaf": "math.5.4",
+  "named_by": [
+   "largest-perimeter-triangle"
+  ]
+ },
+ {
+  "num": 826,
+  "slug": "most-profit-assigning-work",
+  "title": "安排工作以达到最大收益",
+  "en": "Most Profit Assigning Work",
+  "leaf": "greedy.1.3",
+  "named_by": [
+   "assign-cookies"
+  ]
+ },
+ {
+  "num": 842,
+  "slug": "split-array-into-fibonacci-sequence",
+  "title": "将数组拆分成斐波那契序列",
+  "en": "Split Array into Fibonacci Sequence",
+  "leaf": "list-tree-backtracking.4.2",
+  "named_by": [
+   "additive-number"
+  ]
+ },
+ {
+  "num": 850,
+  "slug": "rectangle-area-ii",
+  "title": "矩形面积 II",
+  "en": "Rectangle Area II",
+  "leaf": "data-structures.2.2",
+  "named_by": [
+   "rectangle-area"
+  ]
+ },
+ {
+  "num": 854,
+  "slug": "k-similar-strings",
+  "title": "相似度为 K 的字符串",
+  "en": "K-Similar Strings",
+  "leaf": "graph.1.3",
+  "named_by": [
+   "minimum-swaps-to-make-strings-equal"
+  ]
+ },
+ {
+  "num": 864,
+  "slug": "shortest-path-to-get-all-keys",
+  "title": "获取所有钥匙的最短路径",
+  "en": "Shortest Path to Get All Keys",
+  "leaf": "dp.9.3",
+  "named_by": [
+   "shortest-path-in-a-grid-with-obstacles-elimination"
+  ]
+ },
+ {
+  "num": 866,
+  "slug": "prime-palindrome",
+  "title": "回文质数",
+  "en": "Prime Palindrome",
+  "leaf": "math.1.1",
+  "named_by": [
+   "closest-prime-numbers-in-range"
+  ]
+ },
+ {
+  "num": 870,
+  "slug": "advantage-shuffle",
+  "title": "优势洗牌",
+  "en": "Advantage Shuffle",
+  "leaf": "greedy.1.3",
+  "named_by": [
+   "assign-cookies"
+  ]
+ },
+ {
+  "num": 873,
+  "slug": "length-of-longest-fibonacci-subsequence",
+  "title": "最长的斐波那契子序列的长度",
+  "en": "Length of Longest Fibonacci Subsequence",
+  "leaf": "dp.7.4",
+  "named_by": [
+   "first-day-where-you-have-been-in-all-the-rooms"
+  ]
+ },
+ {
+  "num": 879,
+  "slug": "profitable-schemes",
+  "title": "盈利计划",
+  "en": "Profitable Schemes",
+  "leaf": "dp.3.1",
+  "named_by": [
+   "ones-and-zeroes"
+  ]
+ },
+ {
+  "num": 890,
+  "slug": "find-and-replace-pattern",
+  "title": "查找和替换模式",
+  "en": "Find and Replace Pattern",
+  "leaf": "data-structures.our-hashing",
+  "named_by": [
+   "word-pattern"
+  ]
+ },
+ {
+  "num": 894,
+  "slug": "all-possible-full-binary-trees",
+  "title": "所有可能的真二叉树",
+  "en": "All Possible Full Binary Trees",
+  "leaf": "dp.8.2",
+  "named_by": [
+   "unique-binary-search-trees-ii"
+  ]
+ },
+ {
+  "num": 896,
+  "slug": "monotonic-array",
+  "title": "单调数列",
+  "en": "Monotonic Array",
+  "leaf": "greedy.5.3",
+  "named_by": [
+   "check-if-array-is-sorted-and-rotated"
+  ]
+ },
+ {
+  "num": 897,
+  "slug": "increasing-order-search-tree",
+  "title": "递增顺序搜索树",
+  "en": "Increasing Order Search Tree",
+  "leaf": "list-tree-backtracking.2.9",
+  "named_by": [
+   "flatten-binary-tree-to-linked-list"
+  ]
+ },
+ {
+  "num": 928,
+  "slug": "minimize-malware-spread-ii",
+  "title": "尽量减少恶意软件的传播 II",
+  "en": "Minimize Malware Spread II",
+  "leaf": "graph.1.1",
+  "named_by": [
+   "minimize-malware-spread"
+  ]
+ },
+ {
+  "num": 931,
+  "slug": "minimum-falling-path-sum",
+  "title": "下降路径最小和",
+  "en": "Minimum Falling Path Sum",
+  "leaf": "dp.2.1",
+  "named_by": [
+   "triangle"
+  ]
+ },
+ {
+  "num": 932,
+  "slug": "beautiful-array",
+  "title": "漂亮数组",
+  "en": "Beautiful Array",
+  "leaf": "greedy.6",
+  "named_by": [
+   "beautiful-arrangement-ii"
+  ]
+ },
+ {
+  "num": 936,
+  "slug": "stamping-the-sequence",
+  "title": "戳印序列",
+  "en": "Stamping The Sequence",
+  "leaf": "greedy.5.4",
+  "named_by": [
+   "lexicographically-smallest-generated-string"
+  ]
+ },
+ {
+  "num": 943,
+  "slug": "find-the-shortest-superstring",
+  "title": "最短超级串",
+  "en": "Find the Shortest Superstring",
+  "leaf": "dp.9.3",
+  "named_by": [
+   "xun-bao"
+  ]
+ },
+ {
+  "num": 946,
+  "slug": "validate-stack-sequences",
+  "title": "验证栈序列",
+  "en": "Validate Stack Sequences",
+  "leaf": "data-structures.3.1",
+  "named_by": [
+   "using-a-robot-to-print-the-lexicographically-smallest-string"
+  ]
+ },
+ {
+  "num": 952,
+  "slug": "largest-component-size-by-common-factor",
+  "title": "按公因数计算最大组件大小",
+  "en": "Largest Component Size by Common Factor",
+  "leaf": "data-structures.7.3",
+  "named_by": [
+   "minimize-the-maximum-value-of-gcd-connected-array"
+  ]
+ },
+ {
+  "num": 953,
+  "slug": "verifying-an-alien-dictionary",
+  "title": "验证外星语词典",
+  "en": "Verifying an Alien Dictionary",
+  "leaf": "graph.2.1",
+  "named_by": [
+   "alien-dictionary"
+  ]
+ },
+ {
+  "num": 984,
+  "slug": "string-without-aaa-or-bbb",
+  "title": "不含 AAA 或 BBB 的字符串",
+  "en": "String Without AAA or BBB",
+  "leaf": "data-structures.5.4",
+  "named_by": [
+   "longest-happy-string"
+  ]
+ },
+ {
+  "num": 988,
+  "slug": "smallest-string-starting-from-leaf",
+  "title": "从叶结点开始的最小字符串",
+  "en": "Smallest String Starting From Leaf",
+  "leaf": "list-tree-backtracking.2.2",
+  "named_by": [
+   "sum-root-to-leaf-numbers"
+  ]
+ },
+ {
+  "num": 989,
+  "slug": "add-to-array-form-of-integer",
+  "title": "数组形式的整数加法",
+  "en": "Add to Array-Form of Integer",
+  "leaf": "math.7.our-carry",
+  "named_by": [
+   "plus-one"
+  ]
+ },
+ {
+  "num": 997,
+  "slug": "find-the-town-judge",
+  "title": "找到小镇的法官",
+  "en": "Find the Town Judge",
+  "leaf": "graph.9",
+  "named_by": [
+   "find-the-celebrity"
+  ]
+ },
+ {
+  "num": 999,
+  "slug": "available-captures-for-rook",
+  "title": "可以被一步捕获的棋子数",
+  "en": "Available Captures for Rook",
+  "leaf": "grid.our-matrix-sim",
+  "named_by": [
+   "check-if-move-is-legal"
+  ]
+ },
+ {
+  "num": 1000,
+  "slug": "minimum-cost-to-merge-stones",
+  "title": "合并石头的最低成本",
+  "en": "Minimum Cost to Merge Stones",
+  "leaf": "dp.8.2",
+  "named_by": [
+   "burst-balloons"
+  ]
+ },
+ {
+  "num": 1005,
+  "slug": "maximize-sum-of-array-after-k-negations",
+  "title": "K 次取反后最大化的数组和",
+  "en": "Maximize Sum Of Array After K Negations",
+  "leaf": "greedy.1.1",
+  "named_by": [
+   "two-city-scheduling"
+  ]
+ },
+ {
+  "num": 1012,
+  "slug": "numbers-with-repeated-digits",
+  "title": "至少有 1 位重复的数字",
+  "en": "Numbers With Repeated Digits",
+  "leaf": "dp.10.1",
+  "named_by": [
+   "numbers-at-most-n-given-digit-set"
+  ]
+ },
+ {
+  "num": 1013,
+  "slug": "partition-array-into-three-parts-with-equal-sum",
+  "title": "将数组分成和相等的三个部分",
+  "en": "Partition Array Into Three Parts With Equal Sum",
+  "leaf": null,
+  "named_by": [
+   "ways-to-split-array-into-three-subarrays"
+  ]
+ },
+ {
+  "num": 1014,
+  "slug": "best-sightseeing-pair",
+  "title": "最佳观光组合",
+  "en": "Best Sightseeing Pair",
+  "leaf": "data-structures.0.1.1",
+  "named_by": [
+   "reverse-subarray-to-maximize-array-value"
+  ]
+ },
+ {
+  "num": 1017,
+  "slug": "convert-to-base-2",
+  "title": "负二进制转换",
+  "en": "Convert to Base -2",
+  "leaf": "math.7.10",
+  "named_by": [
+   "adding-two-negabinary-numbers"
+  ]
+ },
+ {
+  "num": 1019,
+  "slug": "next-greater-node-in-linked-list",
+  "title": "链表中的下一个更大节点",
+  "en": "Next Greater Node In Linked List",
+  "leaf": "monotonic-stack.1.2",
+  "named_by": [
+   "number-of-visible-people-in-a-queue"
+  ]
+ },
+ {
+  "num": 1022,
+  "slug": "sum-of-root-to-leaf-binary-numbers",
+  "title": "从根到叶的二进制数之和",
+  "en": "Sum of Root To Leaf Binary Numbers",
+  "leaf": "list-tree-backtracking.2.2",
+  "named_by": [
+   "sum-root-to-leaf-numbers"
+  ]
+ },
+ {
+  "num": 1026,
+  "slug": "maximum-difference-between-node-and-ancestor",
+  "title": "节点与其祖先之间的最大差值",
+  "en": "Maximum Difference Between Node and Ancestor",
+  "leaf": "list-tree-backtracking.2.2",
+  "named_by": [
+   "count-good-nodes-in-binary-tree"
+  ]
+ },
+ {
+  "num": 1027,
+  "slug": "longest-arithmetic-subsequence",
+  "title": "最长等差数列",
+  "en": "Longest Arithmetic Subsequence",
+  "leaf": "dp.7.4",
+  "named_by": [
+   "arithmetic-slices"
+  ]
+ },
+ {
+  "num": 1031,
+  "slug": "maximum-sum-of-two-non-overlapping-subarrays",
+  "title": "两个无重叠子数组的最大和",
+  "en": "Maximum Sum of Two Non-Overlapping Subarrays",
+  "leaf": "data-structures.0.1.2",
+  "named_by": [
+   "find-two-non-overlapping-sub-arrays-each-with-target-sum"
+  ]
+ },
+ {
+  "num": 1032,
+  "slug": "stream-of-characters",
+  "title": "字符流",
+  "en": "Stream of Characters",
+  "leaf": "string.7",
+  "named_by": [
+   "longest-common-suffix-queries"
+  ]
+ },
+ {
+  "num": 1035,
+  "slug": "uncrossed-lines",
+  "title": "不相交的线",
+  "en": "Uncrossed Lines",
+  "leaf": "dp.4.1.1",
+  "named_by": [
+   "longest-common-subsequence"
+  ]
+ },
+ {
+  "num": 1053,
+  "slug": "previous-permutation-with-one-swap",
+  "title": "交换一次的先前排列",
+  "en": "Previous Permutation With One Swap",
+  "leaf": "greedy.3.1",
+  "named_by": [
+   "amazon-window-sort-once"
+  ]
+ },
+ {
+  "num": 1059,
+  "slug": "all-paths-from-source-lead-to-destination",
+  "title": "从起点到终点的所有路径",
+  "en": "All Paths from Source Lead to Destination",
+  "leaf": "graph.1.1",
+  "named_by": [
+   "tt-all-simple-paths"
+  ]
+ },
+ {
+  "num": 1066,
+  "slug": "campus-bikes-ii",
+  "title": "校园自行车分配 II",
+  "en": "Campus Bikes II",
+  "leaf": "dp.9.1",
+  "named_by": [
+   "minimum-moves-to-spread-stones-over-grid"
+  ]
+ },
+ {
+  "num": 1106,
+  "slug": "parsing-a-boolean-expression",
+  "title": "解析布尔表达式",
+  "en": "Parsing A Boolean Expression",
+  "leaf": "data-structures.3.5",
+  "named_by": [
+   "parse-lisp-expression"
+  ]
+ },
+ {
+  "num": 1114,
+  "slug": "print-in-order",
+  "title": "按序打印",
+  "en": "Print in Order",
+  "leaf": "data-structures.our-engineering",
+  "named_by": [
+   "tt-concurrency-limited-runner"
+  ]
+ },
+ {
+  "num": 1128,
+  "slug": "number-of-equivalent-domino-pairs",
+  "title": "等价多米诺骨牌对的数量",
+  "en": "Number of Equivalent Domino Pairs",
+  "leaf": "data-structures.0.1.2",
+  "named_by": [
+   "count-pairs-of-similar-strings"
+  ]
+ },
+ {
+  "num": 1130,
+  "slug": "minimum-cost-tree-from-leaf-values",
+  "title": "叶值的最小代价生成树",
+  "en": "Minimum Cost Tree From Leaf Values",
+  "leaf": "dp.8.2",
+  "named_by": [
+   "unique-binary-search-trees"
+  ]
+ },
+ {
+  "num": 1139,
+  "slug": "largest-1-bordered-square",
+  "title": "最大的以 1 为边界的正方形",
+  "en": "Largest 1-Bordered Square",
+  "leaf": null,
+  "named_by": [
+   "count-square-submatrices-with-all-ones"
+  ]
+ },
+ {
+  "num": 1175,
+  "slug": "prime-arrangements",
+  "title": "质数排列",
+  "en": "Prime Arrangements",
+  "leaf": "math.2.2",
+  "named_by": [
+   "count-primes"
+  ]
+ },
+ {
+  "num": 1178,
+  "slug": "number-of-valid-words-for-each-puzzle",
+  "title": "猜字谜",
+  "en": "Number of Valid Words for Each Puzzle",
+  "leaf": "list-tree-backtracking.4.1",
+  "named_by": [
+   "maximum-length-of-a-concatenated-string-with-unique-characters"
+  ]
+ },
+ {
+  "num": 1188,
+  "slug": "design-bounded-blocking-queue",
+  "title": "设计有限阻塞队列",
+  "en": "Design Bounded Blocking Queue",
+  "leaf": "data-structures.our-engineering",
+  "named_by": [
+   "tt-concurrency-limited-runner"
+  ]
+ },
+ {
+  "num": 1203,
+  "slug": "sort-items-by-groups-respecting-dependencies",
+  "title": "项目管理",
+  "en": "Sort Items by Groups Respecting Dependencies",
+  "leaf": "graph.2.1",
+  "named_by": [
+   "course-schedule-ii"
+  ]
+ },
+ {
+  "num": 1217,
+  "slug": "minimum-cost-to-move-chips-to-the-same-position",
+  "title": "玩筹码",
+  "en": "Minimum Cost to Move Chips to The Same Position",
+  "leaf": "greedy.4.1",
+  "named_by": [
+   "minimum-cost-to-acquire-required-items"
+  ]
+ },
+ {
+  "num": 1219,
+  "slug": "path-with-maximum-gold",
+  "title": "黄金矿工",
+  "en": "Path with Maximum Gold",
+  "leaf": "list-tree-backtracking.4.6",
+  "named_by": [
+   "maximum-path-quality-of-a-graph"
+  ]
+ },
+ {
+  "num": 1222,
+  "slug": "queens-that-can-attack-the-king",
+  "title": "可以攻击国王的皇后",
+  "en": "Queens That Can Attack the King",
+  "leaf": "grid.2",
+  "named_by": [
+   "amazon-chess-king"
+  ]
+ },
+ {
+  "num": 1226,
+  "slug": "the-dining-philosophers",
+  "title": "哲学家进餐",
+  "en": "The Dining Philosophers",
+  "leaf": "data-structures.our-engineering",
+  "named_by": [
+   "tt-concurrency-limited-runner"
+  ]
+ },
+ {
+  "num": 1229,
+  "slug": "meeting-scheduler",
+  "title": "安排会议日程",
+  "en": "Meeting Scheduler",
+  "leaf": "sliding-window.4.1",
+  "named_by": [
+   "interval-list-intersections"
+  ]
+ },
+ {
+  "num": 1250,
+  "slug": "check-if-it-is-a-good-array",
+  "title": "检查「好数组」",
+  "en": "Check If It Is a Good Array",
+  "leaf": "math.1.6",
+  "named_by": [
+   "water-and-jug-problem"
+  ]
+ },
+ {
+  "num": 1255,
+  "slug": "maximum-score-words-formed-by-letters",
+  "title": "得分最高的单词集合",
+  "en": "Maximum Score Words Formed by Letters",
+  "leaf": "list-tree-backtracking.4.1",
+  "named_by": [
+   "maximum-length-of-a-concatenated-string-with-unique-characters"
+  ]
+ },
+ {
+  "num": 1263,
+  "slug": "minimum-moves-to-move-a-box-to-their-target-location",
+  "title": "推箱子",
+  "en": "Minimum Moves to Move a Box to Their Target Location",
+  "leaf": "grid.5",
+  "named_by": [
+   "amazon-forbidden-turn-grid"
+  ]
+ },
+ {
+  "num": 1266,
+  "slug": "minimum-time-visiting-all-points",
+  "title": "访问所有点的最小时间",
+  "en": "Minimum Time Visiting All Points",
+  "leaf": "math.7.3",
+  "named_by": [
+   "squirrel-simulation"
+  ]
+ },
+ {
+  "num": 1269,
+  "slug": "number-of-ways-to-stay-in-the-same-place-after-some-steps",
+  "title": "停在原地的方案数",
+  "en": "Number of Ways to Stay in the Same Place After Some Steps",
+  "leaf": "dp.7.6",
+  "named_by": [
+   "tt-ring-walk-count"
+  ]
+ },
+ {
+  "num": 1283,
+  "slug": "find-the-smallest-divisor-given-a-threshold",
+  "title": "使结果不超过阈值的最小除数",
+  "en": "Find the Smallest Divisor Given a Threshold",
+  "leaf": "binary-search.2.1",
+  "named_by": [
+   "minimum-number-of-days-to-make-m-bouquets"
+  ]
+ },
+ {
+  "num": 1292,
+  "slug": "maximum-side-length-of-a-square-with-sum-less-than-or-equal-to-threshold",
+  "title": "元素和小于等于阈值的正方形的最大边长",
+  "en": "Maximum Side Length of a Square with Sum Less than or Equal to Threshold",
+  "leaf": "data-structures.1.6",
+  "named_by": [
+   "maximal-square"
+  ]
+ },
+ {
+  "num": 1296,
+  "slug": "divide-array-in-sets-of-k-consecutive-numbers",
+  "title": "划分数组为连续数字的集合",
+  "en": "Divide Array in Sets of K Consecutive Numbers",
+  "leaf": "greedy.1.1",
+  "named_by": [
+   "hand-of-straights"
+  ]
+ },
+ {
+  "num": 1301,
+  "slug": "number-of-paths-with-max-score",
+  "title": "最大得分的路径数目",
+  "en": "Number of Paths with Max Score",
+  "leaf": "dp.2.2",
+  "named_by": [
+   "twisted-mirror-path-count"
+  ]
+ },
+ {
+  "num": 1307,
+  "slug": "verbal-arithmetic-puzzle",
+  "title": "口算难题",
+  "en": "Verbal Arithmetic Puzzle",
+  "leaf": "list-tree-backtracking.4.4",
+  "named_by": [
+   "optimal-account-balancing"
+  ]
+ },
+ {
+  "num": 1314,
+  "slug": "matrix-block-sum",
+  "title": "矩阵区域和",
+  "en": "Matrix Block Sum",
+  "leaf": "data-structures.1.6",
+  "named_by": [
+   "range-sum-query-2d-immutable"
+  ]
+ },
+ {
+  "num": 1325,
+  "slug": "delete-leaves-with-a-given-value",
+  "title": "删除给定值的叶子节点",
+  "en": "Delete Leaves With a Given Value",
+  "leaf": "list-tree-backtracking.2.4",
+  "named_by": [
+   "find-leaves-of-binary-tree"
+  ]
+ },
+ {
+  "num": 1329,
+  "slug": "sort-the-matrix-diagonally",
+  "title": "将矩阵按对角线排序",
+  "en": "Sort the Matrix Diagonally",
+  "leaf": "data-structures.0.3",
+  "named_by": [
+   "diagonal-traverse"
+  ]
+ },
+ {
+  "num": 1337,
+  "slug": "the-k-weakest-rows-in-a-matrix",
+  "title": "矩阵中战斗力最弱的 K 行",
+  "en": "The K Weakest Rows in a Matrix",
+  "leaf": null,
+  "named_by": [
+   "count-negative-numbers-in-a-sorted-matrix"
+  ]
+ },
+ {
+  "num": 1356,
+  "slug": "sort-integers-by-the-number-of-1-bits",
+  "title": "根据数字二进制下 1 的数目排序",
+  "en": "Sort Integers by The Number of 1 Bits",
+  "leaf": "bits.1",
+  "named_by": [
+   "counting-bits"
+  ]
+ },
+ {
+  "num": 1361,
+  "slug": "validate-binary-tree-nodes",
+  "title": "验证二叉树",
+  "en": "Validate Binary Tree Nodes",
+  "leaf": "graph.2.1",
+  "named_by": [
+   "create-binary-tree-from-descriptions"
+  ]
+ },
+ {
+  "num": 1367,
+  "slug": "linked-list-in-binary-tree",
+  "title": "二叉树中的链表",
+  "en": "Linked List in Binary Tree",
+  "leaf": "list-tree-backtracking.2.14",
+  "named_by": [
+   "subtree-of-another-tree"
+  ]
+ },
+ {
+  "num": 1368,
+  "slug": "minimum-cost-to-make-at-least-one-valid-path-in-a-grid",
+  "title": "使网格图至少有一条有效路径的最小代价",
+  "en": "Minimum Cost to Make at Least One Valid Path in a Grid",
+  "leaf": "grid.3",
+  "named_by": [
+   "find-a-safe-walk-through-a-grid"
+  ]
+ },
+ {
+  "num": 1392,
+  "slug": "longest-happy-prefix",
+  "title": "最长快乐前缀",
+  "en": "Longest Happy Prefix",
+  "leaf": "string.1",
+  "named_by": [
+   "find-the-index-of-the-first-occurrence-in-a-string"
+  ]
+ },
+ {
+  "num": 1400,
+  "slug": "construct-k-palindrome-strings",
+  "title": "构造 K 个回文字符串",
+  "en": "Construct K Palindrome Strings",
+  "leaf": "greedy.3.2",
+  "named_by": [
+   "longest-palindrome"
+  ]
+ },
+ {
+  "num": 1402,
+  "slug": "reducing-dishes",
+  "title": "做菜顺序",
+  "en": "Reducing Dishes",
+  "leaf": "greedy.4.3",
+  "named_by": [
+   "maximum-spending-after-buying-items"
+  ]
+ },
+ {
+  "num": 1404,
+  "slug": "number-of-steps-to-reduce-a-number-in-binary-representation-to-one",
+  "title": "将二进制表示减到 1 的步骤数",
+  "en": "Number of Steps to Reduce a Number in Binary Representation to One",
+  "leaf": "bits.8",
+  "named_by": [
+   "minimum-operations-to-reduce-an-integer-to-0"
+  ]
+ },
+ {
+  "num": 1406,
+  "slug": "stone-game-iii",
+  "title": "石子游戏 III",
+  "en": "Stone Game III",
+  "leaf": "dp.14",
+  "named_by": [
+   "stone-game-ii"
+  ]
+ },
+ {
+  "num": 1408,
+  "slug": "string-matching-in-an-array",
+  "title": "数组中的字符串匹配",
+  "en": "String Matching in an Array",
+  "leaf": "string.7",
+  "named_by": [
+   "number-of-strings-that-appear-as-substrings-in-word"
+  ]
+ },
+ {
+  "num": 1413,
+  "slug": "minimum-value-to-get-positive-step-by-step-sum",
+  "title": "逐步求和得到正数的最小值",
+  "en": "Minimum Value to Get Positive Step by Step Sum",
+  "leaf": "greedy.1.1",
+  "named_by": [
+   "minimum-health-to-beat-game"
+  ]
+ },
+ {
+  "num": 1442,
+  "slug": "count-triplets-that-can-form-two-arrays-of-equal-xor",
+  "title": "形成两个异或相等数组的三元组数目",
+  "en": "Count Triplets That Can Form Two Arrays of Equal XOR",
+  "leaf": "data-structures.1.2",
+  "named_by": [
+   "number-of-unique-xor-triplets-ii"
+  ]
+ },
+ {
+  "num": 1463,
+  "slug": "cherry-pickup-ii",
+  "title": "摘樱桃 II",
+  "en": "Cherry Pickup II",
+  "leaf": "dp.2.2",
+  "named_by": [
+   "cherry-pickup"
+  ]
+ },
+ {
+  "num": 1464,
+  "slug": "maximum-product-of-two-elements-in-an-array",
+  "title": "数组中两元素的最大乘积",
+  "en": "Maximum Product of Two Elements in an Array",
+  "leaf": "greedy.4.2",
+  "named_by": [
+   "maximum-product-of-three-numbers"
+  ]
+ },
+ {
+  "num": 1470,
+  "slug": "shuffle-the-array",
+  "title": "重新排列数组",
+  "en": "Shuffle the Array",
+  "leaf": "sliding-window.3.5",
+  "named_by": [
+   "concatenation-of-array"
+  ]
+ },
+ {
+  "num": 1483,
+  "slug": "kth-ancestor-of-a-tree-node",
+  "title": "树节点的第 K 个祖先",
+  "en": "Kth Ancestor of a Tree Node",
+  "leaf": "list-tree-backtracking.3.8",
+  "named_by": [
+   "amazon-lowest-common-manager"
+  ]
+ },
+ {
+  "num": 1485,
+  "slug": "clone-binary-tree-with-random-pointer",
+  "title": "克隆含随机指针的二叉树",
+  "en": "Clone Binary Tree With Random Pointer",
+  "leaf": "list-tree-backtracking.2.16",
+  "named_by": [
+   "copy-list-with-random-pointer"
+  ]
+ },
+ {
+  "num": 1494,
+  "slug": "parallel-courses-ii",
+  "title": "并行课程 II",
+  "en": "Parallel Courses II",
+  "leaf": "dp.9.4",
+  "named_by": [
+   "parallel-courses"
+  ]
+ },
+ {
+  "num": 1497,
+  "slug": "check-if-array-pairs-are-divisible-by-k",
+  "title": "检查数组对是否可以被 k 整除",
+  "en": "Check If Array Pairs Are Divisible by k",
+  "leaf": "data-structures.0.1.2",
+  "named_by": [
+   "pairs-of-songs-with-total-durations-divisible-by-60"
+  ]
+ },
+ {
+  "num": 1498,
+  "slug": "number-of-subsequences-that-satisfy-the-given-sum-condition",
+  "title": "满足条件的子序列数目",
+  "en": "Number of Subsequences That Satisfy the Given Sum Condition",
+  "leaf": "sliding-window.3.2",
+  "named_by": [
+   "successful-pairs-of-spells-and-potions"
+  ]
+ },
+ {
+  "num": 1504,
+  "slug": "count-submatrices-with-all-ones",
+  "title": "统计全 1 子矩形",
+  "en": "Count Submatrices With All Ones",
+  "leaf": "monotonic-stack.2",
+  "named_by": [
+   "maximal-rectangle"
+  ]
+ },
+ {
+  "num": 1526,
+  "slug": "minimum-number-of-increments-on-subarrays-to-form-a-target-array",
+  "title": "形成目标数组的子数组最少增加次数",
+  "en": "Minimum Number of Increments on Subarrays to Form a Target Array",
+  "leaf": "data-structures.2.1.2",
+  "named_by": [
+   "minimum-operations-to-make-array-non-decreasing"
+  ]
+ },
+ {
+  "num": 1535,
+  "slug": "find-the-winner-of-an-array-game",
+  "title": "找出数组游戏的赢家",
+  "en": "Find the Winner of an Array Game",
+  "leaf": "math.7.10",
+  "named_by": [
+   "incremental-memory-leak"
+  ]
+ },
+ {
+  "num": 1541,
+  "slug": "minimum-insertions-to-balance-a-parentheses-string",
+  "title": "平衡括号字符串的最少插入次数",
+  "en": "Minimum Insertions to Balance a Parentheses String",
+  "leaf": "data-structures.3.4",
+  "named_by": [
+   "minimum-add-to-make-parentheses-valid"
+  ]
+ },
+ {
+  "num": 1547,
+  "slug": "minimum-cost-to-cut-a-stick",
+  "title": "切棍子的最小成本",
+  "en": "Minimum Cost to Cut a Stick",
+  "leaf": "dp.8.2",
+  "named_by": [
+   "burst-balloons"
+  ]
+ },
+ {
+  "num": 1567,
+  "slug": "maximum-length-of-subarray-with-positive-product",
+  "title": "乘积为正数的最长子数组长度",
+  "en": "Maximum Length of Subarray With Positive Product",
+  "leaf": "dp.6.2",
+  "named_by": [
+   "maximum-product-subarray"
+  ]
+ },
+ {
+  "num": 1582,
+  "slug": "special-positions-in-a-binary-matrix",
+  "title": "二进制矩阵中的特殊位置",
+  "en": "Special Positions in a Binary Matrix",
+  "leaf": "grid.our-matrix-sim",
+  "named_by": [
+   "count-servers-that-communicate"
+  ]
+ },
+ {
+  "num": 1590,
+  "slug": "make-sum-divisible-by-p",
+  "title": "使数组和能被 P 整除",
+  "en": "Make Sum Divisible by P",
+  "leaf": "data-structures.1.2",
+  "named_by": [
+   "subarray-sums-divisible-by-k"
+  ]
+ },
+ {
+  "num": 1616,
+  "slug": "split-two-strings-to-make-palindrome",
+  "title": "分割两个字符串得到回文串",
+  "en": "Split Two Strings to Make Palindrome",
+  "leaf": "sliding-window.3.2",
+  "named_by": [
+   "merge-operations-to-turn-array-into-a-palindrome"
+  ]
+ },
+ {
+  "num": 1626,
+  "slug": "best-team-with-no-conflicts",
+  "title": "无矛盾的最佳球队",
+  "en": "Best Team With No Conflicts",
+  "leaf": "dp.4.2.2",
+  "named_by": [
+   "russian-doll-envelopes"
+  ]
+ },
+ {
+  "num": 1634,
+  "slug": "add-two-polynomials-represented-as-linked-lists",
+  "title": "求两个多项式链表的和",
+  "en": "Add Two Polynomials Represented as Linked Lists",
+  "leaf": "list-tree-backtracking.1.8",
+  "named_by": [
+   "tt-deep-merge-nested-json"
+  ]
+ },
+ {
+  "num": 1654,
+  "slug": "minimum-jumps-to-reach-home",
+  "title": "到家的最少跳跃次数",
+  "en": "Minimum Jumps to Reach Home",
+  "leaf": "graph.1.3",
+  "named_by": [
+   "jump-game-iv"
+  ]
+ },
+ {
+  "num": 1664,
+  "slug": "ways-to-make-a-fair-array",
+  "title": "生成平衡数组的方案数",
+  "en": "Ways to Make a Fair Array",
+  "leaf": "data-structures.1.5",
+  "named_by": [
+   "tt-delete-window-balance-even-odd"
+  ]
+ },
+ {
+  "num": 1670,
+  "slug": "design-front-middle-back-queue",
+  "title": "设计前中后队列",
+  "en": "Design Front Middle Back Queue",
+  "leaf": "data-structures.4.2",
+  "named_by": [
+   "tt-fixed-array-deque-o1"
+  ]
+ },
+ {
+  "num": 1697,
+  "slug": "checking-existence-of-edge-length-limited-paths",
+  "title": "检查边长度限制的路径是否存在",
+  "en": "Checking Existence of Edge Length Limited Paths",
+  "leaf": "graph.9",
+  "named_by": [
+   "count-zero-request-servers"
+  ]
+ },
+ {
+  "num": 1706,
+  "slug": "where-will-the-ball-fall",
+  "title": "球会落何处",
+  "en": "Where Will the Ball Fall",
+  "leaf": "data-structures.0.3",
+  "named_by": [
+   "set-matrix-zeroes"
+  ]
+ },
+ {
+  "num": 1711,
+  "slug": "count-good-meals",
+  "title": "大餐计数",
+  "en": "Count Good Meals",
+  "leaf": "data-structures.our-hashing",
+  "named_by": [
+   "widest-possible-fence"
+  ]
+ },
+ {
+  "num": 1732,
+  "slug": "find-the-highest-altitude",
+  "title": "找到最高海拔",
+  "en": "Find the Highest Altitude",
+  "leaf": "data-structures.1.1",
+  "named_by": [
+   "find-pivot-index"
+  ]
+ },
+ {
+  "num": 1743,
+  "slug": "restore-the-array-from-adjacent-pairs",
+  "title": "从相邻元素对还原数组",
+  "en": "Restore the Array From Adjacent Pairs",
+  "leaf": "greedy.1.1",
+  "named_by": [
+   "hand-of-straights"
+  ]
+ },
+ {
+  "num": 1754,
+  "slug": "largest-merge-of-two-strings",
+  "title": "构造字典序最大的合并字符串",
+  "en": "Largest Merge Of Two Strings",
+  "leaf": "greedy.3.1",
+  "named_by": [
+   "create-maximum-number"
+  ]
+ },
+ {
+  "num": 1755,
+  "slug": "closest-subsequence-sum",
+  "title": "最接近目标值的子序列和",
+  "en": "Closest Subsequence Sum",
+  "leaf": "list-tree-backtracking.4.7",
+  "named_by": [
+   "partition-array-into-two-arrays-to-minimize-sum-difference"
+  ]
+ },
+ {
+  "num": 1763,
+  "slug": "longest-nice-substring",
+  "title": "最长的美好子字符串",
+  "en": "Longest Nice Substring",
+  "leaf": "sliding-window.2.1.2",
+  "named_by": [
+   "longest-substring-with-at-least-k-repeating-characters"
+  ]
+ },
+ {
+  "num": 1790,
+  "slug": "check-if-one-string-swap-can-make-strings-equal",
+  "title": "仅执行一次字符串交换能否使两个字符串相等",
+  "en": "Check if One String Swap Can Make Strings Equal",
+  "leaf": "greedy.5.8",
+  "named_by": [
+   "minimum-swaps-to-make-strings-equal"
+  ]
+ },
+ {
+  "num": 1808,
+  "slug": "maximize-number-of-nice-divisors",
+  "title": "好因子的最大数目",
+  "en": "Maximize Number of Nice Divisors",
+  "leaf": "math.7.2",
+  "named_by": [
+   "integer-break"
+  ]
+ },
+ {
+  "num": 1819,
+  "slug": "number-of-different-subsequences-gcds",
+  "title": "序列中不同最大公约数的数目",
+  "en": "Number of Different Subsequences GCDs",
+  "leaf": "math.1.6",
+  "named_by": [
+   "minimize-the-maximum-value-of-gcd-connected-array"
+  ]
+ },
+ {
+  "num": 1825,
+  "slug": "finding-mk-average",
+  "title": "求出 MK 平均值",
+  "en": "Finding MK Average",
+  "leaf": "data-structures.5.7",
+  "named_by": [
+   "sliding-window-median"
+  ]
+ },
+ {
+  "num": 1836,
+  "slug": "remove-duplicates-from-an-unsorted-linked-list",
+  "title": "从未排序的链表中移除重复元素",
+  "en": "Remove Duplicates From an Unsorted Linked List",
+  "leaf": "list-tree-backtracking.1.2",
+  "named_by": [
+   "remove-duplicates-from-sorted-list"
+  ]
+ },
+ {
+  "num": 1845,
+  "slug": "seat-reservation-manager",
+  "title": "座位预约管理系统",
+  "en": "Seat Reservation Manager",
+  "leaf": "data-structures.5.1",
+  "named_by": [
+   "design-task-manager"
+  ]
+ },
+ {
+  "num": 1855,
+  "slug": "maximum-distance-between-a-pair-of-values",
+  "title": "下标对中的最大距离",
+  "en": "Maximum Distance Between a Pair of Values",
+  "leaf": "sliding-window.4.1",
+  "named_by": [
+   "tt-die-beats-probability"
+  ]
+ },
+ {
+  "num": 1856,
+  "slug": "maximum-subarray-min-product",
+  "title": "子数组最小乘积的最大值",
+  "en": "Maximum Subarray Min-Product",
+  "leaf": "monotonic-stack.3",
+  "named_by": [
+   "sum-of-subarray-minimums"
+  ]
+ },
+ {
+  "num": 1882,
+  "slug": "process-tasks-using-servers",
+  "title": "使用服务器处理任务",
+  "en": "Process Tasks Using Servers",
+  "leaf": "data-structures.5.2",
+  "named_by": [
+   "meeting-rooms-iii"
+  ]
+ },
+ {
+  "num": 1884,
+  "slug": "egg-drop-with-2-eggs-and-n-floors",
+  "title": "鸡蛋掉落-两枚鸡蛋",
+  "en": "Egg Drop With 2 Eggs and N Floors",
+  "leaf": "dp.7.6",
+  "named_by": [
+   "super-egg-drop"
+  ]
+ },
+ {
+  "num": 1888,
+  "slug": "minimum-number-of-flips-to-make-the-binary-string-alternating",
+  "title": "使二进制字符串字符交替的最少反转次数",
+  "en": "Minimum Number of Flips to Make the Binary String Alternating",
+  "leaf": "sliding-window.1.2",
+  "named_by": [
+   "flip-string-to-monotone-increasing"
+  ]
+ },
+ {
+  "num": 1901,
+  "slug": "find-a-peak-element-ii",
+  "title": "寻找峰值 II",
+  "en": "Find a Peak Element II",
+  "leaf": "binary-search.4",
+  "named_by": [
+   "find-peak-element"
+  ]
+ },
+ {
+  "num": 1920,
+  "slug": "build-array-from-permutation",
+  "title": "基于排列构建数组",
+  "en": "Build Array from Permutation",
+  "leaf": "sliding-window.3.5",
+  "named_by": [
+   "concatenation-of-array"
+  ]
+ },
+ {
+  "num": 1922,
+  "slug": "count-good-numbers",
+  "title": "统计好数字的数目",
+  "en": "Count Good Numbers",
+  "leaf": "math.2.1",
+  "named_by": [
+   "powx-n"
+  ]
+ },
+ {
+  "num": 1928,
+  "slug": "minimum-cost-to-reach-destination-in-time",
+  "title": "规定时间内到达终点的最小花费",
+  "en": "Minimum Cost to Reach Destination in Time",
+  "leaf": "graph.3.1",
+  "named_by": [
+   "cheapest-flights-within-k-stops"
+  ]
+ },
+ {
+  "num": 1947,
+  "slug": "maximum-compatibility-score-sum",
+  "title": "最大兼容性评分和",
+  "en": "Maximum Compatibility Score Sum",
+  "leaf": "dp.9.1",
+  "named_by": [
+   "minimum-moves-to-spread-stones-over-grid"
+  ]
+ },
+ {
+  "num": 1963,
+  "slug": "minimum-number-of-swaps-to-make-the-string-balanced",
+  "title": "使字符串平衡的最小交换次数",
+  "en": "Minimum Number of Swaps to Make the String Balanced",
+  "leaf": "data-structures.3.4",
+  "named_by": [
+   "minimum-swaps-to-make-strings-equal"
+  ]
+ },
+ {
+  "num": 1971,
+  "slug": "find-if-path-exists-in-graph",
+  "title": "寻找图中是否存在路径",
+  "en": "Find if Path Exists in Graph",
+  "leaf": "graph.1.1",
+  "named_by": [
+   "reorder-routes-to-make-all-paths-lead-to-the-city-zero"
+  ]
+ },
+ {
+  "num": 1984,
+  "slug": "minimum-difference-between-highest-and-lowest-of-k-scores",
+  "title": "学生分数的最小差值",
+  "en": "Minimum Difference Between Highest and Lowest of K Scores",
+  "leaf": "greedy.1.1",
+  "named_by": [
+   "largest-perimeter-triangle"
+  ]
+ },
+ {
+  "num": 1987,
+  "slug": "number-of-unique-good-subsequences",
+  "title": "不同的好子序列数目",
+  "en": "Number of Unique Good Subsequences",
+  "leaf": "dp.7.4",
+  "named_by": [
+   "distinct-subsequences-ii"
+  ]
+ },
+ {
+  "num": 1991,
+  "slug": "find-the-middle-index-in-array",
+  "title": "找到数组的中间位置",
+  "en": "Find the Middle Index in Array",
+  "leaf": "data-structures.0.1.1",
+  "named_by": [
+   "identify-the-largest-outlier-in-an-array"
+  ]
+ },
+ {
+  "num": 2002,
+  "slug": "maximum-product-of-the-length-of-two-palindromic-subsequences",
+  "title": "两个回文子序列长度的最大乘积",
+  "en": "Maximum Product of the Length of Two Palindromic Subsequences",
+  "leaf": "list-tree-backtracking.4.1",
+  "named_by": [
+   "maximum-length-of-a-concatenated-string-with-unique-characters"
+  ]
+ },
+ {
+  "num": 2033,
+  "slug": "minimum-operations-to-make-a-uni-value-grid",
+  "title": "获取单值网格的最小操作数",
+  "en": "Minimum Operations to Make a Uni-Value Grid",
+  "leaf": "greedy.4.5",
+  "named_by": [
+   "minimum-moves-to-equal-array-elements-ii"
+  ]
+ },
+ {
+  "num": 2063,
+  "slug": "vowels-of-all-substrings",
+  "title": "所有子字符串中的元音",
+  "en": "Vowels of All Substrings",
+  "leaf": "greedy.5.5",
+  "named_by": [
+   "count-vowel-substrings-of-a-string"
+  ]
+ },
+ {
+  "num": 2070,
+  "slug": "most-beautiful-item-for-each-query",
+  "title": "每一个查询的最大美丽值",
+  "en": "Most Beautiful Item for Each Query",
+  "leaf": "binary-search.1.2",
+  "named_by": [
+   "count-zero-request-servers"
+  ]
+ },
+ {
+  "num": 2073,
+  "slug": "time-needed-to-buy-tickets",
+  "title": "买票需要的时间",
+  "en": "Time Needed to Buy Tickets",
+  "leaf": "math.7.10",
+  "named_by": [
+   "incremental-memory-leak"
+  ]
+ },
+ {
+  "num": 2090,
+  "slug": "k-radius-subarray-averages",
+  "title": "半径为 k 的子数组平均值",
+  "en": "K Radius Subarray Averages",
+  "leaf": "sliding-window.1.1",
+  "named_by": [
+   "frequency-of-the-most-frequent-element"
+  ]
+ },
+ {
+  "num": 2131,
+  "slug": "longest-palindrome-by-concatenating-two-letter-words",
+  "title": "连接两字母单词得到的最长回文串",
+  "en": "Longest Palindrome by Concatenating Two Letter Words",
+  "leaf": "greedy.3.2",
+  "named_by": [
+   "longest-palindrome"
+  ]
+ },
+ {
+  "num": 2132,
+  "slug": "stamping-the-grid",
+  "title": "用邮票贴满网格图",
+  "en": "Stamping the Grid",
+  "leaf": "data-structures.2.2",
+  "named_by": [
+   "minimum-operations-to-write-the-letter-y-on-a-grid"
+  ]
+ },
+ {
+  "num": 2144,
+  "slug": "minimum-cost-of-buying-candies-with-discount",
+  "title": "打折购买糖果的最小开销",
+  "en": "Minimum Cost of Buying Candies With Discount",
+  "leaf": "greedy.1.1",
+  "named_by": [
+   "array-partition-i"
+  ]
+ },
+ {
+  "num": 2156,
+  "slug": "find-substring-with-given-hash-value",
+  "title": "查找给定哈希值的子串",
+  "en": "Find Substring With Given Hash Value",
+  "leaf": "sliding-window.1.2",
+  "named_by": [
+   "concatenate-non-zero-digits-and-multiply-by-sum-ii"
+  ]
+ },
+ {
+  "num": 2160,
+  "slug": "minimum-sum-of-four-digit-number-after-splitting-digits",
+  "title": "拆分数位后四位数字的最小和",
+  "en": "Minimum Sum of Four Digit Number After Splitting Digits",
+  "leaf": "greedy.4.1",
+  "named_by": [
+   "minimum-value-of-merged-integers"
+  ]
+ },
+ {
+  "num": 2161,
+  "slug": "partition-array-according-to-given-pivot",
+  "title": "根据给定数字划分数组",
+  "en": "Partition Array According to Given Pivot",
+  "leaf": "sliding-window.3.5",
+  "named_by": [
+   "sort-array-by-parity"
+  ]
+ },
+ {
+  "num": 2172,
+  "slug": "maximum-and-sum-of-array",
+  "title": "数组的最大与和",
+  "en": "Maximum AND Sum of Array",
+  "leaf": "dp.9.1",
+  "named_by": [
+   "minimum-moves-to-spread-stones-over-grid"
+  ]
+ },
+ {
+  "num": 2231,
+  "slug": "largest-number-after-digit-swaps-by-parity",
+  "title": "按奇偶性交换后的最大数字",
+  "en": "Largest Number After Digit Swaps by Parity",
+  "leaf": "greedy.1.1",
+  "named_by": [
+   "maximize-sum-after-at-most-k-digit-rearrangements"
+  ]
+ },
+ {
+  "num": 2241,
+  "slug": "design-an-atm-machine",
+  "title": "设计一个 ATM 机器",
+  "en": "Design an ATM Machine",
+  "leaf": "data-structures.our-design",
+  "named_by": [
+   "simple-bank-system"
+  ]
+ },
+ {
+  "num": 2246,
+  "slug": "longest-path-with-different-adjacent-characters",
+  "title": "相邻字符不同的最长路径",
+  "en": "Longest Path With Different Adjacent Characters",
+  "leaf": "list-tree-backtracking.3.5",
+  "named_by": [
+   "minimum-cost-path-with-even-xor-parity"
+  ]
+ },
+ {
+  "num": 2262,
+  "slug": "total-appeal-of-a-string",
+  "title": "字符串的总引力",
+  "en": "Total Appeal of A String",
+  "leaf": "dp.7.3",
+  "named_by": [
+   "count-frequency-staircase-subarrays-i"
+  ]
+ },
+ {
+  "num": 2270,
+  "slug": "number-of-ways-to-split-array",
+  "title": "分割数组的方案数",
+  "en": "Number of Ways to Split Array",
+  "leaf": null,
+  "named_by": [
+   "ways-to-split-array-into-three-subarrays"
+  ]
+ },
+ {
+  "num": 2272,
+  "slug": "substring-with-largest-variance",
+  "title": "最大波动的子字符串",
+  "en": "Substring With Largest Variance",
+  "leaf": "dp.6.3",
+  "named_by": [
+   "maximum-frequency-after-subarray-operation"
+  ]
+ },
+ {
+  "num": 2276,
+  "slug": "count-integers-in-intervals",
+  "title": "统计区间中的整数数目",
+  "en": "Count Integers in Intervals",
+  "leaf": "data-structures.8.5",
+  "named_by": [
+   "design-memory-allocator"
+  ]
+ },
+ {
+  "num": 2285,
+  "slug": "maximum-total-importance-of-roads",
+  "title": "道路的最大总重要性",
+  "en": "Maximum Total Importance of Roads",
+  "leaf": "greedy.4.3",
+  "named_by": [
+   "minimum-number-of-pushes-to-type-word-ii"
+  ]
+ },
+ {
+  "num": 2287,
+  "slug": "rearrange-characters-to-make-target-string",
+  "title": "重排字符形成目标字符串",
+  "en": "Rearrange Characters to Make Target String",
+  "leaf": "data-structures.our-hashing",
+  "named_by": [
+   "maximum-number-of-balloons"
+  ]
+ },
+ {
+  "num": 2289,
+  "slug": "steps-to-make-array-non-decreasing",
+  "title": "使数组按非递减顺序排列",
+  "en": "Steps to Make Array Non-decreasing",
+  "leaf": "monotonic-stack.1.2",
+  "named_by": [
+   "minimum-operations-to-make-the-array-increasing"
+  ]
+ },
+ {
+  "num": 2290,
+  "slug": "minimum-obstacle-removal-to-reach-corner",
+  "title": "到达角落需要移除障碍物的最小数目",
+  "en": "Minimum Obstacle Removal to Reach Corner",
+  "leaf": "grid.3",
+  "named_by": [
+   "find-a-safe-walk-through-a-grid"
+  ]
+ },
+ {
+  "num": 2305,
+  "slug": "fair-distribution-of-cookies",
+  "title": "公平分发饼干",
+  "en": "Fair Distribution of Cookies",
+  "leaf": "dp.9.4",
+  "named_by": [
+   "partition-to-k-equal-sum-subsets"
+  ]
+ },
+ {
+  "num": 2316,
+  "slug": "count-unreachable-pairs-of-nodes-in-an-undirected-graph",
+  "title": "统计无向图中无法互相到达点对数",
+  "en": "Count Unreachable Pairs of Nodes in an Undirected Graph",
+  "leaf": "graph.1.1",
+  "named_by": [
+   "unit-conversion-ii"
+  ]
+ },
+ {
+  "num": 2320,
+  "slug": "count-number-of-ways-to-place-houses",
+  "title": "统计放置房子的方式数",
+  "en": "Count Number of Ways to Place Houses",
+  "leaf": "dp.1.2",
+  "named_by": [
+   "delete-and-earn"
+  ]
+ },
+ {
+  "num": 2328,
+  "slug": "number-of-increasing-paths-in-a-grid",
+  "title": "网格图中递增路径的数目",
+  "en": "Number of Increasing Paths in a Grid",
+  "leaf": "dp.2.2",
+  "named_by": [
+   "tt-longest-zigzag-grid-path"
+  ]
+ },
+ {
+  "num": 2333,
+  "slug": "minimum-sum-of-squared-difference",
+  "title": "最小差值平方和",
+  "en": "Minimum Sum of Squared Difference",
+  "leaf": "greedy.1.1",
+  "named_by": [
+   "rearranging-fruits"
+  ]
+ },
+ {
+  "num": 2370,
+  "slug": "longest-ideal-subsequence",
+  "title": "最长理想子序列",
+  "en": "Longest Ideal Subsequence",
+  "leaf": "dp.7.4",
+  "named_by": [
+   "minimum-operations-to-make-character-frequencies-equal"
+  ]
+ },
+ {
+  "num": 2384,
+  "slug": "largest-palindromic-number",
+  "title": "最大回文数字",
+  "en": "Largest Palindromic Number",
+  "leaf": "greedy.3.2",
+  "named_by": [
+   "smallest-palindromic-rearrangement-i"
+  ]
+ },
+ {
+  "num": 2389,
+  "slug": "longest-subsequence-with-limited-sum",
+  "title": "和有限的最长子序列",
+  "en": "Longest Subsequence With Limited Sum",
+  "leaf": "binary-search.1.2",
+  "named_by": [
+   "successful-pairs-of-spells-and-potions"
+  ]
+ },
+ {
+  "num": 2404,
+  "slug": "most-frequent-even-element",
+  "title": "出现最频繁的偶数元素",
+  "en": "Most Frequent Even Element",
+  "leaf": "math.7.8",
+  "named_by": [
+   "majority-element-ii"
+  ]
+ },
+ {
+  "num": 2406,
+  "slug": "divide-intervals-into-minimum-number-of-groups",
+  "title": "将区间分为最少组数",
+  "en": "Divide Intervals Into Minimum Number of Groups",
+  "leaf": "data-structures.2.1.2",
+  "named_by": [
+   "meeting-rooms-iii"
+  ]
+ },
+ {
+  "num": 2410,
+  "slug": "maximum-matching-of-players-with-trainers",
+  "title": "运动员和训练师的最大匹配数",
+  "en": "Maximum Matching of Players With Trainers",
+  "leaf": "greedy.1.3",
+  "named_by": [
+   "assign-cookies"
+  ]
+ },
+ {
+  "num": 2413,
+  "slug": "smallest-even-multiple",
+  "title": "最小偶倍数",
+  "en": "Smallest Even Multiple",
+  "leaf": "math.1.7",
+  "named_by": [
+   "convert-the-temperature"
+  ]
+ },
+ {
+  "num": 2423,
+  "slug": "remove-letter-to-equalize-frequency",
+  "title": "删除字符使频率相同",
+  "en": "Remove Letter To Equalize Frequency",
+  "leaf": "greedy.5.8",
+  "named_by": [
+   "minimum-operations-to-make-character-frequencies-equal"
+  ]
+ },
+ {
+  "num": 2441,
+  "slug": "largest-positive-integer-that-exists-with-its-negative",
+  "title": "与对应负数同时存在的最大正整数",
+  "en": "Largest Positive Integer That Exists With Its Negative",
+  "leaf": "data-structures.0.1.1",
+  "named_by": [
+   "make-array-zero-by-subtracting-equal-amounts"
+  ]
+ },
+ {
+  "num": 2459,
+  "slug": "sort-array-by-moving-items-to-empty-space",
+  "title": "通过移动项目到空白区域来排序数组",
+  "en": "Sort Array by Moving Items to Empty Space",
+  "leaf": "data-structures.7.2",
+  "named_by": [
+   "minimum-swaps-to-sort-by-digit-sum"
+  ]
+ },
+ {
+  "num": 2471,
+  "slug": "minimum-number-of-operations-to-sort-a-binary-tree-by-level",
+  "title": "逐层排序二叉树所需的最少操作数目",
+  "en": "Minimum Number of Operations to Sort a Binary Tree by Level",
+  "leaf": "data-structures.7.2",
+  "named_by": [
+   "minimum-swaps-to-sort-by-digit-sum"
+  ]
+ },
+ {
+  "num": 2478,
+  "slug": "number-of-beautiful-partitions",
+  "title": "完美分割的方案数",
+  "en": "Number of Beautiful Partitions",
+  "leaf": "dp.5.3",
+  "named_by": [
+   "minimum-cost-good-caption"
+  ]
+ },
+ {
+  "num": 2482,
+  "slug": "difference-between-ones-and-zeros-in-row-and-column",
+  "title": "行和列中一和零的差值",
+  "en": "Difference Between Ones and Zeros in Row and Column",
+  "leaf": "grid.our-matrix-sim",
+  "named_by": [
+   "count-servers-that-communicate"
+  ]
+ },
+ {
+  "num": 2483,
+  "slug": "minimum-penalty-for-a-shop",
+  "title": "商店的最少代价",
+  "en": "Minimum Penalty for a Shop",
+  "leaf": "dp.6.2",
+  "named_by": [
+   "flip-string-to-monotone-increasing"
+  ]
+ },
+ {
+  "num": 2486,
+  "slug": "append-characters-to-string-to-make-subsequence",
+  "title": "追加字符以获得子序列",
+  "en": "Append Characters to String to Make Subsequence",
+  "leaf": "sliding-window.4.2",
+  "named_by": [
+   "longest-word-in-dictionary-through-deleting"
+  ]
+ },
+ {
+  "num": 2558,
+  "slug": "take-gifts-from-the-richest-pile",
+  "title": "从数量最多的堆取走礼物",
+  "en": "Take Gifts From the Richest Pile",
+  "leaf": "data-structures.5.1",
+  "named_by": [
+   "find-score-of-an-array-after-marking-all-elements"
+  ]
+ },
+ {
+  "num": 2569,
+  "slug": "handling-sum-queries-after-update",
+  "title": "更新数组后处理求和查询",
+  "en": "Handling Sum Queries After Update",
+  "leaf": "data-structures.8.4",
+  "named_by": [
+   "number-of-adjacent-elements-with-the-same-color"
+  ]
+ },
+ {
+  "num": 2572,
+  "slug": "count-the-number-of-square-free-subsets",
+  "title": "无平方子集计数",
+  "en": "Count the Number of Square-Free Subsets",
+  "leaf": "dp.9.4",
+  "named_by": [
+   "the-number-of-good-subsets"
+  ]
+ },
+ {
+  "num": 2578,
+  "slug": "split-with-minimum-sum",
+  "title": "最小和分割",
+  "en": "Split With Minimum Sum",
+  "leaf": "greedy.4.1",
+  "named_by": [
+   "minimum-value-of-merged-integers"
+  ]
+ },
+ {
+  "num": 2598,
+  "slug": "smallest-missing-non-negative-integer-after-operations",
+  "title": "执行操作后的最大 MEX",
+  "en": "Smallest Missing Non-negative Integer After Operations",
+  "leaf": "math.1.9",
+  "named_by": [
+   "lexicographically-maximum-mex-array"
+  ]
+ },
+ {
+  "num": 2612,
+  "slug": "minimum-reverse-operations",
+  "title": "最少翻转操作数",
+  "en": "Minimum Reverse Operations",
+  "leaf": "data-structures.7.4",
+  "named_by": [
+   "zui-xiao-tiao-yue-ci-shu"
+  ]
+ },
+ {
+  "num": 2616,
+  "slug": "minimize-the-maximum-difference-of-pairs",
+  "title": "最小化数对的最大差值",
+  "en": "Minimize the Maximum Difference of Pairs",
+  "leaf": "binary-search.2.4",
+  "named_by": [
+   "house-robber-iv"
+  ]
+ },
+ {
+  "num": 2627,
+  "slug": "debounce",
+  "title": "函数防抖",
+  "en": "Debounce",
+  "leaf": "data-structures.our-design",
+  "named_by": [
+   "event-emitter"
+  ]
+ },
+ {
+  "num": 2636,
+  "slug": "promise-pool",
+  "title": "Promise 对象池",
+  "en": "Promise Pool",
+  "leaf": "data-structures.our-design",
+  "named_by": [
+   "event-emitter"
+  ]
+ },
+ {
+  "num": 2695,
+  "slug": "array-wrapper",
+  "title": "包装数组",
+  "en": "Array Wrapper",
+  "leaf": "data-structures.our-design",
+  "named_by": [
+   "event-emitter"
+  ]
+ },
+ {
+  "num": 2706,
+  "slug": "buy-two-chocolates",
+  "title": "购买两块巧克力",
+  "en": "Buy Two Chocolates",
+  "leaf": "greedy.5.8",
+  "named_by": [
+   "minimum-cost-to-acquire-required-items"
+  ]
+ },
+ {
+  "num": 2709,
+  "slug": "greatest-common-divisor-traversal",
+  "title": "最大公约数遍历",
+  "en": "Greatest Common Divisor Traversal",
+  "leaf": "data-structures.7.3",
+  "named_by": [
+   "minimize-the-maximum-value-of-gcd-connected-array"
+  ]
+ },
+ {
+  "num": 2742,
+  "slug": "painting-the-walls",
+  "title": "给墙壁刷油漆",
+  "en": "Painting the Walls",
+  "leaf": "dp.3.1",
+  "named_by": [
+   "put-marbles-in-bags"
+  ]
+ },
+ {
+  "num": 2824,
+  "slug": "count-pairs-whose-sum-is-less-than-target",
+  "title": "统计和小于目标的下标对数目",
+  "en": "Count Pairs Whose Sum is Less than Target",
+  "leaf": "sliding-window.3.2",
+  "named_by": [
+   "count-the-number-of-fair-pairs"
+  ]
+ },
+ {
+  "num": 2841,
+  "slug": "maximum-sum-of-almost-unique-subarray",
+  "title": "几乎唯一子数组的最大和",
+  "en": "Maximum Sum of Almost Unique Subarray",
+  "leaf": "sliding-window.1.1",
+  "named_by": [
+   "maximum-sum-of-distinct-subarrays-with-length-k"
+  ]
+ },
+ {
+  "num": 2848,
+  "slug": "points-that-intersect-with-cars",
+  "title": "与车相交的点",
+  "en": "Points That Intersect With Cars",
+  "leaf": "data-structures.2.1.1",
+  "named_by": [
+   "car-pooling"
+  ]
+ },
+ {
+  "num": 2935,
+  "slug": "maximum-strong-pair-xor-ii",
+  "title": "找出强数对的最大异或值 II",
+  "en": "Maximum Strong Pair XOR II",
+  "leaf": "bits.5",
+  "named_by": [
+   "amazon-maximize-and-with-budget"
+  ]
+ },
+ {
+  "num": 2976,
+  "slug": "minimum-cost-to-convert-string-i",
+  "title": "转换字符串的最小成本 I",
+  "en": "Minimum Cost to Convert String I",
+  "leaf": "graph.3.2",
+  "named_by": [
+   "minimum-cost-to-convert-string-ii"
+  ]
+ },
+ {
+  "num": 3014,
+  "slug": "minimum-number-of-pushes-to-type-word-i",
+  "title": "输入单词需要的最少按键次数 I",
+  "en": "Minimum Number of Pushes to Type Word I",
+  "leaf": "greedy.4.3",
+  "named_by": [
+   "minimum-number-of-pushes-to-type-word-ii"
+  ]
+ },
+ {
+  "num": 3022,
+  "slug": "minimize-or-of-remaining-elements-using-operations",
+  "title": "给定操作次数内使剩余元素的或值最小",
+  "en": "Minimize OR of Remaining Elements Using Operations",
+  "leaf": "bits.5",
+  "named_by": [
+   "amazon-maximize-and-with-budget"
+  ]
+ },
+ {
+  "num": 3102,
+  "slug": "minimize-manhattan-distances",
+  "title": "最小化曼哈顿距离",
+  "en": "Minimize Manhattan Distances",
+  "leaf": "math.7.3",
+  "named_by": [
+   "maximum-of-absolute-value-expression"
+  ]
+ },
+ {
+  "num": 3128,
+  "slug": "right-triangles",
+  "title": "直角三角形",
+  "en": "Right Triangles",
+  "leaf": "data-structures.0.2.1",
+  "named_by": [
+   "count-servers-that-communicate"
+  ]
+ },
+ {
+  "num": 3131,
+  "slug": "find-the-integer-added-to-array-i",
+  "title": "找出与数组相加的整数 I",
+  "en": "Find the Integer Added to Array I",
+  "leaf": null,
+  "named_by": [
+   "find-the-integer-added-to-array-ii"
+  ]
+ },
+ {
+  "num": 3228,
+  "slug": "maximum-number-of-operations-to-move-ones-to-the-end",
+  "title": "将 1 移动到末尾的最大操作次数",
+  "en": "Maximum Number of Operations to Move Ones to the End",
+  "leaf": "greedy.1.4",
+  "named_by": [
+   "separate-black-and-white-balls"
+  ]
+ },
+ {
+  "num": 3229,
+  "slug": "minimum-operations-to-make-array-equal-to-target",
+  "title": "使数组等于目标数组所需的最少操作次数",
+  "en": "Minimum Operations to Make Array Equal to Target",
+  "leaf": "data-structures.2.1.2",
+  "named_by": [
+   "minimum-operations-to-make-array-non-decreasing"
+  ]
+ },
+ {
+  "num": 3314,
+  "slug": "construct-the-minimum-bitwise-array-i",
+  "title": "构造最小位运算数组 I",
+  "en": "Construct the Minimum Bitwise Array I",
+  "leaf": null,
+  "named_by": [
+   "construct-the-minimum-bitwise-array-ii"
+  ]
+ },
+ {
+  "num": 3397,
+  "slug": "maximum-number-of-distinct-elements-after-operations",
+  "title": "执行操作后不同元素的最大数量",
+  "en": "Maximum Number of Distinct Elements After Operations",
+  "leaf": "greedy.1.1",
+  "named_by": [
+   "maximum-element-after-decreasing-and-rearranging"
+  ]
+ },
+ {
+  "num": 3513,
+  "slug": "number-of-unique-xor-triplets-i",
+  "title": "不同 XOR 三元组的数目 I",
+  "en": "Number of Unique XOR Triplets I",
+  "leaf": "greedy.6",
+  "named_by": [
+   "number-of-unique-xor-triplets-ii"
+  ]
+ },
+ {
+  "num": 3518,
+  "slug": "smallest-palindromic-rearrangement-ii",
+  "title": "最小回文排列 II",
+  "en": "Smallest Palindromic Rearrangement II",
+  "leaf": "math.2.2",
+  "named_by": [
+   "smallest-palindromic-rearrangement-i"
+  ]
+ },
+ {
+  "num": 3614,
+  "slug": "process-string-with-special-operations-ii",
+  "title": "用特殊操作处理字符串 II",
+  "en": "Process String with Special Operations II",
+  "leaf": "list-tree-backtracking.5",
+  "named_by": [
+   "process-string-with-special-operations-i"
+  ]
+ },
+ {
+  "num": 3700,
+  "slug": "number-of-zigzag-arrays-ii",
+  "title": "锯齿形数组的总数 II",
+  "en": "Number of ZigZag Arrays II",
+  "leaf": "dp.11.6",
+  "named_by": [
+   "number-of-zigzag-arrays-i"
+  ]
+ },
+ {
+  "num": 3739,
+  "slug": "count-subarrays-with-majority-element-ii",
+  "title": "统计主要元素子数组数目 II",
+  "en": "Count Subarrays With Majority Element II",
+  "leaf": "data-structures.1.2",
+  "named_by": [
+   "count-subarrays-with-majority-element-i"
+  ]
+ }
+]
