@@ -18,6 +18,8 @@ Rules that came out of building it:
   (`公司::Amazon`, `公司::Cerebras`), 已做过 and 必读 are **tags** on that card (`scripts/lc_tags.py`), never decks of
   copies. A problem outside 0x3F's lists hangs on a leaf through `sources/local/lc/expand.json`. Our own leaves are in
   `our_leaves.json`. The rules are in `research/leetcode-unify/`.
+- **同模式 unfolds only into a body.** A problem named under 同模式 needs its own body, or the item cannot open.
+  `research/leetcode-unify/related_missing.py` lists the named problems without one and hangs them on a leaf.
 - **Under the Hood** holds algorithm and data-structure material that is not a problem: tool internals, patterns,
   Python idioms, Amazon patterns.
 - **Shown in Chinese.** Chi studies in Chinese. A domain written in English with `## zh` translations sets `show: zh`.
