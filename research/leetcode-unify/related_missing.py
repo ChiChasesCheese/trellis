@@ -7,7 +7,8 @@ A 同模式 item unfolds into the named problem's own statement and code, read f
 (`trellis/build.py` load_related). This lists every such problem without a body, with its slug and Chinese title
 (0x3F's title list) and the leaf it should hang on: a leaf of 0x3F's lists that has it as a candidate, preferring the
 leaf of a problem that names it; else the leaf of the first problem that names it. `--write` saves the manifest to
-research/leetcode-unify/related_missing.json (batches for body agents) and adds the problems to
+research/leetcode-unify/related_missing.json (batches for body agents; once it exists, to
+related_missing_next.json, since running agents index its rows) and adds the problems to
 sources/local/lc/expand.json, so `lc_tree.py --write` puts each on its leaf once its body exists.
 """
 from __future__ import annotations
@@ -66,7 +67,8 @@ def main() -> int:
     print(f"{len(rows)} problems; {sum(1 for r in rows if not r['leaf'])} without a leaf")
     if "--write" not in sys.argv:
         return 0
-    OUT.write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
+    out = OUT if not OUT.exists() else OUT.with_name("related_missing_next.json")  # agents index rows of the first one
+    out.write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
     exp = json.loads((LC / "expand.json").read_text(encoding="utf-8"))
     listed = {c["slug"] for v in exp.values() for c in v}
     added = 0
@@ -76,7 +78,7 @@ def main() -> int:
                                                   "rating": 0, "members": False, "importance": 0.0})
             added += 1
     (LC / "expand.json").write_text(json.dumps(exp, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"wrote {OUT.name}; {added} added to expand.json")
+    print(f"wrote {out.name}; {added} added to expand.json")
     return 0
 
 
