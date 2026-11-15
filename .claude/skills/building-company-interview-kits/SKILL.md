@@ -98,3 +98,32 @@ A LeetCode problem that the company changed (new constraints, extra Parts, a des
 - Relative links from `loop/rounds/<round>/<id>/` to the kit root need `../../../`.
 - Subagents spawning subagents, or more than 3 in parallel: the limit is the orchestrator's job.
 - Losing progress on usage limits: append `research/companies/<co>/LEDGER.md`, update `research/companies/<co>/CHECKPOINT.md`, commit + push per task; relaunch the rest on `opus` with a resume rule when sonnet is limited.
+
+## Study layer since 2026-11 (the Cerebras build)
+
+The kit is the reading layer. The cards go into general domains, and the company gets a **sprint deck** that borrows
+them. See docs/explanation/study-system.md.
+
+1. **Research.** Three agents run in parallel:
+   - due diligence: products, business, news, competitors, team, culture;
+   - interview reports, GitHub first;
+   - a **skill map** of 150–200 leaves, weighted by likelihood × centrality and checked against the cards that exist.
+   Then **per round**: a technical-rounds page, plus a gap list against LeetCode, LLD and the system-design bank.
+2. **Cards.**
+   - Gaps go into the domain they belong to; create a general domain when no home exists.
+   - Company-only cards go into domain `<co>` (company, role, loop, HM answers, behavioural mapping, questions to ask).
+   - Runnable practice sets live in `practice/`, accepted with `trellis kit verify_suites`.
+3. **Deck.**
+   - Write a public **role track** (`tracks/<role>.yaml`), or reuse one.
+   - Add a private overlay with the company's sections.
+   - Build: `scripts/track_plan.py overlay -o plan.json` → `scripts/company_deck.py deal`.
+   - Set the order with `scripts/reposition_new.py`.
+   - For LeetCode, add a separate view deck from the `公司::<Co>` tag.
+   - Maps: `scripts/knowledge_tree.py --track`.
+4. **After the interview:** `company_deck.py --deck <name> release`.
+
+Mistakes made here:
+- A public file naming the company is fine now, since prep is public by default; only NDA material stays local.
+- Copies of LeetCode problems per company: never. Tag the one card instead.
+- A deck order fixed only by sub-decks: inside a sub-deck, Anki deals by position, so reposition.
+- Deleting many decks, or writing the collection file, forces a full sync: ask Chi before choosing Upload or Download.

@@ -109,3 +109,10 @@ clipping and card footers open it; a reading tagged `no-archive` keeps its link 
 - Cards that ask "what does chapter 3 say": they fail cold review and the `leans_on_source` lint.
 - Grown cards shipped unreviewed: plausible, confident and occasionally wrong.
 - A dense domain with no `requires` edges: the feed shows advanced leaves before their foundations.
+- A deck Chi cannot read on the phone: he studies in Chinese. A domain written in English needs `## zh` translations
+  and `show: zh`, and Chinese node titles 「中文（English）」.
+- AI or ML material that assumes background: open with the basics, define every term on first use, keep a strict
+  reading order (`requires`), and model it on `llm-inference:basics`.
+- Fewer than 25% of cards with a diagram, or svg fenced as ```svg (Obsidian shows it as code).
+- Several decks holding copies of one item: one source, one card; lists and companies are tags (see
+  docs/explanation/study-system.md).
