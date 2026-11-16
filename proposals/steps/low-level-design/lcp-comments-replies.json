@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-comments-replies": [
+    "lcp-comments-replies-contract-rules",
+    "lcp-comments-replies-state-and-invariant",
+    "lcp-comments-replies-reflection-lock-scope",
+    "lcp-comments-replies-reflection-snapshot-reads"
+  ]
+}

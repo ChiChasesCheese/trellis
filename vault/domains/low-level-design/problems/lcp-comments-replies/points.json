@@ -1,0 +1,381 @@
+[
+ {
+  "point": "结构只有两层：帖子 → 评论 → 回复，回复下面没有回复，回复不带 parent 字段",
+  "cards": [
+   "lcp-comments-replies-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.value-entity"
+  ]
+ },
+ {
+  "point": "三个返回形状固定：评论六个键含空的 replies，回复六个键含 comment_id 但没有 replies",
+  "cards": [
+   "lcp-comments-replies-contract-rules"
+  ],
+  "leaves": [
+   "api.returns",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "文本合法的标准：必须是 str，且 strip 之后非空；None、数字、列表、字节串、空白串都是 ValidationError",
+  "cards": [
+   "lcp-comments-replies-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "strip 只用来判空：存下来、返回的都是调用方给的原值，首尾空白保留",
+  "cards": [
+   "lcp-comments-replies-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "isinstance 检查要放在 strip 之前：对 None 和数字调用 strip 会抛 AttributeError，不是合同要的错误",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "检查顺序固定：先文本，再帖子，加回复时最后才查评论",
+  "cards": [
+   "lcp-comments-replies-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "帖子不存在、评论不存在、评论属于别的帖子，都是 NotFoundError；文本不合法才是 ValidationError",
+  "cards": [
+   "lcp-comments-replies-contract-rules"
+  ],
+  "leaves": [
+   "errors.taxonomy",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "布尔值不是 ID：True 等于 1，不排除就会悄悄命中评论 1，所以 ID 检查要单独排除 bool",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "python.typing"
+  ]
+ },
+ {
+  "point": "评论 ID 与回复 ID 是两条独立的序列，各自从 1 开始，各用一个 itertools.count",
+  "cards": [
+   "lcp-comments-replies-contract-rules",
+   "lcp-comments-replies-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "ID 是全站递增，不按帖子分：帖子 10 的评论占了 1，帖子 20 的下一条是 2",
+  "cards": [
+   "lcp-comments-replies-contract-rules"
+  ],
+  "leaves": [
+   "structure.storage",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "失败的调用不消耗 ID：取号放在所有可能失败的步骤之后，并且在锁里",
+  "cards": [
+   "lcp-comments-replies-contract-rules",
+   "lcp-comments-replies-reflection-lock-scope"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "顺序就是提交顺序：评论和每条评论下的回复都按成功提交的先后返回，后提交的 ID 更大",
+  "cards": [
+   "lcp-comments-replies-contract-rules"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "不按 created_at 排序：时钟可能回拨，两次调用可能同一时刻；它只是响应带出的元数据",
+  "cards": [
+   "lcp-comments-replies-contract-rules"
+  ],
+  "leaves": [
+   "testing.testable-design",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "created_at 以秒为单位、是浮点数：默认用 time.time，测试里注入假时钟，不用 sleep",
+  "cards": [],
+  "leaves": [
+   "testing.testable-design",
+   "testing.doubles"
+  ]
+ },
+ {
+  "point": "没有评论的帖子返回 []，不存在的帖子抛 NotFoundError；空结果是每次新建的列表，空帖子不预建 Thread",
+  "cards": [
+   "lcp-comments-replies-reflection-snapshot-reads",
+   "lcp-comments-replies-state-and-invariant"
+  ],
+  "leaves": [
+   "api.returns",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "每个帖子一个 Thread：评论只存在自己帖子里，用别的帖子找它就是没找到，归属由结构保证",
+  "cards": [
+   "lcp-comments-replies-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "评论放在 dict[评论 ID → Comment] 里：加回复是两次 O(1) 查找，不扫描全站",
+  "cards": [
+   "lcp-comments-replies-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "字典的插入顺序等于提交顺序等于 ID 升序：一个结构既按 ID 查、又按顺序遍历",
+  "cards": [
+   "lcp-comments-replies-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "读取的代价与返回的评论加回复总数成正比：只遍历这个帖子自己的 Thread",
+  "cards": [
+   "lcp-comments-replies-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "Reply 设成 frozen 数据类：提交后不再变，快照可以共享它；Comment 只在末尾追加回复",
+  "cards": [
+   "lcp-comments-replies-state-and-invariant",
+   "lcp-comments-replies-reflection-snapshot-reads"
+  ],
+  "leaves": [
+   "oop.values",
+   "python.dataclasses-enums"
+  ]
+ },
+ {
+  "point": "get(...) or Thread() 是陷阱：对象一旦为假就悄悄丢数据，要写 is None",
+  "cards": [],
+  "leaves": [
+   "python.data-model",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "一把 threading.Lock 罩住读时钟、分配 ID、追加这一整段读—改—写",
+  "cards": [
+   "lcp-comments-replies-reflection-lock-scope"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "itertools.count 的 next 原子，不等于顺序一致：A 取 5、B 取 6、B 先追加，列表顺序就和 ID 反了",
+  "cards": [
+   "lcp-comments-replies-reflection-lock-scope"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency-depth.memory-model"
+  ]
+ },
+ {
+  "point": "查评论再追加回复是一整段：这两步之间不能被别的线程插入",
+  "cards": [
+   "lcp-comments-replies-reflection-lock-scope"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "文本校验与帖子检查放在锁外：持锁时不调外部对象，帖子不会被删除所以安全；能删帖就要改",
+  "cards": [
+   "lcp-comments-replies-reflection-lock-scope"
+  ],
+  "leaves": [
+   "concurrency-depth.safe-structures",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "全局一把锁够用：临界区只有几次字典操作，GIL 下分片锁买不到并行",
+  "cards": [
+   "lcp-comments-replies-reflection-lock-scope"
+  ],
+  "leaves": [
+   "concurrency-depth.parallel-scaling",
+   "concurrency-depth.selection"
+  ]
+ },
+ {
+  "point": "每帖一把锁的代价：ID 序列仍是全站的，还要再加一把全局锁，锁字典自己的创建也要同步",
+  "cards": [
+   "lcp-comments-replies-reflection-lock-scope"
+  ],
+  "leaves": [
+   "concurrency-depth.parallel-scaling",
+   "concurrency-depth.safe-structures"
+  ]
+ },
+ {
+  "point": "GIL 保护的是解释器，不是你的不变量：检查再追加是多条字节码，线程可以插在中间",
+  "cards": [
+   "lcp-comments-replies-reflection-lock-scope"
+  ],
+  "leaves": [
+   "concurrency-depth.memory-model",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "返回快照：每次新建字典与列表，调用方怎么改返回值都伤不到服务内部",
+  "cards": [
+   "lcp-comments-replies-reflection-snapshot-reads"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "直接返回内部列表的后果：调用方改内部、遍历中被改、两个调用方共享同一份",
+  "cards": [
+   "lcp-comments-replies-reflection-snapshot-reads"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "concurrency-depth.confinement"
+  ]
+ },
+ {
+  "point": "值只有字符串和数字，一层拷贝就够；n 条评论、m 条回复，一次读取新建 1 + 2n + m 个容器",
+  "cards": [
+   "lcp-comments-replies-reflection-snapshot-reads"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "oop.values"
+  ]
+ },
+ {
+  "point": "快照要在锁里生成：否则评论是旧的、回复是新的，同一次读里出现两个时刻",
+  "cards": [
+   "lcp-comments-replies-reflection-snapshot-reads"
+  ],
+  "leaves": [
+   "concurrency-depth.memory-model",
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "add_comment 返回的 replies 是新的空列表：之后再加回复，手里的那份不会变长",
+  "cards": [
+   "lcp-comments-replies-reflection-snapshot-reads"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "并发测试用屏障让线程同时起跑，断言不变量：ID 恰好是 1 到 N、读到的评论 ID 是连续前缀",
+  "cards": [],
+  "leaves": [
+   "concurrency-depth.testing",
+   "testing.flaky"
+  ]
+ },
+ {
+  "point": "GIL 下没有锁的读也常常侥幸通过：缩小线程切换间隔把交错放大，并靠读代码核对锁的范围",
+  "cards": [],
+  "leaves": [
+   "concurrency-depth.testing",
+   "testing.flaky"
+  ]
+ },
+ {
+  "point": "多实例部署：进程内的锁和计数器管不到别的进程，ID 改由数据库序列生成，唯一递增但可能有空洞",
+  "cards": [
+   "lcp-comments-replies-reflection-snapshot-reads"
+  ],
+  "leaves": [
+   "structure.storage",
+   "concurrency-depth.selection"
+  ]
+ },
+ {
+  "point": "多实例下的快照：一次查询或一个只读事务给出某一时刻；读从库要处理读自己的写",
+  "cards": [
+   "lcp-comments-replies-reflection-snapshot-reads"
+  ],
+  "leaves": [
+   "concurrency-depth.memory-model",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "给智能体先给规则和数字例子，让它先复述最容易漏的几条，一次只给一个失败的测试",
+  "cards": [],
+  "leaves": [
+   "ai.specs",
+   "ai.decomposition"
+  ]
+ },
+ {
+  "point": "智能体的典型错误：返回内部对象、锁只包计数器、按时间排序；锁的范围和快照自己核对",
+  "cards": [],
+  "leaves": [
+   "ai.failure-modes",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "不接受把失败的测试改成通过：先判断是代码错还是测试错，合同里的例子不能改",
+  "cards": [],
+  "leaves": [
+   "ai.verification",
+   "testing.test-first"
+  ]
+ }
+]
