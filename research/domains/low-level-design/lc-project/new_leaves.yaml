@@ -1,0 +1,114 @@
+# 提议的新叶子（LeetCode Project 映射的产物）。粘贴到 skeleton/low-level-design.yaml 对应根的 children 末尾。
+# 没有 core、没有 study；卡片、阅读材料与 step 由之后的卡片流程补。每个叶子 requires 只引用已存在的叶子。
+
+# --- 粘贴到根 `errors` 的 children 下 ---
+- id: errors.atomic-batches
+  title: "批处理的原子与隔离（All-or-Nothing vs Per-Item Failure）"
+  summary: "先整批校验再提交、失败不留下任何痕迹（含 ID、计数、统计），与逐项返回错误的另一种约定：何时选哪种、怎么实现。"
+  requires: [errors.boundary-validation, errors.cleanup]
+  # 需要它的项目：actor-follow-notifications, currency-conversion, file-deduplication, image-transform-pipeline, issue-creation-api, keyword-user-blocklists, loan-management, parcel-return-policy, payment-reconcile-api, payments-api, reservation-service, return-fraud-risk, review-moderation, scheduled-banking, shipping-cost, stack-trace-stream, tool-call-agent
+  # 来源：https://www.sqlite.org/atomiccommit.html ；代码层写法：https://docs.python.org/3/library/sqlite3.html（连接作上下文管理器：成功提交、异常回滚）
+- id: errors.validation-precedence
+  title: "校验顺序与错误优先级（Validation Order & Error Precedence）"
+  summary: "多条规则同时被违反时先报哪一条：格式、归属、存在性、业务规则的先后，以及为什么固定顺序是契约的一部分。"
+  requires: [errors.boundary-validation, api.error-contract]
+  # 需要它的项目：currency-conversion, issue-creation-api, parcel-return-policy, review-moderation, shipping-cost
+  # 来源：https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.4（403 与 404 的取舍） ；https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/
+
+# --- 粘贴到根 `api` 的 children 下 ---
+- id: api.http-contract
+  title: "HTTP 状态码与错误映射（HTTP Status & Error Mapping）"
+  summary: "服务端把校验失败、冲突、未找到、重放、版本不符映射到 400/404/409/412/422，以及 201 与 200、JSON 错误体的稳定契约。"
+  requires: [api.error-contract]
+  # 需要它的项目：feature-flag, issue-creation-api, movie-recommendations, movie-watchlists, payment-reconcile-api, stockroom-inventory, url-shortener
+  # 来源：https://www.rfc-editor.org/rfc/rfc9110.html（§15.5 客户端错误；§9.2.2 幂等方法）；幂等重放与冲突：https://docs.stripe.com/api/idempotent_requests 、https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/
+- id: api.authorization-scoping
+  title: "资源归属与授权（Ownership Scoping）"
+  summary: "每次读写都按所有者限定、认证与授权的区别、他人资源回 404 还是 403 以免泄露存在性，以及怎么写授权测试。"
+  requires: [api.error-contract]
+  # 需要它的项目：issue-creation-api, movie-watchlists, review-moderation, stockroom-inventory, url-shortener
+  # 来源：https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization ；https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.4
+- id: api.configuration
+  title: "配置的读取、校验与原子更新（Configuration Snapshots）"
+  summary: "环境变量在构造时快照还是每次读取、配置对象的校验与规范化、更新时整体替换而不是逐项修改。"
+  requires: [errors.boundary-validation, data.defensive-copy]
+  # 需要它的项目：feature-flag, keyword-user-blocklists, password-reset
+  # 来源：https://12factor.net/config
+
+# --- 粘贴到根 `data` 的 children 下 ---
+- id: data.sql-queries
+  title: "SQL 查询：聚合、Top-k 与参数化（SQL Queries in Code）"
+  summary: "`GROUP BY` 聚合、带平局规则的 `ORDER BY … LIMIT`、占位符防注入、过滤排序下推到数据库而不是取回再算。"
+  requires: [errors.boundary-validation]
+  # 需要它的项目：payments-api, sales-reporting, url-shortener
+  # 来源：https://docs.python.org/3/library/sqlite3.html（占位符与字符串拼接）
+- id: data.sql-persistence
+  title: "SQL 持久化：提交、约束与重开（SQL Persistence）"
+  summary: "写后必须 commit 才对新连接可见、连接生命周期、唯一约束与自增序列在重开后延续、内存库每个连接各自独立。"
+  requires: [errors.cleanup, structure.storage]
+  # 需要它的项目：movie-watchlists, password-reset, payments-api, reservation-service, stockroom-inventory, url-shortener
+  # 来源：https://docs.python.org/3/library/sqlite3.html ；https://www.sqlite.org/isolation.html
+- id: data.deterministic-hashing
+  title: "确定性哈希（Stable Hashing）"
+  summary: "`hash()` 每个进程加盐所以不能分桶，用 `hashlib` 或固定算法；百分比放量时用户保持稳定；短码生成与摘要碰撞要逐字节确认。"
+  requires: [python.data-model]
+  # 需要它的项目：feature-flag, file-deduplication, url-shortener
+  # 来源：https://docs.growthbook.io/lib/build-your-own ；https://docs.getunleash.io/concepts/stickiness ；https://docs.python.org/3/reference/datamodel.html（hash 随机化）；https://github.com/pkolaczk/fclones（去重分阶段）
+
+# --- 粘贴到根 `concurrency-depth` 的 children 下 ---
+- id: concurrency-depth.optimistic-locking
+  title: "乐观锁与版本检查（Optimistic Locking）"
+  summary: "版本号随写入递增、更新时「版本相同才写」且检查与递增原子；冲突怎么回报（409/412）以及客户端重试。"
+  requires: [concurrency-depth.compound-actions]
+  # 需要它的项目：issue-creation-api, stockroom-inventory
+  # 来源：https://martinfowler.com/eaaCatalog/optimisticOfflineLock.html ；https://www.rfc-editor.org/rfc/rfc9110.html（§13.1.1 If-Match，§15.5.13 412）
+- id: concurrency-depth.db-transactions
+  title: "数据库层的并发（Isolation & Atomic Updates）"
+  summary: "读已提交下两个事务同时扣减会怎样、条件更新与行锁、唯一索引当锁用、序列化失败后整个事务重试。"
+  requires: [concurrency-depth.compound-actions, structure.storage]
+  # 需要它的项目：movie-watchlists, reservation-service, stockroom-inventory, url-shortener
+  # 来源：https://www.postgresql.org/docs/current/transaction-iso.html ；https://www.postgresql.org/docs/current/explicit-locking.html ；https://www.sqlite.org/isolation.html
+- id: concurrency-depth.bounded-pipeline
+  title: "有界并发流水线（Bounded Ordered Pipeline）"
+  summary: "worker 上限、结果按输入顺序产出、惰性消费输入时只放有限个在途任务、按字节预算的 FIFO 准入与失败时归还预算。"
+  requires: [concurrency.patterns, python.context-iterators]
+  # 需要它的项目：file-deduplication, image-transform-pipeline, tool-call-agent
+  # 来源：https://docs.python.org/3/library/concurrent.futures.html ；https://docs.python.org/3/library/threading.html（Semaphore）
+
+# --- 粘贴到根 `fluency` 的 children 下 ---
+- id: fluency.deterministic-ordering
+  title: "确定性顺序与平局（Total Order & Tie-Breaking）"
+  summary: "多键排序键怎么构造、升降序混合、排序稳定性、dict 保持插入序而 set 不保证；让每个输出顺序都能被规格解释。"
+  requires: [fluency.collections]
+  # 需要它的项目：actor-follow-notifications, apparel-shopping-cart, comments-replies, currency-conversion, file-deduplication, image-transform-pipeline, movie-recommendations, payment-reconcile-api, receivable-allocation, return-fraud-risk, sales-reporting, scheduled-banking, stack-trace-stream, tool-call-agent, transactions-list
+  # 来源：https://docs.python.org/3/howto/sorting.html
+- id: fluency.exact-arithmetic
+  title: "精确算术：取整、分摊与范围检查（Exact Arithmetic）"
+  summary: "整数分、向下取整与四舍五入、规格里的 32/64 位上限用精确整数检查、浮点只做容差比较（`math.isclose`）。"
+  requires: [fluency.time-numbers]
+  # 需要它的项目：apparel-shopping-cart, currency-conversion, parcel-return-policy, payment-reconcile-api, receivable-allocation, shipping-cost
+  # 来源：https://docs.python.org/3/tutorial/floatingpoint.html
+
+# --- 粘贴到根 `ai` 的 children 下 ---
+- id: ai.agent-loop
+  title: "工具调用循环（Tool-Calling Agent Loop）"
+  summary: "模型—工具循环：校验模型输出、每个调用 ID 恰好一个结果、工具失败转成错误结果、回合与调用预算、同批并发保序、重复调用 ID 重放缓存。"
+  requires: [ai.tools-automation, errors.boundary-validation]
+  # 需要它的项目：tool-call-agent
+  # 来源：https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls ；https://www.anthropic.com/engineering/building-effective-agents
+
+# --- 粘贴到根 `debugging` 的 children 下 ---
+- id: debugging.data-repair
+  title: "现网数据原地修复（In-Place Data Repair）"
+  summary: "没有重置路径的生产库：先在副本上预演、备份、可重复运行的修复脚本、修复前后核对不变量、留下记录。"
+  requires: [debugging.hypothesis, debugging.prevent]
+  # 需要它的项目：reservation-service
+  # 来源：https://sre.google/sre-book/data-integrity/ ；https://stripe.com/blog/online-migrations
+
+# --- 粘贴到根 `parsing-io` 的 children 下 ---
+- id: parsing-io.strict-json
+  title: "严格 JSON 子集解析（Strict JSON Subset）"
+  summary: "重复键、转义序列、64 位整数、NaN 与 Infinity 的拒绝：标准库默认宽松，怎么写成严格的。"
+  requires: [parsing-io.tokenizer, parsing-io.formats]
+  # 需要它的项目：currency-conversion, parcel-return-policy, payment-reconcile-api, shipping-cost
+  # 来源：https://www.rfc-editor.org/rfc/rfc8259 （名字应当唯一，§4）；https://www.rfc-editor.org/rfc/rfc7493 （I-JSON：重复名字禁止）；https://docs.python.org/3/library/json.html（`object_pairs_hook`、`parse_constant`、`parse_int`）

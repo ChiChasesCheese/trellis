@@ -8,6 +8,12 @@ explanations, which docs/card-notes.md says how to write, back into NoteAnswer.
     uv run python scripts/card_notes.py apply FILE          # [{"nid": ..., "answer": "<markdown>"}] -> NoteAnswer
     uv run python scripts/card_notes.py status
 
+An answer card (tag 作答, the LeetCode Project branch of low-level-design) is different: its Note is Chi's own attempt
+at the front, written before he turned the card. `pending` marks it `"attempt": true`; the explanation grades the
+attempt against the card's 评分点, and the item in FILE carries a `"grade"` ({"score", "hit", "missed", "leaves"}),
+which `apply` appends to sources/local/lc-project/attempts.jsonl for scripts/lcp_plan.py to send him back to the
+knowledge he missed.
+
 A card waits when its Note was written or changed since its last explanation, or when it is starred and has none.
 sources/local/notes/answered.json keeps, per note id, the Note text each explanation answered.
 """
@@ -18,6 +24,7 @@ import html
 import json
 import re
 import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,6 +37,7 @@ from trellis.build import NOTE_FIELDS, _html  # noqa: E402
 NOTE, ANSWER = NOTE_FIELDS
 HOME = ROOT / "sources/local/notes"
 STATE = HOME / "answered.json"
+ATTEMPTS = ROOT / "sources/local/lc-project/attempts.jsonl"  # graded attempts on answer cards (tag 作答)
 QUERY = f'"{NOTE}:_*" OR tag:marked'
 
 
@@ -79,6 +87,7 @@ def pending() -> list[dict]:
             "model": n["modelName"],
             "id": next((t[4:] for t in n["tags"] if t.startswith("id::")), ""),
             "marked": "marked" in n["tags"],
+            "attempt": "作答" in n["tags"],
             "note": plain(f[NOTE]["value"]),
             "card": {k: plain(v["value"])[:4000] for k, v in sorted(f.items(), key=lambda kv: kv[1]["order"])
                      if k not in NOTE_FIELDS and plain(v["value"])},
@@ -98,6 +107,12 @@ def apply(path: Path) -> int:
             continue
         call("updateNoteFields", note={"id": a["nid"], "fields": {ANSWER: _html(a["answer"].strip())}})
         done[str(a["nid"])] = key(plain(n["fields"][NOTE]["value"]))
+        if a.get("grade"):
+            card_id = next((t[4:] for t in n["tags"] if t.startswith("id::")), "")
+            ATTEMPTS.parent.mkdir(parents=True, exist_ok=True)
+            with ATTEMPTS.open("a", encoding="utf-8") as f:
+                f.write(json.dumps({"at": time.strftime("%Y-%m-%dT%H:%M:%S"), "nid": a["nid"], "id": card_id,
+                                    "note": plain(n["fields"][NOTE]["value"]), **a["grade"]}, ensure_ascii=False) + "\n")
     HOME.mkdir(parents=True, exist_ok=True)
     STATE.write_text(json.dumps(done, indent=1), encoding="utf-8")
     call("sync")

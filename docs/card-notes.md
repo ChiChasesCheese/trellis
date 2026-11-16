@@ -37,3 +37,31 @@ reading the explanation once.
 - Length is 300–900 characters. Use more only when the question really needs it.
 - Leave out links, citations, headings and meta talk ("这张卡说…", "希望有帮助").
 - When `previous` is set and the note changed, answer the new note. Reuse what still fits.
+
+## Answer cards (tag 作答): grade the attempt
+
+On an answer card (`"attempt": true`, the LeetCode Project branch `lcproject` of low-level-design) the Note is not a
+question: it is Chi's own answer to the front, written before he turned the card. He learns by answering, so the
+explanation is feedback on that answer, and the grade drives what he studies next.
+
+1. Read the card's 评分点 (the back). For each, decide from his answer: **hit** (he said it, in any words), **partly**
+   (the idea without the part that makes it work, e.g. "加锁" without saying the lock must cover check and update
+   together) or **missed**. Count partly as half. `score` = hits ÷ 评分点, rounded to two decimals.
+2. Write the explanation in this order:
+   - one line: `得分 3.5 / 5`;
+   - what he got right, in one sentence (so he keeps doing it);
+   - each missed or partial point: what was missing, why it matters **in this project** (the input that breaks his
+     version, the hidden test that would fail), and the corrected step — a short timeline or ≤ 15 lines of code;
+   - anything he wrote that is wrong though not on the list (a wrong claim costs more than a missing one);
+   - one line `下一步：` naming the 1–3 knowledge-tree leaves to go back to (their Chinese titles).
+   Same language rules as above; 300–1,200 characters.
+3. In the answers file add `"grade": {"score": 0.7, "hit": ["<评分点短语>", …], "missed": ["<评分点短语>", …],
+   "leaves": ["<leaf id>", …]}`. Take the leaf ids for the missed points from the project's
+   `vault/domains/low-level-design/problems/lcp-<name>/points.json` (the card's id starts with `lcp-<name>-`); a
+   `lcp-round-` card uses the leaves its 知识点 line names (find their ids in `skeleton/low-level-design.yaml`).
+4. A Note that is a question, not an attempt ("为什么要两把锁？"), is answered as a question, with no `grade`.
+5. After `apply`, run `uv run python scripts/lcp_plan.py` (it re-deals the LC Project view so the missed leaves'
+   cards come first). When a missed point has no card in its leaf that teaches the angle he missed, write one or two
+   cards for that leaf with `trellis grow` (normal concept-card rules, not answer cards), import them, and add them with
+   `uv run python scripts/anki_refresh.py --add <card id prefix> low-level-design`. List those new card ids in the
+   attempt's `grade` as `"new_cards"`.
