@@ -50,6 +50,8 @@ is researched at writing time; 新进展 blocks on at least half of the recall c
 | 2026-11-15 | `industry` | 9 | 36 (27 recall, 9 challenge; 12 diagrams; 25 新进展) | accepted: gates ok; survey figures checked against the Menlo report's text, prospectus figures against press summaries; three wordings corrected |
 | 2026-11-15 | `quirks` | 12 | 48 (36 recall, 12 challenge; 19 diagrams; 21 新进展) | accepted: gates ok; benchmark figures checked against the paper's table, blackmail rates against Anthropic's page; eleven wordings corrected |
 | 2026-11-15 | `models` | 9 | 36 (27 recall, 9 challenge; 19 diagrams; 17 新进展) | accepted: gates ok; image tokens and effort defaults checked against Anthropic's docs; all sums re-derived; ten wordings corrected |
+| 2026-11-15 | `evals` | 3 | 12 (9 recall, 3 challenge; 3 diagrams; 7 新进展) | accepted: gates ok; interval widths re-derived; index, ARC-AGI-3, SWE-bench figures checked; one figure corrected |
+| 2026-11-15 | `work` | 4 | 16 (12 recall, 4 challenge; 4 diagrams; 9 新进展) | accepted: gates ok; METR, Indeed, Anthropic skill-study figures checked against the primary pages; three wordings corrected |
 
 ## Least-sure claims (step 5)
 
@@ -145,6 +147,33 @@ Filled from each agent's reply; checked by the orchestrator before the group is 
   only; AMI Labs' round not re-checked. `-vla-loop`: about 50 Hz and the RECAP result rest on the agent's sources.
 - `open-weights-what-you-get`: Muse Spark (8 April 2026, weights not released) confirmed. The Llama licence line now
   names use restrictions next to the 700M-MAU clause.
+
+`evals`:
+
+- Interval widths re-derived (n=50 ±11, 200 ±5.5, 800 ±2.8 at 80%; GPQA Diamond's 198 questions ±4.2 to ±6.4).
+- `leaderboards-*`: Artificial Analysis Intelligence Index v5 (27 October 2026) figures confirmed from its
+  announcement and two summaries: Opus 5.5 low 35 at $0.98 vs max 58 at $10.04, GPT-6.1 Sol max $1.27, HLE-Diamond.
+  ARC-AGI-3 (24 March 2026; Gemini 3.1 Pro 0.37%, every model under 1%) confirmed by three outlets.
+- `benchmarks-contamination-and-gaming`: SWE-bench Pro's paper gives at most 23.3% public and 17.8% commercial; the
+  card's GPT-5 public figure was 23.1 and is now 23.3. The per-model rows (Opus 4.1 22.7 → 17.8, GPT-5 → 14.9) and
+  the set sizes (731 / 276) are from secondary listings. OpenAI dropping SWE-bench Verified (23 February 2026, 59.4%
+  of an audited 27.6% subset) is confirmed from its own post.
+- Not checked beyond the agent's sources: Llama 4 Maverick's Elo 1417 / 32nd place, GSM1k's drop, the 61.5% ±3.1
+  top entry on Scale's board.
+
+`work`:
+
+- `sde-impact-measured-productivity`: METR's 24 February 2026 post confirms −18% (−38 to +9), −4% (−15 to +9),
+  57 developers, 800+ tasks, the 30–50% selection effect and "unreliable signal". Negative means less time with AI.
+- `sde-impact-entry-level`: Indeed's 4.5% / 69.3% are Q1 2026 shares, 71% is May 2025 – May 2026 growth, 27.5%
+  below February 2020 is the June 2026 level; the card dates each this way. Anthropic's skill study (29 January 2026,
+  52 engineers, about 50% vs 67%, 23 vs 25 minutes) is confirmed from its page.
+- `app-architecture-trace-and-guardrails`: OpenTelemetry's GenAI conventions moved to their own repository in June
+  2026 (v1.42.0); copies of the spec still mark agent and tool spans Development. The card said "as of May 2026" and
+  now states the move. Content capture being off by default rests on secondary guides.
+- `app-architecture-gateway`: the cache example mixed a per-million price with a 15k-token prompt; it now gives the
+  per-call cost ($0.003 cached, $0.06 uncached).
+- Not checked beyond the agent's sources: DORA 2025's sample and adoption share, the Stanford payroll study's 13%.
 
 ## Next action
 
