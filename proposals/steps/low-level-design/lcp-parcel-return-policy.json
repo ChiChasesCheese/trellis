@@ -1,0 +1,8 @@
+{
+ "lcproject.lcp-parcel-return-policy": [
+  "lcp-parcel-return-policy-contract-rules",
+  "lcp-parcel-return-policy-state-and-invariant",
+  "lcp-parcel-return-policy-reflection-overflow-tests",
+  "lcp-parcel-return-policy-reflection-library-swap"
+ ]
+}

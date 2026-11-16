@@ -1,0 +1,409 @@
+[
+ {
+  "point": "支持的 JSON 子集：一个扁平对象，值只有 64 位整数、布尔、ASCII 字符串",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.formats",
+   "parsing-io.parse-errors"
+  ]
+ },
+ {
+  "point": "数组、嵌套对象、null、小数、指数一律拒绝，这是刻意的子集",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.formats",
+   "parsing-io.parse-errors"
+  ]
+ },
+ {
+  "point": "空白只有空格、制表、回车、换行，且只在字符串之外",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.tokenizer"
+  ]
+ },
+ {
+  "point": "字符串内只收可打印 ASCII 32 到 126，原始控制字符与非 ASCII 拒绝",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.tokenizer",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "转义只有八种；\\u 与别的转义拒绝，转义出来的控制字符可以出现在结果里",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.tokenizer"
+  ]
+ },
+ {
+  "point": "键必须带引号、冒号、逗号分隔；尾逗号与缺值拒绝",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.recursive-descent"
+  ]
+ },
+ {
+  "point": "重复键按解码后的键判断：a/b 与 a\\/b 是同一个键",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules",
+   "lcp-parcel-return-policy-reflection-overflow-tests"
+  ],
+  "leaves": [
+   "parsing-io.formats",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "字典赋值悄悄覆盖重复键：后一个值赢，错误被吞掉",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "ai.failure-modes"
+  ]
+ },
+ {
+  "point": "整数语法 -?(0|[1-9][0-9]*)：加号、前导零、-、0x 都拒绝，-0 接受",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.regex",
+   "parsing-io.tokenizer"
+  ]
+ },
+ {
+  "point": "整数必须落在有符号 64 位范围内，两端都含",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules",
+   "lcp-parcel-return-policy-reflection-overflow-tests"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "溢出要拒绝，不能静默变成 0 或被截断",
+  "cards": [
+   "lcp-parcel-return-policy-reflection-overflow-tests"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "ai.failure-modes"
+  ]
+ },
+ {
+  "point": "超长数字要先看位数再调用 int()：否则 Python 会抛出另一种 ValueError",
+  "cards": [
+   "lcp-parcel-return-policy-reflection-overflow-tests"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "errors.narrow-catch"
+  ]
+ },
+ {
+  "point": "布尔是布尔，不是整数：true 不能当评分或金额",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "bool 是 int 的子类：用 type(x) is int，不用 isinstance",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules",
+   "lcp-parcel-return-policy-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "正则里用 [0-9] 而不是 \\d，用 match 的位置而不是 $，免得接受别的文字系统的数字",
+  "cards": [
+   "lcp-parcel-return-policy-reflection-overflow-tests"
+  ],
+  "leaves": [
+   "parsing-io.regex"
+  ]
+ },
+ {
+  "point": "对象之后只能是空白：完整消费输入，截断与多余内容都拒绝",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules",
+   "lcp-parcel-return-policy-reflection-overflow-tests"
+  ],
+  "leaves": [
+   "parsing-io.parse-errors",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "所有语法错误都是同一个 ValueError，消息恰好是 invalid_json",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules",
+   "lcp-parcel-return-policy-state-and-invariant"
+  ],
+  "leaves": [
+   "parsing-io.parse-errors",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "请求必须恰好六个字段：缺字段与多字段都是 invalid_request",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "rating 是 1 到 5 的整数；另三个数是非负的 64 位整数",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "六个字段全部校验完才做决定：final_sale 为真时别处的坏字段也要报错",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules",
+   "lcp-parcel-return-policy-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "evaluate 单独被调用也要校验，不能假设上游解析器已经把关",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules",
+   "lcp-parcel-return-policy-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "风险分 = (5 - 星级) * 10 + 金额分 + 账龄分",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "金额与账龄分的下界都含在本段：10000、50000、30、180 恰好落在边界时归更高档",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules",
+   "lcp-parcel-return-policy-reflection-overflow-tests"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "被拒绝的请求也要返回算出的风险分",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "api.returns",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "拒绝规则的顺序：final_sale、窗口、opened_high_value、high_risk，第一条命中的赢",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules",
+   "lcp-parcel-return-policy-state-and-invariant"
+  ],
+  "leaves": [
+   "patterns.strategy",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "第 30 天仍在退货窗口内：条件是大于 30，不是大于等于",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules",
+   "lcp-parcel-return-policy-reflection-overflow-tests"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "规则顺序写成一张有序表，而不是责任链类：行为相同、只有顺序不同，用数据",
+  "cards": [
+   "lcp-parcel-return-policy-state-and-invariant"
+  ],
+  "leaves": [
+   "patterns.strategy",
+   "quality.smells"
+  ]
+ },
+ {
+  "point": "语法错误与策略错误是两层：前者 invalid_json，后者 invalid_request，语法先于策略",
+  "cards": [
+   "lcp-parcel-return-policy-state-and-invariant",
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "errors.taxonomy",
+   "parsing-io.parse-errors",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "驱动按物理行读：一行一个请求，不拼接相邻行；空行是 invalid_json，空输入没有输出",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.streams"
+  ]
+ },
+ {
+  "point": "坏行只产生一条错误输出，不影响后面的行：try 包住的是一行",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules",
+   "lcp-parcel-return-policy-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.narrow-catch",
+   "parsing-io.streams"
+  ]
+ },
+ {
+  "point": "非 ASCII 字节在解码时就是 invalid_json；UnicodeDecodeError 也是 ValueError，要单独认出来",
+  "cards": [
+   "lcp-parcel-return-policy-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.narrow-catch",
+   "parsing-io.parse-errors"
+  ]
+ },
+ {
+  "point": "标准输出只写结果行：诊断文字不能出现在 stdout",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.diagnostics",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "按名字捕获两种命名错误；意外的 ValueError 是缺陷，要冒出去而不是变成错误行",
+  "cards": [
+   "lcp-parcel-return-policy-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.narrow-catch",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "溢出安全的测试：两端上限、再加一、20 位、五千位；完整消费的测试：每种尾部内容",
+  "cards": [
+   "lcp-parcel-return-policy-reflection-overflow-tests"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "testing.coverage-limits"
+  ]
+ },
+ {
+  "point": "用标准库 json 当对拍的参照，加上子集的额外限制，对变异输入逐个比较",
+  "cards": [
+   "lcp-parcel-return-policy-reflection-overflow-tests",
+   "lcp-parcel-return-policy-reflection-library-swap"
+  ],
+  "leaves": [
+   "testing.pytest-tools",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "换成成熟的 JSON 库：库当作词法与基础解析，子集规则放在它外面的一层",
+  "cards": [
+   "lcp-parcel-return-policy-reflection-library-swap"
+  ],
+  "leaves": [
+   "parsing-io.formats",
+   "quality.refactoring"
+  ]
+ },
+ {
+  "point": "json 库不会替你拒绝 \\u、非 ASCII、顶层非对象、嵌套值，这些要在库之外检查",
+  "cards": [
+   "lcp-parcel-return-policy-reflection-library-swap"
+  ],
+  "leaves": [
+   "parsing-io.formats",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "换库之前先把现有行为冻成特征测试，换完两套实现对拍",
+  "cards": [
+   "lcp-parcel-return-policy-reflection-library-swap",
+   "lcp-parcel-return-policy-reflection-overflow-tests"
+  ],
+  "leaves": [
+   "quality.refactoring",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "给智能体的指令：规则先行、先列代码与规则的差异、一次修一类缺陷、每次一个失败的测试",
+  "cards": [
+   "lcp-parcel-return-policy-contract-rules"
+  ],
+  "leaves": [
+   "ai.specs",
+   "ai.decomposition",
+   "rounds.bug-bash"
+  ]
+ },
+ {
+  "point": "智能体只补测试期望值时容易从被测代码抄答案：期望值要独立写出",
+  "cards": [
+   "lcp-parcel-return-policy-reflection-overflow-tests"
+  ],
+  "leaves": [
+   "ai.failure-modes",
+   "ai.verification"
+  ]
+ }
+]
