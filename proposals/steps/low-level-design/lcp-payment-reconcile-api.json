@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-payment-reconcile-api": [
+    "lcp-payment-reconcile-api-contract-rules",
+    "lcp-payment-reconcile-api-state-and-invariant",
+    "lcp-payment-reconcile-api-reflection-multi-instance-batch",
+    "lcp-payment-reconcile-api-reflection-key-expiry"
+  ]
+}

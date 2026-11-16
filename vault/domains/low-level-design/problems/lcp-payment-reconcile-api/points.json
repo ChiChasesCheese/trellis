@@ -1,0 +1,376 @@
+[
+ {
+  "point": "登记一行按 \", \" 切成恰好三段，每段去首尾空白后各自校验；少一段或多一段都是 400",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "parsing-io.formats"
+  ]
+ },
+ {
+  "point": "发票号去空白后长度 1..64，区分大小写：INV 与 inv 是两张不同的发票",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "data.value-entity"
+  ]
+ },
+ {
+  "point": "到期日必须是严格的 YYYY-MM-DD 且是真实日历日：2026-02-30、0000-01-01、全角数字不行，2024-02-29 可以",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "parsing-io.regex"
+  ]
+ },
+ {
+  "point": "金额是只含 ASCII 数字的正整数分：前导零可以，零、正负号、下划线、全角数字不行；`isdigit()` 对全角数字也为真，要再加 `isascii()`",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "金额超过 4300 位时 `int()` 会抛 ValueError，要当成 400 而不是让它冒泡成 500",
+  "cards": [],
+  "leaves": [
+   "fluency.time-numbers",
+   "errors.exceptions-vs-values"
+  ]
+ },
+ {
+  "point": "登记按行序校验：格式错 400 与批内重复 409，先遇到的赢；全部通过后才查账本里已有的号",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "登记批次原子：先检查全部、再写入全部，任何一行出错一张都不存；成功返回 (201, {registered_count})，新发票 UNPAID",
+  "cards": [],
+  "leaves": [
+   "data.invariants",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "付款串按 \", \" 最多切三段：备注是第三段起的原样文字，里面的逗号保留，缺省为空串",
+  "cards": [],
+  "leaves": [
+   "parsing-io.formats",
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "付款号长度 1..64；`forgiveness` 是非负整数且 bool 不算；`key` 是 None 或长度 1..64 的字符串，空白也算内容",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "只和未付发票匹配，三级严格按 id、exact、fuzzy 的优先级，上一级有命中就不看下一级",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "备注标记 `paying for:` 与 `paying off:` 不分大小写，i、I、İ、ı 等价：用 `re.IGNORECASE`；`'İ'.lower()` 有两个字符，整串 lower 会让位置错位",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.regex",
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "发票号取标记后到下一个逗号或串尾的文字：去空白、保留大小写，冒号后不必有空格，号里可以有空格",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.regex",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "一级命中不看金额；发票号区分大小写；已付的号不算，继续看下一个标记、再进入下一级",
+  "cards": [],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "多个标记从左到右扫，第一个指向未付发票的号胜出",
+  "cards": [],
+  "leaves": [
+   "parsing-io.regex",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "二级 exact：未付发票里金额恰好等于付款额；memo 里没有标记时先走这里",
+  "cards": [],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "三级 fuzzy 只在 forgiveness > 0 时启用，区间是闭的：付 98 容差 2 命中 100 的发票，容差 1 不命中",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "同级平局依次比到期日、金额差的绝对值、发票号；到期日先于金额差（早到期但差 4 的胜过晚到期但差 1 的）",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "命中：发票变 PAID 并记付款号，返回 201 和 tier_used；message 里的金额是解析后的整数（0100 写成 100）",
+  "cards": [],
+  "leaves": [
+   "api.returns",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "没有命中是 200 UNMATCHED 而不是错误，账本一个字都不变",
+  "cards": [],
+  "leaves": [
+   "api.error-contract",
+   "errors.exceptions-vs-values"
+  ]
+ },
+ {
+  "point": "没有 key 的请求永远按当前账本匹配，付款号只是标签，不是隐式幂等键",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "errors.retry",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "先校验请求、再查键：非法请求即使带着用过的键，得到的也是 400，不是 409 或重放",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "errors.retry",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "幂等指纹是（付款串去首尾空白，forgiveness）；同键同指纹重放 200，同键不同指纹 409 idempotency_conflict",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "errors.retry",
+   "data.value-entity"
+  ]
+ },
+ {
+  "point": "重放不重新匹配、不改状态，哪怕发票已付清或新登记了更合适的发票；未匹配的结果也缓存",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "errors.retry",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "回执存首次响应的私有拷贝，重放给新字典；调用方改返回值不会污染缓存",
+  "cards": [
+   "lcp-payment-reconcile-api-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "同键并发请求：查键、匹配、结算、记回执在同一个临界区里，恰好一次结算，其余都是 200 重放",
+  "cards": [
+   "lcp-payment-reconcile-api-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency-depth.safe-structures"
+  ]
+ },
+ {
+  "point": "并发付款争同一张发票：至多结算一次，其余得到 UNMATCHED",
+  "cards": [
+   "lcp-payment-reconcile-api-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency-depth.testing"
+  ]
+ },
+ {
+  "point": "发票状态由 settled_by 推出，不另存一份：PAID 当且仅当有结算它的付款号，不可能写成不一致",
+  "cards": [
+   "lcp-payment-reconcile-api-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "principles.simplicity"
+  ]
+ },
+ {
+  "point": "列表返回字段恰好五个的快照，按（到期日，发票号）升序；用 `insort` 在登记时就保持有序",
+  "cards": [],
+  "leaves": [
+   "api.returns",
+   "fluency.collections"
+  ]
+ },
+ {
+  "point": "返回值与输入互相脱钩：不保存传入的列表，不修改传入的字典，返回新字典（批次每行也是独立的字典）",
+  "cards": [
+   "lcp-payment-reconcile-api-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "批次形状：非空的字典列表，必须有 payment，只许 payment、forgiveness、key 三个键，否则 400",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "批次逐行处理，每行看得见前面行的结算和同键重放；第一个错误按行序胜出，没匹配不算失败",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "批次回滚：撤销日志按相反顺序撤销这一批的结算和回执，批前已有的状态和键保留",
+  "cards": [
+   "lcp-payment-reconcile-api-state-and-invariant"
+  ],
+  "leaves": [
+   "patterns.command",
+   "errors.cleanup"
+  ]
+ },
+ {
+  "point": "批次整段持锁，回滚在放锁之前完成，所以读者和别的调用永远看不到半个批次",
+  "cards": [
+   "lcp-payment-reconcile-api-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency-depth.safe-structures"
+  ]
+ },
+ {
+  "point": "用撤销日志而不是拷贝整本账再换回：代价与改动成正比，不与账本大小成正比",
+  "cards": [
+   "lcp-payment-reconcile-api-state-and-invariant"
+  ],
+  "leaves": [
+   "performance.complexity-constants",
+   "patterns.command"
+  ]
+ },
+ {
+  "point": "多实例：整批一个数据库事务，结算用 `WHERE settled_by IS NULL` 的条件更新，键靠主键约束",
+  "cards": [
+   "lcp-payment-reconcile-api-reflection-multi-instance-batch"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "过期回执：保留期大于重试窗口，键里带时间戳，过期的键被拒绝（410），不被当新键重新结算",
+  "cards": [
+   "lcp-payment-reconcile-api-reflection-key-expiry"
+  ],
+  "leaves": [
+   "errors.retry",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "并发测试用屏障让 64 个线程同时起跑，断言不变量（一个 201、63 个 200）；读线程测试把切换间隔调小，断言只读到全未付或全已付",
+  "cards": [
+   "lcp-payment-reconcile-api-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.testing",
+   "testing.flaky"
+  ]
+ },
+ {
+  "point": "交给编程智能体之前，先把 README 的例子逐条写成断言，一次只给它一个失败的用例",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "ai.specs",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "智能体常犯的错：整串 lower 备注、用浮点数算金额、幂等只比付款号、测试失败时改测试",
+  "cards": [
+   "lcp-payment-reconcile-api-contract-rules"
+  ],
+  "leaves": [
+   "ai.failure-modes",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "校验顺序、锁的范围、批次怎么回滚这三个决定自己定，别交给智能体顺手选",
+  "cards": [
+   "lcp-payment-reconcile-api-state-and-invariant"
+  ],
+  "leaves": [
+   "ai.delegation",
+   "rounds.ai-assisted"
+  ]
+ }
+]
