@@ -1,0 +1,384 @@
+[
+ {
+  "point": "同一用户在同一场次已有 active 预约时再预约返回 409，且不多预约、不多扣名额、不多审计",
+  "cards": [
+   "lcp-reservation-service-contract-rules",
+   "lcp-reservation-service-state-and-invariant"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "场次不存在返回 404，正文 {\"detail\": \"Session not found\"}，并且排在 409 判断之前",
+  "cards": [
+   "lcp-reservation-service-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "场次已满返回 409，失败的预约不改任何东西",
+  "cards": [
+   "lcp-reservation-service-contract-rules",
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "available_slots 恒等于 容量 减去 active 预约数",
+  "cards": [
+   "lcp-reservation-service-contract-rules",
+   "lcp-reservation-service-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "取消之后同一用户可以再预约：新预约、新 id、名额再减一",
+  "cards": [
+   "lcp-reservation-service-contract-rules"
+  ],
+  "leaves": [
+   "fsm.illegal-transitions",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "只有主人能取消；别人的预约与不存在的预约一样返回 404，不泄露它存在",
+  "cards": [
+   "lcp-reservation-service-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "review.risk-patterns"
+  ]
+ },
+ {
+  "point": "重复取消每次都 200、正文与第一次相同，cancelled_at 保持第一次的值",
+  "cards": [
+   "lcp-reservation-service-contract-rules",
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "fsm.illegal-transitions",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "重复取消只释放一次名额、只写一行 cancelled 审计",
+  "cards": [
+   "lcp-reservation-service-contract-rules",
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "fsm.illegal-transitions",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "每次成功的预约或取消恰好写一行审计；失败的请求一行都不写",
+  "cards": [
+   "lcp-reservation-service-contract-rules",
+   "lcp-reservation-service-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "errors.cleanup"
+  ]
+ },
+ {
+  "point": "预约状态、名额、审计三者同成败：放进一个事务，任何一步失败都回滚",
+  "cards": [
+   "lcp-reservation-service-contract-rules",
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "errors.cleanup"
+  ]
+ },
+ {
+  "point": "Dashboard 的 active 与 cancelled 两个列表只含当前用户、只含该状态的预约",
+  "cards": [
+   "lcp-reservation-service-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "响应字段 id、user_id、session_id、status、created_at、cancelled_at 与路径、状态值都不能改名",
+  "cards": [
+   "lcp-reservation-service-contract-rules"
+  ],
+  "leaves": [
+   "api.evolution",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "缺少 X-User-ID 或用户不存在返回 401，场次列表不需要鉴权",
+  "cards": [
+   "lcp-reservation-service-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "先锁场次那一行再检查再写：PostgreSQL 用 SELECT … FOR UPDATE，SQLite 用 BEGIN IMMEDIATE",
+  "cards": [
+   "lcp-reservation-service-concurrent-booking",
+   "lcp-reservation-service-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "名额递减写成 available_slots = available_slots - 1；ORM 的 -= 1 写回的是算好的绝对值，会丢更新",
+  "cards": [
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "concurrency-depth.atomics",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "预约的检查顺序：场次存在 → 是否已持有 → 是否已满",
+  "cards": [
+   "lcp-reservation-service-contract-rules",
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "取消只在状态是 active 时才动：状态判断本身就让取消幂等，不需要幂等键表",
+  "cards": [
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "fsm.illegal-transitions",
+   "principles.simplicity"
+  ]
+ },
+ {
+  "point": "取消与预约用同一个加锁顺序：先场次，后预约",
+  "cards": [
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "concurrency.hazards",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "唯一索引 (user_id, session_id) WHERE status = 'active' 让数据库拒绝第二条 active",
+  "cards": [
+   "lcp-reservation-service-state-and-invariant",
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "available_slots <= capacity 由 CHECK 约束（SQLite 里用触发器）把关，已有的 >= 0 保留",
+  "cards": [
+   "lcp-reservation-service-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "只把唯一冲突（SQLSTATE 23505）翻成 409；审计表等别的 IntegrityError 仍是 500",
+  "cards": [
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "errors.narrow-catch",
+   "errors.taxonomy"
+  ]
+ },
+ {
+  "point": "修复只改状态：不删记录，id、用户、场次、created_at 不变",
+  "cards": [
+   "lcp-reservation-service-data-repair"
+  ],
+  "leaves": [
+   "data.invariants",
+   "ai.risks"
+  ]
+ },
+ {
+  "point": "同一用户同一场次有多条 active：created_at 最早的留下，同一时刻取 id 小的",
+  "cards": [
+   "lcp-reservation-service-data-repair"
+  ],
+  "leaves": [
+   "data.invariants",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "去重之后仍超容量：按同样的顺序留到容量为止；容量为 0 的场次全部取消",
+  "cards": [
+   "lcp-reservation-service-data-repair"
+  ],
+  "leaves": [
+   "data.invariants",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "两条修复规则先后有别：先去重再按容量，否则同一用户的重复记录会占掉别人的名额",
+  "cards": [
+   "lcp-reservation-service-data-repair"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "被修复取消的记录 cancelled_at 都是这次修复的同一个时刻（PostgreSQL 事务内 now() 不变）",
+  "cards": [
+   "lcp-reservation-service-data-repair"
+  ],
+  "leaves": [
+   "fluency.time-numbers",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "修复不为被取消的记录补写用户审计行；其余预约与已有审计一行不变",
+  "cards": [
+   "lcp-reservation-service-data-repair"
+  ],
+  "leaves": [
+   "data.invariants",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "修复后重算每个场次的 available_slots，包括没有预约被改动但计数器错位的场次",
+  "cards": [
+   "lcp-reservation-service-data-repair",
+   "lcp-reservation-service-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "先修数据再建约束：脏数据上建部分唯一索引会失败",
+  "cards": [
+   "lcp-reservation-service-data-repair"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.evolution"
+  ]
+ },
+ {
+  "point": "修复、建约束、盖版本号放在一个事务里：中途失败数据与版本号都回到原样",
+  "cards": [
+   "lcp-reservation-service-data-repair"
+  ],
+  "leaves": [
+   "errors.cleanup",
+   "fsm.persistence"
+  ]
+ },
+ {
+  "point": "修复幂等：只处理违反规则的行，第二次运行不改任何行、不覆盖第一次的 cancelled_at",
+  "cards": [
+   "lcp-reservation-service-data-repair"
+  ],
+  "leaves": [
+   "fsm.illegal-transitions",
+   "testing.test-first"
+  ]
+ },
+ {
+  "point": "dry-run 做完同样的事然后回滚，只报告会取消哪些预约、改哪些计数",
+  "cards": [
+   "lcp-reservation-service-data-repair"
+  ],
+  "leaves": [
+   "errors.cleanup",
+   "ai.risks"
+  ]
+ },
+ {
+  "point": "本地快照只是生产的节选，排练通过不等于看见了全部生产行（比如容量为 0 的场次）",
+  "cards": [
+   "lcp-reservation-service-data-repair"
+  ],
+  "leaves": [
+   "ai.risks",
+   "debugging.prevent"
+  ]
+ },
+ {
+  "point": "先复现再改：把请求日志与工单翻成会失败的测试（重试得到两条 active、重复取消名额超过容量）",
+  "cards": [
+   "lcp-reservation-service-contract-rules",
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "debugging.reproduce",
+   "debugging.hypothesis"
+  ]
+ },
+ {
+  "point": "并发测试用真线程加屏障，断言不变量（成功数、名额、审计行数），不断言耗时",
+  "cards": [
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "concurrency-depth.testing",
+   "debugging.heisenbugs"
+  ]
+ },
+ {
+  "point": "给编程智能体的指令：规则加一个失败测试，一次一类缺陷，期望值自己独立写出",
+  "cards": [
+   "lcp-reservation-service-contract-rules",
+   "lcp-reservation-service-concurrent-booking"
+  ],
+  "leaves": [
+   "ai.decomposition",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "生产变更的节奏：本地快照排练、dry-run 看 diff、apply、用只读检查验证，并写变更记录",
+  "cards": [
+   "lcp-reservation-service-data-repair"
+  ],
+  "leaves": [
+   "ai.risks",
+   "debugging.prevent"
+  ]
+ }
+]

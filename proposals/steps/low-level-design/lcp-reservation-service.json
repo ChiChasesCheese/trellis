@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-reservation-service": [
+    "lcp-reservation-service-contract-rules",
+    "lcp-reservation-service-state-and-invariant",
+    "lcp-reservation-service-concurrent-booking",
+    "lcp-reservation-service-data-repair"
+  ]
+}
