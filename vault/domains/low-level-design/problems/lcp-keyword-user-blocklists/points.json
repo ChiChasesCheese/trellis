@@ -1,0 +1,388 @@
+[
+ {
+  "point": "配置是字符串可迭代对象：裸 str 和 bytes 要先拒绝，否则被拆成单个字符",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "空白条目非法：strip 之后为空；空关键词是任何内容的子串，会拒掉一切",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "非字符串条目非法：None、数字、bytes 都是 400",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "python.typing"
+  ]
+ },
+ {
+  "point": "三个错误码各管一处：invalid_keywords、invalid_users、invalid_input",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.taxonomy"
+  ]
+ },
+ {
+  "point": "先整体校验，再整份替换；构造函数与替换走同一条校验路径",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules",
+   "lcp-keyword-user-blocklists-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "校验失败旧配置不变：不能先 clear 再逐个填",
+  "cards": [
+   "lcp-keyword-user-blocklists-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "concurrency-depth.confinement"
+  ]
+ },
+ {
+  "point": "一次性迭代器：先读成快照，只遍历一次，之后改原列表不影响服务",
+  "cards": [
+   "lcp-keyword-user-blocklists-state-and-invariant"
+  ],
+  "leaves": [
+   "python.context-iterators",
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "迭代中抛出的异常原样传出，不包成 400",
+  "cards": [],
+  "leaves": [
+   "errors.exceptions-vs-values",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "非可迭代的配置（None、整数）合同没写：开工前确认，这里归入 400",
+  "cards": [],
+  "leaves": [
+   "api.specs",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "关键词规范化：strip().casefold() 后去重",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "内容只 casefold：不 strip，也不做 NFC 或 NFD 规范化",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "casefold 与 lower 的区别：ß 折成 ss，词尾 Σ 折成 σ",
+  "cards": [],
+  "leaves": [
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "字面子串匹配：不是正则也不是整词，代价是 ass 命中 class",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "匹配结果排序、无重复，重叠的关键词都算命中",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "不可变的关键词表：建表时规范化、去重、排序，查询只过滤",
+  "cards": [
+   "lcp-keyword-user-blocklists-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.confinement",
+   "python.dataclasses-enums"
+  ]
+ },
+ {
+  "point": "空内容和空白内容合法，什么也不命中，不记账",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "用户 ID 区分大小写、原样保存：不 strip，不统一大小写",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "data.value-entity"
+  ]
+ },
+ {
+  "point": "输入校验先于判封、匹配和记账，被封的用户也一样",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "被封是算出来的：手动名单里或次数 ≥ 3，不另存标志",
+  "cards": [
+   "lcp-keyword-user-blocklists-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "structure.state-machines"
+  ]
+ },
+ {
+  "point": "被封用户：不匹配、不加次数、matches 为空，优先于关键词拒绝",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "一个被拒请求只加一次，与命中几个词无关",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "第三次被拒仍是 keyword，第四次起才是 user_blocked",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules",
+   "lcp-keyword-user-blocklists-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.state-machines",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "干净请求放行，且不清零次数",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "api.specs"
+  ]
+ },
+ {
+  "point": "state 的形状：strikes 与 blocked，陌生用户为 0 次，只读不建条目",
+  "cards": [
+   "lcp-keyword-user-blocklists-state-and-invariant"
+  ],
+  "leaves": [
+   "api.returns",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "替换只换自己那一份，空表表示清空，不清零次数也不解除自动封禁",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "移出手动名单只在次数小于 3 时才解封",
+  "cards": [
+   "lcp-keyword-user-blocklists-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "structure.state-machines"
+  ]
+ },
+ {
+  "point": "判封、匹配、记账放在同一把锁里：先检查后动作不能被切开",
+  "cards": [
+   "lcp-keyword-user-blocklists-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency.primitives"
+  ]
+ },
+ {
+  "point": "配置整份替换：锁外读完校验，锁内只换一个引用，请求看到整份旧表或新表",
+  "cards": [
+   "lcp-keyword-user-blocklists-state-and-invariant",
+   "lcp-keyword-user-blocklists-reflection-million-keywords"
+  ],
+  "leaves": [
+   "concurrency-depth.confinement",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "次数封顶是安全不变量：到上限再加就抛异常，不用 assert",
+  "cards": [
+   "lcp-keyword-user-blocklists-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "返回值每次新建：Verdict 转字典、matches 列表、state 字典都是副本",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "实例隔离：状态在实例里，默认参数不共享可变对象",
+  "cards": [],
+  "leaves": [
+   "data.defensive-copy",
+   "data.value-entity"
+  ]
+ },
+ {
+  "point": "并发测试：屏障同时起跑，缩短切换间隔，断言恰好三个 keyword",
+  "cards": [
+   "lcp-keyword-user-blocklists-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.testing",
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "申诉不丢审计：违规只追加成事件，撤销也是新事件",
+  "cards": [
+   "lcp-keyword-user-blocklists-reflection-appeals-audit"
+  ],
+  "leaves": [
+   "data.invariants",
+   "data.value-entity"
+  ]
+ },
+ {
+  "point": "次数改成对事件的查询，账本接口 count 与 add 不变",
+  "cards": [
+   "lcp-keyword-user-blocklists-reflection-appeals-audit"
+  ],
+  "leaves": [
+   "structure.storage",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "百万级关键词：逐词扫描线性变慢且持着锁，换成 Aho–Corasick 自动机",
+  "cards": [
+   "lcp-keyword-user-blocklists-reflection-million-keywords"
+  ],
+  "leaves": [
+   "concurrency-depth.parallel-scaling",
+   "problems.components.rate-limiter"
+  ]
+ },
+ {
+  "point": "后台建好新自动机，再在锁内换引用，请求不被建树堵住",
+  "cards": [
+   "lcp-keyword-user-blocklists-reflection-million-keywords"
+  ],
+  "leaves": [
+   "concurrency-depth.confinement",
+   "concurrency-depth.safe-structures"
+  ]
+ },
+ {
+  "point": "自动机的新瓶颈是内存：字典树比词本身大几十倍",
+  "cards": [
+   "lcp-keyword-user-blocklists-reflection-million-keywords"
+  ],
+  "leaves": [
+   "concurrency-depth.parallel-scaling"
+  ]
+ },
+ {
+  "point": "给编程智能体的第一条指令：十二条合同加数字例子，一次一个失败用例",
+  "cards": [
+   "lcp-keyword-user-blocklists-contract-rules"
+  ],
+  "leaves": [
+   "ai.specs",
+   "ai.decomposition"
+  ]
+ },
+ {
+  "point": "智能体的老毛病：lower、词边界正则、strip 用户 ID、多存一个 blocked 标志",
+  "cards": [],
+  "leaves": [
+   "ai.failure-modes",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "自己写并发测试和合同数字逐项断言，不让智能体代写",
+  "cards": [],
+  "leaves": [
+   "ai.verification",
+   "ai.delegation"
+  ]
+ }
+]

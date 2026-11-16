@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-keyword-user-blocklists": [
+    "lcp-keyword-user-blocklists-contract-rules",
+    "lcp-keyword-user-blocklists-state-and-invariant",
+    "lcp-keyword-user-blocklists-reflection-appeals-audit",
+    "lcp-keyword-user-blocklists-reflection-million-keywords"
+  ]
+}
