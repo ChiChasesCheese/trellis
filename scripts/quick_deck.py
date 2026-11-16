@@ -41,14 +41,15 @@ HOME = Path(os.environ.get("QUICK_HOME") or ROOT / "sources/local/quick")
 DECK = "4 碎片速刷"  # the number sorts it with the daily decks
 PRESET = "碎片速刷"  # its preset kept the old name
 TAG = "quick"
-FORMATS = ("cloze", "mc", "flaw", "qa", "order", "match", "multi", "bug")
-KIND = {"cloze": "填空", "mc": "选择", "flaw": "找错", "qa": "快问", "order": "排序", "match": "配对", "multi": "多选", "bug": "找错行"}
+FORMATS = ("cloze", "mc", "flaw", "qa", "order", "match", "multi", "bug", "judge")
+KIND = {"cloze": "填空", "mc": "选择", "flaw": "找错", "qa": "快问", "order": "排序", "match": "配对", "multi": "多选", "bug": "找错行", "judge": "判断组"}
 FRONT, TAP_FRONT, BACK, TOTAL, OPT, LINE, SIDE, BLANK = 55, 62, 42, 90, 16, 14, 10, 14  # reading units: a Chinese character 1, an ASCII letter or digit 1/2
 MORE = 45  # the extension line under the answer: read only with a few seconds to spare, so outside the ten-second budget
-TAPPED = ("mc", "order", "match", "multi", "bug")
+TAPPED = ("mc", "order", "match", "multi", "bug", "judge")
 # multi: 4-6 options, every right one must be picked; bug: a short code excerpt, tap the one wrong line (LeetCode Project, 2026-11-16)
 MULTI_FRONT, CODE_LINE, CODE_LINES = 80, 44, (4, 10)
-SNIP_LINES = 8  # code_q (with the question) and snippet (on the back): scanned, not read, so outside the units  # options are scanned, not read through: a little more room before the answer
+SNIP_LINES = 8
+JUDGE_ROW = 22  # a judge statement: read and judged in about two seconds  # code_q (with the question) and snippet (on the back): scanned, not read, so outside the units  # options are scanned, not read through: a little more room before the answer
 CHUNK = 20
 DEFAULTS = {"cards": 1000, "per_day": 100, "topic_cap": 6, "source_cards": 2}
 
@@ -166,6 +167,10 @@ def sides(c: dict) -> tuple[list[str], list[str]]:
         return [c.get("text", "")], [c.get("why", "")]
     if f in ("mc", "multi"):
         return [c.get("q", ""), *c.get("opts", [])], [c.get("why", "")]
+    if f == "judge":
+        return [c.get("q", ""), *[r[0] for r in c.get("rows", []) if isinstance(r, list) and r]], [c.get("why", "")]
+    if f == "order":
+        return [c.get("q", ""), *c.get("lines", []), *c.get("decoys", [])], [c.get("why", "")]
     if f == "bug":
         return [c.get("q", "")], [c.get("fix", ""), c.get("why", "")]  # code is scanned, not read: outside the units
     if f == "order":
@@ -192,7 +197,7 @@ def check(c: dict, known: dict[str, dict]) -> list[str]:
     if f not in ("qa", "flaw") and not c.get("why", "").strip():
         bad.append("why is empty")
     uf, ub = sum(units(x) for x in front), sum(units(x) for x in back)
-    limit = MULTI_FRONT if f == "multi" else TAP_FRONT if f in TAPPED else FRONT
+    limit = MULTI_FRONT if f in ("multi", "judge") else TAP_FRONT if f in TAPPED else FRONT
     if uf > limit:
         bad.append(f"front {uf:.0f} > {limit}")
     if ub > BACK:
@@ -227,6 +232,20 @@ def check(c: dict, known: dict[str, dict]) -> list[str]:
             bad.append(f"an option over {OPT}")
         if any(re.search(r"以上|都对|都不|皆", x) for x in o):
             bad.append("no all-of-the-above option")
+    if f == "judge":
+        r = c.get("rows", [])
+        if not 3 <= len(r) <= 5 or any(not (isinstance(x, list) and len(x) in (2, 3) and isinstance(x[0], str) and isinstance(x[1], bool)) for x in r):
+            bad.append("3 to 5 rows [statement, true/false, optional reason]")
+        elif any(units(x[0]) > JUDGE_ROW for x in r) or len({x[0] for x in r}) != len(r):
+            bad.append(f"distinct statements of at most {JUDGE_ROW}")
+        elif all(x[1] for x in r) or not any(x[1] for x in r):
+            bad.append("mix true and false rows")
+        elif any(not x[1] and (len(x) < 3 or not x[2].strip()) for x in r):
+            bad.append("every false row carries its one-line reason")
+    if f == "order" and c.get("decoys"):
+        d = c["decoys"]
+        if not isinstance(d, list) or not 1 <= len(d) <= 2 or any(units(x) > LINE for x in d) or set(d) & set(c.get("lines", [])):
+            bad.append(f"1 or 2 decoys of at most {LINE}, none equal to a line")
     if f == "bug":
         code, i = c.get("code", []), c.get("bad")
         if not CODE_LINES[0] <= len(code) <= CODE_LINES[1] or any(not isinstance(x, str) or len(x) > CODE_LINE for x in code):
@@ -434,6 +453,15 @@ button.go { margin:4px 0 2px; padding:8px 22px; border-radius:8px; border:1px so
 .cl > * { pointer-events:none; } .cl code { background:none; padding:0; white-space:pre; font-size:13px; }
 .cl .ln { flex:0 0 auto; width:18px; text-align:right; color:var(--dim); font-size:11px; }
 .cl.sel { background:rgba(192,57,43,.14); } .cl.ok { background:rgba(46,158,91,.18); }
+button.idk { margin:6px 8px 2px 0; padding:6px 14px; border-radius:8px; border:1px solid var(--rule); background:none; color:var(--dim); font-size:13px; }
+.jrows { display:flex; flex-direction:column; gap:8px; margin:6px 0; }
+.jr { display:flex; gap:8px; align-items:center; padding:6px 8px 6px 12px; border:1px solid var(--rule); border-radius:8px; }
+.jr .body { flex:1 1 auto; min-width:0; overflow-wrap:anywhere; }
+.jb { flex:0 0 auto; width:40px; height:40px; line-height:40px; text-align:center; border:1px solid var(--rule); border-radius:8px; font-size:17px; cursor:pointer; -webkit-tap-highlight-color:transparent; -webkit-user-select:none; user-select:none; }
+.jb.sel { border-color:var(--accent); background:var(--chip); color:var(--accent); }
+.jr.ok { border-color:#2e9e5b; } .jr.bad { border-color:#c0392b; }
+ol.jsol { margin:0 0 10px; padding-left:1.4em; } ol.jsol li { margin-bottom:.35em; } ol.jsol li.bad { color:#c0392b; }
+.jwhy { display:block; color:var(--dim); font-size:.9em; }
 pre.snip { margin:8px 0 4px; padding:6px 10px; border:1px solid var(--rule); border-radius:6px; overflow-x:auto; white-space:pre; font-size:12.5px; line-height:1.45; }
 pre.snip code { background:none; padding:0; white-space:pre; }
 """
@@ -467,41 +495,53 @@ NO_FLIP = 'function flip(ok){}'
 SAVED = ('window._qkT=(window._qkT||0)+1;var m=null;try{m=sessionStorage.getItem("qk")}catch(e){}'
          'if(m===null&&typeof window._qk==="string"){m=window._qk}'
          'var t=document.querySelectorAll(".tappable");for(var i=0;i<t.length;i++){t[i].classList.remove("tappable");t[i].onclick=null;t[i].removeAttribute("onclick")}')
-SHOW = ('if(m){var e=document.getElementById("mine"),g=document.getElementById("grade");e.textContent=ok?"✓ 答对":"✗ 答错"+miss;'
+SHOW = ('if(m==="?"){ok=false;miss="：不会"}'
+        'if(m){var e=document.getElementById("mine"),g=document.getElementById("grade");e.textContent=ok?"✓ 答对":"✗ 答错"+miss;'
         'e.className="mine "+(ok?"good":"miss");if(g){g.textContent=ok?"答对 → Good（蒙对的按 Again）":"答错 → Again"}}')
 FB = '<div class="mine" id="fb"></div>'
+IDK = '<button class="idk" onclick="qkIdk()">不会</button>'
+# a tap on 不会 ends the card as a miss; the back reads "?" and says Again
+IDK_JS = ('function idk(){if(done){return}done=true;var t=document.querySelectorAll(".tappable");for(var i=0;i<t.length;i++){free(t[i])}'
+          'keep("?");say(false," · 不会，看答案");flip(false)}window.qkIdk=idk;')
 
 QA_Q = HEAD % "{{Kind}}" + '<div class="q">{{Question}}</div>'
 QA_A = QA_Q + '<hr id="answer"><div class="a">{{Answer}}</div>' + TAIL
 CLOZE_Q = HEAD % "填空" + '<div class="q">{{cloze:Text}}</div>'
 CLOZE_A = CLOZE_Q + '<hr id="answer">' + TAIL
 
-MC_Q = (HEAD % "选择" + '<div class="q">{{Question}}</div><div class="opts" id="opts">{{Opts}}</div>' + FB +
+MC_Q = (HEAD % "选择" + '<div class="q">{{Question}}</div><div class="opts" id="opts">{{Opts}}</div>' + IDK + FB +
         '<script>(function(){var c="{{Correct}}",root=document.getElementById("opts"),o=root.querySelectorAll(".opt"),done=false;' + TOOLS +
         'function tap(el){if(done){return}done=true;var k=el.getAttribute("data-k");'
         'for(var i=0;i<o.length;i++){var x=o[i].getAttribute("data-k");o[i].classList.add(x===c?"ok":"bad");if(x===k){o[i].classList.add("sel")}free(o[i])}'
         'keep(k);say(k===c,k===c?"":"，正确是 "+c);flip(k===c)}'
-        + CLEAR + 'window.qkTap=tap;arm(o,tap)})();</script>')
+        + CLEAR + IDK_JS + 'window.qkTap=tap;arm(o,tap)})();</script>')
 MC_A = (HEAD % "选择" + '<div class="q">{{Question}}</div><div class="mine" id="mine"></div><div class="opts" id="opts">{{Opts}}</div>'
         '<hr id="answer"><div class="a">{{Answer}}</div>' + TAIL +
         '<script>(function(){var c="{{Correct}}";var o=document.querySelectorAll("#opts .opt");' + SAVED +
         'for(var i=0;i<o.length;i++){var k=o[i].getAttribute("data-k");o[i].classList.add(k===c?"ok":"bad");if(k===m){o[i].classList.add("sel")}}'
         'var ok=m===c,miss="：你选了 "+m;' + SHOW + '})();</script>')
 
-ORDER_Q = (HEAD % "排序" + '<div class="q">{{Question}}</div><div class="pool" id="pool">{{Lines}}</div>' + FB +
-           '<script>(function(){var root=document.getElementById("pool"),L=root.querySelectorAll(".pl"),seq=[],done=false;' + TOOLS +
+ORDER_Q = (HEAD % "排序" + '<div class="q">{{Question}}</div><div class="pool" id="pool">{{Lines}}</div>' + IDK + FB +
+           '<script>(function(){var root=document.getElementById("pool"),L=root.querySelectorAll(".pl"),seq=[],done=false;'
+           # n real steps; rows whose data-i starts with x are decoys that belong in no position
+           'var N=+(root.querySelector(".pl[data-n]")||{getAttribute:function(){return L.length}}).getAttribute("data-n")||L.length,decoy=N<L.length;' + TOOLS +
            'function draw(){for(var i=0;i<L.length;i++){var p=seq.indexOf(L[i].getAttribute("data-i"));'
            'L[i].querySelector(".n").textContent=p<0?"":(p+1);L[i].classList.toggle("sel",p>=0)}}'
-           'function finish(){done=true;var ok=true;for(var i=0;i<L.length;i++){var k=L[i].getAttribute("data-i"),good=seq.indexOf(k)===+k;'
-           'L[i].classList.add(good?"ok":"bad");if(!good){ok=false}free(L[i])}keep(seq.join(""));say(ok,ok?"":"，翻面看顺序");flip(ok)}'
+           'function finish(){done=true;var ok=true,d=0;for(var i=0;i<L.length;i++){var k=L[i].getAttribute("data-i"),p=seq.indexOf(k),x=k.charAt(0)==="x";'
+           'var good=x?p<0:p===+k;if(!x){d+=p<0?9:Math.abs(p-(+k))}else if(p>=0){d+=9}'
+           'L[i].classList.add(good?"ok":"bad");if(!good){ok=false}free(L[i])}keep(seq.join(","));'
+           'say(ok,ok?"":(d===2?"，一处相邻颠倒（Hard）":"，翻面看顺序"));flip(ok)}'
            # the last line has only one place left, so it is filled in: one tap fewer
            'function tap(el){if(done){return}var k=el.getAttribute("data-i"),p=seq.indexOf(k);if(p<0){seq.push(k)}else{seq.splice(p)}'
-           'if(seq.length===L.length-1){for(var i=0;i<L.length;i++){var x=L[i].getAttribute("data-i");if(seq.indexOf(x)<0){seq.push(x);break}}}'
-           'draw();if(seq.length===L.length){finish()}}'
-           + CLEAR + 'window.qkTap=tap;arm(L,tap)})();</script>')
+           'if(!decoy&&seq.length===N-1){for(var i=0;i<L.length;i++){var x=L[i].getAttribute("data-i");if(seq.indexOf(x)<0){seq.push(x);break}}}'
+           'draw();if(seq.length===N){finish()}}'
+           + CLEAR + IDK_JS + 'window.qkTap=tap;arm(L,tap)})();</script>')
 ORDER_A = (HEAD % "排序" + '<div class="q">{{Question}}</div><div class="mine" id="mine"></div><hr id="answer">{{Solution}}' + TAIL +
            '<script>(function(){var n=document.querySelectorAll("ol.steps li").length;' + SAVED +
-           'var want="";for(var i=0;i<n;i++){want+=i}var ok=m===want,miss="";' + SHOW + '})();</script>')
+           'var want=[];for(var i=0;i<n;i++){want.push(i)}var got=m&&m!=="?"?m.split(","):[],d=0;'
+           'for(var i=0;i<n;i++){var p=got.indexOf(String(i));d+=p<0?9:Math.abs(p-i)}for(var j=0;j<got.length;j++){if(got[j].charAt(0)==="x"){d+=9}}'
+           'var ok=d===0,miss=m==="?"?"：不会":(d===2?"：一处相邻颠倒":"");' + SHOW +
+           'var g=document.getElementById("grade");if(g&&m&&d===2){g.textContent="一处相邻颠倒 → Hard"}})();</script>')
 
 MATCH_Q = (HEAD % "配对" + '<div class="q">{{Question}}</div><div class="mcols" id="mcols"><div id="ml">{{Left}}</div><div id="mr">{{Right}}</div></div>' + FB +
            '<script>(function(){var root=document.getElementById("mcols"),L=root.querySelectorAll("#ml .mit"),R=root.querySelectorAll("#mr .mit");'
@@ -531,31 +571,45 @@ MATCH_A = (HEAD % "配对" + '<div class="q">{{Question}}</div><div class="mine"
 
 
 MULTI_Q = (HEAD % "多选" + '<div class="q">{{Question}}<span class="hint">（选出所有对的）</span></div><div class="opts" id="opts">{{Opts}}</div>'
-           '<button class="go" id="go" onclick="qkGo()">确定</button>' + FB +
+           '<button class="go" id="go" onclick="qkGo()">确定</button>' + IDK + FB +
            '<script>(function(){var c="{{Correct}}",root=document.getElementById("opts"),o=root.querySelectorAll(".opt"),pick={},done=false;' + TOOLS +
            'function tap(el){if(done){return}var k=el.getAttribute("data-k");if(pick[k]){delete pick[k];el.classList.remove("sel")}else{pick[k]=1;el.classList.add("sel")}}'
            'function go(){if(done){return}done=true;var s="";for(var i=0;i<o.length;i++){var x=o[i].getAttribute("data-k");'
            'o[i].classList.add(c.indexOf(x)>=0?"ok":"bad");if(pick[x]){s+=x}free(o[i])}'
            'var b=document.getElementById("go");b.style.display="none";keep(s);say(s===c,s===c?"":"，正确是 "+c);flip(s===c)}'
-           + CLEAR + 'window.qkTap=tap;window.qkGo=go;arm(o,tap)})();</script>')
+           + CLEAR + IDK_JS + 'window.qkTap=tap;window.qkGo=go;arm(o,tap)})();</script>')
 MULTI_A = (HEAD % "多选" + '<div class="q">{{Question}}</div><div class="mine" id="mine"></div><div class="opts" id="opts">{{Opts}}</div>'
            '<hr id="answer"><div class="a">{{Answer}}</div>' + TAIL +
            '<script>(function(){var c="{{Correct}}";var o=document.querySelectorAll("#opts .opt");' + SAVED +
            'for(var i=0;i<o.length;i++){var k=o[i].getAttribute("data-k");o[i].classList.add(c.indexOf(k)>=0?"ok":"bad");if(m&&m.indexOf(k)>=0){o[i].classList.add("sel")}}'
            'var ok=m===c,miss="：你选了 "+(m||"（无）");' + SHOW + '})();</script>')
 
-BUG_Q = (HEAD % "找错行" + '<div class="q">{{Question}}</div><div class="code" id="opts">{{Lines}}</div>' + FB +
+BUG_Q = (HEAD % "找错行" + '<div class="q">{{Question}}</div><div class="code" id="opts">{{Lines}}</div>' + IDK + FB +
          '<script>(function(){var c="{{Correct}}",root=document.getElementById("opts"),o=root.querySelectorAll(".cl"),done=false;' + TOOLS +
          'function tap(el){if(done){return}done=true;var k=el.getAttribute("data-k");'
          'for(var i=0;i<o.length;i++){var x=o[i].getAttribute("data-k");if(x===c){o[i].classList.add("ok")}if(x===k){o[i].classList.add("sel")}free(o[i])}'
          'keep(k);say(k===c,k===c?"":"，错的是第 "+c+" 行");flip(k===c)}'
-         + CLEAR + 'window.qkTap=tap;arm(o,tap)})();</script>')
+         + CLEAR + IDK_JS + 'window.qkTap=tap;arm(o,tap)})();</script>')
 BUG_A = (HEAD % "找错行" + '<div class="q">{{Question}}</div><div class="mine" id="mine"></div><div class="code" id="opts">{{Lines}}</div>'
          '<hr id="answer"><div class="a">{{Answer}}</div>' + TAIL +
          '<script>(function(){var c="{{Correct}}";var o=document.querySelectorAll("#opts .cl");' + SAVED +
          'for(var i=0;i<o.length;i++){var k=o[i].getAttribute("data-k");if(k===c){o[i].classList.add("ok")}if(k===m){o[i].classList.add("sel")}}'
          'var ok=m===c,miss="：你点了第 "+m+" 行";' + SHOW + '})();</script>')
 
+
+JUDGE_Q = (HEAD % "判断组" + '<div class="q">{{Question}}<span class="hint">（每句点 ✓ 或 ✗）</span></div><div class="jrows" id="opts">{{Rows}}</div>' + IDK + FB +
+           '<script>(function(){var c="{{Correct}}",root=document.getElementById("opts"),R=root.querySelectorAll(".jr"),B=root.querySelectorAll(".jb"),pick={},done=false;' + TOOLS +
+           'function tap(el){if(done){return}var r=el.parentNode,i=r.getAttribute("data-i");pick[i]=el.getAttribute("data-v");'
+           'var bs=r.querySelectorAll(".jb");for(var j=0;j<bs.length;j++){bs[j].classList.toggle("sel",bs[j]===el)}'
+           'var n=0;for(var k in pick){n++}if(n===R.length){finish()}}'
+           'function finish(){done=true;var s="",good=0;for(var i=0;i<R.length;i++){var v=pick[i],ok=v===c.charAt(i);s+=v;if(ok){good++}'
+           'R[i].classList.add(ok?"ok":"bad")}for(var j=0;j<B.length;j++){free(B[j])}keep(s);'
+           'say(good===R.length,good===R.length?"":"：对了 "+good+"/"+R.length);flip(good===R.length)}'
+           + CLEAR + IDK_JS + 'window.qkTap=tap;arm(B,tap)})();</script>')
+JUDGE_A = (HEAD % "判断组" + '<div class="q">{{Question}}</div><div class="mine" id="mine"></div><hr id="answer">{{Answer}}' + TAIL +
+           '<script>(function(){var c="{{Correct}}";' + SAVED +
+           'var R=document.querySelectorAll(".jsol li"),good=0;for(var i=0;i<R.length;i++){var ok=m&&m.charAt(i)===c.charAt(i);if(ok){good++}'
+           'R[i].classList.add(ok?"ok":"bad")}var ok=good===R.length,miss="：对了 "+good+"/"+R.length;' + SHOW + '})();</script>')
 
 def templates() -> dict[str, tuple[str, str]]:
     """Front and back per model key. `quick.autoflip: false` in the plan config leaves turning the card to the usual tap."""
@@ -576,6 +630,7 @@ MODELS = {  # name, fields, front, back, cloze
     "match": ("Trellis Quick Match", ["Question", "Left", "Right", "Solution", "Why", "Crumb", "Point"], MATCH_Q, MATCH_A, False),
     "multi": ("Trellis Quick Multi", ["Question", "Opts", "Correct", "Answer", "Why", "Crumb", "Point"], MULTI_Q, MULTI_A, False),
     "bug": ("Trellis Quick Bug", ["Question", "Lines", "Correct", "Answer", "Why", "Crumb", "Point"], BUG_Q, BUG_A, False),
+    "judge": ("Trellis Quick Judge", ["Question", "Rows", "Correct", "Answer", "Why", "Crumb", "Point"], JUDGE_Q, JUDGE_A, False),
 }
 MODEL_OF = {"flaw": "qa"}
 
@@ -639,10 +694,23 @@ def fields(c: dict, point: dict) -> tuple[str, list[str]]:
                         for n, x in enumerate(c["code"]))
         answer = f"第 {c['bad'] + 1} 行 → <code>{html.escape(c['fix'])}</code>"
         return "bug", [mark(c["q"]), lines, str(c["bad"] + 1), answer, why, crumb, title]
+    if f == "judge":
+        rows = "".join(f'<div class="jr" data-i="{i}"><div class="body">{mark(r[0])}</div>'
+                       '<span class="jb tappable" data-v="T" onclick="qkTap(this)">✓</span><span class="jb tappable" data-v="F" onclick="qkTap(this)">✗</span></div>'
+                       for i, r in enumerate(c["rows"]))
+        correct = "".join("T" if r[1] else "F" for r in c["rows"])
+        answer = '<ol class="jsol">' + "".join(f'<li>{"✓" if r[1] else "✗"} {mark(r[0])}' + (f'<span class="jwhy">{mark(r[2])}</span>' if len(r) > 2 and r[2] else "") + "</li>"
+                                               for r in c["rows"]) + "</ol>"
+        return "judge", [mark(c["q"]), rows, correct, answer, why, crumb, title]
     if f == "order":
-        order = scrambled(len(c["lines"]), c["kp"], identity_ok=False)
-        lines = "".join(f'<div class="pl tappable" data-i="{i}" onclick="qkTap(this)"><span class="n"></span><div class="body">{mark(c["lines"][i])}</div></div>' for i in order)
+        items = [(str(i), x) for i, x in enumerate(c["lines"])] + [(f"x{i}", x) for i, x in enumerate(c.get("decoys", []))]
+        order = scrambled(len(items), c["kp"], identity_ok=False)
+        n = len(c["lines"])
+        lines = "".join(f'<div class="pl tappable" data-i="{items[i][0]}"' + (f' data-n="{n}"' if pos == 0 else "") +
+                        f' onclick="qkTap(this)"><span class="n"></span><div class="body">{mark(items[i][1])}</div></div>' for pos, i in enumerate(order))
         solution = '<ol class="steps">' + "".join(f"<li>{mark(x)}</li>" for x in c["lines"]) + "</ol>"
+        if c.get("decoys"):
+            solution += '<div class="why">不该出现：' + "；".join(mark(x) for x in c["decoys"]) + "</div>"
         return "order", [mark(c["q"]), lines, solution, why, crumb, title]
     order = scrambled(3, c["kp"], identity_ok=False)
     item = '<div class="mit tappable" data-i="{i}" onclick="qkTap(this)"><span class="badge"></span><div class="body">{t}</div></div>'

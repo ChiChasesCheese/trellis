@@ -40,13 +40,16 @@ Repository root: `/Users/chiserver/sessions/trellis`. Everything you write is lo
 | `mc` | `q`, `opts` (2–3, **the right one first**; the build shuffles), `why` | taps one option |
 | `multi` | `q`, `opts` (4–6), `ok` (indices of the right ones: at least one, not all), `why` | taps every right one, then 确定 |
 | `bug` | `q`, `code` (4–10 lines, each ≤ 44 characters, real Python), `bad` (index of the one wrong line), `fix` (that line corrected), `why` | taps the wrong line |
-| `order` | `q`, `lines` (3–4, in the right order), `why` | taps the steps in order |
+| `order` | `q`, `lines` (3–4, in the right order), optional `decoys` (1–2 lines that belong nowhere), `why` | taps 1, 2, 3, 4 on fixed rows (a rank badge per row); skips decoys |
+| `judge` | `q`, `rows` (3–5 `[statement ≤ 22, true/false, reason if false]`, mix true and false), `why` | taps ✓ or ✗ on every row |
 | `match` | `q`, `pairs` (exactly 3 `[left, right]`), `why` | pairs two columns |
 | `cloze` | `text` with exactly one `{{c1::…}}`, `why` | recalls the blank, flips |
 | `flaw` | `q` = one statement with exactly one flaw, `a` = what is wrong and the right way | says what is wrong, flips |
 | `qa` | `q`, `a` (one phrase) | answers in his head, flips |
 
 Any card may add `snippet` (code on the back); `mc`, `multi`, `qa`, `flaw` may add `code_q` (code with the question).
+Every tapped card shows a 不会 button: Chi taps it instead of guessing. An `order` with one adjacent swap tells him to
+grade Hard, so a 4-row order card is graded by how far off he was, not all-or-nothing.
 
 **Mix per project: at least 60% tapped** (`mc`, `multi`, `bug`, `order`, `match`), because a tap gives Chi an objective
 right or wrong. Use each format where it fits:
@@ -55,6 +58,10 @@ right or wrong. Use each format where it fits:
   the order rules are applied (error precedence), and Chi's favourite, **the order of thinking**: what a strong
   candidate settles first, second, third when the project opens (read the contract before prompting the agent; decide
   the lock scope before writing code). A wrong order must be a real, tempting mistake.
+- `judge` (Kprim) when a point has several near-miss facts: four statements, each judged ✓/✗, each false row with its
+  one-line reason. Prefer it to `multi`: every row is judged, so a miss names the exact fact.
+- `order` with `decoys` for code-line or step sequences where an extra step is the tempting mistake (`SELECT` before
+  `INSERT` for a uniqueness check, a sleep-based retry).
 - `multi` when a question has several right answers that a candidate tends to half-know ("which of these leave state
   behind on failure?", "which inputs must be rejected?"). 4–6 options, each a different fact.
 - `bug` for a pitfall that lives in a line of code: the boundary `>` vs `>=`, the append before the check, the missing
