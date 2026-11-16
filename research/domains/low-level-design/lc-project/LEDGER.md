@@ -14,17 +14,21 @@ adjacent-swap → Hard), match, cloze, flaw, qa; 不会 button on tapped cards.
 Next action: keep three agents busy in this order of priority — a quick writer for a reviewed leaf, a verifier for
 written quick cards, a problem agent for the next exported project (study order in the skeleton).
 
-| Project | Exported | Leaf (commit) | Official tests | Quick cards | Verified | In Anki |
-|---|---|---|---|---|---|---|
-| rate-limiter | yes | f754fca0 | 6/6 | writing | | synthesis 4 (old layout) |
-| return-fraud-risk | yes | 498e211f | 3/3 | writing | | |
-| actor-follow-notifications | yes | 498e211f | 3/3 | | | |
-| issue-creation-api | yes | 498e211f | 3/3 | | | |
-| password-reset | yes | ffacc156 | 4/4 | | | |
-| url-shortener | yes | e826c429 | 18 + 24 subtests | | | |
-| parcel-return-policy | yes | building | | | | |
-| file-deduplication, currency-conversion, sales-reporting | yes | | | | | |
-| the other 21 | exporting | | | | | |
+| Project | Leaf (commit) | Official tests | Quick cards (verified, in Anki) |
+|---|---|---|---|
+| rate-limiter | f754fca0 | 6/6 | 49 |
+| return-fraud-risk | 498e211f | 3/3 | 46 |
+| actor-follow-notifications | 498e211f | 3/3 | 50 |
+| issue-creation-api | 498e211f | 3/3 | 47 |
+| password-reset | ffacc156 | 4/4 | 48 |
+| url-shortener | e826c429 | 18 + 24 subtests | 51 |
+| parcel-return-policy | ea22f091 | 2/2 (workspace Decision) | writing |
+| file-deduplication | fedf07dd | 3/3 | writing |
+| currency-conversion | b6f6876c | 2/2 | — |
+| sales-reporting | 1ecc608b | 2/2 | — |
+| reservation-service | building | | |
+| exported, not started | keyword-user-blocklists, tool-call-agent, receivable-allocation, scheduled-banking, stack-trace-stream, stockroom-inventory, comments-replies | | |
+| export pending | the other 13 (export rerun after the usage limit) | | |
 
 Review findings turned into rules (LCP_AGENT.md "Defects found"): per-key parameters for sweeps; no translated
 REFLECTION questions; never touch the repo .venv for 3.11; LeetCode wording kept out of public files.
