@@ -14,7 +14,7 @@ tags: [作答]
 - **Funds(original, remaining)**：百分比读 `original`，扣款只改 `remaining`；`0 ≤ remaining ≤ original`，只减不增
 - **负请求会造钱**：`min(-5, remaining)` 是 -5，remaining 反而变大，所以 `take` 对负数抛 `ValueError`
 - **逐笔守恒**：每笔应收款的各行之和等于它的金额，违反抛 `ConservationError`；不用 `assert`，`python -O` 会把它去掉
-- **合约先归组**：一次遍历建 `dict[键, list]`，组内保持输入顺序，总成本 O(交易数 + 合约数)；一万 × 一万逐笔扫描约 2.6 秒，归组约 0.01 秒
+- **合约先归组**：一次遍历建 `dict[键, list]`，组内保持输入顺序，总成本 O(交易数 + 合约数)；一万 × 一万逐笔扫描要比较一亿次键，Python 3.14.8 上约 20 秒，归组约 0.01 秒
 - **零头归商户**：取整丢掉的分留在 `remaining`；100 分、三份 3333 基点得到 33、33、33，商户行是 1
 
 ```mermaid
