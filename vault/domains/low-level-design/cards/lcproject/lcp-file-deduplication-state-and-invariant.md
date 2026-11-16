@@ -32,21 +32,21 @@ stateDiagram-v2
 ```
 
 ```python
-while in_flight:
-    future, batch, path = done.get()
-    in_flight -= 1
-    try:
-        digest, nread = future.result()
-    except Exception as exc:
-        issues[str(path)] = describe(exc)  # 抛异常的钩子记 0
-    else:
-        hashed += nread
-        batch.buckets[digest].append(path)
-    batch.left -= 1
-    if not batch.left:
-        for bucket in batch.buckets.values():
-            if len(bucket) > 1:  # 唯一的摘要不再往下读
-                launch("full", batch.size, bucket)
+future, batch, path = done.get()  # 单写者：只有这个循环改状态
+try:
+    digest, nread = future.result()
+except Exception as exc:
+    issues[str(path)] = describe(exc)  # 抛异常的钩子记 0
+else:
+    hashed += nread
+    batch.buckets[digest].append(path)
+batch.left -= 1
+if not batch.left:  # 这批回齐才分桶
+    for bucket in batch.buckets.values():
+        if len(bucket) > 1 and batch.stage == "sample":
+            launch("full", batch.size, bucket)
+        elif len(bucket) > 1:
+            survivors.append((batch.size, bucket))
 ```
 
 <details class="pt"><summary>延伸</summary>候选任务现在一次全部提交，在途任务数与文件数成正比；用信号量把"已提交未完成"限制在 2 × worker 以内，内存才与文件数无关。</details>
