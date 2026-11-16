@@ -49,6 +49,7 @@ is researched at writing time; 新进展 blocks on at least half of the recall c
 | 2026-11-15 | `agents` | 9 | 36 (27 recall, 9 challenge; 11 diagrams; 14 新进展) | accepted: validate 0 errors, plain_style and phone_diagrams ok, numbers re-derived |
 | 2026-11-15 | `industry` | 9 | 36 (27 recall, 9 challenge; 12 diagrams; 25 新进展) | accepted: gates ok; survey figures checked against the Menlo report's text, prospectus figures against press summaries; three wordings corrected |
 | 2026-11-15 | `quirks` | 12 | 48 (36 recall, 12 challenge; 19 diagrams; 21 新进展) | accepted: gates ok; benchmark figures checked against the paper's table, blackmail rates against Anthropic's page; eleven wordings corrected |
+| 2026-11-15 | `models` | 9 | 36 (27 recall, 9 challenge; 19 diagrams; 17 新进展) | accepted: gates ok; image tokens and effort defaults checked against Anthropic's docs; all sums re-derived; ten wordings corrected |
 
 ## Least-sure claims (step 5)
 
@@ -121,6 +122,29 @@ Filled from each agent's reply; checked by the orchestrator before the group is 
 - Not checked beyond the agent's own sources: SGLang's deterministic mode, the 190-model self-identification
   measurement (the card calls it one person's measurement), the December 2025 DALL·E 3 / FLUX.1 retest, the date of the
   passage in Anthropic's prompting guide.
+
+`models`:
+
+- `multimodal-*`: the 28-pixel patch formula, both tiers (1,568 px / 1,568 tokens; 2,576 px / 4,784 tokens, Claude 4.7
+  and later), the 100 / 600 image limits and the 3,000 px rule checked against the vision docs page. The challenge
+  card claimed "under a fifth" for a 1,296-token image against 4,784; it is 27%, the card now asks for a third.
+- `reasoning-budget-to-effort`: default effort (medium on Opus 5.5 and Haiku 5.5, high elsewhere) and the cache rule
+  checked against the effort docs page. Only a top-level effort change can invalidate the cache; a per-message change
+  keeps it. Three cards now say so. The 400 error for `budget_tokens` on 4.7 and later was not re-read.
+- `open-weights-challenge`: a 128 GB machine was said to hold "tens to a hundred-odd 亿" parameters at 4 bits; the
+  right scale is 几百亿到一千多亿. Corrected.
+- `sft-vs-rl-why-reasoning-needs-rl`, `distillation-small-*`: R1-Zero 15.6% to 71.0% on AIME 2024, about 800k
+  distillation samples, the 32B and 7B distilled scores and the QwQ-32B-Preview comparison match the R1 paper as I
+  know it; not re-fetched.
+- `architecture-trends-moe-router`: Kimi K3.1 Pro (2.8 万亿 total, about 1,040 亿 active) and MiniMax M3 (4,280 亿,
+  230 亿) confirmed by several outlets. `-attention-vs-linear`: Qwen3-Next's active parameters are "about 3B" in its
+  name and 3.9B on NVIDIA's card; Nemotron 3 Nano's 3.3x is NVIDIA's own figure and the card says so.
+- `diffusion-video-cost`: Sora's shutdown announced 24 March 2026, confirmed by several outlets. The 240,000-token
+  sum is a labelled assumption (1,000 latent patches a frame).
+- `embodied-world-model`: Genie 4 (27 October 2026, research preview, native audio) confirmed by secondary outlets
+  only; AMI Labs' round not re-checked. `-vla-loop`: about 50 Hz and the RECAP result rest on the agent's sources.
+- `open-weights-what-you-get`: Muse Spark (8 April 2026, weights not released) confirmed. The Llama licence line now
+  names use restrictions next to the 700M-MAU clause.
 
 ## Next action
 
