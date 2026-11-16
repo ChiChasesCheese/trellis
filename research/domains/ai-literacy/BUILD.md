@@ -47,6 +47,7 @@ is researched at writing time; 新进展 blocks on at least half of the recall c
 |---|---|---|---|---|
 | 2026-11-15 | `use` | 11 | 44 (33 recall, 11 challenge; 12 diagrams; 23 新进展) | accepted: gates ok; Claude prices checked against the pricing page; cache and batch sums re-derived |
 | 2026-11-15 | `agents` | 9 | 36 (27 recall, 9 challenge; 11 diagrams; 14 新进展) | accepted: validate 0 errors, plain_style and phone_diagrams ok, numbers re-derived |
+| 2026-11-15 | `industry` | 9 | 36 (27 recall, 9 challenge; 12 diagrams; 25 新进展) | accepted: gates ok; survey figures checked against the Menlo report's text, prospectus figures against press summaries; three wordings corrected |
 
 ## Least-sure claims (step 5)
 
@@ -78,6 +79,24 @@ Filled from each agent's reply; checked by the orchestrator before the group is 
 - `context-memory-four-levers`: Codex and Cursor reading `SKILL.md` rests on secondary blogs.
 - Left out for lack of a primary source: OpenTelemetry GenAI convention status, A2A moving into AAIF, CORE-Bench
   numbers, the GitHub-MCP leak (the security card presents the attack chain as a hypothetical).
+
+`industry`:
+
+- Enterprise survey figures ($176.8B using vs $102.5B building, $1.70 per dollar, shares 40→55 / 27→31 / 21→9,
+  open source 19% of tokens and 4% of spend, 4.7x actual vs 1.9x planned, agents' cache reads 95%+, 25%+ of the three
+  clouds' revenue): checked against the text of Menlo's report (published 2026-11-03, data as of September 2026).
+  Menlo is an investor in Anthropic and OpenRouter; `labs-vendor-risk` now says so next to the share figure.
+- Anthropic prospectus: Q2 2026 operating income about $974M (8%), H1 revenue about $16.3B. Press summaries of the
+  filing agree; the filing itself was not read. Commitments: the card now says Google and Amazon each above $100B
+  (reported minimums $111–121B and $110B). Totals differ by source ($320B to $895B), so no total is on a card.
+- `agi-debate-bubble`: ticker ANT, range $70–78, roadshow from 10 November. Confirmed by the pricing announcement as
+  reported; the listing date and final price are not on the card.
+- `stack-cross-layer`: SpaceX closed the Cursor deal on 14 August 2026 ($60B, all stock). Confirmed by several reports.
+- `chips-supply-bottleneck`: SK hynix ADR, 177.9M at $149, about $26.5B. Confirmed (Reuters via several papers).
+- `products-three-ways-to-charge`: ChatGPT ads from February 2026, $1B annualised by end of August (a run rate:
+  about $83M a month times twelve).
+- Not checked beyond the agent's own sources: Nvidia–Groq (about $20B, December 2025), Cerebras listing (May 2026),
+  DeepSeek V4 details, Abilene capacity figures, the Gemini 2.5 Pro retirement notice.
 
 ## Next action
 
