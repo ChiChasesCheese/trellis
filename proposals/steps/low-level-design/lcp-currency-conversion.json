@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-currency-conversion": [
+    "lcp-currency-conversion-contract-rules",
+    "lcp-currency-conversion-state-and-invariant",
+    "lcp-currency-conversion-reflection-atomic-and-snapshots",
+    "lcp-currency-conversion-reflection-routes-and-tolerance"
+  ]
+}

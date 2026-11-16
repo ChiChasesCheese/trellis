@@ -1,0 +1,406 @@
+[
+{
+"point": "登记入参只接受非空字符串：None、数字、字节串、空串都是 400 invalid_input",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation",
+"api.error-contract"
+]
+},
+{
+"point": "每条记录恰好三段：空记录、空字段、多余冒号、首尾逗号都非法",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"parsing-io.parse-errors",
+"errors.boundary-validation"
+]
+},
+{
+"point": "字段不去空白、不改大小写：带空格或小写的货币码、汇率都是非法",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation"
+]
+},
+{
+"point": "货币码是 3 到 5 个 ASCII 大写字母，自报价（FROM 等于 TO）非法",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"parsing-io.regex",
+"errors.boundary-validation"
+]
+},
+{
+"point": "用 fullmatch 匹配整串：`$` 会放过末尾的换行",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-state-and-invariant"
+],
+"leaves": [
+"parsing-io.regex"
+]
+},
+{
+"point": "汇率先过语法再交给 float()：float() 比语法宽，会放过下划线、空白、nan、inf 和 Unicode 数字",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-state-and-invariant"
+],
+"leaves": [
+"parsing-io.regex",
+"fluency.time-numbers"
+]
+},
+{
+"point": "合法的汇率写法：1、1.、.5、+2.5e-1；非法：空白、十六进制、下划线、nan、inf",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"parsing-io.parse-errors"
+]
+},
+{
+"point": "汇率区间 [1e-12, 1e12] 含两端，看的是解析后的 binary64 值；1e999 解析成 inf、1e-999 解析成 0，都在区间外",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-state-and-invariant"
+],
+"leaves": [
+"fluency.time-numbers",
+"errors.boundary-validation"
+]
+},
+{
+"point": "不做货币舍入，也不用对数近似：返回值就是边上的原始浮点数或乘积",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"fluency.time-numbers"
+]
+},
+{
+"point": "累计图里的货币至多 8 种：边的起点和终点都算，跨调用累计",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-state-and-invariant"
+],
+"leaves": [
+"data.invariants"
+]
+},
+{
+"point": "一批报价让货币数超过 8 种：整批非法，已有数据不变",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-reflection-atomic-and-snapshots"
+],
+"leaves": [
+"data.invariants",
+"errors.boundary-validation"
+]
+},
+{
+"point": "报价有方向：登记一个方向不会产生反方向，反向查询是 route_not_found",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"api.specs"
+]
+},
+{
+"point": "同一有向对重复登记，后写的覆盖先写的，跨调用也一样",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-state-and-invariant"
+],
+"leaves": [
+"api.specs"
+]
+},
+{
+"point": "成功返回 201 和 registered_count：数的是记录条数，重复的也算",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"api.returns",
+"api.specs"
+]
+},
+{
+"point": "整批原子：先把整段解析完，再合并成新簿子，最后一次赋值才生效",
+"cards": [
+"lcp-currency-conversion-state-and-invariant",
+"lcp-currency-conversion-reflection-atomic-and-snapshots"
+],
+"leaves": [
+"data.invariants",
+"errors.cleanup"
+]
+},
+{
+"point": "不可变汇率簿：extend 返回新对象，失败时没有改过旧对象，所以不需要回滚",
+"cards": [
+"lcp-currency-conversion-state-and-invariant",
+"lcp-currency-conversion-reflection-atomic-and-snapshots"
+],
+"leaves": [
+"oop.values",
+"data.defensive-copy"
+]
+},
+{
+"point": "失败的登记不留痕：同批里更早的覆盖和新出现的货币都不会漏进去",
+"cards": [
+"lcp-currency-conversion-reflection-atomic-and-snapshots"
+],
+"leaves": [
+"errors.cleanup",
+"testing.partitioning"
+]
+},
+{
+"point": "查询的错误优先级：先两个码的格式（400），再是否出现过（404 currency_not_found），最后才找路线（404 route_not_found）",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-state-and-invariant"
+],
+"leaves": [
+"api.error-contract"
+]
+},
+{
+"point": "格式错误先于未知货币：另一个码是未知的，也先报 400",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"api.error-contract",
+"errors.boundary-validation"
+]
+},
+{
+"point": "只作过报价终点的货币也算出现过：它能被查询，没有出边就是 route_not_found",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-state-and-invariant"
+],
+"leaves": [
+"api.specs"
+]
+},
+{
+"point": "两个码相同且出现过：直达 rate 为 1，单次中转 rates 为 [1]，最优 best_rate 为 1、path 为 [码]；没出现过仍是 currency_not_found",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"api.specs"
+]
+},
+{
+"point": "直达查询返回登记的那条边，不看别的路线；没有这条边是 route_not_found",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"api.error-contract"
+]
+},
+{
+"point": "单次中转：直达边加每个 S→M→T 的两段乘积，相同数值保留，升序；更长的路线不算",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"api.specs",
+"data.invariants"
+]
+},
+{
+"point": "最优路线枚举所有简单有向路径：路径里已有的货币不再进入，所以环走不起来，走到 T 也就停了",
+"cards": [
+"lcp-currency-conversion-state-and-invariant",
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"python.context-iterators",
+"principles.simplicity"
+]
+},
+{
+"point": "路径乘积从 1 开始，从左到右依次连乘，和参考实现的浮点结果一致",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"fluency.time-numbers"
+]
+},
+{
+"point": "合格路径：最大乘积 M 减去它的乘积不超过 1e-5，只用绝对容差",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"fluency.time-numbers"
+]
+},
+{
+"point": "合格性以全局最大 M 为基准，不以已选中的路径为基准：否则容差会沿着路径链漂移",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"fluency.time-numbers",
+"testing.partitioning"
+]
+},
+{
+"point": "合格路径里先选边数最少的，再选整条货币序列字典序最小的：按代码逐个比较，不拼成字符串",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"fluency.collections",
+"python.data-model"
+]
+},
+{
+"point": "返回被选中路径自己的乘积，它可能略小于 M，不要换成 M",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"fluency.time-numbers",
+"api.returns"
+]
+},
+{
+"point": "为什么需要容差：0.1×3 得 0.30000000000000004，比直接登记的 0.3 大一点点，精确比较会选错路径",
+"cards": [
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"fluency.time-numbers"
+]
+},
+{
+"point": "八种货币下完全图的 A 到 H 有 1957 条简单路径，毫秒级；十种就超过十万条，十二种近千万条",
+"cards": [
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"principles.simplicity",
+"quality.fitness-functions"
+]
+},
+{
+"point": "列表按起点、再按终点排序；None 列出全部；只作终点的货币返回空列表",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"api.specs"
+]
+},
+{
+"point": "列表的过滤码走同样的两层检查：格式错 400，没出现过 404",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"api.error-contract"
+]
+},
+{
+"point": "返回值每次新建字典和列表：改返回值不影响服务，之后的登记也不改变已拿到的结果；浮点数不可变，不需要 deepcopy",
+"cards": [
+"lcp-currency-conversion-reflection-atomic-and-snapshots"
+],
+"leaves": [
+"data.defensive-copy",
+"fluency.mutability"
+]
+},
+{
+"point": "状态存在实例上，不在类或模块上：不同服务实例互不影响",
+"cards": [
+"lcp-currency-conversion-state-and-invariant"
+],
+"leaves": [
+"data.invariants",
+"fluency.mutability"
+]
+},
+{
+"point": "顺序调用不等于线程安全：两个并发登记各自基于旧簿子，后赋值的覆盖先赋值的，丢一批报价；要加锁包住读、合并、赋值",
+"cards": [
+"lcp-currency-conversion-reflection-atomic-and-snapshots"
+],
+"leaves": [
+"concurrency-depth.compound-actions",
+"concurrency-depth.confinement"
+]
+},
+{
+"point": "规模变大或接实时行情：给簿子加版本号做快照读；查询缓存按版本失效；最优路线改成带剪枝的搜索或预计算，语义要重新约定（套利环、新鲜度）",
+"cards": [
+"lcp-currency-conversion-reflection-atomic-and-snapshots",
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"api.evolution",
+"concurrency-depth.safe-structures"
+]
+},
+{
+"point": "开工前把 README 的每条规则写成测试再让智能体实现；规则里的数字例子是第一批测试",
+"cards": [
+"lcp-currency-conversion-contract-rules"
+],
+"leaves": [
+"ai.specs",
+"testing.test-first"
+]
+},
+{
+"point": "用另一种写法（子集排列穷举）写对照实现，在随机图上和解答对拍，抓住容差、平局与方向的错误",
+"cards": [
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"ai.verification",
+"testing.partitioning"
+]
+},
+{
+"point": "容差、平局和错误优先级这些语义决定自己定，写成测试再交给智能体，不让它顺手选一个",
+"cards": [
+"lcp-currency-conversion-contract-rules",
+"lcp-currency-conversion-reflection-routes-and-tolerance"
+],
+"leaves": [
+"ai.delegation",
+"ai.failure-modes"
+]
+}
+]
