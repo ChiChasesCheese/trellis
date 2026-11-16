@@ -41,6 +41,6 @@ def admit(self, calls):
     return fresh
 ```
 
-<details class="pt"><summary>延伸</summary>工作线程直接改共享缓存要加锁，还会让「谁先写」变成不确定；让线程只返回值，就把并发限制在工具执行这一步，其余仍是单线程逻辑。换成数据库时，缓存表以调用 ID 为主键。</details>
+<details class="pt"><summary>延伸</summary>工作线程直接写共享缓存，写入顺序就是完成顺序（反序完成时是 3、2、1、0），还要用锁保护「先查再写」；让线程只返回值，就把并发限制在工具执行这一步，其余仍是单线程逻辑。换成数据库时，缓存表以调用 ID 为主键。</details>
 
 **知识点：** 复合操作（Compound Actions）、不靠锁的线程安全（Immutability & Confinement）、防御性拷贝（Defensive Copying）
