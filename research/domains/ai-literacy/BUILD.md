@@ -52,6 +52,7 @@ is researched at writing time; 新进展 blocks on at least half of the recall c
 | 2026-11-15 | `models` | 9 | 36 (27 recall, 9 challenge; 19 diagrams; 17 新进展) | accepted: gates ok; image tokens and effort defaults checked against Anthropic's docs; all sums re-derived; ten wordings corrected |
 | 2026-11-15 | `evals` | 3 | 12 (9 recall, 3 challenge; 3 diagrams; 7 新进展) | accepted: gates ok; interval widths re-derived; index, ARC-AGI-3, SWE-bench figures checked; one figure corrected |
 | 2026-11-15 | `work` | 4 | 16 (12 recall, 4 challenge; 4 diagrams; 9 新进展) | accepted: gates ok; METR, Indeed, Anthropic skill-study figures checked against the primary pages; three wordings corrected |
+| 2026-11-16 | `safety` | 20 | 20 (15 recall, 5 challenge; 10 diagrams; 12 新进展) | accepted: gates ok; export-control episode, alignment assessment, EU Omnibus and copyright cases checked by search; the Disney–OpenAI deal marked void, unconfirmed attributions and dates removed, system card defined on first use |
 
 ## Least-sure claims (step 5)
 
@@ -174,6 +175,22 @@ Filled from each agent's reply; checked by the orchestrator before the group is 
 - `app-architecture-gateway`: the cache example mixed a per-million price with a 15k-token prompt; it now gives the
   per-call cost ($0.003 cached, $0.06 uncached).
 - Not checked beyond the agent's sources: DORA 2025's sample and adoption share, the Stanford payroll study's 13%.
+
+`safety`:
+
+- The Fable 5 / Mythos 5 export episode: 12 June BIS letter (Lutnick), service off for all customers the same day,
+  Mythos 5 to about 100 vetted US organisations on 26 June, licence requirement lifted 30 June. The letter gave no
+  reason; the jailbreak is Anthropic's reading, and the cards say so. The Amazon attribution and a 1 July restoration
+  date were dropped as unconfirmed.
+- The Disney–OpenAI licence (11 December 2025) is shown as void since March 2026, when Sora was shut down.
+- EU AI Act Omnibus: 7 May deal, 16 June vote 423–57, 29 June Council confirmed; the entry-into-force date and the
+  AI-literacy change were removed as unverified.
+- Not checked beyond the agent's sources: GPT-4.1 ≈ 50% in the Nature emergent-misalignment paper ("as many as 50%"),
+  the 50% volume cap and US third-party testing in the January BIS rule (one secondary source), the removal of "pause"
+  wording in RSP v3.0 (secondary), DeepMind FSF v3.1 date, the emotion-vector 22% baseline, AISI's universal-jailbreak
+  claim and the GPT-5.6 Sol result, Beijing limiting H200 imports.
+- Left out for lack of a source: OpenAI Preparedness Framework version, auditing-agent 42%, Opus 5.5 test-awareness rate,
+  exact RAISE penalties, a China AI-law row, News Corp–Meta and Reddit–Google terms.
 
 ## Next action
 
