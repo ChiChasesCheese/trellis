@@ -39,6 +39,7 @@ from statistics import median
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
+import challenge  # noqa: E402
 import daily_extra  # noqa: E402
 import company_deck  # noqa: E402
 import deep_dive  # noqa: E402
@@ -1241,6 +1242,12 @@ def run(apply_to_anki: bool, deep_only: bool = False) -> None:
     body += points_report(p, cards) + extra_report(extra)
     if quick:
         body += f"<p>{html.escape(quick_plan.line(quick))}" + (f" · 其中 {len(deep)} 个考点的完整卡排进了今天" if deep else "") + "</p>"
+    try:  # challenge cards wait until their leaf is learnt; a failure here must not stop the plan
+        ch = challenge.gate(dry=not apply_to_anki)
+        if ch["total"]:
+            body += f"<p>{html.escape(challenge.line(ch))}</p>"
+    except Exception as e:  # noqa: BLE001
+        print(f"challenge gate skipped: {e}")
     summary["extra"] = {"lc_new": len(extra.lc_new), "lc_similar": len(extra.lc_similar), "lld_new": len(extra.lld_new), "work_new": len(extra.work_new), "reviews": len(extra.reviews),
                         "backlog": extra.backlog}
     if deep_only:  # the deep dive alone: the rest of today's plan stays as dealt

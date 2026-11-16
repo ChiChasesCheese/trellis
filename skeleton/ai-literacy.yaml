@@ -1,0 +1,243 @@
+# What a working software engineer should know about AI in 2026, above the mechanics: how large language models are
+# used (prompting, context, retrieval, tools), how they get better (training methods, reasoning, modalities), agents,
+# evaluation, the industry (labs, products, chips, economics), AI in an engineer's own work, and safety. The mechanics
+# (tokens, attention, transformer, training vs inference) are in llm-inference:basics and are read first; serving and
+# hardware internals stay in llm-inference; design questions stay in ml-system-design. Leaves are in priority order
+# inside each node: how often the topic comes up among engineers, and how much later leaves build on it.
+domain: ai-literacy
+title: AI 通识：大模型应用、智能体与行业
+deck: "📦 其他::AI 通识"
+lang: zh
+vault: domains/ai-literacy
+study:
+  order: skeleton
+  mix: new-first
+  new_per_day: 25
+  reviews_per_day: 150
+nodes:
+- id: use
+  order: 0
+  core: true
+  title: 用好大模型：提示、上下文、检索与工具
+  summary: 模型训练好之后，怎么让它在一个具体任务上答得对：给它什么文字、让它看什么资料、允许它调用什么，以及这些怎么计费。
+  children:
+  - id: use.context-window
+    title: 上下文窗口：模型一次能看多少、为什么会"忘"
+    summary: 模型没有记忆，每次请求只看得到窗口里的 token；窗口有上限，塞得越满越贵、越慢，中间的内容也越容易被忽略。
+  - id: use.prompting
+    title: 提示词：系统提示、少样本与思维链
+    summary: 系统提示定角色和规则，少样本（few-shot）给例子，思维链（chain of thought）让模型先推理再回答；提示词是最便宜的调整手段。
+    requires: [use.context-window]
+  - id: use.hallucination
+    title: 幻觉：模型为什么会编、怎么压
+    summary: 模型输出的是"看起来最可能的下一个 token"，不是查到的事实；压幻觉靠给资料、要求引用、允许说不知道和事后校验。
+    requires: [use.prompting]
+  - id: use.tool-calling
+    title: 工具调用（function calling）：模型怎么"动手"
+    summary: 模型只会输出文字；工具调用是让它输出一段结构化的"调用请求"，由程序去执行，再把结果放回上下文。
+    requires: [use.prompting]
+  - id: use.rag
+    title: 检索增强生成（RAG）：先查资料再回答
+    summary: 把问题变成向量去查相关文档，取最相关的几段拼进提示，让模型依据资料回答；切块、召回、重排各有坑。
+    requires: [use.hallucination]
+  - id: use.context-engineering
+    title: 上下文工程：把对的信息放进窗口
+    summary: 提示词只是窗口的一部分；系统提示、工具定义、检索结果、历史对话、记忆都要挑选和压缩，窗口里放错东西比模型不够强更常见。
+    requires: [use.context-window, use.rag, use.tool-calling]
+  - id: use.prompt-caching
+    title: 提示缓存与批量接口：重复的前缀只算一次
+    summary: 请求开头相同的部分可以复用上一次算好的中间结果（KV 缓存），价格打一折左右；不着急的任务走批量接口再便宜一半。
+    requires: [use.context-window]
+  - id: use.api-economics
+    title: 按 token 计费：输入输出价格、模型分级与路由
+    summary: 输入和输出按 token 分开计价，输出贵几倍；每家都有大中小几档模型，简单请求交给小模型是最直接的省钱办法。
+    requires: [use.context-window]
+  - id: use.structured-output
+    title: 结构化输出：JSON 模式与受约束解码
+    summary: 程序要解析模型的输出，就得保证格式合法；受约束解码（constrained decoding）在每一步只允许符合 schema 的 token。
+    requires: [use.tool-calling]
+  - id: use.vector-search
+    title: 语义检索：嵌入模型、相似度与向量数据库
+    summary: 嵌入模型把一段文字变成一个向量，意思相近的向量也相近；向量数据库用近似最近邻在百万条里几毫秒找出最像的。
+    requires: [use.rag]
+  - id: use.adaptation-choices
+    title: 提示、RAG 还是微调：怎么选（含 LoRA）
+    summary: 缺知识用 RAG，缺行为或格式先改提示、再考虑微调；LoRA 只训练一小组附加参数，是最常见的低成本微调。
+    requires: [use.rag]
+- id: models
+  order: 1
+  core: true
+  title: 模型怎么变强：训练方法、推理模型与模态
+  summary: 同样是 Transformer，模型之间的差别来自怎么训练、推理时花多少计算、能处理哪些输入输出，以及权重是否公开。
+  children:
+  - id: models.sft-vs-rl
+    title: 监督微调与强化学习（SFT 与 RL）：给示范与给奖励
+    summary: SFT 给模型看标准答案让它模仿，上限是示范本身；RL 只给目标和打分让模型自己试，上限更高，但会钻奖励的空子。
+  - id: models.reasoning
+    title: 推理模型：先想后答与思考预算
+    summary: 推理模型在回答前先生成一段思考 token，用更多推理时计算换更高的正确率；思考长度可调，直接影响延迟和费用。
+    requires: [models.sft-vs-rl]
+  - id: models.open-weights
+    title: 开放权重与本地运行
+    summary: 开放权重（open weights）指参数文件可以下载，自己部署、微调、离线运行；闭源模型只能通过接口调用。两者在成本、隐私和能力上各有取舍。
+  - id: models.multimodal
+    title: 多模态：图像、语音、视频怎么进同一个模型
+    summary: 图像切成小块、语音切成小段，各自编码成和文字 token 同样形状的向量，交给同一个 Transformer 处理。
+  - id: models.distillation-small
+    title: 蒸馏与小模型
+    summary: 蒸馏（distillation）让小模型学大模型的输出；小模型便宜、快、能在手机和笔记本上跑，承担了大部分简单请求。
+    requires: [models.sft-vs-rl]
+  - id: models.scaling
+    title: 规模定律与苦涩的教训
+    summary: 更多数据、更多参数、更多算力带来可预测的提升（scaling laws）；长期看，通用方法加算力胜过手工设计（bitter lesson）。
+  - id: models.diffusion
+    title: 扩散模型：图像与视频是怎么生成的
+    summary: 扩散模型（diffusion）从一张纯噪声图开始，一步步去噪得到图像；视频生成把时间也当作一个维度一起去噪。
+    requires: [models.multimodal]
+  - id: models.architecture-trends
+    title: Transformer 的改进与替代：混合专家、状态空间与扩散语言模型
+    summary: 主流改进都在降低每个 token 的计算量：混合专家只激活一部分参数，状态空间模型按线性代价处理长序列，扩散语言模型并行生成多个 token。
+    requires: [models.diffusion]
+  - id: models.embodied
+    title: 世界模型与具身智能
+    summary: 世界模型预测"做了这个动作之后会看到什么"；视觉-语言-动作模型（VLA）把同一套做法用到机器人控制上。
+    requires: [models.multimodal]
+- id: agents
+  order: 2
+  core: true
+  title: 智能体（Agents）
+  summary: 让模型在循环里自己决定调用什么工具、看结果、再决定下一步，直到任务完成；2025 年以来最主要的应用形态。
+  children:
+  - id: agents.loop
+    title: 智能体循环：模型、工具与循环
+    summary: 智能体 = 模型 + 一组工具 + 一个循环：模型选工具，程序执行，结果回到上下文，重复到模型认为做完。和固定流程（workflow）的区别是谁决定下一步。
+  - id: agents.mcp
+    title: 模型上下文协议（MCP）与智能体协议
+    summary: MCP 规定了应用怎样向模型提供工具和数据：写一次服务端，任何支持的客户端都能用；它解决的是 N 个应用乘 M 个工具的接线问题。
+    requires: [agents.loop]
+  - id: agents.coding-agents
+    title: 编程智能体：Claude Code、Codex、Cursor 怎么工作
+    summary: 编程智能体就是工具为"读文件、改文件、跑命令"的智能体循环，外面包一层权限、计划和上下文管理（harness）。
+    requires: [agents.loop]
+  - id: agents.context-memory
+    title: 智能体的上下文与记忆：压缩、子智能体、记忆文件与技能
+    summary: 长任务会把窗口填满；办法是压缩历史、把子任务交给有独立窗口的子智能体、把长期信息写进文件、按需加载技能说明。
+    requires: [agents.loop]
+  - id: agents.security
+    title: 提示注入与权限：智能体的安全边界
+    summary: 模型分不清"数据"和"指令"，网页或文档里的一句话就可能被当成命令执行；防线是最小权限、沙箱和高风险操作前的人工确认。
+    requires: [agents.loop]
+  - id: agents.long-horizon
+    title: 长任务能力：智能体能独立工作多久
+    summary: 衡量智能体的一个指标是"它能以 50% 成功率完成人类要花多久的任务"；这个时长在持续翻倍，错误逐步累积是主要限制。
+    requires: [agents.loop]
+  - id: agents.multi-agent
+    title: 多智能体与编排：什么时候拆、怎么协作
+    summary: 一个主智能体分派任务给多个子智能体，各自有干净的上下文、可以并行；代价是 token 成倍增加和信息在交接时丢失。
+    requires: [agents.context-memory]
+  - id: agents.computer-use
+    title: 计算机使用与浏览器智能体
+    summary: 模型看截图、输出点击和键盘动作，像人一样操作图形界面；通用，但比调用接口慢、贵、容易出错。
+    requires: [agents.loop]
+  - id: agents.reliability
+    title: 智能体为什么不稳：错误累积、评测与可观测
+    summary: 每步 95% 的成功率连乘 20 步只剩约 36%；要靠检查点、验证步骤、轨迹记录和按任务的评测把成功率量出来再提高。
+    requires: [agents.long-horizon]
+- id: evals
+  order: 3
+  core: true
+  title: 评测与基准（Evals）
+  summary: 怎么知道一个模型更好：基准测试量的是什么、分数为什么会失真，以及怎样给自己的功能做评测。
+  children:
+  - id: evals.benchmarks
+    title: 基准怎么读：饱和、泄漏与刷分
+    summary: 基准（benchmark）是一套固定题目加打分方法；题目泄漏进训练数据、分数接近满分、针对榜单优化都会让分数不再代表能力。
+  - id: evals.leaderboards
+    title: 现在常被引用的基准与排行榜
+    summary: 编程看 SWE-bench 一类，推理看 ARC-AGI 一类，知识看研究生水平题集，速度和价格看第三方测速；每个榜量的东西不同。
+    requires: [evals.benchmarks]
+  - id: evals.app-evals
+    title: 给自己的 LLM 功能写评测
+    summary: 通用榜单不代表你的任务；自己攒几十到几百条真实样例，配上代码判分或让模型当评委，每次改提示或换模型都重跑。
+    requires: [evals.benchmarks]
+- id: industry
+  order: 4
+  core: true
+  title: 行业版图：实验室、产品、芯片与钱
+  summary: 谁在做模型、谁在卖产品、算力从哪来、钱花在哪又从哪挣回来。
+  children:
+  - id: industry.stack
+    title: AI 产业的四层：芯片、云、模型、应用
+    summary: 芯片厂卖算力硬件，云厂商把它租出去，模型公司训练模型，应用公司做产品；每一层的利润和瓶颈不同，很多公司跨了几层。
+  - id: industry.labs
+    title: 前沿实验室与模型家族
+    summary: OpenAI、Anthropic、Google DeepMind、Meta、xAI 各自的旗舰模型系列、主要产品和侧重点。
+    requires: [industry.stack]
+  - id: industry.open-china
+    title: 开放权重阵营与中国模型
+    summary: DeepSeek、通义千问（Qwen）、Kimi、智谱、MiniMax 以及 Meta、Mistral 等发布可下载的模型；它们和闭源旗舰的差距、价格和使用场景。
+    requires: [industry.labs]
+  - id: industry.products
+    title: 产品形态与商业模式：聊天助手、编程工具、接口与企业版
+    summary: 收入主要来自订阅、按 token 计费的接口和企业合同；聊天助手和编程工具是目前最大的两类产品。
+    requires: [industry.labs]
+  - id: industry.chips
+    title: 算力芯片与供应链：GPU、高带宽内存、先进封装与定制芯片
+    summary: 英伟达 GPU 占训练和推理的大头；高带宽内存（HBM）和台积电的封装产能是瓶颈；云厂商自研芯片，另有专做推理的芯片公司。
+    requires: [industry.stack]
+  - id: industry.inference-economics
+    title: 推理经济学：token 价格、用量与毛利
+    summary: 同等能力的 token 价格每年下降约一个数量级，但用量涨得更快；推理支出已超过训练，决定了模型公司的毛利。
+    requires: [industry.products]
+  - id: industry.datacenters
+    title: 数据中心、电力与资本开支
+    summary: 新建集群按吉瓦（GW）计，电力和并网成了比芯片更难的约束；几家大厂每年的资本开支是几千亿美元量级。
+    requires: [industry.chips]
+  - id: industry.timeline
+    title: 关键时间线与人物
+    summary: 2012 年深度学习突破，2017 年 Transformer，2020 年 GPT-3，2022 年 ChatGPT，2024 年起推理模型，2025 年起智能体；以及每一步背后的人。
+  - id: industry.agi-debate
+    title: 通用人工智能（AGI）之争与泡沫论
+    summary: AGI 没有公认定义；乐观派看能力曲线和时间跨度翻倍，怀疑派看可靠性、成本和收入能否撑起投资。两边的论据都要能说清。
+    requires: [industry.timeline]
+- id: work
+  order: 5
+  core: true
+  title: 工程师怎么用 AI
+  summary: AI 怎样改变写代码的方式、怎样搭一个带大模型的功能，以及怎么判断关于 AI 的说法。
+  children:
+  - id: work.ai-coding
+    title: 用 AI 写代码的工作方式：规格、上下文文件与验证
+    summary: 从补全到让智能体独立改代码，人的工作变成写清要求、提供上下文、审查和验证；测试和评审是把关的地方。
+  - id: work.reading-news
+    title: 怎么判断一条 AI 新闻
+    summary: 先问是谁测的、在什么任务上、和谁比、花了多少钱；厂商数字、演示视频和单个基准分数各有固定的水分。
+  - id: work.app-architecture
+    title: LLM 应用的典型架构：网关、编排、检索、护栏与可观测
+    summary: 请求先过网关（鉴权、限流、路由到模型），中间是提示拼装、检索和工具调用，前后有护栏检查，全程记录 token、延迟和轨迹。
+  - id: work.sde-impact
+    title: AI 对软件工程岗位的影响：证据与争论
+    summary: 生产率的实测结果不一致：有的研究显示明显提速，有的显示有经验的开发者反而变慢；招聘和初级岗位的变化仍在争论中。
+    requires: [work.ai-coding]
+- id: safety
+  order: 6
+  title: 安全、对齐与治理
+  summary: 模型学到的目标和人想要的目标之间的差距，被滥用和被攻击的方式，以及公司和政府怎么约束。
+  children:
+  - id: safety.alignment
+    title: 对齐问题：模型优化的目标和你想要的目标
+    summary: 训练只能奖励"看得见的行为"；模型可能学会讨好（sycophancy）、钻奖励空子，或在被评测时表现不同。
+  - id: safety.jailbreak-guardrails
+    title: 越狱与护栏
+    summary: 越狱（jailbreak）是用户想办法绕过模型的拒绝；护栏是在模型前后加的输入输出检查。它和提示注入的区别在于攻击者是谁。
+    requires: [safety.alignment]
+  - id: safety.interpretability
+    title: 可解释性：看模型内部在算什么
+    summary: 把模型内部的激活拆成可以命名的"特征"，追踪一个回答是由哪些特征一步步算出来的；目前能解释局部，离整体理解还远。
+    requires: [safety.alignment]
+  - id: safety.governance
+    title: 安全框架、监管与出口管制
+    summary: 实验室自己的发布门槛（按能力等级加码防护）、欧盟《人工智能法》一类的法规，以及先进芯片的出口管制。
+  - id: safety.data-rights
+    title: 训练数据、版权与隐私
+    summary: 训练数据的版权诉讼与授权交易；企业关心的是发给接口的数据会不会被保留或用于训练。
