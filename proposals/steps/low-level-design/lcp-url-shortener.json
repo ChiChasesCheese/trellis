@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-url-shortener": [
+    "lcp-url-shortener-contract-rules",
+    "lcp-url-shortener-state-and-invariant",
+    "lcp-url-shortener-reflection-concurrent-hits",
+    "lcp-url-shortener-reflection-code-allocation"
+  ]
+}
