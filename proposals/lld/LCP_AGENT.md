@@ -116,3 +116,9 @@ git; do not start agents; touch only your leaves' files.
   that needs the same answer.
 - State that remembers "the parameters of the last call" must be per key: a sweep, an eviction or a refill that reads
   the parameters of whichever request triggered it applies one client's limits to every other client.
+- A workspace that audits SQL by substring ("the request value must not appear in any statement") also catches
+  constants you spelled inline when a request can send the same value ('active' in `IN ('active','termed')`), and even
+  placeholder names or aliases that contain it (`$active`). Bind constants as parameters under neutral names. Read the
+  workspace's own test fixtures for audits like this before writing SQL.
+- When running the official tests, the tests often compare against the workspace's own classes (`models.Decision`,
+  `models.ServiceError`): import those instead of your copies, and put the solution into the file the tests import.
