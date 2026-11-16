@@ -6,21 +6,49 @@ step: 1
 tags: [作答]
 ---
 ## Q
-CastWatch 的用户可以关注演员；登记一部新片（`add_movie(movie_id, title, actors)`）时，要给关注了卡司的人发通知，`inbox(user)` 读取通知。现有服务的症状是：通知丢失、取关无效、重试导入行为混乱、收件箱顺序不对，多个线程会同时调用。开工前你会先定下哪几条规则？
+CastWatch 的用户关注演员，登记新片（`add_movie`）时要给关注者发通知，用 `inbox(user)` 读取。现有服务通知丢失、取关无效、重试导入返回值混乱、收件箱顺序不对，多个线程会同时调用。开工前你会先定下哪几条规则？
 
 ## A
-**评分点**
-- 说出受众是"关注了卡司中任意一人"的用户，每人恰好一条：关注多个卡司成员、卡司里有重复 id 都只一条；空卡司不通知任何人
-- 说出重复导入（同 id、同片名、卡司集合相等）返回 False 且不产生通知，哪怕关注者变了；卡司按集合比较，顺序和重复无关
-- 说出同 id 但片名或卡司集合不同抛 RuntimeError("movie_conflict")，并且什么状态都不改
-- 说出收件箱按电影成功登记的先后返回，不是按 id 排序；返回独立副本，取关不删历史，关注不回填
-- 说出校验先于一切：非法输入抛 ValueError("invalid_input")，发生在改状态之前，也先于冲突检查
-- 说出并发调用等价于某个串行顺序，不能留半截状态
+**先把合同写成六条带数据的断言，再改代码。**
 
-<details class="pt"><summary>参考答案</summary>
+- **受众**：关注了卡司任一演员的用户，每人一条；关注两位主演、卡司里有重复 id 都只一条；空卡司没人收到
+- **重复与冲突**：同 id、同片名、卡司集合相等，返回 `False` 且不通知，哪怕关注者变了；同 id 内容不同，抛 `movie_conflict` 且状态不变
+- **关注与取关**：关注不回填；取关只删这一条关系、不删历史；重复关注与取关不存在的关系都是无操作
+- **收件箱**：按登记顺序而不是 id 排序；返回副本，之后的导入不影响已拿到的结果
+- **校验在先**：非法输入抛 `invalid_input`，发生在改状态之前，也先于冲突检查
+- **并发**：任意并发调用等价于某个串行顺序，失败不留半截状态
 
-先把合同写成六条：受众是卡司任一成员的关注者并集，每人一条；相同的重复导入返回 `False` 且无通知；同 id 内容不同抛 `movie_conflict` 且不改状态；收件箱按登记顺序、返回副本，取关不删历史、关注不回填；校验在改状态之前、先于冲突；并发等价于某个串行顺序。每条配一个带具体数据的测试，再让智能体动手。
+```mermaid
+flowchart TB
+    A[add_movie] --> B{入参合法}
+    B -->|否| C[ValueError]
+    B -->|是| D{id 已登记}
+    D -->|否| E[登记并通知 返回 True]
+    D -->|相同| F[返回 False]
+    D -->|不同| G[RuntimeError]
+```
+
+```python
+def add_movie(self, movie_id, title, actors):
+    _valid(movie_id)
+    _valid(title)
+    if not isinstance(actors, list):
+        raise ValueError(INVALID_INPUT)
+    cast = frozenset(_valid(a) for a in list(actors))
+    movie = _Movie(title, cast)
+    with self._lock:
+        if not self._catalog.is_new(movie_id, movie):
+            return False              # 冲突在 is_new 里抛出
+        audience = self._subscriptions.audience(cast)
+        self._catalog.add(movie_id, movie)
+        self._inboxes.deliver(audience, Notice(movie_id, title))
+        return True
+```
+
+<details class="pt"><summary>延伸</summary>
+
+每条规则配一个带具体数据的测试：卡司 `[a1, a2, a1]`、alice 关注 a1 与 a2，收件箱恰好一条；这些例子也是交给编程智能体的第一批断言。
 
 </details>
 
-**知识点：** 边界校验（Validate at the Boundary）、复合操作（Compound Actions）、防御性拷贝（Defensive Copying）
+**知识点：** 观察者与事件（Observer）、非法转移与幂等（Illegal Transitions）、边界校验（Validate at the Boundary）
