@@ -1,0 +1,413 @@
+[
+ {
+  "point": "路径身份是 str(Path(p))：./a//b/ 与 a/b 同一个，a/../a 是另一个",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "同一路径身份只处理一次，根路径重叠、重复输入也一样",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "fluency.collections"
+  ]
+ },
+ {
+  "point": "输入可能只能迭代一次：只迭代一次，先收成栈再处理",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "python.context-iterators",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "发现用 lstat 而不是 stat：不跟随软链接，大小也在这里取到",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "parsing-io.streams"
+  ]
+ },
+ {
+  "point": "软链接（含断链、目录链接）记 FileIssue，不当文件也不走进去",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "特殊文件（管道、套接字）记问题，而且绝不打开它",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "缺失路径、遍历出错的目录只影响自己，别的文件照常处理",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "errors.bug-vs-failure",
+   "errors.narrow-catch"
+  ]
+ },
+ {
+  "point": "FileIssue.error 必须含底层异常的消息",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.taxonomy"
+  ]
+ },
+ {
+  "point": "files_considered 是发现的普通文件数，后面的阶段失败也照样计入",
+  "cards": [
+   "lcp-file-deduplication-contract-rules",
+   "lcp-file-deduplication-state-and-invariant"
+  ],
+  "leaves": [
+   "api.returns",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "空输入是合法的空报告；max_workers 与 sample_size 都必须为正",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "按发现时的大小分组：大小唯一的文件不进抽样与全量，也不预检查可读性",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "performance.complexity-constants",
+   "parsing-io.streams"
+  ]
+ },
+ {
+  "point": "抽样头部读 min(sample_size, size)，尾部从 max(head, size - sample_size) 起",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.streams",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "抽样最多读 2 × sample_size；小于 sample_size 的文件只有头部一段",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.streams",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "抽样钩子返回（摘要，实际读到的字节数），不是请求的字节数",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "api.returns",
+   "parsing-io.streams"
+  ]
+ },
+ {
+  "point": "只有大小相同且抽样摘要相同的文件才进入全量哈希",
+  "cards": [
+   "lcp-file-deduplication-contract-rules",
+   "lcp-file-deduplication-state-and-invariant"
+  ],
+  "leaves": [
+   "performance.complexity-constants",
+   "patterns.selection"
+  ]
+ },
+ {
+  "point": "全量哈希按块流式读，内存与文件大小无关",
+  "cards": [
+   "lcp-file-deduplication-contract-rules",
+   "lcp-file-deduplication-reflection-storage-bounds"
+  ],
+  "leaves": [
+   "parsing-io.streams",
+   "performance.memory"
+  ]
+ },
+ {
+  "point": "摘要相同不等于内容相同：用逐字节比较确认，哪怕 SHA-256 几乎不会碰撞",
+  "cards": [
+   "lcp-file-deduplication-contract-rules",
+   "lcp-file-deduplication-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "一个摘要桶里可以有多组不同内容：按代表比较拆成等价类，各自成组",
+  "cards": [
+   "lcp-file-deduplication-contract-rules",
+   "lcp-file-deduplication-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "fluency.collections"
+  ]
+ },
+ {
+  "point": "逐字节比较一次读一块、遇到第一处不同就停，同一时刻内存里只有两块",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.streams",
+   "performance.memory"
+  ]
+ },
+ {
+  "point": "canonical 是字符串最小的路径，重复项升序，组按 canonical 排序",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "api.returns",
+   "fluency.collections"
+  ]
+ },
+ {
+  "point": "排序按 str 不按 Path：Path 比较路径分量，a/b 会排在 a.txt 前面",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "问题按 (path, error) 排序；同一路径的重复问题只留最近一条",
+  "cards": [
+   "lcp-file-deduplication-contract-rules",
+   "lcp-file-deduplication-state-and-invariant"
+  ],
+  "leaves": [
+   "api.returns",
+   "fluency.collections"
+  ]
+ },
+ {
+  "point": "失败隔离：一个文件失败，别的重复组照常返回",
+  "cards": [
+   "lcp-file-deduplication-contract-rules",
+   "lcp-file-deduplication-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.bug-vs-failure",
+   "errors.narrow-catch"
+  ]
+ },
+ {
+  "point": "逐字节比较失败记在出错的那一边；代表读不了就由下一个成员接任",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "errors.narrow-catch",
+   "errors.cleanup"
+  ]
+ },
+ {
+  "point": "bytes_hashed 只累加成功返回的抽样与全量钩子；抛异常记 0，逐字节比较读的不计",
+  "cards": [
+   "lcp-file-deduplication-contract-rules",
+   "lcp-file-deduplication-state-and-invariant"
+  ],
+  "leaves": [
+   "api.returns",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "抽样与全量共用一个线程池，同时活动的钩子不超过 max_workers",
+  "cards": [
+   "lcp-file-deduplication-state-and-invariant",
+   "lcp-file-deduplication-reflection-storage-bounds"
+  ],
+  "leaves": [
+   "concurrency.patterns",
+   "concurrency-depth.safe-structures"
+  ]
+ },
+ {
+  "point": "满 max_workers 个钩子互相阻塞时仍要能同时运行：一个池，不多不少",
+  "cards": [
+   "lcp-file-deduplication-state-and-invariant",
+   "lcp-file-deduplication-reflection-storage-bounds"
+  ],
+  "leaves": [
+   "concurrency.patterns",
+   "concurrency-depth.testing"
+  ]
+ },
+ {
+  "point": "按批流水线：一批抽样全部回来就提交这批的全量，不做整体分段",
+  "cards": [
+   "lcp-file-deduplication-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency.patterns",
+   "performance.measure-first"
+  ]
+ },
+ {
+  "point": "单写者：工作线程只返回值，协调线程独占汇总状态，所以没有锁",
+  "cards": [
+   "lcp-file-deduplication-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.confinement",
+   "concurrency-depth.safe-structures"
+  ]
+ },
+ {
+  "point": "在途任务无界：一次提交全部候选，要用信号量把已提交未完成的限制住",
+  "cards": [
+   "lcp-file-deduplication-state-and-invariant",
+   "lcp-file-deduplication-reflection-storage-bounds"
+  ],
+  "leaves": [
+   "concurrency-depth.parallel-scaling",
+   "performance.memory"
+  ]
+ },
+ {
+  "point": "文件在扫描中变化：读前读后各 lstat，比较（大小，mtime_ns，inode）",
+  "cards": [
+   "lcp-file-deduplication-reflection-changing-files"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "filecmp.cmp 按（大小，修改时间）缓存结论，同修改时间的改写会得到过期的相同",
+  "cards": [
+   "lcp-file-deduplication-reflection-changing-files"
+  ],
+  "leaves": [
+   "parsing-io.streams",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "硬链接是两个路径一个 inode：会成组，但节省量按（设备，inode）的个数算",
+  "cards": [
+   "lcp-file-deduplication-state-and-invariant"
+  ],
+  "leaves": [
+   "data.value-entity",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "worker 数跟着存储的并发能力走：固态盘看核数，网络文件系统与对象存储看服务端",
+  "cards": [
+   "lcp-file-deduplication-reflection-storage-bounds"
+  ],
+  "leaves": [
+   "concurrency-depth.parallel-scaling",
+   "concurrency.model"
+  ]
+ },
+ {
+  "point": "同时打开的文件数是 max(max_workers, 2)：每个钩子一个，比较阶段两个",
+  "cards": [
+   "lcp-file-deduplication-reflection-storage-bounds"
+  ],
+  "leaves": [
+   "concurrency-depth.parallel-scaling",
+   "parsing-io.streams"
+  ]
+ },
+ {
+  "point": "测试人造碰撞：让钩子对所有文件返回同一个摘要，断言仍然按字节分组",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "testing.doubles",
+   "testing.test-first"
+  ]
+ },
+ {
+  "point": "测试并发上限：屏障让前 max_workers 个钩子同时在场，断言峰值恰好等于它",
+  "cards": [
+   "lcp-file-deduplication-reflection-storage-bounds"
+  ],
+  "leaves": [
+   "concurrency-depth.testing",
+   "testing.flaky"
+  ]
+ },
+ {
+  "point": "与暴力解对拍：随机目录树、固定种子、worker 数取 1 和 5，报告必须相同",
+  "cards": [
+   "lcp-file-deduplication-state-and-invariant"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "testing.pytest-tools"
+  ]
+ },
+ {
+  "point": "交给智能体之前把十四条规则列成清单，逐条对照，先写会失败的测试",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "ai.specs",
+   "ai.decomposition"
+  ]
+ },
+ {
+  "point": "改坏实现检验测试：把尾部起点改成重叠、信任摘要，看测试是否变红",
+  "cards": [
+   "lcp-file-deduplication-contract-rules"
+  ],
+  "leaves": [
+   "ai.verification",
+   "testing.coverage-limits"
+  ]
+ }
+]

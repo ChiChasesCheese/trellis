@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-file-deduplication": [
+    "lcp-file-deduplication-contract-rules",
+    "lcp-file-deduplication-state-and-invariant",
+    "lcp-file-deduplication-reflection-changing-files",
+    "lcp-file-deduplication-reflection-storage-bounds"
+  ]
+}
