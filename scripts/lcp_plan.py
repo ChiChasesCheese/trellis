@@ -12,8 +12,9 @@ The plan is the reinforcement loop made concrete:
 - `00 补弱`: every card of the leaves his recent attempts missed (the most missed first), so the next cards he meets
   are the knowledge his answers lacked;
 - then one part per project in the skeleton's order (the study order): `1 先修`, the first cards of the leaves the
-  project's points.json names, and `2 作答`, the project's answer cards in step order;
-- `3 第二次练`, for an exam point only that project tests: every point is practised at least twice (Chi,
+  project's points.json names; `2 快刷`, its ten-second cards in point order (scripts/lcp_quick.py, local); `3 综合`,
+  its few long synthesis cards (tag 作答) in step order;
+- `4 第二次练`, for an exam point only that project tests: every point is practised at least twice (Chi,
   2026-11-16), so its second practice comes from the bank or another domain (lc-project/second_practice.json).
 A card already borrowed by an earlier sprint deck stays there (company_deck.py: the first plan naming a card wins).
 """
@@ -27,7 +28,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "scripts"))
 from trellis.project import load_project  # noqa: E402
+
+import lcp_quick  # noqa: E402
 
 HOME = ROOT / "sources/local/lc-project"
 PLAN = HOME / "plan.json"
@@ -44,11 +48,17 @@ def ordered(cards) -> list[str]:
 
 
 def weak_leaves() -> list[str]:
+    """Leaves behind the points he graded Again or Hard lately (quick cards), then any graded written attempts."""
+    import lcp_quick
+    try:
+        leaves = lcp_quick.weak()
+    except Exception:  # noqa: BLE001 - Anki not reachable: plan without the weak part
+        leaves = []
     if not ATTEMPTS.exists():
-        return []
+        return leaves
     rows = [json.loads(line) for line in ATTEMPTS.read_text(encoding="utf-8").splitlines() if line.strip()][-RECENT:]
     misses = Counter(leaf for r in rows if r.get("score", 1) < WEAK_SCORE for leaf in r.get("leaves", []))
-    return [leaf for leaf, _ in misses.most_common()]
+    return list(dict.fromkeys(leaves + [leaf for leaf, _ in misses.most_common()]))
 
 
 def plan() -> list[dict]:
@@ -76,14 +86,18 @@ def plan() -> list[dict]:
         need = [lid for p in json.loads(points.read_text(encoding="utf-8")) for lid in p.get("leaves", [])] if points.exists() else []
         need = list(dict.fromkeys(need))
         prereq = take([i for lid in need for i in ordered(by_leaf.get(lid, []))[:PREREQ_PER_LEAF]])
+        name = slug.removeprefix("lcp-")
+        quick = take([f"lcpq.{p['kp']}" for p in lcp_quick.points(name)])
         own = take(ordered(by_leaf[leaf.id]))
         title = leaf.title.split("（")[0]
         if prereq:
             parts.append({"label": f"{n:02d} {title}::1 先修", "ids": prereq})
-        parts.append({"label": f"{n:02d} {title}::2 作答", "ids": own})
+        if quick:
+            parts.append({"label": f"{n:02d} {title}::2 快刷", "ids": quick})
+        parts.append({"label": f"{n:02d} {title}::3 综合", "ids": own})
         extra = second.get(slug.removeprefix("lcp-"), {})
         if ids := take([i for lid in extra.get("leaves", []) for i in ordered(by_leaf.get(lid, []))] + extra.get("ids", [])):
-            parts.append({"label": f"{n:02d} {title}::3 第二次练", "ids": ids})
+            parts.append({"label": f"{n:02d} {title}::4 第二次练", "ids": ids})
     return parts
 
 

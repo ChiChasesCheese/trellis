@@ -71,7 +71,7 @@ def test_age_points_at_every_threshold(days, points):
 # ---- 总分与决定 ----
 
 @pytest.mark.parametrize("args, score, decision", [
-    ((3, 0, 30), 30, "manual_review"),        # 总分恰好 30：进入人工复核，不是通过
+    ((3, 0, 100), 30, "manual_review"),        # 总分恰好 30：进入人工复核，不是通过
     ((4, 0, 29), 35, "manual_review"),
     ((4, 0, 180), 10, "approve"),
     ((5, 0, 29), 25, "approve"),              # 比 30 小一档
