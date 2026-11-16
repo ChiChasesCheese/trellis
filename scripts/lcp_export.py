@@ -3,6 +3,12 @@
     uv run python scripts/lcp_export.py rate-limiter [url-shortener ...]   # one or more projects, one after another
     uv run python scripts/lcp_export.py --all                              # every project in the public list
     uv run python scripts/lcp_export.py --force rate-limiter               # export again even if done
+    uv run python scripts/lcp_export.py --max 8 --gap 15-30 a b c ...      # pacing (these are the defaults)
+
+Pacing (Chi, 2026-11-16: personal use, behave like a person, never get the account banned): one project at a time,
+at most `--max` exports per run (default 8, one run a day), a pause of `--gap` minutes between projects (default 15-30),
+only between 08:00 and 22:00 local time, and the run stops at the first sign of push-back from the site (a captcha,
+"unusual activity", "too many requests", HTTP 429, a login wall) so Chi can look before anything else is sent.
 
 A project's files exist only inside a timed cloud workspace (Eclipse Theia in an iframe) that a practice start
 creates; the page's own GraphQL has no file API, and the browser tools can neither read the cross-origin iframe nor
@@ -16,6 +22,8 @@ it into files/. Everything stays local: LeetCode's problem material never goes i
 from __future__ import annotations
 
 import json
+import random
+import re
 import shutil
 import subprocess
 import sys
@@ -31,6 +39,14 @@ OUT = ROOT / "sources/local/lc-project/workspaces"
 HELPER_CWD = Path.home() / "sessions/lcproj-chrome"  # outside the repo: the helper needs no project instructions
 DOWNLOADS = Path.home() / "Downloads"
 WAIT = 90  # seconds to wait for the download to finish after the helper returns
+HOURS = (8, 22)  # local hours a run may start a project in
+PUSHBACK = re.compile(r"captcha|unusual activity|too many requests|\b429\b|verify (that )?you are (a )?human|"
+                      r"are you a robot|access denied|account (is )?(locked|suspended|restricted)|"
+                      r"not logged in|please (log|sign) in", re.I)
+
+
+class Pushback(RuntimeError):
+    pass
 
 
 def all_slugs() -> list[str]:
@@ -82,7 +98,7 @@ def unpack(archive: Path, dest: Path) -> int:
 def export(slug: str, force: bool) -> bool:
     home = OUT / slug
     if (home / ".done").exists() and not force:
-        print(f"{slug}: already exported")
+        print(f"{slug}: already exported", flush=True)
         return True
     home.mkdir(parents=True, exist_ok=True)
     HELPER_CWD.mkdir(parents=True, exist_ok=True)
@@ -92,15 +108,17 @@ def export(slug: str, force: bool) -> bool:
                         "--allowedTools", "mcp__claude-in-chrome__*,ToolSearch"],
                        cwd=HELPER_CWD, stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=1500)
     (home / "export.log").write_text(r.stdout + ("\n--- stderr ---\n" + r.stderr if r.stderr else ""), encoding="utf-8")
+    if m := PUSHBACK.search(r.stdout):
+        raise Pushback(f"{slug}: the site pushed back ({m.group(0)!r}); stopped. Read {home / 'export.log'}")
     got = new_download(before)
     if not got:
-        print(f"{slug}: no download arrived; see {home / 'export.log'}")
+        print(f"{slug}: no download arrived; see {home / 'export.log'}", flush=True)
         return False
     target = home / got.name
     shutil.move(str(got), target)
     n = unpack(target, home / "files")
     (home / ".done").write_text(time.strftime("%Y-%m-%dT%H:%M:%S"), encoding="utf-8")
-    print(f"{slug}: {got.name}, {n} entries -> {home / 'files'}")
+    print(f"{slug}: {got.name}, {n} entries -> {home / 'files'}", flush=True)
     return True
 
 
@@ -110,6 +128,7 @@ def main() -> int:
     slugs = [a for a in args if not a.startswith("--")]
     if "--all" in args:
         slugs = all_slugs()
+    slugs = [s for s in slugs if not re.fullmatch(r"\d+(-\d+)?", s)]  # values of --max / --gap
     if not slugs:
         print(__doc__)
         return 2
@@ -120,7 +139,29 @@ def main() -> int:
         return 1
     except StopIteration:
         pass
-    return 0 if all([export(s, force) for s in slugs]) else 1
+    cap, gap = 8, (15, 30)
+    if "--max" in args:
+        cap = int(args[args.index("--max") + 1])
+    if "--gap" in args:
+        lo, hi = args[args.index("--gap") + 1].split("-")
+        gap = (int(lo), int(hi))
+    todo = [s for s in slugs if force or not (OUT / s / ".done").exists()][:cap]
+    ok = True
+    for i, slug in enumerate(todo):
+        if not HOURS[0] <= time.localtime().tm_hour < HOURS[1]:
+            print(f"outside {HOURS[0]}:00-{HOURS[1]}:00; stopped before {slug}", flush=True)
+            break
+        try:
+            ok &= export(slug, force)
+        except Pushback as e:
+            print(e, flush=True)
+            return 3
+        if i + 1 < len(todo):
+            pause = random.uniform(*gap) * 60
+            print(f"pausing {pause / 60:.0f} min", flush=True)
+            time.sleep(pause)
+    print(f"run finished: {sum((OUT / s / '.done').exists() for s in slugs)}/{len(slugs)} exported", flush=True)
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":
