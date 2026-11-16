@@ -45,11 +45,26 @@ is researched at writing time; 新进展 blocks on at least half of the recall c
 
 | Date | Group | Leaves | Cards | State |
 |---|---|---|---|---|
+| 2026-11-15 | `use` | 11 | 44 (33 recall, 11 challenge; 12 diagrams; 23 新进展) | accepted: gates ok; Claude prices checked against the pricing page; cache and batch sums re-derived |
 | 2026-11-15 | `agents` | 9 | 36 (27 recall, 9 challenge; 11 diagrams; 14 新进展) | accepted: validate 0 errors, plain_style and phone_diagrams ok, numbers re-derived |
 
 ## Least-sure claims (step 5)
 
 Filled from each agent's reply; checked by the orchestrator before the group is committed.
+
+`use`:
+
+- Claude prices and cache multipliers (Sonnet 5.5 $2 in, read 0.05x; Opus 5.5 $4; Fable 5.2 read 0.025x): checked
+  against platform.claude.com pricing on 2026-11-15.
+- `api-economics-bill-surprises`: Gemini 4 Carbon $2/$10 until 30 Nov, $4/$20 from 1 Dec. Several blogs quote
+  Google's pricing page; the page itself was not read.
+- `rag-where-it-breaks`: Claude Code moved from a local vector DB to agentic search. Several secondary reports of one
+  statement from May 2025; the heading now says that month.
+- `api-economics-tiers-and-routing`: the advisor tool's month comes from its beta header (`2026-03-01`).
+- `context-engineering-four-techniques`: server-side compaction dated to Opus 4.6 (February 2026) by inference.
+- `hallucination-why-models-make-things-up`: SimpleQA figures (52% / 26% vs 1% / 75%) read from a copy of OpenAI's
+  table; they match the paper as I know it.
+- Left out: per-model hallucination rates, the embedding leaderboard, pgvector scale ceilings, Gemini cache prices.
 
 `agents`:
 
