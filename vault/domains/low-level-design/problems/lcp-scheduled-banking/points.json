@@ -1,0 +1,404 @@
+[
+ {
+  "point": "每个公开方法先结算到期付款，查询与失败的调用也不例外",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules",
+   "lcp-scheduled-banking-reflection-concurrent-atomicity"
+  ],
+  "leaves": [
+   "problems.components.task-scheduler",
+   "structure.state-machines"
+  ]
+ },
+ {
+  "point": "到期时间不晚于本次时间戳就算到期（等于也算）",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "到期付款先按到期时间排队，再按创建序号",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules",
+   "lcp-scheduled-banking-state-and-invariant"
+  ],
+  "leaves": [
+   "problems.components.task-scheduler",
+   "performance.data-structures"
+  ]
+ },
+ {
+  "point": "创建序号按整数比较：payment10 在 payment9 之后",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "fluency.collections",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "钱不够的到期付款永久失败：不重试、不留痕、不计支出",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules",
+   "lcp-scheduled-banking-reflection-crash-safe-payments"
+  ],
+  "leaves": [
+   "fsm.illegal-transitions",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "同一时刻的存款发生在到期付款之后，救不了已失败的付款",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "structure.state-machines",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "付款的余额变化记在到期时刻，而不是触发结算的那次调用",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules",
+   "lcp-scheduled-banking-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "到期那一刻取消已经太晚：先结算，后取消",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules",
+   "lcp-scheduled-banking-reflection-concurrent-atomicity"
+  ],
+  "leaves": [
+   "structure.state-machines",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "取消只对待付款且归属当前活跃账户的付款成立",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "fsm.illegal-transitions"
+  ]
+ },
+ {
+  "point": "安排付款失败不消耗编号，编号在整个银行内全局递增",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "安排付款不冻结资金，到期才检查余额",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "structure.state-machines"
+  ]
+ },
+ {
+  "point": "账户 ID 永不复用，被并掉的 ID 也不行",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules",
+   "lcp-scheduled-banking-state-and-invariant"
+  ],
+  "leaves": [
+   "data.value-entity",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "转账失败的三种情形与恰好花光合法",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "失败一律用 None 或 False 返回，不抛异常",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "errors.exceptions-vs-values",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "排名：累计转出降序、ID 的 Python 字符串顺序升序，含零",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "fluency.collections",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "排名格式、n 为零与 n 大于账户数",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "支出只含成功转账与成功付款，存款、转入、失败付款不算",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "data.invariants",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "合并：余额、累计转出、待付款项一起并入，付款编号与顺序不变",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules",
+   "lcp-scheduled-banking-state-and-invariant",
+   "lcp-scheduled-banking-reflection-concurrent-atomicity"
+  ],
+  "leaves": [
+   "data.invariants",
+   "oop.relationships"
+  ]
+ },
+ {
+  "point": "合并后被并掉的账户查任何时刻都是 None",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "data.optional"
+  ]
+ },
+ {
+  "point": "合并不追溯历史：存活账户合并前保留自己的余额，总额从合并时刻起算",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules",
+   "lcp-scheduled-banking-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "连环合并：每一步都先结算，再把当前主人的东西并入新主人",
+  "cards": [
+   "lcp-scheduled-banking-state-and-invariant"
+  ],
+  "leaves": [
+   "data.value-entity",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "历史查询用二分找最近的不晚于 time_at 的点",
+  "cards": [
+   "lcp-scheduled-banking-state-and-invariant"
+  ],
+  "leaves": [
+   "performance.data-structures",
+   "performance.complexity-constants"
+  ]
+ },
+ {
+  "point": "time_at 晚于本次时间戳，或那时账户还不存在，返回 None",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules",
+   "lcp-scheduled-banking-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "data.optional"
+  ]
+ },
+ {
+  "point": "同一时刻的多个事件只留最后一个余额",
+  "cards": [
+   "lcp-scheduled-banking-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "批次在暂存余额上演算，全部通过才一次性提交",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules",
+   "lcp-scheduled-banking-reflection-concurrent-atomicity"
+  ],
+  "leaves": [
+   "patterns.command",
+   "errors.cleanup"
+  ]
+ },
+ {
+  "point": "批次内后一笔可以花前一笔刚收到的钱",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "批次失败只丢批内改动，已结算的付款保留；空批次也先结算并返回空列表",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "api.returns",
+   "structure.state-machines"
+  ]
+ },
+ {
+  "point": "批次净额为零也计入支出；同一时间戳的历史只看到批次结束后的余额",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "data.invariants",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "不修改传入的批次列表，返回的列表是新对象",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "取消留下的堆残留项惰性跳过，过多时重建，内存有界",
+  "cards": [
+   "lcp-scheduled-banking-state-and-invariant"
+  ],
+  "leaves": [
+   "debugging.memory",
+   "performance.memory"
+  ]
+ },
+ {
+  "point": "用装饰器保证每个公开入口先结算，而不是靠每个方法自己记得写",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules",
+   "lcp-scheduled-banking-reflection-concurrent-atomicity"
+  ],
+  "leaves": [
+   "python.first-class-functions",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "崩溃后重试安全：付款状态落库，扣款与改状态在同一事务",
+  "cards": [
+   "lcp-scheduled-banking-reflection-crash-safe-payments"
+  ],
+  "leaves": [
+   "fsm.persistence",
+   "errors.retry"
+  ]
+ },
+ {
+  "point": "付款编号做幂等键，重复执行只扣一次",
+  "cards": [
+   "lcp-scheduled-banking-reflection-crash-safe-payments"
+  ],
+  "leaves": [
+   "fsm.illegal-transitions",
+   "errors.retry"
+  ]
+ },
+ {
+  "point": "长期历史存储：(账户, 时间) 有序索引上的向下取整查询",
+  "cards": [
+   "lcp-scheduled-banking-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "performance.data-structures"
+  ]
+ },
+ {
+  "point": "并发下一把锁罩住结算、校验与写入整个公开方法",
+  "cards": [
+   "lcp-scheduled-banking-reflection-concurrent-atomicity"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency-depth.safe-structures"
+  ]
+ },
+ {
+  "point": "跨账户的批次与合并分片加锁要按 ID 排序，避免死锁",
+  "cards": [
+   "lcp-scheduled-banking-reflection-concurrent-atomicity"
+  ],
+  "leaves": [
+   "concurrency.hazards",
+   "concurrency-depth.parallel-scaling"
+  ]
+ },
+ {
+  "point": "先把合同逐条写成断言，再一次只给编程智能体一个失败用例",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "ai.specs",
+   "ai.decomposition"
+  ]
+ },
+ {
+  "point": "读智能体的 diff：是否漏掉失败调用先结算、批次是否真的原子",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "ai.verification",
+   "ai.failure-modes"
+  ]
+ },
+ {
+  "point": "公开测试只有五条，边界与失败路径要自己补",
+  "cards": [
+   "lcp-scheduled-banking-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "ai.verification"
+  ]
+ }
+]

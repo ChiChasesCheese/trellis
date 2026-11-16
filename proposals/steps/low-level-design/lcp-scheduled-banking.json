@@ -1,0 +1,8 @@
+{
+ "lcproject.lcp-scheduled-banking": [
+  "lcp-scheduled-banking-contract-rules",
+  "lcp-scheduled-banking-state-and-invariant",
+  "lcp-scheduled-banking-reflection-crash-safe-payments",
+  "lcp-scheduled-banking-reflection-concurrent-atomicity"
+ ]
+}
