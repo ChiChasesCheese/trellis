@@ -105,3 +105,13 @@ what he missed back to the knowledge tree. So the back of a card is a grading ke
 Per leaf: the gate line, tests, solution code lines, article characters, cards — and the three claims or rules you are
 least sure of (especially product rules you had to decide that the hidden tests might decide differently). Do not run
 git; do not start agents; touch only your leaves' files.
+
+## Defects found in this branch (each is a rule)
+
+- `uv run --python 3.11` inside the repository replaces the project's `.venv`. Run 3.11 with
+  `UV_PROJECT_ENVIRONMENT=/tmp/venv311 uv run --python 3.11 …` or `uv run --no-project --python 3.11 --with pytest …`.
+- A REFLECTION card that translates LeetCode's question (the essay file carries an official Chinese version) copies
+  their text into a public file. Ask it as a concrete situation in your own words ("流量涨十倍时…", "开四个进程时…")
+  that needs the same answer.
+- State that remembers "the parameters of the last call" must be per key: a sweep, an eviction or a refill that reads
+  the parameters of whichever request triggered it applies one client's limits to every other client.

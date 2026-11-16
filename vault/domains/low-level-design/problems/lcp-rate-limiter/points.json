@@ -1,0 +1,10 @@
+[
+  {"point": "合同口径：remaining 在决策之后算、截断向 0、返回 int", "cards": ["lcp-rate-limiter-contract-rules", "lcp-rate-limiter-boundary-and-truncation", "lcp-rate-limiter-fractional-tokens"], "leaves": ["problems.components.rate-limiter", "errors.boundary-validation"]},
+  {"point": "每个 key 的状态与不变量：只在放行时写", "cards": ["lcp-rate-limiter-state-and-invariant", "lcp-rate-limiter-fractional-tokens"], "leaves": ["problems.components.rate-limiter", "structure.storage"]},
+  {"point": "被拒不留痕：重试风暴不能延长锁定", "cards": ["lcp-rate-limiter-retried-rejection", "lcp-rate-limiter-find-the-defect", "lcp-rate-limiter-contract-rules"], "leaves": ["errors.retry", "api.error-contract"]},
+  {"point": "复合操作与锁的范围：判定与计数同一把锁", "cards": ["lcp-rate-limiter-race-check-then-count", "lcp-rate-limiter-reflection-lock-atomicity"], "leaves": ["concurrency-depth.compound-actions", "concurrency.primitives", "concurrency-depth.safe-structures", "concurrency-depth.memory-model"]},
+  {"point": "整数时间与可注入时钟", "cards": ["lcp-rate-limiter-boundary-and-truncation", "lcp-rate-limiter-state-and-invariant", "lcp-rate-limiter-five-tests"], "leaves": ["quality.testability", "errors.boundary-validation"]},
+  {"point": "指挥编程智能体：合同、拆小步、保留关键决定", "cards": ["lcp-rate-limiter-first-instruction-to-agent"], "leaves": ["ai.specs", "ai.decomposition", "ai.delegation", "ai.verification"]},
+  {"point": "验证与测试选择：数字例子、边界、并发不变量", "cards": ["lcp-rate-limiter-find-the-defect", "lcp-rate-limiter-five-tests", "lcp-rate-limiter-first-instruction-to-agent"], "leaves": ["ai.verification", "ai.failure-modes", "concurrency-depth.testing", "quality.testability"]},
+  {"point": "扩展与多实例演进：cost、按接口限额、共享存储", "cards": ["lcp-rate-limiter-followup-cost-and-per-endpoint", "lcp-rate-limiter-reflection-multi-instance", "lcp-rate-limiter-reflection-lock-atomicity"], "leaves": ["concurrency-depth.safe-structures", "structure.storage", "errors.retry"]}
+]

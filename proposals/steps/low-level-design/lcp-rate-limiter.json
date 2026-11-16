@@ -1,0 +1,16 @@
+{
+  "lcproject.lcp-rate-limiter": [
+    "lcp-rate-limiter-contract-rules",
+    "lcp-rate-limiter-state-and-invariant",
+    "lcp-rate-limiter-first-instruction-to-agent",
+    "lcp-rate-limiter-race-check-then-count",
+    "lcp-rate-limiter-retried-rejection",
+    "lcp-rate-limiter-boundary-and-truncation",
+    "lcp-rate-limiter-fractional-tokens",
+    "lcp-rate-limiter-find-the-defect",
+    "lcp-rate-limiter-five-tests",
+    "lcp-rate-limiter-followup-cost-and-per-endpoint",
+    "lcp-rate-limiter-reflection-lock-atomicity",
+    "lcp-rate-limiter-reflection-multi-instance"
+  ]
+}
