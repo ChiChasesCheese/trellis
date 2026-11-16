@@ -1,0 +1,8 @@
+{
+ "lcproject.lcp-tool-call-agent": [
+  "lcp-tool-call-agent-contract-rules",
+  "lcp-tool-call-agent-state-and-invariant",
+  "lcp-tool-call-agent-reflection-irreversible-restart",
+  "lcp-tool-call-agent-reflection-untrusted-safeguards"
+ ]
+}

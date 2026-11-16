@@ -1,0 +1,360 @@
+[
+ {
+  "point": "入口校验：question 必须是 str，预算必须是精确 int，布尔和浮点无效，模型调用之前抛 ValueError",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.parameters"
+  ]
+ },
+ {
+  "point": "三个预算的取值范围：max_turns ≥ 1，max_tool_calls ≥ 0，max_workers ≥ 1",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "对话记录的结构：user 开头，assistant 带 text 与 tool_calls，tool 结果跟在它之后",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "api.returns",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "终止判据：没有 tool_calls 就终止，空文本答案也算；带调用时的文本只是中间文字",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "api.specs"
+  ]
+ },
+ {
+  "point": "成功返回恰好四个键：answer、messages、model_calls、tool_calls",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "api.returns"
+  ]
+ },
+ {
+  "point": "模型拿到的是整段对话的深拷贝快照",
+  "cards": [
+   "lcp-tool-call-agent-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "模型响应的形状：恰好两个键，每个调用恰好三个键，id 与 name 非空",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "JSON 值的定义：精确 bool/int、有限 float、str、键为 str 的 dict；元组、NaN、无穷无效",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "python.typing"
+  ]
+ },
+ {
+  "point": "整个响应先校验完，再执行任何工具",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "工具结果消息的形状：tool_call_id、name、content 为 ok 与 value",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "api.returns"
+  ]
+ },
+ {
+  "point": "未知工具得到 unknown_tool，并且占一次工具尝试",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "errors.exceptions-vs-values"
+  ]
+ },
+ {
+  "point": "工具抛 Exception、参数绑定失败或返回非 JSON 值，一律 tool_error，不带异常文本",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules",
+   "lcp-tool-call-agent-reflection-untrusted-safeguards"
+  ],
+  "leaves": [
+   "errors.exceptions-vs-values",
+   "errors.narrow-catch"
+  ]
+ },
+ {
+  "point": "一个工具失败不取消同批其余调用",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "errors.exceptions-vs-values",
+   "concurrency.patterns"
+  ]
+ },
+ {
+  "point": "模型自己抛出的异常原样传出，不包装",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "errors.narrow-catch",
+   "errors.chaining"
+  ]
+ },
+ {
+  "point": "非 Exception 的 BaseException：等同批已启动的调用结束后原样传出",
+  "cards": [],
+  "leaves": [
+   "errors.unrecoverable",
+   "concurrency-depth.cancel-shutdown"
+  ]
+ },
+ {
+  "point": "同一批里互不相同的调用并发执行，同时活跃的不超过 max_workers，并且能够重叠",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "concurrency.patterns",
+   "problems.components.thread-pool"
+  ]
+ },
+ {
+  "point": "结果按请求顺序追加，与完成顺序无关",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "concurrency.patterns"
+  ]
+ },
+ {
+  "point": "max_workers 为 1 时按首次出现的顺序执行",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "concurrency.patterns"
+  ]
+ },
+ {
+  "point": "整批等完再继续：下一次模型调用、返回或抛预算错误之前，没有线程残留",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "concurrency-depth.cancel-shutdown",
+   "errors.cleanup"
+  ]
+ },
+ {
+  "point": "重复 ID 共享一次执行，每次出现各得一条结果",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules",
+   "lcp-tool-call-agent-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "重放缓存：同 ID 同名同参，跨响应也直接返回缓存，不执行、不计数",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules",
+   "lcp-tool-call-agent-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "errors.retry"
+  ]
+ },
+ {
+  "point": "参数相等的判据：排序键、紧凑分隔符、ensure_ascii=False 的 JSON；数组顺序与 1 对 1.0 有区别",
+  "cards": [
+   "lcp-tool-call-agent-state-and-invariant"
+  ],
+  "leaves": [
+   "api.specs"
+  ]
+ },
+ {
+  "point": "同 ID 不同名字或参数抛 ValueError，整个响应预检",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules",
+   "lcp-tool-call-agent-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "工具尝试数等于缓存条目数：每个不同 ID 一次，出错的也算",
+  "cards": [
+   "lcp-tool-call-agent-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "预留预算：新 ID 个数超过剩余额度，tool budget exceeded，整个响应零执行，之前批次不回滚",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "轮次预算：最后一轮仍请求工具，先处理完这批再抛 model budget exceeded，不多调一次模型",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "errors.exceptions-vs-values"
+  ]
+ },
+ {
+  "point": "两个预算错误同时成立时的先后：预检在先，所以工具预算错误先于轮次预算错误",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "数据所有权：响应、参数、结果、快照都深拷贝，重放给每次出现一份独立副本",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules",
+   "lcp-tool-call-agent-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "工具注册表在运行开始时复制",
+  "cards": [
+   "lcp-tool-call-agent-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "每次运行有自己的缓存和计数器，模块里没有可变的全局状态",
+  "cards": [
+   "lcp-tool-call-agent-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.confinement"
+  ]
+ },
+ {
+  "point": "只有主线程写缓存和对话记录，工作线程只返回值",
+  "cards": [
+   "lcp-tool-call-agent-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.confinement",
+   "concurrency-depth.safe-structures"
+  ]
+ },
+ {
+  "point": "模型文本和工具输出永远不当代码或指令，改不了预算",
+  "cards": [
+   "lcp-tool-call-agent-reflection-untrusted-safeguards"
+  ],
+  "leaves": [
+   "ai.risks"
+  ]
+ },
+ {
+  "point": "减少模型轮次：一个响应里请求全部独立调用，让它们并发；批量工具必须逐项报错",
+  "cards": [],
+  "leaves": [
+   "concurrency.patterns",
+   "api.parameters"
+  ]
+ },
+ {
+  "point": "不可逆工具与重启：缓存落盘、先写意图、调用 ID 作幂等键、pending 表示结果未知",
+  "cards": [
+   "lcp-tool-call-agent-reflection-irreversible-restart"
+  ],
+  "leaves": [
+   "errors.retry",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "不可信的模型与工具：沙箱进程、墙钟超时、授权、输出上限、密钥隔离放在循环之外",
+  "cards": [
+   "lcp-tool-call-agent-reflection-untrusted-safeguards"
+  ],
+  "leaves": [
+   "ai.risks",
+   "concurrency-depth.cancel-shutdown"
+  ]
+ },
+ {
+  "point": "用真线程测并发：屏障证明重叠，峰值计数检查上限，事件链制造反序完成",
+  "cards": [],
+  "leaves": [
+   "concurrency-depth.testing",
+   "testing.flaky"
+  ]
+ },
+ {
+  "point": "和智能体一起做：先把规则写成断言，一次只给它一个失败的测试",
+  "cards": [
+   "lcp-tool-call-agent-contract-rules"
+  ],
+  "leaves": [
+   "ai.specs",
+   "ai.decomposition"
+  ]
+ },
+ {
+  "point": "和智能体一起做：读它的 diff，查有没有改测试、改签名、把并发写成顺序循环",
+  "cards": [],
+  "leaves": [
+   "ai.verification",
+   "ai.failure-modes"
+  ]
+ }
+]
