@@ -1,0 +1,392 @@
+[
+{
+"point": "配置在构造时读一次，之后环境变量变了只影响新实例",
+"cards": [
+"lcp-password-reset-contract-rules",
+"lcp-password-reset-state-and-invariant"
+],
+"leaves": [
+"api.specs",
+"data.invariants"
+]
+},
+{
+"point": "变量没设才用默认 http://internal.auth.local；设了就原样保留",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"api.specs"
+]
+},
+{
+"point": "设成空串或带空白也要原样保留：用 get 的默认值，不用 or",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"api.specs",
+"errors.boundary-validation"
+]
+},
+{
+"point": "environment 缺省才用 os.environ：空映射也算调用方给了",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation",
+"testing.doubles"
+]
+},
+{
+"point": "构造不读时钟、不改存储",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"api.specs",
+"testing.doubles"
+]
+},
+{
+"point": "请求重置先查用户，未知用户抛 ValueError('User not found')",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"api.error-contract",
+"errors.boundary-validation"
+]
+},
+{
+"point": "未知用户不读时钟、不写任何状态：错误发生在副作用之前",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation",
+"fsm.illegal-transitions"
+]
+},
+{
+"point": "同一实例生成的码不重复，成功用过之后也不再出现",
+"cards": [
+"lcp-password-reset-contract-rules",
+"lcp-password-reset-state-and-invariant"
+],
+"leaves": [
+"data.invariants"
+]
+},
+{
+"point": "新码要不同于该用户当前存着的码，哪怕是另一个实例签发的",
+"cards": [
+"lcp-password-reset-contract-rules",
+"lcp-password-reset-state-and-invariant"
+],
+"leaves": [
+"data.invariants",
+"api.specs"
+]
+},
+{
+"point": "生成器是钩子：每次尝试调用一次，撞车就重试",
+"cards": [
+"lcp-password-reset-contract-rules",
+"lcp-password-reset-state-and-invariant"
+],
+"leaves": [
+"testing.doubles",
+"api.specs"
+]
+},
+{
+"point": "生成器一直撞车要设重试上限并抛错，不能死循环",
+"cards": [
+"lcp-password-reset-state-and-invariant"
+],
+"leaves": [
+"errors.unrecoverable",
+"quality.errors"
+]
+},
+{
+"point": "保存的时间是带时区的 UTC 时刻，与时钟值是同一瞬间",
+"cards": [
+"lcp-password-reset-contract-rules",
+"lcp-password-reset-state-and-invariant"
+],
+"leaves": [
+"fluency.time-numbers"
+]
+},
+{
+"point": "再次请求替换旧码与时间，重新开始 30 秒",
+"cards": [
+"lcp-password-reset-contract-rules",
+"lcp-password-reset-state-and-invariant"
+],
+"leaves": [
+"data.invariants",
+"fsm.illegal-transitions"
+]
+},
+{
+"point": "校验返回布尔值：未知用户、无记录、码不相等都是 False 而不是异常",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"api.error-contract",
+"errors.boundary-validation"
+]
+},
+{
+"point": "码精确比较：不去空白、不改大小写",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation"
+]
+},
+{
+"point": "有效期是半开区间 [0, 30) 秒：0 与 29.9 有效，30 过期",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation",
+"fluency.time-numbers"
+]
+},
+{
+"point": "记录创建时间在未来（负年龄，时钟倒退）无效，但不消耗记录",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"fluency.time-numbers",
+"errors.boundary-validation"
+]
+},
+{
+"point": "没有时区的旧时间戳当 UTC：用 replace 补上，不用 astimezone 按本地时区猜",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"fluency.time-numbers",
+"testing.test-first"
+]
+},
+{
+"point": "任意 UTC 偏移的时间戳按时刻比较，不是按钟面字段",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"fluency.time-numbers"
+]
+},
+{
+"point": "相减之前两端都先换成 UTC：同一个 tzinfo 对象相减会忽略偏移变化",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"fluency.time-numbers",
+"debugging.heisenbugs"
+]
+},
+{
+"point": "任何 False 都不改密码和记录：错码不消耗有效码",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"fsm.illegal-transitions",
+"data.invariants"
+]
+},
+{
+"point": "过期记录留在库里，直到被新请求替换：过期是算出来的，不是存的状态",
+"cards": [
+"lcp-password-reset-contract-rules",
+"lcp-password-reset-state-and-invariant"
+],
+"leaves": [
+"data.invariants",
+"fsm.illegal-transitions"
+]
+},
+{
+"point": "成功时一次 update_password 存 'hashed_' + 密码，原样保留空串、空白、Unicode",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"api.specs",
+"quality.testability"
+]
+},
+{
+"point": "get_user 返回副本：改副本不会保存，必须走 update_password",
+"cards": [
+"lcp-password-reset-contract-rules",
+"lcp-password-reset-state-and-invariant"
+],
+"leaves": [
+"data.defensive-copy"
+]
+},
+{
+"point": "get_reset_code 返回库里的本体：服务只能读，不能改它",
+"cards": [
+"lcp-password-reset-state-and-invariant"
+],
+"leaves": [
+"data.defensive-copy",
+"data.invariants"
+]
+},
+{
+"point": "成功后 clear_reset_code 再返回 True：同一个码重放得 False，换实例也一样",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"fsm.illegal-transitions"
+]
+},
+{
+"point": "先存密码后清记录：密码没写成功，码仍然有效，可以重试",
+"cards": [
+"lcp-password-reset-contract-rules",
+"lcp-password-reset-state-and-invariant"
+],
+"leaves": [
+"fsm.illegal-transitions",
+"errors.retry"
+]
+},
+{
+"point": "码属于存它的用户：不能用 A 的码重置 B，也不清 B 的记录",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"data.invariants"
+]
+},
+{
+"point": "用户存在与否在校验时才查：被删用户的残留记录返回 False 且不动状态",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation"
+]
+},
+{
+"point": "一个码最多成功一次：多进程下要靠库里带条件的删除，影响一行才算成功",
+"cards": [
+"lcp-password-reset-reflection-shared-database"
+],
+"leaves": [
+"concurrency-depth.compound-actions",
+"concurrency-depth.atomics"
+]
+},
+{
+"point": "进程内的锁和 GIL 管不了多进程，也不让先查再改变成一步",
+"cards": [
+"lcp-password-reset-reflection-shared-database"
+],
+"leaves": [
+"concurrency-depth.compound-actions",
+"concurrency-depth.safe-structures"
+]
+},
+{
+"point": "尝试次数放库里原子自增，到上限就作废记录",
+"cards": [
+"lcp-password-reset-reflection-shared-database"
+],
+"leaves": [
+"concurrency-depth.atomics",
+"errors.retry"
+]
+},
+{
+"point": "过期判断统一用库的时间，不用各实例的时钟",
+"cards": [
+"lcp-password-reset-reflection-shared-database"
+],
+"leaves": [
+"fluency.time-numbers"
+]
+},
+{
+"point": "码用 secrets 生成，不用可预测的 random",
+"cards": [
+"lcp-password-reset-reflection-credential-hardening"
+],
+"leaves": [
+"errors.boundary-validation"
+]
+},
+{
+"point": "库里存码的 HMAC 摘要，比较用 compare_digest",
+"cards": [
+"lcp-password-reset-reflection-credential-hardening"
+],
+"leaves": [
+"data.invariants"
+]
+},
+{
+"point": "密码用 scrypt、argon2 或 bcrypt 加每用户随机盐，'hashed_' 前缀只是占位",
+"cards": [
+"lcp-password-reset-reflection-credential-hardening"
+],
+"leaves": [
+"data.invariants"
+]
+},
+{
+"point": "先写规则与数字例子，让智能体先列代码与规则的差异、不改代码",
+"cards": [
+"lcp-password-reset-contract-rules"
+],
+"leaves": [
+"ai.specs",
+"ai.decomposition"
+]
+},
+{
+"point": "一次只修一类缺陷、一个失败测试，改完立刻跑测试",
+"cards": [],
+"leaves": [
+"ai.decomposition",
+"ai.verification"
+]
+},
+{
+"point": "时间边界、旧记录、时区这些决定自己留着，期望值自己写成表",
+"cards": [],
+"leaves": [
+"ai.delegation",
+"ai.verification"
+]
+},
+{
+"point": "不接受把测试改成通过：先判断是代码错还是测试错",
+"cards": [],
+"leaves": [
+"ai.failure-modes",
+"ai.verification"
+]
+}
+]
