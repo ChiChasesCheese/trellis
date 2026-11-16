@@ -1,0 +1,12 @@
+{
+ "_doc": "Exam points that only one LeetCode Project tests. Chi (2026-11-16): every point is practised at least twice, so lcp_plan.py deals a second practice right after that project. `leaves`: low-level-design leaves whose cards are dealt; `ids`: card ids from any domain; `todo`: nothing exists yet, write it.",
+ "rate-limiter": {"point": "滑动窗口与令牌桶", "leaves": ["problems.components.rate-limiter"]},
+ "actor-follow-notifications": {"point": "发布订阅扇出与去重通知", "leaves": ["problems.components.pub-sub"]},
+ "scheduled-banking": {"point": "定时事件与任意历史时点查询", "leaves": ["problems.marketplaces.bank-account"]},
+ "file-deduplication": {"point": "文件遍历、软硬链接与流式 I/O", "leaves": ["amazon.amz-linux-find"]},
+ "currency-conversion": {"point": "图上的最优路径", "ids": ["lct-evaluate-division"]},
+ "keyword-user-blocklists": {"point": "字符串规范化与匹配", "leaves": ["fluency.strings-bytes"], "todo": "fluency.strings-bytes has no cards yet"},
+ "stack-trace-stream": {"point": "流式状态的检查点与续跑", "leaves": ["fsm.persistence"], "todo": "a second checkpoint/resume exercise"},
+ "tool-call-agent": {"point": "智能体的模型—工具循环", "leaves": ["ai.agent-loop"], "todo": "proposed leaf ai.agent-loop: write its cards"},
+ "reservation-service": {"point": "线上数据原地修复", "leaves": ["debugging.data-repair"], "todo": "proposed leaf debugging.data-repair: write its cards"}
+}

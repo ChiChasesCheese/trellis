@@ -12,7 +12,9 @@ The plan is the reinforcement loop made concrete:
 - `00 补弱`: every card of the leaves his recent attempts missed (the most missed first), so the next cards he meets
   are the knowledge his answers lacked;
 - then one part per project in the skeleton's order (the study order): `1 先修`, the first cards of the leaves the
-  project's points.json names, and `2 作答`, the project's answer cards in step order.
+  project's points.json names, and `2 作答`, the project's answer cards in step order;
+- `3 第二次练`, for an exam point only that project tests: every point is practised at least twice (Chi,
+  2026-11-16), so its second practice comes from the bank or another domain (lc-project/second_practice.json).
 A card already borrowed by an earlier sprint deck stays there (company_deck.py: the first plan naming a card wins).
 """
 from __future__ import annotations
@@ -31,6 +33,7 @@ HOME = ROOT / "sources/local/lc-project"
 PLAN = HOME / "plan.json"
 ATTEMPTS = HOME / "attempts.jsonl"
 PROBLEMS = ROOT / "vault/domains/low-level-design/problems"
+SECOND = ROOT / "research/domains/low-level-design/lc-project/second_practice.json"
 PREREQ_PER_LEAF = 3   # 先修: the first cards of each leaf a project stands on
 RECENT = 60           # attempts that count towards 补弱
 WEAK_SCORE = 0.75     # an attempt below this sends its missed leaves to 补弱
@@ -63,6 +66,7 @@ def plan() -> list[dict]:
     weak = [i for leaf in weak_leaves() for i in ordered(by_leaf.get(leaf, []))]
     if ids := take(weak):
         parts.append({"label": "00 补弱", "ids": ids})
+    second = json.loads(SECOND.read_text(encoding="utf-8")) if SECOND.exists() else {}
     leaves = [l for l in project.skeleton.leaves() if l.id.startswith("lcproject.") and by_leaf.get(l.id)]
     for n, leaf in enumerate(leaves, 1):
         slug = leaf.id.split(".", 1)[1]
@@ -75,6 +79,9 @@ def plan() -> list[dict]:
         if prereq:
             parts.append({"label": f"{n:02d} {title}::1 先修", "ids": prereq})
         parts.append({"label": f"{n:02d} {title}::2 作答", "ids": own})
+        extra = second.get(slug.removeprefix("lcp-"), {})
+        if ids := take([i for lid in extra.get("leaves", []) for i in ordered(by_leaf.get(lid, []))] + extra.get("ids", [])):
+            parts.append({"label": f"{n:02d} {title}::3 第二次练", "ids": ids})
     return parts
 
 
