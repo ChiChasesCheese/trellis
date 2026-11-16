@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-event-campaigns": [
+    "lcp-event-campaigns-contract-rules",
+    "lcp-event-campaigns-state-and-invariant",
+    "lcp-event-campaigns-reflection-new-rule-and-trial",
+    "lcp-event-campaigns-reflection-fallback-visible"
+  ]
+}

@@ -1,0 +1,387 @@
+[
+ {
+  "point": "出发点优先级：分享的精确位置优先，其次是家所在城市的坐标，都没有就是没有出发点",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "data.optional"
+  ]
+ },
+ {
+  "point": "家所在城市位置服务不认识坐标时，没有出发点，不能退回别的猜测",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "data.optional",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "缺出发点或演出城市没有坐标：within_miles 不匹配，不抛异常",
+  "cards": [
+   "lcp-event-campaigns-contract-rules",
+   "lcp-event-campaigns-reflection-fallback-visible"
+  ],
+  "leaves": [
+   "data.optional",
+   "errors.exceptions-vs-values"
+  ]
+ },
+ {
+  "point": "缺位置不能当成距离 0 或无穷：0 会让所有人就在演出地，无穷会让大半径永远匹配",
+  "cards": [
+   "lcp-event-campaigns-state-and-invariant"
+  ],
+  "leaves": [
+   "data.optional",
+   "debugging.failure-origins"
+  ]
+ },
+ {
+  "point": "半径含边界：距离恰好等于半径算匹配，比它小一点的半径不算",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "in_metro_area 匹配家所在城市本身和直接相邻的城市",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "邻接不传递：家的邻居的邻居不算都市圈",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "邻接是双向的，且不需要城市有坐标",
+  "cards": [],
+  "leaves": [
+   "api.specs",
+   "data.optional"
+  ]
+ },
+ {
+  "point": "in_metro_area 只看 home_city，不看 location；没有家就谁也不匹配",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "data.optional"
+  ]
+ },
+ {
+  "point": "within_days 是 [now, now + d×24 小时]，两端都含；已经开始的不算",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "用 abs 算时间差会把过去的演出放进未来窗口：窗口要有方向",
+  "cards": [],
+  "leaves": [
+   "fluency.time-numbers",
+   "debugging.failure-origins"
+  ]
+ },
+ {
+  "point": "this_weekend 窗口是 [周六 00:00, 下周一 00:00) 半开区间，周日整天都在里面",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "fluency.time-numbers",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "周一到周五的这个周末指即将到来的那个，周六日指正在过的这个",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "fluency.time-numbers",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "周末窗口用本周一零点加 5 天与加 7 天算出：周一为一周之首，周六日自然属于当前周",
+  "cards": [],
+  "leaves": [
+   "fluency.time-numbers",
+   "refactoring.conditionals"
+  ]
+ },
+ {
+  "point": "对 7 取模往前推的写法在周日跳到下一个周六",
+  "cards": [],
+  "leaves": [
+   "fluency.time-numbers",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "this_weekend 还要求开始时间不早于 now：周六下午不会推荐周六上午的演出",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "规则里不调用 datetime.now()：现在由 context.now 注入，测试把 now 拨到周一到周日就能覆盖",
+  "cards": [
+   "lcp-event-campaigns-state-and-invariant"
+  ],
+  "leaves": [
+   "quality.testability",
+   "testing.testable-design"
+  ]
+ },
+ {
+  "point": "跨月、跨年的周末由 timedelta 加法自动处理，不用自己判断月末",
+  "cards": [],
+  "leaves": [
+   "fluency.time-numbers",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "price_under 是严格小于：恰好等于上限的票不算",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "price_under 的有货与够便宜必须落在同一张票上，不能用两次 any",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "debugging.failure-origins"
+  ]
+ },
+ {
+  "point": "all_of 要全部匹配：循环里反复覆盖结果只会让最后一条规则生效",
+  "cards": [],
+  "leaves": [
+   "debugging.failure-origins",
+   "refactoring.conditionals"
+  ]
+ },
+ {
+  "point": "空 all_of 匹配一切，空 any_of 什么都不匹配",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "组合子可以嵌套，也装得下别处写的规则：Protocol 的结构化子类型，不必继承",
+  "cards": [
+   "lcp-event-campaigns-reflection-new-rule-and-trial"
+  ],
+  "leaves": [
+   "structure.api",
+   "patterns.structural"
+  ]
+ },
+ {
+  "point": "同一个规则对象服务多位客户：规则身上的缓存会让后面的客户拿到前面客户的答案",
+  "cards": [
+   "lcp-event-campaigns-state-and-invariant"
+  ],
+  "leaves": [
+   "oop.values",
+   "debugging.heisenbugs"
+  ]
+ },
+ {
+  "point": "冻结数据类让规则无状态由语言保证：给实例赋值直接抛错",
+  "cards": [
+   "lcp-event-campaigns-state-and-invariant"
+  ],
+  "leaves": [
+   "oop.values",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "要缓存距离就放在一次调用的范围里，键包含出发点；先正确，再测量",
+  "cards": [
+   "lcp-event-campaigns-state-and-invariant"
+  ],
+  "leaves": [
+   "performance.caching",
+   "performance.measure-first"
+  ]
+ },
+ {
+  "point": "可推荐活动 = 还没开始 + 至少一张有货的票，按 (开始时间, id) 排序",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "恰好在 now 开始的演出可推荐；售罄的和只有过期票的不可推荐",
+  "cards": [],
+  "leaves": [
+   "testing.partitioning",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "先匹配、后截断到 limit：先截断会让最早几场不相关时变成空列表",
+  "cards": [
+   "lcp-event-campaigns-contract-rules",
+   "lcp-event-campaigns-reflection-fallback-visible"
+  ],
+  "leaves": [
+   "debugging.failure-origins",
+   "refactoring.conditionals"
+  ]
+ },
+ {
+  "point": "第一个至少命中一场可推荐活动的级别胜出，后面的级别不再看",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "patterns.behavioral"
+  ]
+ },
+ {
+  "point": "兜底对每位客户一样：返回可推荐活动的前 limit 个，不管有没有位置或家",
+  "cards": [
+   "lcp-event-campaigns-contract-rules",
+   "lcp-event-campaigns-reflection-fallback-visible"
+  ],
+  "leaves": [
+   "api.specs",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "结果只有在没有可推荐活动时才为空",
+  "cards": [
+   "lcp-event-campaigns-reflection-fallback-visible"
+  ],
+  "leaves": [
+   "api.returns",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "用生成器加 islice 惰性截断：凑够 limit 个就停止评估后面的演出",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "python.context-iterators",
+   "performance.complexity-constants"
+  ]
+ },
+ {
+  "point": "返回的列表归调用方所有：修改它不影响下一次调用",
+  "cards": [],
+  "leaves": [
+   "data.defensive-copy",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "推荐器构造后只读，规则与活动不可变：多个线程共用不需要锁",
+  "cards": [
+   "lcp-event-campaigns-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.confinement",
+   "concurrency-depth.testing"
+  ]
+ },
+ {
+  "point": "题目给的例子在坏代码上也能通过：每个现象要有自己的失败测试",
+  "cards": [
+   "lcp-event-campaigns-contract-rules"
+  ],
+  "leaves": [
+   "ai.verification",
+   "testing.test-first"
+  ]
+ },
+ {
+  "point": "先把五个现象各对到一处缺陷，再让智能体一次改一个",
+  "cards": [],
+  "leaves": [
+   "debugging.hypothesis",
+   "ai.decomposition"
+  ]
+ },
+ {
+  "point": "不改推荐器上线新规则：写一个带 matches 的类，只放进一个试验活动",
+  "cards": [
+   "lcp-event-campaigns-reflection-new-rule-and-trial"
+  ],
+  "leaves": [
+   "patterns.selection",
+   "api.evolution"
+  ]
+ },
+ {
+  "point": "验证未验证的信号：影子模式加随机小流量对照，看点击率、转化、退订与新规则独有命中",
+  "cards": [
+   "lcp-event-campaigns-reflection-new-rule-and-trial"
+  ],
+  "leaves": [
+   "performance.measure-first",
+   "quality.fitness-functions"
+  ]
+ },
+ {
+  "point": "兜底结果带上命中的级别或 fallback，按天看兜底率；骤升说明规则数据坏了",
+  "cards": [
+   "lcp-event-campaigns-reflection-fallback-visible"
+  ],
+  "leaves": [
+   "api.returns",
+   "parsing-io.diagnostics"
+  ]
+ }
+]
