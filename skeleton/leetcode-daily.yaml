@@ -211,6 +211,9 @@ nodes:
   - id: math-bit-sim.minimum-moves-to-equal-array-elements-iii
     title: LC 3736 最小操作次数使数组元素相等 III（Minimum Moves to Equal Array Elements III）
     summary: Easy；Array, Math。
+  - id: math-bit-sim.calculate-digit-sum-of-a-string
+    title: LC 2243 计算字符串的数字和（Calculate Digit Sum of a String）
+    summary: Easy；String, Simulation。
   core: true
 - id: sorting-permutation
   order: 18
