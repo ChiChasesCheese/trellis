@@ -125,6 +125,8 @@ classic problem. It never restates the answer and the card stands without it.
 - A race the GIL hides: the card may say the test cannot fail under the GIL; never claim it shows up readily there.
 - An example input called "not on a boundary" is checked against every threshold of every field.
 - A `more` line is a fact too: run it.
+- A card that asks about data the reader cannot see ("例子库里的 b") is not self-contained: put the rows in the stem or `code_q`.
+- A version-dependent fact (a query plan, an index choice) names the version it was measured on.
 
 ## Steps (writer)
 

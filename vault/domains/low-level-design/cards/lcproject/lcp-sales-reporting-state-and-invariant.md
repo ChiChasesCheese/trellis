@@ -41,7 +41,7 @@ def _leaders(self, request, key, measure):
 
 <details class="pt"><summary>延伸</summary>
 
-四条查询各扫一遍表；嫌慢可以合成一条带 CTE 的 `UNION ALL`（行数仍是 1 + 3k），再给 `saleDate` 建索引。表大到每次现算不可接受时，才引入按天预聚合的汇总表，同时要决定它和明细怎样保持一致。
+四条查询各扫一遍表；嫌慢先给 `saleDate` 建索引缩小每次扫描，再不够合成一条带 CTE 的 `UNION ALL`（表只扫一次，行数仍是 1 + 3k）。表大到每次现算不可接受时，才引入按天预聚合的汇总表，同时要决定它和明细怎样保持一致。
 
 </details>
 

@@ -30,13 +30,14 @@ flowchart TB
 
 ```python
 MATCHING = """
-    type = $kind                                     -- 常量 sale
-    AND saleDate >= $start AND saleDate < $end      -- 左闭右开
-    AND customerStatus IN ($live, $gone)            -- active、termed；NULL 与未知状态进不来
+    type = $kind
+    AND saleDate >= $start AND saleDate < $end
+    AND customerStatus IN ($live, $gone)
     AND ($status IS NULL OR customerStatus = $status)
-    AND ($region IS NULL OR region = $region)       -- NULL 地区匹配不上
+    AND ($region IS NULL OR region = $region)
     AND ($item IS NULL OR itemName = $item)
 """
+CONSTANTS = {"kind": "sale", "live": "active", "gone": "termed"}  # 常量也绑定，语句文本里没有这三个词
 ```
 
 <details class="pt"><summary>延伸</summary>
