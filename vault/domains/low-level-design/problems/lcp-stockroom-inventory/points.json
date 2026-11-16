@@ -1,0 +1,411 @@
+[
+ {
+  "point": "检查顺序固定：身份 401、路由 404、id 400、方法 405，之后才看请求体",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "身份是去空白后非空的字符串；owner 原样保存，首尾空格也算不同用户",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "错误体恒为 {error: 代码}，不放异常文本和堆栈",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules",
+   "lcp-stockroom-inventory-reflection-concurrent-uniqueness"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.exceptions-vs-values"
+  ]
+ },
+ {
+  "point": "id 恰好 24 位十六进制，大小写都收，返回一律小写",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "畸形 id 的 400 先于 405：方法放在最后分派",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "SKU 用 fullmatch：match 加 $ 会放过结尾的换行",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "parsing-io.regex",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "名字去 ECMAScript 空白后按 UTF-16 码元数 1 到 80，存去空白后的名字",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "str.strip() 的字符表与 ECMAScript 不同：多剥 0x85、不剥 U+FEFF",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "数字：int、整数值 float、整数值 Decimal 算数；布尔、字符串、None 不算，用 type 不用 isinstance",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "非法数量不能悄悄变成 0：x or 0 把 None 和合法的 0 混为一谈",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "ai.failure-modes"
+  ]
+ },
+ {
+  "point": "创建的键恰好是 sku、name、quantity；owner、id、version 不由调用方给",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "api.hard-to-misuse",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "先写库再回 201，返回库里读出的值，不是自己拼的字典",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules",
+   "lcp-stockroom-inventory-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "构造字典、插入、更新是三件事：内存、可能被拒的写入、条件修改",
+  "cards": [
+   "lcp-stockroom-inventory-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "每个读、改、删的查询都带 owner；别人的与不存在同形，都是 404",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules",
+   "lcp-stockroom-inventory-state-and-invariant"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "别人的条目返回 404 而不是 403，否则泄露 id 是否存在",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "ai.risks"
+  ]
+ },
+ {
+  "point": "列表只含自己的，按 sku 升序再 id 升序；空列表是 200",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "api.returns",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "删除返回 204 且正文是 None，重复删除 404，删后 SKU 可复用",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "更新的键只能是 name、quantity、version；version 必填，至少改一项",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "版本范围 1 到 9223372036854775806：留一位给加一，浮点形式在边界上越界",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "fluency.time-numbers",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "更新顺序：先校验整个请求 400，再找自己的条目 404，最后比版本 409",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "版本检查与加一在同一次库操作里：条件 owner、id、version，修改带 version + 1",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules",
+   "lcp-stockroom-inventory-state-and-invariant",
+   "lcp-stockroom-inventory-reflection-concurrent-uniqueness"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "先读版本再写有窗口：并发两个请求都通过比较，都成功",
+  "cards": [
+   "lcp-stockroom-inventory-state-and-invariant",
+   "lcp-stockroom-inventory-reflection-concurrent-uniqueness"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency-depth.memory-model"
+  ]
+ },
+ {
+  "point": "值没变的更新也要加一版本；失败的更新不改任何字段与版本",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules",
+   "lcp-stockroom-inventory-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "errors.cleanup"
+  ]
+ },
+ {
+  "point": "更新返回改后的文档，不是读出来的旧文档（RETURNING 或 return_document=AFTER）",
+  "cards": [
+   "lcp-stockroom-inventory-state-and-invariant"
+  ],
+  "leaves": [
+   "api.returns",
+   "ai.failure-modes"
+  ]
+ },
+ {
+  "point": "更新没命中后按 owner 再查一次：在是 409，不在是 404",
+  "cards": [
+   "lcp-stockroom-inventory-reflection-concurrent-uniqueness"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "唯一性交给 (owner, sku) 唯一索引：直接插入，不先查后插",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules",
+   "lcp-stockroom-inventory-reflection-concurrent-uniqueness"
+  ],
+  "leaves": [
+   "structure.storage",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "不同 owner 可以用同一个 SKU；条目删除后 SKU 可复用",
+  "cards": [
+   "lcp-stockroom-inventory-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "错误按码映射：11000 是 409，121 是 400，其余是 503；不按消息文本",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules",
+   "lcp-stockroom-inventory-reflection-concurrent-uniqueness"
+  ],
+  "leaves": [
+   "errors.taxonomy",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "库的模式校验只是最后一道网：放过结尾换行、按字符数名字、拒绝整数值浮点",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "进程内的锁和 GIL 管不到多进程：裁决放在数据库里",
+  "cards": [
+   "lcp-stockroom-inventory-state-and-invariant",
+   "lcp-stockroom-inventory-reflection-concurrent-uniqueness"
+  ],
+  "leaves": [
+   "concurrency-depth.safe-structures",
+   "concurrency-depth.memory-model"
+  ]
+ },
+ {
+  "point": "先把请求解析成合格的值再碰库：解析不过返回 None，失败不留痕",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "data.value-entity"
+  ]
+ },
+ {
+  "point": "孤立代理项不能编码成 UTF-8：当作 400 而不是让异常逃出去",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "增量调整不幂等：操作号加唯一约束，流水与改数量同一个事务",
+  "cards": [
+   "lcp-stockroom-inventory-reflection-retry-safe-adjustments"
+  ],
+  "leaves": [
+   "errors.retry",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "设置绝对值天然安全：重发得同一结果，配合版本重发得 409",
+  "cards": [
+   "lcp-stockroom-inventory-reflection-retry-safe-adjustments"
+  ],
+  "leaves": [
+   "errors.retry",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "扣减的下限写进更新条件：quantity 不小于扣减量，不先读后判断",
+  "cards": [
+   "lcp-stockroom-inventory-reflection-retry-safe-adjustments"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "屏障并发测试：十六个线程同版本更新，恰好一个 200，断言不变量而不是时间",
+  "cards": [
+   "lcp-stockroom-inventory-reflection-concurrent-uniqueness"
+  ],
+  "leaves": [
+   "concurrency-depth.testing",
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "多个服务实例连同一个数据库的测试，证明裁决在库里而不在进程里",
+  "cards": [
+   "lcp-stockroom-inventory-reflection-concurrent-uniqueness"
+  ],
+  "leaves": [
+   "concurrency-depth.testing",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "故障注入：让某个库操作抛出指定错误码，断言状态码与错误体",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "quality.testability",
+   "testing.doubles"
+  ]
+ },
+ {
+  "point": "指挥智能体：先让它只列规则与代码的差异，一类缺陷一个失败测试，不接受改测试迁就代码",
+  "cards": [
+   "lcp-stockroom-inventory-contract-rules"
+  ],
+  "leaves": [
+   "ai.specs",
+   "ai.verification",
+   "ai.failure-modes"
+  ]
+ },
+ {
+  "point": "测试只连临时库并只删自己建的库：别让智能体把测试指向真实数据",
+  "cards": [],
+  "leaves": [
+   "ai.risks",
+   "ai.verification"
+  ]
+ }
+]

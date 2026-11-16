@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-stockroom-inventory": [
+    "lcp-stockroom-inventory-contract-rules",
+    "lcp-stockroom-inventory-state-and-invariant",
+    "lcp-stockroom-inventory-reflection-concurrent-uniqueness",
+    "lcp-stockroom-inventory-reflection-retry-safe-adjustments"
+  ]
+}
