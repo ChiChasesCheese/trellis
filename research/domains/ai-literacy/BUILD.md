@@ -194,7 +194,11 @@ Filled from each agent's reply; checked by the orchestrator before the group is 
 
 ## Next action
 
-Launch the card groups (three at a time): `use`, `agents`, `industry`, then `quirks` (two agents, six leaves each),
-`models`, `evals` + `work`, `safety` (after `quirks`, so it can avoid its questions).
-Then: `anki_refresh.py --add ail- ai-literacy`, sections in `tracks/ai-infra-sdet.yaml`, rebuild the sprint plan,
-`company_deck.py deal`.
+Done 2026-11-16: 8 nodes, 62 leaves, 248 cards (186 recall, 62 challenge), 90 with a diagram (36.3%); validate 0 errors.
+In Anki through `anki_refresh.py --add ail- ai-literacy` (deck `📦 其他::AI 通识`); the 13 basics challenge cards of
+llm-inference added the same way; the Cerebras plan rebuilt (1,315 → 1,576 ids, none removed) and dealt; challenge gate
+applied (75 challenge cards, 72 held). Cross-folder check: the METR 11.3 h / 270 h figure is the 新进展 of both
+`agents/long-horizon-not-reliable` and `work/reading-news-fixed-water` (kept: different questions); the Fable 5 export
+episode appears in four cards from four angles (vendor risk, timeline, export control, guardrail failure).
+
+Next: keep dated cards fresh (search before each refresh); readings and link coverage are still 0% (step 6 of the skill).
