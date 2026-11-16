@@ -27,6 +27,17 @@ Rules that came out of building it:
 - **Pictures.** At least 25% of every deck's cards carry a diagram (`scripts/diagram_share.py`). A diagram is a mermaid
   block or a bare `<svg>` block. Never fence svg: Obsidian shows a fence as code. Design answers put one on every card.
   `scripts/diagram_queue.py` and the 1:37 task backfill old decks in study order.
+- **AI in two layers.** Mechanics from zero live in `llm-inference` (`basics`, `ml`, then serving and hardware).
+  What an engineer talks about lives in `ai-literacy`: using models, how models improve, agents, benchmarks, the
+  industry, AI at work, safety, in priority order inside each node (`research/domains/ai-literacy/BUILD.md`).
+- **新进展 at the bottom of a card.** An AI card may end with a dated block that ties its mechanism to a recent
+  development, then a folded 想一想 question answered from the card plus the news. Every dated fact is searched for
+  when the card is written (`research/domains/llm-inference/NEWS_TASK.md`).
+- **Challenge cards.** A leaf's ordinary cards demonstrate. Its challenge card (tag `挑战`, last `step`) gives a new
+  situation, grading points and a folded reference answer. `scripts/challenge.py` keeps it suspended (tag
+  `挑战::待放出`) until every other card of the leaf has left the learning steps, and the daily run releases it. The
+  daily report card shows the 迁移率: the share of challenge cards answered Good or Easy the first time, next to the
+  same leaves' review retention. High retention with a low 迁移率 means wording was memorised, not the mechanism.
 
 ## Daily decks
 
@@ -50,7 +61,7 @@ set by `scripts/reposition_new.py` while Anki is closed (see below).
 |---|---|---|
 | 1:37 | Diagram backfill | ~30 diagrams on the cards studied next |
 | 3:43 | LeetCode Daily | newly solved problems → body → tree → tags; moves 必读 |
-| 3:58 | Study plan daily | tags new problems, exam points, mock fixes, 完整答案 ahead for the next deep-dive question, rebuilds the daily decks, answers card notes |
+| 3:58 | Study plan daily | tags new problems, exam points, mock fixes, 完整答案 ahead for the next deep-dive question, rebuilds the daily decks, holds and releases challenge cards, answers card notes |
 
 ## Anki: what forces a full sync
 

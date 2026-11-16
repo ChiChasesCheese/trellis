@@ -30,6 +30,43 @@ sections:
   - node: llm-inference:basics.transformer-block
   - node: llm-inference:basics.llm-lifecycle
   - node: llm-inference:basics.inference-serving
+  # above the mechanics, by how often a topic comes up among engineers: using models, agents, how models improve,
+  # benchmarks, the industry (domain ai-literacy; each leaf ends with a challenge card)
+  - node: ai-literacy:use.context-window
+  - node: ai-literacy:use.prompting
+  - node: ai-literacy:use.hallucination
+  - node: ai-literacy:use.tool-calling
+  - node: ai-literacy:use.rag
+  - node: ai-literacy:use.context-engineering
+  - node: ai-literacy:use.prompt-caching
+  - node: ai-literacy:use.api-economics
+  - node: ai-literacy:agents.loop
+  - node: ai-literacy:agents.mcp
+  - node: ai-literacy:agents.coding-agents
+  - node: ai-literacy:agents.context-memory
+  - node: ai-literacy:agents.security
+  - node: ai-literacy:agents.long-horizon
+  - node: ai-literacy:work.ai-coding
+  - node: ai-literacy:models.sft-vs-rl
+  - node: ai-literacy:models.reasoning
+  - node: ai-literacy:models.open-weights
+  - node: ai-literacy:models.multimodal
+  - node: ai-literacy:models.distillation-small
+  - node: ai-literacy:models.scaling
+  - node: ai-literacy:evals.benchmarks
+  - node: ai-literacy:evals.leaderboards
+  - node: ai-literacy:industry.stack
+  - node: ai-literacy:industry.labs
+  - node: ai-literacy:industry.open-china
+  - node: ai-literacy:industry.products
+  - node: ai-literacy:industry.chips
+  - node: ai-literacy:industry.inference-economics
+  - node: ai-literacy:industry.datacenters
+  - node: ai-literacy:industry.timeline
+  - node: ai-literacy:industry.agi-debate
+  - node: ai-literacy:agents.multi-agent
+  - node: ai-literacy:agents.computer-use
+  - node: ai-literacy:work.reading-news
 - title: 机器学习基础
   parts:
   - node: llm-inference:ml.loss-gradient
@@ -724,3 +761,20 @@ sections:
   - node: ml-system-design:classic
 - title: 行为面方法
   parts: []
+- title: AI 通识 · 扩展
+  parts:
+  - node: ai-literacy:use.structured-output
+  - node: ai-literacy:use.vector-search
+  - node: ai-literacy:use.adaptation-choices
+  - node: ai-literacy:models.diffusion
+  - node: ai-literacy:models.architecture-trends
+  - node: ai-literacy:models.embodied
+  - node: ai-literacy:agents.reliability
+  - node: ai-literacy:evals.app-evals
+  - node: ai-literacy:work.app-architecture
+  - node: ai-literacy:work.sde-impact
+  - node: ai-literacy:safety.alignment
+  - node: ai-literacy:safety.jailbreak-guardrails
+  - node: ai-literacy:safety.interpretability
+  - node: ai-literacy:safety.governance
+  - node: ai-literacy:safety.data-rights

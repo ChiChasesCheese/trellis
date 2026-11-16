@@ -22,7 +22,7 @@ nodes:
   summary: 模型训练好之后，怎么让它在一个具体任务上答得对：给它什么文字、让它看什么资料、允许它调用什么，以及这些怎么计费。
   children:
   - id: use.context-window
-    title: 上下文窗口：模型一次能看多少、为什么会"忘"
+    title: 上下文窗口：模型一次能看多少、为什么会「忘」
     summary: 模型没有记忆，每次请求只看得到窗口里的 token；窗口有上限，塞得越满越贵、越慢，中间的内容也越容易被忽略。
   - id: use.prompting
     title: 提示词：系统提示、少样本与思维链
@@ -33,7 +33,7 @@ nodes:
     summary: 模型输出的是"看起来最可能的下一个 token"，不是查到的事实；压幻觉靠给资料、要求引用、允许说不知道和事后校验。
     requires: [use.prompting]
   - id: use.tool-calling
-    title: 工具调用（function calling）：模型怎么"动手"
+    title: 工具调用（function calling）：模型怎么「动手」
     summary: 模型只会输出文字；工具调用是让它输出一段结构化的"调用请求"，由程序去执行，再把结果放回上下文。
     requires: [use.prompting]
   - id: use.rag
