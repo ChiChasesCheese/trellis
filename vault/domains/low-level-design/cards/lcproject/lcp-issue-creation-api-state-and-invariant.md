@@ -9,28 +9,44 @@ tags: [作答]
 在项目工单服务里，成员表、每个项目的工单、幂等键的回执、全局 id 计数器都放在内存里，多个线程同时调用。要存哪些状态？每部分用什么结构？哪条不变量最要紧，什么会打破它？
 
 ## A
-**评分点**
-- 说出成员表构造时复制并冻结：之后改传入的集合不影响授权
-- 说出每个项目一份状态：工单列表按 id 升序追加（id 全局递增所以天然有序）、按 id 查找的字典，查找只在本项目内，天然隔离
-- 说出回执表按 (用户, 键) 存"规范化后的请求加工单引用"：比较就是值相等，重放看到的是最新状态
-- 说出最要紧的不变量：同一范围内一个键至多对应一张工单，所以"查键、分配 id、追加、记回执"必须在同一个临界区里
-- 说出打破它的做法：不加锁或分两步加锁、先自增 id 再检查冲突、`get` 不加锁读到状态已改版本未加的半截
-- 说出对外只给字典快照，不交出内部对象
+**每个项目一个 `Board`，全实例一把锁；最要紧的不变量是同范围一个键至多一张工单**
 
-<details class="pt"><summary>参考答案</summary>
+- **成员表**：构造时冻结成 `frozenset`，之后改传入的集合不影响授权
+- **每项目一个 `Board`**：按 id 升序的列表（id 全局递增，追加即有序）、id 字典、回执表；查找只在本项目内，天然隔离
+- **回执**：键是 (用户, 键)，值是规范化后的请求加工单引用；比较是值相等，重放看到现状
+- **一把锁加全局 id**：创建、版本比较、读都在锁内；id 只在真的建出工单后加一
+- **打破这条不变量**：查键放锁外，两个线程都查到没用过，各建一张
+- **打破别的不变量**：先加 id 再查键（id 出现空洞）、`get` 不加锁（读到状态已改、版本未加的半截）、返回内部对象（调用方改动存储）
+- **对外只给快照**：`snapshot()` 的字典，改它不影响存储
 
-状态：冻结的成员表；每个项目一个 `Board`（升序工单列表、id 字典、(用户, 键)→回执）；一个全局 id 计数器；一把锁。最要紧的不变量：一个键在一个范围内至多对应一张工单、id 序列没有洞。它靠"查键、分配 id、追加、记回执"在一个临界区里，并且所有可能抛错的检查都在第一次写之前来保证；读也要在锁里，返回的都是快照。
+```mermaid
+classDiagram
+    class IssueService {
+        members 冻结
+        一把锁
+        next_id
+    }
+    class Board {
+        升序工单列表
+        id 字典
+        回执表
+    }
+    IssueService *-- Board : 每项目一个
+    Board *-- Issue
+    Board *-- Receipt
+```
 
 ```python
 with self._lock:
-    existing = board.replay(user, key, request)   # 可能抛 409
-    if existing is not None:
-        return 200, existing.snapshot()
-    issue = Issue(self._next_id, project, user, request.title, request.description)
-    self._next_id += 1                            # 此后不再有会抛错的语句
+    old = board.replay(user, key, request)
+    if old is not None:
+        return 200, old.snapshot()
+    issue = Issue(self._next_id, project, user,
+                  request.title, request.description)
+    self._next_id += 1       # 最后一个会抛错的语句已过
     board.add(issue, key, request)
 ```
 
-</details>
+<details class="pt"><summary>延伸</summary>要让项目之间并行，把锁挪进 `Board`，再配一把只管 id 的小锁；迁到数据库后，回执变成 (用户, 项目, 键) 上带唯一约束的表。</details>
 
 **知识点：** 复合操作（Compound Actions）、防御性拷贝（Defensive Copying）、不变量与封装（Invariants）

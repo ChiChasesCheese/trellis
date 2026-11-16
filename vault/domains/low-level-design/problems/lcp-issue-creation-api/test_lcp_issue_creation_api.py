@@ -302,6 +302,17 @@ def test_paging_with_the_last_id_visits_every_issue_once():
     assert seen == list(range(1, 26))
 
 
+def test_cursor_paging_survives_a_close_between_pages():
+    service = make()
+    for _ in range(5):
+        new(service)
+    first = service.list("alice", "demo", status="open", limit=2)
+    service.transition("alice", "demo", 1, "closed", 1)
+    second = service.list("alice", "demo", status="open", after_id=first[-1]["id"], limit=2)
+    assert [row["id"] for row in first] == [1, 2]
+    assert [row["id"] for row in second] == [3, 4]  # offset=2 would give [4, 5] and skip 3
+
+
 @pytest.mark.parametrize("kwargs", [
     {"status": "done"}, {"status": ""}, {"status": 1}, {"status": ["open"]},
     {"after_id": -1}, {"after_id": True}, {"after_id": "0"}, {"after_id": 1.5}, {"after_id": None},
