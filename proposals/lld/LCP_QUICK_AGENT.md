@@ -114,6 +114,18 @@ classic problem. It never restates the answer and the card stands without it.
 6. **Chinese, plain and spoken**, terms engineers say in English stay English (`idempotency key`, `TTL`, `lock`).
 7. **Vary the openings**; do not start every question the same way.
 
+## Defects verifiers found (each is a rule)
+
+- An `order` whose two steps commute (two reads, a filter and a sort that can swap) has two right answers: pick steps
+  that depend on each other, or make it an `mc`.
+- An `mc` where a second option is also right ("open, 版本已是 2" is a torn read too): try to argue every wrong option.
+- A `bug` excerpt shortened by dropping a line (`self._next_id += 1`) gains a second defect; keep it whole.
+- A design choice the README leaves open (key retention, Lock vs RLock, IntEnum) is stated as our choice, never as
+  the contract, and its wrong options are real mistakes, not strawmen.
+- A race the GIL hides: the card may say the test cannot fail under the GIL; never claim it shows up readily there.
+- An example input called "not on a boundary" is checked against every threshold of every field.
+- A `more` line is a fact too: run it.
+
 ## Steps (writer)
 
 1. Resume rule: if `points/<slug>.json` and `cards/<slug>.jsonl` exist, write only the points that lack a card.
