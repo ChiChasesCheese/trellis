@@ -45,10 +45,24 @@ is researched at writing time; 新进展 blocks on at least half of the recall c
 
 | Date | Group | Leaves | Cards | State |
 |---|---|---|---|---|
+| 2026-11-15 | `agents` | 9 | 36 (27 recall, 9 challenge; 11 diagrams; 14 新进展) | accepted: validate 0 errors, plain_style and phone_diagrams ok, numbers re-derived |
 
 ## Least-sure claims (step 5)
 
 Filled from each agent's reply; checked by the orchestrator before the group is committed.
+
+`agents`:
+
+- `long-horizon-not-reliable`: GPT-5.6 Sol, 11.3 h vs over 270 h. Checked: METR's post of 2026-06-26 states both and
+  calls neither a robust measure.
+- `long-horizon-doubling-trend`: Opus 4.6 at 14.5 h, interval 6–98 h. Checked against two reports of METR's figure.
+  Secondary pages mention a later correction to about 12 h; not confirmed on METR's page, left out.
+- `reliability-trajectories`: the January 2026 date of the τ2-bench loophole example rests on secondary pages.
+- `coding-agents-permission-modes`: auto mode dates (March 2026 preview, default for Pro/Max/Team from August 2026)
+  rest on press and blog titles. `computer-use-vs-api`: "about 86%" on OSWorld is self-reported, and the card says so.
+- `context-memory-four-levers`: Codex and Cursor reading `SKILL.md` rests on secondary blogs.
+- Left out for lack of a primary source: OpenTelemetry GenAI convention status, A2A moving into AAIF, CORE-Bench
+  numbers, the GitHub-MCP leak (the security card presents the attack chain as a hypothetical).
 
 ## Next action
 
