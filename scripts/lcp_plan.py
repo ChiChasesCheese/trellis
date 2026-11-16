@@ -67,8 +67,10 @@ def plan() -> list[dict]:
     if ids := take(weak):
         parts.append({"label": "00 补弱", "ids": ids})
     second = json.loads(SECOND.read_text(encoding="utf-8")) if SECOND.exists() else {}
-    leaves = [l for l in project.skeleton.leaves() if l.id.startswith("lcproject.") and by_leaf.get(l.id)]
-    for n, leaf in enumerate(leaves, 1):
+    leaves = [l for l in project.skeleton.leaves() if l.id.startswith("lcproject.")]
+    for n, leaf in enumerate(leaves, 1):  # numbered by the leaf's place in the study order, so labels never shift
+        if not by_leaf.get(leaf.id):
+            continue
         slug = leaf.id.split(".", 1)[1]
         points = PROBLEMS / slug / "points.json"
         need = [lid for p in json.loads(points.read_text(encoding="utf-8")) for lid in p.get("leaves", [])] if points.exists() else []
