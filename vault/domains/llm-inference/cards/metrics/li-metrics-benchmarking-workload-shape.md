@@ -32,3 +32,7 @@ step: 1
 - **公开数据集：** ShareGPT（真实对话）可以近似聊天流量，`vllm bench serve --dataset-name sharegpt`。
 - **可控的随机分布：** `--dataset-name random --random-input-len 2048 --random-output-len 256 --random-range-ratio 0.5`，长度在设定值上下浮动。
 - **多个负载档位：** 至少分别报告"短输入短输出""长输入短输出""短输入长输出"三档，避免一个平均负载掩盖某类场景的退化。
+
+**新进展（2026 年 8 月）。** SemiAnalysis 的 InferenceX 基准发布 AgentX 1.0：回放真实的智能体编码会话（多轮、上下文最长 100 万 token、前缀大量复用），取代原来 8K 输入 1K 输出的单轮固定负载，并称固定长度只适合当芯片和内核的基线。这正是本卡说的固定负载会误导之处，随机输入的前缀缓存命中率是 0。
+
+<details class="pt"><summary>想一想：在这种负载里，同一个会话的几轮被路由器分到不同机器，会发生什么？</summary>前缀缓存的命中会崩塌，每一轮都要重做长预填充，首 token 延迟变差。所以要么让同一会话固定走一台机器，要么用感知缓存的路由。</details>

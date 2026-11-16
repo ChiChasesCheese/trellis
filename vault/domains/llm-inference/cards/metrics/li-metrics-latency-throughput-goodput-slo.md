@@ -36,3 +36,7 @@ vllm bench serve --model meta-llama/Llama-3.1-8B-Instruct \
 `--goodput` 的值以毫秒为单位，可选 `ttft`、`tpot`、`e2el`（端到端延迟）。输出结果会多出 "Request goodput" 一行。
 
 **SLO 怎么定：** 按产品场景。对话产品常见要求是 TTFT 几百毫秒到 1–2 秒、TPOT 在 20–50 ms（每秒 20–50 个 token，快于阅读速度）；代码补全要更快；离线批处理只看吞吐。MLPerf Inference 的 Llama 2 70B 服务器场景用 TTFT ≤ 2 s、TPOT ≤ 200 ms，更严格的交互场景用 450 ms 和 40 ms。
+
+**新进展（2026 年 2 月）。** Anthropic 为 Claude Opus 4.6 推出“快速模式”（fast mode，研究预览）：同一个模型，输出速度最高约 2.5 倍，价格约为标准价的 6 倍（每百万 token 输入 30 美元、输出 150 美元，标准价是 5 和 25）。这等于给更严的 TPOT 目标直接标了价。
+
+<details class="pt"><summary>想一想：为什么把 TPOT 目标收紧，价格要涨这么多？</summary>Anthropic 没公开做法，最合理的解释是：要降低每步延迟，就得用更小的批，每张卡同时服务的人更少，每卡的 goodput 下降，成本摊到更少的 token 上。</details>

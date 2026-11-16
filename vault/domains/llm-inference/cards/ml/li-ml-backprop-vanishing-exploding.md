@@ -31,3 +31,7 @@ flowchart LR
 - **梯度裁剪（gradient clipping）：** 梯度整体长度超过阈值（大模型训练常用 1.0）就按比例缩小，专治爆炸。PyTorch：`torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)`。
 
 **训练监控：** 记录每步梯度的整体长度（grad norm）。突然飙升往往预示几步之后损失变 NaN，这是训练稳定性测试里最常用的早期信号。
+
+**新进展（2025 年 7 月）。** Kimi K2 报告 15.5 万亿 token 的预训练“零损失尖峰”（loss spike，损失突然飙升）。靠的是 QK-Clip：监控注意力打分（Q 与 K 的点积），一旦过大，就缩小产生它的查询、键权重。
+
+<details class="pt"><summary>想一想：QK-Clip 和本卡的梯度裁剪有什么不同？</summary>梯度裁剪缩小的是“本步更新量”，防止一步跳太远；QK-Clip 直接缩小已经偏大的权重本身，专门压住注意力打分。</details>

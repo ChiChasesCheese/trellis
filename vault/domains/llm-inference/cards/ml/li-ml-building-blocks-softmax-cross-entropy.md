@@ -40,3 +40,7 @@ print(torch.nn.functional.cross_entropy(logits, target))   # tensor(0.4076)
 ```
 
 大语言模型的训练损失就是它，类别是词表里的几万个 token。
+
+**新进展（2025 年 9 月）。** DeepSeek-R1 的强化学习用 GRPO 算法：同一道题让模型答一组，用这组的平均得分当基线，因此不用另训一个评论模型（critic）。得分高于平均的答案，其 token 的概率被推高，本质上是把本卡的交叉熵按得分高低加权。
+
+<details class="pt"><summary>想一想：若同一道题的一组答案全对，会怎样？</summary>每个答案都等于平均分，没有高低之分，几乎没有学习信号。所以训练要挑有时对有时错、有难度的题。</details>

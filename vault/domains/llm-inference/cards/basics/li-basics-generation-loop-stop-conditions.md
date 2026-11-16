@@ -37,3 +37,7 @@ flowchart TD
 - **取消不生效：** 用户断开后服务仍在生成，浪费算力，高峰期会拖慢所有人。
 
 测试要逐一覆盖：每种 `finish_reason`、停止串恰好横跨两个 token、`max_tokens=1`、输入已接近窗口上限。
+
+**新进展（2026 年 3 月）。** 思考型模型（先写一大段看不见的“思考”再回答，这些 token 叫 reasoning tokens）流行后，OpenAI 文档写明：思考 token 虽不显示，却占上下文窗口、按输出价计费，也计入输出上限。GPT-5.4 用 reasoning.effort 参数调节想多久。
+
+<details class="pt"><summary>想一想：对思考型模型把输出上限设成 300，最可能发生什么？</summary>300 个 token 很可能全被思考用掉，在吐出任何答案之前就按长度上限停下（状态为 incomplete），用户什么也看不到，却照样付费。</details>
