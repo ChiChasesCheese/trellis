@@ -1,0 +1,397 @@
+[
+{
+"point": "新出现的行追加在行序末尾，已有的行加一不挪位置",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules",
+"lcp-apparel-shopping-cart-reflection-line-order"
+],
+"leaves": [
+"fluency.collections",
+"data.invariants"
+]
+},
+{
+"point": "updateLine 设的是绝对数量，不是增量：连改两次 3 仍是 3",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules"
+],
+"leaves": [
+"api.specs",
+"testing.partitioning"
+]
+},
+{
+"point": "正数更新可以新建一行，落在行序末尾",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules"
+],
+"leaves": [
+"fluency.collections",
+"api.specs"
+]
+},
+{
+"point": "已有的行改量保持原位置，不论走加一还是 updateLine",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules",
+"lcp-apparel-shopping-cart-reflection-line-order"
+],
+"leaves": [
+"fluency.collections",
+"data.invariants"
+]
+},
+{
+"point": "更新为 0 删除这一行；行本来不在时什么都不做，也不报错",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules",
+"lcp-apparel-shopping-cart-state-and-invariant"
+],
+"leaves": [
+"api.specs",
+"testing.partitioning"
+]
+},
+{
+"point": "删除后再加回来落在末尾，加一与 updateLine 两个入口都一样",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules",
+"lcp-apparel-shopping-cart-reflection-line-order"
+],
+"leaves": [
+"fluency.collections",
+"reading.predict-behaviour"
+]
+},
+{
+"point": "数量范围是 0 到 1,000,000，两端都含",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules",
+"lcp-apparel-shopping-cart-state-and-invariant"
+],
+"leaves": [
+"testing.partitioning",
+"errors.boundary-validation"
+]
+},
+{
+"point": "加一在 999 得 1000；在 1,000,000 上再加越界，被拒绝且购物车不变",
+"cards": [
+"lcp-apparel-shopping-cart-state-and-invariant"
+],
+"leaves": [
+"errors.boundary-validation",
+"errors.bug-vs-failure"
+]
+},
+{
+"point": "products 永远按目录原序，每项带 cartQuantity，没加的是 0",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules"
+],
+"leaves": [
+"api.returns",
+"data.value-entity"
+]
+},
+{
+"point": "items 按插入序，每项有 id、name、priceCents、quantity、lineTotalCents",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules"
+],
+"leaves": [
+"api.returns",
+"api.specs"
+]
+},
+{
+"point": "lineTotalCents 等于单价乘数量，单价为 0 的商品照样是一行",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules"
+],
+"leaves": [
+"api.specs",
+"fluency.time-numbers"
+]
+},
+{
+"point": "totalQuantity 与 totalPriceCents 是各行之和，空车都是 0",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules",
+"lcp-apparel-shopping-cart-state-and-invariant"
+],
+"leaves": [
+"api.specs",
+"fluency.time-numbers"
+]
+},
+{
+"point": "empty 当且仅当没有任何行",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules"
+],
+"leaves": [
+"api.specs",
+"testing.partitioning"
+]
+},
+{
+"point": "empty 不能用「总价是 0」判断：只放了单价 0 的商品，总价为 0 但购物车不空",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules"
+],
+"leaves": [
+"data.invariants",
+"testing.partitioning"
+]
+},
+{
+"point": "名字或价格相同也是两个商品，身份只看 id",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules"
+],
+"leaves": [
+"data.value-entity",
+"oop.values"
+]
+},
+{
+"point": "目录至多 100 个商品，起始数量都是 0，空目录也是合法的",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules"
+],
+"leaves": [
+"testing.partitioning",
+"api.specs"
+]
+},
+{
+"point": "总价是精确整数：3200 分的衬衫 1,000,000 件是 3,200,000,000，超过 32 位",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules"
+],
+"leaves": [
+"fluency.time-numbers",
+"testing.partitioning"
+]
+},
+{
+"point": "单行至多 10**12、整本目录至多 10**14，比 2**53 小，所以浮点数碰巧也精确，但整数才是对的写法",
+"cards": [],
+"leaves": [
+"fluency.time-numbers"
+]
+},
+{
+"point": "金额用整数分，不用浮点数也不用 Decimal：没有除法，没有舍入",
+"cards": [
+"lcp-apparel-shopping-cart-state-and-invariant"
+],
+"leaves": [
+"fluency.time-numbers",
+"data.primitive-obsession"
+]
+},
+{
+"point": "行存成「商品 ID → 数量」的字典，插入序就是行序",
+"cards": [
+"lcp-apparel-shopping-cart-state-and-invariant",
+"lcp-apparel-shopping-cart-reflection-line-order"
+],
+"leaves": [
+"fluency.collections",
+"structure.storage"
+]
+},
+{
+"point": "数量 0 从不入库：删除是 pop，不是把数量写成 0",
+"cards": [
+"lcp-apparel-shopping-cart-state-and-invariant",
+"lcp-apparel-shopping-cart-reflection-line-order"
+],
+"leaves": [
+"data.invariants",
+"fluency.collections"
+]
+},
+{
+"point": "小计、总数量、总价每次快照现算，不另存",
+"cards": [
+"lcp-apparel-shopping-cart-state-and-invariant"
+],
+"leaves": [
+"data.invariants",
+"structure.storage"
+]
+},
+{
+"point": "目录构造时拷成冻结条目，调用方之后改名、改价、清空列表都无关",
+"cards": [
+"lcp-apparel-shopping-cart-state-and-invariant",
+"lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+],
+"leaves": [
+"data.defensive-copy",
+"fluency.mutability"
+]
+},
+{
+"point": "snapshot 每次新建全部对象与列表，旧快照与被改坏的快照都碰不到内部",
+"cards": [
+"lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+],
+"leaves": [
+"data.defensive-copy",
+"oop.values"
+]
+},
+{
+"point": "状态放在实例上：类属性或模块变量会让两辆车共享",
+"cards": [
+"lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+],
+"leaves": [
+"fluency.mutability",
+"concurrency-depth.confinement"
+]
+},
+{
+"point": "失败先于修改：未知 ID 与坏数量在写入之前抛错，购物车原样",
+"cards": [
+"lcp-apparel-shopping-cart-state-and-invariant"
+],
+"leaves": [
+"errors.boundary-validation",
+"api.error-contract"
+]
+},
+{
+"point": "True 也是 int：数量要排除 bool，类型检查用 type(x) is int",
+"cards": [
+"lcp-apparel-shopping-cart-state-and-invariant"
+],
+"leaves": [
+"errors.boundary-validation",
+"python.dataclasses-enums"
+]
+},
+{
+"point": "快照用新建的可变副本还是冻结的不可变值：两种都被接受，各有成本",
+"cards": [
+"lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+],
+"leaves": [
+"oop.values",
+"data.defensive-copy"
+]
+},
+{
+"point": "不缓存快照：缓存省一次构造，却让两次调用共享同一批对象",
+"cards": [
+"lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+],
+"leaves": [
+"data.defensive-copy",
+"fluency.mutability"
+]
+},
+{
+"point": "调用是顺序的所以不加锁；多线程时锁要罩住「读行、算合计」整个快照",
+"cards": [
+"lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+],
+"leaves": [
+"concurrency-depth.compound-actions",
+"concurrency-depth.confinement"
+]
+},
+{
+"point": "HTTP 层负责把 1、1.0、1e0 当同一个整数，小数、布尔、字符串在改状态前拒绝",
+"cards": [],
+"leaves": [
+"errors.boundary-validation",
+"api.error-contract"
+]
+},
+{
+"point": "用例：加 p1、加 p2、删 p1、再加 p1 的序列一次钉住三条顺序规则",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules",
+"lcp-apparel-shopping-cart-reflection-line-order"
+],
+"leaves": [
+"testing.partitioning",
+"testing.test-first"
+]
+},
+{
+"point": "用例：改了输入、改了快照之后再读快照，断言没变",
+"cards": [
+"lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+],
+"leaves": [
+"testing.pytest-tools",
+"data.defensive-copy"
+]
+},
+{
+"point": "用例：留着旧快照，之后每一步都深比较它没变",
+"cards": [
+"lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+],
+"leaves": [
+"testing.pytest-tools",
+"ai.verification"
+]
+},
+{
+"point": "用例：两辆车共用同一批商品对象，一辆动，另一辆不动",
+"cards": [
+"lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+],
+"leaves": [
+"testing.partitioning",
+"fluency.mutability"
+]
+},
+{
+"point": "用例：随机一万次操作与朴素列表模型对拍，期望值独立写出",
+"cards": [
+"lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+],
+"leaves": [
+"testing.coverage-limits",
+"ai.verification"
+]
+},
+{
+"point": "智能体：拿到模板先找别名，`self._products = products` 不是拷贝",
+"cards": [
+"lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+],
+"leaves": [
+"ai.failure-modes",
+"fluency.mutability"
+]
+},
+{
+"point": "智能体：把规则和 README 例子逐条交给它，一次只给一个失败的测试",
+"cards": [
+"lcp-apparel-shopping-cart-contract-rules"
+],
+"leaves": [
+"ai.specs",
+"ai.decomposition"
+]
+},
+{
+"point": "智能体：测试失败时先判断是代码错还是测试错，不接受「把测试改成通过」",
+"cards": [
+"lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+],
+"leaves": [
+"ai.verification",
+"rounds.ai-assisted"
+]
+}
+]

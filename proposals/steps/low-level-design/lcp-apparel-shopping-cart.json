@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-apparel-shopping-cart": [
+    "lcp-apparel-shopping-cart-contract-rules",
+    "lcp-apparel-shopping-cart-state-and-invariant",
+    "lcp-apparel-shopping-cart-reflection-line-order",
+    "lcp-apparel-shopping-cart-reflection-isolation-and-verification"
+  ]
+}
