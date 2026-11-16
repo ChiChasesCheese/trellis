@@ -1,0 +1,9 @@
+{
+  "lcproject.lcp-issue-creation-api": [
+    "lcp-issue-creation-api-contract-rules",
+    "lcp-issue-creation-api-state-and-invariant",
+    "lcp-issue-creation-api-reflection-atomic-retry",
+    "lcp-issue-creation-api-reflection-key-expiry",
+    "lcp-issue-creation-api-reflection-optimistic-vs-row-lock"
+  ]
+}

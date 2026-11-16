@@ -41,11 +41,13 @@ HOME = Path(os.environ.get("QUICK_HOME") or ROOT / "sources/local/quick")
 DECK = "4 碎片速刷"  # the number sorts it with the daily decks
 PRESET = "碎片速刷"  # its preset kept the old name
 TAG = "quick"
-FORMATS = ("cloze", "mc", "flaw", "qa", "order", "match")
-KIND = {"cloze": "填空", "mc": "选择", "flaw": "找错", "qa": "快问", "order": "排序", "match": "配对"}
+FORMATS = ("cloze", "mc", "flaw", "qa", "order", "match", "multi", "bug")
+KIND = {"cloze": "填空", "mc": "选择", "flaw": "找错", "qa": "快问", "order": "排序", "match": "配对", "multi": "多选", "bug": "找错行"}
 FRONT, TAP_FRONT, BACK, TOTAL, OPT, LINE, SIDE, BLANK = 55, 62, 42, 90, 16, 14, 10, 14  # reading units: a Chinese character 1, an ASCII letter or digit 1/2
 MORE = 45  # the extension line under the answer: read only with a few seconds to spare, so outside the ten-second budget
-TAPPED = ("mc", "order", "match")  # options are scanned, not read through: a little more room before the answer
+TAPPED = ("mc", "order", "match", "multi", "bug")
+# multi: 4-6 options, every right one must be picked; bug: a short code excerpt, tap the one wrong line (LeetCode Project, 2026-11-16)
+MULTI_FRONT, CODE_LINE, CODE_LINES = 80, 44, (4, 10)  # options are scanned, not read through: a little more room before the answer
 CHUNK = 20
 DEFAULTS = {"cards": 1000, "per_day": 100, "topic_cap": 6, "source_cards": 2}
 
@@ -161,8 +163,10 @@ def sides(c: dict) -> tuple[list[str], list[str]]:
     f = c.get("fmt")
     if f == "cloze":
         return [c.get("text", "")], [c.get("why", "")]
-    if f == "mc":
+    if f in ("mc", "multi"):
         return [c.get("q", ""), *c.get("opts", [])], [c.get("why", "")]
+    if f == "bug":
+        return [c.get("q", "")], [c.get("fix", ""), c.get("why", "")]  # code is scanned, not read: outside the units
     if f == "order":
         return [c.get("q", ""), *c.get("lines", [])], [c.get("why", "")]
     if f == "match":
@@ -187,7 +191,7 @@ def check(c: dict, known: dict[str, dict]) -> list[str]:
     if f not in ("qa", "flaw") and not c.get("why", "").strip():
         bad.append("why is empty")
     uf, ub = sum(units(x) for x in front), sum(units(x) for x in back)
-    limit = TAP_FRONT if f in TAPPED else FRONT
+    limit = MULTI_FRONT if f == "multi" else TAP_FRONT if f in TAPPED else FRONT
     if uf > limit:
         bad.append(f"front {uf:.0f} > {limit}")
     if ub > BACK:
@@ -212,6 +216,24 @@ def check(c: dict, known: dict[str, dict]) -> list[str]:
             bad.append("no all-of-the-above option")
         if o and max(units(x) for x in o) > 0 and units(o[0]) > 1.6 * max(units(x) for x in o[1:]) + 2:
             bad.append("the right option is much longer than the others")
+    if f == "multi":
+        o, ok = c["opts"], c.get("ok", [])
+        if not 4 <= len(o) <= 6 or len(set(o)) != len(o):
+            bad.append("4 to 6 distinct options")
+        if not ok or len(set(ok)) != len(ok) or not all(isinstance(i, int) and 0 <= i < len(o) for i in ok) or len(ok) == len(o):
+            bad.append("ok lists the right options' indices: at least one, not all")
+        if any(units(x) > OPT for x in o):
+            bad.append(f"an option over {OPT}")
+        if any(re.search(r"以上|都对|都不|皆", x) for x in o):
+            bad.append("no all-of-the-above option")
+    if f == "bug":
+        code, i = c.get("code", []), c.get("bad")
+        if not CODE_LINES[0] <= len(code) <= CODE_LINES[1] or any(not isinstance(x, str) or len(x) > CODE_LINE for x in code):
+            bad.append(f"{CODE_LINES[0]}..{CODE_LINES[1]} code lines of at most {CODE_LINE} characters")
+        elif not isinstance(i, int) or not 0 <= i < len(code) or not code[i].strip():
+            bad.append("bad is the index of the one wrong, non-empty line")
+        if not c.get("fix", "").strip():
+            bad.append("fix (the corrected line) is empty")
     if f == "order":
         n = c["lines"]
         if not 3 <= len(n) <= 4 or len(set(n)) != len(n) or any(units(x) > LINE for x in n):
@@ -397,6 +419,13 @@ QUICK_CSS = """
 .c1 .badge { background:#3b6fd4; border-color:#3b6fd4; } .c2 .badge { background:#b76b01; border-color:#b76b01; } .c3 .badge { background:#8e44ad; border-color:#8e44ad; }
 ol.steps { margin:0 0 10px; padding-left:1.4em; } ol.steps li { margin-bottom:.3em; }
 table.sol { margin:0 0 10px; } table.sol td { border:none; border-bottom:1px solid var(--rule); padding:5px 8px 5px 0; }
+.hint { font-weight:400; font-size:.86em; color:var(--dim); margin-left:4px; }
+button.go { margin:4px 0 2px; padding:8px 22px; border-radius:8px; border:1px solid var(--accent); background:var(--chip); color:var(--accent); font-size:15px; font-weight:600; }
+.code { margin:6px 0; border:1px solid var(--rule); border-radius:8px; overflow-x:auto; padding:4px 0; }
+.cl { display:flex; gap:8px; align-items:baseline; padding:3px 10px; white-space:pre; cursor:pointer; -webkit-tap-highlight-color:transparent; -webkit-user-select:none; user-select:none; }
+.cl > * { pointer-events:none; } .cl code { background:none; padding:0; white-space:pre; font-size:13px; }
+.cl .ln { flex:0 0 auto; width:18px; text-align:right; color:var(--dim); font-size:11px; }
+.cl.sel { background:rgba(192,57,43,.14); } .cl.ok { background:rgba(46,158,91,.18); }
 """
 
 HEAD = '<div class="crumb">{{Crumb}}<span class="chip">%s</span></div>'
@@ -491,6 +520,33 @@ MATCH_A = (HEAD % "配对" + '<div class="q">{{Question}}</div><div class="mine"
            'var ok=good===n,miss="：对了 "+good+"/"+n;' + SHOW + '})();</script>')
 
 
+MULTI_Q = (HEAD % "多选" + '<div class="q">{{Question}}<span class="hint">（选出所有对的）</span></div><div class="opts" id="opts">{{Opts}}</div>'
+           '<button class="go" id="go" onclick="qkGo()">确定</button>' + FB +
+           '<script>(function(){var c="{{Correct}}",root=document.getElementById("opts"),o=root.querySelectorAll(".opt"),pick={},done=false;' + TOOLS +
+           'function tap(el){if(done){return}var k=el.getAttribute("data-k");if(pick[k]){delete pick[k];el.classList.remove("sel")}else{pick[k]=1;el.classList.add("sel")}}'
+           'function go(){if(done){return}done=true;var s="";for(var i=0;i<o.length;i++){var x=o[i].getAttribute("data-k");'
+           'o[i].classList.add(c.indexOf(x)>=0?"ok":"bad");if(pick[x]){s+=x}free(o[i])}'
+           'var b=document.getElementById("go");b.style.display="none";keep(s);say(s===c,s===c?"":"，正确是 "+c);flip(s===c)}'
+           + CLEAR + 'window.qkTap=tap;window.qkGo=go;arm(o,tap)})();</script>')
+MULTI_A = (HEAD % "多选" + '<div class="q">{{Question}}</div><div class="mine" id="mine"></div><div class="opts" id="opts">{{Opts}}</div>'
+           '<hr id="answer"><div class="a">{{Answer}}</div>' + TAIL +
+           '<script>(function(){var c="{{Correct}}";var o=document.querySelectorAll("#opts .opt");' + SAVED +
+           'for(var i=0;i<o.length;i++){var k=o[i].getAttribute("data-k");o[i].classList.add(c.indexOf(k)>=0?"ok":"bad");if(m&&m.indexOf(k)>=0){o[i].classList.add("sel")}}'
+           'var ok=m===c,miss="：你选了 "+(m||"（无）");' + SHOW + '})();</script>')
+
+BUG_Q = (HEAD % "找错行" + '<div class="q">{{Question}}</div><div class="code" id="opts">{{Lines}}</div>' + FB +
+         '<script>(function(){var c="{{Correct}}",root=document.getElementById("opts"),o=root.querySelectorAll(".cl"),done=false;' + TOOLS +
+         'function tap(el){if(done){return}done=true;var k=el.getAttribute("data-k");'
+         'for(var i=0;i<o.length;i++){var x=o[i].getAttribute("data-k");if(x===c){o[i].classList.add("ok")}if(x===k){o[i].classList.add("sel")}free(o[i])}'
+         'keep(k);say(k===c,k===c?"":"，错的是第 "+c+" 行");flip(k===c)}'
+         + CLEAR + 'window.qkTap=tap;arm(o,tap)})();</script>')
+BUG_A = (HEAD % "找错行" + '<div class="q">{{Question}}</div><div class="mine" id="mine"></div><div class="code" id="opts">{{Lines}}</div>'
+         '<hr id="answer"><div class="a">{{Answer}}</div>' + TAIL +
+         '<script>(function(){var c="{{Correct}}";var o=document.querySelectorAll("#opts .cl");' + SAVED +
+         'for(var i=0;i<o.length;i++){var k=o[i].getAttribute("data-k");if(k===c){o[i].classList.add("ok")}if(k===m){o[i].classList.add("sel")}}'
+         'var ok=m===c,miss="：你点了第 "+m+" 行";' + SHOW + '})();</script>')
+
+
 def templates() -> dict[str, tuple[str, str]]:
     """Front and back per model key. `quick.autoflip: false` in the plan config leaves turning the card to the usual tap."""
     out = {k: (front, back) for k, (_n, _f, front, back, _c) in MODELS.items()}
@@ -508,6 +564,8 @@ MODELS = {  # name, fields, front, back, cloze
     "mc": ("Trellis Quick Choice", ["Question", "Opts", "Correct", "Answer", "Why", "Crumb", "Point"], MC_Q, MC_A, False),
     "order": ("Trellis Quick Order", ["Question", "Lines", "Solution", "Why", "Crumb", "Point"], ORDER_Q, ORDER_A, False),
     "match": ("Trellis Quick Match", ["Question", "Left", "Right", "Solution", "Why", "Crumb", "Point"], MATCH_Q, MATCH_A, False),
+    "multi": ("Trellis Quick Multi", ["Question", "Opts", "Correct", "Answer", "Why", "Crumb", "Point"], MULTI_Q, MULTI_A, False),
+    "bug": ("Trellis Quick Bug", ["Question", "Lines", "Correct", "Answer", "Why", "Crumb", "Point"], BUG_Q, BUG_A, False),
 }
 MODEL_OF = {"flaw": "qa"}
 
@@ -549,6 +607,19 @@ def fields(c: dict, point: dict) -> tuple[str, list[str]]:
                        for pos, i in enumerate(order))
         right = "ABC"[order.index(0)]
         return "mc", [mark(c["q"]), opts, right, f"{right}. {mark(c['opts'][0])}", why, crumb, title]
+    if f == "multi":
+        order = scrambled(len(c["opts"]), c["kp"], identity_ok=True)
+        letters = "ABCDEF"
+        opts = "".join(f'<div class="opt tappable" data-k="{letters[pos]}" onclick="qkTap(this)"><span class="k">{letters[pos]}</span><div class="body">{mark(c["opts"][i])}</div></div>'
+                       for pos, i in enumerate(order))
+        right = "".join(letters[pos] for pos, i in enumerate(order) if i in c["ok"])
+        answer = "；".join(f"{letters[pos]}. {mark(c['opts'][i])}" for pos, i in enumerate(order) if i in c["ok"])
+        return "multi", [mark(c["q"]), opts, right, answer, why, crumb, title]
+    if f == "bug":
+        lines = "".join(f'<div class="cl tappable" data-k="{n + 1}" onclick="qkTap(this)"><span class="ln">{n + 1}</span><code>{html.escape(x)}</code></div>'
+                        for n, x in enumerate(c["code"]))
+        answer = f"第 {c['bad'] + 1} 行 → <code>{html.escape(c['fix'])}</code>"
+        return "bug", [mark(c["q"]), lines, str(c["bad"] + 1), answer, why, crumb, title]
     if f == "order":
         order = scrambled(len(c["lines"]), c["kp"], identity_ok=False)
         lines = "".join(f'<div class="pl tappable" data-i="{i}" onclick="qkTap(this)"><span class="n"></span><div class="body">{mark(c["lines"][i])}</div></div>' for i in order)

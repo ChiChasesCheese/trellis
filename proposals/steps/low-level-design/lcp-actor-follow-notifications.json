@@ -1,0 +1,9 @@
+{
+ "lcproject.lcp-actor-follow-notifications": [
+  "lcp-actor-follow-notifications-contract-rules",
+  "lcp-actor-follow-notifications-state-and-invariant",
+  "lcp-actor-follow-notifications-reflection-atomic-boundary",
+  "lcp-actor-follow-notifications-reflection-outbox",
+  "lcp-actor-follow-notifications-reflection-ten-million-followers"
+ ]
+}

@@ -166,8 +166,11 @@ def check(project, leaf_id: str, company: bool = False) -> list[str]:
             if len(re.findall(r"https?://", tail)) < 3:
                 problems.append(f"{s.path.name}: fewer than 3 source links under 来源与延伸")
 
-    if len(cards) < MIN_CARDS:
-        problems.append(f"{len(cards)} card(s), need ≥ {MIN_CARDS}")
+    # LeetCode Project leaves keep only a few long synthesis cards: their ten-second cards live in
+    # sources/local/lc-project/quick/ (Chi, 2026-11-16) and are checked by scripts/lcp_quick.py
+    need = 3 if leaf_id.startswith("lcproject.") else MIN_CARDS
+    if len(cards) < need:
+        problems.append(f"{len(cards)} card(s), need ≥ {need}")
     for c in cards:
         if not CJK.search(c.question or c.text):
             problems.append(f"card {c.id}: the question is not Chinese")

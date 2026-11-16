@@ -1,0 +1,331 @@
+[
+ {
+  "point": "评分只接受 1 到 5，0 与 6 都是无效输入",
+  "cards": [
+   "lcp-return-fraud-risk-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "金额与账龄必须是非负整数，负数无效",
+  "cards": [
+   "lcp-return-fraud-risk-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "bool 是 int 的子类：True 等于 1，却必须被拒绝",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "errors.exceptions-vs-values"
+  ]
+ },
+ {
+  "point": "浮点数、字符串、None 都是无效类型，3.0 也不行",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "先查类型再比范围，and 短路，否则字符串比较抛 TypeError 变成 500",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "无效输入不做悄悄转换：int(3.9)、int('3') 会把错误变成有效",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "合法整数没有人为上界，金额与账龄可以是 10 的 100 次方",
+  "cards": [
+   "lcp-return-fraud-risk-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "无效输入统一是 ServiceError(400, 'invalid_input')，错误在任何计算之前",
+  "cards": [
+   "lcp-return-fraud-risk-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "评分分项是查表 40、30、20、10、0，不是线性公式",
+  "cards": [
+   "lcp-return-fraud-risk-contract-rules"
+  ],
+  "leaves": [
+   "python.dataclasses-enums",
+   "ai.failure-modes"
+  ]
+ },
+ {
+  "point": "金额分项的下界含：10000 得 15，50000 得 30，9999 得 0",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "账龄分项的下界含：30 天得 10，180 天得 0，29 天得 25",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "决定的下界含：总分 30 是 manual_review，60 是 reject",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "ai.failure-modes"
+  ]
+ },
+ {
+  "point": "总分是三项之和，不取整、不截断、不归一，最大 95",
+  "cards": [
+   "lcp-return-fraud-risk-contract-rules",
+   "lcp-return-fraud-risk-reflection-threshold-tests"
+  ],
+  "leaves": [
+   "api.returns"
+  ]
+ },
+ {
+  "point": "总分都是 5 的倍数，29 与 59 取不到，决定边界用 25/30 与 55/60",
+  "cards": [
+   "lcp-return-fraud-risk-reflection-threshold-tests"
+  ],
+  "leaves": [
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "分段表是数据：下界升序加 bisect_right，边界规则全表只有一处",
+  "cards": [
+   "lcp-return-fraud-risk-state-and-invariant"
+  ],
+  "leaves": [
+   "patterns.strategy",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "分段表不变量：从 0 起、严格升序，每个非负整数恰有一段",
+  "cards": [
+   "lcp-return-fraud-risk-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "if 链里 > 与 >= 混用是边界错误的头号来源",
+  "cards": [],
+  "leaves": [
+   "quality.smells"
+  ]
+ },
+ {
+  "point": "阈值测试取三点：下界前一格、恰好、后一格",
+  "cards": [
+   "lcp-return-fraud-risk-reflection-threshold-tests"
+  ],
+  "leaves": [
+   "quality.testability",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "测决定边界时让金额与账龄不压边界，缺陷才不互相混淆",
+  "cards": [
+   "lcp-return-fraud-risk-reflection-threshold-tests"
+  ],
+  "leaves": [
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "期望值独立写成表，不从被测代码里抄",
+  "cards": [
+   "lcp-return-fraud-risk-reflection-threshold-tests"
+  ],
+  "leaves": [
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "批量每条一个 {result, error}，无效项的 error 是 'invalid_input' 不是 None",
+  "cards": [],
+  "leaves": [
+   "errors.narrow-catch",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "批量坏记录不影响后面，结果与输入顺序一一对应，空输入返回 []",
+  "cards": [
+   "lcp-return-fraud-risk-contract-rules"
+  ],
+  "leaves": [
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "批量记录必须是字典且键恰好三个：缺键、多键、非字典都无效",
+  "cards": [
+   "lcp-return-fraud-risk-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "try 只包一条记录，循环头在 try 之外，迭代器自己的异常原样抛出",
+  "cards": [],
+  "leaves": [
+   "errors.narrow-catch",
+   "python.context-iterators"
+  ]
+ },
+ {
+  "point": "输入只遍历一次：不先 list 再遍历、不为数长度而遍历，生成器第二遍是空的",
+  "cards": [],
+  "leaves": [
+   "python.context-iterators",
+   "api.paging-iteration"
+  ]
+ },
+ {
+  "point": "引擎无状态：结果只由三个入参与策略版本决定",
+  "cards": [
+   "lcp-return-fraud-risk-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "concurrency-depth.confinement"
+  ]
+ },
+ {
+  "point": "返回的字典每次现建，缓存或模块级常量会让调用之间互相影响",
+  "cards": [
+   "lcp-return-fraud-risk-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "oop.values"
+  ]
+ },
+ {
+  "point": "内部用不可变记录，出口才生成字典，比到处 deepcopy 更简单",
+  "cards": [],
+  "leaves": [
+   "data.defensive-copy",
+   "oop.values"
+  ]
+ },
+ {
+  "point": "批量里同一条记录出现两次，两个结果的 components 不能是同一个对象",
+  "cards": [],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "批量不修改传入的记录字典",
+  "cards": [
+   "lcp-return-fraud-risk-contract-rules"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "给智能体的第一条指令是规则与数字例子，并先要差异清单、不改代码",
+  "cards": [],
+  "leaves": [
+   "ai.specs",
+   "ai.decomposition"
+  ]
+ },
+ {
+  "point": "一次只修一类缺陷、只给一个失败测试，改完立刻运行",
+  "cards": [],
+  "leaves": [
+   "ai.decomposition",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "边界归属、bool 是否有效、迭代器异常吞不吞，这些决定自己留着",
+  "cards": [],
+  "leaves": [
+   "ai.delegation"
+  ]
+ },
+ {
+  "point": "不接受把测试改成通过：先判断是代码错还是测试错",
+  "cards": [],
+  "leaves": [
+   "ai.failure-modes",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "策略是带版本号的不可变数据，改规则发新版本",
+  "cards": [
+   "lcp-return-fraud-risk-reflection-policy-versioning"
+  ],
+  "leaves": [
+   "data.evolution",
+   "api.evolution"
+  ]
+ },
+ {
+  "point": "判定记录保存输入、策略版本、分项与决定，才能事后重放解释",
+  "cards": [
+   "lcp-return-fraud-risk-reflection-policy-versioning"
+  ],
+  "leaves": [
+   "data.evolution",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "无效输入（错误码）与策略拒绝（成功评估的 decision）分开计数、分开告警",
+  "cards": [
+   "lcp-return-fraud-risk-reflection-invalid-vs-reject"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.taxonomy"
+  ]
+ },
+ {
+  "point": "新增状态相关的输入（如近期退货次数）由上游传入，引擎仍然无状态",
+  "cards": [],
+  "leaves": [
+   "api.evolution"
+  ]
+ }
+]

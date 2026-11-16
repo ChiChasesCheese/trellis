@@ -1,0 +1,9 @@
+{
+ "lcproject.lcp-return-fraud-risk": [
+  "lcp-return-fraud-risk-contract-rules",
+  "lcp-return-fraud-risk-state-and-invariant",
+  "lcp-return-fraud-risk-reflection-threshold-tests",
+  "lcp-return-fraud-risk-reflection-policy-versioning",
+  "lcp-return-fraud-risk-reflection-invalid-vs-reject"
+ ]
+}

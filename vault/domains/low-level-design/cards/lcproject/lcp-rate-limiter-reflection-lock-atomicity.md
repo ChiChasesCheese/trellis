@@ -2,7 +2,7 @@
 id: lcp-rate-limiter-reflection-lock-atomicity
 node: lcproject.lcp-rate-limiter
 type: qa
-step: 11
+step: 3
 tags: [作答]
 ---
 ## Q

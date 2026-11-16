@@ -1,0 +1,353 @@
+[
+ {
+  "point": "受众是关注了卡司任一演员的用户，不是关注全部演员的用户",
+  "cards": [
+   "lcp-actor-follow-notifications-contract-rules"
+  ],
+  "leaves": [
+   "patterns.observer"
+  ]
+ },
+ {
+  "point": "同时关注两位主演的用户只收一条通知",
+  "cards": [
+   "lcp-actor-follow-notifications-contract-rules"
+  ],
+  "leaves": [
+   "patterns.observer",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "卡司里重复的演员 id 不会让用户多收通知",
+  "cards": [],
+  "leaves": [
+   "patterns.observer"
+  ]
+ },
+ {
+  "point": "空卡司不通知任何人；子集判断会让空卡司通知所有人",
+  "cards": [
+   "lcp-actor-follow-notifications-contract-rules"
+  ],
+  "leaves": [
+   "patterns.observer"
+  ]
+ },
+ {
+  "point": "按演员建反向索引，受众是关注者集合的并集",
+  "cards": [
+   "lcp-actor-follow-notifications-state-and-invariant"
+  ],
+  "leaves": [
+   "patterns.observer",
+   "performance.data-structures"
+  ]
+ },
+ {
+  "point": "关注不回填登记之前的电影",
+  "cards": [
+   "lcp-actor-follow-notifications-contract-rules"
+  ],
+  "leaves": [
+   "patterns.observer"
+  ]
+ },
+ {
+  "point": "取关只删这一条关系，不删已收到的历史通知",
+  "cards": [
+   "lcp-actor-follow-notifications-contract-rules"
+  ],
+  "leaves": [
+   "patterns.observer"
+  ]
+ },
+ {
+  "point": "重复关注和取关不存在的关系都是无操作",
+  "cards": [
+   "lcp-actor-follow-notifications-contract-rules"
+  ],
+  "leaves": [
+   "fsm.illegal-transitions"
+  ]
+ },
+ {
+  "point": "取关到没人关注时索引里不留空集合",
+  "cards": [
+   "lcp-actor-follow-notifications-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.safe-structures",
+   "performance.data-structures"
+  ]
+ },
+ {
+  "point": "相同的重复导入返回 False 且不通知，哪怕关注者变了",
+  "cards": [
+   "lcp-actor-follow-notifications-contract-rules"
+  ],
+  "leaves": [
+   "fsm.illegal-transitions",
+   "errors.retry"
+  ]
+ },
+ {
+  "point": "卡司按集合比较，顺序和重复不影响相等",
+  "cards": [],
+  "leaves": [
+   "fsm.illegal-transitions"
+  ]
+ },
+ {
+  "point": "同 id 不同片名或不同卡司集合抛 movie_conflict 且状态不变",
+  "cards": [
+   "lcp-actor-follow-notifications-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "fsm.illegal-transitions"
+  ]
+ },
+ {
+  "point": "冲突检查在所有写入之前，所以不需要回滚",
+  "cards": [
+   "lcp-actor-follow-notifications-reflection-atomic-boundary"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "片名逐字比较，区分大小写和首尾空白",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "校验先于冲突检查，非法输入得到 ValueError",
+  "cards": [
+   "lcp-actor-follow-notifications-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "非法输入在拿锁之前、改状态之前抛 invalid_input",
+  "cards": [
+   "lcp-actor-follow-notifications-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "空白判定用合同列出的字符表，不用 strip 或 isspace",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "U+00A0、U+0085、U+2007、U+202F 是合法字符",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "空串是空白；None、数字、bool、字节串都不是合法的 id",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "actors 只收 list，元组、集合、生成器都是非法输入",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "先复制 actors 再校验同一份副本，避免校验后被调用方改动",
+  "cards": [
+   "lcp-actor-follow-notifications-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "收件箱按登记顺序返回，不是按 id 排序",
+  "cards": [
+   "lcp-actor-follow-notifications-contract-rules"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "inbox 返回新列表，调用方改它不影响内部",
+  "cards": [
+   "lcp-actor-follow-notifications-contract-rules",
+   "lcp-actor-follow-notifications-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "concurrency-depth.confinement"
+  ]
+ },
+ {
+  "point": "之后的导入不会改变已经拿到的快照",
+  "cards": [
+   "lcp-actor-follow-notifications-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "Notice 是冻结数据类，浅拷贝列表就足够独立",
+  "cards": [
+   "lcp-actor-follow-notifications-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.confinement",
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "check-then-act：两个线程都看到电影不存在会产生两个 True",
+  "cards": [
+   "lcp-actor-follow-notifications-reflection-atomic-boundary"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency.primitives"
+  ]
+ },
+ {
+  "point": "判重、算受众、写电影、写收件箱必须在同一个临界区",
+  "cards": [
+   "lcp-actor-follow-notifications-reflection-atomic-boundary",
+   "lcp-actor-follow-notifications-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency-depth.safe-structures"
+  ]
+ },
+ {
+  "point": "电影表与关注索引分两把锁，结果不对应任何串行顺序",
+  "cards": [],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency-depth.safe-structures"
+  ]
+ },
+ {
+  "point": "取关与登记并发：收件箱 0 条或 1 条都合法，不能是 2 条",
+  "cards": [],
+  "leaves": [
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "先算后写：把可能失败的只读工作放在写入之前",
+  "cards": [
+   "lcp-actor-follow-notifications-reflection-atomic-boundary",
+   "lcp-actor-follow-notifications-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "用屏障让线程同时起跑，不用 sleep，断言不变量",
+  "cards": [],
+  "leaves": [
+   "concurrency-depth.testing"
+  ]
+ },
+ {
+  "point": "第一条指令带合同规则和具体数据，先让测试变红再修",
+  "cards": [],
+  "leaves": [
+   "ai.specs",
+   "ai.decomposition"
+  ]
+ },
+ {
+  "point": "每次只让智能体修一个缺陷、重跑全部测试、读 diff",
+  "cards": [],
+  "leaves": [
+   "ai.decomposition",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "锁的范围、校验与冲突的先后、受众算法由自己决定",
+  "cards": [],
+  "leaves": [
+   "ai.delegation"
+  ]
+ },
+ {
+  "point": "已读与分页只动收件箱：下标是稳定游标，水位只增不减",
+  "cards": [],
+  "leaves": [
+   "concurrency-depth.safe-structures",
+   "concurrency-depth.confinement"
+  ]
+ },
+ {
+  "point": "按渠道发送时观察者才有位置，现有三块状态不动",
+  "cards": [],
+  "leaves": [
+   "patterns.observer"
+  ]
+ },
+ {
+  "point": "事务发件箱：电影与待发通知在同一个事务里提交",
+  "cards": [
+   "lcp-actor-follow-notifications-reflection-outbox"
+  ],
+  "leaves": [
+   "errors.retry"
+  ]
+ },
+ {
+  "point": "发件箱投递至少一次，接收端用 (用户, 电影 id) 去重",
+  "cards": [
+   "lcp-actor-follow-notifications-reflection-outbox"
+  ],
+  "leaves": [
+   "errors.retry",
+   "fsm.illegal-transitions"
+  ]
+ },
+ {
+  "point": "超大演员推拉结合：大 V 读扩散，需要记录关注区间",
+  "cards": [
+   "lcp-actor-follow-notifications-reflection-ten-million-followers"
+  ],
+  "leaves": [
+   "patterns.observer",
+   "concurrency-depth.parallel-scaling"
+  ]
+ },
+ {
+  "point": "一把锁罩住全部受众时，持锁时间随关注者数增长",
+  "cards": [
+   "lcp-actor-follow-notifications-reflection-ten-million-followers"
+  ],
+  "leaves": [
+   "concurrency-depth.parallel-scaling"
+  ]
+ }
+]

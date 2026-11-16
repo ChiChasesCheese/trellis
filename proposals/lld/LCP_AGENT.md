@@ -49,18 +49,11 @@ what he missed back to the knowledge tree. So the back of a card is a grading ke
    dry-run mode, and test it run twice. Where the workspace uses PostgreSQL, MongoDB or an ORM, the vault version uses
    `sqlite3` and the article says what differs.
 5. **Python 3.11.** LeetCode runs these in Python 3.11: no `type X = …`, no PEP 695 generics, no 3.12-only APIs.
-6. **The cards: 8–10 answer cards plus one per REFLECTION question, every one with a `step`, in this ladder.** Tag every card `作答`.
-
-   | step | the front asks (a concrete situation, then one question) | the back |
-   |---|---|---|
-   | 1 | the project in three sentences, then 「开工前你会先定下哪几条规则？」 | the 4–6 rules a hidden test pins and a careless reading misses |
-   | 2 | 「要存哪些状态？哪条不变量最要紧？」 | the state, the structure for each part, the invariant, and what breaks it |
-   | 3 | 「你给编程智能体的第一条指令写什么？哪些决定你自己留着？怎么验证它的改动？」 | decomposition, the context it needs (the rules, the failing test), the decisions kept, the verification cadence |
-   | 4–7 | one hard decision each: a race between two calls, a retried request, a batch that fails half-way, a tie, a boundary value, an error that must win over another | what goes wrong, the mechanism that prevents it, the cost of the other option |
-   | 8 | a 6–15 line excerpt with one realistic defect (from `starter.py` for a repair project, or plausible agent output for a build project): 「哪里错了？怎么修？哪个测试能抓住它？」 | the defect, the fix, the test |
-   | 9 | 「只能写五个测试，你写哪五个？」 | the five, each with the rule it pins |
-   | 10 (optional) | the stage-4 follow-up an interviewer adds | where it lands in the design and what stays untouched |
-   | 11+ | one card per question in `REFLECTION.essay`, restated in Chinese | what a strong written answer covers |
+6. **The long cards: 3–4 synthesis cards only** (Chi, 2026-11-16: most study is ten-second tap cards, written in a
+   separate pass from your `points.json`; a few longer cards are welcome). Tag them `作答`, give each a `step`:
+   step 1 「开工前你会先定下哪几条规则？」 (the 4–6 rules a hidden test pins), step 2 「要存哪些状态？哪条不变量最要紧？」,
+   then one card per REFLECTION question, asked as a concrete situation in your own words. Chi answers them in his
+   head and grades himself, so the 评分点 are short phrases he can tick off at a glance.
 
    The back of every card has exactly this shape:
 
@@ -83,9 +76,11 @@ what he missed back to the knowledge tree. So the back of a card is a grading ke
    leaves of `skeleton/low-level-design.yaml` by their title (the knowledge an answer that missed a 评分点 should go back
    to); `points.json` (below) carries their ids.
    Every front is self-contained and names the system (「在 LLM 网关限流器里，…」); never 「本题」「上一张卡」.
-7. **`points.json`** beside the code: the project's exam points, which the grader maps misses through.
-   `[{"point": "<中文短语>", "cards": ["<card id>", …], "leaves": ["<leaf id>", …]}]`, 5–10 points, every card in at least
-   one point, every leaf id real (`grep -n "id: <leaf id>$" skeleton/low-level-design.yaml`).
+7. **`points.json`** beside the code: the project's exam points, fine-grained, because each becomes one ten-second
+   card. `[{"point": "<中文短语>", "cards": ["<card id>", …], "leaves": ["<leaf id>", …]}]`, 15–40 points: every README
+   rule, boundary and error-precedence choice, each defect of a repair project, each mechanism of the solution, each
+   decision with its refused alternative, the agent-workflow habits this project needs. `cards` may be empty; every
+   leaf id real (`grep -n "id: <leaf id>$" skeleton/low-level-design.yaml`). The drill's 评分点 link only real cards.
 8. **The drill** follows PROBLEM_AGENT.md §5, and adds a `**和编程智能体一起练**` paragraph: open `starter.py` with a coding
    agent (Claude Code or the workspace agent), give it the rules and one failing test at a time, keep the design
    decisions yourself, and run the tests after every change.

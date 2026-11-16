@@ -29,12 +29,12 @@ tags: [problem]
 **评分点**
 - 开工前把合同定成规则：`remaining` 在决策之后算、被拒为 0、毫秒向 0 截断、被拒不留痕、按 key 隔离（[[lcp-rate-limiter-contract-rules]]）。
 - 说得出每个 key 的状态、只在放行时写的不变量，读时钟在锁内（[[lcp-rate-limiter-state-and-invariant]]）。
-- 给编程智能体的第一条指令带着合同和数字例子，拆小步，自己留着锁的范围等决定（[[lcp-rate-limiter-first-instruction-to-agent]]）。
-- 用同一把锁罩住读时钟、判定、记账、计数，说清 GIL 为什么不够、代价与分片（[[lcp-rate-limiter-race-check-then-count]]）。
-- 被拒的请求不延长锁定：重试风暴下 t=100 仍然放行（[[lcp-rate-limiter-retried-rejection]]）。
-- 整数纳秒代替浮点秒，窗口边界左闭右开，注入时钟（[[lcp-rate-limiter-boundary-and-truncation]]）。
-- 令牌数保留小数，被拒时算对 800 ms，`refill_rate=0` 不除零（[[lcp-rate-limiter-fractional-tokens]]）。
-- 能在智能体写出的判定里找出四处缺陷并给出能抓住它们的测试（[[lcp-rate-limiter-find-the-defect]]、[[lcp-rate-limiter-five-tests]]）。
+- 给编程智能体的第一条指令带着合同和数字例子，拆小步，自己留着锁的范围等决定（[[lcp-rate-limiter-contract-rules]]）。
+- 用同一把锁罩住读时钟、判定、记账、计数，说清 GIL 为什么不够、代价与分片（[[lcp-rate-limiter-contract-rules]]）。
+- 被拒的请求不延长锁定：重试风暴下 t=100 仍然放行（[[lcp-rate-limiter-contract-rules]]）。
+- 整数纳秒代替浮点秒，窗口边界左闭右开，注入时钟（[[lcp-rate-limiter-contract-rules]]）。
+- 令牌数保留小数，被拒时算对 800 ms，`refill_rate=0` 不除零（[[lcp-rate-limiter-contract-rules]]）。
+- 能在智能体写出的判定里找出四处缺陷并给出能抓住它们的测试（[[lcp-rate-limiter-contract-rules]]）。
 - 两篇短文写得出机制、代价和多实例的演进（[[lcp-rate-limiter-reflection-lock-atomicity]]、[[lcp-rate-limiter-reflection-multi-instance]]）。
 
 **题解**：[[solution-lcp-rate-limiter]]——先做，再看。经典限流器见 [[solution-rate-limiter]]。

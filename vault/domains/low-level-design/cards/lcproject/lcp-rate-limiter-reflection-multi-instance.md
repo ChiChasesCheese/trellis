@@ -2,7 +2,7 @@
 id: lcp-rate-limiter-reflection-multi-instance
 node: lcproject.lcp-rate-limiter
 type: qa
-step: 12
+step: 4
 tags: [作答]
 ---
 ## Q
