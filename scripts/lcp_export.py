@@ -4,6 +4,7 @@
     uv run python scripts/lcp_export.py --all                              # every project in the public list
     uv run python scripts/lcp_export.py --force rate-limiter               # export again even if done
     uv run python scripts/lcp_export.py --max 8 --gap 15-30 a b c ...      # pacing (these are the defaults)
+    uv run python scripts/lcp_export.py --max 40 --gap 3-6 --anytime --all  # Chi's call: everything in one go
 
 Pacing (Chi, 2026-11-16: personal use, behave like a person, never get the account banned): one project at a time,
 at most `--max` exports per run (default 8, one run a day), a pause of `--gap` minutes between projects (default 15-30),
@@ -148,7 +149,7 @@ def main() -> int:
     todo = [s for s in slugs if force or not (OUT / s / ".done").exists()][:cap]
     ok = True
     for i, slug in enumerate(todo):
-        if not HOURS[0] <= time.localtime().tm_hour < HOURS[1]:
+        if "--anytime" not in args and not HOURS[0] <= time.localtime().tm_hour < HOURS[1]:
             print(f"outside {HOURS[0]}:00-{HOURS[1]}:00; stopped before {slug}", flush=True)
             break
         try:
