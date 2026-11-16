@@ -27,7 +27,7 @@ CUSTOM_CODE_PATTERN = re.compile(r"[A-Za-z0-9_-]{3,32}")
 MAX_GENERATION_ATTEMPTS = 5
 CODE_LENGTH = 7
 ALPHABET = string.ascii_letters + string.digits
-RESERVED_CODES = frozenset({"links", "stats"})  # 和路由撞名的自定义码永远跳转不到，直接拒绝
+RESERVED_CODES = frozenset({"links", "stats"})  # `stats` 被统计路由接走，永远跳转不到；`links` 其实能跳转，也保守地拒绝
 COLUMNS = "short_code, long_url, created_at, expires_at, hit_count, owner_token"
 
 
@@ -86,7 +86,7 @@ def _clean_url(value: object) -> str:
     if not isinstance(value, str):
         raise ValidationError("long_url must be a string")
     url = value.strip()
-    if any(ord(ch) <= 32 or ord(ch) == 127 for ch in url):  # 必须先查：urlsplit 会悄悄吞掉 \t \r \n
+    if any(ord(ch) <= 32 or ord(ch) == 127 for ch in url):  # 查原字符串：urlsplit 会悄悄删掉 \t \r \n，解析结果里查不到
         raise ValidationError("long_url must not contain whitespace or control characters")
     try:
         parts = urlsplit(url)

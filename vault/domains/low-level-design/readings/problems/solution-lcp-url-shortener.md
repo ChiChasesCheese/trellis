@@ -117,14 +117,15 @@ classDiagram
 
 ### 决策一：过期判断和加一写进同一条 UPDATE，而不是先查再改
 
-要解决的问题：跳转要"没过期才加一"。两个请求、或者一个请求与时间的流逝，会在"判断"和"加一"之间插进来。
+要解决的问题：跳转要"没过期才加一"。只要"判断"和"加一"是两条语句，别的请求就可能插在它们中间。
 
-- **选项 A：先 SELECT 看是否过期，再 UPDATE 加一。** 两条语句之间有空隙：线程 1 看到"还剩 1 毫秒"，线程 2 抢先改了数据，线程 1 再加一时链接已经过期，点击被多记。
-  在 Python 里"读出 `hit_count`，加一，再写回"更糟：两个线程读到同一个旧值，各写回旧值加一，丢一次点击。
+- **选项 A：先 SELECT 看是否过期，再 UPDATE 加一。** 放在 `_tx()` 的锁与 `BEGIN IMMEDIATE` 里，这样写是对的：实测八个线程、时钟不断前进，没有一次点击记在到期之后（每次只取一次 `now`，判断和加一用同一个时刻）。
+  它的问题是正确性靠锁与事务的范围兜底：哪天有人把这两条语句挪出 `_tx()`，别的连接就能插进中间（比如删掉那一行，后面的 `SELECT long_url` 就读到 `None`）。
+  在 Python 里"读出 `hit_count`，加一，再写回"则是真错：实测两个连接各加 50 次，中间稍有停顿，最后只到 50，丢了一半。
 - **选项 B：一条 `UPDATE links SET hit_count = hit_count + 1 WHERE short_code = ? AND (expires_at IS NULL OR ? < expires_at)`，用 `rowcount` 判断。**
-  判断与加一发生在数据库的同一条语句里，不可能被别的写入插进来。`rowcount` 为 1 就是成功；为 0 再查一次是否存在，用来区分 404 与 410。
+  判断与加一发生在数据库的同一条语句里，不可能被别的写入插进来，不依赖锁的范围写对。`rowcount` 为 1 就是成功；为 0 再查一次是否存在，用来区分 404 与 410。
 
-选 B。它是"复合操作"的标准做法：把"检查再行动"压成一次原子的条件写。多一次读只发生在失败路径上，代价很小。
+选 B。它是"复合操作"的标准做法：把"检查再行动"压成一次原子的条件写，锁与事务只是再加一层。多一次读只发生在失败路径上，代价很小。
 同样的逻辑也适用于 `delete`：先查令牌再删，必须在同一个事务里（决策二）。
 
 这不是一个需要设计模式的地方：没有策略也没有状态机，只是把条件写进 SQL。
@@ -159,7 +160,8 @@ classDiagram
   存了一百万条链接时，一次生成撞上现有短码的概率是 `10**6 / 62**7 ≈ 2.8e-7`，连撞五次约 `1.8e-33`，所以"五次都撞"在真实流量里等同于生成器坏了。
 - **核对生成器的输出。** 测试会替换 `_generate_code`，让它返回 `"bad/code"`；返回值不合格就直接抛 `CodeGenerationError`，不能让不合法的短码进库。
 
-另外 `stats` 与 `links` 是路由里的静态路径，一个叫 `stats` 的自定义短码永远跳转不到（`GET /stats` 先匹配到统计）。自动短码至少六位，不会撞上这两个词；自定义短码最短三位，所以要显式拒绝，参考解按 409 处理。
+另外 `GET /stats` 是静态路由，先于 `/<short_code>` 匹配，所以一个叫 `stats` 的自定义短码建得出来、却永远跳转不到。`links` 不一样：静态路由只有 `POST /links` 和 `/links/<code>`，`GET /links` 仍落到跳转路由，实测在 Flask 里能 302 到它的网址。
+参考解连 `links` 也一起拒绝，是保守的选择，不是路由逼的。自动短码至少六位，不会撞上这两个词；自定义短码最短三位，所以要显式拒绝，参考解按 409 处理。
 
 ### 决策四：校验是一层只做校验的函数，而且先于一切数据库访问
 
@@ -170,7 +172,8 @@ classDiagram
 
 选 B。每个校验里有一个值得记住的坑：
 
-- **网址的空白与控制字符要在 `urlsplit` 之前查。** 实测 `urlsplit("https://exa\tmple.com/a\nb")` 得到主机名 `example.com`、路径 `/ab`：制表符和换行被悄悄吞掉了，如果先解析再查，这个网址就蒙混过关了。
+- **空白与控制字符要查原字符串，不是解析结果。** 实测 `urlsplit("https://exa\tmple.com/a\nb")` 得到主机名 `example.com`、路径 `/ab`：制表符和换行在解析时被悄悄删掉，再查 `parts.netloc` 与 `parts.path` 就什么也查不到，这个网址会蒙混过关。
+  先后顺序本身无所谓：解析之后再去查原字符串 `url`，照样查得出来；参考解把它放在解析之前，只是因为校验失败时不必再解析。
 - **短码用 `fullmatch`，不用 `match` 加 `$`。** `re.match(r"^[A-Za-z0-9_-]{3,32}$", "abc\n")` 为真，因为 `$` 能匹配结尾换行之前；`re.fullmatch(r"[A-Za-z0-9_-]{3,32}", "abc\n")` 为假。
 - **ttl 排除布尔，再排除 NaN 与无穷。** `float("nan") <= 0` 与 `float("nan") > 0` 都是假，所以只比较大小拦不住 NaN，必须用 `math.isfinite`。`10**400` 转浮点数会抛 `OverflowError`，要当成校验失败而不是让它变成 500。
 - **端口也属于网址。** `urlsplit(...).port` 在端口非法时才抛 `ValueError`，所以显式访问一次。
@@ -221,7 +224,7 @@ CUSTOM_CODE_PATTERN = re.compile(r"[A-Za-z0-9_-]{3,32}")
 MAX_GENERATION_ATTEMPTS = 5
 CODE_LENGTH = 7
 ALPHABET = string.ascii_letters + string.digits
-RESERVED_CODES = frozenset({"links", "stats"})  # 和路由撞名的自定义码永远跳转不到，直接拒绝
+RESERVED_CODES = frozenset({"links", "stats"})  # `stats` 被统计路由接走，永远跳转不到；`links` 其实能跳转，也保守地拒绝
 COLUMNS = "short_code, long_url, created_at, expires_at, hit_count, owner_token"
 
 
@@ -280,7 +283,7 @@ def _clean_url(value: object) -> str:
     if not isinstance(value, str):
         raise ValidationError("long_url must be a string")
     url = value.strip()
-    if any(ord(ch) <= 32 or ord(ch) == 127 for ch in url):  # 必须先查：urlsplit 会悄悄吞掉 \t \r \n
+    if any(ord(ch) <= 32 or ord(ch) == 127 for ch in url):  # 查原字符串：urlsplit 会悄悄删掉 \t \r \n，解析结果里查不到
         raise ValidationError("long_url must not contain whitespace or control characters")
     try:
         parts = urlsplit(url)
@@ -586,11 +589,11 @@ if __name__ == "__main__":
 ## 常见错误
 
 - **用 `re.match` 加 `^…$` 校验短码**：`"abc\n"` 通过。用 `fullmatch`。
-- **先 `urlsplit` 再查空白**：制表符和换行已经被吞掉。
+- **对 `urlsplit` 的解析结果查空白**：制表符和换行已经被删掉，查不出来；要查去掉首尾空白后的原字符串（先后顺序无所谓）。
 - **`isinstance(ttl, (int, float))` 放过 `True`**：`ttl_seconds: true` 变成一秒钟的有效期。
 - **`ttl` 只检查 `> 0`**：`NaN > 0` 为假、`nan <= 0` 也为假，两种写法都会放过 NaN；用 `math.isfinite`。
 - **先读 `hit_count` 再写回**：两个线程读到同一个旧值，丢一次点击；用 `hit_count = hit_count + 1`。
-- **先查过期、再加一**：两条语句之间过期的链接被多记一次。
+- **先查过期、再加一**：在 `_tx()` 里也对，但全靠锁与事务的范围兜底，挪出去就有空隙；一条条件 `UPDATE` 不依赖它们。
 - **加了锁但读不加锁**：Python 里 `sqlite3` 共用连接，读与写交错也会在同一个事务里看到半截状态，读也走 `_tx`。
 - **先 `SELECT` 再 `INSERT` 判断短码重复**：并发时两个请求都通过检查。直接插，接 `IntegrityError`。
 - **自动短码由网址哈希得到**：同一网址再缩必撞；合同要求两条独立链接。
@@ -610,7 +613,7 @@ if __name__ == "__main__":
 - **10–22 分钟｜建表、创建、校验**：先写 `_init_db` 与 `create`，每写完一块就跑公开测试，再把示例写成自己的断言。每次只给智能体一个失败的用例。
 - **22–32 分钟｜跳转、计数、删除、统计**：先自己写"过期的跳转不加点击""缺令牌先于 404""同分按短码升序"三个测试，再让智能体实现；它最容易漏的是把过期判断拆成独立的一条语句。
 - **32–40 分钟｜HTTP 与错误形状**：路由、请求体解析、异常到状态码的表；检查每一种错误都只有 `error` 一个键。
-- **40–45 分钟｜并发与收尾**：自己写屏障测试：一百个线程跳转计数恰好一百。留出时间向面试官口述两件事：为什么条件 `UPDATE` 比先查再改安全；换成多进程后哪里变化。
+- **40–45 分钟｜并发与收尾**：自己写屏障测试：一百个线程跳转计数恰好一百。留出时间向面试官口述两件事：为什么条件 `UPDATE` 不靠锁的范围也对；换成多进程后哪里变化。
 
 时间不够时的取舍顺序：先砍统计的索引讨论，再砍令牌哈希的讨论，再砍边缘的校验。
 **绝不能砍的是**：过期与加一在同一条语句里、直接插入加接住冲突、校验先于数据库、所有错误的 JSON 形状。
