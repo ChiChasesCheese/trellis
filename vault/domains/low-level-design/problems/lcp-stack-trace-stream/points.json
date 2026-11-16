@@ -1,0 +1,381 @@
+[
+ {
+  "point": "栈帧由完整有序前缀识别，不是只看名字",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "data.value-entity",
+   "oop.values"
+  ]
+ },
+ {
+  "point": "递归的同名帧在不同深度是不同的帧",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "data.value-entity",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "根变了，同名的叶子也要先结束再开始",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "data.value-entity",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "一个采样内先结束后开始：旧后缀从叶到根，新后缀从根到叶",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "fsm.transition-table"
+  ]
+ },
+ {
+  "point": "事件用当前采样的时间戳和原样的名字",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "api.returns",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "栈完全相同不产生事件，空栈结束全部已开始的帧",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "fsm.illegal-transitions"
+  ]
+ },
+ {
+  "point": "输入耗尽不补结束事件，不猜两个采样之间的调用",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules",
+   "lcp-stack-trace-stream-reflection-what-samples-know"
+  ],
+  "leaves": [
+   "api.specs",
+   "reading.predict-behaviour"
+  ]
+ },
+ {
+  "point": "confirmations 必须是精确类型 int 且为正，bool 也拒绝",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "python.data-model"
+  ]
+ },
+ {
+  "point": "连续第 N 次才开始，用确认那个采样的时间戳，不回填",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules",
+   "lcp-stack-trace-stream-reflection-what-samples-know"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "fsm.guards-actions"
+  ]
+ },
+ {
+  "point": "保留的父帧在子帧变化时保留自己的连续次数",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules",
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "structure.state-machines"
+  ]
+ },
+ {
+  "point": "中断一次就清零，分开的几段不累加",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules",
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "fsm.illegal-transitions"
+  ]
+ },
+ {
+  "point": "已确认的帧立刻结束且先于新帧开始，未确认的帧不产生结束",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules",
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "fsm.guards-actions"
+  ]
+ },
+ {
+  "point": "每个转换器的状态互相独立，不放在模块全局",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "data.invariants",
+   "concurrency-depth.confinement"
+  ]
+ },
+ {
+  "point": "已确认就是连续次数等于 N：由次数推出，不另存已开始标志",
+  "cards": [
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "fsm.flags-to-states"
+  ]
+ },
+ {
+  "point": "父层次数不小于子层，所以已确认的帧是栈的一段前缀",
+  "cards": [
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "structure.state-machines"
+  ]
+ },
+ {
+  "point": "状态只有上一个栈、每层连续次数和上一个时间戳，大小与栈深成正比",
+  "cards": [
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "performance.data-structures",
+   "parsing-io.streams"
+  ]
+ },
+ {
+  "point": "convert_samples 是生成器：开始迭代之前不读任何采样",
+  "cards": [],
+  "leaves": [
+   "python.context-iterators",
+   "api.paging-iteration"
+  ]
+ },
+ {
+  "point": "当前采样的事件还没产完就不读下一个采样",
+  "cards": [],
+  "leaves": [
+   "python.context-iterators",
+   "bank.structures.iterators"
+  ]
+ },
+ {
+  "point": "不保留全部历史：流过的采样不会被转换器持有",
+  "cards": [
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "parsing-io.streams",
+   "debugging.memory"
+  ]
+ },
+ {
+  "point": "compress_samples 读到第一个不同的采样就产出前一段",
+  "cards": [],
+  "leaves": [
+   "python.context-iterators",
+   "bank.structures.iterators"
+  ]
+ },
+ {
+  "point": "StackRun 的 start/end 是首尾采样的时间，count 是采样个数，stack 是 tuple",
+  "cards": [],
+  "leaves": [
+   "data.value-entity",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "不相邻的相同栈是两段，空栈合法，空输入无输出，压缩不做确认过滤",
+  "cards": [],
+  "leaves": [
+   "testing.partitioning",
+   "bank.practical.log-processing"
+  ]
+ },
+ {
+  "point": "时间戳必须是精确类型 int 或 float，bool 和其他类型拒绝",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "时间戳必须有限且非负，NaN 与无穷拒绝",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "时间戳在一条流内严格递增，重复与倒退都拒绝",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "大整数按精确数值比较，不转成 float，isfinite 只对 float 调用",
+  "cards": [],
+  "leaves": [
+   "fluency.time-numbers",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "栈必须是由非空字符串组成的 list 或 tuple，空白与 Unicode 名字合法",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "先校验并复制整个栈，再改状态：失败的 feed 不消耗时间戳、不影响连续次数",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules",
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "errors.cleanup"
+  ]
+ },
+ {
+  "point": "compress_samples 读取时做同样的校验，已经产出的结果不撤回",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "errors.exceptions-vs-values"
+  ]
+ },
+ {
+  "point": "snapshot 恰好五个键，空流 last_ts 为 None，空栈采样后是它的时间戳",
+  "cards": [
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "fsm.persistence",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "快照里的 previous 含未确认的帧，streaks 封顶 N",
+  "cards": [
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "fsm.persistence",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "from_snapshot 不产生事件，续跑与不中断的输出逐字相同",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules",
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "fsm.persistence",
+   "fsm.testing"
+  ]
+ },
+ {
+  "point": "恢复之后下一个时间戳必须严格大于保存的时间戳",
+  "cards": [
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "fsm.persistence",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "非法快照的结构规则：五键、version、等长、次数在 1..N、父不小于子",
+  "cards": [
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fsm.persistence"
+  ]
+ },
+ {
+  "point": "快照与恢复出的状态不和调用方、也不和别的转换器共享列表",
+  "cards": [
+   "lcp-stack-trace-stream-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "fluency.mutability"
+  ]
+ },
+ {
+  "point": "用随机流和每个快照点证明续跑相同，而不是只测几个例子",
+  "cards": [],
+  "leaves": [
+   "fsm.testing",
+   "testing.test-first"
+  ]
+ },
+ {
+  "point": "参照模型只看完整历史、直接照定义算，不带状态，用来对照增量实现",
+  "cards": [],
+  "leaves": [
+   "ai.verification",
+   "testing.testable-design"
+  ]
+ },
+ {
+  "point": "乱序采样在转换器前用有界重排缓冲和水位线处理，迟到太久的丢弃并计数",
+  "cards": [
+   "lcp-stack-trace-stream-reflection-out-of-order"
+  ],
+  "leaves": [
+   "bank.practical.log-processing",
+   "performance.data-structures"
+  ]
+ },
+ {
+  "point": "给编程智能体的指令：先改写规则为断言，一次一个失败测试，自己定确认与快照的语义",
+  "cards": [
+   "lcp-stack-trace-stream-contract-rules"
+  ],
+  "leaves": [
+   "ai.decomposition",
+   "ai.specs"
+  ]
+ }
+]

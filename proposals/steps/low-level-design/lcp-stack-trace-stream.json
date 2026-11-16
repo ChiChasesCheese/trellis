@@ -1,0 +1,8 @@
+{
+ "lcproject.lcp-stack-trace-stream": [
+  "lcp-stack-trace-stream-contract-rules",
+  "lcp-stack-trace-stream-state-and-invariant",
+  "lcp-stack-trace-stream-reflection-what-samples-know",
+  "lcp-stack-trace-stream-reflection-out-of-order"
+ ]
+}
