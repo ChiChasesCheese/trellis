@@ -15,7 +15,7 @@ tags: [作答]
 - **改密码与删记录同一事务**：要么都生效，要么都不发生；密码没写成功，码仍可用
 - **进程内的锁没用**：`threading.Lock` 只管一个进程，GIL 也不让"先查再改"变成一步
 - **尝试次数存在库里**：错码时 `attempts = attempts + 1` 原子自增，到上限就删记录，要求重新请求
-- **统一时间来源**：记录里存创建时刻，比较用库的 `now()`，不用各实例的时钟
+- **统一时间来源**：记录里存创建时刻（由库写入），比较用库的时间（SQLite 的 `unixepoch()`，PostgreSQL 的 `now()`），不用各实例的时钟
 
 ```mermaid
 flowchart TB
@@ -27,12 +27,13 @@ flowchart TB
 ```
 
 ```python
-def consume(conn, user_id, code, now, new_hash):
+def consume(conn, user_id, code, new_hash):
     with conn:  # 一个事务：下面两条要么都生效，要么都不生效
         cur = conn.execute(
             "DELETE FROM reset_codes"
-            " WHERE user_id = ? AND code = ? AND created_at <= ? AND ? < created_at + 30",
-            (user_id, code, now, now),
+            " WHERE user_id = ? AND code = ?"
+            " AND unixepoch() - created_at BETWEEN 0 AND 29",  # 库的时间，整数秒：[0, 30)
+            (user_id, code),
         )
         if cur.rowcount != 1:  # 0 行：码错、过期或已被别人消耗
             return False
