@@ -135,6 +135,19 @@ question. No 新进展 block and no diagram on a challenge card.
 - `agents.coding-agents`, `work.ai-coding`: Chi uses Claude Code every day. Explain what he sees (the loop, tools,
   permission prompts, context compaction, subagents, memory files, skills, plan mode) through the mechanism.
 - `use.prompt-caching`: connect to the KV cache he learnt (a cached prefix is the saved KV state of that prefix).
+- `quirks.*` (Chi, 2026-11-15: "Claude 返回中文的时候总是莫名其妙地说一些韩语或者日文，到底是为什么"): each leaf is a
+  thing he has seen a model do. Card 1 names the phenomenon with a concrete example and gives the mechanism in one
+  bold sentence. Card 2 is the evidence or the nearest contrast (what was measured, or why a similar case does not
+  fail). Card 3 is what to do about it, or how it bites in a product. Say plainly when the cause is not settled:
+  give the mechanisms that are established and mark the rest as 「推测」. Never present a guess as a vendor's
+  statement. Read the other ai-literacy folders first (`use/` hallucination and context-window, `models/`, `safety/`
+  if present) and do not re-ask their questions: a quirk card starts from the symptom, theirs from the concept.
+  - `language-mixing`: established pieces are that concepts are represented across languages and the output language
+    is chosen late (interpretability work on multilingual features), CJK languages share characters and neighbouring
+    tokens, and one wrong-language token makes the next more likely (the generation loop). A second, separate cause
+    is a serving fault: research Anthropic's September 2025 postmortem (wrong characters in replies from a
+    misconfigured server, and a sampling bug) and reasoning models seen thinking in Chinese.
+  - `got-dumber`: the same postmortem is the model case of a real fault; contrast with context that has grown long.
 
 ## Gate
 

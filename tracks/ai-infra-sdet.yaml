@@ -53,6 +53,19 @@ sections:
   - node: ai-literacy:models.multimodal
   - node: ai-literacy:models.distillation-small
   - node: ai-literacy:models.scaling
+  # things every user has seen a model do, each explained by one mechanism
+  - node: ai-literacy:quirks.language-mixing
+  - node: ai-literacy:quirks.counting-letters
+  - node: ai-literacy:quirks.sycophancy
+  - node: ai-literacy:quirks.nondeterminism
+  - node: ai-literacy:quirks.got-dumber
+  - node: ai-literacy:quirks.identity-and-date
+  - node: ai-literacy:quirks.ai-writing-tells
+  - node: ai-literacy:quirks.loops-and-glitches
+  - node: ai-literacy:quirks.prompt-superstitions
+  - node: ai-literacy:quirks.self-explanation
+  - node: ai-literacy:quirks.scary-headlines
+  - node: ai-literacy:quirks.image-bias
   - node: ai-literacy:evals.benchmarks
   - node: ai-literacy:evals.leaderboards
   - node: ai-literacy:industry.stack

@@ -33,7 +33,8 @@ Out of scope, on purpose: dataset engineering, training from scratch (code), cla
 
 ## Skeleton (step 2)
 
-`skeleton/ai-literacy.yaml`: 7 top-level nodes, 50 leaves, in priority order inside each node (how often the topic
+`skeleton/ai-literacy.yaml`: 8 top-level nodes, 62 leaves (node `quirks`, 12 leaves, added the same day at Chi's
+request: things a user sees a model do, such as Korean in a Chinese reply, each explained by its mechanism), in priority order inside each node (how often the topic
 comes up among engineers, then how much later leaves build on it). `safety` is the only node not marked `core`.
 
 ## Cards (step 4)
@@ -51,6 +52,7 @@ Filled from each agent's reply; checked by the orchestrator before the group is 
 
 ## Next action
 
-Launch the card groups (three at a time): `use`, `agents`, `industry`, then `models`, `evals` + `work`, `safety`.
+Launch the card groups (three at a time): `use`, `agents`, `industry`, then `quirks` (two agents, six leaves each),
+`models`, `evals` + `work`, `safety` (after `quirks`, so it can avoid its questions).
 Then: `anki_refresh.py --add ail- ai-literacy`, sections in `tracks/ai-infra-sdet.yaml`, rebuild the sprint plan,
 `company_deck.py deal`.

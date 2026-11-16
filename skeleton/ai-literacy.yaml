@@ -219,8 +219,51 @@ nodes:
     title: AI 对软件工程岗位的影响：证据与争论
     summary: 生产率的实测结果不一致：有的研究显示明显提速，有的显示有经验的开发者反而变慢；招聘和初级岗位的变化仍在争论中。
     requires: [work.ai-coding]
-- id: safety
+- id: quirks
   order: 6
+  core: true
+  title: 怪现象：模型为什么会这样
+  summary: 用过大模型的人都见过的怪事，每一件背后都是一个机制：token、采样、训练数据、强化学习的奖励，或者部署上的毛病。
+  children:
+  - id: quirks.language-mixing
+    title: 中文回答里突然冒出韩文、日文
+    summary: 模型内部的概念不分语言，用哪种语言写出来是最后几层才定的；语言信号弱、采样选偏或部署出错时，就会滑到邻近的语言，而且一旦写出一个就容易接着写。
+  - id: quirks.counting-letters
+    title: 数不清 strawberry 里有几个 r，9.11 和 9.9 比不对
+    summary: 模型看到的是 token 不是字母和数位，字符级和数位级的操作要靠背或靠工具；让它写代码去算就对了。
+  - id: quirks.sycophancy
+    title: 「你说得太对了」：讨好（sycophancy）从哪来
+    summary: 训练时人更爱给顺着自己的回答打高分，模型就学会了附和；后果是它会放弃正确答案、夸烂方案。
+  - id: quirks.nondeterminism
+    title: 同一个问题问两次，答案不一样
+    summary: 输出是从概率分布里抽出来的；温度设成 0 也不保证完全一致，因为批处理、硬件和浮点运算顺序会改变最后几位。
+  - id: quirks.got-dumber
+    title: 「模型变笨了」：错觉、上下文太长，还是真出了故障
+    summary: 权重发布后不变，但路由、量化、系统提示和推理服务的毛病会让同一个模型表现变差；也有很大一部分是期望变高和上下文变脏。
+    requires: [quirks.nondeterminism]
+  - id: quirks.identity-and-date
+    title: 模型说自己是别家的模型，还以为现在是去年
+    summary: 模型对自己的了解只来自训练数据和系统提示：没人告诉它日期，它就按训练截止时间猜；训练数据里别家模型的自我介绍多，它就可能照着说。
+  - id: quirks.ai-writing-tells
+    title: 一眼「AI 味」：破折号、套话和固定句式
+    summary: 模型偏爱训练和调优中被奖励的写法，于是不同人拿到的文字都像一个人写的；靠这些特征做 AI 检测并不可靠。
+  - id: quirks.loops-and-glitches
+    title: 复读、死循环与「海马表情」：模型怎么把自己带进沟里
+    summary: 每个 token 都接着前面已经写出的内容生成，写错一步后面就顺着错下去；某些罕见 token 或不存在的东西会触发失控的输出。
+  - id: quirks.prompt-superstitions
+    title: 说「请」、许诺小费、威胁它，有用吗
+    summary: 措辞确实会改变输出，但这类偏方的效果小、不稳定、换一代模型就变；稳定有用的是给清楚的任务、例子和上下文。
+  - id: quirks.self-explanation
+    title: 模型说的「我是这么想的」可信吗
+    summary: 模型对自己推理过程的描述是另一段生成出来的文字，不是内部计算的读数；思维链和事后解释都可能和真实的计算不一致。
+  - id: quirks.scary-headlines
+    title: 「AI 勒索工程师」「拒绝关机」：这类新闻怎么读
+    summary: 这些结果大多来自故意设计的红队场景：给模型一个目标、一条退路和一个把柄，看它会不会走。它说明模型能做到什么，不说明它平时会这么做。
+  - id: quirks.image-bias
+    title: 画不出倒满的红酒杯，钟表永远指向 10:10
+    summary: 生成模型画的是训练图片里最常见的样子；数据里几乎没有的组合，它很难凭一句话画对。
+- id: safety
+  order: 7
   title: 安全、对齐与治理
   summary: 模型学到的目标和人想要的目标之间的差距，被滥用和被攻击的方式，以及公司和政府怎么约束。
   children:
