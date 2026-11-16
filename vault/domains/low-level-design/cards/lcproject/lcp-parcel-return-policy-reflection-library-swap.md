@@ -12,8 +12,8 @@ tags: [作答]
 **库只管语法；子集规则留在库外，换之前冻结行为，换之后对拍。**
 
 - **先冻结行为**：现有测试加变异种子集当特征测试，换之前全绿
-- **钩子拦一部分**：`parse_float`、`parse_constant` 抛错拒绝小数与 NaN；`object_pairs_hook` 发现重复键就抛
-- **库放过的要自己查**：`\u` 转义、非 ASCII、DEL、顶层不是对象、值是数组或 `null`、整数超出 64 位
+- **钩子拦一部分**：`object_pairs_hook` 一处拦重复键和子集外的值，小数、NaN、`null`、数组、嵌套对象都不是 `int`、`bool`、`str`
+- **库放过的要自己查**：`\u` 转义、非 ASCII、DEL、顶层不是对象、整数超出 64 位
 - **所有失败映射成同一个码**：库的 `ValueError` 和深层嵌套的 `RecursionError` 都变成 `invalid_json`，库自己的消息不外漏
 - **并跑再切**：旧新两套实现跑同一批输入，差异为零才切；对不上的地方先判断是旧的错还是新的错
 
@@ -29,19 +29,21 @@ flowchart TB
 ```
 
 ```python
-_BAD = re.compile(r"[^\x00-\x7e]|(?<!\\)(?:\\\\)*\\u")  # 非 ASCII、DEL、\u
+_BAD = re.compile(r"[^\x00-\x7e]|\A\s*[^\s{]|(?<!\\)(?:\\\\)*\\u")  # 非 ASCII、DEL、顶层非对象、\u
+
+def _pairs(pairs):  # 重复键、子集外的值；64 位范围另查
+    d = dict(pairs)
+    if len(d) < len(pairs) or {type(v) for v in d.values()} - {int, bool, str}:
+        raise InvalidJson
+    return d
 
 def parse_with_library(text):
     if type(text) is not str or _BAD.search(text):
         raise InvalidJson
     try:
-        data = json.loads(text, parse_float=_reject, parse_constant=_reject,
-                          object_pairs_hook=_unique_keys)
+        return json.loads(text, object_pairs_hook=_pairs)
     except (ValueError, RecursionError):  # 库的任何失败都映射成同一个错误码
         raise InvalidJson from None
-    if type(data) is not dict or not all(_in_subset(v) for v in data.values()):
-        raise InvalidJson
-    return data
 ```
 
 <details class="pt"><summary>延伸</summary>

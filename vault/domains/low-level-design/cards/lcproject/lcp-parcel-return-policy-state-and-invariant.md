@@ -15,7 +15,7 @@ tags: [作答]
 - **两层各有一种错**：语法层只抛 `InvalidJson`，策略层只抛 `InvalidRequest`；都是 `ValueError`，`str(error)` 就是错误码
 - **语法先于策略**：第一行少了 `}`，是 `invalid_json`；第二行语法对、类型错，是 `invalid_request`
 - **校验成值**：`ReturnRequest` 能构造出来，就说明六个字段齐全、类型与范围都对；规则只看它，不再碰字典
-- **按名字捕获**：驱动只接这两种错；`UnicodeDecodeError` 也是 `ValueError`，要在它之前单独认出来，否则解码提示会漏进输出
+- **按名字捕获**：驱动只接这两种错；`UnicodeDecodeError` 也是 `ValueError`，要单独接它，不能靠 `except ValueError` 兜底，否则解码提示会漏进输出
 - **`evaluate` 自己也校验**：被直接调用时没有解析器替它把关
 
 ```mermaid
