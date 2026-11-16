@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-sales-reporting": [
+    "lcp-sales-reporting-contract-rules",
+    "lcp-sales-reporting-state-and-invariant",
+    "lcp-sales-reporting-reflection-query-design",
+    "lcp-sales-reporting-reflection-verification"
+  ]
+}

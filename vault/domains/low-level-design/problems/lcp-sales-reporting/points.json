@@ -1,0 +1,373 @@
+[
+ {
+  "point": "只有 type 为 sale 的行参与报表",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "data.optional"
+  ]
+ },
+ {
+  "point": "缺日期、缺状态、未知状态的行永远不算：NULL 的比较结果是 NULL，WHERE 把它过滤掉",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "data.optional",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "日期区间左闭右开：start 含、end 不含",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "end 可以是 2100-01-01，而且只能做 end：这样 2099-12-31 的销售才报得出",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "end 必须晚于 start，相等也非法",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "日期必须真实存在（2026-02-30、平年的 2 月 29 日非法），年份限 2020–2099",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "日期只收定宽的 YYYY-MM-DD：3.11 的 fromisoformat 还收 20260101 与周日期，要先用 [0-9] 正则卡形状",
+  "cards": [],
+  "leaves": [
+   "parsing-io.regex",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "k 是 1–20 的整数，不给就是 10",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.parameters"
+  ]
+ },
+ {
+  "point": "k 的显式 null、布尔、小数、字符串都是 400；1.0 与 1e0 解码后是整数 1，合法",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "data.optional"
+  ]
+ },
+ {
+  "point": "布尔是 int 的子类：整数检查要显式排除 True 与 False（integer(value)）",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.time-numbers"
+  ]
+ },
+ {
+  "point": "未知字段、请求体不是 JSON 对象都是 400 invalid_request",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "status 缺省或 null 是不筛选；给了就必须恰好是 active 或 termed，区分大小写",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "data.optional"
+  ]
+ },
+ {
+  "point": "region 与 item 缺省或 null 是不筛选；空串、非文本、超过 100 个码点都是 400",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "data.optional"
+  ]
+ },
+ {
+  "point": "长度数码点，不数字节；孤立的代理码点存不进 UTF-8，当作非法而不是让它变成 500",
+  "cards": [],
+  "leaves": [
+   "fluency.strings-bytes",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "筛选是精确匹配：区分大小写、不去空白，% 与 _ 与引号都只是字符",
+  "cards": [
+   "lcp-sales-reporting-contract-rules",
+   "lcp-sales-reporting-reflection-query-design"
+  ],
+  "leaves": [
+   "api.specs",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "具体的 region 匹配不到 NULL 地区；不给 region 时 NULL 地区照常参与",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "data.optional",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "所有筛选对三个标量和三个排行同时生效",
+  "cards": [
+   "lcp-sales-reporting-contract-rules",
+   "lcp-sales-reporting-state-and-invariant"
+  ],
+  "leaves": [
+   "api.specs",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "active_customers 是匹配行里 active 行的不同客户数：多条 active 销售只数一次",
+  "cards": [
+   "lcp-sales-reporting-reflection-verification"
+  ],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "status=termed 时 active_customers 是 0，总量与总额照常",
+  "cards": [
+   "lcp-sales-reporting-reflection-verification"
+  ],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "active 按销售行的状态算，不按客户最新的状态算：同一个客户的不同行可以不同",
+  "cards": [],
+  "leaves": [
+   "api.specs",
+   "data.value-entity"
+  ]
+ },
+ {
+  "point": "总量与总额各自求和、互相独立：totalPrice 已是整笔总价，不乘以 itemQuantity",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "ai.failure-modes"
+  ]
+ },
+ {
+  "point": "三个排行：按客户的数量、按客户的金额、按商品的数量，各自 GROUP BY 键",
+  "cards": [],
+  "leaves": [
+   "structure.storage",
+   "performance.data-structures"
+  ]
+ },
+ {
+  "point": "平局规则：数值降序、再按键升序，而且先排序再 LIMIT",
+  "cards": [
+   "lcp-sales-reporting-contract-rules",
+   "lcp-sales-reporting-state-and-invariant"
+  ],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "升序是 UTF-8 字节序（列的 BINARY 排序规则）：大写在小写前，不折叠大小写",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "没有匹配行：三个标量是 0、三个数组是空；SUM 在空集上是 NULL，要 COALESCE",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "data.optional",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "按条件去重计数的写法：COUNT(DISTINCT CASE WHEN 条件 THEN 列 END)",
+  "cards": [
+   "lcp-sales-reporting-reflection-verification"
+  ],
+  "leaves": [
+   "structure.storage",
+   "performance.data-structures"
+  ]
+ },
+ {
+  "point": "资格与筛选写成一份 MATCHING，四条查询共用，总数与排行才永远看同一批行",
+  "cards": [
+   "lcp-sales-reporting-state-and-invariant",
+   "lcp-sales-reporting-reflection-query-design"
+  ],
+  "leaves": [
+   "data.invariants",
+   "principles.simplicity"
+  ]
+ },
+ {
+  "point": "可选筛选写成 ($x IS NULL OR 列 = $x)：语句文本不变，代价是 region 上的索引用不上",
+  "cards": [
+   "lcp-sales-reporting-reflection-query-design"
+  ],
+  "leaves": [
+   "performance.measure-first",
+   "performance.complexity-constants"
+  ]
+ },
+ {
+  "point": "请求值一律走 $name 绑定参数；表名（keyspace）可以拼进语句，值不可以",
+  "cards": [
+   "lcp-sales-reporting-state-and-invariant",
+   "lcp-sales-reporting-reflection-query-design"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "行数预算 32 + 3k：标量查询 1 行加三个至多 k 行的排行，合计 1 + 3k",
+  "cards": [
+   "lcp-sales-reporting-state-and-invariant",
+   "lcp-sales-reporting-reflection-query-design"
+  ],
+  "leaves": [
+   "performance.data-structures",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "过滤、去重、分组、求和、排序、限量都留在数据库里，不 SELECT * 拉回 Python 再算",
+  "cards": [
+   "lcp-sales-reporting-reflection-query-design"
+  ],
+  "leaves": [
+   "performance.data-structures",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "校验先于一切数据库访问：非法请求不产生任何查询",
+  "cards": [
+   "lcp-sales-reporting-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "错误形状：非法请求 400 invalid_request；其他方法与路径 404 not_found（先于读请求体）；数据库异常不吞、不泄露细节",
+  "cards": [
+   "lcp-sales-reporting-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.exceptions-vs-values"
+  ]
+ },
+ {
+  "point": "测试里用一个记录每次查询的上下文：行数预算与「值不在语句里」只有看查询才测得出",
+  "cards": [
+   "lcp-sales-reporting-reflection-query-design"
+  ],
+  "leaves": [
+   "testing.pytest-tools",
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "为「客户被重复计数」设计测试：造形状不同的客户、手算期望、让它拒绝 COUNT(列)、漏 active、漏区间",
+  "cards": [
+   "lcp-sales-reporting-reflection-verification"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "和智能体一起做：先把合同写成规则和断言，一次只给它一个失败的测试",
+  "cards": [],
+  "leaves": [
+   "ai.specs",
+   "ai.decomposition",
+   "rounds.ai-assisted"
+  ]
+ },
+ {
+  "point": "读智能体的 diff 时查这几处：价格乘数量、COUNT(*) 数客户、漏平局键、拼接值、isinstance(k, int) 放过布尔",
+  "cards": [],
+  "leaves": [
+   "review.ai-code",
+   "ai.failure-modes"
+  ]
+ },
+ {
+  "point": "平局、NULL 地区、混合状态客户这几个最要紧的测试自己写，不让智能体代写",
+  "cards": [],
+  "leaves": [
+   "ai.verification",
+   "ai.delegation"
+  ]
+ }
+]
