@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-receivable-allocation": [
+    "lcp-receivable-allocation-contract-rules",
+    "lcp-receivable-allocation-state-and-invariant",
+    "lcp-receivable-allocation-reflection-original-vs-remaining",
+    "lcp-receivable-allocation-reflection-detached-and-verified"
+  ]
+}

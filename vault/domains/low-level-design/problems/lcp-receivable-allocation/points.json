@@ -1,0 +1,374 @@
+[
+{
+"point": "分组键是 (商户, 卡类型, 付款日) 三元组，精确匹配、区分大小写、不做规范化",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation",
+"data.value-entity"
+]
+},
+{
+"point": "客户编号不参与分组；重复的交易行各算一次，金额相加",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"data.value-entity",
+"testing.partitioning"
+]
+},
+{
+"point": "空交易返回空列表；空应收款返回空；空合约时只返回每笔应收款的商户行",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"testing.partitioning",
+"errors.boundary-validation"
+]
+},
+{
+"point": "三种记录的字段顺序不同（交易里日期在卡类型前，应收款里卡类型在日期前），建键一律按名字取",
+"cards": [
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"api.hard-to-misuse",
+"data.primitive-obsession"
+]
+},
+{
+"point": "用字典按键累加，键首次出现的顺序就是输出顺序，结果确定",
+"cards": [
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"fluency.collections"
+]
+},
+{
+"point": "百分比请求额 = 原始金额 × 基点 // 10000，向下取整；2500 基点 = 25%",
+"cards": [
+"lcp-receivable-allocation-contract-rules",
+"lcp-receivable-allocation-reflection-original-vs-remaining"
+],
+"leaves": [
+"fluency.time-numbers"
+]
+},
+{
+"point": "百分比永远基于原始金额，不基于剩余金额；固定额分走多少都不影响它",
+"cards": [
+"lcp-receivable-allocation-contract-rules",
+"lcp-receivable-allocation-reflection-original-vs-remaining"
+],
+"leaves": [
+"data.invariants",
+"testing.partitioning"
+]
+},
+{
+"point": "能区分原始与剩余的例子：1001 分，先固定 400 再 25%，按原始 250、按剩余 150",
+"cards": [
+"lcp-receivable-allocation-reflection-original-vs-remaining"
+],
+"leaves": [
+"testing.partitioning",
+"fluency.time-numbers"
+]
+},
+{
+"point": "金额全程用整数分，不用 float，返回值是 int 不是 float",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"fluency.time-numbers",
+"oop.values"
+]
+},
+{
+"point": "先乘后整除：`int(50 * (5800 / 10000))` 得 28，而 50 × 5800 // 10000 是 29",
+"cards": [
+"lcp-receivable-allocation-reflection-original-vs-remaining"
+],
+"leaves": [
+"fluency.time-numbers"
+]
+},
+{
+"point": "`round()` 不是向下取整：1 分的 9999 基点 `round` 得 1，向下取整得 0",
+"cards": [
+"lcp-receivable-allocation-reflection-original-vs-remaining"
+],
+"leaves": [
+"fluency.time-numbers"
+]
+},
+{
+"point": "乘积最大 10^13，在 float 的 2^53 精度内，但仍然用整数运算而不是靠这个界限侥幸",
+"cards": [
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"fluency.time-numbers",
+"principles.simplicity"
+]
+},
+{
+"point": "每份合约实际拿到 min(请求额, 该键剩余)",
+"cards": [
+"lcp-receivable-allocation-contract-rules",
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"data.invariants"
+]
+},
+{
+"point": "钱不够时合约按输入顺序先到先得：先来的拿满，后来的拿剩下的，调换顺序结果不同",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"data.invariants",
+"testing.partitioning"
+]
+},
+{
+"point": "百分比之和超过 100% 时，后到的合约只拿剩下的，之后的合约不出行",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"testing.partitioning"
+]
+},
+{
+"point": "键不在应收款里的合约被忽略（商户、卡类型、日期任一不同都算不在）",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation",
+"testing.partitioning"
+]
+},
+{
+"point": "合约行只在拿到的金额为正时才输出：零值合约、取整为 0 的百分比、钱已分完的合约都不出行",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"testing.partitioning"
+]
+},
+{
+"point": "合约行的 id 是 contract_id，卡类型和付款日沿用应收款",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"api.returns"
+]
+},
+{
+"point": "每笔输入的应收款输出一行商户余额，余额为 0 也要出；id 是 merchant_id",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"api.returns",
+"testing.partitioning"
+]
+},
+{
+"point": "固定额等于全部或 100% 分走后，商户行是 0 而不是消失",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"testing.partitioning"
+]
+},
+{
+"point": "不同合约不合并成一行，即使属于同一个商户",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"api.returns"
+]
+},
+{
+"point": "取整丢掉的零头留在剩余里，最后归商户：100 分三份 3333 基点得 33、33、33，商户 1",
+"cards": [
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"data.invariants",
+"fluency.time-numbers"
+]
+},
+{
+"point": "逐笔守恒不变量：每笔应收款的各行金额之和等于它的金额，钱不会在键与键之间流动",
+"cards": [
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"data.invariants",
+"errors.bug-vs-failure"
+]
+},
+{
+"point": "守恒与安全检查用具名异常，不用 assert，因为 python -O 会去掉 assert",
+"cards": [
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"errors.bug-vs-failure",
+"errors.unrecoverable"
+]
+},
+{
+"point": "Funds 拥有一笔钱：original 不变、remaining 只减不增，0 ≤ remaining ≤ original",
+"cards": [
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"data.invariants",
+"python.dataclasses-enums"
+]
+},
+{
+"point": "负的请求额会让 remaining 变大（造钱），所以扣款函数对负数抛 ValueError",
+"cards": [
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"data.invariants",
+"errors.bug-vs-failure"
+]
+},
+{
+"point": "合约先一次遍历按键归组，组内保持输入顺序，总成本 O(交易数 + 合约数)",
+"cards": [
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"performance.data-structures",
+"performance.complexity-constants"
+]
+},
+{
+"point": "逐笔应收款扫描全部合约是 O(n×m)：一万 × 一万约 2.6 秒，按键归组约 0.01 秒",
+"cards": [
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"performance.complexity-constants"
+]
+},
+{
+"point": "同一个键的应收款出现两次，合约会被分两遍（钱被造出来），所以拒绝重复键",
+"cards": [
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"errors.boundary-validation",
+"data.invariants"
+]
+},
+{
+"point": "合约种类用 Enum 表示，未知种类抛错，不静默当成固定额",
+"cards": [
+"lcp-receivable-allocation-state-and-invariant"
+],
+"leaves": [
+"python.dataclasses-enums",
+"errors.boundary-validation"
+]
+},
+{
+"point": "不对参数列表原地 sort、pop 或 append；要排序就用 sorted 得到新列表",
+"cards": [
+"lcp-receivable-allocation-reflection-detached-and-verified"
+],
+"leaves": [
+"fluency.mutability",
+"data.defensive-copy"
+]
+},
+{
+"point": "记录是冻结的 dataclass，结果是新建的列表：结果与输入互不相连，不需要再拷贝",
+"cards": [
+"lcp-receivable-allocation-reflection-detached-and-verified"
+],
+"leaves": [
+"oop.values",
+"data.defensive-copy"
+]
+},
+{
+"point": "函数无状态：没有模块级缓存、没有可变默认参数，重复调用结果相同",
+"cards": [
+"lcp-receivable-allocation-reflection-detached-and-verified"
+],
+"leaves": [
+"concurrency-depth.confinement",
+"fluency.mutability"
+]
+},
+{
+"point": "测试输入不被修改：调用前后各取副本比较，调用两次，清空第一次结果后第二次不变",
+"cards": [
+"lcp-receivable-allocation-reflection-detached-and-verified"
+],
+"leaves": [
+"testing.pytest-tools",
+"data.defensive-copy"
+]
+},
+{
+"point": "用 Fraction 写独立实现，在随机数据上逐行对拍，并断言守恒",
+"cards": [
+"lcp-receivable-allocation-reflection-detached-and-verified"
+],
+"leaves": [
+"testing.test-first",
+"testing.partitioning"
+]
+},
+{
+"point": "先把 README 的每个数字例子变成测试，再让编程智能体实现",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"ai.specs",
+"ai.verification"
+]
+},
+{
+"point": "智能体常把百分比算在剩余金额上、用浮点数取整、漏掉零余额行：这三处要自己写测试盯住",
+"cards": [
+"lcp-receivable-allocation-reflection-original-vs-remaining"
+],
+"leaves": [
+"ai.failure-modes",
+"ai.verification"
+]
+},
+{
+"point": "一次只给智能体一个失败的测试，改完立刻运行；取整方向和基数这类语义自己定",
+"cards": [
+"lcp-receivable-allocation-contract-rules"
+],
+"leaves": [
+"ai.decomposition",
+"ai.delegation"
+]
+}
+]
