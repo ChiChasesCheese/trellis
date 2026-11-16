@@ -64,7 +64,10 @@ step: 1
   For `industry.*` leaves: who and what; why it matters; the dispute or risk.
 - **Short.** The answer leads with one bold sentence that is the whole answer, then at most ~200 Chinese characters:
   phrases in a list or a small table, not paragraphs. A card is read on a phone in under a minute.
-- **Self-contained.** Each card is understood alone: no 「见上一张」, no 「如前所述」.
+- **Self-contained.** Each card is understood alone: no 「见上一张」「见下一张卡」, no 「如前所述」. A fact another card
+  of the leaf explains is restated here in one phrase.
+- **No process talk.** The card states the fact, never how you found it: no 「我没有找到」「精确数字只给了图」
+  「这是按机制推理得出的」. Something unsettled is written as 「没有公开的测量」 or marked 「推测」.
 - **Concrete.** Prefer an example, a number or a tiny snippet (a prompt, a JSON tool call, at most 12 lines) to an
   abstract sentence. Code and JSON go in fenced blocks, lines ≤ 60 characters.
 - **Diagrams.** At least one of the three recall cards of every leaf carries a diagram, more where the content is a
@@ -84,7 +87,8 @@ step: 1
   <details class="pt"><summary>想一想：<a question Chi can answer from this card plus the news?></summary>1–3 sentences: the answer.</details>
   ```
 
-  The month is when it happened (`2025 年 11 月 – 2026 年 6 月` for a trend). The `<details>` block stays on one line
+  The month is when it happened (`2025 年 11 月 – 2026 年 6 月` for a trend); a study or report is dated by the month
+  it was published, never by 「截至 2026 年 11 月」. The `<details>` block stays on one line
   with plain text inside (no markdown, no backticks). The question makes him think, not recall: predict an effect,
   compare with the card's mechanism, spot the trade-off. Model:
   `vault/domains/llm-inference/cards/serving/li-serving-moe-expert-parallel-all-to-all.md`.

@@ -48,6 +48,7 @@ is researched at writing time; 新进展 blocks on at least half of the recall c
 | 2026-11-15 | `use` | 11 | 44 (33 recall, 11 challenge; 12 diagrams; 23 新进展) | accepted: gates ok; Claude prices checked against the pricing page; cache and batch sums re-derived |
 | 2026-11-15 | `agents` | 9 | 36 (27 recall, 9 challenge; 11 diagrams; 14 新进展) | accepted: validate 0 errors, plain_style and phone_diagrams ok, numbers re-derived |
 | 2026-11-15 | `industry` | 9 | 36 (27 recall, 9 challenge; 12 diagrams; 25 新进展) | accepted: gates ok; survey figures checked against the Menlo report's text, prospectus figures against press summaries; three wordings corrected |
+| 2026-11-15 | `quirks` | 12 | 48 (36 recall, 12 challenge; 19 diagrams; 21 新进展) | accepted: gates ok; benchmark figures checked against the paper's table, blackmail rates against Anthropic's page; eleven wordings corrected |
 
 ## Least-sure claims (step 5)
 
@@ -97,6 +98,29 @@ Filled from each agent's reply; checked by the orchestrator before the group is 
   about $83M a month times twelve).
 - Not checked beyond the agent's own sources: Nvidia–Groq (about $20B, December 2025), Cerebras listing (May 2026),
   DeepSeek V4 details, Abilene capacity figures, the Gemini 2.5 Pro retirement notice.
+
+`quirks`:
+
+- `counting-letters-reasoning-cost`, `-tokens-not-letters`: SubTokenTest (arXiv 2601.09089). Checked against the
+  paper's Table 2 and text: 814 vs 14,971 tokens, keystroke decoding 0% vs 94%, o4-mini low 20% vs high 47%, the
+  2,048-token peak, the probe on Qwen-2.5-7B. The probe predicts how often each letter occurs; the card now says so.
+- `scary-headlines-*`: rates (96 / 96 / 80 / 80 / 79 / 15, 86% without a goal conflict, 96→37 with an explicit ban,
+  55.1% vs 6.5%) checked against Anthropic's write-up; 86% and 37% are read from its charts. The Haiku 4.5 system-card
+  statement is confirmed from search snippets of the card. Palisade's figures are from its own page and press.
+- `got-dumber-*`: the April 2026 postmortem (default effort, the thinking-clearing bug, the verbosity prompt, about 3%)
+  confirmed; the card now names all three models it lists.
+- `sycophancy-measured`: 9% / 25% / 38%, 18% after pushback; published end of April 2026, the card now dates it so.
+  "About half" for Opus 4.7 vs 4.6 rests on one secondary figure (about 5% vs 11%).
+- `ai-writing-tells-measured-and-drifting`: the preprint (arXiv 2603.27006) figures come from its abstract. The
+  Graphite study is confirmed by several outlets (13,000 phrases, "dependable" about 23x), which disagree on its date
+  (16 or 30 September, 2 October); the card says October, when it was covered.
+- `loops-and-glitches-repetition-loop`: the ICML 2026 paper is confirmed (arXiv December 2025); the second paper only
+  from its listing.
+- `image-bias-*`: ChatGPT Images 2.0 (21 April 2026) confirmed. Passing the clock and full-glass tests is single-run
+  reviews for every model named; the 10:10 and full-glass explanations are marked 「推测」.
+- Not checked beyond the agent's own sources: SGLang's deterministic mode, the 190-model self-identification
+  measurement (the card calls it one person's measurement), the December 2025 DALL·E 3 / FLUX.1 retest, the date of the
+  passage in Anthropic's prompting guide.
 
 ## Next action
 
