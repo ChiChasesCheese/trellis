@@ -6,9 +6,10 @@ incident. Every project is graded on hidden tests plus how the candidate directs
 branch of `skeleton/low-level-design.yaml` holds one leaf per project. In Anki the cards become the deck
 `低层设计（LLD）::28 LeetCode Project（实战项目）`.
 
-Chi does not want to read answers first. **Every card of this branch is an answer card**: he writes his own answer to the
-front into the card's Note field, then turns the card; a daily job grades the Note against the card's 评分点 and sends
-what he missed back to the knowledge tree. So the back of a card is a grading key, not an essay.
+Chi learns these like vocabulary (2026-11-16): most of a project is ten-second tap cards, one per fine-grained point,
+written in a later pass from your `points.json` (proposals/lld/LCP_QUICK_AGENT.md); a miss sends him back to the
+point's knowledge-tree leaves. Your leaf adds 3–5 longer synthesis cards (tag 作答): he answers in his head, turns, and
+grades himself against a dense, structured back with a diagram and code. No typing anywhere.
 
 > **`proposals/WRITING_RULES.md` overrides everything below**: textbook voice, cause → effect, self-contained, no
 > provenance on a learning page. `scripts/plain_style.py` enforces part of it inside the gate.
@@ -55,26 +56,31 @@ what he missed back to the knowledge tree. So the back of a card is a grading ke
    then one card per REFLECTION question, asked as a concrete situation in your own words. Chi answers them in his
    head and grades himself, so the 评分点 are short phrases he can tick off at a glance.
 
-   The back of every card has exactly this shape:
+   The back of every synthesis card has this layout (Chi, 2026-11-16: dense, structured, a picture, code over prose,
+   no filler; the layout itself shows the outline):
 
    ```
-   **评分点**
-   - <短语>：<为什么，一句>
-   - …（3–6 条，按重要性排序；每条都是 Chi 的答案里可以「有或没有」的一件事）
+   **<结论：一句话，≤ 30 字>**
 
-   <details class="pt"><summary>参考答案</summary>
+   - **<短语>**：<为什么或怎么做，一句>
+   - …（3–6 条，按重要性；每条是 Chi 想答案时可以打勾的一件事）
 
-   <≤ 220 个汉字的完整作答，可带一个 ≤ 15 行的 Python 代码块>
+   ```mermaid
+   flowchart TB / stateDiagram-v2 / sequenceDiagram …（流程、状态或结构，≤ 8 个节点，手机竖屏放得下）
+   ```
 
-   </details>
+   ```python
+   # ≤ 15 行：这件事的最小正确代码，名字和参考解一致
+   ```
+
+   <details class="pt"><summary>延伸</summary>一两句：规模变大、换成数据库或分布式时怎么变。</details>
 
    **知识点：** <1–3 个 LLD 叶子的中文标题，用「、」隔开>
    ```
 
-   The 评分点 are what the daily grader checks a written answer against, so each must be decidable from a short answer:
-   「说出用一把锁保护"检查余额+扣款"整个复合操作」 is gradable; 「理解并发」 is not. The 知识点 line names existing
-   leaves of `skeleton/low-level-design.yaml` by their title (the knowledge an answer that missed a 评分点 should go back
-   to); `points.json` (below) carries their ids.
+   The diagram or the code may be left out only when the point has no structure or no code; most cards have both. No
+   paragraph of prose longer than two lines anywhere on the card. The mermaid block follows rule 12 of
+   WRITING_RULES (`python3 scripts/phone_diagrams.py` passes).
    Every front is self-contained and names the system (「在 LLM 网关限流器里，…」); never 「本题」「上一张卡」.
 7. **`points.json`** beside the code: the project's exam points, fine-grained, because each becomes one ten-second
    card. `[{"point": "<中文短语>", "cards": ["<card id>", …], "leaves": ["<leaf id>", …]}]`, 15–40 points: every README

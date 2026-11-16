@@ -47,7 +47,8 @@ FRONT, TAP_FRONT, BACK, TOTAL, OPT, LINE, SIDE, BLANK = 55, 62, 42, 90, 16, 14, 
 MORE = 45  # the extension line under the answer: read only with a few seconds to spare, so outside the ten-second budget
 TAPPED = ("mc", "order", "match", "multi", "bug")
 # multi: 4-6 options, every right one must be picked; bug: a short code excerpt, tap the one wrong line (LeetCode Project, 2026-11-16)
-MULTI_FRONT, CODE_LINE, CODE_LINES = 80, 44, (4, 10)  # options are scanned, not read through: a little more room before the answer
+MULTI_FRONT, CODE_LINE, CODE_LINES = 80, 44, (4, 10)
+SNIP_LINES = 8  # code_q (with the question) and snippet (on the back): scanned, not read, so outside the units  # options are scanned, not read through: a little more room before the answer
 CHUNK = 20
 DEFAULTS = {"cards": 1000, "per_day": 100, "topic_cap": 6, "source_cards": 2}
 
@@ -244,6 +245,13 @@ def check(c: dict, known: dict[str, dict]) -> list[str]:
             bad.append("3 pairs, all sides distinct")
         elif any(units(x) > SIDE for pair in p for x in pair):
             bad.append(f"a side over {SIDE}")
+    for name in ("code_q", "snippet"):
+        if name in c:
+            code = c[name]
+            if not isinstance(code, list) or not 1 <= len(code) <= SNIP_LINES or any(not isinstance(x, str) or len(x) > CODE_LINE for x in code):
+                bad.append(f"{name}: 1..{SNIP_LINES} code lines of at most {CODE_LINE} characters")
+    if "code_q" in c and f not in ("mc", "multi", "qa", "flaw"):
+        bad.append("code_q only on mc, multi, qa or flaw")
     text = " ".join(front + back)
     if re.search(r"见上|如上|本卡|原文|上文|来源卡", text):
         bad.append("leans on something outside the card")
@@ -426,6 +434,8 @@ button.go { margin:4px 0 2px; padding:8px 22px; border-radius:8px; border:1px so
 .cl > * { pointer-events:none; } .cl code { background:none; padding:0; white-space:pre; font-size:13px; }
 .cl .ln { flex:0 0 auto; width:18px; text-align:right; color:var(--dim); font-size:11px; }
 .cl.sel { background:rgba(192,57,43,.14); } .cl.ok { background:rgba(46,158,91,.18); }
+pre.snip { margin:8px 0 4px; padding:6px 10px; border:1px solid var(--rule); border-radius:6px; overflow-x:auto; white-space:pre; font-size:12.5px; line-height:1.45; }
+pre.snip code { background:none; padding:0; white-space:pre; }
 """
 
 HEAD = '<div class="crumb">{{Crumb}}<span class="chip">%s</span></div>'
@@ -591,13 +601,22 @@ def scrambled(n: int, seed: str, identity_ok: bool) -> list[int]:
     return order
 
 
+def snip(code: list[str]) -> str:
+    """A short code block: one line per item, never wrapped, scrolls sideways."""
+    return '<pre class="snip"><code>' + "\n".join(html.escape(x) for x in code) + "</code></pre>"
+
+
 def fields(c: dict, point: dict) -> tuple[str, list[str]]:
     """Model key and field values of a card."""
     f, why, crumb, title = c["fmt"], mark(c.get("why", "")), point["topic_title"], point["title"]
+    if c.get("snippet"):  # a minimal working snippet on the back: code instead of prose (Chi, 2026-11-16)
+        why += snip(c["snippet"])
+    if c.get("code_q"):  # code shown with the question; scanned, so outside the reading units
+        c = {**c, "q": c.get("q", ""), "_code_q": snip(c["code_q"])}
     if c.get("more"):  # kept inside the Why field: a new field forces a one-way full sync of the collection
         why += f'<div class="more"><b>延伸</b>{mark(c["more"])}</div>'
     if f in ("qa", "flaw"):
-        q = ("这句话错在哪？<br>" if f == "flaw" else "") + mark(c["q"])
+        q = ("这句话错在哪？<br>" if f == "flaw" else "") + mark(c["q"]) + c.get("_code_q", "")
         return "qa", [q, mark(c["a"]), why, crumb, KIND[f], title]
     if f == "cloze":
         return "cloze", [mark(c["text"]), why, crumb, title]
@@ -606,7 +625,7 @@ def fields(c: dict, point: dict) -> tuple[str, list[str]]:
         opts = "".join(f'<div class="opt tappable" data-k="{"ABC"[pos]}" onclick="qkTap(this)"><span class="k">{"ABC"[pos]}</span><div class="body">{mark(c["opts"][i])}</div></div>'
                        for pos, i in enumerate(order))
         right = "ABC"[order.index(0)]
-        return "mc", [mark(c["q"]), opts, right, f"{right}. {mark(c['opts'][0])}", why, crumb, title]
+        return "mc", [mark(c["q"]) + c.get("_code_q", ""), opts, right, f"{right}. {mark(c['opts'][0])}", why, crumb, title]
     if f == "multi":
         order = scrambled(len(c["opts"]), c["kp"], identity_ok=True)
         letters = "ABCDEF"
@@ -614,7 +633,7 @@ def fields(c: dict, point: dict) -> tuple[str, list[str]]:
                        for pos, i in enumerate(order))
         right = "".join(letters[pos] for pos, i in enumerate(order) if i in c["ok"])
         answer = "；".join(f"{letters[pos]}. {mark(c['opts'][i])}" for pos, i in enumerate(order) if i in c["ok"])
-        return "multi", [mark(c["q"]), opts, right, answer, why, crumb, title]
+        return "multi", [mark(c["q"]) + c.get("_code_q", ""), opts, right, answer, why, crumb, title]
     if f == "bug":
         lines = "".join(f'<div class="cl tappable" data-k="{n + 1}" onclick="qkTap(this)"><span class="ln">{n + 1}</span><code>{html.escape(x)}</code></div>'
                         for n, x in enumerate(c["code"]))

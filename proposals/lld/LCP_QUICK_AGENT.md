@@ -46,6 +46,8 @@ Repository root: `/Users/chiserver/sessions/trellis`. Everything you write is lo
 | `flaw` | `q` = one statement with exactly one flaw, `a` = what is wrong and the right way | says what is wrong, flips |
 | `qa` | `q`, `a` (one phrase) | answers in his head, flips |
 
+Any card may add `snippet` (code on the back); `mc`, `multi`, `qa`, `flaw` may add `code_q` (code with the question).
+
 **Mix per project: at least 60% tapped** (`mc`, `multi`, `bug`, `order`, `match`), because a tap gives Chi an objective
 right or wrong. Use each format where it fits:
 
@@ -60,6 +62,21 @@ right or wrong. Use each format where it fits:
   has exactly one wrong line; every other line is correct Python.
 - `mc` for a decision or a rule with one or two tempting wrong alternatives.
 - `cloze` only for a number with its unit or the proper name of a mechanism; `flaw` and `qa` sparingly.
+
+## Content: dense, structured, code first (Chi, 2026-11-16)
+
+Chi: high information per second, the layout shows the outline, no filler, and code instead of prose wherever code says
+it ("单纯用文字去讲解，真的会看麻"). So:
+
+- **Ask with code when the point lives in code.** `bug` for a wrong line; `mc`/`multi` whose options are code
+  expressions (`tokens >= 1` vs `round(tokens) >= 1`); `cloze` on the one token that matters (`now - ts {{c1::>=}} window`);
+  `order` over 3–4 code lines or steps. Put a 1–8 line excerpt beside the question in `code_q` (allowed on `mc`, `multi`,
+  `qa`, `flaw`) instead of describing the code in words.
+- **Answer with code.** `snippet`: 1–8 lines (each ≤ 44 characters) shown under `why` — the minimal correct code for the
+  point. A card about a mechanism almost always has one. `why` then needs only the reason, in one short sentence.
+- Both code fields are scanned, not read, so they sit outside the unit limits; keep them real, runnable Python that
+  matches our solution's names.
+- No filler words ("注意"、"值得一提"、"其实"、"需要"). Every word in `q`, `why`, `more` carries information.
 
 ## Ten seconds: the limits (`uv run python scripts/lcp_quick.py gate <slug>` enforces them)
 
@@ -97,7 +114,12 @@ classic problem. It never restates the answer and the card stands without it.
    valid JSON object per line, `ensure_ascii` off).
 3. Run `uv run python scripts/lcp_quick.py gate <slug>` and fix every failing line (shorten by cutting words, never
    meaning) until it reports 0 failing and 0 without a card. Do not run git; if uv touches uv.lock, leave it.
-4. Report: points per kind, cards per format, the tapped share, and the three cards you are least sure are correct.
+4. Rewrite the leaf's synthesis cards (`vault/domains/low-level-design/cards/lcproject/lcp-<slug>-*.md`, 3–5 cards) into
+   the layout of LCP_AGENT.md §6: keep `id`, `node`, `step`, `tags`; rewrite only the `## A` body (and tighten `## Q`).
+   Then run `uv run python scripts/check_lld_problems.py --branch lcproject lcproject.lcp-<slug>`,
+   `python3 scripts/plain_style.py <the cards>` and `python3 scripts/phone_diagrams.py <the cards>` until all pass.
+5. Report: points per kind, cards per format, the tapped share, cards with code, and the three cards you are least
+   sure are correct.
 
 ## Steps (verifier)
 
