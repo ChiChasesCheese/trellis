@@ -109,6 +109,8 @@ def export(slug: str, force: bool) -> bool:
                         "--allowedTools", "mcp__claude-in-chrome__*,ToolSearch"],
                        cwd=HELPER_CWD, stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=1500)
     (home / "export.log").write_text(r.stdout + ("\n--- stderr ---\n" + r.stderr if r.stderr else ""), encoding="utf-8")
+    if re.search(r"hit your .{0,20}limit", r.stdout):  # our own usage limit, not the site: stop, nothing was sent
+        raise Pushback(f"{slug}: the helper hit its usage limit; stopped. Rerun after the reset")
     if m := PUSHBACK.search(r.stdout):
         raise Pushback(f"{slug}: the site pushed back ({m.group(0)!r}); stopped. Read {home / 'export.log'}")
     got = new_download(before)
