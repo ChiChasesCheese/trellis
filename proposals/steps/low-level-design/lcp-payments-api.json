@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-payments-api": [
+    "lcp-payments-api-contract-rules",
+    "lcp-payments-api-state-and-invariant",
+    "lcp-payments-api-reflection-existing-vs-missing",
+    "lcp-payments-api-reflection-verify-balances"
+  ]
+}

@@ -36,6 +36,11 @@ MIN_ARTICLE, MIN_CARDS, MIN_TESTS, MIN_DECISIONS = 8000, 6, 10, 3
 # requires Chinese docstrings and comments and must not then penalise writing them. A third to a
 # half of an accepted file is prose. The generous total cap is only a bloat guard.
 SOLUTION_CODE_LINES, SOLUTION_TOTAL_MAX = (120, 480), 900
+# Leaves whose contract is too small for the size floor: (min code lines, min classes) and why. Padding to reach the
+# floor is worse than a small solution (proposals/lld/LCP_AGENT.md).
+SMALL_CONTRACT = {
+    "lcp-payments-api": (40, 2, "three functions over two tables; the README asks for nothing more"),
+}
 SECTIONS = ["题目与澄清", "需求与分级", "核心对象与职责", "关键设计决策", "代码走读", "测试与自检",
             "扩展与追问", "常见错误", "45 分钟怎么分配", "来源与延伸"]
 COMMERCIAL = ("hellointerview.com", "educative.io", "designgurus.io", "algomaster.io", "codemia.io",
@@ -78,6 +83,9 @@ def check_code(slug: str) -> list[str]:
     code = sum(1 for i, line in enumerate(lines, 1)
                if line.strip() and not line.strip().startswith("#") and i not in doc_lines)
     lo, hi = SOLUTION_CODE_LINES
+    min_classes = 3
+    if slug in SMALL_CONTRACT:
+        lo, min_classes, _why = SMALL_CONTRACT[slug]
     if not lo <= code <= hi:
         problems.append(f"solution.py has {code} lines of code (excluding docstrings and comments), "
                         f"want {lo}–{hi}")
@@ -99,8 +107,8 @@ def check_code(slug: str) -> list[str]:
     if prose and sum(1 for t in prose if CJK.search(t)) / len(prose) < 0.8:
         problems.append("solution.py: comments and docstrings must be Chinese (≥ 80%)")
     classes = [n for n in tree.body if isinstance(n, ast.ClassDef)]
-    if len(classes) < 3:
-        problems.append(f"solution.py defines {len(classes)} top-level class(es); an object design needs ≥ 3")
+    if len(classes) < min_classes:
+        problems.append(f"solution.py defines {len(classes)} top-level class(es); an object design needs ≥ {min_classes}")
     funcs = [n for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))]
     untyped = [f.name for f in funcs if f.returns is None and f.name != "__init__"]
     if funcs and len(untyped) / len(funcs) > 0.2:
