@@ -265,7 +265,7 @@ One card per entry, in this order. The anchor is a starting point from memory: c
 
 - node: `game.negotiate.batna` · file: `vault/domains/psych/cards/game/psy-game-batna.md`
 - 一句话：谈判里的力量主要来自：谈崩了，你最好的另一条路有多好。
-- 证据等级：A（卡片上写「证据 · 强」）
+- 证据等级：B（卡片上写「证据 · 中」）
 - anchor: Fisher & Ury 1981 'Getting to Yes'. Pinkley, Neale, Bennett 1994: negotiators with a better alternative got better outcomes for themselves and larger joint gains. Magee, Galinsky, Gruenfeld 2007. A second offer in hand changes a salary talk more than any phrasing.
 
 ### 先出价与锚（first offer anchoring）

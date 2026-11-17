@@ -244,7 +244,7 @@ One card per entry, in this order. The anchor is a starting point from memory: c
 
 - node: `life.health.exercise-mood` · file: `vault/domains/psych/cards/life/psy-life-exercise-mood.md`
 - 一句话：走路、慢跑、力量训练、瑜伽对抑郁的效果，和心理治疗、药物在同一个量级，强度大一点效果更好。
-- 证据等级：A（卡片上写「证据 · 强」）
+- 证据等级：B（卡片上写「证据 · 中」）
 - anchor: Noetel et al. 2024 BMJ network meta-analysis (218 trials, 14,170 participants): walking or jogging g=-0.62, yoga -0.55, strength training -0.49; effects grew with intensity. Singh et al. 2023 British Journal of Sports Medicine umbrella review (97 reviews). Many trials are small and have a risk of bias; the direction is consistent.
 
 ### 酒精、睡眠与情绪（alcohol）

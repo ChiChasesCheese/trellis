@@ -131,6 +131,20 @@ def main() -> None:
             f"memory: check every number against the paper or a reliable summary before it goes on a card.\n\n"
             + "\n".join(rows), encoding="utf-8")
 
+    # The whole map as an Obsidian outline (Mindmap NextGen): every concept, carded or not. No frontmatter (the plugin's
+    # YAML parser breaks on mobile). scripts/knowledge_tree.py draws the other note, which shows only what has cards.
+    cards = {f.stem for f in (ROOT / "vault/domains/psych/cards").glob("*/*.md")}
+    lines = ["# 人性与决策 概念全图", ""]
+    for top in tops:
+        mine = [leaf for mid in top["children"] for leaf in mid["children"]]
+        lines.append(f"- {top['title']} · {len(mine)}")
+        for mid in top["children"]:
+            lines.append(f"  - {mid['title']} · {len(mid['children'])} <!-- markmap: fold -->")
+            for leaf in mid["children"]:
+                todo = "" if card_id(leaf["id"]) in cards else " · 待写"
+                lines.append(f"    - {leaf['title']} · 证据{grade_word[leaf['grade']]}{todo}")
+    (ROOT / "vault/domains/psych/人性与决策 概念全图.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
     core = [leaf for leaf in leaves if leaf["core"]]
     print(f"{len(tops)} fields, {sum(len(t['children']) for t in tops)} themes, {len(leaves)} leaves, {len(core)} core")
     for top in tops:

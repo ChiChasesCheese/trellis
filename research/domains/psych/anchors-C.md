@@ -237,7 +237,7 @@ One card per entry, in this order. The anchor is a starting point from memory: c
 
 - node: `career.path.peter-principle` · file: `vault/domains/psych/cards/career/psy-career-peter-principle.md`
 - 一句话：按当前岗位的业绩提拔人，会把最好的执行者变成不称职的管理者。
-- 证据等级：A（卡片上写「证据 · 强」）
+- 证据等级：B（卡片上写「证据 · 中」）
 - anchor: Peter & Hull 1969, written as satire. Benson, Li, Shue 2019 QJE (53,035 sales workers, 214 US firms): doubling a salesperson's sales raised the chance of promotion about 15%, and predicted a 7.5% drop in their new subordinates' sales; firms promoted the best sellers, not the best future managers.
 
 ### 做得好不等于被看见（visibility）
@@ -300,7 +300,7 @@ One card per entry, in this order. The anchor is a starting point from memory: c
 
 - node: `career.work.overwork` · file: `vault/domains/psych/cards/career/psy-career-overwork.md`
 - 一句话：每周工作超过约 50 小时后，每多一小时的产出急剧下降；70 小时做出来的几乎不比 55 小时多。
-- 证据等级：A（卡片上写「证据 · 强」）
+- 证据等级：B（卡片上写「证据 · 中」）
 - anchor: Pencavel 2015 Economic Journal: British munitions workers in the First World War; output rose proportionally up to about 49 hours a week, then flattened; output at 70 hours was barely above 56. Kivimäki et al. 2015 Lancet meta (603,838 people): 55+ hours a week, 33% higher stroke risk.
 
 ### 工作重塑（job crafting）

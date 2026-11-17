@@ -24,7 +24,8 @@ First wave: 200 cards. The request asked for stories on every card (「卡片内
 ## Skeleton (step 2)
 
 `research/domains/psych/tree.txt` is the source; `gen_tree.py` writes `skeleton/psych.yaml` and the per-group anchor
-lists. 9 fields, 33 themes, 332 leaves, 200 of them `core: true` (the first wave). Each leaf carries an evidence grade:
+lists. 9 fields, 33 themes, 332 leaves, 200 of them `core: true` (the first wave); it also writes the full map note
+`vault/domains/psych/人性与决策 概念全图.md` (every concept, 待写 on the 132 without a card). Each leaf carries an evidence grade:
 
 - A: replicated or supported by a meta-analysis;
 - B: real but small, conditional or thinly replicated;
@@ -48,9 +49,40 @@ line with the grade → who uses it → an action with a trigger. Five groups (A
 | D | `social`, `life` | 39 |
 | E | `group`, `game` | 40 |
 
+## Review (step 5)
+
+The orchestrator read all 200 cards. `review.py` checks the format (layout, tags against the tree, length, banned
+phrases, figure share) and `--dump <group>` prints a group's unread cards. What review changed:
+
+- Grades lowered from A to B after the agents read the sources: commitment devices (the self-set deadlines study did not
+  replicate), friction and nudges (publication-bias correction), learned helplessness (the 2016 revision rests on rat
+  work), end-of-history illusion (recall against forecast, different people), checklists (before-and-after design;
+  Ontario found nothing), BATNA, exercise for depression (trial quality), Peter principle (one function), overwork (one
+  1916 data set). The tree carries the new grades.
+- Anchor errors caught by the agents and recorded in `claims-*.md`: Many Labs 2 replicated 15 of 28, not 14; lifetime
+  regrets are split about evenly in the 2,600-person replication; Beshears 2021 did raise savings; the coin-flip study
+  counts 22,511 tosses and its effect appears at six months only; the rater-effect ratings were developmental.
+- Fixed by the orchestrator: median written as mean (habit, 66 days); a therapy session called a class; a Murphy
+  question whose numbers did not add up (now 1,000 runs a day at 1 in 100,000: 97% chance of a failure within a year,
+  computed); a loosely sourced 5%/95% line dropped; four action lines rewritten; two figures added from the formula
+  (Kelly growth curve, sample-size funnel); 被试 replaced by 参与者.
+- Left without numbers on purpose because no primary source was reached: first-offer prices, salary negotiation
+  premium, BATNA sample details.
+
+Rules this produced are in `CARDS_TASK.md` (the two sections after the format).
+
+## Next
+
+- 132 leaves without a card are listed in the full map note. A second wave takes them in tree order per field; the
+  anchors are already in `tree.txt` (change `-` to `*` and re-run `gen_tree.py`).
+- No readings yet (link coverage 0%): one readable source per theme would be the next step of the skill.
+- The deck is not in the daily planner (`scripts/study_plan.py`); Chi decides whether it joins `1 今日计划`.
+
 ## Ledger
 
 | Date | Step | Result |
 |---|---|---|
 | 2026-11-17 | survey, tree, skeleton | 332 leaves, 200 core, `validate` 0 errors |
 | 2026-11-17 | model cards | loss aversion, rumination, ego depletion |
+| 2026-11-17 | cards, three waves (two cut by the usage limit) | 200 cards, 56 with a figure (28%), 23 mermaid blocks render |
+| 2026-11-17 | review | all 200 read; 0 format defects; `validate` 0 errors, `plain_style` ok, `phone_diagrams` ok |

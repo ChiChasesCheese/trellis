@@ -286,7 +286,7 @@ One card per entry, in this order. The anchor is a starting point from memory: c
 
 - node: `judge.hygiene.checklist` · file: `vault/domains/psych/cards/judge/psy-judge-checklist.md`
 - 一句话：把必做的几步写下来逐条核对，能挡住熟练的人因为熟练而漏掉的步骤。
-- 证据等级：A（卡片上写「证据 · 强」）
+- 证据等级：B（卡片上写「证据 · 中」）
 - anchor: Haynes et al. 2009 NEJM, WHO Surgical Safety Checklist in 8 hospitals: deaths 1.5% to 0.8%, complications 11.0% to 7.0%. Pronovost 2006 NEJM Michigan ICUs: central-line infections median to 0 over 18 months. Boeing B-17 1935 crash as the origin story. Urbach 2014 Ontario: mandated checklist without culture change showed no effect.
 
 ### 够好就行（satisficing vs maximizing）

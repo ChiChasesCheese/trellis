@@ -130,6 +130,18 @@ tags: [证据强]
   the Capilano bridge). Keep doing that: say so on the card in the evidence line, in one clause.
 - `记住`, `有研究`, `研究发现` (without naming whose) are flagged by the review script: rephrase.
 
+## Search budget (added for the third wave)
+
+All agents of one turn share a limit of 200 web searches, and the account's usage window is short. So:
+
+- At most 3 WebSearch calls per card. Prefer WebFetch on a page you can name without searching: the PubMed or
+  journal abstract page, the DOI link, the author's lab page, the Wikipedia article on the study (good for sample
+  sizes and percentages, and it cites the paper).
+- One search should confirm several of a card's numbers at once: put the authors, the year and the key figures in
+  one query.
+- When searches run out, stop writing new cards and report which ones remain. Never write a card from memory.
+- Do not re-verify cards that already exist. Do not read other groups' cards.
+
 ## Gate
 
 - `uv run trellis --domain psych validate` shows 0 errors (warnings about leaves without cards or readings are fine).

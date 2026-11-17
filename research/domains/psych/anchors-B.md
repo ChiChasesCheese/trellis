@@ -83,7 +83,7 @@ One card per entry, in this order. The anchor is a starting point from memory: c
 
 - node: `self.control.commitment-device` · file: `vault/domains/psych/cards/self/psy-self-commitment-device.md`
 - 一句话：趁冷静时给将来的自己设限或设罚，让到时候想反悔也难。
-- 证据等级：A（卡片上写「证据 · 强」）
+- 证据等级：B（卡片上写「证据 · 中」）
 - anchor: Ariely & Wertenbroch 2002: students who set their own binding deadlines did better than those with one final deadline, worse than evenly spaced imposed ones. Giné, Karlan, Zinman 2010 (CARES, Philippines): smokers who staked their own money were 3 percentage points more likely to pass a nicotine test at 12 months. Ashraf, Karlan, Yin 2006 SEED: locked savings balances up 81% after a year.
 
 ### 执行意图（implementation intention）
@@ -111,7 +111,7 @@ One card per entry, in this order. The anchor is a starting point from memory: c
 
 - node: `self.control.friction` · file: `vault/domains/psych/cards/self/psy-self-friction.md`
 - 一句话：把想做的事变得顺手、不想做的事多隔几步，比下决心管用。
-- 证据等级：A（卡片上写「证据 · 强」）
+- 证据等级：B（卡片上写「证据 · 中」）
 - anchor: Thorndike et al. 2012 AJPH, Massachusetts General Hospital cafeteria: traffic-light labels plus moving water to eye level; bottled-water sales up 25.8%, sugary drinks down. Rozin et al. 2011: making a salad-bar item slightly harder to reach cut intake 8–16%. Avoid Wansink's studies (retracted).
 
 ### 间歇强化（variable-ratio reinforcement）
@@ -188,7 +188,7 @@ One card per entry, in this order. The anchor is a starting point from memory: c
 
 - node: `self.motivation.learned-helplessness` · file: `vault/domains/psych/cards/self/psy-self-learned-helplessness.md`
 - 一句话：被动不是学来的，是面对长期逆境的默认反应；要学的是「我能控制」。
-- 证据等级：A（卡片上写「证据 · 强」）
+- 证据等级：B（卡片上写「证据 · 中」）
 - anchor: Seligman & Maier 1967: dogs given inescapable shocks later failed to escape. Hiroto 1974 in humans. Maier & Seligman 2016 Psychological Review 'Learned Helplessness at Fifty': neuroscience showed passivity is the default; detecting control (ventromedial prefrontal cortex inhibiting the dorsal raphe) is what is learned and it immunises.
 
 ### 有条件的自我价值（contingent self-worth）
@@ -230,7 +230,7 @@ One card per entry, in this order. The anchor is a starting point from memory: c
 
 - node: `self.identity.end-of-history` · file: `vault/domains/psych/cards/self/psy-self-end-of-history.md`
 - 一句话：人承认过去十年自己变了很多，却认为今后十年不会怎么变；每个年龄段都这样。
-- 证据等级：A（卡片上写「证据 · 强」）
+- 证据等级：B（卡片上写「证据 · 中」）
 - anchor: Quoidbach, Gilbert, Wilson 2013 Science (n>19,000, ages 18–68): at every age people predicted less change in the next decade than people ten years older reported having had. They would pay 61% more to see their current favourite band in ten years than to see their favourite of ten years ago today.
 
 ### 人格会随年龄成熟（maturity principle）
