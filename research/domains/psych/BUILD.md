@@ -32,8 +32,8 @@ lists. 9 fields, 33 themes, 332 leaves, 200 of them `core: true` (the first wave
 - C: famous and weakened or refuted. These get cards on purpose: knowing which popular claims fail is part of the goal.
 
 Choice of the first 200: how often the situation comes up in an adult's life, strength of evidence, whether there is
-something to do about it, and weight on the themes that matter most for someone who studies a lot alone: learning
-that sticks and transfers, rumination and self-worth, habits, loneliness and reaching out, age and career timing.
+something to do about it. Extra weight on learning that sticks and transfers, emotion regulation, habits,
+relationships, and age and career timing.
 
 ## Cards (step 4)
 
