@@ -9,7 +9,7 @@ tags: [作答]
 评论审核服务（ReviewDesk）每周重启一次，重启后所有用户的违规数归零，被封的人又能发评论了。要让违规记录跨重启保留，并且仍然在恰好第三次被拒时封禁，你会怎么改？
 
 ## A
-**违规数放进数据库，"记一次违规"是一条原子 SQL，封禁仍然现算**
+**违规数进数据库，记一次违规是一条原子 SQL，封禁现算**
 
 - **违规表**：`strikes(user PRIMARY KEY, count)`；`flagged` 还是 `count >= 3` 现算，不另存标志位
 - **原子自增**：`INSERT … ON CONFLICT DO UPDATE SET count = count + 1 RETURNING count`，多个进程同时记也不丢次数
