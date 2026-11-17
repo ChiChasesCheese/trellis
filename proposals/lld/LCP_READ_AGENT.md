@@ -126,3 +126,6 @@ whole corrected card / `drop`), keep the existing lines, run the gate, and repor
 - A label the files do not give (which files are protected, which 409 text) stated as fact: mark it 「推断」 or 本实现.
 - First person on a card (「我跑了」): state what ran and its result, no 「我」.
 - A measured table that does not say how the state was reached (「Ada 订了两次，名额 3 → 1」): give the steps.
+- 「参考实现放进去全过」 when it only passes after swapping its own record classes for the workspace's: say what was
+  swapped.
+- An example whose answer depends on a time or value the card leaves out (the payment's due time): state it.
