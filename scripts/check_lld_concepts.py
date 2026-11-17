@@ -27,6 +27,9 @@ FENCE = re.compile(r"```(\w*)\n(.*?)```", re.S)
 MIN_CARDS, MAX_CARDS = 4, 8
 PLANNED_ROOTS = {"rounds", "fluency", "languages", "data", "api", "fsm", "concurrency-depth", "errors", "testing", "parsing-io", "reading", "debugging",
                  "refactoring", "review", "performance", "ai", "bank"}
+# Problem branches: each leaf is a problem whose card count follows its stages; check_lld_problems.py gates them.
+# Here they keep the per-card checks (language, Java, code parses) but not the 4–8 count.
+PROBLEM_BRANCHES = {"amazon", "lcproject"}
 PLANNED_LEAVES = {"python.metaprogramming", "principles.responsibility", "patterns.frameworks"}  # framework leaves added to existing roots
 
 
@@ -77,7 +80,7 @@ def main(argv: list[str]) -> int:
             n_cards += len(cards)
             if not cards and (branch in PLANNED_ROOTS or leaf.id in PLANNED_LEAVES):
                 continue
-            if not MIN_CARDS <= len(cards) <= MAX_CARDS:
+            if branch not in PROBLEM_BRANCHES and not MIN_CARDS <= len(cards) <= MAX_CARDS:
                 problems.append(f"{leaf.id}: {len(cards)} card(s), want {MIN_CARDS}–{MAX_CARDS}")
             for c in cards:
                 problems += [f"{c.id}: {p}" for p in check_card(c, python_only=branch != "languages")]

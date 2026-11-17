@@ -18,7 +18,7 @@ tags: [grown]
 - `LineRule` / `OrderRule` / `PriceEngine`：只看一行的优惠、看整单的优惠，以及遍历、钳位、记账的引擎。
 
 ```mermaid
-flowchart LR
+flowchart TB
     M["Menu"] --> B["PizzaBuilder"]
     B -->|"build() 一次性校验"| P["Pizza"]
     P --> O1["Order"]
