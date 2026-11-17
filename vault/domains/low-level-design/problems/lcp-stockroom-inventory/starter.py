@@ -188,13 +188,13 @@ def view(row: dict[str, Any]) -> dict[str, Any]:
 
 
 class InventoryService:
-    """待修：这个服务能跑，但有好几处缺陷。"""
+    """待修：这个服务能跑，但有缺陷（症状见题解）。"""
 
     def __init__(self, collection: ItemCollection) -> None:
         self.collection = collection
 
     def handle(self, method: str, path: str, user: str | None, body: Any = None) -> Response:
-        if not isinstance(user, str) or user == "":
+        if not isinstance(user, str) or not trim(user):
             return problem(401, "unauthorized")
         item_id = None
         if path != "/items":
@@ -203,23 +203,26 @@ class InventoryService:
                 return problem(404, "not_found")
             if ITEM_ID.fullmatch(found[1]) is None:
                 return problem(400, "invalid_id")
-            item_id = found[1]
+            item_id = found[1].lower()  # 原版靠 ObjectId 把大小写统一成小写，这里的 id 是文本，自己转
+        query: dict[str, Any] = {} if item_id is None else {"id": item_id}
         try:
             if item_id is None and method == "POST":
                 return self._create(user, body)
             if item_id is None and method == "GET":
-                return Response(200, [view(row) for row in self.collection.find({})])
+                return Response(200, [view(row) for row in self.collection.find(query)])
             if item_id is not None and method == "GET":
-                row = self.collection.find_one({"id": item_id})
+                row = self.collection.find_one(query)
                 return Response(200, view(row)) if row else problem(404, "item_not_found")
             if item_id is not None and method == "PATCH":
-                return self._update(item_id, body)
+                return self._update(query, body)
             if item_id is not None and method == "DELETE":
-                gone = self.collection.delete_one({"id": item_id})
+                gone = self.collection.delete_one(query)
                 return Response(204, None) if gone else problem(404, "item_not_found")
             return problem(405, "method_not_allowed")
+        except SchemaViolation:
+            return problem(400, "invalid_input")
         except StoreError:
-            return problem(503, "storage_unavailable")
+            return problem(503, "storage_unavailable")  # 重复键也落到这里
 
     def _create(self, user: str, body: Any) -> Response:
         if not isinstance(body, dict) or body.keys() != {"sku", "name", "quantity"}:
@@ -230,10 +233,13 @@ class InventoryService:
         if name is None or not (isinstance(sku, str) and SKU.fullmatch(sku)):
             return problem(400, "invalid_input")
         draft = {"id": secrets.token_hex(12), "owner": user, "sku": sku, "name": name, "quantity": stock, "version": 1}
-        return Response(201, view(draft))
+        return Response(201, view(draft))  # 没有 insert：回了 201，库里什么都没有
 
-    def _update(self, item_id: str, body: Any) -> Response:
-        if not isinstance(body, dict) or not set(body) <= {"name", "quantity", "version"}:
+    def _update(self, query: dict[str, Any], body: Any) -> Response:
+        if not isinstance(body, dict) or set(body) - {"name", "quantity", "version"} or not {"name", "quantity"} & body.keys():
+            return problem(400, "invalid_input")
+        version = whole_number(body.get("version"), 1, MAX_VERSION)
+        if version is None:
             return problem(400, "invalid_input")
         changes: dict[str, Any] = {}
         if "name" in body:
@@ -246,10 +252,10 @@ class InventoryService:
             if new_quantity is None:
                 return problem(400, "invalid_input")
             changes["quantity"] = new_quantity
-        row = self.collection.find_one({"id": item_id})
-        if row is None:
+        before = self.collection.find_one(query)
+        if before is None:
             return problem(404, "item_not_found")
-        if row["version"] != body.get("version"):
+        # 版本比较在这条语句的条件里，是原子的；但回给调用方的是更新之前的行（原版的 ReturnDocument.BEFORE）
+        if self.collection.find_one_and_update({**query, "version": version}, changes) is None:
             return problem(409, "version_conflict")
-        self.collection.find_one_and_update({"id": item_id}, changes)
-        return Response(200, view(row))
+        return Response(200, view(before))
