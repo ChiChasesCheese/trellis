@@ -155,5 +155,5 @@ Write one line per card to `sources/local/lc-project/quick/verify/<slug>.jsonl`:
 `{"kp": "...", "verdict": "ok"}`, or `{"kp": "...", "verdict": "ok", "more": "<replacement>", "note": "..."}`, or
 `{"kp": "...", "verdict": "fix", "card": {the whole corrected card}, "note": "what was wrong"}`, or
 `{"kp": "...", "verdict": "drop", "note": "why"}`. Fix inside the card's format first; keep the tapped share ≥ 60%. For
-a missing point, add it to the points file and its card to the cards file yourself, and say so. Then run the gate until
+a missing point, write `{"kp": "<slug>.<name>", "verdict": "add", "point": {...}, "card": {...}, "where": "after <kp>"}` to the verify file (another agent may be editing the points file); the orchestrator applies it with `uv run python scripts/lcp_quick.py apply-adds <slug>`. Then run the gate until
 it is clean. Report the counts of ok / fix / drop / added and the notes of the fixes.
