@@ -31,6 +31,9 @@ def main(argv: list[str]) -> int:
     core = {gen_tree.card_id(i): leaf for i, leaf in leaves.items() if leaf["core"]}
     dump = argv[1] if len(argv) == 2 and argv[0] == "--dump" else None
     found, figures, defects = set(), 0, 0
+    seen_file = Path("/tmp/psy_reviewed.txt")  # ids already read by the reviewer: --dump prints only the rest
+    seen = set(seen_file.read_text().split()) if seen_file.exists() else set()
+    shown: list[str] = []
     for path in sorted(CARDS.glob("*/*.md")):
         text = path.read_text(encoding="utf-8")
         m = re.match(r"---\n(.*?)\n---\n## Q\n(.*?)\n## A\n(.*)", text, re.S)
@@ -81,9 +84,12 @@ def main(argv: list[str]) -> int:
         if problems:
             defects += 1
             print(f"{path.name}: " + "; ".join(problems))
-        if dump and leaf and gen_tree.group_of(leaf["id"]) == dump:
+        if dump and leaf and gen_tree.group_of(leaf["id"]) == dump and cid not in seen:
+            shown.append(cid)
             body = re.sub(r"^<svg\b.*?</svg>", "[svg]", answer, flags=re.S | re.M)
             print(f"\n===== {cid}  [{','.join(tags)}]  {size}字\nQ: {question.strip()}\n{body.strip()}")
+    if dump:
+        seen_file.write_text("\n".join(sorted(seen | set(shown))) + "\n")
     missing = sorted(set(core) - found)
     if not dump:
         print(f"\n{len(found)} cards, {figures} with a figure ({figures * 100 // max(len(found), 1)}%), "
