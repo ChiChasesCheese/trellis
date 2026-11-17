@@ -60,3 +60,8 @@ and `uv run trellis --domain low-level-design validate` with no error naming you
 
 Per leaf: card ids with their one-line question, which LCP points they prepare for, and the three statements you are
 least sure of.
+
+## Defects the orchestrator found (each is a rule)
+
+- A bullet that advises one thing while the card's code does another (「在查询里过滤 owner」 over code that fetches and
+  then compares): the bullets describe the code shown, or say plainly what the code simplifies.
