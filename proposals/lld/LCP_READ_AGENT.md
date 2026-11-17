@@ -117,3 +117,7 @@ whole corrected card / `drop`), keep the existing lines, run the gate, and repor
 - A claim about what a value becomes on its way in (「缺字段或类型错都变成 `None`」) that was read, not run: run the
   adapter with a recording stub; wrong types often pass through unchanged.
 - An example whose answer depends on data the stem leaves out (「两对内容不同」): put it in the stem.
+- A rule credited to our reference that README actually states (「拒绝前导 + 和 0，接受 -0」): grep README before
+  writing 「本实现」; the source column must be right both ways.
+- An example input that a second rule masks (day 30 hides the extra-field defect): pick inputs where only the rule in
+  question fires, and run them.
