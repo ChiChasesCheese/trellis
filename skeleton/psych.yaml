@@ -1,0 +1,1417 @@
+# People as they are measured: the findings from psychology, behavioural economics and sociology that hold up when
+# the studies are repeated, chosen for how much they change everyday judgment, self-management, learning, relationships,
+# career and life decisions. Generated from research/domains/psych/tree.txt by gen_tree.py: edit that file, not this one.
+# Depth is fixed: field -> theme -> concept. A leaf is one concept. `core: true` marks the first 200 (the first wave of
+# cards); the other leaves wait for a later wave. Evidence grades and source studies are in the tree file.
+domain: psych
+title: 人性与决策：经得起重做的心理学、行为经济学与社会学
+deck: "9 人性与决策"
+lang: zh
+vault: domains/psych
+deck_depth: 1
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 20
+  reviews_per_day: 200
+nodes:
+- id: evidence
+  order: 1
+  title: "先学会看证据"
+  summary: "一个心理学结论靠不靠得住，看它怎么做出来的、别人重做是否成立、效果有多大；流行说法里有一批已经站不住。"
+  children:
+  - id: evidence.method
+    title: "研究是怎么出错的"
+    summary: "复现、效应量、发表偏倚、因果与样本：读任何「研究表明」之前先问的五个问题。"
+    children:
+    - id: evidence.method.replication-crisis
+      core: true
+      title: "复现危机（replication crisis）"
+      summary: "把已发表的心理学实验原样重做，只有一部分还能得到原结论；单个小样本的惊人发现要打折。"
+    - id: evidence.method.effect-size
+      core: true
+      title: "效应量（effect size）"
+      summary: "「有显著差异」不等于「差得多」；要问效果多大，Cohen's d 0.2 小、0.5 中、0.8 大。"
+    - id: evidence.method.publication-bias
+      core: true
+      title: "发表偏倚与 p 值操纵（publication bias, p-hacking）"
+      summary: "只有「有效果」的研究容易发表，研究者又有很多分析自由度，所以文献整体高估效果。"
+    - id: evidence.method.correlation-causation
+      core: true
+      title: "相关不等于因果（correlation vs causation）"
+      summary: "两件事一起出现，可能是反向因果、共同原因或选择；随机对照实验和自然实验才回答因果。"
+    - id: evidence.method.weird-samples
+      core: true
+      title: "WEIRD 样本"
+      summary: "多数心理学实验的被试是西方、受过教育、工业化、富裕、民主社会的大学生，结论未必适用所有人。"
+    - id: evidence.method.meta-analysis
+      title: "元分析与预注册（meta-analysis, preregistration）"
+      summary: "把多项研究合并估计效果；预注册先写下假设和分析再收数据，堵住事后挑结果的路。"
+    - id: evidence.method.average-vs-individual
+      title: "平均效应不等于对你有效"
+      summary: "实验给的是一群人的平均差异；个体差异大时，对你是否有效要自己小规模试。"
+  - id: evidence.myth
+    title: "流行但站不住的说法"
+    summary: "写进畅销书、重做却不成立或被大幅削弱的著名结论；知道它们错在哪，比多背十个效应有用。"
+    children:
+    - id: evidence.myth.ego-depletion
+      core: true
+      title: "自我损耗：意志力像肌肉会用完？"
+      summary: "「意志力是会耗尽的资源」在多实验室重做中效果接近零。"
+      requires: [evidence.method.replication-crisis]
+    - id: evidence.myth.power-pose
+      core: true
+      title: "高能量姿势（power pose）"
+      summary: "摆两分钟「强势姿势」改变激素和冒险行为的说法没有复现；只剩「自我感觉更有力」的小效应。"
+      requires: [evidence.method.replication-crisis]
+    - id: evidence.myth.marshmallow
+      core: true
+      title: "棉花糖实验"
+      summary: "4 岁能等 15 分钟不等于以后更成功：样本扩大并控制家庭背景后，关联缩小到原来的一小部分。"
+      requires: [evidence.method.correlation-causation]
+    - id: evidence.myth.ten-thousand-hours
+      core: true
+      title: "一万小时定律"
+      summary: "一万小时是一组小提琴手的平均数，不是门槛；练习量只解释一部分水平差异，领域越不规则解释得越少。"
+      requires: [evidence.method.effect-size]
+    - id: evidence.myth.stanford-prison
+      core: true
+      title: "斯坦福监狱实验"
+      summary: "「普通人一穿上制服就变残暴」不是实验自发出现的：看守被教过怎么做，重做没有得到同样结果。"
+      requires: [evidence.method.replication-crisis]
+    - id: evidence.myth.learning-styles
+      core: true
+      title: "学习风格（视觉型、听觉型）"
+      summary: "按「学习风格」配教法并不提高成绩；内容适合什么形式，比人属于什么类型重要。"
+    - id: evidence.myth.mehrabian
+      core: true
+      title: "沟通的 7-38-55 定律"
+      summary: "「语言只占 7%」来自两项只测单个词语情绪色彩的小实验，不能推广到一般沟通。"
+    - id: evidence.myth.maslow
+      core: true
+      title: "马斯洛需求层次"
+      summary: "需求确实分种类，但「先满足低层才追求高层」没有数据支持，金字塔图也不是马斯洛画的。"
+    - id: evidence.myth.mbti
+      core: true
+      title: "MBTI 与大五人格"
+      summary: "MBTI 把连续的特质硬切成 16 型，重测常常换型；研究里用的是大五人格（Big Five）。"
+    - id: evidence.myth.folk-laws
+      core: true
+      title: "鸡汤定律：手表、木桶、鲶鱼、温水青蛙"
+      summary: "中文管理读物里的很多「定律」是比喻或编出来的故事，没有研究；温水里的青蛙其实会跳走。"
+    - id: evidence.myth.left-brain-right-brain
+      title: "左脑人右脑人、大脑只用了 10%"
+      summary: "脑成像没有发现「整体偏用一侧」的人；10% 的说法没有任何依据。"
+    - id: evidence.myth.behavioral-priming
+      title: "行为启动（priming）"
+      summary: "「看到老年相关词就走得更慢」这类社会启动效应重做失败。"
+    - id: evidence.myth.hawthorne
+      title: "霍桑效应"
+      summary: "「被观察就更努力」的原始照明实验数据并不支持这个结论。"
+    - id: evidence.myth.dishonesty-studies
+      title: "被撤稿的「诚实」研究"
+      summary: "「在表格开头签名会更诚实」的数据是伪造的；十诫启动也没复现。"
+    - id: evidence.myth.backfire-effect
+      title: "逆火效应（backfire effect）"
+      summary: "「纠正错误信息反而让人更坚信」基本没有复现；纠正通常有用，只是效果会退。"
+    - id: evidence.myth.zeigarnik
+      title: "蔡格尼克效应（Zeigarnik effect）"
+      summary: "「没做完的事记得更牢」的原始结果重复起来很不稳定。"
+- id: judge
+  order: 2
+  title: "判断与决策"
+  summary: "大脑用省力的捷径做判断，错得有规律：怎么估概率、怎么看得失、怎么为自己辩护，以及把纠偏变成流程的办法。"
+  children:
+  - id: judge.dual
+    title: "两套系统与启发式"
+    summary: "快而自动的直觉和慢而费力的推理；直觉用容易想到、看着像、先入为主来代替真正的计算。"
+    children:
+    - id: judge.dual.two-systems
+      core: true
+      title: "系统 1 与系统 2（dual process）"
+      summary: "直觉先给答案，推理通常只是签字放行；觉得「一眼就知道」的题最该停一下。"
+    - id: judge.dual.availability
+      core: true
+      title: "可得性启发（availability heuristic）"
+      summary: "越容易想起的事，被判断得越常见、越危险。"
+    - id: judge.dual.base-rate-neglect
+      core: true
+      title: "代表性启发与基础比率忽略（base-rate neglect）"
+      summary: "按「像不像」判断概率，忘了这类事本来有多常见。"
+    - id: judge.dual.anchoring
+      core: true
+      title: "锚定效应（anchoring）"
+      summary: "先看到的数字，即使无关，也会把之后的估计拉过去。"
+    - id: judge.dual.framing
+      core: true
+      title: "框架效应（framing effect）"
+      summary: "同一个选择，说成「救活多少」还是「死多少」，人的偏好会反过来。"
+    - id: judge.dual.normalcy-bias
+      core: true
+      title: "正常化偏误（normalcy bias）"
+      summary: "灾难刚开始时，多数人先当它是正常情况，花时间确认、收拾、等别人先动。"
+    - id: judge.dual.affect-heuristic
+      title: "情感启发（affect heuristic）"
+      summary: "喜欢的东西被判断为收益大、风险小；讨厌的反过来。"
+    - id: judge.dual.wysiati
+      title: "眼见即全部（WYSIATI）与叙事谬误"
+      summary: "用手头的信息编出连贯的故事，不问缺了什么；故事越顺越自信。"
+    - id: judge.dual.conjunction-fallacy
+      title: "合取谬误（conjunction fallacy）"
+      summary: "细节越多越像真的，概率却只会更低。"
+    - id: judge.dual.contrast-effect
+      title: "对比效应（contrast effect）"
+      summary: "同一个东西，放在更差的旁边显得好，放在更好的旁边显得差。"
+    - id: judge.dual.scope-neglect
+      title: "范围忽视（scope neglect）"
+      summary: "愿意为一件事付出多少，几乎不随它的规模变化。"
+    - id: judge.dual.action-bias
+      title: "行动偏差（action bias）"
+      summary: "压力下人宁可做点什么，哪怕不动才是最好的选择。"
+  - id: judge.prospect
+    title: "得失与风险"
+    summary: "人按相对于参照点的得失来衡量结果，损失比同样大的收益重，小概率被放大（前景理论）。"
+    children:
+    - id: judge.prospect.loss-aversion
+      core: true
+      title: "损失厌恶（loss aversion）"
+      summary: "丢 100 块的难受，大约要得到 200 块才能抵消。"
+    - id: judge.prospect.endowment
+      core: true
+      title: "禀赋效应（endowment effect）"
+      summary: "东西一旦归你，你要的卖价就比你愿意出的买价高出一倍左右。"
+      requires: [judge.prospect.loss-aversion]
+    - id: judge.prospect.sunk-cost
+      core: true
+      title: "沉没成本谬误（sunk cost fallacy）"
+      summary: "已经花掉、收不回来的钱和时间不该影响接下来的决定，但它会。"
+      requires: [judge.prospect.loss-aversion]
+    - id: judge.prospect.status-quo-default
+      core: true
+      title: "现状偏差与默认选项（status quo bias, default effect）"
+      summary: "多数人不改默认值；谁设默认值，谁就决定了结果。"
+      requires: [judge.prospect.loss-aversion]
+    - id: judge.prospect.mental-accounting
+      core: true
+      title: "心理账户（mental accounting）"
+      summary: "钱被分到不同的心理账户里，同样一笔钱在不同账户里花得不一样。"
+    - id: judge.prospect.probability-weighting
+      core: true
+      title: "小概率被放大（probability weighting）"
+      summary: "人同时买彩票和保险：很小的概率在心里被放大，接近确定的概率被打折。"
+    - id: judge.prospect.regret-action-inaction
+      core: true
+      title: "后悔：做了的和没做的"
+      summary: "短期内更后悔做错的事，拉长到一生，更后悔没做的事。"
+    - id: judge.prospect.opportunity-cost-neglect
+      core: true
+      title: "机会成本忽视（opportunity cost neglect）"
+      summary: "花钱花时间时，人很少自动想到「这些本来还能换什么」。"
+    - id: judge.prospect.disposition-effect
+      title: "处置效应（disposition effect）"
+      summary: "投资者急着卖掉赚钱的股票，死拿亏钱的。"
+      requires: [judge.prospect.loss-aversion]
+    - id: judge.prospect.omission-bias
+      title: "不作为偏差（omission bias）"
+      summary: "同样的坏结果，由「做了」造成比由「没做」造成显得更糟。"
+    - id: judge.prospect.ikea-effect
+      title: "宜家效应（IKEA effect）"
+      summary: "自己动手做的东西，哪怕做得一般，也估价更高。"
+    - id: judge.prospect.hyperbolic-risk
+      title: "确定性效应之外：模糊厌恶（ambiguity aversion）"
+      summary: "人宁可选已知概率的赌局，也不选概率不明的。"
+  - id: judge.justify
+    title: "确认与自我辩护"
+    summary: "人先有结论再找理由：只看支持自己的证据，事后觉得早就知道，对自己的把握过高。"
+    children:
+    - id: judge.justify.confirmation-bias
+      core: true
+      title: "确认偏误（confirmation bias）"
+      summary: "人找的、记的、信的，多是支持自己已有看法的证据。"
+    - id: judge.justify.hindsight-outcome
+      core: true
+      title: "后见之明与结果偏差（hindsight bias, outcome bias）"
+      summary: "知道结果后，觉得当初就该料到，并按结果好坏评价当初的决定。"
+    - id: judge.justify.overconfidence
+      core: true
+      title: "过度自信与校准（overconfidence, calibration）"
+      summary: "人说「九成把握」的事，实际对的比例低得多。"
+    - id: judge.justify.dunning-kruger
+      core: true
+      title: "达克效应的真实版本（Dunning–Kruger effect）"
+      summary: "成绩最差的人高估自己最多，但他们并没有觉得自己比高手强；网上那条「愚昧之巅」曲线不在原论文里。"
+      requires: [judge.justify.overconfidence]
+    - id: judge.justify.planning-fallacy
+      core: true
+      title: "计划谬误（planning fallacy）"
+      summary: "估自己的项目要多久，总按最顺利的情况估，哪怕以前次次超时。"
+    - id: judge.justify.explanatory-depth
+      core: true
+      title: "解释深度错觉（illusion of explanatory depth）"
+      summary: "人以为自己懂拉链、马桶、政策是怎么回事，真要一步步讲出来才发现不懂。"
+    - id: judge.justify.cognitive-dissonance
+      core: true
+      title: "认知失调（cognitive dissonance）"
+      summary: "行为和信念对不上时，人常常改信念来配合已经做了的事。"
+    - id: judge.justify.bias-blind-spot
+      core: true
+      title: "偏见盲点（bias blind spot）"
+      summary: "人看得出别人的偏差，看不出自己的；聪明也不管用。"
+    - id: judge.justify.motivated-reasoning
+      title: "动机性推理（motivated reasoning）"
+      summary: "想信的结论只要「能不能信」，不想信的结论则要「非信不可吗」。"
+    - id: judge.justify.self-serving-bias
+      title: "自利归因（self-serving bias）"
+      summary: "成功归自己，失败归环境。"
+    - id: judge.justify.false-consensus
+      title: "虚假共识（false consensus effect）"
+      summary: "高估别人和自己想法、做法相同的比例。"
+    - id: judge.justify.ostrich-effect
+      title: "鸵鸟效应（ostrich effect）"
+      summary: "预感是坏消息时，人干脆不去看。"
+    - id: judge.justify.illusion-of-control
+      title: "控制错觉（illusion of control）"
+      summary: "人觉得自己能影响纯靠运气的结果。"
+    - id: judge.justify.just-world
+      title: "公正世界信念（just-world hypothesis）"
+      summary: "人想相信世界是公平的，于是倾向于认为受害者自己有问题。"
+  - id: judge.prob
+    title: "概率与统计直觉"
+    summary: "随机、样本和筛选怎么骗人：极端之后会回落，看到的只是活下来的，小样本最爱出极端值。"
+    children:
+    - id: judge.prob.regression-to-mean
+      core: true
+      title: "回归均值（regression to the mean）"
+      summary: "一次特别好或特别差的表现之后，下一次多半更接近平常水平，和你做了什么无关。"
+    - id: judge.prob.survivorship
+      core: true
+      title: "幸存者偏差（survivorship bias）"
+      summary: "只看到通过筛选的样本，就会把筛选的结果当成成功的原因。"
+    - id: judge.prob.small-numbers
+      core: true
+      title: "小数定律（law of small numbers）"
+      summary: "小样本更容易出极端结果；人却把小样本当成总体的缩影。"
+    - id: judge.prob.gamblers-hot-hand
+      core: true
+      title: "赌徒谬误与热手（gambler's fallacy, hot hand）"
+      summary: "独立事件没有记性；人却觉得连出几次黑就「该出红了」。"
+    - id: judge.prob.selection-berkson
+      core: true
+      title: "选择偏差与伯克森悖论（Berkson's paradox）"
+      summary: "只在被筛选过的人群里看，两个本来无关的特征会显得此消彼长。"
+    - id: judge.prob.simpson
+      core: true
+      title: "辛普森悖论（Simpson's paradox）"
+      summary: "每个分组里都成立的趋势，合在一起可以反过来。"
+    - id: judge.prob.ruin-ergodicity
+      core: true
+      title: "期望值为正也会破产（凯利公式与遍历性）"
+      summary: "一连串可以输光的下注里，押多少比押什么重要；平均值好看，不代表你这一条路走得到。"
+    - id: judge.prob.pareto-power-law
+      core: true
+      title: "二八定律与幂律（Pareto principle, power law）"
+      summary: "很多结果不是平均分布的：少数原因、少数人、少数作品占了大部分。"
+    - id: judge.prob.murphy
+      core: true
+      title: "墨菲定律（Murphy's law）"
+      summary: "「会出错的事总会出错」不是心理学定律；站得住的部分是：次数够多，小概率的事必然发生，而人只记得出事的那次。"
+    - id: judge.prob.bayes-update
+      title: "贝叶斯更新（Bayesian updating）"
+      summary: "新证据应该按它的区分力，把原来的概率往上或往下调一点，不是推倒重来。"
+    - id: judge.prob.butterfly-chaos
+      title: "蝴蝶效应（chaos）"
+      summary: "对初始条件敏感的系统长期不可预测；它说的是预测有上限，不是「小事必有大后果」。"
+    - id: judge.prob.lindy
+      title: "林迪效应（Lindy effect）"
+      summary: "不会自然老化的东西（书、技术、想法），已经存在得越久，预期还能存在越久。"
+  - id: judge.hygiene
+    title: "决策卫生"
+    summary: "知道偏差的名字挡不住偏差，流程才行：先看同类事的统计、先假设失败、列清单、让判断可检验。"
+    children:
+    - id: judge.hygiene.outside-view
+      core: true
+      title: "外部视角（reference class forecasting）"
+      summary: "先问「同类的事一般结果如何」，再按这件事的特点微调。"
+      requires: [judge.justify.planning-fallacy]
+    - id: judge.hygiene.premortem
+      core: true
+      title: "事前验尸（premortem）"
+      summary: "动手前假设项目已经失败，让每个人写下失败的原因。"
+    - id: judge.hygiene.superforecasting
+      core: true
+      title: "超级预测者的习惯（superforecasting）"
+      summary: "预测准的人不是更懂行，而是把问题拆开、用概率说话、经常小幅修正、事后对账。"
+    - id: judge.hygiene.noise
+      core: true
+      title: "噪声（noise）"
+      summary: "同一个案子交给不同的人，甚至同一个人换个时间，判出来差很多；这种随机差异和偏差一样伤。"
+    - id: judge.hygiene.checklist
+      core: true
+      title: "清单（checklist）"
+      summary: "把必做的几步写下来逐条核对，能挡住熟练的人因为熟练而漏掉的步骤。"
+    - id: judge.hygiene.satisficing
+      core: true
+      title: "够好就行（satisficing vs maximizing）"
+      summary: "总想挑到最好的人，挑到的客观上略好，主观上更不满意。"
+    - id: judge.hygiene.choice-overload
+      core: true
+      title: "选择过载（choice overload）"
+      summary: "选项太多有时让人干脆不选，但这个效应不稳定，取决于选项是否难比、人是否已有偏好。"
+    - id: judge.hygiene.decision-journal
+      title: "决策日志"
+      summary: "做重大决定时写下当时知道什么、预期什么、多大把握，以后才能分清是决策差还是运气差。"
+    - id: judge.hygiene.automation-bias
+      title: "自动化偏差（automation bias）"
+      summary: "有自动系统给建议时，人会少查证，系统错的时候跟着错。"
+    - id: judge.hygiene.base-rates-for-life
+      title: "给人生决定找基础比率"
+      summary: "创业、读博、换城市之前，先查这类决定的统计结果。"
+    - id: judge.hygiene.red-team
+      title: "唱反调的人与红队"
+      summary: "指定人专门找漏洞，比泛泛地「欢迎提意见」有效。"
+- id: self
+  order: 3
+  title: "自我：情绪、动机与自控"
+  summary: "情绪怎么调、内耗怎么停、事情怎么开始做并坚持下去，以及人对自己的了解有多不准。"
+  children:
+  - id: self.emotion
+    title: "情绪调节"
+    summary: "情绪不能直接命令，但能通过怎么解释、怎么行动、离多远看来改变；压下去和反复想是最常用也最没用的两招。"
+    children:
+    - id: self.emotion.reappraisal
+      core: true
+      title: "重新评估与压抑（reappraisal vs suppression）"
+      summary: "换一种解释来看同一件事，比忍着不表现出来有效，代价也小。"
+    - id: self.emotion.affect-labeling
+      core: true
+      title: "给情绪命名（affect labeling）"
+      summary: "把正在感受的情绪用词说出来，它的强度会降下来一点。"
+    - id: self.emotion.self-distancing
+      core: true
+      title: "自我抽离（self-distancing）"
+      summary: "用第三人称、用旁观者的位置想自己的事，更冷静也更明智。"
+    - id: self.emotion.rumination
+      core: true
+      title: "反刍（rumination）"
+      summary: "反复想「为什么是我、哪里不对」不解决问题，只把低落拉长。"
+    - id: self.emotion.cognitive-distortions
+      core: true
+      title: "认知歪曲（cognitive distortions）"
+      summary: "低落时的想法有固定的歪法：非黑即白、灾难化、读心、以偏概全；认出来再对着证据检查。"
+    - id: self.emotion.behavioral-activation
+      core: true
+      title: "行为激活（behavioral activation）"
+      summary: "低落时不等有心情再做事；先按计划去做，情绪跟在行动后面。"
+    - id: self.emotion.avoidance-exposure
+      core: true
+      title: "回避与暴露（avoidance, exposure）"
+      summary: "躲开害怕的事，当下轻松，害怕却被养大；一点点去接触，它才会变小。"
+    - id: self.emotion.self-compassion
+      core: true
+      title: "自我关怀（self-compassion）"
+      summary: "失败后像对朋友那样对自己，下一次反而更肯努力；自责不是动力。"
+    - id: self.emotion.mindfulness
+      core: true
+      title: "正念的证据（mindfulness）"
+      summary: "八周正念训练对焦虑和抑郁有中等大小的效果，和其他正规疗法差不多，不是万能药。"
+    - id: self.emotion.negativity-bias
+      core: true
+      title: "负面偏差（negativity bias）"
+      summary: "同样强度的坏事比好事影响大、记得久；一次批评要好几次肯定才抵得掉。"
+    - id: self.emotion.expressive-writing
+      title: "表达性书写（expressive writing）"
+      summary: "连续几天每天写 15–20 分钟最烦心的事，对身心有小而真实的好处。"
+    - id: self.emotion.worry-time
+      title: "给担心定个时间（worry postponement）"
+      summary: "把担心推迟到每天固定的半小时，其余时间出现就记下来放一边。"
+    - id: self.emotion.mind-wandering
+      title: "走神与不快乐（mind-wandering）"
+      summary: "人醒着的时间近一半在想别的事，走神时比专注时不快乐。"
+    - id: self.emotion.defusion
+      title: "认知解离（cognitive defusion, ACT）"
+      summary: "把「我不行」换成「我有一个『我不行』的想法」，想法还在，但不再指挥你。"
+    - id: self.emotion.misattribution-arousal
+      title: "唤醒的错误归因"
+      summary: "心跳加速可能被当成心动；身体的唤醒需要一个解释，解释可以是错的。"
+  - id: self.control
+    title: "自控与习惯"
+    summary: "自控靠的不是忍，是把选择提前做掉：改环境、定触发条件、给未来的自己设限。"
+    children:
+    - id: self.control.present-bias
+      core: true
+      title: "现时偏好（present bias, hyperbolic discounting）"
+      summary: "为下周的自己选健康和努力，为今天的自己选舒服；同一个人，偏好随时间远近翻转。"
+    - id: self.control.commitment-device
+      core: true
+      title: "承诺机制（commitment device）"
+      summary: "趁冷静时给将来的自己设限或设罚，让到时候想反悔也难。"
+      requires: [self.control.present-bias]
+    - id: self.control.implementation-intention
+      core: true
+      title: "执行意图（implementation intention）"
+      summary: "把目标写成「如果到了某个时间地点，我就做某个动作」，做到的概率明显变高。"
+    - id: self.control.mental-contrasting
+      core: true
+      title: "心理对比（WOOP）"
+      summary: "只想象成功会让人松劲；想完成功再想最大的那个障碍，并配上应对动作，才推动行动。"
+    - id: self.control.habit
+      core: true
+      title: "习惯靠情境触发（habit）"
+      summary: "每天近一半的行为是在固定情境下自动发生的；养成它靠同一个情境里重复，时间比你想的长。"
+    - id: self.control.friction
+      core: true
+      title: "摩擦与环境设计（friction, choice architecture）"
+      summary: "把想做的事变得顺手、不想做的事多隔几步，比下决心管用。"
+    - id: self.control.variable-reward
+      core: true
+      title: "间歇强化（variable-ratio reinforcement）"
+      summary: "不知道下一次有没有奖励的行为最难停：老虎机、短视频、反复刷新邮件都是这个结构。"
+    - id: self.control.temptation-bundling
+      title: "诱惑捆绑（temptation bundling）"
+      summary: "把想拖的事和只在那时才允许的享受绑在一起。"
+    - id: self.control.fresh-start
+      core: true
+      title: "新起点效应（fresh start effect）"
+      summary: "周一、月初、生日这种时间界标之后，人更愿意开始新目标；它帮你开头，不保证坚持。"
+    - id: self.control.what-the-hell
+      core: true
+      title: "破罐破摔效应（what-the-hell effect）"
+      summary: "一旦破了戒，人容易想「反正已经破了」，然后彻底放开。"
+    - id: self.control.hot-cold-gap
+      core: true
+      title: "冷热共情鸿沟（hot–cold empathy gap）"
+      summary: "冷静时想象不出自己在饿、困、生气、有冲动时会怎么做，所以总高估自己的自控。"
+    - id: self.control.procrastination
+      core: true
+      title: "拖延是情绪问题（procrastination）"
+      summary: "拖的不是时间，是那件事带来的不舒服；先处理情绪，或把任务切到不吓人。"
+    - id: self.control.goal-setting
+      core: true
+      title: "目标设定理论（goal-setting theory）"
+      summary: "具体而有难度的目标，比「尽力而为」带来更高的表现；前提是有反馈、人认这个目标。"
+    - id: self.control.small-wins
+      core: true
+      title: "目标梯度与小进展（goal gradient, progress principle）"
+      summary: "离终点越近越卖力；看得见的小进展是最强的日常动力。"
+    - id: self.control.self-monitoring
+      core: true
+      title: "自我监测（self-monitoring）"
+      summary: "把行为记下来这件事本身就会改变行为，公开或写下来效果更大。"
+    - id: self.control.moral-licensing
+      title: "道德许可（moral licensing）"
+      summary: "做了一件「好事」之后，人会给自己放纵一下的许可。"
+    - id: self.control.urge-surfing
+      title: "冲动冲浪（urge surfing）"
+      summary: "冲动像浪，不满足它也会在几十分钟内自己退下去；看着它过去。"
+    - id: self.control.planning-buffer
+      title: "展开任务（unpacking）"
+      summary: "把任务拆成步骤再估时间，估计会更接近实际。"
+    - id: self.control.deadline-effect
+      title: "截止日期效应"
+      summary: "期限越远，开始得越晚；短期限的完成率更高。"
+  - id: self.motivation
+    title: "动机与自我价值"
+    summary: "人为什么肯做事、为什么放弃，以及把自我价值押在成绩上要付的代价。"
+    children:
+    - id: self.motivation.self-determination
+      core: true
+      title: "自我决定论（self-determination theory）"
+      summary: "持久的动力来自三样：自己选的（自主）、做得来（胜任）、和人有连接（关系）；外部奖励会挤掉原有的兴趣。"
+    - id: self.motivation.self-efficacy
+      core: true
+      title: "自我效能（self-efficacy）"
+      summary: "相信自己做得成这件具体的事，这个信念主要来自亲手做成过。"
+    - id: self.motivation.learned-helplessness
+      core: true
+      title: "习得性无助及其修正（learned helplessness）"
+      summary: "被动不是学来的，是面对长期逆境的默认反应；要学的是「我能控制」。"
+    - id: self.motivation.contingent-self-worth
+      core: true
+      title: "有条件的自我价值（contingent self-worth）"
+      summary: "把「我值不值」押在成绩上，成功只是松口气，失败却是对整个人的否定。"
+    - id: self.motivation.impostor
+      core: true
+      title: "冒名顶替现象（impostor phenomenon）"
+      summary: "客观上做得不错，却觉得自己是混进来的、迟早被拆穿；它很常见，而且不随成就消失。"
+    - id: self.motivation.perfectionism
+      core: true
+      title: "完美主义（perfectionism）"
+      summary: "高标准本身不伤人，伤人的是「达不到就没价值」和「别人要求我完美」。"
+    - id: self.motivation.social-comparison
+      core: true
+      title: "社会比较（social comparison）"
+      summary: "人靠和别人比来评估自己，而且多半往上比；看得到的又是别人挑过的那一面。"
+    - id: self.motivation.explanatory-style
+      title: "解释风格（explanatory style）"
+      summary: "把坏事解释成暂时的、局部的、可改的人，更能扛挫折。"
+    - id: self.motivation.flow
+      title: "心流（flow）"
+      summary: "难度略高于能力、目标清楚、反馈即时，人会全神贯注到忘记时间。"
+    - id: self.motivation.yerkes-dodson
+      title: "耶克斯–多德森定律"
+      summary: "压力和表现的倒 U 关系在教科书里被讲得比原始数据（1908 年的小鼠）强得多。"
+    - id: self.motivation.locus-of-control
+      title: "控制点（locus of control）"
+      summary: "相信结果主要取决于自己的人，健康、收入和工作满意度都略好。"
+  - id: self.identity
+    title: "认识自己"
+    summary: "人对自己的行为原因、未来的变化和性格的了解，比自己以为的差。"
+    children:
+    - id: self.identity.introspection-illusion
+      core: true
+      title: "内省错觉（introspection illusion）"
+      summary: "人常常不知道自己为什么这么选，却能马上给出一个听着合理的理由。"
+    - id: self.identity.end-of-history
+      core: true
+      title: "历史终结错觉（end of history illusion）"
+      summary: "人承认过去十年自己变了很多，却认为今后十年不会怎么变；每个年龄段都这样。"
+    - id: self.identity.personality-change
+      core: true
+      title: "人格会随年龄成熟（maturity principle）"
+      summary: "性格不是定死的：成年后尽责性、情绪稳定性普遍上升，20 到 40 岁变得最多。"
+    - id: self.identity.narrative-identity
+      title: "叙事认同（narrative identity）"
+      summary: "人怎么讲自己的故事（比如把坏事讲成转折）和心理健康相关。"
+    - id: self.identity.self-concept-clarity
+      title: "自我概念清晰度"
+      summary: "对「我是谁」的回答清楚而稳定的人，情绪更稳。"
+    - id: self.identity.self-verification
+      title: "自我验证（self-verification）"
+      summary: "人想被别人按自己的自我看法对待，哪怕那个看法是负面的。"
+- id: learn
+  order: 4
+  title: "学习与成长"
+  summary: "怎么学才留得住、用得上：从记忆规律到技能训练，再到把输入变成产出。"
+  children:
+  - id: learn.memory
+    title: "记得住"
+    summary: "感觉学得顺不等于学会了；让提取变难一点的做法（自测、间隔、交错、自己产出）才留得久。"
+    children:
+    - id: learn.memory.testing-effect
+      core: true
+      title: "提取练习（testing effect）"
+      summary: "合上书回忆一遍，比再读一遍记得久得多，尽管当时感觉更差。"
+    - id: learn.memory.forgetting-curve
+      core: true
+      title: "遗忘曲线（forgetting curve）"
+      summary: "新学的东西头一天忘得最快，之后变慢；没有意义联系的材料忘得尤其快。"
+    - id: learn.memory.spacing
+      core: true
+      title: "间隔效应（spacing effect）"
+      summary: "同样的总时间，分开几次学比一次学完记得牢；间隔拉到快忘了再复习。"
+      requires: [learn.memory.forgetting-curve]
+    - id: learn.memory.interleaving
+      core: true
+      title: "交错练习（interleaving）"
+      summary: "几类题混着练，比一类练完再练下一类考得好，因为你被迫先判断「这是哪一类」。"
+    - id: learn.memory.fluency-illusion
+      core: true
+      title: "流畅错觉与合意困难（illusion of fluency, desirable difficulties）"
+      summary: "重读、划线、看答案让材料变眼熟，眼熟被误当成会了。"
+      requires: [learn.memory.testing-effect]
+    - id: learn.memory.generation-effect
+      core: true
+      title: "生成效应（generation effect）"
+      summary: "自己想出来、写出来的内容，比读现成的记得牢。"
+    - id: learn.memory.ai-offloading
+      core: true
+      title: "把思考外包给 AI（cognitive offloading）"
+      summary: "用 AI 直接要答案，当场做得更好，脱离 AI 后比没用过的人差；让它提示而不是代做，就没有这个代价。"
+      requires: [learn.memory.generation-effect]
+    - id: learn.memory.self-explanation
+      core: true
+      title: "自我解释（self-explanation）"
+      summary: "学一步就问自己「这一步为什么成立」，比只看懂步骤学得深。"
+    - id: learn.memory.learning-by-teaching
+      core: true
+      title: "以教为学（learning by teaching）"
+      summary: "准备讲给别人听、真的不看稿讲一遍，学得更好，起作用的是提取和组织。"
+    - id: learn.memory.transfer-appropriate
+      core: true
+      title: "怎么考就怎么练（transfer-appropriate processing）"
+      summary: "记忆在和练习时相似的条件下最容易取出来；练的形式要像将来用的形式。"
+    - id: learn.memory.chunking
+      title: "组块（chunking）"
+      summary: "工作记忆只装得下四个左右的块；专家的优势是每个块更大。"
+    - id: learn.memory.cognitive-load
+      title: "认知负荷（cognitive load theory）"
+      summary: "同时要处理的新东西太多就学不进；先减负，再加难度。"
+    - id: learn.memory.sleep-memory
+      title: "睡眠巩固记忆"
+      summary: "学完睡一觉，比同样时间醒着记得多。"
+    - id: learn.memory.pretesting
+      title: "先考后学（pretesting effect）"
+      summary: "学之前先猜一遍答案，哪怕猜错，之后学得更牢。"
+    - id: learn.memory.note-taking
+      title: "手写与键盘笔记"
+      summary: "「手写笔记比打字学得好」重做后没有稳定优势。"
+  - id: learn.skill
+    title: "变强"
+    summary: "技能靠有反馈的、针对弱点的练习长出来；学到的东西不会自动搬到新情境。"
+    children:
+    - id: learn.skill.deliberate-practice
+      core: true
+      title: "刻意练习（deliberate practice）"
+      summary: "让人变强的不是做的时间，是盯着一个具体弱点、马上得到反馈、在够不着的边上重复。"
+    - id: learn.skill.transfer
+      core: true
+      title: "迁移（transfer of learning）"
+      summary: "学会一件事，不会自动用到表面不一样的另一件事上；要自己把共同的结构说出来。"
+    - id: learn.skill.feedback
+      core: true
+      title: "反馈会帮倒忙（feedback interventions）"
+      summary: "反馈平均有用，但约三分之一的情况让表现变差：当它指向「你这个人」而不是任务时。"
+    - id: learn.skill.expert-intuition
+      core: true
+      title: "专家直觉什么时候可信（expert intuition）"
+      summary: "直觉是对见过的模式的识别；只有规律稳定、反馈又快又明确的领域，直觉才值得信。"
+    - id: learn.skill.worked-example
+      core: true
+      title: "样例效应与专长反转（worked example effect）"
+      summary: "新手先看带讲解的例题，比硬解学得快；有底子之后反过来，自己解才有长进。"
+    - id: learn.skill.growth-mindset
+      core: true
+      title: "成长型思维：真的，但很小（growth mindset）"
+      summary: "相信能力可以练出来有一点帮助，主要对成绩差、处境不利的学生；它不是万能钥匙。"
+      requires: [evidence.method.effect-size]
+    - id: learn.skill.grit
+      core: true
+      title: "坚毅（grit）"
+      summary: "「坚毅」和成就的相关不高，而且和大五里的尽责性几乎是一回事；有用的是其中「坚持努力」那一半。"
+      requires: [evidence.method.effect-size]
+    - id: learn.skill.plateau
+      title: "平台期（OK plateau）"
+      summary: "技能够用之后就自动化，不再长进；要继续长就得回到费劲的练法。"
+    - id: learn.skill.sampling-period
+      title: "先多试再专精"
+      summary: "世界级运动员少年时练的项目更多、定主项更晚；过早专精赢在青少年组。"
+    - id: learn.skill.mental-models-analogy
+      title: "类比与比较学习"
+      summary: "把两个例子放一起比，才看得出共同的结构。"
+  - id: learn.create
+    title: "从输入到产出"
+    summary: "好作品出在多产里；影响力大的那一个出现在第几个，事先看不出来。"
+    children:
+    - id: learn.create.equal-odds
+      core: true
+      title: "等概率法则（equal-odds rule）"
+      summary: "一个人最好的作品落在他哪一件作品上近乎随机，所以产出越多，出好东西的机会越多。"
+    - id: learn.create.hot-streak
+      core: true
+      title: "连胜期（hot streak）"
+      summary: "多数人的职业生涯里有一段成果扎堆的时期，它可以出现在任何年龄，往往跟在一段广泛尝试之后。"
+    - id: learn.create.brainwriting
+      title: "先各自想再讨论"
+      summary: "一起头脑风暴产生的点子比同样人数各自想的少。"
+    - id: learn.create.incubation
+      title: "酝酿效应（incubation）"
+      summary: "卡住时放一放再回来，对发散类问题有小的帮助。"
+    - id: learn.create.constraints-creativity
+      title: "限制促进创造"
+      summary: "适度的限制让人更有创造性。"
+- id: social
+  order: 5
+  title: "人际"
+  summary: "人怎么形成印象、怎么变亲近、怎么被说服，以及高估别人在注意自己这件事。"
+  children:
+  - id: social.perceive
+    title: "看人与被看"
+    summary: "对别人下判断又快又偏：看行为就定性格，一个优点盖住全部；而别人其实没那么注意你。"
+    children:
+    - id: social.perceive.attribution-error
+      core: true
+      title: "基本归因错误（fundamental attribution error）"
+      summary: "解释别人的行为时，高估性格、低估处境。"
+    - id: social.perceive.halo
+      core: true
+      title: "光环效应（halo effect）"
+      summary: "一个突出的优点（长相、名校、口才）会把对这个人其他方面的评价一起抬高。"
+    - id: social.perceive.first-impression
+      core: true
+      title: "第一印象与薄片判断（thin slices）"
+      summary: "人在零点几秒内形成印象，之后的信息多用来确认它。"
+    - id: social.perceive.warmth-competence
+      core: true
+      title: "温暖与能力（warmth–competence）"
+      summary: "人评价他人主要看两条：对我有没有善意，有没有本事；善意先被判断。"
+    - id: social.perceive.spotlight
+      core: true
+      title: "聚光灯效应（spotlight effect）"
+      summary: "人高估别人注意到自己的程度，大约高估一倍。"
+    - id: social.perceive.transparency-illusion
+      core: true
+      title: "透明度错觉（illusion of transparency）"
+      summary: "人以为自己的紧张、说谎、不高兴别人都看得出来，其实漏出去的很少。"
+    - id: social.perceive.liking-gap
+      core: true
+      title: "喜欢差距（liking gap）"
+      summary: "聊完天，人普遍低估对方喜欢自己的程度。"
+    - id: social.perceive.pygmalion
+      core: true
+      title: "期望效应（Pygmalion effect）"
+      summary: "别人对你的期望会通过对待你的方式变成一部分现实，但效果比传说的小得多。"
+    - id: social.perceive.implicit-bias
+      title: "内隐联想测验（IAT）测到了什么"
+      summary: "IAT 分数和实际歧视行为的相关很弱，改变分数也不改变行为。"
+    - id: social.perceive.naive-realism
+      title: "朴素实在论（naive realism）"
+      summary: "人觉得自己看到的就是事实，不同意的人不是没信息就是有偏见。"
+    - id: social.perceive.physiognomy-limits
+      title: "以貌取人的准确率"
+      summary: "从脸判断性格、可信度的一致性很高，准确性接近没有。"
+  - id: social.connect
+    title: "亲近与关系"
+    summary: "关系是见得多、离得近、互相多说一点长出来的；人系统性地低估别人愿意靠近的程度。"
+    children:
+    - id: social.connect.mere-exposure
+      core: true
+      title: "曝光效应（mere exposure effect）"
+      summary: "见得越多越有好感，哪怕没有任何交流。"
+    - id: social.connect.propinquity
+      core: true
+      title: "邻近效应（propinquity effect）"
+      summary: "物理距离是友谊最强的预测因素之一：隔几个门，交朋友的概率就掉一大截。"
+    - id: social.connect.self-disclosure
+      core: true
+      title: "自我暴露（self-disclosure）"
+      summary: "亲近感来自轮流、逐步加深地说自己的事，不是来自共处的时间长短。"
+    - id: social.connect.undersociality
+      core: true
+      title: "人低估和陌生人说话的好处（undersociality）"
+      summary: "人预计和陌生人聊天会尴尬，实际更愉快；深一点的话题也比预想的顺。"
+    - id: social.connect.asking-help
+      core: true
+      title: "人低估别人答应的概率"
+      summary: "开口求助、要内推、请人帮忙，被答应的概率大约是自己估计的两倍。"
+    - id: social.connect.loneliness-loop
+      core: true
+      title: "孤独的自我强化循环（loneliness loop）"
+      summary: "孤独让人对社交威胁更敏感，更容易把中性信号读成拒绝，于是更退缩。"
+    - id: social.connect.friendship-hours
+      core: true
+      title: "交朋友需要的小时数"
+      summary: "从认识到普通朋友约 50 小时，到朋友约 90 小时，到好朋友要 200 小时以上，而且得是一起闲着的时间。"
+    - id: social.connect.capitalization
+      core: true
+      title: "怎么回应别人的好消息（capitalization）"
+      summary: "对方分享好事时，热情地追问细节，比对方倒霉时安慰他更能预测关系好坏。"
+    - id: social.connect.attachment
+      core: true
+      title: "成人依恋（adult attachment）"
+      summary: "人在亲密关系里有稳定的倾向：安全、焦虑（怕被丢下）或回避（怕靠太近）；它会变，不是判决。"
+    - id: social.connect.gottman
+      core: true
+      title: "关系里的四种危险信号（Gottman's four horsemen）"
+      summary: "批评人格、蔑视、辩解、冷战这四种互动方式预示关系变坏，蔑视最毒；「预测准确率九成」则是高估。"
+    - id: social.connect.stated-preferences
+      core: true
+      title: "嘴上的择偶标准不预测心动"
+      summary: "人说自己看重什么条件，和面对面时被谁吸引，几乎对不上。"
+    - id: social.connect.similarity
+      title: "相似相吸"
+      summary: "人喜欢和自己态度相近的人；「互补相吸」没有证据。"
+    - id: social.connect.ben-franklin
+      title: "富兰克林效应（Ben Franklin effect）"
+      summary: "请别人帮一个小忙，对方之后可能更喜欢你，证据不多。"
+    - id: social.connect.pratfall
+      title: "出丑效应（pratfall effect）"
+      summary: "能力强的人出个小丑更讨喜，能力一般的人出丑更减分。"
+    - id: social.connect.dunbar
+      title: "邓巴数与关系圈层（Dunbar's number）"
+      summary: "一个人能维持的稳定关系有上限，按亲近程度分层：约 5、15、50、150；150 这个数字本身误差很大。"
+    - id: social.connect.investment-model
+      title: "投入模型（investment model）"
+      summary: "留在一段关系里取决于满意度、已投入多少、有没有更好的选择。"
+    - id: social.connect.assortative-mating
+      title: "同类婚配（assortative mating）"
+      summary: "人多半和教育、收入、年龄相近的人结婚。"
+  - id: social.influence
+    title: "说服与影响"
+    summary: "让人说「好」的几种固定办法：先给、先要个小的、告诉他别人都这样、说快没了、重复。"
+    children:
+    - id: social.influence.reciprocity
+      core: true
+      title: "互惠（reciprocity）"
+      summary: "先收到好处的人会觉得欠着，回报常常比收到的大。"
+    - id: social.influence.sequential-requests
+      core: true
+      title: "登门槛与留面子（foot-in-the-door, door-in-the-face）"
+      summary: "先让人答应一个小请求，或先提一个会被拒绝的大请求，后面的真请求更容易成。"
+    - id: social.influence.social-proof
+      core: true
+      title: "社会认同（social proof）"
+      summary: "不确定该怎么做时，人看别人怎么做，尤其是和自己处境相似的人。"
+    - id: social.influence.scarcity
+      core: true
+      title: "稀缺（scarcity）"
+      summary: "「快没了」「只剩今天」让东西显得更值钱，也让人来不及想。"
+    - id: social.influence.illusory-truth
+      core: true
+      title: "真相错觉（illusory truth effect）"
+      summary: "一句话听得多了就更像真的，即使你本来知道它是错的。"
+    - id: social.influence.decoy
+      title: "诱饵效应（decoy effect）"
+      summary: "加一个明显更差的第三选项，会把人推向它旁边那个。"
+    - id: social.influence.inoculation
+      title: "预防接种（inoculation theory）"
+      summary: "先让人见一个弱化版的误导手法，之后更不容易上当。"
+    - id: social.influence.identifiable-victim
+      title: "可识别受害者效应"
+      summary: "一个有名字的人比一组统计数字更能让人掏钱，但效果很小。"
+    - id: social.influence.authority-cue
+      title: "权威线索"
+      summary: "头衔、制服、专业术语本身就让人更服从。"
+  - id: social.talk
+    title: "沟通与冲突"
+    summary: "你知道的对方不知道，你想表达的对方没收到；越想逼人同意，对方越往后退。"
+    children:
+    - id: social.talk.curse-of-knowledge
+      core: true
+      title: "知识的诅咒（curse of knowledge）"
+      summary: "一旦懂了某件事，就很难想象不懂的人听到的是什么。"
+    - id: social.talk.reactance
+      core: true
+      title: "心理抗拒（reactance）"
+      summary: "感到选择被人拿走时，人会偏要选被禁止的那个。"
+    - id: social.talk.perspective-getting
+      core: true
+      title: "换位思考不如直接问（perspective getting）"
+      summary: "努力想象对方的想法并不让你猜得更准，只让你更自信；问出来才准。"
+    - id: social.talk.active-listening
+      title: "被听见的感觉"
+      summary: "追问型的问题让人更喜欢你。"
+    - id: social.talk.conversational-receptiveness
+      title: "接纳式表达"
+      summary: "用「我理解你的意思是」「有时候」这类措辞表达分歧，对方更愿意继续谈。"
+    - id: social.talk.apology
+      title: "有效的道歉"
+      summary: "承认责任和提出补救是道歉里最起作用的两部分。"
+- id: group
+  order: 6
+  title: "群体与社会"
+  summary: "人在群体里会跟随、服从、偷懒；机会沿着关系网流动；起点的小差异被放大成大差距。"
+  children:
+  - id: group.conform
+    title: "从众与服从"
+    summary: "多数人的做法和权威的要求对个人判断的压力，以及什么条件下压力会破掉。"
+    children:
+    - id: group.conform.asch
+      core: true
+      title: "从众实验（Asch conformity）"
+      summary: "答案明摆着，约三分之一的回答还是跟着错的多数走；只要有一个人不跟，压力就垮了。"
+    - id: group.conform.milgram
+      core: true
+      title: "服从权威（Milgram obedience）"
+      summary: "在权威一步步的要求下，多数普通人会做出自己认为不该做的事。"
+    - id: group.conform.bystander
+      core: true
+      title: "旁观者效应（bystander effect）"
+      summary: "在场的人越多，每个人越觉得轮不到自己；但真实的公共冲突里，多数时候有人出手。"
+    - id: group.conform.pluralistic-ignorance
+      core: true
+      title: "多数无知（pluralistic ignorance）"
+      summary: "每个人私下都不认同，却以为别人都认同，于是都不说。"
+    - id: group.conform.herd
+      core: true
+      title: "羊群效应与信息瀑布（herd behavior, information cascade）"
+      summary: "后来的人看前面人的选择来做判断，早期一点随机的领先会滚成压倒性的流行。"
+    - id: group.conform.deindividuation
+      title: "去个体化"
+      summary: "匿名和人群让人更按当下群体的规范行事，不一定更坏。"
+    - id: group.conform.minority-influence
+      title: "少数派影响"
+      summary: "少数人只要一直坚持同一个立场，就能改变多数人私下的看法。"
+    - id: group.conform.spiral-of-silence
+      title: "沉默的螺旋"
+      summary: "觉得自己是少数的人更不愿意开口，于是显得更少。"
+  - id: group.team
+    title: "团队里的人"
+    summary: "人一多，个人出力变少、意见变极端；团队判断好不好，取决于成员是否各自独立地想、敢不敢说。"
+    children:
+    - id: group.team.social-loafing
+      core: true
+      title: "社会懈怠（social loafing）"
+      summary: "一起干活时每个人出的力比单干时少，人越多越少；个人贡献看得见就好很多。"
+    - id: group.team.group-polarization
+      core: true
+      title: "群体极化（group polarization）"
+      summary: "观点相近的人讨论之后，整体立场比讨论前更极端。"
+    - id: group.team.wisdom-of-crowds
+      core: true
+      title: "群体智慧及其条件（wisdom of crowds）"
+      summary: "很多人各自独立的估计取平均，常比其中的专家准；一旦互相看到答案，就不准了。"
+    - id: group.team.brainstorming
+      core: true
+      title: "头脑风暴不如各自先想（brainstorming）"
+      summary: "同样几个人，各自写完再汇总，点子比坐在一起说更多、更好。"
+    - id: group.team.psychological-safety
+      core: true
+      title: "心理安全感（psychological safety）"
+      summary: "成员相信提问、认错、唱反调不会被惩罚的团队，学得快，表现也好。"
+    - id: group.team.minimal-group
+      core: true
+      title: "最小群体范式（minimal group paradigm）"
+      summary: "哪怕按抛硬币分组，人也会偏向自己这一组。"
+    - id: group.team.contact-hypothesis
+      title: "接触假说"
+      summary: "平等地位下的合作接触能减少群体间的偏见。"
+    - id: group.team.shared-information
+      title: "共享信息偏差"
+      summary: "团队讨论的大多是大家都已经知道的信息，只有一个人知道的关键信息很少被提出来。"
+    - id: group.team.ringelmann-meeting
+      title: "会议人数与决策质量"
+      summary: "团队越大，协调成本涨得比人手快。"
+  - id: group.network
+    title: "网络与机会"
+    summary: "新信息和机会多半从不太熟的人、从两个圈子之间的位置过来；领先一点会越滚越大。"
+    children:
+    - id: group.network.weak-ties
+      core: true
+      title: "弱关系的力量（strength of weak ties）"
+      summary: "新工作的消息更多来自不太熟的人，因为熟人知道的和你知道的差不多。"
+    - id: group.network.structural-holes
+      core: true
+      title: "结构洞（structural holes）"
+      summary: "站在两个互不来往的圈子之间的人，更早看到两边的信息，好点子和晋升都更多。"
+      requires: [group.network.weak-ties]
+    - id: group.network.matthew
+      core: true
+      title: "马太效应（Matthew effect, cumulative advantage）"
+      summary: "早期的一点领先带来更多资源和关注，于是差距越拉越大，哪怕起点的差别几乎是运气。"
+    - id: group.network.luck
+      core: true
+      title: "成功里的运气（luck in success）"
+      summary: "竞争越激烈、参与的人越多，最顶上那个越可能是又强又走运的人；极端的成绩里运气的成分最大。"
+      requires: [group.network.matthew]
+    - id: group.network.small-world
+      title: "六度分隔（small world）"
+      summary: "任意两个人之间隔着的中间人平均只有五六个，但多数传递链会断掉。"
+    - id: group.network.homophily
+      title: "同质性（homophily）"
+      summary: "人和与自己相似的人交往，所以圈子里听到的多是自己已经同意的。"
+    - id: group.network.social-contagion
+      title: "肥胖、快乐会沿着网络传染？"
+      summary: "「朋友的朋友胖了你也更容易胖」的结论，方法上分不清传染和物以类聚。"
+    - id: group.network.relative-age
+      title: "相对年龄效应（relative age effect）"
+      summary: "同一年级里年龄大几个月的孩子，早期被选拔的机会明显更多。"
+  - id: group.norms
+    title: "地位、规范与比较"
+    summary: "人满不满意取决于和谁比；规范靠「大家都这样」维持，也会被一句话无意中带坏。"
+    children:
+    - id: group.norms.relative-deprivation
+      core: true
+      title: "相对剥夺与参照群体（relative deprivation, reference group）"
+      summary: "满意不满意，取决于和身边可比的人比，不取决于绝对水平。"
+    - id: group.norms.descriptive-norms
+      core: true
+      title: "描述性规范的反作用（descriptive norms）"
+      summary: "「很多人都在这么干坏事」这句劝告，听到的是「大家都这么干」。"
+    - id: group.norms.broken-windows
+      core: true
+      title: "破窗效应（broken windows）"
+      summary: "环境里有人违规的痕迹，会让后来的人更容易跟着违规；用它来论证「零容忍执法」则证据不足。"
+    - id: group.norms.control-status
+      core: true
+      title: "地位、控制感与健康（Whitehall studies）"
+      summary: "职级越低死亡率越高，差距不是穷造成的，很大一部分来自对自己工作的控制感低。"
+    - id: group.norms.cultural-tightness
+      title: "文化松紧与个人主义—集体主义"
+      summary: "不同社会对违反规范的容忍度差别很大，和历史上面对的威胁有关。"
+    - id: group.norms.status-signals
+      title: "地位信号与炫耀性消费"
+      summary: "人花钱让别人看见自己的位置。"
+    - id: group.norms.zero-sum-society
+      title: "社会流动与起点"
+      summary: "出生的邮编在很大程度上预测成年后的收入。"
+    - id: group.norms.self-fulfilling-prophecy
+      title: "自证预言（self-fulfilling prophecy）"
+      summary: "一个本来错误的判断，因为大家照着它行动而变成真的。"
+    - id: group.norms.big-fish-little-pond
+      title: "大鱼小池效应（big-fish–little-pond effect）"
+      summary: "同样的能力，放在更强的同伴里，对自己的评价更低。"
+    - id: group.norms.cultural-capital
+      title: "文化资本（cultural capital）"
+      summary: "说话方式、品味、见过的世面这些看不见的资本，影响学校和职场里的待遇。"
+- id: game
+  order: 7
+  title: "博弈、激励与识骗"
+  summary: "结果取决于别人也在怎么想的时候：合作为什么难、指标为什么被玩坏、骗局为什么得手、谈判怎么不吃亏。"
+  children:
+  - id: game.theory
+    title: "博弈的基本型"
+    summary: "几个反复出现的局：各自理性却两败俱伤，重复打交道才有合作，出价最高的人往往买贵了。"
+    children:
+    - id: game.theory.prisoners-dilemma
+      core: true
+      title: "囚徒困境（prisoner's dilemma）"
+      summary: "两个人各自选对自己最有利的做法，结果比都让一步更差。"
+    - id: game.theory.tit-for-tat
+      core: true
+      title: "重复博弈与以牙还牙（tit for tat）"
+      summary: "同一批人反复打交道时，先合作、被坑就回敬、对方改了就原谅，是最稳的策略。"
+      requires: [game.theory.prisoners-dilemma]
+    - id: game.theory.zero-sum-bias
+      core: true
+      title: "零和偏差与固定馅饼（zero-sum bias, fixed-pie bias）"
+      summary: "人默认别人多得一分自己就少一分，于是看不见双方都能更好的方案。"
+    - id: game.theory.commons
+      core: true
+      title: "公地悲剧与奥斯特罗姆（tragedy of the commons）"
+      summary: "人人可用的资源会被用垮，但不是必然：能互相监督、自己定规矩的小群体能管好几百年。"
+      requires: [game.theory.prisoners-dilemma]
+    - id: game.theory.public-goods
+      core: true
+      title: "公共品博弈与惩罚（public goods game）"
+      summary: "没有惩罚时，合作会一轮轮滑向搭便车；允许自己掏钱惩罚搭便车的人，合作就回来。"
+      requires: [game.theory.prisoners-dilemma]
+    - id: game.theory.ultimatum
+      core: true
+      title: "最后通牒博弈（ultimatum game）"
+      summary: "人宁可什么都不要，也要拒绝太不公平的分法。"
+    - id: game.theory.winners-curse
+      core: true
+      title: "赢家的诅咒（winner's curse）"
+      summary: "很多人竞价同一个价值不确定的东西时，赢的往往是估得最高的那个，也就是估过头的那个。"
+    - id: game.theory.beauty-contest
+      core: true
+      title: "猜三分之二平均数（k-level thinking）"
+      summary: "赢不靠推到最深，靠猜对别人推了几步；多数人只推一两步。"
+    - id: game.theory.schelling-point
+      title: "聚焦点（Schelling point）"
+      summary: "没法商量的时候，人会选那个「大家都会想到」的显眼答案来碰头。"
+    - id: game.theory.credible-commitment
+      title: "可信承诺（credible commitment）"
+      summary: "主动砍掉自己的退路，对方才信你不会退。"
+    - id: game.theory.chicken
+      title: "胆小鬼博弈（game of chicken）"
+      summary: "双方都不让就一起完蛋，先让的人吃亏；谁先让对方相信自己不会让，谁赢。"
+    - id: game.theory.catch-22
+      title: "第二十二条军规与双重束缚（catch-22, double bind）"
+      summary: "规则互相咬死，怎么选都不满足条件。"
+    - id: game.theory.stag-hunt
+      title: "猎鹿博弈（stag hunt）"
+      summary: "合作收益更大，但只要怀疑别人不来，自己单干更安全；难的是信任，不是利益冲突。"
+  - id: game.incentive
+    title: "激励与信息"
+    summary: "人对激励有反应，但反应的常常是指标本身；一方知道得多时，市场和合作都会变形。"
+    children:
+    - id: game.incentive.goodhart
+      core: true
+      title: "古德哈特定律（Goodhart's law）"
+      summary: "一个数字一旦被拿来考核，人就会去优化这个数字本身，它也就不再反映原来想衡量的东西。"
+    - id: game.incentive.crowding-out
+      core: true
+      title: "罚款成了价格（motivation crowding out）"
+      summary: "给本来靠自觉和情面的事标上价，会把自觉挤走，钱一撤也回不来。"
+    - id: game.incentive.principal-agent
+      core: true
+      title: "委托代理问题（principal–agent problem）"
+      summary: "替你办事的人有自己的利益和你不知道的信息，他的最优做法未必是你的。"
+    - id: game.incentive.lemons
+      core: true
+      title: "柠檬市场（market for lemons）"
+      summary: "卖方比买方更清楚质量时，买方只肯出平均价，好货退出，剩下的越来越差。"
+    - id: game.incentive.signaling
+      core: true
+      title: "信号理论（signaling）"
+      summary: "说自己好没有成本所以没人信；只有差的人学不起、装不像的代价，才是可信的信号。"
+      requires: [game.incentive.lemons]
+    - id: game.incentive.moral-hazard
+      title: "道德风险（moral hazard）"
+      summary: "后果有人兜底时，人会多冒险。"
+    - id: game.incentive.skin-in-game
+      title: "利益攸关"
+      summary: "让做决定的人自己承担后果，决定会更谨慎。"
+    - id: game.incentive.tournament-pay
+      title: "锦标赛与赢家通吃"
+      summary: "报酬按名次而不是按绝对产出发的时候，第一和第二差一点，回报差很多。"
+    - id: game.incentive.cobra-perverse
+      title: "有悖初衷的激励"
+      summary: "激励设计错了会让问题更严重。"
+  - id: game.deceive
+    title: "欺骗与识骗"
+    summary: "人默认相信别人，看脸识谎的准确率和猜差不多；骗局靠的是一步步让你自己走进去。"
+    children:
+    - id: game.deceive.lie-detection
+      core: true
+      title: "人识别谎言的准确率"
+      summary: "靠观察神态判断对方是否说谎，准确率平均 54%，警察、法官也一样。"
+    - id: game.deceive.truth-default
+      core: true
+      title: "真相默认（truth-default theory）"
+      summary: "人先相信、有疑点才怀疑；这在多数时候划算，骗子利用的正是这一点。"
+    - id: game.deceive.barnum
+      core: true
+      title: "巴纳姆效应（Barnum / Forer effect）"
+      summary: "一段对谁都适用的笼统描述，人会觉得是在精准地说自己。"
+    - id: game.deceive.scam-structure
+      core: true
+      title: "骗局的结构（anatomy of a scam）"
+      summary: "长线骗局不靠一句谎话，靠一串步骤：建立信任、给小甜头、制造紧迫、隔开你和能提醒你的人、让你舍不得已经投进去的。"
+    - id: game.deceive.inattentional-blindness
+      core: true
+      title: "非注意盲视（inattentional blindness）"
+      summary: "注意力盯着一件事时，眼前发生的另一件大事可以完全看不见。"
+    - id: game.deceive.cognitive-load-lying
+      title: "增加认知负担来识谎"
+      summary: "让对方倒着讲一遍经过，说谎的人更容易露破绽。"
+    - id: game.deceive.change-blindness
+      title: "变化盲视（change blindness）"
+      summary: "眼前的人被换成另一个人，一半的人没发现。"
+    - id: game.deceive.bullshit-receptivity
+      title: "对空话的接受度"
+      summary: "听着深刻、其实没内容的句子，有人会评为很有深度。"
+    - id: game.deceive.gaslighting-limits
+      title: "记忆可以被植入"
+      summary: "反复的暗示能让一部分人「记起」没发生过的事。"
+  - id: game.negotiate
+    title: "谈判"
+    summary: "底气来自谈不成时你还有什么；先报的数字会成为锚；多数人根本没开口谈。"
+    children:
+    - id: game.negotiate.batna
+      core: true
+      title: "谈不成的退路（BATNA）"
+      summary: "谈判里的力量主要来自：谈崩了，你最好的另一条路有多好。"
+    - id: game.negotiate.first-offer
+      core: true
+      title: "先出价与锚（first offer anchoring）"
+      summary: "谁先报出一个有依据的数字，成交价就往谁那边靠；自己信息少的时候才让对方先开口。"
+      requires: [judge.dual.anchoring]
+    - id: game.negotiate.salary-negotiation
+      core: true
+      title: "谈薪：开口和不开口的差别"
+      summary: "多数人接受第一个报价；开口谈的人起薪通常高出几个百分点，并在之后每次调薪里被放大。"
+    - id: game.negotiate.integrative
+      title: "把饼做大（integrative negotiation）"
+      summary: "双方看重的东西不一样时，各自在自己不在乎的项上让步，两边都更好。"
+    - id: game.negotiate.mesos
+      title: "同时给出多个等价方案"
+      summary: "一次给两三个对你等值的方案，对方的选择会告诉你他看重什么。"
+- id: career
+  order: 8
+  title: "职业与组织"
+  summary: "职业轨迹的统计规律：什么时候出成果、换工作值不值、晋升看什么，以及组织里反复出现的失灵。"
+  children:
+  - id: career.path
+    title: "轨迹与选择"
+    summary: "关于年龄、跳槽和重大职业决定，数据说的和焦虑时想的不一样。"
+    children:
+    - id: career.path.founder-age
+      core: true
+      title: "出成果的年龄（age and achievement）"
+      summary: "最成功的创业者创业时平均四十出头；多数领域的高峰比「三十岁前」的说法晚得多。"
+    - id: career.path.job-switching
+      core: true
+      title: "跳槽与留任的工资增长"
+      summary: "职业早期的工资增长里，大约三分之一来自换雇主；换工作的人涨薪中位数长期高于留任的人。"
+    - id: career.path.coin-flip
+      core: true
+      title: "犹豫不决时偏向改变"
+      summary: "在重大决定上拿不定主意的人，最后选了改变的，半年后比没改的更快乐。"
+      requires: [judge.prospect.status-quo-default]
+    - id: career.path.explore-exploit
+      core: true
+      title: "探索与利用（explore–exploit, 37% rule）"
+      summary: "选择还多、时间还长的时候多试；试到一定数量之后，遇到比之前都好的就定下来。"
+    - id: career.path.peter-principle
+      core: true
+      title: "彼得原理（Peter principle）"
+      summary: "按当前岗位的业绩提拔人，会把最好的执行者变成不称职的管理者。"
+    - id: career.path.planned-happenstance
+      title: "计划内的偶然（planned happenstance）"
+      summary: "多数职业转折来自没计划到的机会；能做的是提高遇到和接住机会的概率。"
+    - id: career.path.specialist-generalist
+      title: "专才与通才"
+      summary: "环境规则稳定时专才占优；规则多变、问题没见过时，跨领域的人更常解出来。"
+    - id: career.path.sunk-career
+      title: "职业里的沉没成本"
+      summary: "已经在一个方向上投入的年头，让人更难离开一条不再合适的路。"
+  - id: career.perform
+    title: "被看见与被评价"
+    summary: "业绩不会自己说话：评价里有很大一部分是评价者自己，晋升看得见的人，面试测到的东西有限。"
+    children:
+    - id: career.perform.visibility
+      core: true
+      title: "做得好不等于被看见（visibility）"
+      summary: "同样的产出，被看见的人晋升更快；远程办公的人业绩更高，晋升却更少。"
+    - id: career.perform.rater-bias
+      core: true
+      title: "绩效评分里有多少是评分人（idiosyncratic rater effect）"
+      summary: "一份绩效评分的差异，一多半来自打分的人自己的习惯，只有约五分之一来自被评的人的实际表现。"
+    - id: career.perform.interview-validity
+      core: true
+      title: "面试到底测到什么（selection validity）"
+      summary: "随意聊的面试预测工作表现的能力很差；有固定问题和评分标准的结构化面试、实际工作样本好得多。"
+    - id: career.perform.confidence-status
+      core: true
+      title: "自信被当成能力（overconfidence and status）"
+      summary: "表现得比实际更有把握的人，会被同伴当成更有能力，得到更高的地位，被拆穿后也没怎么掉。"
+    - id: career.perform.sponsor
+      core: true
+      title: "导师与保荐人（mentoring, sponsorship）"
+      summary: "有人指点对薪水和晋升的帮助是真的但不大；有人在你不在场的会议上替你说话，作用更直接。"
+    - id: career.perform.self-promotion
+      title: "自我推销的代价"
+      summary: "直接说自己的成绩有效但招人烦；装谦虚的炫耀最差。"
+    - id: career.perform.recency-review
+      title: "近因效应与评估周期"
+      summary: "评估前最近几个月的表现被过分加权。"
+  - id: career.org
+    title: "组织里的规律"
+    summary: "组织会按可预测的方式低效：工作填满时间，权力让人看不见别人。"
+    children:
+    - id: career.org.parkinson
+      core: true
+      title: "帕金森定律（Parkinson's law）"
+      summary: "工作会膨胀到占满给它的时间；它是一篇讽刺文章，但「时间越宽裕做得越慢」有实验支持。"
+    - id: career.org.power
+      title: "权力让人少换位思考（power and perspective-taking）"
+      summary: "感到自己有权的人，更少去想别人怎么看、怎么感受。"
+    - id: career.org.brooks-law
+      title: "布鲁克斯法则（Brooks's law）"
+      summary: "给延期的软件项目加人，会让它更延期。"
+    - id: career.org.organizational-silence
+      title: "组织沉默"
+      summary: "员工知道问题却不说，因为觉得说了没用或有风险。"
+    - id: career.org.bikeshedding
+      title: "鸡毛蒜皮定律（bikeshedding）"
+      summary: "会议花在一件事上的时间，和这件事的重要性成反比。"
+  - id: career.work
+    title: "工作、精力与倦怠"
+    summary: "加班的产出很快封顶，切换任务有残留成本，倦怠来自要求高而掌控少。"
+    children:
+    - id: career.work.burnout
+      core: true
+      title: "倦怠（burnout）"
+      summary: "倦怠有三个部分：耗竭、对工作变冷漠、觉得自己没用；它主要由工作条件造成，不是个人脆弱。"
+    - id: career.work.attention-residue
+      core: true
+      title: "注意力残留与切换成本（attention residue）"
+      summary: "从一件没做完的事切到另一件，脑子有一部分还留在前一件上。"
+    - id: career.work.overwork
+      core: true
+      title: "长工时的产出封顶"
+      summary: "每周工作超过约 50 小时后，每多一小时的产出急剧下降；70 小时做出来的几乎不比 55 小时多。"
+    - id: career.work.job-crafting
+      core: true
+      title: "工作重塑（job crafting）"
+      summary: "不换岗位，也能自己调整任务的范围、和谁打交道、怎么理解这份工作，让它更合自己。"
+    - id: career.work.remote-work
+      title: "远程办公的证据"
+      summary: "混合办公不降低产出和晋升，离职率更低。"
+    - id: career.work.pay-for-performance
+      title: "计件工资"
+      summary: "产出容易量的工作，按件付酬能明显提高产量。"
+    - id: career.work.meaning-work
+      title: "工作的意义感"
+      summary: "看到自己的工作帮到了谁，人会干得更多。"
+- id: life
+  order: 9
+  title: "幸福、健康与人生阶段"
+  summary: "什么让人长期过得好：对幸福的预测为什么总错，钱起多大作用，身体怎么托住情绪，人到中年在乎的东西怎么变。"
+  children:
+  - id: life.happy
+    title: "幸福感"
+    summary: "人会适应大多数好事和坏事，预测自己将来的感受时总是估过头；关系比收入更能预测晚年。"
+    children:
+    - id: life.happy.hedonic-adaptation
+      core: true
+      title: "享乐适应（hedonic adaptation）"
+      summary: "升职、加薪、买房带来的高兴会退回到原来的水平；有几样坏事（失业、长期通勤、噪音）却适应不了。"
+    - id: life.happy.affective-forecasting
+      core: true
+      title: "情感预测偏差（affective forecasting, impact bias）"
+      summary: "人高估未来的好事坏事会让自己高兴或难受多久，因为只盯着那一件事，也低估了自己的恢复力。"
+    - id: life.happy.income-happiness
+      core: true
+      title: "钱和幸福（income and well-being）"
+      summary: "收入越高，日常情绪平均越好，没有封顶；只有本来就最不快乐的那一小部分人，过了约十万美元后钱不再有用。"
+      requires: [life.happy.hedonic-adaptation]
+    - id: life.happy.peak-end
+      core: true
+      title: "峰终定律（peak–end rule）"
+      summary: "人对一段经历的记忆由最强烈的一刻和结尾决定，和持续了多久几乎无关。"
+    - id: life.happy.relationships-health
+      core: true
+      title: "关系是晚年健康最强的预测因素"
+      summary: "跟踪八十多年的研究里，50 岁时对关系的满意度，比胆固醇更能预测 80 岁时的健康。"
+    - id: life.happy.time-vs-money
+      core: true
+      title: "花钱买时间（time vs money）"
+      summary: "把钱花在省掉讨厌的杂事上的人更满意；多数人有钱也不这么花。"
+    - id: life.happy.experiential-purchases
+      title: "体验比物品更值"
+      summary: "花在体验上的钱带来的满足比花在物品上的更持久，差别不大。"
+    - id: life.happy.prosocial-spending
+      title: "为别人花钱"
+      summary: "给别人花钱比给自己花钱略微更快乐。"
+    - id: life.happy.gratitude
+      title: "感恩练习"
+      summary: "每周写下几件值得感谢的事，对情绪有小的正面作用。"
+    - id: life.happy.focusing-illusion
+      title: "聚焦错觉（focusing illusion）"
+      summary: "你正在想的那件事，没有你想的时候以为的那么重要。"
+    - id: life.happy.midlife-dip
+      title: "中年低谷（U-shape of happiness）"
+      summary: "很多国家的截面数据里，生活满意度在四十多岁最低，之后回升；跟踪同一批人时没这么清楚。"
+    - id: life.happy.diderot-effect
+      title: "狄德罗效应（鸟笼效应）"
+      summary: "买了一件新东西，周围的旧东西显得不配，于是接着换下去。"
+  - id: life.health
+    title: "身体是地基"
+    summary: "睡眠、运动和酒精直接改变情绪和判断力，而且当事人自己常常感觉不到。"
+    children:
+    - id: life.health.sleep-debt
+      core: true
+      title: "睡眠不足而不自知（sleep restriction）"
+      summary: "连续两周每晚只睡六小时，反应和注意力掉到相当于两夜没睡，自己却只觉得「有点困」。"
+    - id: life.health.exercise-mood
+      core: true
+      title: "运动对抑郁的效果（exercise and depression）"
+      summary: "走路、慢跑、力量训练、瑜伽对抑郁的效果，和心理治疗、药物在同一个量级，强度大一点效果更好。"
+    - id: life.health.alcohol
+      core: true
+      title: "酒精、睡眠与情绪（alcohol）"
+      summary: "酒让人更快睡着，却把后半夜的睡眠打碎，压掉快速眼动睡眠；长期喝还把抑郁的风险翻倍。"
+    - id: life.health.social-jetlag
+      title: "社交时差（social jetlag）"
+      summary: "工作日和休息日的作息差两小时以上，相当于每周飞一次跨时区。"
+    - id: life.health.stress-mindset
+      title: "怎么看压力（stress mindset）"
+      summary: "把压力反应理解成身体在帮自己准备，表现略好；「相信压力有害的人死得更多」来自一项相关研究。"
+    - id: life.health.nature-exposure
+      title: "接触自然"
+      summary: "在自然环境里走一段，反刍减少。"
+    - id: life.health.weight-maintenance
+      title: "减重后怎么不反弹"
+      summary: "长期保持住的人的共同点是高活动量、持续称重记录、饮食规律。"
+  - id: life.stage
+    title: "人生阶段与成熟"
+    summary: "所谓四十岁的心态，在研究里是几样具体的变化：把时间看成有限的，看重有情感分量的人和事，能容下不确定和别人的立场。"
+    children:
+    - id: life.stage.social-clock
+      core: true
+      title: "社会时钟（social clock）"
+      summary: "「几岁该干什么」是一套文化里的时间表；觉得自己落后于它会带来真实的压力，但这张表本身一直在往后挪。"
+    - id: life.stage.socioemotional-selectivity
+      core: true
+      title: "社会情绪选择理论（socioemotional selectivity theory）"
+      summary: "觉得时间还很多的人追求新信息和新关系；觉得时间有限的人把精力给最有情感分量的少数人和事。起作用的是时间感，不是年龄。"
+    - id: life.stage.wise-reasoning
+      core: true
+      title: "智慧推理（wise reasoning）"
+      summary: "研究里的「智慧」是几样可测的做法：承认自己知道的有限，看到别人的立场，预期事情会变，找折中；它预测生活过得好，智商不预测。"
+      requires: [self.emotion.self-distancing]
+    - id: life.stage.emerging-adulthood
+      title: "成年初显期（emerging adulthood）"
+      summary: "18 到 29 岁换工作、换城市、换伴侣是这个阶段的常态，不是失败。"
+    - id: life.stage.purpose
+      title: "人生目标感与寿命"
+      summary: "觉得生活有方向的人死亡风险更低。"
+    - id: life.stage.post-traumatic-growth
+      title: "创伤后成长"
+      summary: "很多人自述在重大打击后有成长，但自述的成长和实际测到的变化对不上。"
+    - id: life.stage.reminiscence-bump
+      title: "怀旧高峰（reminiscence bump）"
+      summary: "人一生记得最多的是 15 到 30 岁之间的事。"
