@@ -38,6 +38,6 @@ def to_dict(self):                      # Comment：每次新建，值直接引�
             "replies": [r.to_dict() for r in self.replies]}
 ```
 
-<details class="pt"><summary>延伸</summary>多实例时，ID 改由数据库序列生成（唯一、递增，但可能有空洞），"某一时刻"靠一次查询或一个只读事务；读从库还要处理"读自己的写"。</details>
+<details class="pt"><summary>延伸</summary>多实例时，ID 改由数据库序列生成（唯一、递增，但可能有空洞），"某一时刻"靠一次查询或一个可重复读的只读事务；读从库还要处理"读自己的写"。</details>
 
 **知识点：** 防御性拷贝（Defensive Copying）、内存模型与可见性（Memory Model）、内存持久化（In-Memory Persistence）

@@ -16,7 +16,7 @@ tags: [作答]
 - **锁里只放内存操作**：帖子仓库的检查放在锁外，持锁时不调外部对象、不睡眠
 - **ID 最后分配**：时钟或构造失败发生在取号之前，失败的调用不烧号
 - **全局锁够用**：临界区是几次字典操作；纯 Python 受 GIL 限制，分片也买不到并行
-- **每帖一把锁的代价**：ID 序列仍是全站的，还得再加一把全局锁；锁字典自己的创建也要同步
+- **每帖一把锁的代价**：ID 序列仍是全站的，各帖的锁管不到它；锁字典自己的创建也要同步
 
 ```mermaid
 %%{init: {'sequence': {'actorMargin': 16, 'width': 104, 'messageMargin': 28}}}%%
@@ -42,6 +42,6 @@ with self._lock:
     return comment.to_dict()
 ```
 
-<details class="pt"><summary>延伸</summary>写入真的成了瓶颈时，先测量再拆：每帖一把锁加每帖独立的 ID 序列，这会改变"ID 全站唯一"的合同，要先问产品。</details>
+<details class="pt"><summary>延伸</summary>写入真的成了瓶颈时，先测量再拆：每帖一把锁加每帖独立的 ID 序列，这会改变本实现"ID 全站唯一"的选择，要先问产品。</details>
 
 **知识点：** 复合操作（Compound Actions）、线程安全结构的写法（Thread-Safe Structures）、并行加速与锁竞争（Parallel Speedup & Contention）
