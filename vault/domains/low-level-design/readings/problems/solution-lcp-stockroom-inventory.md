@@ -75,12 +75,12 @@ Stockroom 是一个私有的库存接口：每个用户管理自己的库存条�
 ## 需求与分级
 
 **第 1 关（约 15 分钟，先看清缺陷）**：不改代码，先把九条规则逐条对照现有服务，列出差异清单；然后跑一遍现有测试，看哪几个失败。
-这一关的产出是上面那张修复清单。例子：创建 `{"sku": "BOOK-1", "name": " Book ", "quantity": 3}` 应得到
-`Response(status=201, body={'id': …, 'owner': 'alice', 'sku': 'BOOK-1', 'name': 'Book', 'quantity': 3, 'version': 1})`，其中名字已去掉空白；紧接着 `GET` 同一个 id 必须得到同一个字典。
+这一关的产出是上面那张修复清单。例子：用户 `dana` 创建 `{"sku": "TOOL-9", "name": " Hammer ", "quantity": 7}` 应得到
+`Response(status=201, body={'id': …, 'owner': 'dana', 'sku': 'TOOL-9', 'name': 'Hammer', 'quantity': 7, 'version': 1})`，其中名字已去掉空白；紧接着 `GET` 同一个 id 必须得到同一个字典。
 
 **第 2 关（约 20 分钟，创建与所有者限定）**：让创建真正落库并返回库里读出的值；非法数量不能悄悄变 0；所有读、改、删都带 owner；`id` 规范成小写。
-这一关决定了"把校验写成一个值"和"每个查询带 owner"两个结构（决策一、决策四）。例子：`alice` 创建的条目，`bob` 用同一个 id `GET`、`PATCH`、`DELETE` 都得到 `404 item_not_found`，
-并且之后 `alice` 再读，条目的每个字段和版本都没动。
+这一关决定了"把校验写成一个值"和"每个查询带 owner"两个结构（决策一、决策四）。例子：`dana` 创建的条目，`erin` 用同一个 id `GET`、`PATCH`、`DELETE` 都得到 `404 item_not_found`，
+并且之后 `dana` 再读，条目的每个字段和版本都没动。
 
 **第 3 关（约 20 分钟，版本与唯一）**：更新的检查与修改合成一次库操作；返回更新后的文档；没命中时区分 404 与 409；重复 SKU 映射成 409；错误码表。
 例子：版本为 1 的条目，`PATCH {"version": 1, "quantity": 3}`（值没变）返回版本 2；再用版本 1 发一次得到 `409 version_conflict`；
@@ -169,7 +169,7 @@ row = self.collection.find_one_and_update({**query, "version": patch.version}, p
 
 校验里有四个值得单独记住的细节：
 
-- **数字**：`type(value) in (int, float, Decimal)`，用 `type` 而不用 `isinstance`，因为 `True` 是 `int` 的实例，`isinstance(True, int)` 为真，会让布尔混进来。
+- **数字**：先取 `kind = type(value)`，只认 `int`、`float`、`Decimal` 三种；用 `type` 而不用 `isinstance`，因为 `True` 是 `int` 的实例，`isinstance(True, int)` 为真，会让布尔混进来。
   浮点要有限且是整数值，`Decimal` 要有限且等于自己取整；范围比较用原值，不先转 `int`。`Decimal("3.0000000000000001")` 不是整数值，被拒绝，这就是 HTTP 适配器要把小数解析成 `Decimal` 而不是 `float` 的原因：`float` 会把它悄悄舍成 3.0。
 - **名字**：先 `trim` 再数长度，数的是 UTF-16 码元：`😀` 是 2 个，`é` 是 1 个，40 个 `😀` 刚好 80。
 - **去空白**：必须自己列字符表。Python 的 `str.strip()` 会多剥 `\x1c` 到 `\x1f` 和 `\x85`，又不剥 U+FEFF；ECMAScript 的规则正好相反，所以 `"\x85z\x1f"` 要原样保留，`"\ufeffx"` 要变成 `"x"`。
@@ -284,11 +284,11 @@ from dataclasses import dataclass
 from decimal import Decimal
 from typing import Any
 
-# ECMAScript 的空白与行终止符：Python 的 str.strip() 多剥 \x1c-\x1f、\x85，又不剥 \ufeff，所以必须自己列
-WHITESPACE = (
-    "\t\n\v\f\r \u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a"
-    "\u2028\u2029\u202f\u205f\u3000\ufeff"
+# 题目规定的"空白"是 ECMAScript 那一套：str.strip() 默认会多剥 0x1c-0x1f 与 0x85，又剥不掉 0xfeff，只能自己列码点
+BLANK_CODEPOINTS = (
+    *range(0x09, 0x0E), 0x20, 0xA0, 0x1680, *range(0x2000, 0x200B), 0x2028, 0x2029, 0x202F, 0x205F, 0x3000, 0xFEFF,
 )
+WHITESPACE = "".join(map(chr, BLANK_CODEPOINTS))
 SKU = re.compile(r"[A-Z0-9-]{1,24}")  # 与 fullmatch 配用：`$` 会放过结尾的换行
 ITEM_ID = re.compile(r"[0-9a-fA-F]{24}")
 ITEM_PATH = re.compile(r"/items/([^/]+)")
@@ -317,22 +317,25 @@ def utf16_length(text: str) -> int:
 
 
 def valid_name(value: Any) -> str | None:
-    """合格返回去空白后的名字，否则 None。"""
-    if not isinstance(value, str):
-        return None
-    name = trim(value)
+    """合格就返回去空白后的名字，否则 None。"""
+    name = trim(value) if isinstance(value, str) else ""
     return name if 1 <= utf16_length(name) <= 80 else None
 
 
 def whole_number(value: Any, minimum: int, maximum: int) -> int | None:
-    """int、整数值的 float、整数值的 Decimal 且在范围内才返回 int；bool、字符串、None 都不是数。"""
-    if type(value) not in (int, float, Decimal):
+    """只认 int、整数值的 float、整数值的 Decimal；bool、字符串、None 都不是数。落在 [minimum, maximum] 才返回 int。"""
+    kind = type(value)  # 用 type() 而不是 isinstance：bool 是 int 的子类，必须挡在外面
+    if kind is int:
+        integral = True
+    elif kind is float:
+        integral = math.isfinite(value) and value.is_integer()
+    elif kind is Decimal:
+        integral = value.is_finite() and value == value.to_integral_value()
+    else:
         return None
-    if isinstance(value, float) and not (math.isfinite(value) and value.is_integer()):
+    if not integral or not minimum <= value <= maximum:
         return None
-    if isinstance(value, Decimal) and not (value.is_finite() and value == value.to_integral_value()):
-        return None
-    return int(value) if minimum <= value <= maximum else None
+    return int(value)
 
 
 class StoreError(Exception):
@@ -441,7 +444,7 @@ class NewItem:
 
     @classmethod
     def parse(cls, body: Any) -> NewItem | None:
-        if not isinstance(body, dict) or set(body) != {"sku", "name", "quantity"}:
+        if not isinstance(body, dict) or body.keys() != {"sku", "name", "quantity"}:
             return None
         sku, name = body["sku"], valid_name(body["name"])
         quantity = whole_number(body["quantity"], 0, 1000000)
@@ -486,7 +489,8 @@ class InventoryService:
         self.collection = collection
 
     def handle(self, method: str, path: str, user: str | None, body: Any = None) -> Response:
-        if not isinstance(user, str) or not trim(user):
+        signed_in = isinstance(user, str) and bool(trim(user))
+        if not signed_in:
             return problem(401, "unauthorized")
         item_id = None
         if path != "/items":

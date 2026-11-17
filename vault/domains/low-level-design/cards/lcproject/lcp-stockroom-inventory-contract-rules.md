@@ -29,7 +29,8 @@ flowchart TB
 
 ```python
 def handle(self, method, path, user, body=None):
-    if not isinstance(user, str) or not trim(user):
+    signed_in = isinstance(user, str) and bool(trim(user))
+    if not signed_in:
         return problem(401, "unauthorized")
     item_id = None
     if path != "/items":

@@ -49,15 +49,15 @@ tags: [solution]
 | 周日永远没有 | 周末窗口的终点只比周六晚一天，且是闭区间 | 周日 00:00 就已经结束了 |
 | 售罄的便宜票被推荐 | 价格规则用 `<=`，且不看数量 | 两个条件都丢了一半 |
 | 后面的客户拿到前面客户的演出 | 距离规则在自己身上记了"按演出算好的距离" | 有状态的规则被共用 |
-| 有些客户一场都没有 | 先截断再匹配；兜底只给"没有任何位置信息"的客户 | 顺序错了，兜底条件错了 |
+| 有些客户一场都没有 | 先截断再匹配；兜底只给没有 `home_city` 的客户 | 顺序错了，兜底条件错了 |
 
 **第 2 关（约 15 分钟）：规则逐条符合定义。** 位置规则（出发点优先级、缺失即不匹配、含边界），时间规则（两个窗口），价格规则，两个组合子（修复前的 `all_of` 只看最后一条规则的结果）。这一关的主要产出是边界测试：恰好等于、差一微秒、差一秒。
 
-**第 3 关（约 10 分钟）：推荐器。** 可推荐集合、排序、先匹配后截断、第一个命中的级别、兜底。示例：用同一个活动同时发给住费城的 Pat 和人在波士顿的 Sam，两人的结果不同，且交换顺序结果不变。
+**第 3 关（约 10 分钟）：推荐器。** 可推荐集合、排序、先匹配后截断、第一个命中的级别、兜底。示例：用同一个活动同时发给住西雅图的 Pat 和人在斯波坎的 Sam，两人的结果不同，且交换顺序结果不变。
 
 **第 4 关（选做，约 5 分钟）：复用与扩展。** 让一条别处写的规则放进组合子；用多个线程共用同一个推荐器和同一个活动；再把三个书面问题答完（怎么不改推荐器就加新规则、怎么试验未验证的信号、兜底怎么保证又怎么看得见）。
 
-题目给的那个例子——Pat 住费城，一场卡姆登周日 20:00 的爵士演出，2026-11-05（周四）09:00 发出——**在修复前的代码上也返回 `["e1"]`**：周末那一级因为终点错了不命中，第二级 `within_days(30)` 里的 `all_of` 只看最后一条规则，碰巧通过。一个例子通过不能证明代码正确，这是第一课。
+一个很容易拿来验收的例子——Pat 住西雅图，一场贝尔维尤周日 20:00 的演出，2026-11-05（周四）09:00 发出，活动是「周末那一级、再加 14 天内那一级」——**在修复前的代码上也返回 `["c1"]`**：周末那一级因为终点错了不命中，第二级 `within_days(14)` 里的 `all_of` 只看最后一条规则，碰巧通过。一个例子通过不能证明代码正确，这是第一课。
 
 ## 核心对象与职责
 
@@ -111,7 +111,7 @@ classDiagram
 
 **问题**：现象四（后面的客户拿到前面客户的演出）是怎么来的？
 
-修复前的 `within_miles` 在自己身上放了一个字典：键是演出城市，值是"算过的距离"。第一位客户来问费城到特伦顿，字典里记下 28.33；第二位客户来问，字典里已经有这个键，直接返回——不管第二位客户其实在波士顿。更糟的是，缺少位置信息时它记下的是 `0.0`，"0 英里"小于任何半径，于是下一个客户，哪怕有位置，也被当成"就在演出地"。
+修复前的 `within_miles` 在自己身上放了一个字典：键是演出 id，值是第一次算出的"在不在半径内"。第一位客户（住西雅图）来问塔科马的演出，约 25 英里，字典里记下"在"；第二位客户（人在斯波坎）来问同一场演出，字典里已经有这个键，直接返回"在"——不管他离塔科马其实有两百多英里。更糟的是，缺少位置信息时它先把距离记成 `0.0`，"0 英里"小于任何半径，结论就成了"在"；这个结论又被记下来，之后有位置的客户也被当成"就在演出地"。
 同一个规则对象被所有客户、所有活动共用（合同第 8 条），所以**规则身上的任何可变状态都是共享状态**。
 
 可选的做法有三个：
@@ -124,19 +124,20 @@ classDiagram
 实现上，用 `@dataclass(frozen=True, slots=True)`：冻结之后给实例属性赋值会抛 `FrozenInstanceError`，"无状态"由语言保证，不靠自觉。
 
 ```python
-# 修复前：规则身上有一个按城市记距离的字典，所有客户共用
+# 修复前：规则身上有一个字典，记着第一次算出的结论，所有客户共用
 def matches(self, event, context):
-    if event.city not in self._seen:
-        self._seen[event.city] = distance_for(context.customer, event.city)
-    return self._seen[event.city] <= self.miles
+    memo = self._verdicts
+    if event.id not in memo:
+        memo[event.id] = gap_to(event, context) <= self.miles
+    return memo[event.id]
 
-# 修复后：每次只用收到的两个参数，没有 self._seen
+# 修复后：每次只用收到的两个参数，没有 self._verdicts
 def matches(self, event, context):
-    origin = origin_of(context.customer, context.locations)
-    target = context.locations.coordinates_of(event.city)
-    if origin is None or target is None:
+    here = origin_of(context.customer, context.locations)
+    venue = context.locations.coordinates_of(event.city)
+    if here is None or venue is None:
         return False
-    return context.locations.distance_miles(origin, target) <= self.miles
+    return context.locations.distance_miles(here, venue) <= self.miles
 ```
 
 这里不需要任何设计模式。缓存（Memoization）是优化，不是结构；用装饰器去包一层缓存，只会让"为什么两个客户拿到同一个答案"更难一眼看出。
@@ -166,7 +167,7 @@ def origin_of(customer, locations):
 
 **问题**：周末窗口怎么算才不容易错？
 
-修复前的写法是按周几分支：周日退一天，其他天往前推到周六；终点是周六零点加一天。两个问题：终点只到周日 00:00，于是周日的演出一律落在窗口之外；闭区间让周日 00:00 整的演出反而命中。把另一种常见写法（对 7 取模往前推）拿来比较，会发现它在周日把"这个周末"推到下一个周六：
+修复前的写法是对 7 取模往前推到周六，终点是周六零点加一天。两个问题：终点只到周日 00:00，于是周日的演出一律落在窗口之外，而闭区间让周日 00:00 整的演出反而命中；取模写法还在周日把"这个周末"推到了下一个周六：
 
 | 现在 | 正确窗口（含起、不含止） | 取模写法的起点 |
 |---|---|---|
@@ -208,7 +209,7 @@ def weekend_window(now):
 
 **问题**：现象五（有些客户一场都没有）怎么来的？
 
-修复前的 `recommend` 先把可推荐活动截到 `limit` 个，再让每一级去匹配这"前几场"。最早的几场如果都不在客户附近，匹配结果就是空的，哪怕第 20 场就在隔壁。随后兜底只给"既没有位置又没有家"的客户，其他人拿到空列表。
+修复前的 `recommend` 先把可推荐活动截到 `limit` 个，再让每一级去匹配这"前几场"。最早的几场如果都不在客户附近，匹配结果就是空的，哪怕第 20 场就在隔壁。随后兜底只给没有 `home_city` 的客户，其他人拿到空列表。
 正确的顺序是：
 
 1. 可推荐集合：过滤（没开始、有票）、排序一次。
@@ -217,11 +218,11 @@ def weekend_window(now):
 
 ```python
 for tier in campaign.tiers:
-    hits = (event for event in eligible if tier.matches(event, context))
-    matched = [event.id for event in islice(hits, campaign.limit)]   # 惰性：够了就停
-    if matched:
-        return matched
-return [event.id for event in islice(eligible, campaign.limit)]
+    hits = (e for e in pool if tier.matches(e, ctx))
+    picked = [e.id for e in islice(hits, campaign.limit)]   # 惰性：够了就停
+    if picked:
+        return picked
+return [e.id for e in pool[: campaign.limit]]
 ```
 
 用生成器加 `islice` 的好处是：凑够 `limit` 个就停止评估后面的演出，规则很贵（比如要查库存）时能省下大部分调用；而结果和"先全部匹配再切片"完全一样。排序放在 `Recommender` 的构造函数里做一次，因为演出在构造后不变；可推荐集合每次调用重新算，因为它依赖 `now` 和库存。
@@ -238,33 +239,34 @@ return [event.id for event in islice(eligible, campaign.limit)]
 
 ## 代码走读
 
-先看文件顶部"固定的数据类型"那一段：它在真实工作区里是 `models.py`，这里复制进来只为让文件能单独运行；放进真实工作区时换成 `from models import ...`，其余一字不改，公开测试照常跑。
+先看文件顶部"固定的数据类型"那一段：它在真实工作区里是 `models.py`，这里按同样的公开接口自己写了一份，只为让文件能单独运行；放进真实工作区时换成 `from models import ...`，其余一字不改，公开测试照常跑。
 
-然后看 `origin_of` 与 `WithinMiles.matches`：先出发点，再目标坐标，任何一个是 `None` 就 `return False`，最后才计算距离并用 `<=` 比较半径。这十行就是决策一和决策二的全部落点。注意没有任何 `self.` 开头的可变字段。
+然后看 `origin_of` 与 `WithinMiles.matches`：先出发点（`here`），再演出城市的坐标（`venue`），任何一个是 `None` 就 `return False`，最后才计算距离并用 `<=` 比较半径。这十行就是决策一和决策二的全部落点。注意没有任何 `self.` 开头的可变字段。
 
-接着是 `weekend_window` 与 `ThisWeekend`：窗口是 `(start, end)`，比较是 `start <= 开始时间 < end`，另加 `now <= 开始时间`。`PriceUnder` 里的 `any` 把数量与价格两个条件放在同一个生成器表达式里。
+接着是 `weekend_window` 与 `ThisWeekend`：窗口是 `(start, end)`，比较是 `max(now, start) <= 开始时间 < end`：既不早于现在，又落在半开的周末窗口里。`PriceUnder` 里的 `any` 把数量与价格两个条件放在同一个生成器表达式里。
 
-最后是 `Recommender.recommend`：上下文一次建好，可推荐集合一次算好，`for tier in campaign.tiers` 里 `islice(hits, campaign.limit)`，循环之后是兜底。`_eligible` 单独成一个方法，因为"可推荐"在逐级和兜底里是同一个集合，不能写两遍。
+最后是 `Recommender.recommend`：上下文一次建好，可推荐集合一次算好，`for tier in campaign.tiers` 里 `islice(hits, campaign.limit)`，循环之后是兜底。`_can_recommend` 单独成一个方法，因为"可推荐"在逐级和兜底里是同一个集合，不能写两遍。
 
 %% code:begin solution.py %%
 ```python
 """活动推荐规则修复（Event Campaigns）：参考解。
 
 设计五行：
-1. 规则是只带配置的冻结对象：`matches(event, context)` 的答案只取决于这两个参数，不记任何东西；
-2. 一切"这位客户是谁、现在几点、查哪张表"都从 `RecommendationContext` 进来，所以同一个规则对象可以被
-   任意多个客户、活动和线程共用；
-3. `all_of` / `any_of` 只组合"任何带 `matches` 的对象"，可以嵌套到任意深度，也能装下别处写的规则；
-4. 周末窗口用"本周一零点加 5 天、加 7 天"算出，周六日属于当前这一周，周一到周五取的就是即将到来的那一个；
-5. `Recommender` 先定出"可推荐集合"（已排序），再逐级匹配：先匹配、后截断，没有一级命中就用同一集合兜底。
+1. 规则是只带配置的冻结对象：`matches(event, context)` 的答案只取决于这两个参数，自己不记任何东西；
+2. "这位客户是谁、现在几点、查哪张表"全部经由 `RecommendationContext` 传入，所以一个规则对象
+   可以被任意多个客户、活动和线程共用；
+3. `all_of` / `any_of` 只要求成员有 `matches` 方法，因此能嵌套到任意深度，也能装下别处写的规则；
+4. 周末窗口用"本周一零点 + 5 天 / + 7 天"得到：周六日落在当前这一周，周一到周五则指向即将到来的周末；
+5. `Recommender` 先得到排好序的"可推荐集合"，再逐级匹配：先匹配、后截断；没有一级命中就返回这个集合的开头。
 
-下面第一段（models:begin 到 models:end）是工作区里固定的数据类型，复制在这里只为让文件能单独运行；
-放进真实工作区时换成 `from models import ...`，其余一字不改。
+models:begin 到 models:end 之间是工作区里固定不动的数据类型，这里写了一份自己的实现，只为让本文件能单独运行；
+放进真实工作区时把这一段换成 `from models import ...`，其余部分原样使用。
 """
 
 from __future__ import annotations
 
 import math
+from collections import defaultdict
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -304,47 +306,47 @@ class Listing:
 
 
 class Inventory:
-    """按活动查票。"""
+    """票务库存：按活动 id 分桶，每个桶里是该活动的所有挂牌。"""
 
     def __init__(self, listings: Iterable[Listing] = ()) -> None:
-        self._by_event: dict[str, list[Listing]] = {}
-        for listing in listings:
-            self._by_event.setdefault(listing.event_id, []).append(listing)
+        self._stock: defaultdict[str, list[Listing]] = defaultdict(list)
+        for item in listings:
+            self._stock[item.event_id].append(item)
 
     def listings_for(self, event_id: str) -> list[Listing]:
-        return list(self._by_event.get(event_id, ()))
+        return list(self._stock.get(event_id, []))  # 每次给调用方一份新列表
 
 
 class LocationService:
-    """城市坐标，以及哪些城市两两相邻（双向）。"""
+    """城市到坐标的表，加一张无向的邻接图。"""
 
-    def __init__(
-        self, cities: dict[str, Coordinates], adjacent: Iterable[tuple[str, str]] = ()
-    ) -> None:
-        self._cities = dict(cities)
-        self._adjacent: dict[str, set[str]] = {}
-        for first, second in adjacent:
-            self._adjacent.setdefault(first, set()).add(second)
-            self._adjacent.setdefault(second, set()).add(first)
+    def __init__(self, cities: dict[str, Coordinates], adjacent: Iterable[tuple[str, str]] = ()) -> None:
+        links: defaultdict[str, set[str]] = defaultdict(set)
+        for a, b in adjacent:
+            links[a].add(b)
+            links[b].add(a)
+        self._links = links
+        self._coords = dict(cities)
 
     def coordinates_of(self, city: str) -> Coordinates | None:
-        return self._cities.get(city)
+        return self._coords.get(city, None)
 
     def adjacent_cities(self, city: str) -> frozenset[str]:
-        return frozenset(self._adjacent.get(city, ()))
+        return frozenset(self._links[city]) if city in self._links else frozenset()
 
     def distance_miles(self, origin: Coordinates, target: Coordinates) -> float:
-        """球面上两点的大圆距离（haversine 公式）。"""
-        lat1, lat2 = math.radians(origin.latitude), math.radians(target.latitude)
-        dlon = math.radians(target.longitude - origin.longitude)
-        h = math.sin((lat2 - lat1) / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
-        h = min(1.0, max(0.0, h))  # 舍入误差可能让 h 略微越界
-        return 2 * EARTH_RADIUS_MILES * math.atan2(math.sqrt(h), math.sqrt(1 - h))
+        """大圆距离：haversine 取 asin 的写法。"""
+        phi_a = math.radians(origin.latitude)
+        phi_b = math.radians(target.latitude)
+        half_dphi = (phi_b - phi_a) / 2
+        half_dlam = math.radians(target.longitude - origin.longitude) / 2
+        a = math.sin(half_dphi) ** 2 + math.cos(phi_a) * math.cos(phi_b) * math.sin(half_dlam) ** 2
+        return 2 * EARTH_RADIUS_MILES * math.asin(min(1.0, math.sqrt(a)))  # min 防浮点误差越过 1
 
 
 @dataclass(frozen=True)
 class RecommendationContext:
-    """一条规则可以查看的全部信息：客户、此刻、位置服务、库存。"""
+    """规则判断时能看到的全部输入：谁在问、此刻几点、位置表、库存。"""
 
     customer: Customer
     now: datetime
@@ -362,15 +364,16 @@ class Campaign:
     tiers: Sequence[Rule]
     limit: int
 
+    # a Campaign is shared by many callers, so its tiers are frozen into a tuple on creation
     def __post_init__(self) -> None:
-        object.__setattr__(self, "tiers", tuple(self.tiers))
+        object.__setattr__(self, "tiers", (*self.tiers,))
 
 
 # ---- models:end ----
 
 
 def origin_of(customer: Customer, locations: LocationService) -> Coordinates | None:
-    """客户的出发点：分享的精确位置优先；没有才用家所在城市的坐标；都没有就是没有。"""
+    """出发点：精确位置第一；其次是位置表认识的家乡城市；两样都没有就返回 None。"""
     if customer.location is not None:
         return customer.location
     if customer.home_city is None:
@@ -379,8 +382,9 @@ def origin_of(customer: Customer, locations: LocationService) -> Coordinates | N
 
 
 def weekend_window(now: datetime) -> tuple[datetime, datetime]:
-    """`now` 所在周的周末 [周六 00:00, 下周一 00:00)。周一为一周之首，所以周六日算当前这一周。"""
-    monday = now.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=now.weekday())
+    """半开区间 [周六 00:00, 下周一 00:00)。以周一为一周之首，周六日就属于 `now` 所在的这一周。"""
+    today = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    monday = today - timedelta(days=now.weekday())
     return monday + timedelta(days=5), monday + timedelta(days=7)
 
 
@@ -389,20 +393,27 @@ class WithinMiles:
     miles: float
 
     def matches(self, event: Event, context: RecommendationContext) -> bool:
-        origin = origin_of(context.customer, context.locations)
-        target = context.locations.coordinates_of(event.city)
-        if origin is None or target is None:
-            return False  # 缺位置信息是"不匹配"，不是异常，更不是距离 0
-        return context.locations.distance_miles(origin, target) <= self.miles
+        here = origin_of(context.customer, context.locations)
+        venue = context.locations.coordinates_of(event.city)
+        if here is None or venue is None:
+            return False  # 不知道在哪里，就不能说"在范围内"；它既不是异常，也不是 0 英里
+        return context.locations.distance_miles(here, venue) <= self.miles
+
+
+def within_miles(miles: float) -> Rule:
+    return WithinMiles(miles=miles)
 
 
 @dataclass(frozen=True, slots=True)
 class InMetroArea:
     def matches(self, event: Event, context: RecommendationContext) -> bool:
-        home = context.customer.home_city
-        if home is None:
-            return False
-        return event.city == home or event.city in context.locations.adjacent_cities(home)
+        base = context.customer.home_city
+        # 家本身算，直接相邻的城市算；没有家，就没有都市圈
+        return base is not None and event.city in {base, *context.locations.adjacent_cities(base)}
+
+
+def in_metro_area() -> Rule:
+    return InMetroArea()
 
 
 @dataclass(frozen=True, slots=True)
@@ -410,18 +421,24 @@ class PriceUnder:
     cents: int
 
     def matches(self, event: Event, context: RecommendationContext) -> bool:
-        # 同一张票要同时"买得到"且"够便宜"：两个条件落在同一个 listing 上
-        return any(
-            listing.quantity > 0 and listing.price_cents < self.cents
-            for listing in context.inventory.listings_for(event.id)
-        )
+        # 买得到和够便宜要由同一张票同时满足
+        offers = context.inventory.listings_for(event.id)
+        return any(o.quantity > 0 and o.price_cents < self.cents for o in offers)
+
+
+def price_under(cents: int) -> Rule:
+    return PriceUnder(cents=cents)
 
 
 @dataclass(frozen=True, slots=True)
 class ThisWeekend:
     def matches(self, event: Event, context: RecommendationContext) -> bool:
-        start, end = weekend_window(context.now)
-        return context.now <= event.starts_at and start <= event.starts_at < end
+        opens, closes = weekend_window(context.now)
+        return max(context.now, opens) <= event.starts_at < closes
+
+
+def this_weekend() -> Rule:
+    return ThisWeekend()
 
 
 @dataclass(frozen=True, slots=True)
@@ -429,7 +446,12 @@ class WithinDays:
     days: int
 
     def matches(self, event: Event, context: RecommendationContext) -> bool:
-        return context.now <= event.starts_at <= context.now + timedelta(days=self.days)
+        horizon = context.now + timedelta(days=self.days)
+        return context.now <= event.starts_at <= horizon
+
+
+def within_days(days: int) -> Rule:
+    return WithinDays(days=days)
 
 
 @dataclass(frozen=True, slots=True)
@@ -437,7 +459,11 @@ class AllOf:
     rules: tuple[Rule, ...]
 
     def matches(self, event: Event, context: RecommendationContext) -> bool:
-        return all(rule.matches(event, context) for rule in self.rules)
+        return all(r.matches(event, context) for r in self.rules)
+
+
+def all_of(*rules: Rule) -> Rule:
+    return AllOf(rules=rules)
 
 
 @dataclass(frozen=True, slots=True)
@@ -445,74 +471,51 @@ class AnyOf:
     rules: tuple[Rule, ...]
 
     def matches(self, event: Event, context: RecommendationContext) -> bool:
-        return any(rule.matches(event, context) for rule in self.rules)
-
-
-def within_miles(miles: float) -> Rule:
-    return WithinMiles(miles)
-
-
-def in_metro_area() -> Rule:
-    return InMetroArea()
-
-
-def price_under(cents: int) -> Rule:
-    return PriceUnder(cents)
-
-
-def this_weekend() -> Rule:
-    return ThisWeekend()
-
-
-def within_days(days: int) -> Rule:
-    return WithinDays(days)
-
-
-def all_of(*rules: Rule) -> Rule:
-    return AllOf(tuple(rules))
+        return any(r.matches(event, context) for r in self.rules)
 
 
 def any_of(*rules: Rule) -> Rule:
-    return AnyOf(tuple(rules))
+    return AnyOf(rules=rules)
 
 
 class Recommender:
-    """唯一持有数据的对象：活动按 (开始时间, id) 排好一次；每次推荐只读它们。"""
+    """唯一持有数据的对象：活动在构造时按 (开始时间, id) 排好，之后每次推荐都只读。"""
 
     def __init__(self, events: Iterable[Event], inventory: Inventory, locations: LocationService) -> None:
-        self._events = tuple(sorted(events, key=lambda event: (event.starts_at, event.id)))
-        self._inventory = inventory
-        self._locations = locations
+        by_start = sorted(events, key=lambda e: (e.starts_at, e.id))
+        self._events = tuple(by_start)
+        self._stock = inventory
+        self._places = locations
+
+    def _can_recommend(self, event: Event, now: datetime) -> bool:
+        """没开始，并且至少还有一张能买的票。"""
+        if event.starts_at < now:
+            return False
+        return any(o.quantity > 0 for o in self._stock.listings_for(event.id))
 
     def recommend(self, customer: Customer, campaign: Campaign, now: datetime) -> list[str]:
-        context = RecommendationContext(customer, now, self._locations, self._inventory)
-        eligible = [event for event in self._events if self._eligible(event, now)]
+        ctx = RecommendationContext(customer, now, self._places, self._stock)
+        pool = [e for e in self._events if self._can_recommend(e, now)]
         for tier in campaign.tiers:
-            hits = (event for event in eligible if tier.matches(event, context))
-            matched = [event.id for event in islice(hits, campaign.limit)]  # 先匹配，后截断
-            if matched:
-                return matched  # 第一个有命中的级别决定结果，后面的级别不再看
-        return [event.id for event in islice(eligible, campaign.limit)]  # 兜底：人人一样
-
-    def _eligible(self, event: Event, now: datetime) -> bool:
-        """还没开始，并且至少有一张买得到的票。"""
-        return event.starts_at >= now and any(
-            listing.quantity > 0 for listing in self._inventory.listings_for(event.id)
-        )
+            hits = (e for e in pool if tier.matches(e, ctx))
+            picked = [e.id for e in islice(hits, campaign.limit)]  # 先匹配，再截断
+            if picked:
+                return picked  # 第一个有命中的级别说了算
+        return [e.id for e in pool[: campaign.limit]]  # 没有级别命中：每位客户拿到同样的开头
 
 
 if __name__ == "__main__":
     from datetime import UTC
 
     places = LocationService(
-        {"philadelphia": Coordinates(39.9526, -75.1652), "camden": Coordinates(39.9259, -75.1196)},
-        [("philadelphia", "camden")],
+        {"seattle": Coordinates(47.6062, -122.3321), "bellevue": Coordinates(47.6101, -122.2015)},
+        [("seattle", "bellevue")],
     )
-    show = Event("e1", "Jazz by the River", "camden", datetime(2026, 11, 8, 20, tzinfo=UTC))
-    recommender = Recommender([show], Inventory([Listing("e1", 3500, 12)]), places)
-    nearby = any_of(within_miles(100), in_metro_area())
-    weekend = Campaign("this-weekend", [all_of(this_weekend(), nearby), all_of(within_days(30), nearby)], 5)
-    print(recommender.recommend(Customer("pat", home_city="philadelphia"), weekend, datetime(2026, 11, 5, 9, tzinfo=UTC)))
+    concert = Event("c1", "Harbor Lights Concert", "bellevue", datetime(2026, 11, 8, 20, tzinfo=UTC))
+    recommender = Recommender([concert], Inventory([Listing("c1", 4200, 8)]), places)
+    close = any_of(within_miles(25), in_metro_area())
+    campaign = Campaign("weekend-picks", [all_of(this_weekend(), close), all_of(within_days(14), close)], 3)
+    print(recommender.recommend(Customer("pat", home_city="seattle"), campaign, datetime(2026, 11, 5, 9, tzinfo=UTC)))
 ```
 %% code:end %%
 
@@ -521,7 +524,7 @@ if __name__ == "__main__":
 测试按合同逐条写，另外给每个缺陷各留一个能失败的断言：
 
 - **位置**：分享位置的客户优先于家所在城市；家所在城市没有坐标时没有出发点；缺信息永远不匹配；半径含边界（用位置服务算出的距离本身作半径是匹配，用比它小的最近浮点数不匹配）。
-- **都市圈**：家所在城市、双向邻接、不传递（卡姆登与樱桃山相邻，费城客户看不到樱桃山）、没有坐标的城市也能邻接、只有位置没有家的客户不匹配。
+- **都市圈**：家所在城市、双向邻接、不传递（贝尔维尤与雷德蒙德相邻，西雅图客户看不到雷德蒙德）、没有坐标的城市也能邻接、只有位置没有家的客户不匹配。
 - **时间**：`within_days` 两端含、差一微秒就不含；`this_weekend` 对周一到周五、周六、周日、周一零点分别参数化，每次在五个边界点上检查；跨月和跨年各一个。
 - **价格**：数量与价格在同一张票上、严格小于、没有票的演出不匹配。
 - **组合**：首条不过末条过、中间不过首末都过；空 `all_of` 与空 `any_of`；嵌套；一个外部写的 `Hometown` 规则。

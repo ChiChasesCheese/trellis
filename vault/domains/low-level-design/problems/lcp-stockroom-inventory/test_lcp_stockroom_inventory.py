@@ -49,16 +49,16 @@ def run_threads(count, work):
     return results
 
 
-# ---- 例子与身份、路由 ----
+# ---- 端到端的例子与身份、路由 ----
 
-def test_readme_example():
+def test_create_then_read_back_roundtrip():
     service = make()
-    created = service.handle("POST", "/items", "alice", {"sku": "BOOK-1", "name": "Book", "quantity": 3})
-    assert created.status == 201
-    item = created.body
-    assert set(item) == {"id", "owner", "sku", "name", "quantity", "version"}
-    assert (item["owner"], item["quantity"], item["version"]) == ("alice", 3, 1)
-    assert service.handle("GET", "/items/" + item["id"], "alice").body == item
+    reply = service.handle("POST", "/items", "dana", {"sku": "TOOL-9", "name": "Hammer", "quantity": 7})
+    assert reply.status == 201
+    stored = reply.body
+    assert set(stored) == {"id", "owner", "sku", "name", "quantity", "version"}
+    assert (stored["owner"], stored["quantity"], stored["version"]) == ("dana", 7, 1)
+    assert service.handle("GET", "/items/" + stored["id"], "dana").body == stored
 
 
 @pytest.mark.parametrize("user", [None, "", "   ", "\t\n", "\u00a0\ufeff\u3000", 7, ["alice"]])

@@ -32,11 +32,11 @@ class WithinMiles:
     miles: float                                    # 只有配置，没有缓存
 
     def matches(self, event, context) -> bool:
-        origin = origin_of(context.customer, context.locations)
-        target = context.locations.coordinates_of(event.city)
-        if origin is None or target is None:
+        here = origin_of(context.customer, context.locations)
+        venue = context.locations.coordinates_of(event.city)
+        if here is None or venue is None:
             return False                            # 不知道 ≠ 距离 0
-        return context.locations.distance_miles(origin, target) <= self.miles
+        return context.locations.distance_miles(here, venue) <= self.miles
 ```
 
 <details class="pt"><summary>延伸</summary>演出多到每次都算距离太慢时，先用城市索引缩小候选，再在候选上跑规则；规则本身不变，变的是候选集合怎么得到。</details>

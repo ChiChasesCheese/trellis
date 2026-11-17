@@ -15,13 +15,14 @@
 10. 逐级尝试：第一个至少匹配一个可推荐活动的级别给出结果（它的匹配项，保持顺序，最多 `limit` 个），后面的级别不再看；先匹配、后截断。
 11. 没有任何级别命中时，对每一位客户都返回可推荐活动的前 `limit` 个；只有可推荐活动为空时结果才为空。
 """
+
 from __future__ import annotations
 
 import math
+from collections import defaultdict
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from functools import reduce
 from typing import Protocol
 
 # ---- models:begin ----
@@ -57,47 +58,47 @@ class Listing:
 
 
 class Inventory:
-    """按活动查票。"""
+    """票务库存：按活动 id 分桶，每个桶里是该活动的所有挂牌。"""
 
     def __init__(self, listings: Iterable[Listing] = ()) -> None:
-        self._by_event: dict[str, list[Listing]] = {}
-        for listing in listings:
-            self._by_event.setdefault(listing.event_id, []).append(listing)
+        self._stock: defaultdict[str, list[Listing]] = defaultdict(list)
+        for item in listings:
+            self._stock[item.event_id].append(item)
 
     def listings_for(self, event_id: str) -> list[Listing]:
-        return list(self._by_event.get(event_id, ()))
+        return list(self._stock.get(event_id, []))  # 每次给调用方一份新列表
 
 
 class LocationService:
-    """城市坐标，以及哪些城市两两相邻（双向）。"""
+    """城市到坐标的表，加一张无向的邻接图。"""
 
-    def __init__(
-        self, cities: dict[str, Coordinates], adjacent: Iterable[tuple[str, str]] = ()
-    ) -> None:
-        self._cities = dict(cities)
-        self._adjacent: dict[str, set[str]] = {}
-        for first, second in adjacent:
-            self._adjacent.setdefault(first, set()).add(second)
-            self._adjacent.setdefault(second, set()).add(first)
+    def __init__(self, cities: dict[str, Coordinates], adjacent: Iterable[tuple[str, str]] = ()) -> None:
+        links: defaultdict[str, set[str]] = defaultdict(set)
+        for a, b in adjacent:
+            links[a].add(b)
+            links[b].add(a)
+        self._links = links
+        self._coords = dict(cities)
 
     def coordinates_of(self, city: str) -> Coordinates | None:
-        return self._cities.get(city)
+        return self._coords.get(city, None)
 
     def adjacent_cities(self, city: str) -> frozenset[str]:
-        return frozenset(self._adjacent.get(city, ()))
+        return frozenset(self._links[city]) if city in self._links else frozenset()
 
     def distance_miles(self, origin: Coordinates, target: Coordinates) -> float:
-        """球面上两点的大圆距离（haversine 公式）。"""
-        lat1, lat2 = math.radians(origin.latitude), math.radians(target.latitude)
-        dlon = math.radians(target.longitude - origin.longitude)
-        h = math.sin((lat2 - lat1) / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
-        h = min(1.0, max(0.0, h))  # 舍入误差可能让 h 略微越界
-        return 2 * EARTH_RADIUS_MILES * math.atan2(math.sqrt(h), math.sqrt(1 - h))
+        """大圆距离：haversine 取 asin 的写法。"""
+        phi_a = math.radians(origin.latitude)
+        phi_b = math.radians(target.latitude)
+        half_dphi = (phi_b - phi_a) / 2
+        half_dlam = math.radians(target.longitude - origin.longitude) / 2
+        a = math.sin(half_dphi) ** 2 + math.cos(phi_a) * math.cos(phi_b) * math.sin(half_dlam) ** 2
+        return 2 * EARTH_RADIUS_MILES * math.asin(min(1.0, math.sqrt(a)))  # min 防浮点误差越过 1
 
 
 @dataclass(frozen=True)
 class RecommendationContext:
-    """一条规则可以查看的全部信息：客户、此刻、位置服务、库存。"""
+    """规则判断时能看到的全部输入：谁在问、此刻几点、位置表、库存。"""
 
     customer: Customer
     now: datetime
@@ -115,46 +116,52 @@ class Campaign:
     tiers: Sequence[Rule]
     limit: int
 
+    # a Campaign is shared by many callers, so its tiers are frozen into a tuple on creation
     def __post_init__(self) -> None:
-        object.__setattr__(self, "tiers", tuple(self.tiers))
+        object.__setattr__(self, "tiers", (*self.tiers,))
 
 
 # ---- models:end ----
 
+
 def origin_of(customer: Customer, locations: LocationService) -> Coordinates | None:
-    if customer.home_city is not None:
-        home = locations.coordinates_of(customer.home_city)
-        if home is not None:
-            return home
-    return customer.location
+    home = locations.coordinates_of(customer.home_city) if customer.home_city else None
+    return home or customer.location
 
 
 def weekend_window(now: datetime) -> tuple[datetime, datetime]:
-    midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
-    saturday = midnight + timedelta(days=(5 - now.weekday()) % 7)
+    today = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    saturday = today + timedelta(days=(5 - now.weekday()) % 7)
     return saturday, saturday + timedelta(days=1)
 
 
 class WithinMiles:
     def __init__(self, miles: float) -> None:
+        self._verdicts: dict[str, bool] = {}  # 演出 id -> 第一次算出的结果
         self.miles = miles
-        self._seen: dict[str, float] = {}  # 活动城市 -> 距离，省得重复计算
 
     def matches(self, event: Event, context: RecommendationContext) -> bool:
-        if event.city not in self._seen:
-            origin = origin_of(context.customer, context.locations)
-            target = context.locations.coordinates_of(event.city)
-            if origin is None or target is None:
-                self._seen[event.city] = 0.0
-            else:
-                self._seen[event.city] = context.locations.distance_miles(origin, target)
-        return self._seen[event.city] <= self.miles
+        memo = self._verdicts
+        if event.id not in memo:
+            here = origin_of(context.customer, context.locations)
+            venue = context.locations.coordinates_of(event.city)
+            gap = 0.0 if here is None or venue is None else context.locations.distance_miles(here, venue)
+            memo[event.id] = gap <= self.miles
+        return memo[event.id]
+
+
+def within_miles(miles: float) -> Rule:
+    return WithinMiles(miles)
 
 
 class InMetroArea:
     def matches(self, event: Event, context: RecommendationContext) -> bool:
-        home = context.customer.home_city
-        return home is not None and event.city in context.locations.adjacent_cities(home)
+        base = context.customer.home_city
+        return base is not None and event.city in context.locations.adjacent_cities(base)
+
+
+def in_metro_area() -> Rule:
+    return InMetroArea()
 
 
 class PriceUnder:
@@ -162,14 +169,22 @@ class PriceUnder:
         self.cents = cents
 
     def matches(self, event: Event, context: RecommendationContext) -> bool:
-        prices = [listing.price_cents for listing in context.inventory.listings_for(event.id)]
-        return bool(prices) and min(prices) <= self.cents
+        offers = context.inventory.listings_for(event.id)
+        return any(o.price_cents <= self.cents for o in offers)
+
+
+def price_under(cents: int) -> Rule:
+    return PriceUnder(cents)
 
 
 class ThisWeekend:
     def matches(self, event: Event, context: RecommendationContext) -> bool:
-        start, end = weekend_window(context.now)
-        return context.now <= event.starts_at and start <= event.starts_at <= end
+        opens, closes = weekend_window(context.now)
+        return context.now <= event.starts_at and opens <= event.starts_at <= closes
+
+
+def this_weekend() -> Rule:
+    return ThisWeekend()
 
 
 class WithinDays:
@@ -177,71 +192,62 @@ class WithinDays:
         self.days = days
 
     def matches(self, event: Event, context: RecommendationContext) -> bool:
-        return abs(event.starts_at - context.now) <= timedelta(days=self.days)
-
-
-class AllOf:
-    def __init__(self, rules: Iterable[Rule]) -> None:
-        self.rules = tuple(rules)
-
-    def matches(self, event: Event, context: RecommendationContext) -> bool:
-        return reduce(lambda _, rule: rule.matches(event, context), self.rules, True)
-
-
-class AnyOf:
-    def __init__(self, rules: Iterable[Rule]) -> None:
-        self.rules = tuple(rules)
-
-    def matches(self, event: Event, context: RecommendationContext) -> bool:
-        return any(rule.matches(event, context) for rule in self.rules)
-
-
-def within_miles(miles: float) -> Rule:
-    return WithinMiles(miles)
-
-
-def in_metro_area() -> Rule:
-    return InMetroArea()
-
-
-def price_under(cents: int) -> Rule:
-    return PriceUnder(cents)
-
-
-def this_weekend() -> Rule:
-    return ThisWeekend()
+        gap = event.starts_at - context.now  # 没有方向：过去的演出同样算"在 days 天之内"
+        return abs(gap) <= timedelta(days=self.days)
 
 
 def within_days(days: int) -> Rule:
     return WithinDays(days)
 
 
+@dataclass(frozen=True)
+class AllOf:
+    rules: tuple[Rule, ...]
+
+    def matches(self, event: Event, context: RecommendationContext) -> bool:
+        verdict = True
+        for r in self.rules:
+            verdict = r.matches(event, context)  # 每条都问了，但只留最后一条的答案
+        return verdict
+
+
 def all_of(*rules: Rule) -> Rule:
-    return AllOf(rules)
+    return AllOf(rules=rules)
 
 
-def any_of(*rules: Rule) -> Rule:
-    return AnyOf(rules)
+@dataclass(frozen=True)
+class AnyOf:
+    rules: tuple[Rule, ...]
+
+    def matches(self, event: Event, context: RecommendationContext) -> bool:
+        return any(member.matches(event, context) for member in self.rules)
 
 
 class Recommender:
+    """持有演出、库存和位置表；`recommend` 对每位客户现算。"""
+
     def __init__(self, events: Iterable[Event], inventory: Inventory, locations: LocationService) -> None:
-        self._events = list(events)
-        self._inventory = inventory
-        self._locations = locations
+        catalog = list(events)
+        self._stock = inventory
+        self._catalog = catalog
+        self._places = locations
+
+    def _can_recommend(self, event: Event, now: datetime) -> bool:
+        return event.starts_at >= now and len(self._stock.listings_for(event.id)) > 0
 
     def recommend(self, customer: Customer, campaign: Campaign, now: datetime) -> list[str]:
-        context = RecommendationContext(customer, now, self._locations, self._inventory)
-        eligible = sorted(
-            (event for event in self._events if self._eligible(event, now)),
-            key=lambda event: (event.starts_at, event.id),
+        ctx = RecommendationContext(customer, now, self._places, self._stock)
+        pool = sorted(
+            (e for e in self._catalog if self._can_recommend(e, now)),
+            key=lambda e: (e.starts_at, e.id),
         )
-        shortlist = eligible[: campaign.limit]  # 先截断，再匹配
+        top = pool[: campaign.limit]  # 先截断，再匹配
         for tier in campaign.tiers:
-            matched = [event.id for event in shortlist if tier.matches(event, context)]
-            if matched:
-                return matched
-        return [] if customer.home_city else [event.id for event in shortlist]
+            picked = [e.id for e in top if tier.matches(e, ctx)]
+            if picked:
+                return picked
+        return [] if customer.home_city else [e.id for e in top]
 
-    def _eligible(self, event: Event, now: datetime) -> bool:
-        return event.starts_at >= now and bool(self._inventory.listings_for(event.id))
+
+def any_of(*rules: Rule) -> Rule:
+    return AnyOf(rules=rules)
