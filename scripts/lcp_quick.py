@@ -3,6 +3,7 @@
     uv run python scripts/lcp_quick.py gate [<slug> ...]              # check written cards (shape, length, one per point)
     uv run python scripts/lcp_quick.py push [--dry-run] [--unverified] [<slug> ...]   # update Anki, import what never was
     uv run python scripts/lcp_quick.py weak [days]                    # points answered Again/Hard lately, and their leaves
+    uv run python scripts/lcp_quick.py apply-adds <slug> [...]        # insert verifier `add` lines into points and cards
 
 Chi (2026-11-16): no typing; cards read like vocabulary, so he knows at a glance whether he knows the point and grades
 1-4; points as fine as possible; an extension line under the answer that does not count toward the point; most cards
@@ -203,6 +204,41 @@ def push(args: list[str]) -> int:
     return 0
 
 
+def apply_adds(slug: str) -> str:
+    """A verifier that may not edit the points file writes {"verdict": "add", "point", "card", "where"}; insert them.
+
+    `where` names the point to follow ("after <kp> ..."); without it the point goes last. Each add gets an ok verdict.
+    """
+    import re
+    adds = [v for v in rows("verify", slug)[0] if v.get("verdict") == "add"]
+    pts = points(slug)
+    have = {p["kp"] for p in pts}
+    cards_file = HOME / "cards" / f"{slug}.jsonl"
+    lines = [l for l in cards_file.read_text(encoding="utf-8").splitlines() if l.strip()]
+    card_kps = {json.loads(l)["kp"] for l in lines}
+    done = 0
+    for a in adds:
+        if a["kp"] not in have:
+            m = re.search(r"after (\S+)", a.get("where", ""))
+            anchor = m.group(1) if m else ""
+            anchor = anchor if anchor.startswith(slug + ".") else f"{slug}.{anchor}"
+            order = [p["kp"] for p in pts]
+            pts.insert(order.index(anchor) + 1 if anchor in order else len(pts), {**a["point"], "kp": a["kp"]})
+            have.add(a["kp"])
+            done += 1
+        if a["kp"] not in card_kps:
+            lines.append(json.dumps({**a["card"], "kp": a["kp"]}, ensure_ascii=False))
+            card_kps.add(a["kp"])
+    (HOME / "points" / f"{slug}.json").write_text(json.dumps(pts, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    cards_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    judged = {v.get("kp") for v in rows("verify", slug)[0] if v.get("verdict") in ("ok", "fix")}
+    with (HOME / "verify" / f"{slug}.jsonl").open("a", encoding="utf-8") as f:
+        for a in adds:
+            if a["kp"] not in judged:
+                f.write(json.dumps({"kp": a["kp"], "verdict": "ok", "note": "added by the verifier"}, ensure_ascii=False) + "\n")
+    return f"{slug}: {done} point(s) inserted from {len(adds)} add line(s)"
+
+
 def weak(days: int = 14) -> list[str]:
     """Leaves behind the points Chi answered Again or Hard in the last `days` days, the most missed first."""
     from anki_refresh import call
@@ -219,13 +255,16 @@ def weak(days: int = 14) -> list[str]:
 
 def main() -> int:
     args = sys.argv[1:]
-    if not args or args[0] not in ("gate", "push", "weak"):
+    if not args or args[0] not in ("gate", "push", "weak", "apply-adds"):
         print(__doc__)
         return 2
     if args[0] == "gate":
         return gate(args[1:])
     if args[0] == "push":
         return push(args[1:])
+    if args[0] == "apply-adds":
+        print("\n".join(apply_adds(s) for s in args[1:]))
+        return 0
     print("\n".join(weak(int(args[1]) if len(args) > 1 else 14)))
     return 0
 
