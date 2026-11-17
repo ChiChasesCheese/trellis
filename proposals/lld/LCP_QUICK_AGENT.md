@@ -84,6 +84,7 @@ it ("单纯用文字去讲解，真的会看麻"). So:
 - Both code fields are scanned, not read, so they sit outside the unit limits; keep them real, runnable Python that
   matches our solution's names.
 - No filler words ("注意"、"值得一提"、"其实"、"需要"). Every word in `q`, `why`, `more` carries information.
+- No meta sentences about the content (「这张卡考的是」「这里要注意」); state the content. Spoken, human Chinese.
 
 ## Ten seconds: the limits (`uv run python scripts/lcp_quick.py gate <slug>` enforces them)
 

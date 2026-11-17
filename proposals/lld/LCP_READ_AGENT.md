@@ -33,6 +33,27 @@ line ≤ 60 units: the takeaway). It is read once, then graded understood / not;
 be readable in one to two minutes: prose ≤ 900 units, code ≤ 40 lines (`uv run python scripts/lcp_quick.py gate <slug>`
 checks). Chinese, plain, structured; terms engineers say in English stay English.
 
+**How it reads (Chi, 2026-11-16: "说人话 … 能用卡片结构表达的东西就别一直复述 … 直接把题目或者说内容列出来").**
+Show the content itself, laid out; never talk about it.
+
+- No meta sentences: no 「本节介绍了」「这一部分讲的是」「我们需要注意」「值得一提的是」「下面我们来看」. Start with the content.
+- Let the layout carry the structure: a table for things with the same fields (files, errors, examples), a numbered
+  list for rules and steps, a code block for code and example calls with their output, a bold label in front of a
+  short line. A paragraph only for the story card, and short.
+- Say each thing once. Do not restate in prose what a table or code block already shows.
+- Plain, spoken Chinese, like a colleague briefing you: 「坏在哪」「你要交什么」「给你的东西」, not textbook phrasing.
+- Example of the wrong way: 「本章节主要介绍了返回值的约定，我们需要注意 remaining 的计算时机。」
+  The right way:
+
+  ```
+  **返回** `(allowed, remaining, reset_after_ms)`
+
+  | 字段 | 规则 |
+  |---|---|
+  | `remaining` | 本次判定之后还能放几次；被拒时为 0 |
+  | `reset_after_ms` | 整数毫秒，向 0 截断 |
+  ```
+
 Write, in this order:
 
 1. **题目背景与前因后果** — the story first: what the system is, who uses it, what is broken or missing and how that
