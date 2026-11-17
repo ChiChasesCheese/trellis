@@ -14,5 +14,10 @@ extends (LCP_AGENT.md §9) and link it.
 Resume rule first: run `uv run python scripts/check_lld_problems.py --branch lcproject lcproject.lcp-{NAME}`; if it
 prints ok, stop and report; otherwise do only what it lists as missing and never rewrite a file that already passes.
 
+Before you report, `uv run python scripts/lcp_overlap.py {NAME}` must print ok (LCP_AGENT.md rule 3): your own
+words, names, sample data and helper code everywhere, signatures excepted. Run every check after your last edit. Do not
+start database servers; if the workspace needs one, write the vault version on sqlite3 and say what was not run. Python
+3.11 runs use `uv run --no-project --python 3.11 --with pytest …`; never touch the repo `.venv`.
+
 Do not run git. Do not start other agents. Touch only this leaf's files (and /tmp scratch copies). Your final message
 is the report LCP_AGENT.md describes, plus the official public test summary line (or "no public tests shipped").
