@@ -322,10 +322,10 @@ class ReconciliationService:
 
 if __name__ == "__main__":
     service = ReconciliationService()
-    print(service.register_invoices(["INV A, 2026-03-01, 100", "INV B, 2026-03-02, 100"]))
+    print(service.register_invoices(["ORD A, 2026-08-04, 100", "ORD B, 2026-08-05, 100"]))
     print(service.reconcile_batch([
-        {"payment": "p1, 1, paying for:INV A", "key": "retry-1"},
-        {"payment": "p1, 1, paying for:INV A", "key": "retry-1"},
-        {"payment": "p2, 100"},
+        {"payment": "r1, 1, paying for:ORD A", "key": "again-1"},
+        {"payment": "r1, 1, paying for:ORD A", "key": "again-1"},
+        {"payment": "r2, 100"},
     ]))
     print(service.list_invoices())

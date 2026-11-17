@@ -41,9 +41,9 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
-AUTO_CODE_PATTERN_TEXT = r"[A-Za-z0-9]{6,10}"
-CUSTOM_CODE_PATTERN_TEXT = r"[A-Za-z0-9_-]{3,32}"
 MAX_GENERATION_ATTEMPTS = 5
+AUTO_CODE_PATTERN_TEXT = r"[A-Za-z0-9]{6,10}"
+CUSTOM_CODE_PATTERN_TEXT = r"[0-9A-Za-z_-]{3,32}"
 
 
 class ShortenerError(Exception):

@@ -36,15 +36,15 @@ def pay(service, text, forgiveness=0, key=None):
 # ---- README 里的例子与公开用例 ----
 
 def test_readme_batch_example():
-    service = service_with("INV A, 2026-03-01, 100", "INV B, 2026-03-02, 100")
+    service = service_with("ORD A, 2026-08-04, 100", "ORD B, 2026-08-05, 100")
     status, result = service.reconcile_batch([
-        {"payment": "p1, 1, paying for:INV A", "key": "retry-1"},
-        {"payment": "p1, 1, paying for:INV A", "key": "retry-1"},
-        {"payment": "p2, 100"},
+        {"payment": "r1, 1, paying for:ORD A", "key": "again-1"},
+        {"payment": "r1, 1, paying for:ORD A", "key": "again-1"},
+        {"payment": "r2, 100"},
     ])
     assert status == 200
     assert [row["status"] for row in result["results"]] == [201, 200, 201]
-    assert [row["body"]["settled_invoice_id"] for row in result["results"]] == ["INV A", "INV A", "INV B"]
+    assert [row["body"]["settled_invoice_id"] for row in result["results"]] == ["ORD A", "ORD A", "ORD B"]
     assert [row["body"]["tier_used"] for row in result["results"]] == ["id", "id", "exact"]
     assert result["results"][0]["body"] == result["results"][1]["body"]
 
@@ -59,18 +59,18 @@ def test_readme_batch_rollback_example():
 
 def test_public_register_and_tiers():
     service = impl.ReconciliationService()
-    assert service.register_invoices(["INV-1, 2026-03-01, 100", "INV-2, 2026-04-01, 200"]) == (201, {"registered_count": 2})
-    service = service_with("INV-7, 2026-03-01, 250", "INV-3, 2026-02-01, 100")
-    status, body = pay(service, "pay_1, 100, paying for: INV-7")
-    assert (status, body["settled_invoice_id"], body["tier_used"]) == (201, "INV-7", "id")
-    service = service_with("INV-9, 2026-04-01, 100", "INV-4, 2026-01-15, 100")
-    status, body = pay(service, "pay_2, 100, March rent, thanks")
-    assert (status, body["settled_invoice_id"], body["tier_used"]) == (201, "INV-4", "exact")
-    service = service_with("INV-1, 2026-05-01, 100", "INV-2, 2026-06-01, 130")
-    status, body = pay(service, "pay_3, 98, bank transfer", forgiveness=2)
-    assert (status, body["settled_invoice_id"], body["tier_used"]) == (201, "INV-1", "fuzzy")
-    service = service_with("INV-1, 2026-05-01, 100")
-    status, body = pay(service, "pay_4, 500, no match here")
+    assert service.register_invoices(["LN-1, 2026-09-03, 120", "LN-2, 2026-10-03, 210"]) == (201, {"registered_count": 2})
+    service = service_with("LN-7, 2026-09-01, 260", "LN-3, 2026-08-01, 110")
+    status, body = pay(service, "rcpt_1, 110, paying for: LN-7")
+    assert (status, body["settled_invoice_id"], body["tier_used"]) == (201, "LN-7", "id")
+    service = service_with("LN-9, 2026-10-01, 140", "LN-4, 2026-07-15, 140")
+    status, body = pay(service, "rcpt_2, 140, June rent, thanks")
+    assert (status, body["settled_invoice_id"], body["tier_used"]) == (201, "LN-4", "exact")
+    service = service_with("LN-1, 2026-11-01, 150", "LN-2, 2026-12-01, 180")
+    status, body = pay(service, "rcpt_3, 147, wire transfer", forgiveness=3)
+    assert (status, body["settled_invoice_id"], body["tier_used"]) == (201, "LN-1", "fuzzy")
+    service = service_with("LN-1, 2026-11-01, 150")
+    status, body = pay(service, "rcpt_4, 900, nothing fits")
     assert (status, body["status"], body["settled_invoice_id"]) == (200, "UNMATCHED", None)
 
 

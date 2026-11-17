@@ -38,12 +38,12 @@ def assert_invalid(*args):
 # ---- 合同里的两个例子 ----
 
 def test_readme_example_high_risk():
-    assert impl.RiskEngine().evaluate(1, 50_000, 10) == {
-        "score": 95, "decision": "reject", "components": {"rating": 40, "value": 30, "age": 25}}
+    assert impl.RiskEngine().evaluate(2, 50_000, 5) == {
+        "score": 85, "decision": "reject", "components": {"rating": 30, "value": 30, "age": 25}}
 
 
 def test_readme_example_low_risk():
-    assert impl.RiskEngine().evaluate(5, 500, 365) == {
+    assert impl.RiskEngine().evaluate(5, 900, 400) == {
         "score": 0, "decision": "approve", "components": {"rating": 0, "value": 0, "age": 0}}
 
 
@@ -146,18 +146,18 @@ def test_invalid_input_leaves_the_engine_usable():
     engine = impl.RiskEngine()
     with pytest.raises(impl.ServiceError):
         engine.evaluate(0, 0, 0)
-    assert engine.evaluate(5, 500, 365)["score"] == 0
+    assert engine.evaluate(5, 900, 400)["score"] == 0
 
 
 # ---- 批量 ----
 
 def test_batch_results_follow_input_order_and_mix_valid_with_invalid():
     engine = impl.RiskEngine()
-    records = [record(1, 50_000, 10), {"rating": 9}, record(5, 500, 365), "nope", record(0)]
+    records = [record(2, 50_000, 5), {"rating": 9}, record(5, 900, 400), "nope", record(0)]
     out = engine.evaluate_many(records)
     assert [o["error"] for o in out] == [None, "invalid_input", None, "invalid_input", "invalid_input"]
-    assert out[0]["result"] == engine.evaluate(1, 50_000, 10)
-    assert out[2]["result"] == engine.evaluate(5, 500, 365)
+    assert out[0]["result"] == engine.evaluate(2, 50_000, 5)
+    assert out[2]["result"] == engine.evaluate(5, 900, 400)
     assert [o["result"] for o in out if o["error"]] == [None, None, None]
     assert all(set(o) == {"result", "error"} for o in out)
 
@@ -182,7 +182,7 @@ def test_batch_empty_input_returns_an_empty_list():
     {"rating": 3, "value_cents": 100, "age_days": 30},                                 # 键名不对
 ])
 def test_batch_marks_each_kind_of_bad_record_invalid_and_keeps_going(bad):
-    out = impl.RiskEngine().evaluate_many([bad, record(5, 500, 365)])
+    out = impl.RiskEngine().evaluate_many([bad, record(5, 900, 400)])
     assert out[0] == {"result": None, "error": "invalid_input"}
     assert out[1]["error"] is None and out[1]["result"]["score"] == 0
 
@@ -191,7 +191,7 @@ def test_batch_consumes_the_iterable_exactly_once():
     pulled = []
 
     def source():
-        for item in (record(1, 50_000, 10), {"rating": 0}, record(5, 500, 365)):
+        for item in (record(2, 50_000, 5), {"rating": 0}, record(5, 900, 400)):
             pulled.append(item)
             yield item
 
@@ -201,7 +201,7 @@ def test_batch_consumes_the_iterable_exactly_once():
 
 def test_batch_does_not_swallow_errors_from_the_input_iterator():
     def source():
-        yield record(5, 500, 365)
+        yield record(5, 900, 400)
         raise RuntimeError("upstream broke")
 
     with pytest.raises(RuntimeError, match="upstream broke"):
@@ -210,21 +210,21 @@ def test_batch_does_not_swallow_errors_from_the_input_iterator():
 
 def test_batch_accepts_any_finite_iterable():
     engine = impl.RiskEngine()
-    as_tuple = engine.evaluate_many((record(1, 50_000, 10),))
-    as_gen = engine.evaluate_many(r for r in [record(1, 50_000, 10)])
-    assert as_tuple == as_gen == [{"result": engine.evaluate(1, 50_000, 10), "error": None}]
+    as_tuple = engine.evaluate_many((record(2, 50_000, 5),))
+    as_gen = engine.evaluate_many(r for r in [record(2, 50_000, 5)])
+    assert as_tuple == as_gen == [{"result": engine.evaluate(2, 50_000, 5), "error": None}]
 
 
 # ---- 无状态与互不影响 ----
 
 def test_mutating_a_result_does_not_change_later_results():
     engine = impl.RiskEngine()
-    first = engine.evaluate(1, 50_000, 10)
+    first = engine.evaluate(2, 50_000, 5)
     first["components"]["rating"] = -1
     first["decision"] = "approve"
     first["score"] = 0
-    assert engine.evaluate(1, 50_000, 10) == {
-        "score": 95, "decision": "reject", "components": {"rating": 40, "value": 30, "age": 25}}
+    assert engine.evaluate(2, 50_000, 5) == {
+        "score": 85, "decision": "reject", "components": {"rating": 30, "value": 30, "age": 25}}
 
 
 def test_two_results_for_the_same_input_share_no_objects():
@@ -250,7 +250,7 @@ def test_calls_do_not_depend_on_what_ran_before_or_on_the_instance():
     one, two = impl.RiskEngine(), impl.RiskEngine()
     with pytest.raises(impl.ServiceError):
         one.evaluate(0, 0, 0)
-    one.evaluate_many([{"rating": 9}, record(1, 50_000, 10)])
+    one.evaluate_many([{"rating": 9}, record(2, 50_000, 5)])
     assert one.evaluate(3, 10_000, 0) == two.evaluate(3, 10_000, 0)
 
 

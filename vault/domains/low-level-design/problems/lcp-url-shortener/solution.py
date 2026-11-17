@@ -23,8 +23,9 @@ from typing import Any
 from urllib.parse import urlsplit
 
 AUTO_CODE_PATTERN = re.compile(r"[A-Za-z0-9]{6,10}")  # 一律 fullmatch：`$` 会放过结尾的换行
-CUSTOM_CODE_PATTERN = re.compile(r"[A-Za-z0-9_-]{3,32}")
+CUSTOM_CODE_RE = re.compile(r"[0-9A-Za-z_-]{3,32}")
 MAX_GENERATION_ATTEMPTS = 5
+LOCK_WAIT_MS = 5000
 CODE_LENGTH = 7
 ALPHABET = string.ascii_letters + string.digits
 RESERVED_CODES = frozenset({"links", "stats"})  # `stats` 被统计路由接走，永远跳转不到；`links` 其实能跳转，也保守地拒绝
@@ -101,7 +102,7 @@ def _clean_url(value: object) -> str:
 def _clean_code(value: object) -> str | None:
     if value is None:
         return None
-    if not isinstance(value, str) or not CUSTOM_CODE_PATTERN.fullmatch(value):
+    if not isinstance(value, str) or not CUSTOM_CODE_RE.fullmatch(value):
         raise ValidationError("custom_code must match [A-Za-z0-9_-]{3,32}")
     return value
 
@@ -133,9 +134,11 @@ class URLShortener:
     def _open(self) -> sqlite3.Connection:
         path = self._db_path or os.environ.get("URL_SHORTENER_DB_PATH") or "shortener.db"
         conn = sqlite3.connect(path, check_same_thread=False, isolation_level=None)  # 自己管事务
-        conn.execute("PRAGMA busy_timeout = 5000")  # 另一个进程占着写锁时等，不立刻报错
+        settings = [f"busy_timeout = {LOCK_WAIT_MS}"]  # 另一个进程占着写锁时最多等这么久，不立刻报错
         if path != ":memory:":
-            conn.execute("PRAGMA journal_mode = WAL")  # 读不挡写
+            settings.append("journal_mode = WAL")  # 读不挡写
+        for setting in settings:
+            conn.execute("PRAGMA " + setting)
         return conn
 
     def _init_db(self) -> None:

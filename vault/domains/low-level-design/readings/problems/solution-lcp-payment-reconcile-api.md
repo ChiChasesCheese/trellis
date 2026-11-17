@@ -50,17 +50,17 @@ tags: [solution]
 
 **第 1 关（约 15 分钟，登记与列表）**：解析发票行、逐行校验、原子登记、按（到期日，发票号）排序的列表。
 这一关最重要的是把"一行怎么变成合法发票"写成**一个**函数（`Invoice.parse`），金额、日期、发票号三个小解析各一个函数，被付款那边复用。
-示例：`register_invoices(["INV A, 2026-03-01, 100", "INV B, 2026-03-02, 100"])` 得到 `(201, {"registered_count": 2})`；再登记 `["INV A, 2026-03-01, 100"]` 得到 `409 duplicate_invoice`，账本里仍是两张。
+示例：`register_invoices(["ORD A, 2026-08-04, 100", "ORD B, 2026-08-05, 100"])` 得到 `(201, {"registered_count": 2})`；再登记 `["ORD A, 2026-08-04, 100"]` 得到 `409 duplicate_invoice`，账本里仍是两张。
 
 **第 2 关（约 20 分钟，三级匹配）**：备注标记、exact、fuzzy、平局顺序、结算与返回体。
-示例：发票 `INV-1` 到期 2026-05-01 金额 100，`INV-2` 到期 2026-06-01 金额 130，付款 `"pay_3, 98, bank transfer"`：
+示例：发票 `LN-1` 到期 2026-11-01 金额 150，`LN-2` 到期 2026-12-01 金额 180，付款 `"rcpt_3, 147, wire transfer"`：
 
 | forgiveness | 结果 |
 |---|---|
 | 0 | `UNMATCHED` |
-| 1 | `UNMATCHED`（98 + 1 = 99，够不到 100） |
-| 2 | `MATCHED INV-1`，`tier_used` 是 `fuzzy`（闭区间的下界正好含 100） |
-| 3 | `MATCHED INV-1`，`fuzzy` |
+| 2 | `UNMATCHED`（147 + 2 = 149，够不到 150） |
+| 3 | `MATCHED LN-1`，`tier_used` 是 `fuzzy`（闭区间的上界 150 正好含在内） |
+| 4 | `MATCHED LN-1`，`fuzzy` |
 
 平局例子：发票 `A` 03-02 金额 101、`B` 03-01 金额 96、`D` 03-01 金额 102、`C` 03-01 金额 98，付款 100 容差 5，连续付五笔，命中顺序是 `C D B A` 然后未匹配。
 `C` 与 `D` 的金额差都是 2，到期日相同，发票号小的 `C` 先；之后 `D`（差 2）先于 `B`（差 4）；最后才是晚一天到期的 `A`，哪怕它的差只有 1。
@@ -70,7 +70,7 @@ tags: [solution]
 把金额改成 101 再用键 `k` 得到 `409 idempotency_conflict`；格式错的 `"bad"` 带键 `k` 得到 `400`（先校验）；不带键的 `"p1, 100"` 连发三次，依次命中 B、C，然后 `UNMATCHED`。
 
 **第 4 关（约 10 分钟，批次与并发）**：逐行暂存、回滚、整批原子、并发。
-示例：README 的批次例子里三行的状态是 `[201, 200, 201]`，命中的发票是 `INV A`、`INV A`、`INV B`；第一行靠 id 命中，尽管金额只有 1，第二行同键同请求重放，第三行 exact 命中 `INV B`。
+示例：README 的批次例子里三行的状态是 `[201, 200, 201]`，命中的发票是 `ORD A`、`ORD A`、`ORD B`；第一行靠 id 命中，尽管金额只有 1，第二行同键同请求重放，第三行 exact 命中 `ORD B`。
 `[p3 带键 new-key, "invalid"]` 得到 `400 invalid_input`，之后 `new-key` 是全新的键，p3 的结算也不见了。
 
 HTTP 合同（适配器已写好，要知道它做什么，才知道你的方法会收到什么）：
@@ -579,11 +579,11 @@ class ReconciliationService:
 
 if __name__ == "__main__":
     service = ReconciliationService()
-    print(service.register_invoices(["INV A, 2026-03-01, 100", "INV B, 2026-03-02, 100"]))
+    print(service.register_invoices(["ORD A, 2026-08-04, 100", "ORD B, 2026-08-05, 100"]))
     print(service.reconcile_batch([
-        {"payment": "p1, 1, paying for:INV A", "key": "retry-1"},
-        {"payment": "p1, 1, paying for:INV A", "key": "retry-1"},
-        {"payment": "p2, 100"},
+        {"payment": "r1, 1, paying for:ORD A", "key": "again-1"},
+        {"payment": "r1, 1, paying for:ORD A", "key": "again-1"},
+        {"payment": "r2, 100"},
     ]))
     print(service.list_invoices())
 ```
@@ -622,8 +622,8 @@ if __name__ == "__main__":
 
 ```text
 (201, {'registered_count': 2})
-(200, {'results': [{'status': 201, 'body': {'status': 'MATCHED', 'payment_id': 'p1', 'settled_invoice_id': 'INV A', 'tier_used': 'id', 'message': 'Payment p1 paid 1 for invoice INV A due on 2026-03-01'}}, {'status': 200, 'body': {'status': 'MATCHED', 'payment_id': 'p1', 'settled_invoice_id': 'INV A', 'tier_used': 'id', 'message': 'Payment p1 paid 1 for invoice INV A due on 2026-03-01'}}, {'status': 201, 'body': {'status': 'MATCHED', 'payment_id': 'p2', 'settled_invoice_id': 'INV B', 'tier_used': 'exact', 'message': 'Payment p2 paid 100 for invoice INV B due on 2026-03-02'}}]})
-(200, [{'invoice_id': 'INV A', 'due_date': '2026-03-01', 'amount_cents': 100, 'status': 'PAID', 'settled_by_payment_id': 'p1'}, {'invoice_id': 'INV B', 'due_date': '2026-03-02', 'amount_cents': 100, 'status': 'PAID', 'settled_by_payment_id': 'p2'}])
+(200, {'results': [{'status': 201, 'body': {'status': 'MATCHED', 'payment_id': 'r1', 'settled_invoice_id': 'ORD A', 'tier_used': 'id', 'message': 'Payment r1 paid 1 for invoice ORD A due on 2026-08-04'}}, {'status': 200, 'body': {'status': 'MATCHED', 'payment_id': 'r1', 'settled_invoice_id': 'ORD A', 'tier_used': 'id', 'message': 'Payment r1 paid 1 for invoice ORD A due on 2026-08-04'}}, {'status': 201, 'body': {'status': 'MATCHED', 'payment_id': 'r2', 'settled_invoice_id': 'ORD B', 'tier_used': 'exact', 'message': 'Payment r2 paid 100 for invoice ORD B due on 2026-08-05'}}]})
+(200, [{'invoice_id': 'ORD A', 'due_date': '2026-08-04', 'amount_cents': 100, 'status': 'PAID', 'settled_by_payment_id': 'r1'}, {'invoice_id': 'ORD B', 'due_date': '2026-08-05', 'amount_cents': 100, 'status': 'PAID', 'settled_by_payment_id': 'r2'}])
 ```
 
 然后说出：为什么先校验再查键、为什么回执存响应的副本、为什么批次要撤销日志而且回滚在放锁之前。

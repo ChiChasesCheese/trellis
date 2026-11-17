@@ -45,7 +45,7 @@ def evaluate(self, rating, value_cents, account_age_days):
 
 <details class="pt"><summary>延伸</summary>
 
-规则数量变多时，每条规则对应一个带数字的测试；`(1, 50000, 10)` 得 95 分、reject 这类合同例子是第一批测试。
+规则数量变多时，每条规则对应一个带数字的测试；`(2, 50000, 5)` 得 85 分、reject 这类合同例子是第一批测试。
 
 </details>
 

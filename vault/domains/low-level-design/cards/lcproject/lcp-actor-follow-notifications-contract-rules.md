@@ -29,12 +29,13 @@ flowchart TB
 ```
 
 ```python
-def add_movie(self, movie_id, title, actors):
+def add_movie(self, movie_id: str, title: str, actors: list[str]) -> bool:
     _valid(movie_id)
     _valid(title)
     if not isinstance(actors, list):
         raise ValueError(INVALID_INPUT)
-    cast = frozenset(_valid(a) for a in list(actors))
+    # 先复制成不可变集合再校验：之后调用方怎么改列表，校验过的内容都不变
+    cast = frozenset(_valid(actor) for actor in list(actors))
     movie = _Movie(title, cast)
     with self._lock:
         if not self._catalog.is_new(movie_id, movie):

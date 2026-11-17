@@ -51,14 +51,14 @@ class ReconciliationService:
         pass
 
     def register_invoices(self, invoices: list[str]) -> tuple[int, dict[str, Any]]:
-        raise NotImplementedError("Implement atomic invoice batch registration")
+        raise NotImplementedError("todo: parse and register one invoice batch, all or nothing")
 
     def reconcile_payment(self, payment: str, forgiveness: int = 0,
                           key: str | None = None) -> tuple[int, dict[str, Any]]:
-        raise NotImplementedError("Implement tiered payment reconciliation and idempotency")
+        raise NotImplementedError("todo: three-tier matching plus replay by key")
 
     def list_invoices(self) -> tuple[int, list[dict[str, Any]]]:
-        raise NotImplementedError("Implement deterministic invoice listing")
+        raise NotImplementedError("todo: list invoices in a fixed order")
 
     def reconcile_batch(self, payments: list[dict[str, Any]]) -> tuple[int, dict[str, Any]]:
-        raise NotImplementedError("Implement transactional payment batches")
+        raise NotImplementedError("todo: run a payment list as one transaction")

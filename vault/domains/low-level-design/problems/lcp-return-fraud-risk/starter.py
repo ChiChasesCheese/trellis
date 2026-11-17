@@ -2,22 +2,23 @@
 
 这份代码能跑，但有几处和下面的规则不符：它就是要你修的东西。
 
-产品规则（逐条都有测试）：
- 1. `evaluate(rating, value_cents, account_age_days)` 只接受三个整数：评分 1..5，金额（分）≥ 0，账龄（天）≥ 0；
-    布尔值、浮点数、字符串、`None`、范围外的值一律抛 `ServiceError(400, "invalid_input")`，且在任何计算之前；
-    合法整数没有人为的上界（评分除外）。
- 2. 评分分项：1→40、2→30、3→20、4→10、5→0。
- 3. 金额分项：0..9999 分→0；10000..49999→15；≥ 50000→30（下界含）。
- 4. 账龄分项：0..29 天→25；30..179→10；≥ 180→0（下界含）。
- 5. 总分是三项之和，不归一、不取整、不截断；< 30 为 "approve"，30 ≤ 总分 < 60 为 "manual_review"，≥ 60 为 "reject"。
- 6. 返回恰好 `{"score": int, "decision": str, "components": {"rating": int, "value": int, "age": int}}`。
- 7. `evaluate_many(records)` 把有限可迭代对象只遍历一次，按输入顺序为每条记录返回一个结果：
-    记录必须是字典且键恰好是 `rating`、`value_cents`、`account_age_days`；
-    合法的记录是 `{"result": evaluate(...), "error": None}`，无效的记录是 `{"result": None, "error": "invalid_input"}`；
-    坏记录不影响后面的记录；空输入返回 `[]`；输入迭代器自己抛出的异常不能被吞掉。
- 8. 引擎无状态：调用之间、返回的嵌套字典之间互不影响，不修改输入；没有时钟、网络、汇率、学习模型的依赖。
+规则（每一条都有测试）：
+ 1. `evaluate(rating, value_cents, account_age_days)` 的三个入参必须是整数：评分 1..5，金额（分）不小于 0，
+    账龄（天）不小于 0。布尔、浮点、字符串、`None`、越界的值，都抛 `ServiceError(400, "invalid_input")`，
+    而且要在算分之前抛；除评分外，整数没有上界。
+ 2. 评分分：1→40，2→30，3→20，4→10，5→0。
+ 3. 金额分：0..9999 分得 0；10000..49999 得 15；50000 及以上得 30。每一段的下界都算这一段。
+ 4. 账龄分：0..29 天得 25；30..179 得 10；180 及以上得 0。下界同样算这一段。
+ 5. 总分就是三项相加，不归一、不取整、不截断。低于 30 是 "approve"；30 到 59 是 "manual_review"；
+    60 及以上是 "reject"。
+ 6. 返回值恰好是 `{"score": int, "decision": str, "components": {"rating": int, "value": int, "age": int}}`。
+ 7. `evaluate_many(records)` 只遍历一次输入（有限的可迭代对象），按输入顺序给每条记录一个结果。
+    记录必须是字典，键恰好是 `rating`、`value_cents`、`account_age_days`。
+    合法记录得 `{"result": evaluate(...), "error": None}`，非法记录得 `{"result": None, "error": "invalid_input"}`；
+    坏记录不拖累后面的记录；空输入得 `[]`；输入迭代器自己抛的异常照常往外抛，不能吞。
+ 8. 引擎没有状态：调用之间、返回的嵌套字典之间互不影响，也不改输入；不依赖时钟、网络、汇率或学习模型。
 
-Python 3.11，标准库。
+Python 3.11，只用标准库。
 """
 
 from __future__ import annotations
@@ -31,42 +32,59 @@ class ServiceError(Exception):
         super().__init__(code)
 
 
+REQUIRED_FIELDS = ("rating", "value_cents", "account_age_days")
+
+
+def _bad_input():
+    return ServiceError(400, "invalid_input")
+
+
 class RiskEngine:
     def evaluate(self, rating, value_cents, account_age_days):
-        for x in (rating, value_cents, account_age_days):
-            if x is None or isinstance(x, (str, float)):
-                raise ServiceError(400, "invalid_input")
-        if not 0 <= rating <= 5 or value_cents < 0 or account_age_days < 0:
-            raise ServiceError(400, "invalid_input")
-        rating_points = (5 - rating) * 5
-        if value_cents > 50000:
-            value_points = 30
+        for field in (rating, value_cents, account_age_days):
+            # 缺陷：只挡了 None、str、float，bool 之类仍然混得进来
+            if field is None or isinstance(field, (str, float)):
+                raise _bad_input()
+        # 缺陷：评分下界写成 0
+        if rating < 0 or rating > 5 or value_cents < 0 or account_age_days < 0:
+            raise _bad_input()
+
+        # 缺陷：评分表直接用公式算，1 分只得 20
+        by_rating = (5 - rating) * 5
+
+        by_value = 0
+        if value_cents > 50000:  # 缺陷：这里和下一行都漏了"下界含"
+            by_value = 30
         elif value_cents > 10000:
-            value_points = 15
-        else:
-            value_points = 0
+            by_value = 15
+
+        by_age = 0
         if account_age_days < 30:
-            age_points = 25
+            by_age = 25
         elif account_age_days < 180:
-            age_points = 10
-        else:
-            age_points = 0
-        score = rating_points + value_points + age_points
-        if score > 60:
-            decision = "reject"
-        elif score >= 30:
-            decision = "manual_review"
-        else:
-            decision = "approve"
-        return {"score": score, "decision": decision, "components": {"rating": rating_points, "value": value_points, "age": age_points}}
+            by_age = 10
+
+        total = by_rating + by_value + by_age
+        # 缺陷：60 分被当成 manual_review
+        verdict = "approve"
+        if total > 60:
+            verdict = "reject"
+        elif total >= 30:
+            verdict = "manual_review"
+        return {
+            "score": total,
+            "decision": verdict,
+            "components": {"rating": by_rating, "value": by_value, "age": by_age},
+        }
 
     def evaluate_many(self, records):
-        results = []
-        for record in records:
+        out = []
+        for item in records:
             try:
-                if not isinstance(record, dict) or set(record) != {"rating", "value_cents", "account_age_days"}:
-                    raise ServiceError(400, "invalid_input")
-                results.append({"result": self.evaluate(**record), "error": None})
+                if not isinstance(item, dict) or tuple(sorted(item)) != tuple(sorted(REQUIRED_FIELDS)):
+                    raise _bad_input()
+                out.append({"result": self.evaluate(**item), "error": None})
             except ServiceError:
-                results.append({"result": None, "error": None})
-        return results
+                # 缺陷：错误码丢了，应该是 "invalid_input"
+                out.append({"result": None, "error": None})
+        return out

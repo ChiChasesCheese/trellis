@@ -180,8 +180,8 @@ class RiskEngine:
 
 if __name__ == "__main__":
     engine = RiskEngine()
-    print(engine.evaluate(1, 50000, 10))
-    print(engine.evaluate(5, 500, 365))
+    print(engine.evaluate(2, 50000, 5))
+    print(engine.evaluate(5, 900, 400))
     print(engine.assess(3, 10_000, 0).explain())
     for outcome in engine.evaluate_many([{"rating": 3, "value_cents": 10_000, "account_age_days": 0}, {"rating": 0}]):
         print(outcome)

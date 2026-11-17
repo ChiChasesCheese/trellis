@@ -80,7 +80,7 @@ def test_invalid_urls(svc, url):
     assert svc.get_stats()["total_links"] == 0
 
 
-@pytest.mark.parametrize("code", ["abc", "x" * 32, "Ab9_-Z", "docs_2026"])
+@pytest.mark.parametrize("code", ["abc", "x" * 32, "Ab9_-Z", "spring_sale"])
 def test_valid_custom_codes(svc, code):
     assert svc.create("https://example.com", custom_code=code).short_code == code
 
@@ -354,13 +354,13 @@ def test_stats_total_matches_sum_while_writing(svc):
 # ---------- HTTP 合同 ----------
 
 def test_readme_create_example(api, clock):
-    reply = post(api, {"long_url": "https://example.com/a/very/long/page", "custom_code": "docs_2026", "ttl_seconds": 3600})
+    reply = post(api, {"long_url": "https://example.org/guides/setup/intro", "custom_code": "spring_sale", "ttl_seconds": 7200})
     body = dict(reply.body)
     assert re.fullmatch(r"tok_[A-Za-z0-9_-]{16,}", body.pop("owner_token"))
     assert reply.status == 201 and body == {
-        "short_code": "docs_2026", "short_url": "http://localhost:8080/docs_2026",
-        "long_url": "https://example.com/a/very/long/page", "created_at": 1760000000.0,
-        "expires_at": 1760003600.0, "hit_count": 0, "is_expired": False}
+        "short_code": "spring_sale", "short_url": "http://localhost:8080/spring_sale",
+        "long_url": "https://example.org/guides/setup/intro", "created_at": 1760000000.0,
+        "expires_at": 1760007200.0, "hit_count": 0, "is_expired": False}
 
 
 def test_short_url_follows_the_request_host(svc):

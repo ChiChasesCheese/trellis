@@ -6,7 +6,7 @@ tags: [solution]
 
 ## 题目与澄清
 
-短链服务把一个很长的网址换成一个短码：用户拿 `http://host/docs_2026` 这样的短链，服务查表后用 302 把浏览器带到原网址。
+短链服务把一个很长的网址换成一个短码：用户拿 `http://host/spring_sale` 这样的短链，服务查表后用 302 把浏览器带到原网址。
 这个项目要你写五个接口：创建短链、按短码跳转、查元数据、凭所有者令牌删除、查统计。
 后端是 SQLite，多个请求线程共用一条连接；状态码与 JSON 的形状都是合同，一个字都不能错。
 你要写的是服务层 `URLShortener`（建表、校验、生成短码、计数、删除、统计）和把它接到 HTTP 上的那一层。
@@ -29,20 +29,20 @@ tags: [solution]
 下面是用参考解跑出来的真实交互（时钟固定在 1760000000.0，所以数字可以直接对照）：
 
 ```text
-POST /links {"long_url": "https://example.com/a/very/long/page", "custom_code": "docs_2026", "ttl_seconds": 3600}
-  -> 201 {"short_code": "docs_2026", "long_url": "https://example.com/a/very/long/page", "created_at": 1760000000.0,
-          "expires_at": 1760003600.0, "hit_count": 0, "is_expired": false,
-          "short_url": "http://localhost:8080/docs_2026", "owner_token": "tok_…"}
-GET /docs_2026                      -> 302，Location: https://example.com/a/very/long/page
-（时间走过 3600 秒）
-GET /docs_2026                      -> 410 {"error": "the link has expired"}
-GET /links/docs_2026                -> 200 {…, "hit_count": 1, "is_expired": true}
+POST /links {"long_url": "https://example.org/guides/setup/intro", "custom_code": "spring_sale", "ttl_seconds": 7200}
+  -> 201 {"short_code": "spring_sale", "long_url": "https://example.org/guides/setup/intro", "created_at": 1760000000.0,
+          "expires_at": 1760007200.0, "hit_count": 0, "is_expired": false,
+          "short_url": "http://localhost:8080/spring_sale", "owner_token": "tok_…"}
+GET /spring_sale                      -> 302，Location: https://example.org/guides/setup/intro
+（时间走过 7200 秒）
+GET /spring_sale                      -> 410 {"error": "the link has expired"}
+GET /links/spring_sale                -> 200 {…, "hit_count": 1, "is_expired": true}
 POST /links {"long_url": "https://bad host/path"}   -> 400
-POST /links {…, "custom_code": "docs_2026"}          -> 409
+POST /links {…, "custom_code": "spring_sale"}          -> 409
 POST /links {…, "ttl_seconds": true}                 -> 400
-DELETE /links/docs_2026 {}                           -> 400
-DELETE /links/docs_2026 {"owner_token": "x"}         -> 403
-DELETE /links/docs_2026 {"owner_token": "tok_…"}     -> 200 {"deleted": "docs_2026"}
+DELETE /links/spring_sale {}                           -> 400
+DELETE /links/spring_sale {"owner_token": "x"}         -> 403
+DELETE /links/spring_sale {"owner_token": "tok_…"}     -> 200 {"deleted": "spring_sale"}
 PUT /links                                           -> 405 {"error": "method not allowed"}
 ```
 
@@ -66,7 +66,7 @@ PUT /links                                           -> 405 {"error": "method no
 这一关的核心是"过期判断和加一不能被别的请求插进来"（决策一）。示例：`ttl_seconds=60` 的链接，在创建后第 59.999 秒不过期，第 60 秒过期，此时跳转抛 `ExpiredLinkError` 且点击不变。
 
 **第 3 关（约 15 分钟，删除、统计与 HTTP）**：删除的三种失败与一种成功、统计的排序、状态码与错误形状、405 与 404。
-示例：`delete("docs_2026", "x")` 抛 `PermissionDeniedError`，链接仍在；之后 `delete(..., 真令牌)` 返回 `True`，再删一次返回 `False`（路由层翻成 404）。
+示例：`delete("spring_sale", "x")` 抛 `PermissionDeniedError`，链接仍在；之后 `delete(..., 真令牌)` 返回 `True`，再删一次返回 `False`（路由层翻成 404）。
 
 **第 4 关（约 15 分钟，并发与加固）**：一百个线程同时跳转，计数恰好一百；三十二个线程抢同一个自定义短码，恰好一个成功；
 两个连接（相当于两个 worker 进程）同时写同一个文件，计数照样不丢。这一关检验的是决策一与决策二。
@@ -220,8 +220,9 @@ from typing import Any
 from urllib.parse import urlsplit
 
 AUTO_CODE_PATTERN = re.compile(r"[A-Za-z0-9]{6,10}")  # 一律 fullmatch：`$` 会放过结尾的换行
-CUSTOM_CODE_PATTERN = re.compile(r"[A-Za-z0-9_-]{3,32}")
+CUSTOM_CODE_RE = re.compile(r"[0-9A-Za-z_-]{3,32}")
 MAX_GENERATION_ATTEMPTS = 5
+LOCK_WAIT_MS = 5000
 CODE_LENGTH = 7
 ALPHABET = string.ascii_letters + string.digits
 RESERVED_CODES = frozenset({"links", "stats"})  # `stats` 被统计路由接走，永远跳转不到；`links` 其实能跳转，也保守地拒绝
@@ -298,7 +299,7 @@ def _clean_url(value: object) -> str:
 def _clean_code(value: object) -> str | None:
     if value is None:
         return None
-    if not isinstance(value, str) or not CUSTOM_CODE_PATTERN.fullmatch(value):
+    if not isinstance(value, str) or not CUSTOM_CODE_RE.fullmatch(value):
         raise ValidationError("custom_code must match [A-Za-z0-9_-]{3,32}")
     return value
 
@@ -330,9 +331,11 @@ class URLShortener:
     def _open(self) -> sqlite3.Connection:
         path = self._db_path or os.environ.get("URL_SHORTENER_DB_PATH") or "shortener.db"
         conn = sqlite3.connect(path, check_same_thread=False, isolation_level=None)  # 自己管事务
-        conn.execute("PRAGMA busy_timeout = 5000")  # 另一个进程占着写锁时等，不立刻报错
+        settings = [f"busy_timeout = {LOCK_WAIT_MS}"]  # 另一个进程占着写锁时最多等这么久，不立刻报错
         if path != ":memory:":
-            conn.execute("PRAGMA journal_mode = WAL")  # 读不挡写
+            settings.append("journal_mode = WAL")  # 读不挡写
+        for setting in settings:
+            conn.execute("PRAGMA " + setting)
         return conn
 
     def _init_db(self) -> None:

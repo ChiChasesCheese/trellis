@@ -9,7 +9,7 @@ import pytest
 impl = importlib.import_module(os.environ.get("IMPL", "solution"))
 Notice = impl.Notice
 
-# 合同逐个列出的空白字符，独立于被测代码再写一遍：U+0009–000D、U+001C–0020、U+1680、U+2000–2006、U+2008–200A、U+2028–2029、U+205F、U+3000
+# 合同点名的空白字符，在测试里单独列一遍（区间：09–0D、1C–20、1680、2000–2006、2008–200A、2028–2029、205F、3000）
 BLANKS = (
     [chr(c) for c in range(0x09, 0x0E)]
     + [chr(c) for c in range(0x1C, 0x21)]
@@ -68,9 +68,9 @@ def test_readme_example_and_idempotent_retry():
 
 def test_public_cases_follow_unfollow_empty():
     service = make()
-    service.follow("alice", "actor-1")
-    service.add_movie("m1", "Opening Night", ["actor-1", "actor-2"])
-    assert service.inbox("alice") == [Notice("m1", "Opening Night")]
+    service.follow("dana", "star-7")
+    service.add_movie("f9", "Harbour Lights", ["star-7", "star-8"])
+    assert service.inbox("dana") == [Notice("f9", "Harbour Lights")]
 
     other = make()
     other.follow("alice", "actor-1")
