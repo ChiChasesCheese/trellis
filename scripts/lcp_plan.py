@@ -11,10 +11,12 @@ grades the answer (docs/card-notes.md, answer cards) into sources/local/lc-proje
 The plan is the reinforcement loop made concrete:
 - `00 补弱`: every card of the leaves his recent attempts missed (the most missed first), so the next cards he meets
   are the knowledge his answers lacked;
-- then one part per project in the skeleton's order (the study order): `1 先修`, the first cards of the leaves the
-  project's points.json names; `2 快刷`, its ten-second cards in point order (scripts/lcp_quick.py, local); `3 综合`,
-  its few long synthesis cards (tag 作答) in step order;
-- `4 第二次练`, for an exam point only that project tests: every point is practised at least twice (Chi,
+- then one part per project in the skeleton's order (the study order). Chi (2026-11-16) needs the problem before its
+  details: `1 题目`, reading cards, one per workspace file, the story and the contract first (local quick cards of kind
+  `file`); `2 题目理解`, questions on the problem itself, recalled after reading (kind `recall`); `3 先修`, the first
+  cards of the leaves the project's points.json names; `4 快刷`, its ten-second cards in point order; `5 综合`, its few
+  long synthesis cards (tag 作答) in step order;
+- `6 第二次练`, for an exam point only that project tests: every point is practised at least twice (Chi,
   2026-11-16), so its second practice comes from the bank or another domain (lc-project/second_practice.json).
 A card already borrowed by an earlier sprint deck stays there (company_deck.py: the first plan naming a card wins).
 """
@@ -87,17 +89,24 @@ def plan() -> list[dict]:
         need = list(dict.fromkeys(need))
         prereq = take([i for lid in need for i in ordered(by_leaf.get(lid, []))[:PREREQ_PER_LEAF]])
         name = slug.removeprefix("lcp-")
-        quick = take([f"lcpq.{p['kp']}" for p in lcp_quick.points(name)])
+        pts = lcp_quick.points(name)
+        files = take([f"lcpq.{p['kp']}" for p in pts if p.get("kind") == "file"])
+        recall = take([f"lcpq.{p['kp']}" for p in pts if p.get("kind") == "recall"])
+        quick = take([f"lcpq.{p['kp']}" for p in pts if p.get("kind") not in ("file", "recall")])
         own = take(ordered(by_leaf[leaf.id]))
         title = leaf.title.split("（")[0]
+        if files:
+            parts.append({"label": f"{n:02d} {title}::1 题目", "ids": files})
+        if recall:
+            parts.append({"label": f"{n:02d} {title}::2 题目理解", "ids": recall})
         if prereq:
-            parts.append({"label": f"{n:02d} {title}::1 先修", "ids": prereq})
+            parts.append({"label": f"{n:02d} {title}::3 先修", "ids": prereq})
         if quick:
-            parts.append({"label": f"{n:02d} {title}::2 快刷", "ids": quick})
-        parts.append({"label": f"{n:02d} {title}::3 综合", "ids": own})
+            parts.append({"label": f"{n:02d} {title}::4 快刷", "ids": quick})
+        parts.append({"label": f"{n:02d} {title}::5 综合", "ids": own})
         extra = second.get(slug.removeprefix("lcp-"), {})
         if ids := take([i for lid in extra.get("leaves", []) for i in ordered(by_leaf.get(lid, []))] + extra.get("ids", [])):
-            parts.append({"label": f"{n:02d} {title}::4 第二次练", "ids": ids})
+            parts.append({"label": f"{n:02d} {title}::6 第二次练", "ids": ids})
     return parts
 
 

@@ -41,15 +41,18 @@ HOME = Path(os.environ.get("QUICK_HOME") or ROOT / "sources/local/quick")
 DECK = "4 碎片速刷"  # the number sorts it with the daily decks
 PRESET = "碎片速刷"  # its preset kept the old name
 TAG = "quick"
-FORMATS = ("cloze", "mc", "flaw", "qa", "order", "match", "multi", "bug", "judge")
-KIND = {"cloze": "填空", "mc": "选择", "flaw": "找错", "qa": "快问", "order": "排序", "match": "配对", "multi": "多选", "bug": "找错行", "judge": "判断组"}
+FORMATS = ("cloze", "mc", "flaw", "qa", "order", "match", "multi", "bug", "judge", "read")
+KIND = {"cloze": "填空", "mc": "选择", "flaw": "找错", "qa": "快问", "order": "排序", "match": "配对", "multi": "多选", "bug": "找错行", "judge": "判断组", "read": "阅读"}
 FRONT, TAP_FRONT, BACK, TOTAL, OPT, LINE, SIDE, BLANK = 55, 62, 42, 90, 16, 14, 10, 14  # reading units: a Chinese character 1, an ASCII letter or digit 1/2
 MORE = 45  # the extension line under the answer: read only with a few seconds to spare, so outside the ten-second budget
 TAPPED = ("mc", "order", "match", "multi", "bug", "judge")
 # multi: 4-6 options, every right one must be picked; bug: a short code excerpt, tap the one wrong line (LeetCode Project, 2026-11-16)
 MULTI_FRONT, CODE_LINE, CODE_LINES = 80, 44, (4, 10)
 SNIP_LINES = 8
-JUDGE_ROW = 22  # a judge statement: read and judged in about two seconds  # code_q (with the question) and snippet (on the back): scanned, not read, so outside the units  # options are scanned, not read through: a little more room before the answer
+JUDGE_ROW = 22  # a judge statement: read and judged in about two seconds
+# read: a reading card for the material a project rests on (one workspace file, or one part of it). Not a ten-second
+# card: read once to understand, graded "understood or not" (Chi, 2026-11-16: "我对这些题没有概念，不知道前因后果")
+READ_BODY, READ_CODE_LINES = 900, 40  # code_q (with the question) and snippet (on the back): scanned, not read, so outside the units  # options are scanned, not read through: a little more room before the answer
 CHUNK = 20
 DEFAULTS = {"cards": 1000, "per_day": 100, "topic_cap": 6, "source_cards": 2}
 
@@ -169,6 +172,8 @@ def sides(c: dict) -> tuple[list[str], list[str]]:
         return [c.get("q", ""), *c.get("opts", [])], [c.get("why", "")]
     if f == "judge":
         return [c.get("q", ""), *[r[0] for r in c.get("rows", []) if isinstance(r, list) and r]], [c.get("why", "")]
+    if f == "read":
+        return [c.get("title", "")], [c.get("key", "")]
     if f == "order":
         return [c.get("q", ""), *c.get("lines", []), *c.get("decoys", [])], [c.get("why", "")]
     if f == "bug":
@@ -194,8 +199,21 @@ def check(c: dict, known: dict[str, dict]) -> list[str]:
     if any(not isinstance(x, str) or not x.strip() for x in front) or (f in ("qa", "flaw") and not c.get("a", "").strip()):
         bad.append("an empty field")
         return bad
-    if f not in ("qa", "flaw") and not c.get("why", "").strip():
+    if f not in ("qa", "flaw", "read") and not c.get("why", "").strip():
         bad.append("why is empty")
+    if f == "read":
+        body = c.get("body", "")
+        prose = re.sub(r"```.*?```", "", body, flags=re.S)
+        code = [l for b in re.findall(r"```[^\n]*\n(.*?)```", body, flags=re.S) for l in b.splitlines()]
+        if not c.get("title", "").strip() or not body.strip() or not c.get("key", "").strip():
+            bad.append("read needs title, body and key")
+        if units(prose) > READ_BODY:
+            bad.append(f"read body prose {units(prose):.0f} > {READ_BODY}")
+        if len(code) > READ_CODE_LINES:
+            bad.append(f"read code {len(code)} lines > {READ_CODE_LINES}")
+        if units(c.get("key", "")) > 60:
+            bad.append("read key over 60")
+        return bad
     uf, ub = sum(units(x) for x in front), sum(units(x) for x in back)
     limit = MULTI_FRONT if f in ("multi", "judge") else TAP_FRONT if f in TAPPED else FRONT
     if uf > limit:
@@ -462,6 +480,8 @@ button.idk { margin:6px 8px 2px 0; padding:6px 14px; border-radius:8px; border:1
 .jr.ok { border-color:#2e9e5b; } .jr.bad { border-color:#c0392b; }
 ol.jsol { margin:0 0 10px; padding-left:1.4em; } ol.jsol li { margin-bottom:.35em; } ol.jsol li.bad { color:#c0392b; }
 .jwhy { display:block; color:var(--dim); font-size:.9em; }
+.rbody { line-height:1.6; } .rbody pre { overflow-x:auto; white-space:pre; } .rbody pre code { white-space:pre; }
+.rbody h3, .rbody h4 { margin:12px 0 4px; font-size:1em; }
 pre.snip { margin:8px 0 4px; padding:6px 10px; border:1px solid var(--rule); border-radius:6px; overflow-x:auto; white-space:pre; font-size:12.5px; line-height:1.45; }
 pre.snip code { background:none; padding:0; white-space:pre; }
 """
@@ -611,6 +631,10 @@ JUDGE_A = (HEAD % "判断组" + '<div class="q">{{Question}}</div><div class="mi
            'var R=document.querySelectorAll(".jsol li"),good=0;for(var i=0;i<R.length;i++){var ok=m&&m.charAt(i)===c.charAt(i);if(ok){good++}'
            'R[i].classList.add(ok?"ok":"bad")}var ok=good===R.length,miss="：对了 "+good+"/"+R.length;' + SHOW + '})();</script>')
 
+READ_Q = (HEAD % "阅读" + '<div class="q">{{Title}}</div><div class="rbody">{{Body}}</div>')
+READ_A = (READ_Q + '<hr id="answer"><div class="a">{{Key}}</div>' +
+          '<div class="pt">考点：{{Point}}</div>' + NOTE_BLOCK + '<div class="grade">读懂了 → Good · 没懂 → Again</div>')
+
 def templates() -> dict[str, tuple[str, str]]:
     """Front and back per model key. `quick.autoflip: false` in the plan config leaves turning the card to the usual tap."""
     out = {k: (front, back) for k, (_n, _f, front, back, _c) in MODELS.items()}
@@ -631,6 +655,7 @@ MODELS = {  # name, fields, front, back, cloze
     "multi": ("Trellis Quick Multi", ["Question", "Opts", "Correct", "Answer", "Why", "Crumb", "Point"], MULTI_Q, MULTI_A, False),
     "bug": ("Trellis Quick Bug", ["Question", "Lines", "Correct", "Answer", "Why", "Crumb", "Point"], BUG_Q, BUG_A, False),
     "judge": ("Trellis Quick Judge", ["Question", "Rows", "Correct", "Answer", "Why", "Crumb", "Point"], JUDGE_Q, JUDGE_A, False),
+    "read": ("Trellis Quick Read", ["Title", "Body", "Key", "Crumb", "Point"], READ_Q, READ_A, False),
 }
 MODEL_OF = {"flaw": "qa"}
 
@@ -694,6 +719,9 @@ def fields(c: dict, point: dict) -> tuple[str, list[str]]:
                         for n, x in enumerate(c["code"]))
         answer = f"第 {c['bad'] + 1} 行 → <code>{html.escape(c['fix'])}</code>"
         return "bug", [mark(c["q"]), lines, str(c["bad"] + 1), answer, why, crumb, title]
+    if f == "read":
+        from trellis.build import _html
+        return "read", [mark(c["title"]), _html(c["body"]), mark(c["key"]), crumb, title]
     if f == "judge":
         rows = "".join(f'<div class="jr" data-i="{i}"><div class="body">{mark(r[0])}</div>'
                        '<span class="jb tappable" data-v="T" onclick="qkTap(this)">✓</span><span class="jb tappable" data-v="F" onclick="qkTap(this)">✗</span></div>'

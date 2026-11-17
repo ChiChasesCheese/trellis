@@ -36,7 +36,8 @@ HOME = ROOT / "sources/local/lc-project/quick"
 TAG = "lcpq"
 ROOT_DECK = "低层设计（LLD）::28 LeetCode Project（实战项目）"
 SOURCES = ("readme", "overview", "template", "tests", "solution", "article", "reflection", "bank")
-KINDS = ("rule", "mechanism", "pitfall", "decision", "number", "agent", "test")
+KINDS = ("rule", "mechanism", "pitfall", "decision", "number", "agent", "test", "file", "recall")
+# file: a reading card for one workspace file (题目); recall: a question on the problem itself, asked after the files (题目理解)
 
 
 def slugs(args: list[str]) -> list[str]:
@@ -84,7 +85,7 @@ def load(slug: str, verified_only: bool) -> tuple[list[dict], list[str]]:
         if verified_only and v.get("verdict") not in ("ok", "fix"):
             problems.append(f"{slug} {kp}: no verdict")
             continue
-        errs = qd.check(c, known) + (qd.check_more(c["more"], c) if "more" in c else ["more is missing"])
+        errs = qd.check(c, known) + (qd.check_more(c["more"], c) if "more" in c else [] if c.get("fmt") == "read" else ["more is missing"])
         if kp in by_kp:
             errs.append("a second card for the point")
         if errs:
