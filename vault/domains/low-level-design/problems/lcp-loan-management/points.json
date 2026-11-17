@@ -1,0 +1,340 @@
+[
+ {
+  "point": "金额必须恰好是 int 且大于 0：布尔、浮点、字符串、None、0、负数都是 400 invalid_amount",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "data.primitive-obsession"
+  ]
+ },
+ {
+  "point": "bool 是 int 的子类：True 必须被拒绝，所以用 type(x) is int 而不是 isinstance",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "创建先验金额、再验借款人存在：金额错与用户不存在同时发生时报 400",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "编号从 1 起，只有成功的创建才消耗编号；失败的创建、放款、还款都不动编号计数",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "data.invariants",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "创建不动钱，返回恰好六个键：lender 为 None、outstanding 等于 principal、status 为 pending",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "api.returns",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "贷款要用返回的 id 作键存进表里：存到 id 加一的位置，创建完就查不到",
+  "cards": [],
+  "leaves": [
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "贷款编号不存在是 404 loan_not_found；不是 int 的编号（包括 True）也是 404，True 与 1 哈希相同不能误中",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "用户不存在是 404 user_not_found；不可哈希的值也要当作不存在，不能抛 TypeError",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "放款的检查顺序：贷款存在 → 出借人存在 → 状态与身份 → 余额",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "fsm.illegal-transitions"
+  ]
+ },
+ {
+  "point": "只有 pending 的贷款能放款，同一笔贷款放第二次是 409 invalid_state，换出借人也一样",
+  "cards": [
+   "lcp-loan-management-contract-rules",
+   "lcp-loan-management-state-and-invariant"
+  ],
+  "leaves": [
+   "fsm.illegal-transitions",
+   "fsm.transition-table"
+  ]
+ },
+ {
+  "point": "出借人不能是借款人：是 invalid_state，并且先于余额检查，所以余额为 0 的借款人自借也报 invalid_state",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "fsm.illegal-transitions"
+  ]
+ },
+ {
+  "point": "余额恰好等于本金可以放款，少一分才是 409 insufficient_balance：比较是 小于，不是 小于等于",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "放款成功：本金从出借人划给借款人，贷款记下出借人、变 active，outstanding 仍等于 principal",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "structure.state-machines"
+  ]
+ },
+ {
+  "point": "还款的检查顺序：金额 → 贷款存在 → 归属 403 → 状态与超额 409 → 借款人余额 409",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "归属先于状态：别人给 pending 的贷款还款得 403，不存在的用户也是 403",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "超额还款是 invalid_state，不是 insufficient_balance，并且先于余额检查",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "fsm.illegal-transitions"
+  ]
+ },
+ {
+  "point": "还款成功：钱划给出借人，outstanding 减少；减到 0 才变 repaid，部分还款仍是 active",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "structure.state-machines"
+  ]
+ },
+ {
+  "point": "状态只向前：pending → active → repaid；repaid 的贷款不能再还款",
+  "cards": [
+   "lcp-loan-management-state-and-invariant"
+  ],
+  "leaves": [
+   "fsm.transition-table",
+   "fsm.illegal-transitions"
+  ]
+ },
+ {
+  "point": "失败不留痕迹：先做完所有检查再写；转账的两次写之间没有可能失败的步骤",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "data.invariants",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "余额守恒：转账是改余额的唯一入口，总和不变、没有负数；欠款与本金可以超过 32 位，Python int 不溢出",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "一把锁罩住贷款状态加账本：不变量跨两个对象，锁就放在把两者串起来的服务上",
+  "cards": [
+   "lcp-loan-management-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency.primitives"
+  ]
+ },
+ {
+  "point": "先检查再修改必须在同一次持锁里：同一笔贷款并发放款恰好一个成功，其余 invalid_state",
+  "cards": [
+   "lcp-loan-management-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "公开方法之间不互相调用，内部辅助函数默认调用方已持锁，所以用普通 Lock，不需要 RLock",
+  "cards": [],
+  "leaves": [
+   "concurrency.primitives"
+  ]
+ },
+ {
+  "point": "GIL 不让复合操作原子：漏锁的版本在单测里也可能碰巧通过，所以要写确定性的规则测试加屏障测试",
+  "cards": [
+   "lcp-loan-management-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.memory-model",
+   "concurrency-depth.testing"
+  ]
+ },
+ {
+  "point": "并发测试用屏障让线程同时出发，断言不变量（恰好一个成功、余额总和不变），不断言谁赢或耗时",
+  "cards": [
+   "lcp-loan-management-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.testing"
+  ]
+ },
+ {
+  "point": "返回快照：每次现建一个新字典，不把内部字典交出去，调用方怎么改都碰不到服务状态",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "构造时复制传入的余额，之后外面改字典不影响服务；实例之间没有共享的类级状态",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "状态用 Enum，转移的前提写在贷款自己的方法里，调用方不能绕过检查直接改字段",
+  "cards": [
+   "lcp-loan-management-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.state-machines",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "搬到数据库：放款是一个事务，用 UPDATE … WHERE status = 'pending' 抢占，rowcount 为 1 才算成功",
+  "cards": [
+   "lcp-loan-management-reflection-shared-database"
+  ],
+  "leaves": [
+   "structure.storage",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "数据库里的余额扣减写成带下限的条件更新，不先读后写；表上再加 CHECK 做最后一道网",
+  "cards": [
+   "lcp-loan-management-reflection-shared-database"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "转账碰两个账户：多实例下按固定顺序（如用户 id 排序）加锁，避免互相借款的两个事务死锁",
+  "cards": [
+   "lcp-loan-management-reflection-shared-database"
+  ],
+  "leaves": [
+   "concurrency.hazards"
+  ]
+ },
+ {
+  "point": "禁止超额还款只看状态；幂等看请求身份：欠 60 时重发的 20 不超额，会被扣第二次",
+  "cards": [
+   "lcp-loan-management-reflection-repay-idempotency"
+  ],
+  "leaves": [
+   "errors.retry",
+   "fsm.illegal-transitions"
+  ]
+ },
+ {
+  "point": "还款幂等的做法：请求号加唯一约束，同号同内容重放返回现状，同号不同内容是 422 冲突",
+  "cards": [
+   "lcp-loan-management-reflection-repay-idempotency"
+  ],
+  "leaves": [
+   "errors.retry"
+  ]
+ },
+ {
+  "point": "请求号的登记和划转在同一个事务里，失败一起回滚，重试等于第一次",
+  "cards": [
+   "lcp-loan-management-reflection-repay-idempotency"
+  ],
+  "leaves": [
+   "errors.retry",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "修缺陷先复现：每个缺陷写一个会失败的最小测试，再改，一次只修一类",
+  "cards": [],
+  "leaves": [
+   "debugging.reproduce",
+   "debugging.prevent"
+  ]
+ },
+ {
+  "point": "错误顺序类缺陷要用同时违反两条规则的输入才能测出：已放款的贷款被穷出借人再放款",
+  "cards": [
+   "lcp-loan-management-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "让智能体先列出代码与规则的差异、不改代码；期望值自己写，不接受把测试改成通过",
+  "cards": [],
+  "leaves": [
+   "ai.delegation",
+   "ai.verification"
+  ]
+ }
+]

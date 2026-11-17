@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-loan-management": [
+    "lcp-loan-management-contract-rules",
+    "lcp-loan-management-state-and-invariant",
+    "lcp-loan-management-reflection-shared-database",
+    "lcp-loan-management-reflection-repay-idempotency"
+  ]
+}
