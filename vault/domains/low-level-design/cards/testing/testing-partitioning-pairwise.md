@@ -12,28 +12,20 @@ step: 2
 
 ```python
 from itertools import combinations, product
+def pairs(row):                      # all (param index, value) pairs in a row
+    return set(combinations(enumerate(row), 2))
 
 def pairwise(params):
-    names = list(params)
-    uncovered = {((a, va), (b, vb))
-                 for a, b in combinations(names, 2)
-                 for va in params[a] for vb in params[b]}
-    rows = []
-    while uncovered:
-        # greedy: the full combination that covers the most new pairs
-        best = max(product(*params.values()), key=lambda row: sum(
-            ((a, row[i]), (b, row[j])) in uncovered
-            for (i, a), (j, b) in combinations(enumerate(names), 2)))
-        row = dict(zip(names, best))
-        uncovered -= {((a, row[a]), (b, row[b]))
-                      for a, b in combinations(names, 2)}
-        rows.append(row)
-    return rows
+    rows = list(product(*params.values()))
+    todo, out = set().union(*map(pairs, rows)), []
+    while todo:                      # greedy: row with most uncovered pairs
+        out.append(max(rows, key=lambda r: len(pairs(r) & todo)))
+        todo -= pairs(out[-1])
+    return out
 
-matrix = {"python": ["3.11", "3.12", "3.13", "3.14"], "db": ["postgres", "mysql", "sqlite"],
-          "batch": [1, 8, 64, 256], "os": ["linux", "macos", "windows"]}
-rows = pairwise(matrix)
-print(len(rows), "rows instead of", 4 * 3 * 4 * 3)
+m = {"py": ["3.11", "3.12", "3.13", "3.14"], "db": ["pg", "mysql", "sqlite"],
+     "batch": [1, 8, 64, 256], "os": ["linux", "macos", "windows"]}
+print(len(pairwise(m)), "rows instead of", 4 * 3 * 4 * 3)
 ```
 
 - **依据：** 大多数配置相关的 bug 由一个参数或两个参数的交互触发（比如「Python 3.14 + Windows」），三个以上参数同时作用才出现的 bug 少得多。两两覆盖用很少的用例抓住了大部分。
