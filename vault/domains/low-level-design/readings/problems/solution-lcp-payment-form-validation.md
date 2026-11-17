@@ -486,10 +486,10 @@ if __name__ == "__main__":
 
 ## 延伸阅读
 
-- [[fsm.guards-actions|守卫、动作和进出钩子（Guards, Actions, Hooks）]]：`canSubmit` 是一个由两个事实组成的守卫，不是一个状态。
-- [[errors.boundary-validation|边界校验（Validate at the Boundary）]]：格式判断与 `apply_action` 的做法。
-- [[data.defensive-copy|防御性拷贝（Defensive Copying）]]：快照现建与"从一开始就不共享"。
-- [[fluency.strings-bytes|字符串与字节（Strings & Bytes）]]：`isdigit`、`isascii`、`isalpha` 各自接受什么。
+- **守卫、动作和进出钩子（Guards, Actions, Hooks）**：`canSubmit` 是一个由两个事实组成的守卫，不是一个状态。
+- **边界校验（Validate at the Boundary）**：格式判断与 `apply_action` 的做法。
+- **防御性拷贝（Defensive Copying）**：快照现建与"从一开始就不共享"。
+- **字符串与字节（Strings & Bytes）**：`isdigit`、`isascii`、`isalpha` 各自接受什么。
 - [[solution-lcp-feature-flag]]：同样用"名字到函数的表"代替一族类，并且有"缺失或类型不符只算不命中"的严格输入约定。
 - [Python 文档：str.isdigit 与 str.isascii](https://docs.python.org/3/library/stdtypes.html#str.isdigit)：`isdigit` 接受上标和其他文字的数字。
 - [Python 文档：re.fullmatch](https://docs.python.org/3/library/re.html#re.fullmatch)：与 `match` 加 `$` 的区别，`\d` 的 Unicode 范围。

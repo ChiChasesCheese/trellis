@@ -12,7 +12,7 @@ tags: [solution]
 `replaceTransactions(transactions)` 换整份列表，`snapshot()` 返回当前要显示的一切。
 
 这个小题目的重心不在筛选，而在两件事：展示字符串一个字符都不能变，以及「谁拥有这些数据」。调用方传进来的是可变对象（`Transaction` 和嵌套的 `Location`），
-`snapshot()` 返回的也是可变对象（列表和数据类），所以进口一次、出口一次，边界上各有一次拷贝的责任，见 [[data.defensive-copy|防御性拷贝（Defensive Copying）]]。
+`snapshot()` 返回的也是可变对象（列表和数据类），所以进口一次、出口一次，边界上各有一次拷贝的责任，见 **防御性拷贝（Defensive Copying）**。
 
 开工前先把合同写成自己的话，按「粗心的读者最容易漏掉」的顺序：
 
@@ -336,9 +336,9 @@ class TransactionsList:
 
 ## 延伸阅读
 
-- [[data.defensive-copy|防御性拷贝（Defensive Copying）]]：进口一次、出口一次的原则，浅拷贝与深拷贝的取舍。
+- **防御性拷贝（Defensive Copying）**：进口一次、出口一次的原则，浅拷贝与深拷贝的取舍。
 - [[oop.values|值对象与不可变性（Value Objects）]]：冻结的行为什么让隔离变成结构保证。
 - [[structure.state-machines|状态机（State Machines）]]：把「筛选」与「列表」看成两个独立的状态变量。
-- [[api.returns|返回值设计（Return Values）]]：返回可变对象和返回只读对象的取舍。
+- **返回值设计（Return Values）**：返回可变对象和返回只读对象的取舍。
 - [Python 文档：dataclasses](https://docs.python.org/3/library/dataclasses.html)：`frozen=True` 与 `slots=True` 的行为和限制。
 - [Python 文档：copy 模块](https://docs.python.org/3/library/copy.html)：浅拷贝与深拷贝的定义。

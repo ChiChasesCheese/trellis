@@ -456,7 +456,7 @@ Account(id=1, balance=450) None None
 - [[problems.marketplaces.bank-account|银行账户系统（Bank Account System）]]：同样是"余额由流水推出"，但在内存里做并带转账与排名，可以对照这里把真相放在数据库里的写法。
 - [[problems.marketplaces.digital-wallet|数字钱包（Digital Wallet）]]：余额不能为负、转账两边一致，是"没有透支检查"之后的自然追问。
 - [[amazon.amz-in-memory-db|内存数据库（In-Memory Database）]]：从零写一个小库，看建表、查询、事务是怎么搭起来的，对照这里直接用现成的 SQLite。
-- [[lcproject.lcp-movie-watchlists|私人片单修复（Persistent Private Watchlists）]]：同样是 SQLite 加连接管理加状态码，侧重修复与归属校验。
+- [[solution-lcp-movie-watchlists|私人片单修复（Persistent Private Watchlists）]]：同样是 SQLite 加连接管理加状态码，侧重修复与归属校验。
 - [SQLite 文档：AUTOINCREMENT](https://www.sqlite.org/autoinc.html)：为什么 `AUTOINCREMENT` 不复用编号，以及 `sqlite_sequence` 表。
 - [SQLite 文档：聚合函数 sum 与 total](https://www.sqlite.org/lang_aggfunc.html)：空集合的结果、整数溢出与浮点结果的区别。
 - [SQLite 文档：外键支持](https://www.sqlite.org/foreignkeys.html)：外键默认关闭，必须在每个连接上打开。
