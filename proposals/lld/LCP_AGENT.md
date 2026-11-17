@@ -125,3 +125,7 @@ git; do not start agents; touch only your leaves' files.
   workspace's own test fixtures for audits like this before writing SQL.
 - When running the official tests, the tests often compare against the workspace's own classes (`models.Decision`,
   `models.ServiceError`): import those instead of your copies, and put the solution into the file the tests import.
+- A repair leaf whose `starter.py` and article list defects the workspace starter does not have (stockroom: a version
+  race, untrimmed user and case-sensitive ids that the real starter gets right). The defect table is the workspace's
+  defects, each confirmed by running the workspace starter; what the starter already does right goes on a separate
+  「已经做对的」 line, because the fix must keep it.
