@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-movie-recommendations": [
+    "lcp-movie-recommendations-contract-rules",
+    "lcp-movie-recommendations-state-and-invariant",
+    "lcp-movie-recommendations-reflection-popularity-blend",
+    "lcp-movie-recommendations-reflection-snapshot-version"
+  ]
+}
