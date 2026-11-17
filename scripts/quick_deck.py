@@ -686,6 +686,13 @@ def snip(code: list[str]) -> str:
     return '<pre class="snip"><code>' + "\n".join(html.escape(x) for x in code) + "</code></pre>"
 
 
+
+def dedent_code(md: str) -> str:
+    """Strip the indent a code excerpt kept from its class or function, so a phone shows code, not margin."""
+    import re
+    import textwrap
+    return re.sub(r"(```[^\n]*\n)(.*?)(```)", lambda m: m.group(1) + textwrap.dedent(m.group(2)) + m.group(3), md, flags=re.S)
+
 def fields(c: dict, point: dict) -> tuple[str, list[str]]:
     """Model key and field values of a card."""
     f, why, crumb, title = c["fmt"], mark(c.get("why", "")), point["topic_title"], point["title"]
@@ -721,7 +728,7 @@ def fields(c: dict, point: dict) -> tuple[str, list[str]]:
         return "bug", [mark(c["q"]), lines, str(c["bad"] + 1), answer, why, crumb, title]
     if f == "read":
         from trellis.build import _html
-        return "read", [mark(c["title"]), _html(c["body"]), mark(c["key"]), crumb, title]
+        return "read", [mark(c["title"]), _html(dedent_code(c["body"])), mark(c["key"]), crumb, title]
     if f == "judge":
         rows = "".join(f'<div class="jr" data-i="{i}"><div class="body">{mark(r[0])}</div>'
                        '<span class="jb tappable" data-v="T" onclick="qkTap(this)">✓</span><span class="jb tappable" data-v="F" onclick="qkTap(this)">✗</span></div>'
