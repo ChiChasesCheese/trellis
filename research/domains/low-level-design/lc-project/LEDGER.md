@@ -32,3 +32,16 @@ written quick cards, a problem agent for the next exported project (study order 
 
 Review findings turned into rules (LCP_AGENT.md "Defects found"): per-key parameters for sweeps; no translated
 REFLECTION questions; never touch the repo .venv for 3.11; LeetCode wording kept out of public files.
+
+## 2026-11-16 (evening)
+
+- 题目 / 题目理解 (reading + recall cards, `LCP_READ_AGENT.md`): verified and in Anki for return-fraud-risk,
+  actor-follow-notifications, issue-creation-api, password-reset (90 cards, 13 fixed by the verifiers); written for
+  file-deduplication, currency-conversion (verifying); writing url-shortener, parcel-return-policy.
+- Quick cards verified and in Anki: event-campaigns (48), payment-reconcile-api (51).
+- image-transform-pipeline leaf committed (cbaf0c16), 3/3 official tests.
+- Workspace copies: `scripts/lcp_overlap.py` found 15 committed leaves repeating workspace text beyond signatures
+  (worst: event-campaigns, stockroom-inventory). All unpushed. Rewrite per `proposals/lld/LCP_DECOPY_TASK.md`;
+  **no push until every leaf prints ok.**
+- `scripts/lcp_preview.py` renders cards with the real templates (screenshot at 390 px with Playwright, channel chrome).
+

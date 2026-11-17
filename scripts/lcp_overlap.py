@@ -28,7 +28,8 @@ API = re.compile(r"""^\s*(
     (async\s+)?def\s+\w+\s*\(.* | class\s+\w+.*: |
     \w+\s*:\s*(?P<type>[\w.\[\]|, "']+?)\s*(=\s*[^=].*)?,? |
     \)\s*(->.*)?:? | \.\.\.|pass | \"\"\"|''' | self,? | raise\s+NotImplementedError(\(\))? |
-    self\.(?P<attr>\w+)\s*=\s*(?P=attr) | [A-Z]\w*\s*=\s*[\w.\[\], |]+ )\s*(\#.*)?$""", re.X)
+    self\.(?P<attr>\w+)\s*=\s*(?P=attr) | [A-Z]\w*\s*=\s*[\w.\[\], |]+ |
+    CREATE\s+TABLE\s+\w+\s*\(? | \w+\s+(TEXT|INTEGER|REAL|BLOB|NUMERIC|BOOLEAN|VARCHAR\(\d+\))\b[\w\s()]*,? )\s*(\#.*)?$""", re.X)
 
 
 def is_api(line: str) -> bool:
