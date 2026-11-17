@@ -36,13 +36,13 @@ def _create(self, user, _item_id, body):
     if new is None:
         return problem(400, "invalid_input")
     item_id = secrets.token_hex(12)
-    # 不先查：直接插，重复由唯一索引在库里裁决
+    # 不先查：直接插（参考实现的集合接口，PyMongo 里是 insert_one），重复由唯一索引裁决
     self.collection.insert({"id": item_id, "owner": user, "sku": new.sku, "name": new.name,
                             "quantity": new.quantity, "version": 1})
     return self._found(user, item_id, 201)
 # handle() 里：except StoreError as e → STORE_ERRORS[e.code] = (409, "sku_conflict")
 ```
 
-<details class="pt"><summary>延伸</summary>分片集群里唯一索引必须包含分片键；若 SKU 要全局唯一而不是按用户唯一，就要换一个单独的"占位"集合来裁决。</details>
+<details class="pt"><summary>延伸</summary>分片集群只有在唯一索引含分片键（作前缀）时，才能跨分片保证唯一；若 SKU 要全局唯一而不是按用户唯一，就要换一个单独的"占位"集合来裁决。</details>
 
 **知识点：** 复合操作（Compound Actions）、线程安全结构的写法（Thread-Safe Structures）、内存持久化（In-Memory Persistence）

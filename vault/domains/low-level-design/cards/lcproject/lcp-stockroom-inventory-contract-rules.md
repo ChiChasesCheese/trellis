@@ -39,10 +39,10 @@ def handle(self, method, path, user, body=None):
         if ITEM_ID.fullmatch(match[1]) is None:
             return problem(400, "invalid_id")
         item_id = match[1].lower()
-    handler = routes.get((item_id is not None, method))
+    handler = routes.get((item_id is not None, method))  # routes：(带 id, 方法) 到处理函数
     return handler(user, item_id, body) if handler else problem(405, "method_not_allowed")
 ```
 
-<details class="pt"><summary>延伸</summary>库里的模式校验只是最后一道网：它放过结尾带换行的 SKU，也不按 UTF-16 数名字长度，所以产品规则必须在服务里先写一遍。</details>
+<details class="pt"><summary>延伸</summary>库里的模式校验只是最后一道网：它只拦写得进去的坏数据，出错只报一个错误码 121，没有产品语义，所以规则和状态码必须在服务里先写一遍。</details>
 
 **知识点：** 接口的错误契约（Error Contract）、边界校验（Validate at the Boundary）、规格与契约（Specifications）

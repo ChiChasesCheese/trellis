@@ -15,7 +15,7 @@ tags: [作答]
 - **增量天然不安全**：`quantity + 5` 执行两次就是 10；响应丢了，客户端不知道有没有生效
 - **操作号加唯一约束**：每次调整带客户端生成的 `op_id`，流水表对 `(owner, op_id)` 建唯一索引
 - **同一事务里记流水并改数量**：插入流水成功才加数；重复键说明已处理，返回当时的结果
-- **下限写进条件**：`quantity >= n` 作为更新条件，扣减不会出现负数，不够就 409
+- **下限写进条件**：`quantity >= n` 作为更新条件，扣减不会出现负数，不够就整体回滚、不留流水
 
 ```mermaid
 flowchart TB
@@ -27,7 +27,7 @@ flowchart TB
 ```
 
 ```python
-def adjust(db, owner, item_id, op_id, delta):
+def adjust(db, owner, item_id, op_id, delta):  # sqlite3 参考写法
     with db:  # 流水与数量在同一个事务里
         try:
             db.execute("INSERT INTO moves (owner, op_id, item_id, delta) VALUES (?, ?, ?, ?)",
