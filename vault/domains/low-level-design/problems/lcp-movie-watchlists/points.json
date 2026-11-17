@@ -1,0 +1,403 @@
+[
+ {
+  "point": "名字先 strip 再数长度，合法范围 1 到 80，库里存 strip 之后的值",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "名字长度按 Unicode 字符计：80 个汉字可以，81 个不行",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "名字不是字符串（None、整数、列表）也是 invalid_name",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "电影 id 必须恰好是 int：布尔、浮点、字符串都不算，用 type(x) is int",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.mutability"
+  ]
+ },
+ {
+  "point": "电影 id 范围 1 到 2147483647，两端都含",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "片单 id 删除后不复用：AUTOINCREMENT 保证单调，没有它会把最大的 id 再发一次",
+  "cards": [
+   "lcp-movie-watchlists-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.value-entity"
+  ]
+ },
+ {
+  "point": "重名片单允许，靠 id 区分，不靠名字",
+  "cards": [
+   "lcp-movie-watchlists-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.value-entity"
+  ]
+ },
+ {
+  "point": "返回的片单是新对象：电影升序不重复，改返回值不影响库",
+  "cards": [
+   "lcp-movie-watchlists-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "fluency.mutability"
+  ]
+ },
+ {
+  "point": "“不存在”和“别人的”都是 404 list_not_found：不让外人探测别人有没有片单",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "校验先于归属：别人用坏参数探测，只会拿到 400",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "先查片单、后查电影：别人片单里的电影也是 list_not_found",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "用户 id 不归一：大小写与空白都敏感",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "被拒绝的操作什么都不改，包括 id 与成员行数",
+  "cards": [
+   "lcp-movie-watchlists-reflection-failed-mutations"
+  ],
+  "leaves": [
+   "errors.cleanup",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "添加：真的新增 201，已经在里面 200，两种都返回片单",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "api.returns",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "201 还是 200 靠 INSERT 的 rowcount 判断，不靠先查再插",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules",
+   "lcp-movie-watchlists-reflection-failed-mutations"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "联合主键 (list_id, movie_id) 是重复成员的唯一防线",
+  "cards": [
+   "lcp-movie-watchlists-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "ON CONFLICT DO NOTHING 只放过指定的冲突，OR IGNORE 还会吞掉非空约束失败",
+  "cards": [
+   "lcp-movie-watchlists-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "errors.narrow-catch"
+  ]
+ },
+ {
+  "point": "成员只属于一张片单：同一部电影放进两张片单各算新增",
+  "cards": [
+   "lcp-movie-watchlists-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "移除只删指定的那一部：条件是等于，写成不等于会删掉其余所有",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "debugging.hypothesis"
+  ]
+ },
+ {
+  "point": "移除缺失的电影是 404 movie_not_found，靠 DELETE 的 rowcount",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "删除只删请求的那一张，同一用户和别的用户的片单都原样",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "debugging.reproduce"
+  ]
+ },
+ {
+  "point": "外键 ON DELETE CASCADE 带走成员；PRAGMA foreign_keys 要在每个连接上设",
+  "cards": [
+   "lcp-movie-watchlists-state-and-invariant"
+  ],
+  "leaves": [
+   "structure.storage",
+   "errors.cleanup"
+  ]
+ },
+ {
+  "point": "孤儿行从接口上看不到，用一个只读的成员行计数让测试看见",
+  "cards": [
+   "lcp-movie-watchlists-state-and-invariant"
+  ],
+  "leaves": [
+   "quality.testability",
+   "testing.testable-design"
+  ]
+ },
+ {
+  "point": "所有者条件写进每条 SQL 的 WHERE，用 rowcount 判断有没有命中",
+  "cards": [
+   "lcp-movie-watchlists-state-and-invariant",
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "data.invariants",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "一个漏了所有者的读取函数，会让五个方法一起越权",
+  "cards": [
+   "lcp-movie-watchlists-state-and-invariant"
+  ],
+  "leaves": [
+   "debugging.failure-origins",
+   "debugging.hypothesis"
+  ]
+ },
+ {
+  "point": "一个写操作一个事务：业务里的异常穿过 with 就回滚",
+  "cards": [
+   "lcp-movie-watchlists-reflection-failed-mutations"
+  ],
+  "leaves": [
+   "errors.cleanup",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "校验放在事务之外：坏参数不开事务，也不占写锁",
+  "cards": [
+   "lcp-movie-watchlists-reflection-failed-mutations"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "errors.cleanup"
+  ]
+ },
+ {
+  "point": "BEGIN IMMEDIATE 先取写锁，避免延迟事务升级时的 database is locked",
+  "cards": [
+   "lcp-movie-watchlists-reflection-failed-mutations"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency.hazards"
+  ]
+ },
+ {
+  "point": "提交在返回之前：同一文件上的第二个实例立刻读得到，关闭重开还在",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules",
+   "lcp-movie-watchlists-reflection-failed-mutations"
+  ],
+  "leaves": [
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "一个连接加一把 RLock；:memory: 不能每次调用新开连接，否则每次都是空库",
+  "cards": [
+   "lcp-movie-watchlists-reflection-failed-mutations"
+  ],
+  "leaves": [
+   "concurrency-depth.safe-structures",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "GIL 不让“先查后插”成为整体：靠锁加事务，跨进程靠数据库的写锁",
+  "cards": [
+   "lcp-movie-watchlists-reflection-failed-mutations"
+  ],
+  "leaves": [
+   "concurrency-depth.memory-model",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "大片单用键集分页，不用 OFFSET：走主键索引，翻页期间不漏不重",
+  "cards": [
+   "lcp-movie-watchlists-reflection-pagination"
+  ],
+  "leaves": [
+   "api.paging-iteration",
+   "performance.data-structures"
+  ]
+ },
+ {
+  "point": "游标不携带权限：每一页重新检查所有者，多取一条判断有没有下一页",
+  "cards": [
+   "lcp-movie-watchlists-reflection-pagination"
+  ],
+  "leaves": [
+   "api.paging-iteration",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "不加仓储抽象、缓存或 ORM：只有一个实现的接口是 Java 习惯",
+  "cards": [
+   "lcp-movie-watchlists-state-and-invariant"
+  ],
+  "leaves": [
+   "principles.simplicity",
+   "refactoring.over-abstraction"
+  ]
+ },
+ {
+  "point": "三个公开测试只抓到五个缺陷中的一个：全绿不等于修好",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "ai.verification",
+   "testing.coverage-limits"
+  ]
+ },
+ {
+  "point": "先让智能体只列差异不改代码；之后一次一个缺陷、一个失败的测试",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "ai.delegation",
+   "testing.test-first"
+  ]
+ },
+ {
+  "point": "起始代码已经做对的（提交、外键、AUTOINCREMENT、先校验）修缺陷时不能改坏",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "reading.characterization",
+   "reading.minimal-diff"
+  ]
+ },
+ {
+  "point": "“重连后丢数据”不是缺陷：先写两个实例的测试再判断，别把 with self._db 改掉",
+  "cards": [
+   "lcp-movie-watchlists-reflection-failed-mutations"
+  ],
+  "leaves": [
+   "debugging.reproduce",
+   "debugging.hypothesis"
+  ]
+ },
+ {
+  "point": "HTTP 的顺序：401 先于 404 先于 405；204 没有响应体",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "structure.api"
+  ]
+ },
+ {
+  "point": "HTTP：片单 id 超过 64 位是 404，先比字符串长度再转整数",
+  "cards": [
+   "lcp-movie-watchlists-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.parameters"
+  ]
+ }
+]

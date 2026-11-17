@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-movie-watchlists": [
+    "lcp-movie-watchlists-contract-rules",
+    "lcp-movie-watchlists-state-and-invariant",
+    "lcp-movie-watchlists-reflection-failed-mutations",
+    "lcp-movie-watchlists-reflection-pagination"
+  ]
+}
