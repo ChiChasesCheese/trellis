@@ -35,3 +35,10 @@ through `uv run --no-project --python 3.11 --with pytest …` in /tmp; never tou
    `python3 scripts/plain_style.py <article and cards>`, `python3 scripts/phone_diagrams.py <article and cards>`.
 
 Report per project: copied lines before → after, what you rewrote, the test results, and anything you kept as API.
+
+## Defects found in earlier batches
+
+- A last hand edit after the test run left an `IndentationError` in `solution.py` and the article: run every check
+  **after the last edit**, and re-embed the article code with `lld_embed_code.py` rather than editing it by hand.
+- Do not start database servers (mongod, postgres) for a check; where the official tests need one, say so in the report.
+- Expected values in tests come from running our solution on the new data, never set by hand.
