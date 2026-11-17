@@ -121,3 +121,5 @@ whole corrected card / `drop`), keep the existing lines, run the gate, and repor
   writing 「本实现」; the source column must be right both ways.
 - An example input that a second rule masks (day 30 hides the extra-field defect): pick inputs where only the rule in
   question fires, and run them.
+- A recall card asks about an open choice or rule no reading card states: every recall answer must be on a reading card.
+- A count in prose that disagrees with the table under it (「三种结果」 over two rows).
