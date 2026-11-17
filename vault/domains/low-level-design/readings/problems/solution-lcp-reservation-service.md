@@ -635,11 +635,28 @@ UPDATE reservations r SET status = 'cancelled', cancelled_at = now()
 12 个用户抢容量 3：12 个成功，12 条 active，名额 2（重复 5 次结果相同）
 ```
 
+起始代码的缺陷共八处，三个函数里：
+
+| 位置 | 症状 | 对应规则 |
+|---|---|---|
+| `reserve` | 场次不存在时直接崩溃，线上是 500 | 4 |
+| `reserve` | 同一用户重试，两条 active，名额 3→1 | 1 |
+| `reserve` | 读名额与写名额之间没有锁：三个用户抢容量 1 的场次，可以两个都成功，名额 0、active 2 条 | 2、3 |
+| `reserve` | 审计在预约提交之后另起一次提交，中间失败就只留下预约 | 9 |
+| `cancel` | 别人能取消，返回 200，状态变 cancelled | 5 |
+| `cancel` | 重复取消每次都释放名额（2→3→4，容量才 3），`cancelled_at` 被改写，审计写了三行 | 6 |
+| `cancel` | 状态与名额一次提交，审计另一次提交，同一个原子性缺陷 | 9 |
+| 列表 | `status=active` 时没有过滤，已取消的混在里面 | 7 |
+
+**起始代码已经做对的**：缺 `X-User-ID` 与未知用户是 401，场次列表公开并按开始时间排序；已满是 409；取消不存在的预约是 404；取消之后同一个用户可以再预约；预约的状态与名额在同一次提交里；审计的 `action` 与 `actor_user_id` 写得对；每个请求一个会话，出错回滚。修复要保住这些。
+
+**起始代码没有的**：生产库只有 0001 的三条 CHECK，没有"一人一场一条 active"的唯一索引，没有 `available_slots <= capacity`；也没有任何修复历史数据的代码，要自己新增一个迁移。`starter.py` 里的 `plan_repair` 与 `upgrade_0002` 因此是空桩。
+
 在真实栈（PostgreSQL，FastAPI 的 `TestClient` 加线程）上，同样的回归测试针对原代码有 7 条失败（超卖、重复释放、他人取消、404、重复取消正文不同、列表过滤、审计失败的回滚），修复后全部通过；PostgreSQL 上 3 个用户各发 4 个请求抢容量 3 的场次，同样恰好 3 个成功、名额 0、审计 3 行。
 
 **两分钟演示给面试官：**
 
-1. 打开 `starter.py`，说出五个缺陷，各指一行：`reserve` 开头没有 `None` 判断；名额写回绝对值；审计在 `with` 之外；`cancel` 不看主人也不看状态；`list_reservations` 只在 `cancelled` 时过滤。
+1. 打开 `starter.py`，说出五类缺陷，各指一行：`reserve` 开头没有 `None` 判断，也没有重复预约的检查；名额写回绝对值；审计在 `with` 之外；`cancel` 不看主人也不看状态；`list_reservations` 只在 `cancelled` 时过滤。再说一句：修复与约束在起始代码里没有，要你新增。
 2. 跑 12 个线程的并发测试，失败信息里是 12 个成功。
 3. 切到 `solution.py`，指 `transaction` 的 `BEGIN IMMEDIATE` 和 `_write_reservation` 的三件事，再跑一遍全绿。
 4. 展示 `upgrade_0002(dry_run=True)` 的报告，随后真跑，再跑一遍报告为空。

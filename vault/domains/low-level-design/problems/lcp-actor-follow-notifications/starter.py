@@ -31,9 +31,18 @@ INVALID_INPUT = "invalid_input"
 MOVIE_CONFLICT = "movie_conflict"
 
 
+_BLANK = frozenset(
+    chr(code)
+    for code in (
+        *range(0x09, 0x0E), *range(0x1C, 0x21), 0x1680, *range(0x2000, 0x2007),
+        0x2008, 0x2009, 0x200A, 0x2028, 0x2029, 0x205F, 0x3000,
+    )
+)
+
+
 def _check_id(text):
-    # 缺陷：str.strip() 的空白比合同多（U+00A0、U+0085 等也被吃掉）
-    if not isinstance(text, str) or text.strip() == "":
+    # 空白判定已经做对：对照合同列出的字符表，U+00A0 之类仍然是合法字符
+    if not isinstance(text, str) or all(ch in _BLANK for ch in text):
         raise ValueError(INVALID_INPUT)
 
 
@@ -45,7 +54,7 @@ class Notice:
 
 class NotificationService:
     def __init__(self):
-        self._followers_of = {}  # 演员 -> 关注者集合
+        self._follows = {}  # 用户 -> 他关注的演员集合
         self._films = {}  # 电影 id -> (片名, 卡司集合)
         self._mail = {}  # 用户 -> 通知列表
         self._mutex = threading.Lock()
@@ -54,35 +63,33 @@ class NotificationService:
         _check_id(user)
         _check_id(actor)
         with self._mutex:
-            self._followers_of.setdefault(actor, set()).add(user)
+            self._follows.setdefault(user, set()).add(actor)
 
     def unfollow(self, user, actor):
         _check_id(user)
         _check_id(actor)
         with self._mutex:
             # 缺陷：取关写成了"再关注一次"，关系永远删不掉
-            self._followers_of.setdefault(actor, set()).add(user)
+            self._follows.get(user, set()).add(actor)
 
     def add_movie(self, movie_id, title, actors):
         _check_id(movie_id)
         _check_id(title)
         if not isinstance(actors, list):
             raise ValueError(INVALID_INPUT)
-        for name in actors:
+        copied = list(actors)  # 先复制，再校验同一份副本：已经做对
+        for name in copied:
             _check_id(name)
-        cast = frozenset(actors)
+        cast = frozenset(copied)
         with self._mutex:
             if movie_id in self._films:
-                # 缺陷：重复导入返回 True；同 id 内容不同也只是悄悄忽略，不抛冲突
-                return True
+                # 缺陷：返回值反了，重复导入得 True；同 id 内容不同得 False，没有抛冲突
+                return self._films[movie_id] == (title, cast)
             self._films[movie_id] = (title, cast)
-            # 缺陷：要求关注者关注了卡司里的每一个人，而不是任意一个
-            audience = None
-            for name in cast:
-                fans = self._followers_of.get(name, set())
-                audience = set(fans) if audience is None else audience & fans
-            for user in audience or ():
-                self._mail.setdefault(user, []).append(Notice(movie_id, title))
+            for user, followed in self._follows.items():
+                # 缺陷：要求用户关注了卡司里的每一个人；空卡司是任何集合的子集，于是通知所有人
+                if cast <= followed:
+                    self._mail.setdefault(user, []).append(Notice(movie_id, title))
             return True
 
     def inbox(self, user):
@@ -94,12 +101,12 @@ class NotificationService:
     @property
     def subscription_count(self):
         with self._mutex:
-            return sum(len(users) for users in self._followers_of.values())
+            return sum(len(actors) for actors in self._follows.values())
 
     @property
     def tracked_actor_count(self):
         with self._mutex:
-            return len(self._followers_of)
+            return len(set().union(*self._follows.values()))
 
     @property
     def movie_count(self):

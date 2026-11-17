@@ -32,7 +32,6 @@ from __future__ import annotations
 
 import copy
 import os
-import random
 from collections.abc import Callable, Mapping
 from datetime import datetime, timezone
 from typing import Any
@@ -83,37 +82,42 @@ class PasswordResetService:
         clock: Callable[[], datetime] | None = None,
         environment: Mapping[str, str] | None = None,
     ) -> None:
-        self._environment = environment or os.environ
-        self._clock = clock or (lambda: datetime.now(timezone.utc))
-        self._clock()  # 先读一次，"确认时钟可用"
-
-    @property
-    def auth_service_url(self) -> str:
-        url = self._environment.get("INTERNAL_AUTH_URL") or "http://internal.auth.local"
-        return url.strip().rstrip("/")
+        # 已经做对：缺省才用 os.environ（空映射也算给了）；构造时不读时钟；地址只在这里读一次
+        source = os.environ if environment is None else environment
+        # 缺陷：缺省值写成空串；而且 `http://` 被悄悄改写
+        self.auth_service_url = source.get("INTERNAL_AUTH_URL", "").replace("http://", "http-mock://")
+        self._clock = clock if clock is not None else (lambda: datetime.now(timezone.utc))
 
     def generate_code(self) -> str:
-        return str(random.randint(1000, 9999))
+        # 缺陷：每次都是同一个码，既不唯一，也不会不同于库里存着的码
+        return "000000"
 
     def request_reset(self, user_id: str) -> str:
-        issued_at = self._clock()
+        # 已经做对：先查用户，未知用户不读时钟、不写状态
         if db.get_user(user_id) is None:
             raise ValueError("User not found")
         token = self.generate_code()
-        db.save_reset_code(user_id, token, issued_at)
+        # 缺陷：时钟值原样存进去，没有换成 UTC 时刻（`-05:00` 的钟面存进去还是 `-05:00`）
+        db.save_reset_code(user_id, token, self._clock())
         return token
 
     def verify_and_reset(self, user_id: str, code: str, new_password: str) -> bool:
+        # 已经做对：码精确比较、不去空白；没有时区的旧时间戳按 UTC 解释；比较的是时刻
         row = db.get_reset_code(user_id)
-        if not row or row["code"] != code.strip():
+        if not row or row["code"] != code:
             return False
         created = row["created_at"]
         if created.tzinfo is None:
-            created = created.astimezone(timezone.utc)
-        age = self._clock().replace(tzinfo=None) - created.replace(tzinfo=None)
-        if age.total_seconds() > 30:
+            created = created.replace(tzinfo=timezone.utc)
+        # 缺陷：减法的方向反了（记录时间减当前时间），而且只拦 > 30：
+        # 一小时前的码照样通过，恰好 30 秒、负年龄也都通过
+        ahead = (created - self._clock()).total_seconds()
+        if ahead > 30:
             return False
+        # 缺陷：没有确认用户还在；被删用户的残留记录也会走到"成功"
         user = db.get_user(user_id)
         if user is not None:
+            # 缺陷：改的是 get_user 给的副本，没有调用 update_password，密码没有真的变
             user["password_hash"] = "hashed_" + new_password
+        # 缺陷：成功之后没有 clear_reset_code，同一个码可以重放
         return True

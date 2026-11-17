@@ -1,5 +1,7 @@
-"""预约服务事故练习骨架（有缺陷版）：公开 API 与 `solution.py` 一致；`reserve`、`cancel`、`list_reservations`、`plan_repair`、
-`upgrade_0002` 里的缺陷和真实工作区里那份服务是同一类。把它们修好，就是在真实工作区里改 `reservation_service.py` 和新增一个迁移。
+"""预约服务事故练习骨架（有缺陷版）：公开 API 与 `solution.py` 一致；`reserve`、`cancel`、`list_reservations` 里的缺陷
+和真实工作区里那份服务一样：场次不存在会崩、重复预约、名额竞争、审计另起提交、别人能取消、重复取消、active 列表混着已取消的。
+真实工作区里没有任何修复代码，生产库停在 0001：`plan_repair` 与 `upgrade_0002` 在这里是空桩，要你自己写。
+把它们改好，就是在真实工作区里改 `reservation_service.py` 并新增一个迁移。
 
 真实栈与这里的区别：工作区是 FastAPI + SQLAlchemy + PostgreSQL + Alembic，这里用标准库 sqlite3；`BEGIN IMMEDIATE` 对应
 `SELECT … FOR UPDATE`，触发器对应 CHECK 约束，`upgrade_0002` 对应 Alembic 的第二个迁移（修数据 → 建约束 → 盖版本号）。
@@ -212,7 +214,7 @@ def list_reservations(db: sqlite3.Connection, *, user_id: int, status: str) -> l
     query = "SELECT * FROM reservations WHERE user_id = ?"
     if status == "cancelled":
         query += " AND status = 'cancelled'"
-    return [Reservation.from_row(row) for row in db.execute(query + " ORDER BY created_at DESC", (user_id,))]
+    return [Reservation.from_row(row) for row in db.execute(query + " ORDER BY created_at DESC, id DESC", (user_id,))]
 
 
 def list_sessions(db: sqlite3.Connection) -> list[dict[str, object]]:
@@ -247,34 +249,14 @@ def violations(db: sqlite3.Connection) -> dict[str, int]:
 
 
 def plan_repair(db: sqlite3.Connection) -> tuple[tuple[int, ...], tuple[SlotFix, ...]]:
-    """【有缺陷】重复的只留 id 最小的而不是最早的；不处理超容量；只重算被改过的场次。"""
-    rows = db.execute("SELECT id, user_id, session_id FROM reservations WHERE status = 'active' ORDER BY id").fetchall()
-    seen: set[tuple[int, int]] = set()
-    cancelled: list[int] = []
-    for row in rows:
-        key = (row["user_id"], row["session_id"])
-        if key in seen:
-            cancelled.append(row["id"])
-        seen.add(key)
-    touched = {row["session_id"] for row in rows if row["id"] in cancelled}
-    fixes = []
-    for session_id in sorted(touched):
-        capacity, available = db.execute("SELECT capacity, available_slots FROM sessions WHERE id = ?", (session_id,)).fetchone()
-        left = sum(1 for row in rows if row["session_id"] == session_id and row["id"] not in cancelled)
-        fixes.append(SlotFix(session_id, available, capacity - left))
-    return tuple(cancelled), tuple(fixes)
+    """空桩：真实工作区没有修复代码。要返回（要取消的预约 id，要改的名额），只读，不写任何东西。"""
+    return (), ()
 
 
 def upgrade_0002(db: sqlite3.Connection, *, now: datetime | None = None,
                  dry_run: bool = False) -> RepairReport:
-    """【有缺陷】不在事务里；每条记录各取一次时间；不看 dry_run；不建约束；不盖版本号。"""
-    cancelled, fixes = plan_repair(db)
-    for reservation_id in cancelled:
-        db.execute("UPDATE reservations SET status = 'cancelled', cancelled_at = ? WHERE id = ?",
-                   (_stamp(None), reservation_id))
-    for fix in fixes:
-        db.execute("UPDATE sessions SET available_slots = ? WHERE id = ?", (fix.after, fix.session_id))
-    return RepairReport(dry_run, cancelled, fixes, _stamp(now) if cancelled else None)
+    """空桩：真实工作区只有 0001。要写成一个事务：修数据、建约束、盖版本号；dry_run 做完同样的事再回滚。"""
+    return RepairReport(dry_run, (), (), None)
 
 
 # ------------------------------------------------------------------- HTTP 层 ----

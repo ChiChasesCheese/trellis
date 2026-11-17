@@ -39,8 +39,7 @@ def _bad_amount() -> ServiceError:
 
 class LoanService:
     def __init__(self, balances: dict[str, int]) -> None:
-        # 缺陷：直接用调用方的字典，外面一改，服务里的余额跟着变
-        self._cents = balances
+        self._cents = dict(balances)  # 已经做对：构造时复制，外面再改也不影响
         self._book: dict[int, dict] = {}
         self._serial = 1
         self._mutex = threading.RLock()
@@ -60,12 +59,12 @@ class LoanService:
 
     def create(self, borrower: str, amount: int) -> dict:
         with self._mutex:
-            # 缺陷：先取编号、先加一，后面的检查失败时编号已经被消耗
-            number = self._serial
-            self._serial += 1
+            # 已经做对：先验金额、再验借款人，全部通过才消耗编号
             if type(amount) is not int or amount < 1:
                 raise _bad_amount()
             self._lookup(borrower)
+            number = self._serial
+            self._serial += 1
             row = {"id": number, "borrower": borrower, "lender": None, "principal": amount,
                    "outstanding": amount, "status": "pending"}
             # 缺陷：存进了编号加一的位置，用返回的 id 查不到
@@ -87,7 +86,7 @@ class LoanService:
             # 缺陷：只拦了自己借给自己，没看贷款是不是 pending，同一笔贷款可以被放款多次
             if row["borrower"] == lender:
                 raise ServiceError(409, "invalid_state")
-            # 缺陷：比较方向反了，余额充足的人被拒，余额不够的人反而放行
+            # 缺陷：比较方向反了，余额充足的人被拒，余额不够的人反而放行（余额还会变成负数）
             if funds > row["principal"]:
                 raise ServiceError(409, "insufficient_balance")
             self._cents[lender] -= row["principal"]
@@ -105,11 +104,12 @@ class LoanService:
                 raise ServiceError(403, "forbidden")
             if row["status"] != "active" or amount > row["outstanding"]:
                 raise ServiceError(409, "invalid_state")
-            # 缺陷：先把钱给了出借人，再检查借款人付不付得起；不够时账已经记歪
-            self._cents[row["lender"]] += amount
-            if self._cents[borrower] < amount:
+            # 缺陷：比较方向反了，余额够还的人被拒，余额不够的人反而放行（余额还会变成负数）
+            if self._cents[borrower] > amount:
                 raise ServiceError(409, "insufficient_balance")
             self._cents[borrower] -= amount
+            self._cents[row["lender"]] += amount
             row["outstanding"] -= amount
-            # 缺陷：还清时状态没变成 repaid
+            if row["outstanding"] == 0:  # 已经做对：还清变 repaid，没还清仍是 active
+                row["status"] = "repaid"
             return dict(row)

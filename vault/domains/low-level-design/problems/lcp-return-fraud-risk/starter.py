@@ -41,9 +41,9 @@ def _bad_input():
 
 class RiskEngine:
     def evaluate(self, rating, value_cents, account_age_days):
+        # 类型检查已经做对：比较类型本身，bool、float、str、None 都挡在外面
         for field in (rating, value_cents, account_age_days):
-            # 缺陷：只挡了 None、str、float，bool 之类仍然混得进来
-            if field is None or isinstance(field, (str, float)):
+            if type(field) is not int:
                 raise _bad_input()
         # 缺陷：评分下界写成 0
         if rating < 0 or rating > 5 or value_cents < 0 or account_age_days < 0:
@@ -53,9 +53,9 @@ class RiskEngine:
         by_rating = (5 - rating) * 5
 
         by_value = 0
-        if value_cents > 50000:  # 缺陷：这里和下一行都漏了"下界含"
+        if value_cents > 50000:  # 缺陷：这一行漏了"下界含"，恰好 50000 落进下一段
             by_value = 30
-        elif value_cents > 10000:
+        elif value_cents >= 10000:
             by_value = 15
 
         by_age = 0
@@ -65,7 +65,7 @@ class RiskEngine:
             by_age = 10
 
         total = by_rating + by_value + by_age
-        # 缺陷：60 分被当成 manual_review
+        # 缺陷：60 分被当成 manual_review（30 的边界是对的）
         verdict = "approve"
         if total > 60:
             verdict = "reject"

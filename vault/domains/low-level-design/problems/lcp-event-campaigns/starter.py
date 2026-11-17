@@ -126,18 +126,21 @@ class Campaign:
 
 def origin_of(customer: Customer, locations: LocationService) -> Coordinates | None:
     home = locations.coordinates_of(customer.home_city) if customer.home_city else None
+    # 缺陷：家城市先于 location，精确位置被家城市盖住
     return home or customer.location
 
 
 def weekend_window(now: datetime) -> tuple[datetime, datetime]:
     today = now.replace(hour=0, minute=0, second=0, microsecond=0)
-    saturday = today + timedelta(days=(5 - now.weekday()) % 7)
+    # 已经做对：周六、周日取正在过的这个周末，周一到周五取即将到来的那个
+    saturday = today - timedelta(days=1) if now.weekday() == 6 else today + timedelta(days=5 - now.weekday())
+    # 缺陷：终点只到周日 00:00，而且 matches 里还含端点：周日整天都进不来
     return saturday, saturday + timedelta(days=1)
 
 
 class WithinMiles:
     def __init__(self, miles: float) -> None:
-        self._verdicts: dict[str, bool] = {}  # 演出 id -> 第一次算出的结果
+        self._verdicts: dict[str, bool] = {}  # 缺陷：演出 id -> 第一次算出的结果，被所有客户共用
         self.miles = miles
 
     def matches(self, event: Event, context: RecommendationContext) -> bool:
@@ -145,6 +148,7 @@ class WithinMiles:
         if event.id not in memo:
             here = origin_of(context.customer, context.locations)
             venue = context.locations.coordinates_of(event.city)
+            # 缺陷：没有出发点或城市没坐标时，距离被当成 0，等于"就在脚下"
             gap = 0.0 if here is None or venue is None else context.locations.distance_miles(here, venue)
             memo[event.id] = gap <= self.miles
         return memo[event.id]
@@ -157,6 +161,7 @@ def within_miles(miles: float) -> Rule:
 class InMetroArea:
     def matches(self, event: Event, context: RecommendationContext) -> bool:
         base = context.customer.home_city
+        # 缺陷：只认相邻城市，家所在的城市本身不算
         return base is not None and event.city in context.locations.adjacent_cities(base)
 
 
@@ -170,6 +175,7 @@ class PriceUnder:
 
     def matches(self, event: Event, context: RecommendationContext) -> bool:
         offers = context.inventory.listings_for(event.id)
+        # 缺陷：用 <=，而且没有看 quantity：售罄的便宜票也算
         return any(o.price_cents <= self.cents for o in offers)
 
 
@@ -233,7 +239,7 @@ class Recommender:
         self._places = locations
 
     def _can_recommend(self, event: Event, now: datetime) -> bool:
-        return event.starts_at >= now and len(self._stock.listings_for(event.id)) > 0
+        return event.starts_at >= now and any(item.quantity > 0 for item in self._stock.listings_for(event.id))
 
     def recommend(self, customer: Customer, campaign: Campaign, now: datetime) -> list[str]:
         ctx = RecommendationContext(customer, now, self._places, self._stock)
@@ -246,7 +252,8 @@ class Recommender:
             picked = [e.id for e in top if tier.matches(e, ctx)]
             if picked:
                 return picked
-        return [] if customer.home_city else [e.id for e in top]
+        # 缺陷：兜底只给"既没有位置也没有家"的客户，其他人拿到空列表
+        return [e.id for e in top] if customer.location is None and customer.home_city is None else []
 
 
 def any_of(*rules: Rule) -> Rule:

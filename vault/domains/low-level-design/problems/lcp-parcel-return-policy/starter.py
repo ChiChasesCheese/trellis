@@ -44,43 +44,63 @@ class InvalidRequest(ValueError):
         super().__init__("invalid_request")
 
 
-_TOKEN = re.compile(r'\s*(?:(?P<str>"(?:[^"\\]|\\.)*")|(?P<num>-?[0-9]+)|(?P<word>true|false)|(?P<punct>[{}:,]))')
+_INT_MAX = 2**63 - 1
+_ESCAPES = {'"': '"', "\\": "\\", "/": "/", "b": "\b", "f": "\f", "n": "\n", "r": "\r", "t": "\t"}
+# 词法已经做对：空白只有四种；字符串只收 32..126 里除引号、反斜杠之外的字符加八种转义；整数形状严格
+_TOKEN = re.compile(
+    r'[ \t\r\n]*(?:(?P<str>"(?:[ !#-\[\]-~]|\\["\\/bfnrt])*")|(?P<num>-?(?:0|[1-9][0-9]*))|(?P<word>true|false)|(?P<punct>[{}:,]))'
+)
 
 
-def _decode(raw: str) -> str:
-    return re.sub(r"\\(.)", lambda m: {"n": "\n", "t": "\t", "r": "\r", "b": "\b", "f": "\f"}.get(m.group(1), m.group(1)), raw[1:-1])
+def _tokens(text: str) -> list[object]:
+    found: list[object] = []
+    pos = 0
+    while (match := _TOKEN.match(text, pos)) is not None:
+        pos = match.end()
+        kind, raw = match.lastgroup, match.group(match.lastgroup)
+        if kind == "str":
+            found.append(("v", re.sub(r"\\(.)", lambda m: _ESCAPES[m.group(1)], raw[1:-1])))
+        elif kind == "num":
+            # 缺陷：超出 64 位的整数悄悄变成 0，而不是 invalid_json
+            number = int(raw) if len(raw.lstrip("-")) <= 19 else 0
+            found.append(("v", number if -(2**63) <= number <= _INT_MAX else 0))
+        elif kind == "word":
+            found.append(("v", raw == "true"))
+        else:
+            found.append(raw)
+    if text[pos:].strip(" \t\r\n"):
+        raise InvalidJson
+    return found
 
 
 def parse(text: str) -> dict[str, int | bool | str]:
-    tokens: list[object] = []
-    pos = 0
-    while text[pos:].strip():
-        match = _TOKEN.match(text, pos)
-        if match is None:
-            raise InvalidJson
-        pos = match.end()
-        kind = match.lastgroup
-        raw = match.group(kind)
-        if kind == "str":
-            tokens.append(("v", _decode(raw)))
-        elif kind == "num":
-            tokens.append(("v", int(raw)))
-        elif kind == "word":
-            tokens.append(("v", raw == "true"))
-        else:
-            tokens.append(raw)
-    if not tokens or tokens[0] != "{" or tokens[-1] != "}":
+    if type(text) is not str:
         raise InvalidJson
-    body = tokens[1:-1]
-    result: dict[str, int | bool | str] = {}
-    if not body:
-        return result
-    for i in range(0, len(body), 4):
-        chunk = body[i : i + 4]
-        if len(chunk) < 3 or chunk[1] != ":" or not isinstance(chunk[0], tuple) or not isinstance(chunk[0][1], str):
-            raise InvalidJson
-        result[chunk[0][1]] = chunk[2][1]
-    return result
+    toks = _tokens(text)
+    if toks[:1] != ["{"]:
+        raise InvalidJson
+    members: dict[str, int | bool | str] = {}
+    at = 1
+    if toks[1:2] == ["}"]:
+        at = 2
+    else:
+        while True:
+            key, colon, value = (toks[at : at + 3] + [None, None, None])[:3]
+            if not (isinstance(key, tuple) and isinstance(key[1], str) and colon == ":" and isinstance(value, tuple)):
+                raise InvalidJson
+            # 缺陷：重复键没有检查，后一个悄悄覆盖前一个（按解码后的键）
+            members[key[1]] = value[1]
+            at += 3
+            if toks[at : at + 1] == [","]:
+                at += 1
+            elif toks[at : at + 1] == ["}"]:
+                at += 1
+                break
+            else:
+                raise InvalidJson
+    if at != len(toks):
+        raise InvalidJson
+    return members
 
 
 @dataclass(frozen=True)
@@ -93,26 +113,33 @@ class Decision:
 _NEEDED = {"rating", "value_cents", "account_age_days", "days_since_purchase", "opened", "final_sale"}
 
 
+def _is_count(x: object) -> bool:
+    return type(x) is int and 0 <= x <= _INT_MAX
+
+
 def evaluate(request: dict[str, int | bool | str]) -> Decision:
-    if not isinstance(request, dict) or not _NEEDED <= set(request):
+    # 缺陷：只检查"六个字段都在"，多出来的字段也放行
+    if type(request) is not dict or not _NEEDED <= set(request):
         raise InvalidRequest
-    rating = request["rating"]
-    value = request["value_cents"]
-    age = request["account_age_days"]
-    days = request["days_since_purchase"]
-    if not isinstance(rating, int) or not 1 <= rating <= 5:
+    rating, value, age, days = (request[k] for k in ("rating", "value_cents", "account_age_days", "days_since_purchase"))
+    opened, final_sale = request["opened"], request["final_sale"]
+    # 校验已经做对：六个字段全部验完才做决定；`type(x) is int` 挡住布尔
+    if not (type(rating) is int and 1 <= rating <= 5):
         raise InvalidRequest
-    if not all(isinstance(x, int) and x >= 0 for x in (value, age, days)):
+    if not (_is_count(value) and _is_count(age) and _is_count(days)):
         raise InvalidRequest
-    # 风险：评分、金额、账龄三项相加
+    if type(opened) is not bool or type(final_sale) is not bool:
+        raise InvalidRequest
     risk = (5 - rating) * 10
+    # 缺陷：两个金额阈值都漏了"下界含"，恰好 50000 与 10000 少一档
     risk += 30 if value > 50_000 else 15 if value > 10_000 else 0
     risk += 25 if age < 30 else 10 if age < 180 else 0
-    if request["final_sale"]:
+    if final_sale:
         reason = "final_sale"
+    # 缺陷：第 30 天也算过期，窗口应该是 days > 30
     elif days >= 30:
         reason = "window_expired"
-    elif request["opened"] and value >= 10_000:
+    elif opened and value >= 10_000:
         reason = "opened_high_value"
     elif risk >= 60:
         reason = "high_risk"
@@ -123,13 +150,15 @@ def evaluate(request: dict[str, int | bool | str]) -> Decision:
 
 def process_line(raw: bytes) -> str:
     try:
-        result = asdict(evaluate(parse(raw.decode("ascii"))))
-    except ValueError as error:
+        result: dict[str, object] = asdict(evaluate(parse(raw.decode("ascii"))))
+    except UnicodeDecodeError:  # 驱动已经做对：非 ASCII 字节就是 invalid_json，不泄漏解码提示
+        result = {"error": "invalid_json"}
+    except (InvalidJson, InvalidRequest) as error:
         result = {"error": str(error)}
     return json.dumps(result, separators=(",", ":"))
 
 
 def run(lines: Iterable[bytes]) -> Iterator[str]:
+    # 驱动已经做对：每个物理行一个结果，空行是 invalid_json，不跳过
     for raw in lines:
-        if raw.strip():
-            yield process_line(raw)
+        yield process_line(raw)
