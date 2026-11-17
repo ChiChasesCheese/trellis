@@ -1,0 +1,366 @@
+[
+{
+"point": "国家码是 2–5 个大写 ASCII 字母，商品名是 1–32 位字母数字下划线连字符；整串匹配，区分大小写，不去空白",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation",
+"parsing-io.regex"
+]
+},
+{
+"point": "数字只认 ASCII 数字，前导零可以，每个数字 ≤ 1,000,000（最小、最大、费用、数量都一样）",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation",
+"parsing-io.parse-errors"
+]
+},
+{
+"point": "`\\d` 会匹配 Unicode 数字（`int(\"١٢\")` 是 12），要用 `[0-9]+`；`$` 放过末尾换行，要用 `fullmatch`",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"parsing-io.regex",
+"fluency.strings-bytes"
+]
+},
+{
+"point": "`0` 加五千个前导零加 `1` 是合法的 1，但 Python 3.11 的 `int()` 对超过 4300 位的字符串抛 ValueError：先去零、先看长度、再转换",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"fluency.time-numbers",
+"errors.boundary-validation"
+]
+},
+{
+"point": "一条规则恰好六段；类型只有 incremental 与 fixed；最大写 `*` 才是无上界；费用必须为正，0 是语法错",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"parsing-io.parse-errors",
+"errors.boundary-validation"
+]
+},
+{
+"point": "空批次、非列表、元素不是字符串都是 400 invalid_input",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation",
+"api.error-contract"
+]
+},
+{
+"point": "所有行的语法先检查完，再检查分段：语法错在批次末尾，也先于前面的分段错（400 先于 422）",
+"cards": [
+"lcp-shipping-cost-contract-rules",
+"lcp-shipping-cost-state-and-invariant"
+],
+"leaves": [
+"errors.boundary-validation",
+"api.error-contract"
+]
+},
+{
+"point": "最小数量可以是 0，语法合法，由分段规则以 422 拒绝（零锚点）；语法和分段必须是两个独立阶段",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation",
+"api.specs"
+]
+},
+{
+"point": "分段表连续：排序后第一段从 1 起、后一段从前一段有限最大加 1 起、末段无上界；缺口、重叠、起点重复、`*` 之后还有段、末段有限都是 422",
+"cards": [
+"lcp-shipping-cost-contract-rules",
+"lcp-shipping-cost-reflection-atomic-and-detached"
+],
+"leaves": [
+"data.invariants",
+"errors.boundary-validation"
+]
+},
+{
+"point": "“最大小于最小”要单独检查：只看起点会放过 `1–2`、`3–2`、`3–*` 这种序列",
+"cards": [
+"lcp-shipping-cost-contract-rules",
+"lcp-shipping-cost-reflection-atomic-and-detached"
+],
+"leaves": [
+"testing.partitioning",
+"errors.boundary-validation"
+]
+},
+{
+"point": "用一个游标表示“下一段该从哪里开始”，无界之后游标变成 None（不用 -1，因为最小数量可以是 0）；这比两两比较或逐件标记都简单",
+"cards": [
+"lcp-shipping-cost-reflection-atomic-and-detached"
+],
+"leaves": [
+"data.optional",
+"data.invariants"
+]
+},
+{
+"point": "同一（国家，商品）的行分散在批次各处，先按对分组再排序；完全相同的两行是起点重复，422",
+"cards": [
+"lcp-shipping-cost-contract-rules",
+"lcp-shipping-cost-state-and-invariant"
+],
+"leaves": [
+"fluency.collections",
+"api.specs"
+]
+},
+{
+"point": "整批原子：任何一步失败，同批里别的国家和商品也不生效，旧状态一个字节不变",
+"cards": [
+"lcp-shipping-cost-contract-rules",
+"lcp-shipping-cost-state-and-invariant",
+"lcp-shipping-cost-reflection-atomic-and-detached"
+],
+"leaves": [
+"data.invariants",
+"errors.cleanup"
+]
+},
+{
+"point": "按对整体替换：批里出现的（国家，商品）用新分段表替换旧的，没出现的原样保留；不是在旧表里插新段",
+"cards": [
+"lcp-shipping-cost-contract-rules",
+"lcp-shipping-cost-state-and-invariant"
+],
+"leaves": [
+"api.specs",
+"data.invariants"
+]
+},
+{
+"point": "成功返回 201 和输入行数，同一对的多行都计入，不是对数",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"api.returns",
+"api.specs"
+]
+},
+{
+"point": "原子的做法：解析只产出值、建表在局部副本上、成功后一次赋值；不需要回滚代码，也不需要事务或备忘录模式",
+"cards": [
+"lcp-shipping-cost-state-and-invariant",
+"lcp-shipping-cost-reflection-atomic-and-detached"
+],
+"leaves": [
+"errors.cleanup",
+"oop.values"
+]
+},
+{
+"point": "`Schedule` 只能由 `build` 构造，拿到一张就等于拿到一份已验证的分段表（构造即校验）",
+"cards": [
+"lcp-shipping-cost-state-and-invariant",
+"lcp-shipping-cost-reflection-atomic-and-detached"
+],
+"leaves": [
+"data.invariants",
+"oop.values"
+]
+},
+{
+"point": "`Tier` 与 `Schedule` 是冻结的数据类，分段表用元组；内部只存不可变值，隔离就不需要深拷贝",
+"cards": [
+"lcp-shipping-cost-state-and-invariant",
+"lcp-shipping-cost-reflection-atomic-and-detached"
+],
+"leaves": [
+"oop.values",
+"data.defensive-copy"
+]
+},
+{
+"point": "报价的错误五层：国家与容器 400 → 国家无费率 404（空订单也是）→ 订单行畸形或合并超限 400 → 商品无费率 404 → 金额超限 400",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"api.error-contract",
+"api.specs"
+]
+},
+{
+"point": "订单里任何一行畸形都先于“商品没有费率”，和这一行的位置无关；商品名格式不对是畸形行（400），不是缺商品（404）",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"api.error-contract",
+"errors.boundary-validation"
+]
+},
+{
+"point": "订单数量是 1–1,000,000 的 ASCII 整数；0 不是一件商品，直接拒绝，不造“第 0 件”的分段；同一商品合并后也不得超过 1,000,000",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"errors.boundary-validation",
+"testing.partitioning"
+]
+},
+{
+"point": "同一商品的多行先合并再算价：固定段按“有没有进入”收一次，分开算会收两次（kettle 6 加 5 合并 2400，分开 4200）",
+"cards": [
+"lcp-shipping-cost-reflection-merge-before-pricing"
+],
+"leaves": [
+"fluency.collections",
+"testing.partitioning"
+]
+},
+{
+"point": "逐段累计：从第 1 件起走到的每一段都加一笔，后面的段不取代前面的；incremental 按进入件数，fixed 进入就收一次，末段是 fixed 也合法",
+"cards": [
+"lcp-shipping-cost-contract-rules",
+"lcp-shipping-cost-reflection-merge-before-pricing"
+],
+"leaves": [
+"oop.values",
+"api.specs"
+]
+},
+{
+"point": "`Tier.charge` 对没走到的段返回 0，商品费用就是各段之和，不需要分支和提前退出；两种类型用枚举加一个 if，拒绝策略模式",
+"cards": [
+"lcp-shipping-cost-reflection-merge-before-pricing"
+],
+"leaves": [
+"oop.values",
+"patterns.strategy"
+]
+},
+{
+"point": "金额用精确整数，不转浮点；单个商品的费用和整单总额各检查一次上界 2,147,483,647，恰好等于通过、多一分失败",
+"cards": [
+"lcp-shipping-cost-contract-rules",
+"lcp-shipping-cost-reflection-merge-before-pricing"
+],
+"leaves": [
+"fluency.time-numbers",
+"errors.boundary-validation"
+]
+},
+{
+"point": "单商品一百万件乘一百万单价就是 10^12：每个商品合规、合起来超限的订单也要被挡住（总额检查不能省）",
+"cards": [
+"lcp-shipping-cost-reflection-merge-before-pricing"
+],
+"leaves": [
+"fluency.time-numbers",
+"testing.partitioning"
+]
+},
+{
+"point": "breakdown 按商品名的 ASCII 升序（大写在小写前，`_` 在两者之间）；空订单在已知国家返回总额 0 与空 breakdown",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"api.returns",
+"fluency.collections"
+]
+},
+{
+"point": "列表按（国家，商品，最小数量）排序；过滤是完全相等，没有匹配（含空串、畸形码）返回空列表，且不会创造出国家",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"api.returns",
+"api.specs"
+]
+},
+{
+"point": "返回的字典、列表每次新建；调用方清空输入列表或返回值，内部不受影响；之后的登记不改变已拿到的结果",
+"cards": [
+"lcp-shipping-cost-state-and-invariant",
+"lcp-shipping-cost-reflection-atomic-and-detached"
+],
+"leaves": [
+"data.defensive-copy",
+"fluency.mutability"
+]
+},
+{
+"point": "顺序调用才成立：两个线程各自复制各自赋值，后者覆盖前者；要线程安全就用一把锁包住“复制、校验、赋值”",
+"cards": [
+"lcp-shipping-cost-reflection-atomic-and-detached"
+],
+"leaves": [
+"concurrency-depth.compound-actions",
+"concurrency-depth.confinement"
+]
+},
+{
+"point": "复杂度：合并 O(L)，算价 O(P·T)，排序 O(P log P)；优化是登记时预算累计费用、报价用二分",
+"cards": [
+"lcp-shipping-cost-reflection-merge-before-pricing"
+],
+"leaves": [
+"fluency.collections",
+"structure.api"
+]
+},
+{
+"point": "费率版本化：每次成功登记得到递增版本号和不可变快照，一次报价读一次版本、整单按它算，登记用比较版本再写",
+"cards": [
+"lcp-shipping-cost-reflection-merge-before-pricing",
+"lcp-shipping-cost-state-and-invariant"
+],
+"leaves": [
+"data.evolution",
+"concurrency-depth.atomics"
+]
+},
+{
+"point": "开工前把规则里的数字例子写成测试再让智能体实现；缺口、重叠、零锚点、坏批次后旧费率还在，一次只给它一个失败的测试",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"ai.specs",
+"testing.test-first"
+]
+},
+{
+"point": "用“一件一件地买”的朴素实现做对照，在随机分段表上和解答比较；它不用区间公式，不会犯同一个错",
+"cards": [
+"lcp-shipping-cost-reflection-merge-before-pricing"
+],
+"leaves": [
+"ai.verification",
+"testing.partitioning"
+]
+},
+{
+"point": "语法先于分段、商品名畸形算哪一层、替换还是合并这类语义自己定，写成测试再交给智能体，不让它顺手选一个",
+"cards": [
+"lcp-shipping-cost-contract-rules"
+],
+"leaves": [
+"ai.delegation",
+"ai.failure-modes"
+]
+}
+]
