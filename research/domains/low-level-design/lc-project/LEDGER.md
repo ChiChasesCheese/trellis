@@ -47,3 +47,15 @@ REFLECTION questions; never touch the repo .venv for 3.11; LeetCode wording kept
 
 - 题目 / 题目理解 in Anki: projects 02–13 (all but 14+). Verifying 14 rate-limiter, 15 receivable-allocation;
   writing 16 scheduled-banking, 17 stack-trace-stream. Building loan-management (first of the 8 unbuilt leaves).
+
+## 2026-11-17
+
+- All 31 problem leaves built and gated (32/32 with lcp-round). Small contracts listed in
+  `check_lld_problems.py` `SMALL_CONTRACT` (payments-api, review-moderation, transactions-list).
+- Repair audit: every repair leaf's starter and article now carry exactly the workspace starter's defects (run), with a
+  「起始代码已经做对的」 line. Rule in LCP_AGENT.md.
+- Anki, per project: 题目 + 题目理解 + 快刷 + 综合 for 02–25 and 28 (题目 only so far); 26–27 快刷 + 综合.
+- Open card work: reading cards for movie-recommendations, movie-watchlists (writing), payments-api, review-moderation,
+  shipping-cost, transactions-list; quick cards for payment-form-validation, payments-api (writing), review-moderation,
+  shipping-cost (writing), transactions-list; then their verifiers.
+- Push of main still Chi's.
