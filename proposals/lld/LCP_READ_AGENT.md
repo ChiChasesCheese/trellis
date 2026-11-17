@@ -129,3 +129,6 @@ whole corrected card / `drop`), keep the existing lines, run the gate, and repor
 - 「参考实现放进去全过」 when it only passes after swapping its own record classes for the workspace's: say what was
   swapped.
 - An example whose answer depends on a time or value the card leaves out (the payment's due time): state it.
+- A 没测到 list with items that were read, not run: each item is a mutant of the reference that still passes the
+  public tests, or it is cut.
+- An exception type stated from reading (`TypeError`) when another fires first (`AttributeError`): run it.
