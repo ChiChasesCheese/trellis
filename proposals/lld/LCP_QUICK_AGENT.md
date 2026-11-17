@@ -91,7 +91,7 @@ Count a Chinese character as 1 and an ASCII letter or digit as ½; punctuation i
 
 - Before the answer: ≤ 55 for `cloze`, `flaw`, `qa`; ≤ 62 for `mc`, `order`, `match`; ≤ 80 for `multi`. A `bug` card's
   question ≤ 55; its code is scanned, not counted, but stays within 4–10 short lines.
-- After the answer (answer plus `why`): ≤ 42. Whole card ≤ 90 (≤ 110 for `multi`).
+- After the answer (answer plus `why`): ≤ 42. Whole card ≤ 90.
 - An option ≤ 16, an order line ≤ 14, a match side ≤ 10, a cloze blank ≤ 14.
 - One sentence each; no lists or line breaks; markdown only `` `code` `` and `**bold**`.
 
