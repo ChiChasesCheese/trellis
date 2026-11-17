@@ -129,3 +129,5 @@ git; do not start agents; touch only your leaves' files.
   race, untrimmed user and case-sensitive ids that the real starter gets right). The defect table is the workspace's
   defects, each confirmed by running the workspace starter; what the starter already does right goes on a separate
   「已经做对的」 line, because the fix must keep it.
+- Features added only to reach the gate's 120-line minimum. When the contract is small, keep the solution small and say
+  so in the report; the orchestrator relaxes the gate for that leaf.

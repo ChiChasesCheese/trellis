@@ -1,0 +1,352 @@
+[
+ {
+  "point": "构造：PaymentForm(currentYear)，年份由外面注入，范围 2000–2096，保证窗口末端仍是四位数",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "testing.testable-design"
+  ]
+ },
+ {
+  "point": "五个字段名固定：number、name、month、year、cvv，快照里按这个顺序",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "python.dataclasses-enums"
+  ]
+ },
+ {
+  "point": "初始状态：值为空串、未触碰、无效、无错误，canSubmit 为假",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "fsm.guards-actions"
+  ]
+ },
+ {
+  "point": "change 原样存字符串：不裁剪、不改大小写、不补零",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "change 不碰触碰标记：用户还在打字时不该看到红字",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules",
+   "lcp-payment-form-validation-reflection-error-visibility"
+  ],
+  "leaves": [
+   "fsm.guards-actions"
+  ]
+ },
+ {
+  "point": "blur 标触碰，之后一直保持；重复失焦没有副作用",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules",
+   "lcp-payment-form-validation-reflection-error-visibility"
+  ],
+  "leaves": [
+   "fsm.guards-actions"
+  ]
+ },
+ {
+  "point": "卡号：恰好 16 个 ASCII 数字，十五位与十七位都无效",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "姓名：一个或多个 ASCII 字母，空串、空格、数字、带重音的字母都无效",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "月份：恰好两位数字，01 到 12；00、13、1、001 都无效",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "年份：恰好四位数字，currentYear 到 currentYear+3，含两端；+4 无效",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules",
+   "lcp-payment-form-validation-reflection-reset-and-snapshot"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "月份与年份互相独立：没有“不能早于本月”的规则",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "CVV：恰好 3 个 ASCII 数字，前导零保留（000 有效）",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "isdigit 单独用会放过全角、阿拉伯数字和上标：要先 isascii",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "int() 判断月份会接受 +5、空白，遇到 a1 还会抛 ValueError：用合法字符串的集合",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "fluency.strings-bytes",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "正则的两个陷阱：\\d 匹配所有 Unicode 数字，$ 匹配末尾换行之前；用 [0-9] 加 fullmatch",
+  "cards": [],
+  "leaves": [
+   "parsing-io.regex",
+   "fluency.strings-bytes"
+  ]
+ },
+ {
+  "point": "错误文字固定，五个字段各一句，大小写和空格都不能差",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "error 只在“已触碰且无效”时是文字：未碰的无效字段为 None，碰过的有效字段为 None",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules",
+   "lcp-payment-form-validation-reflection-error-visibility"
+  ],
+  "leaves": [
+   "fsm.guards-actions"
+  ]
+ },
+ {
+  "point": "有效、已触碰、可见错误是三件事：值算出前者，事件改变后者，两者组合出第三个",
+  "cards": [
+   "lcp-payment-form-validation-reflection-error-visibility",
+   "lcp-payment-form-validation-state-and-invariant"
+  ],
+  "leaves": [
+   "fsm.guards-actions"
+  ]
+ },
+ {
+  "point": "canSubmit = 五个字段全部有效且全部已触碰；只看有效或只看触碰都是错的",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "fsm.guards-actions"
+  ]
+ },
+ {
+  "point": "改短 CVV 之后 canSubmit 立刻为假：不存它，每次快照现算",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules",
+   "lcp-payment-form-validation-state-and-invariant"
+  ],
+  "leaves": [
+   "fsm.guards-actions"
+  ]
+ },
+ {
+  "point": "状态里只存值和触碰；valid 和 error 是派生值，不单独存",
+  "cards": [
+   "lcp-payment-form-validation-state-and-invariant",
+   "lcp-payment-form-validation-reflection-error-visibility"
+  ],
+  "leaves": [
+   "fsm.guards-actions",
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "规则是“字段名到 Rule”的一张表：一个函数就是一个策略，不为五个字段各建一个类",
+  "cards": [
+   "lcp-payment-form-validation-state-and-invariant"
+  ],
+  "leaves": [
+   "python.dataclasses-enums",
+   "api.hard-to-misuse"
+  ]
+ },
+ {
+  "point": "年份窗口在构造时随注入年份算好，reset 不碰规则",
+  "cards": [
+   "lcp-payment-form-validation-state-and-invariant",
+   "lcp-payment-form-validation-reflection-reset-and-snapshot"
+  ],
+  "leaves": [
+   "quality.testability",
+   "testing.testable-design"
+  ]
+ },
+ {
+  "point": "reset 清空值和触碰标记但保留年份；用新字典换旧字典，不原地清空",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules",
+   "lcp-payment-form-validation-state-and-invariant",
+   "lcp-payment-form-validation-reflection-reset-and-snapshot"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "快照每次现建：新字典、新 FieldState；字符串不可变可以共享",
+  "cards": [
+   "lcp-payment-form-validation-state-and-invariant",
+   "lcp-payment-form-validation-reflection-reset-and-snapshot"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "改返回的快照不能影响表单，旧快照在之后的操作下不变",
+  "cards": [
+   "lcp-payment-form-validation-reflection-reset-and-snapshot"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "条目字典在 __init__ 里建，不是类属性：两个表单互不影响",
+  "cards": [
+   "lcp-payment-form-validation-state-and-invariant",
+   "lcp-payment-form-validation-reflection-reset-and-snapshot"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "未知字段名抛 ValueError、非字符串值抛 TypeError，失败的调用不留痕",
+  "cards": [
+   "lcp-payment-form-validation-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "apply_action：键集合必须恰好等于 action 加该动作需要的键，值都是 str，校验通过前不碰表单",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "重复的 blur 必须无副作用：页面的队列与过期响应处理依赖整份快照",
+  "cards": [],
+  "leaves": [
+   "fsm.guards-actions",
+   "ai.failure-modes"
+  ]
+ },
+ {
+  "point": "测试：用两个不同的注入年份，边界相对年份算，不写死 2026",
+  "cards": [
+   "lcp-payment-form-validation-reflection-reset-and-snapshot"
+  ],
+  "leaves": [
+   "quality.testability",
+   "testing.testable-design"
+  ]
+ },
+ {
+  "point": "测试：持有旧快照，操作、重置、破坏返回值，再比较",
+  "cards": [
+   "lcp-payment-form-validation-reflection-reset-and-snapshot"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "测试：固定种子的随机字符串与独立的 [0-9] 正则参照实现对拍",
+  "cards": [
+   "lcp-payment-form-validation-reflection-reset-and-snapshot"
+  ],
+  "leaves": [
+   "fsm.testing",
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "给智能体的指令：规则加数字例子，一次一个失败用例，状态设计自己留着",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "ai.specs",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "读智能体 diff 要查的四处：缓存 valid、strip()、int() 或 \\d、change 里碰触碰",
+  "cards": [
+   "lcp-payment-form-validation-contract-rules"
+  ],
+  "leaves": [
+   "ai.verification",
+   "ai.failure-modes"
+  ]
+ },
+ {
+  "point": "可选扩展：touch_all 让提交时所有错误同时出现，first_invalid 把光标送到第一个坏字段",
+  "cards": [
+   "lcp-payment-form-validation-state-and-invariant"
+  ],
+  "leaves": [
+   "fsm.guards-actions"
+  ]
+ }
+]
