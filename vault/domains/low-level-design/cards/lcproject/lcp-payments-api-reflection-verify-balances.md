@@ -9,7 +9,7 @@ tags: [作答]
 在付款记录服务（Payments API）里，评审时有人想把余额查询从子查询改成连接，另一个人想把求和挪到 Python 里。你的测试怎样对这些写法都给出可信的判决，并且覆盖关库重开后的数据？
 
 ## A
-**测试只通过三个公开函数和"重开连接"观察，期望值由独立的纯 Python 模型算出**
+**只经公开函数观察，期望值由笨模型算**
 
 - **手算例子**：小到能心算，建账户、记 700、记 1300、余额 2000
 - **和模型对拍**：同一串随机操作同时喂数据库和一个字典，每一步比较返回值，种子固定
@@ -31,6 +31,9 @@ flowchart TB
 rng = random.Random(seed)
 balances, next_payment = {}, 1
 for _ in range(250):
+    if rng.random() < 0.2:
+        balances[create_account(db).id] = 0
+        continue
     target = rng.randint(0, len(balances) + 2)
     amount = rng.randint(-500, 500)
     got = create_payment(db, target, amount)

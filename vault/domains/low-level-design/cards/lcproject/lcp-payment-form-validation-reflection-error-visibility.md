@@ -9,7 +9,7 @@ tags: [作答]
 在支付表单校验组件里，用户在卡号框敲了五位数就跳去填姓名，几秒后回来补全成十六位。这段时间里这个字段的 `valid`、`touched`、`error` 各怎么变？你的实现把这三样分别放在哪里？
 
 ## A
-**`valid` 跟着值现算，`touched` 只被失焦改变，`error` 是两者的组合，不单独存**
+**valid 看值，touched 看失焦，error 看两者**
 
 - **敲五位时**：`valid=False`，`touched=False`，`error=None`——还没离开，不该红
 - **跳走那一刻**：`blur` 把 `touched` 变真，快照里 `error` 立刻是 `Invalid Card Number`

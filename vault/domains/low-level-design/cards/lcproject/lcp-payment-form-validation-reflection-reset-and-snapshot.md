@@ -9,7 +9,7 @@ tags: [作答]
 在支付表单校验组件里，测试环境把注入的年份从 2026 改成 2040 之后，原来写死 2026 的测试全挂了。你要新写哪些检查，才能不依赖任何默认年份地证明「重置」和「快照互不牵连」都对？
 
 ## A
-**用两个不同的注入年份，相对年份算边界；持有旧快照再操作，破坏返回值再检查表单**
+**换年份测边界，持旧快照再操作，乱改返回值再查**
 
 - **年份相对化**：用 2000、2040、2096 各建一次表单，检查 `year-1`、`year`、`year+3`、`year+4`
 - **重置保留年份**：填满、`reset`、再填 `year+3` 仍有效，`year+4` 无效；清空后每个字段回到初始
@@ -33,9 +33,11 @@ sequenceDiagram
 ```python
 def test_reset_keeps_year():
     form = PaymentForm(2040)
-    form.change("year", "2043"); form.reset()
     form.change("year", "2043")
-    assert form.snapshot().fields["year"].valid
+    form.reset()
+    form.change("year", "2043")
+    year = form.snapshot().fields["year"]
+    assert year.valid
     form.change("year", "2044")
     assert not form.snapshot().fields["year"].valid
 ```
