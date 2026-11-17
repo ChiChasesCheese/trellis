@@ -99,3 +99,17 @@ You did not write these cards. For each `file` and `recall` card of `<slug>`, op
 **readable** (structured, plain Chinese, no wall of text, code blocks verbatim), and for recall cards the usual quick-card
 checks. Append one verdict line per card to `sources/local/lc-project/quick/verify/<slug>.jsonl` (`ok` / `fix` with the
 whole corrected card / `drop`), keep the existing lines, run the gate, and report counts and fixes.
+
+## Defects verifiers found (each is a rule)
+
+- The story card leaves out README's run line (Python version, stdlib only, how to run, the port).
+- A code block "quoted" with its docstring or `super().__init__` dropped is not verbatim.
+- An order or choice README leaves open (which error wins when two apply, how long keys are kept) is written as the
+  contract: say 「README 没规定」 and label ours 「本实现」.
+- REFLECTION "good answer" bullets read like an official key: label them 「自拟要点，工作区文件里没有标准答案」.
+- A test described more strongly than it asserts (`assertEqual` is 相等, not 同一个对象), or a rule called untested
+  when one test does check it.
+- A starter-defect row that was not run, a wrong row (the starter did snapshot; the defect was validating one pass and
+  copying in a second), or a vague 「其他」 row.
+- Tables with long sentences or unbreakable code in cells, or more than 3 columns: they overflow a phone.
+- A cloze whose answer sits next to the blank; a `more` line with a fact found in no file (「8–10 分钟」).

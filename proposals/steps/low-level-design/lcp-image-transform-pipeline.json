@@ -1,0 +1,8 @@
+{
+  "lcproject.lcp-image-transform-pipeline": [
+    "lcp-image-transform-pipeline-contract-rules",
+    "lcp-image-transform-pipeline-state-and-invariant",
+    "lcp-image-transform-pipeline-reflection-scheduler-fairness",
+    "lcp-image-transform-pipeline-reflection-distributed-batch"
+  ]
+}

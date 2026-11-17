@@ -38,6 +38,9 @@ grades himself against a dense, structured back with a diagram and code. No typi
    inputs, outputs, error precedence, boundaries, rounding, ordering, what a failure leaves behind), and into the
    article's `## 题目与澄清`. `starter.py` keeps the workspace's public API (class, method and function names and
    signatures, return shapes) so the solution drops into the real workspace unchanged.
+   `uv run python scripts/lcp_overlap.py <name>` must print `ok`: it lists every line of your leaf that repeats a
+   12-token run of the workspace, signatures and dataclass fields excepted. Docstrings, comments, provided helper
+   bodies, README examples and test data are rewritten (your own names, values and structure), never copied.
 4. **Prove the solution against the official tests.** Make a scratch copy:
    `cp -R sources/local/lc-project/workspaces/<name>/files /tmp/lcp-<name>-official`, put your `solution.py` in it under
    the template's file name (e.g. `rate_limiter.py`; adapt nothing but the import surface), and run the public tests the

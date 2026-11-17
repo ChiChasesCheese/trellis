@@ -1,0 +1,372 @@
+[
+ {
+  "point": "结果列表按输入下标排列，与完成顺序无关",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules",
+   "lcp-image-transform-pipeline-state-and-invariant"
+  ],
+  "leaves": [
+   "api.specs",
+   "concurrency.patterns"
+  ]
+ },
+ {
+  "point": "每个被取出的输入恰好一个结果；index 从 0 起",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "data.value-entity"
+  ]
+ },
+ {
+  "point": "image_id 原样复制，重复 id 不影响顺序与下标",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "data.value-entity"
+  ]
+ },
+ {
+  "point": "变换链：每个恰好一次、按顺序、输出接输入；空链是恒等",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "python.first-class-functions"
+  ]
+ },
+ {
+  "point": "Exception 变成 data=None 加 \"类型名: 消息\"，空消息和多行消息原样保留",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "errors.exceptions-vs-values",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "错误文本不能用 str(exc)（丢类型名）或 repr(exc)（带引号括号）",
+  "cards": [],
+  "leaves": [
+   "errors.exceptions-vs-values",
+   "errors.chaining"
+  ]
+ },
+ {
+  "point": "失败立即停这张图，后面的变换一个都不调用",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "errors.exceptions-vs-values",
+   "errors.bug-vs-failure"
+  ]
+ },
+ {
+  "point": "一张图失败不影响别的图：失败是值，不是中断整批",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "errors.bug-vs-failure",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "BaseException 不捕获，从 run 里原样抛出",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "errors.narrow-catch",
+   "errors.unrecoverable"
+  ]
+ },
+ {
+  "point": "同时在跑的链不超过 max_workers",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "concurrency.patterns",
+   "concurrency-depth.safe-structures"
+  ]
+ },
+ {
+  "point": "max_workers 张阻塞时必须真能同时跑：串行执行不合格",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "concurrency.patterns",
+   "concurrency-depth.testing"
+  ]
+ },
+ {
+  "point": "先进先出准入：队头放不进去，后面更小的也不能插队",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules",
+   "lcp-image-transform-pipeline-reflection-scheduler-fairness"
+  ],
+  "leaves": [
+   "concurrency.patterns",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "越过队头的代价：只要后面不断有小图，队头就饿死",
+  "cards": [
+   "lcp-image-transform-pipeline-reflection-scheduler-fairness"
+  ],
+  "leaves": [
+   "concurrency-depth.parallel-scaling",
+   "concurrency.patterns"
+  ]
+ },
+ {
+  "point": "先进先出的代价：超大队头独占窗口时其余 worker 空转",
+  "cards": [
+   "lcp-image-transform-pipeline-reflection-scheduler-fairness"
+  ],
+  "leaves": [
+   "concurrency-depth.parallel-scaling",
+   "performance.complexity-constants"
+  ]
+ },
+ {
+  "point": "预算计原图字节，从提交一直计到整条链成功或失败",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules",
+   "lcp-image-transform-pipeline-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.cleanup",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "失败路径也要还名额和字节，否则后面的图永远进不去，run 挂死",
+  "cards": [
+   "lcp-image-transform-pipeline-state-and-invariant"
+  ],
+  "leaves": [
+   "errors.cleanup",
+   "concurrency.hazards"
+  ]
+ },
+ {
+  "point": "恰好等于预算要放行：用 > 拒绝，不是 >=",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "testing.partitioning",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "超大队头只在没有别的图在途时放行，它在途期间不放行任何别的图",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules",
+   "lcp-image-transform-pipeline-state-and-invariant"
+  ],
+  "leaves": [
+   "data.invariants",
+   "concurrency.hazards"
+  ]
+ },
+ {
+  "point": "0 字节的图在超大图在途时也不放行：总数已经超预算",
+  "cards": [],
+  "leaves": [
+   "api.specs",
+   "testing.partitioning"
+  ]
+ },
+ {
+  "point": "预算口径只数原图字节：输出、解码缓冲、执行器开销都不算",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "performance.memory",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "惰性取用：jobs 只迭代一次、一次取一个，不 list(jobs)",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "python.context-iterators",
+   "api.paging-iteration"
+  ]
+ },
+ {
+  "point": "Executor.map 会一次取完整个输入并全部提交，破坏惰性和预算",
+  "cards": [],
+  "leaves": [
+   "python.context-iterators",
+   "concurrency.patterns"
+  ]
+ },
+ {
+  "point": "已提交或在途的任务（含池的队列）不超过 max_workers，不要一次提交全部",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "concurrency.patterns",
+   "performance.memory"
+  ]
+ },
+ {
+  "point": "全部阻塞时已向迭代器要过的输入不超过 max_workers + 1",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "python.context-iterators",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "队头变量同时给出先进先出和惰性取用：它不放行就不取下一项",
+  "cards": [
+   "lcp-image-transform-pipeline-state-and-invariant"
+  ],
+  "leaves": [
+   "python.context-iterators",
+   "concurrency.patterns"
+  ]
+ },
+ {
+  "point": "准入判断做成不带线程的 AdmissionWindow，可以不开线程直接测试",
+  "cards": [
+   "lcp-image-transform-pipeline-state-and-invariant"
+  ],
+  "leaves": [
+   "testing.testable-design",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "协调线程独占状态，工作线程只返回值，所以没有锁",
+  "cards": [
+   "lcp-image-transform-pipeline-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.confinement",
+   "concurrency.patterns"
+  ]
+ },
+ {
+  "point": "wait(FIRST_COMPLETED) 在在途数有上界时扫描很便宜，不需要完成回调加队列",
+  "cards": [],
+  "leaves": [
+   "concurrency.patterns",
+   "performance.complexity-constants"
+  ]
+ },
+ {
+  "point": "退出路径 finally：shutdown(wait=True, cancel_futures=True)，run 返回时没有变换在后台运行",
+  "cards": [],
+  "leaves": [
+   "concurrency-depth.cancel-shutdown",
+   "errors.cleanup"
+  ]
+ },
+ {
+  "point": "记账的安全不变量用异常（RuntimeError）而不是 assert",
+  "cards": [],
+  "leaves": [
+   "errors.bug-vs-failure",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "不建 Stage / Scheduler / ResultCollector：变换就是 Callable，结果表就是字典",
+  "cards": [],
+  "leaves": [
+   "python.first-class-functions",
+   "python.protocols-abc"
+  ]
+ },
+ {
+  "point": "同一个 ImagePipeline 实例可重复、可并发使用：每次 run 的状态都是局部变量",
+  "cards": [],
+  "leaves": [
+   "concurrency-depth.confinement",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "并发测试用事件和屏障，不用 sleep；等待带上限只为把挂死变成断言",
+  "cards": [],
+  "leaves": [
+   "concurrency-depth.testing",
+   "testing.flaky"
+  ]
+ },
+ {
+  "point": "屏障能确定地证明\"至少\"，线程层面的\"最多\"只对正确实现确定：上限的规则放在纯逻辑单元测试里",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "concurrency-depth.testing",
+   "testing.test-levels"
+  ]
+ },
+ {
+  "point": "纯 Python 变换受 GIL 限制不会并行；C 扩展释放 GIL 才行，CPU 密集换进程池，预算口径翻倍",
+  "cards": [],
+  "leaves": [
+   "concurrency.model",
+   "concurrency-depth.selection"
+  ]
+ },
+ {
+  "point": "分布式：按下标分片，幂等键是（批次号，下标）而不是 image_id，确定的输出键，清单最后写",
+  "cards": [
+   "lcp-image-transform-pipeline-reflection-distributed-batch"
+  ],
+  "leaves": [
+   "errors.retry",
+   "api.paging-iteration"
+  ]
+ },
+ {
+  "point": "生产要测的内存：解码后的缓冲、变换输出、每个 worker 的峰值、结果表、RSS 峰值而不是平均",
+  "cards": [],
+  "leaves": [
+   "performance.memory",
+   "performance.profiling"
+  ]
+ },
+ {
+  "point": "给智能体：先给规则清单和三个数字例子，要求先说每条规则落在哪里，不写代码",
+  "cards": [
+   "lcp-image-transform-pipeline-contract-rules"
+  ],
+  "leaves": [
+   "ai.specs",
+   "ai.decomposition"
+  ]
+ },
+ {
+  "point": "给智能体：一次一个失败的测试，期望值自己写；让它故意改坏一次确认测试变红",
+  "cards": [],
+  "leaves": [
+   "ai.verification",
+   "rounds.ai-assisted"
+  ]
+ }
+]
