@@ -1,0 +1,352 @@
+[
+ {
+  "point": "快照的 filters 恰好三项，顺序固定 all、credit、debit",
+  "cards": [
+   "lcp-transactions-list-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "每项 active 是真布尔，且恰好一项为真，activeFilter 与它一致",
+  "cards": [
+   "lcp-transactions-list-contract-rules",
+   "lcp-transactions-list-state-and-invariant"
+  ],
+  "leaves": [
+   "api.returns",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "默认选中 all；构造之后第一次快照就是完整的",
+  "cards": [
+   "lcp-transactions-list-contract-rules"
+  ],
+  "leaves": [
+   "api.specs"
+  ]
+ },
+ {
+  "point": "all 显示全部；credit、debit 只显示 txnType 与之相等的交易",
+  "cards": [
+   "lcp-transactions-list-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "structure.state-machines"
+  ]
+ },
+ {
+  "point": "重复选择同一个筛选没有副作用（赋值，不是切换）",
+  "cards": [
+   "lcp-transactions-list-contract-rules",
+   "lcp-transactions-list-reflection-keep-filter"
+  ],
+  "leaves": [
+   "structure.state-machines",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "没有匹配的交易时，所选筛选仍然生效，items 为空，不退回 all",
+  "cards": [
+   "lcp-transactions-list-contract-rules",
+   "lcp-transactions-list-reflection-keep-filter"
+  ],
+  "leaves": [
+   "api.specs",
+   "structure.state-machines"
+  ]
+ },
+ {
+  "point": "一条可见交易恰好一个展示项，顺序就是输入顺序，不排序不去重",
+  "cards": [
+   "lcp-transactions-list-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "展示项的 id 取交易的 id，不是 location.id；zipCode 与地点 id 不外泄",
+  "cards": [
+   "lcp-transactions-list-contract-rules"
+  ],
+  "leaves": [
+   "api.specs",
+   "data.primitive-obsession"
+  ]
+ },
+ {
+  "point": "替换是整体替换：不追加、不合并、不排序；空列表合法",
+  "cards": [
+   "lcp-transactions-list-contract-rules",
+   "lcp-transactions-list-reflection-keep-filter"
+  ],
+  "leaves": [
+   "structure.storage",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "换列表保留当前筛选，并立刻作用在新列表上",
+  "cards": [
+   "lcp-transactions-list-contract-rules",
+   "lcp-transactions-list-reflection-keep-filter"
+  ],
+  "leaves": [
+   "structure.state-machines",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "金额与日期是展示文本：不解析、不去空白、不改格式，Unicode 原样",
+  "cards": [
+   "lcp-transactions-list-contract-rules"
+  ],
+  "leaves": [
+   "data.primitive-obsession",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "输入范围：至多 1000 条、id 在 ±9007199254740991 内可以为负；整数原样通过",
+  "cards": [
+   "lcp-transactions-list-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "不修改传入的列表、交易与地点",
+  "cards": [
+   "lcp-transactions-list-contract-rules",
+   "lcp-transactions-list-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "构造或替换之后调用方再改输入，视图不变：进口读一次，不保存引用",
+  "cards": [
+   "lcp-transactions-list-state-and-invariant",
+   "lcp-transactions-list-reflection-ownership-and-history"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "fluency.mutability"
+  ]
+ },
+ {
+  "point": "保存引用的缺陷：调用方清空列表，视图就空了",
+  "cards": [
+   "lcp-transactions-list-state-and-invariant",
+   "lcp-transactions-list-reflection-ownership-and-history"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "fluency.mutability"
+  ]
+ },
+ {
+  "point": "浅拷贝的缺陷：容器独立了，嵌套的交易与地点仍共享，改地址会穿透",
+  "cards": [
+   "lcp-transactions-list-state-and-invariant",
+   "lcp-transactions-list-reflection-ownership-and-history"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "fluency.mutability"
+  ]
+ },
+ {
+  "point": "进口就投影成冻结的行（frozen dataclass），字符串与整数本身不可变",
+  "cards": [
+   "lcp-transactions-list-state-and-invariant"
+  ],
+  "leaves": [
+   "oop.values",
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "内部状态只有两个字段：当前筛选名和冻结行的元组",
+  "cards": [
+   "lcp-transactions-list-state-and-invariant",
+   "lcp-transactions-list-reflection-keep-filter"
+  ],
+  "leaves": [
+   "structure.state-machines",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "筛选与列表是两个独立的状态变量，选择只写前者，替换只写后者",
+  "cards": [
+   "lcp-transactions-list-reflection-keep-filter"
+  ],
+  "leaves": [
+   "structure.state-machines",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "替换先建完整元组再赋值：中途出错时旧列表还在",
+  "cards": [
+   "lcp-transactions-list-reflection-keep-filter",
+   "lcp-transactions-list-state-and-invariant"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "快照每次现造：新的 FilterState、TransactionItem 和列表，不缓存",
+  "cards": [
+   "lcp-transactions-list-state-and-invariant",
+   "lcp-transactions-list-reflection-ownership-and-history"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "快照被改（改字段、增删项、改筛选项）不影响视图和别的快照",
+  "cards": [
+   "lcp-transactions-list-reflection-ownership-and-history"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "旧快照在之后的选择与替换后保持原样；两次快照没有共享的可变对象",
+  "cards": [
+   "lcp-transactions-list-reflection-ownership-and-history"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "oop.values"
+  ]
+ },
+ {
+  "point": "不同实例互不影响：没有类级或模块级的可变状态",
+  "cards": [
+   "lcp-transactions-list-reflection-ownership-and-history"
+  ],
+  "leaves": [
+   "structure.storage",
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "可变快照与不可变快照合同都接受；选可变数据类，因为界面与适配层已按它写好",
+  "cards": [
+   "lcp-transactions-list-reflection-ownership-and-history"
+  ],
+  "leaves": [
+   "api.returns",
+   "oop.values"
+  ]
+ },
+ {
+  "point": "筛选用元组常量加一行判断，拒绝为三个字符串建策略类",
+  "cards": [],
+  "leaves": [
+   "patterns.strategy",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "未知筛选名合同不要求处理；要拒绝就在 selectFilter 开头加一行",
+  "cards": [],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "并发不在合同内；若要加，把 (筛选, 列表) 合成一个冻结状态整体替换",
+  "cards": [],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "oop.values"
+  ]
+ },
+ {
+  "point": "规模：1000 行一次快照 O(n) 约 70 微秒；十万行再按类型预分组或分页",
+  "cards": [],
+  "leaves": [
+   "structure.storage",
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "测试隔离的方式：先拍下整份期望快照，破坏后断言整份相等（asdict 比较）",
+  "cards": [
+   "lcp-transactions-list-reflection-ownership-and-history"
+  ],
+  "leaves": [
+   "testing.test-first",
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "隔离测试必须在保存引用与浅拷贝的实现上失败，否则它什么也没断言",
+  "cards": [
+   "lcp-transactions-list-reflection-ownership-and-history"
+  ],
+  "leaves": [
+   "quality.testability",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "示例里的三步（选支出、换成一条、换成空）逐字写成测试，用乱序 id 防排序",
+  "cards": [
+   "lcp-transactions-list-contract-rules"
+  ],
+  "leaves": [
+   "testing.test-first",
+   "ai.specs"
+  ]
+ },
+ {
+  "point": "指挥编程智能体：先交规则与示例，一次只给一个失败的测试，自己读 __init__",
+  "cards": [],
+  "leaves": [
+   "ai.specs",
+   "ai.decomposition",
+   "ai.delegation"
+  ]
+ },
+ {
+  "point": "智能体常犯的错：保存调用方列表、只做浅拷贝、返回内部列表、换列表时重置筛选",
+  "cards": [],
+  "leaves": [
+   "ai.failure-modes",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "模板的 __init__ 直接保存传入的列表：开工第一步就要改掉它",
+  "cards": [
+   "lcp-transactions-list-state-and-invariant"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "ai.failure-modes"
+  ]
+ }
+]

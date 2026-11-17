@@ -41,6 +41,7 @@ SOLUTION_CODE_LINES, SOLUTION_TOTAL_MAX = (120, 480), 900
 SMALL_CONTRACT = {
     "lcp-payments-api": (40, 2, "three functions over two tables; the README asks for nothing more"),
     "lcp-review-moderation": (80, 3, "create, edit and two reads around one checker call; 96 lines cover the README"),
+    "lcp-transactions-list": (50, 3, "a filtered list view with replace and snapshot; no persistence or concurrency"),
 }
 SECTIONS = ["题目与澄清", "需求与分级", "核心对象与职责", "关键设计决策", "代码走读", "测试与自检",
             "扩展与追问", "常见错误", "45 分钟怎么分配", "来源与延伸"]

@@ -1,0 +1,8 @@
+{
+ "lcproject.lcp-transactions-list": [
+  "lcp-transactions-list-contract-rules",
+  "lcp-transactions-list-state-and-invariant",
+  "lcp-transactions-list-reflection-keep-filter",
+  "lcp-transactions-list-reflection-ownership-and-history"
+ ]
+}
