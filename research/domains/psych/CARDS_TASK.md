@@ -116,6 +116,20 @@ tags: [证据强]
   `uv run python -c "import sys; from trellis.build import _mermaid_svg; print(bool(_mermaid_svg(open(sys.argv[1]).read())))" /tmp/psy_<G>.mmd`
   must print `True`.
 
+## Rules added after reviewing the first 78 cards
+
+- **Q is short.** At most about 80 Chinese characters: one or two sentences of situation, then at most two
+  questions. Do not list three or four questions and do not preview the answer's structure.
+- **Hard length.** Above 360 characters the answer is too long: cut the second study from the story, or move one
+  number out of the evidence line.
+- **Median is not mean.** Write 「中位数」 when the paper reports a median (Lally's 66 days), 「平均」 for a mean.
+  「提高 81%」 and 「高 81 个百分点」 are different claims: copy the paper's.
+- **A therapy session is 「一次治疗」**, not 「一节课」. A study's participants are 「参与者」 or what they were
+  (students, nurses), not 「被试」.
+- **Some groups had already found** that a classic in the anchor no longer holds (Ariely & Wertenbroch's deadlines,
+  the Capilano bridge). Keep doing that: say so on the card in the evidence line, in one clause.
+- `记住`, `有研究`, `研究发现` (without naming whose) are flagged by the review script: rephrase.
+
 ## Gate
 
 - `uv run trellis --domain psych validate` shows 0 errors (warnings about leaves without cards or readings are fine).
