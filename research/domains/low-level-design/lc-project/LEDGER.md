@@ -42,6 +42,8 @@ REFLECTION questions; never touch the repo .venv for 3.11; LeetCode wording kept
 - image-transform-pipeline leaf committed (cbaf0c16), 3/3 official tests.
 - Workspace copies: `scripts/lcp_overlap.py` found 15 committed leaves repeating workspace text beyond signatures
   (worst: event-campaigns, stockroom-inventory). All unpushed. Rewrite per `proposals/lld/LCP_DECOPY_TASK.md`;
-  **no push until every leaf prints ok.**
+  Done: all 23 leaves print ok (5d7232e3); private_guard push check clean. Push is Chi's (classifier denies it).
 - `scripts/lcp_preview.py` renders cards with the real templates (screenshot at 390 px with Playwright, channel chrome).
 
+- 题目 / 题目理解 in Anki: projects 02–13 (all but 14+). Verifying 14 rate-limiter, 15 receivable-allocation;
+  writing 16 scheduled-banking, 17 stack-trace-stream. Building loan-management (first of the 8 unbuilt leaves).
