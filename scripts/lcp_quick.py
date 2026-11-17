@@ -41,7 +41,7 @@ KINDS = ("rule", "mechanism", "pitfall", "decision", "number", "agent", "test", 
 
 
 def slugs(args: list[str]) -> list[str]:
-    return args or sorted(f.stem for f in (HOME / "points").glob("*.json"))
+    return args or sorted(f.stem for f in (HOME / "points").glob("*.json") if "." not in f.stem)  # skip <slug>.read side files
 
 
 def titles() -> dict[str, str]:
