@@ -1,0 +1,15 @@
+R1_quant-stroller-research-platform
+S10_retract-own-number
+S1_settlement-pipeline-never-drop-bad-data
+S3_silent-null-root-cause
+S5_cutover-with-the-production-query
+S6_per-row-cost-times-peak-rows
+S7_schema-pool-and-why-a-clone-is-fast
+S8_fix-one-then-scan-the-repo
+headlands/01-company-brief
+headlands/06-questions-to-ask
+headlands/fit
+headlands/loop/LOOP_GUIDE
+interviews/companies/headlands/loop/rounds/01_video/hc05_market_order_book/solution
+interviews/companies/headlands/loop/rounds/01_video/hc13_fixed_memory_pool/solution
+ld01_spsc_channel
