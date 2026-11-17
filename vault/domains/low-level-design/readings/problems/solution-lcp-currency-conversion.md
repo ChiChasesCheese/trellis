@@ -25,7 +25,7 @@ tags: [solution]
 13. **最优路线**：所有简单有向路径，乘积从 1 起从左到右连乘；与最大值 M 差不超过 1e-5 的合格，合格者里边数最少、再是货币序列字典序最小，返回被选路径自己的乘积。
 14. **返回值是独立快照**，数字是 float 而不是布尔值或字符串，不带多余字段；不同实例互不共享状态。
 
-两个数字例子是你的第一批测试。登记 `USD:EUR:0.9,EUR:CAD:1.5,USD:CAD:1.2` 得到 `(201, {"registered_count": 3})`；从 USD 到 CAD，直达是 `1.2`，单次中转是 `[1.2, 1.35]`，最优是 `1.35`、路径 `["USD", "EUR", "CAD"]`。另一个例子：先登记 `GBP:JPY:180`，再登记 `GBP:JPY:200,JPY:usd:2`，第二批因为 `usd` 不是大写而整批失败，GBP 到 JPY 仍是 180，JPY 到 GBP 是 `route_not_found`，因为没有登记反方向。
+两个数字例子是你的第一批测试。登记 `SGD:HKD:5.8,HKD:NOK:1.3,SGD:NOK:7.1` 得到 `(201, {"registered_count": 3})`；从 SGD 到 NOK，直达是 `7.1`，单次中转是 `[7.1, 7.54]`，最优是 `7.54`、路径 `["SGD", "HKD", "NOK"]`。另一个例子：先登记 `CHF:SEK:11`，再登记 `CHF:SEK:12,SEK:chf:2`，第二批因为 `chf` 不是大写而整批失败，CHF 到 SEK 仍是 11，SEK 到 CHF 是 `route_not_found`，因为没有登记反方向。
 
 开口前值得问的澄清问题，每个答案都会改变代码：
 
@@ -431,9 +431,9 @@ class CurrencyExchangeService:
 
 if __name__ == "__main__":
     service = CurrencyExchangeService()
-    service.register_rates("USD:EUR:0.9,EUR:CAD:1.5,USD:CAD:1.2")
-    print(service.get_single_hop_rates("USD", "CAD"))
-    print(service.get_best_rate("USD", "CAD"))
+    service.register_rates("SGD:HKD:5.8,HKD:NOK:1.3,SGD:NOK:7.1")
+    print(service.get_single_hop_rates("SGD", "NOK"))
+    print(service.get_best_rate("SGD", "NOK"))
 ```
 %% code:end %%
 
@@ -457,7 +457,7 @@ if __name__ == "__main__":
 - **对照实现**：另用"对所有中间货币的所有排列穷举"写一个最优路线的参照，在十二个固定种子的随机图和一张八种货币的完全图上，比较路径与乘积，同时比较单次中转的列表。
 - **快照与隔离**：清空所有返回值之后再查，结果不变；之后的登记不改变已拿到的结果；不同实例互不影响。
 
-两分钟演示：登记 `USD:EUR:0.9,EUR:CAD:1.5,USD:CAD:1.2`，依次调用三个查询，得到 `1.2`、`[1.2, 1.35]`、`1.35` 加路径；再提交一批含 `usd` 的坏批次，说明旧汇率还在；最后登记 `AAA:BBB:0.1,BBB:CCC:3,AAA:CCC:0.3`，讲"为什么选直达"。
+两分钟演示：登记 `SGD:HKD:5.8,HKD:NOK:1.3,SGD:NOK:7.1`，依次调用三个查询，得到 `7.1`、`[7.1, 7.54]`、`7.54` 加路径；再提交一批含 `usd` 的坏批次，说明旧汇率还在；最后登记 `AAA:BBB:0.1,BBB:CCC:3,AAA:CCC:0.3`，讲"为什么选直达"。
 
 自检一个技巧：每条测试都问"如果实现错了，哪一行会失败"。可以故意改坏实现：把 `<=` 改成 `<`、把 `fullmatch` 改成 `match`、让容差追着已选路径走、让登记边写边改，每一种都应该有至少一个测试变红。
 

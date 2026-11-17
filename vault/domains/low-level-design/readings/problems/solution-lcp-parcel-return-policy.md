@@ -24,7 +24,7 @@ tags: [solution]
 12. **`parse` 本身接受字符串里的回车与换行**，驱动不把相邻的物理行拼起来。
 13. **Python 3.11，只用标准库。**
 
-合同里的例子是第一个测试：`{"rating":5,"value_cents":0,"account_age_days":180,"days_since_purchase":30,"opened":false,"final_sale":false}` 得到 `{"eligible":true,"reason":"eligible","risk":0}`。它同时压着第 30 天的边界，所以现有代码连这个例子都过不了。
+合同里的例子是第一个测试：`{"rating":4,"value_cents":10000,"account_age_days":29,"days_since_purchase":30,"opened":false,"final_sale":false}` 得到 `{"eligible":true,"reason":"eligible","risk":50}`。它同时压着三条边界：第 30 天仍在窗口内、10000 分已经算高价值档（风险 15）、账龄 29 天还在 25 分那一档（风险 10 + 15 + 25 = 50），所以现有代码连这个例子都过不了。
 
 开口前值得问的澄清问题，每个答案都会改变代码：
 
@@ -448,7 +448,7 @@ def run(lines: Iterable[bytes]) -> Iterator[str]:
 
 
 if __name__ == "__main__":
-    sample = b'{"rating":5,"value_cents":0,"account_age_days":180,"days_since_purchase":30,"opened":false,"final_sale":false}\n'
+    sample = b'{"rating":4,"value_cents":10000,"account_age_days":29,"days_since_purchase":30,"opened":false,"final_sale":false}\n'
     for out in run([sample, b"\n", b'{"rating":true}\n']):
         print(out)
 ```
@@ -461,7 +461,7 @@ if __name__ == "__main__":
 3. **`parse` 的结尾**：`reader.peek() != ""` 就是"完整消费"。`peek` 先跳空白，再看有没有字符；对象之后只允许空白，其余一概拒绝。`type(text) is not str` 的检查放在最前面，让非字符串的参数也得到 `invalid_json`。
 4. **`process_line`**：`UnicodeDecodeError` 在前，具名的两种错在后，别的异常不接。意外的 `ValueError` 在这里冒出去，在测试里是红的，在线上是日志里的一条栈。`run` 是一个生成器：一行进，一行出，行与行之间没有任何共享状态。
 
-模块底部的 `__main__` 演示：合同例子输出 `{"eligible":true,"reason":"eligible","risk":0}`；空行输出 `{"error":"invalid_json"}`；`{"rating":true}` 语法对但字段不全，输出 `{"error":"invalid_request"}`。
+模块底部的 `__main__` 演示：合同例子输出 `{"eligible":true,"reason":"eligible","risk":50}`；空行输出 `{"error":"invalid_json"}`；`{"rating":true}` 语法对但字段不全，输出 `{"error":"invalid_request"}`。
 
 ## 测试与自检
 

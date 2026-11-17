@@ -48,11 +48,11 @@ tags: [solution]
 
 **第 1 关（约 20 分钟，授权与创建）**：构造时复制成员表；`create` 的输入校验；全局 id；`get` 的项目隔离。
 这一关最重要的是把"授权先于校验"落成一个只有一份的私有方法（`_authorize`），四个公开方法的第一行都是它，而不是每个方法各写一遍。
-示例：`create("alice", "demo", {"title": " Fix login "})` 得到 `(201, {"id": 1, "project": "demo", "creator": "alice", "title": "Fix login", "description": "", "status": "open", "version": 1})`；
-再 `get("bob", "demo", 1)`（bob 也是成员）得到同样的字典；`get("alice", "other", 1)` 抛 `404 issue_not_found`。
+示例：`create("mina", "orbit", {"title": " Rotate logs "})` 得到 `(201, {"id": 1, "project": "orbit", "creator": "mina", "title": "Rotate logs", "description": "", "status": "open", "version": 1})`；
+再 `get("omar", "orbit", 1)`（omar 也是成员）得到同样的字典；`get("mina", "other", 1)` 抛 `404 issue_not_found`。
 
 **第 2 关（约 15 分钟，幂等）**：键的范围、规范化比较、重放返回当前状态、失败不占用键。
-示例：`create(..., {"title": "Fix login"}, "k1")` 第一次 201，第二次 200 同一个 id；换成 `{"title": "Fix login", "description": "x"}` 得到 `409 idempotency_conflict`；
+示例：`create(..., {"title": "Rotate logs"}, "k1")` 第一次 201，第二次 200 同一个 id；换成 `{"title": "Rotate logs", "description": "x"}` 得到 `409 idempotency_conflict`；
 bob 用同一个键 `k1` 与 `description: "x"` 得到全新的 `201`（id 为 2）。这一关决定了"请求规范化成一个可比较的值"这个结构（决策二）。
 
 **第 3 关（约 15 分钟，版本与状态流转）**：`transition` 的校验顺序、版本比较、"状态没变版本不变"。
@@ -175,7 +175,7 @@ flowchart TB
 
 ### 决策二：把请求规范化成一个值，"同一个请求"就是两个值相等
 
-**问题。** 幂等要回答"这次请求和当初那次是同一个吗"。比较的东西不是原始的字典：`{"title": " Fix login "}` 和 `{"title": "Fix login", "description": ""}` 在合同里是同一个请求。
+**问题。** 幂等要回答"这次请求和当初那次是同一个吗"。比较的东西不是原始的字典：`{"title": " Rotate logs "}` 和 `{"title": "Rotate logs", "description": ""}` 在合同里是同一个请求。
 
 **选项 A：存原始字典，比较时临时规范化。** 每次比较都要重新写一遍"去空白、补缺省"的规则，规则会写在两个地方（创建时一次，比较时一次），迟早改了一处忘了另一处。
 还有一个更隐蔽的问题：存下传入的字典本身，调用方之后改它，回执就跟着变了。
@@ -458,11 +458,11 @@ class IssueService:
 
 
 if __name__ == "__main__":
-    service = IssueService({"demo": ["alice", "bob"]})
-    print(service.create("alice", "demo", {"title": " Fix login "}, "retry-1"))
-    print(service.create("alice", "demo", {"title": "Fix login"}, "retry-1"))
-    print(service.transition("bob", "demo", 1, "closed", 1))
-    print(service.list("alice", "demo", status="closed"))
+    service = IssueService({"orbit": ["mina", "omar"]})
+    print(service.create("mina", "orbit", {"title": " Rotate logs "}, "nightly-1"))
+    print(service.create("mina", "orbit", {"title": "Rotate logs"}, "nightly-1"))
+    print(service.transition("omar", "orbit", 1, "closed", 1))
+    print(service.list("mina", "orbit", status="closed"))
 ```
 %% code:end %%
 
@@ -492,7 +492,7 @@ if __name__ == "__main__":
 - **id 与原子**：id 跨项目、跨用户递增；穿插了校验失败、冲突、重放、404 之后，下一张工单的 id 仍然紧接着；没有键时每次成功都新建；
   `get` 对别的项目的工单、不存在的 id、`0`、`True`、字符串 `"1"` 都是 `404 issue_not_found`。
 - **隔离**：改传入的 `payload`、改返回的字典、改列表里的字典、清空返回的列表，都不影响存储，也不影响之后的幂等重放。
-- **幂等**：工单被关闭之后重放，返回 `status: "closed"`、`version: 2`；规范化比较（`"  Fix login  "` 与 `"Fix login"` 相同，`"Fix login"` 与 `"fix login"` 不同，描述 `""` 与 `" "` 不同）；
+- **幂等**：工单被关闭之后重放，返回 `status: "closed"`、`version: 2`；规范化比较（`"  Rotate logs  "` 与 `"Rotate logs"` 相同，`"Rotate logs"` 与 `"fix login"` 不同，描述 `""` 与 `" "` 不同）；
   范围是 `(用户, 项目, 键)`；格式错误的请求即使键已经用过，得到的也是 400。
 - **版本与流转**：`closed → open → closed` 的版本是 2、3；同状态同版本不变；同状态错版本是 409；十二组非法的 `(status, version)`（含 `True`、`1.0`、`"1"`、`0`、`-1`、`None`）都是 400 且不改任何东西；
   对不存在的工单发乱写的状态是 404。
@@ -505,10 +505,10 @@ if __name__ == "__main__":
 两分钟演示给面试官：模块底部的 `__main__` 依次执行合同示例，输出四行：
 
 ```text
-(201, {'id': 1, 'project': 'demo', 'creator': 'alice', 'title': 'Fix login', 'description': '', 'status': 'open', 'version': 1})
-(200, {'id': 1, 'project': 'demo', 'creator': 'alice', 'title': 'Fix login', 'description': '', 'status': 'open', 'version': 1})
-{'id': 1, 'project': 'demo', 'creator': 'alice', 'title': 'Fix login', 'description': '', 'status': 'closed', 'version': 2}
-[{'id': 1, 'project': 'demo', 'creator': 'alice', 'title': 'Fix login', 'description': '', 'status': 'closed', 'version': 2}]
+(201, {'id': 1, 'project': 'orbit', 'creator': 'mina', 'title': 'Rotate logs', 'description': '', 'status': 'open', 'version': 1})
+(200, {'id': 1, 'project': 'orbit', 'creator': 'mina', 'title': 'Rotate logs', 'description': '', 'status': 'open', 'version': 1})
+{'id': 1, 'project': 'orbit', 'creator': 'mina', 'title': 'Rotate logs', 'description': '', 'status': 'closed', 'version': 2}
+[{'id': 1, 'project': 'orbit', 'creator': 'mina', 'title': 'Rotate logs', 'description': '', 'status': 'closed', 'version': 2}]
 ```
 
 然后说出：授权为什么在最前面、"同一个请求"为什么是两个值相等、版本比较和修改为什么在同一个临界区里。
@@ -552,7 +552,7 @@ if __name__ == "__main__":
 - **项目隔离只在 `list` 里做**：`get` 和 `transition` 用全局的 `by_id` 字典查工单而不核对项目，另一个项目的成员能读到、能改别的项目的工单。把字典放在 `Board` 里，查找天然只在本项目内发生。
 - **`isinstance(version, int)` 忘了 `bool`**：`version=True` 被当成 1 通过校验；`get(..., True)` 取到 1 号工单。
 - **幂等只比较标题**：描述不同的两个请求用同一个键，被当成重放，第二次的描述被静默丢弃；合同要求 409。
-- **幂等比较的是原始标题而不是规范化后的**：`" Fix login "` 与 `"Fix login"` 被当成不同的请求，重试得到的是 409 而不是 200，重试保护在最需要的时候失效。
+- **幂等比较的是原始标题而不是规范化后的**：`" Rotate logs "` 与 `"Rotate logs"` 被当成不同的请求，重试得到的是 409 而不是 200，重试保护在最需要的时候失效。
 - **键的范围写成全局**：两个用户用了同一个键，第二个人得到第一个人的工单；这既是错误也是信息泄露。
 - **先 `self._next_id += 1` 再检查冲突**：每个失败或重放都在 id 序列里留下一个洞，合同明确说不耗 id。
 - **重放返回首次响应的拷贝**：工单被关闭后重放仍是"打开"。合同要的是当前状态。

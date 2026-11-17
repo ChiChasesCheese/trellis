@@ -15,17 +15,19 @@ tags: [solution]
 
 ```sql
 CREATE TABLE sales (
-    type TEXT COLLATE BINARY,           -- 只有 'sale' 参与
+    type TEXT COLLATE BINARY,
     customerId TEXT COLLATE BINARY,
-    customerName TEXT COLLATE BINARY,   -- 展示用，不参与计数或排序
-    customerStatus TEXT COLLATE BINARY, -- 'active' 或 'termed'，记在这一笔销售上
+    customerName TEXT COLLATE BINARY,
+    customerStatus TEXT COLLATE BINARY,
     itemName TEXT COLLATE BINARY,
     itemQuantity INTEGER,
-    totalPrice INTEGER,                 -- 这一笔的总价（分），不是单价
-    saleDate TEXT COLLATE BINARY,       -- YYYY-MM-DD
-    region TEXT COLLATE BINARY          -- 可以是 NULL
+    totalPrice INTEGER,
+    saleDate TEXT COLLATE BINARY,
+    region TEXT COLLATE BINARY
 );
 ```
+
+其中 `customerName` 只用来展示，不参与计数或排序；`customerStatus` 是 `active` 或 `termed`，记在这一笔销售上；`totalPrice` 是这一笔的总价（分），不是单价；`saleDate` 是 `YYYY-MM-DD` 文本；`region` 可以是 NULL。
 
 开工前先把合同用自己的话写成规则，按"粗心的人最容易丢分"的顺序：
 

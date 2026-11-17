@@ -219,6 +219,6 @@ def run(lines: Iterable[bytes]) -> Iterator[str]:
 
 
 if __name__ == "__main__":
-    sample = b'{"rating":5,"value_cents":0,"account_age_days":180,"days_since_purchase":30,"opened":false,"final_sale":false}\n'
+    sample = b'{"rating":4,"value_cents":10000,"account_age_days":29,"days_since_purchase":30,"opened":false,"final_sale":false}\n'
     for out in run([sample, b"\n", b'{"rating":true}\n']):
         print(out)

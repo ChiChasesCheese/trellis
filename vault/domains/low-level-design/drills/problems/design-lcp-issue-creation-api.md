@@ -10,7 +10,7 @@ tags: [problem]
 
 **分关要求**（每关做完再看下一关，像真实的项目轮）
 - 第 1 关（约 15 分钟）：先读合同，把 `starter.py` 文档字符串里的十二条规则逐条用自己的话改写成断言。
-  然后做授权、创建、`get`：`create("alice", "demo", {"title": " Fix login "})` 返回 `(201, {"id": 1, ..., "title": "Fix login", "status": "open", "version": 1})`；
+  然后做授权、创建、`get`：`create("mina", "orbit", {"title": " Rotate logs "})` 返回 `(201, {"id": 1, ..., "title": "Rotate logs", "status": "open", "version": 1})`；
   空串用户得到 401、非成员得到 404、乱写的请求体得到 400，而且同时违反时 401 先于 404 先于 400；`get` 取别的项目的工单是 `404 issue_not_found`。
 - 第 2 关（约 15 分钟）：幂等。同一个 `(用户, 项目, 键)` 再发规范化后相同的请求，返回 `(200, 当前工单)`，不同则 `409 idempotency_conflict`；
   失败的请求不占键、不耗 id。写一个测试：关闭工单之后重放，应当看到 `status: "closed"`、`version: 2`。

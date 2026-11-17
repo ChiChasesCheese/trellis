@@ -3,6 +3,7 @@ import json
 import os
 import sqlite3
 import threading
+from contextlib import closing
 from decimal import Decimal
 
 import pytest
@@ -37,31 +38,28 @@ def sale(customer, item, qty, price, day, status="active", region="north", **ove
 
 
 class Context:
-    """和工作区同构的上下文：只读连接、`$name` 命名参数、字典行；另外记下每次查询，供审计行数与绑定。"""
+    """测试用的数据库上下文：和真实的只读查询接口同形（`keyspace`、`query`），并把每次查询记在 `trace` 里，供审计行数与绑定。"""
 
     keyspace = '"sales"'
 
     def __init__(self, directory, documents):
         self.path = directory / "sales.sqlite3"
-        connection = sqlite3.connect(self.path)
-        with connection:
-            connection.execute(SCHEMA)
-            connection.executemany(
-                "INSERT INTO sales VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                [tuple(doc.get(c) for c in COLUMNS) for doc in documents])
-        connection.close()
+        with closing(sqlite3.connect(self.path)) as setup:
+            setup.execute(SCHEMA)
+            setup.executemany("INSERT INTO sales VALUES (?,?,?,?,?,?,?,?,?)",
+                              [[doc.get(c) for c in COLUMNS] for doc in documents])
+            setup.commit()
         self.trace = []
-        self._lock = threading.Lock()
+        self._trace_lock = threading.Lock()
 
     def query(self, statement, parameters):
-        connection = sqlite3.connect(self.path.resolve().as_uri() + "?mode=ro", uri=True)
-        try:
-            connection.execute("PRAGMA query_only = ON")
-            connection.row_factory = sqlite3.Row
-            rows = [dict(row) for row in connection.execute(statement, parameters)]
-        finally:
-            connection.close()
-        with self._lock:
+        address = f"file:{self.path.resolve()}?mode=ro"
+        with closing(sqlite3.connect(address, uri=True)) as link:
+            link.execute("PRAGMA query_only=1")
+            cursor = link.execute(statement, parameters)
+            names = [d[0] for d in cursor.description or []]
+            rows = [dict(zip(names, values)) for values in cursor.fetchall()]
+        with self._trace_lock:
             self.trace.append({"statement": statement, "parameters": dict(parameters), "rows": len(rows)})
         return rows
 
@@ -99,13 +97,13 @@ def make(tmp_path):
     return build
 
 
-README_DOCS = [
-    sale("a", "tea", 2, 500, "2026-01-01"),
-    sale("a", "coffee", 3, 1500, "2026-01-10"),
-    sale("b", "tea", 7, 700, "2026-01-15", status="termed", region="south"),
-    sale("c", "coffee", 5, 2000, "2026-01-31"),
-    sale("d", "tea", 2, 2000, "2026-02-01"),
-    sale("b", "tea", 1, 500, "2026-01-20"),
+SAMPLE_DOCS = [
+    sale("kim", "soda", 4, 800, "2026-01-02"),
+    sale("kim", "chips", 2, 600, "2026-01-12"),
+    sale("lee", "soda", 6, 1200, "2026-01-15", status="termed", region="west"),
+    sale("lee", "soda", 3, 300, "2026-01-20"),
+    sale("mo", "chips", 5, 1400, "2026-01-31"),
+    sale("ng", "soda", 9, 2700, "2026-02-01"),
 ]
 ZERO = {"active_customers": 0, "total_quantity": 0, "total_spend_cents": 0,
         "quantity_leaders": [], "spend_leaders": [], "item_leaders": []}
@@ -114,22 +112,22 @@ WINDOW = {"start": "2026-01-01", "end": "2026-02-01"}
 
 # ---- 例子 ----
 
-def test_readme_example(make):
-    ctx = make(README_DOCS)
+def test_sample_report(make):
+    ctx = make(SAMPLE_DOCS)
     status, body = call(ctx, {**WINDOW, "k": 2})
     assert status == 200
     assert body == {
-        "active_customers": 3, "total_quantity": 18, "total_spend_cents": 5200,
-        "quantity_leaders": [{"customer_id": "b", "quantity": 8}, {"customer_id": "a", "quantity": 5}],
-        "spend_leaders": [{"customer_id": "a", "spend_cents": 2000}, {"customer_id": "c", "spend_cents": 2000}],
-        "item_leaders": [{"item": "tea", "quantity": 10}, {"item": "coffee", "quantity": 8}],
+        "active_customers": 3, "total_quantity": 20, "total_spend_cents": 4300,
+        "quantity_leaders": [{"customer_id": "lee", "quantity": 9}, {"customer_id": "kim", "quantity": 6}],
+        "spend_leaders": [{"customer_id": "lee", "spend_cents": 1500}, {"customer_id": "kim", "spend_cents": 1400}],
+        "item_leaders": [{"item": "soda", "quantity": 13}, {"item": "chips", "quantity": 7}],
     }
 
 
-def test_readme_empty_interval_and_impossible_date(make):
-    ctx = make(README_DOCS)
-    assert call(ctx, {"start": "2026-03-01", "end": "2026-04-01"}) == (200, ZERO)
-    assert call(ctx, {"start": "2026-02-30", "end": "2026-03-01"}) == (400, {"error": "invalid_request"})
+def test_empty_interval_and_impossible_date(make):
+    ctx = make(SAMPLE_DOCS)
+    assert call(ctx, {"start": "2026-06-01", "end": "2026-07-01"}) == (200, ZERO)
+    assert call(ctx, {"start": "2027-04-31", "end": "2027-05-02"}) == (400, {"error": "invalid_request"})
 
 
 ARTICLE_DOCS = [
@@ -256,7 +254,7 @@ def test_invalid_bodies_and_filters(make, body):
 
 
 def test_null_filters_mean_omitted(make):
-    ctx = make(README_DOCS)
+    ctx = make(SAMPLE_DOCS)
     full = call(ctx, WINDOW)
     assert call(ctx, {**WINDOW, "status": None, "region": None, "item": None}) == full
 
@@ -272,7 +270,7 @@ def test_text_length_counts_code_points(make):
 
 
 def test_other_routes_are_404_before_the_body_is_read(make):
-    ctx = make(README_DOCS)
+    ctx = make(SAMPLE_DOCS)
     for method, path in [("GET", "/report"), ("PUT", "/report"), ("DELETE", "/report"), ("POST", "/reports"),
                          ("POST", "/"), ("POST", "/report/"), ("GET", "/anything")]:
         assert call(ctx, "garbage", method=method, path=path) == (404, {"error": "not_found"})
@@ -317,12 +315,12 @@ def test_customers_group_across_items_dates_and_names(make):
 
 
 def test_status_filter_applies_to_every_part(make):
-    ctx = make(README_DOCS)
+    ctx = make(SAMPLE_DOCS)
     _, body = call(ctx, {**WINDOW, "status": "termed", "k": 5})
-    assert body == {"active_customers": 0, "total_quantity": 7, "total_spend_cents": 700,
-                    "quantity_leaders": [{"customer_id": "b", "quantity": 7}],
-                    "spend_leaders": [{"customer_id": "b", "spend_cents": 700}],
-                    "item_leaders": [{"item": "tea", "quantity": 7}]}
+    assert body == {"active_customers": 0, "total_quantity": 6, "total_spend_cents": 1200,
+                    "quantity_leaders": [{"customer_id": "lee", "quantity": 6}],
+                    "spend_leaders": [{"customer_id": "lee", "spend_cents": 1200}],
+                    "item_leaders": [{"item": "soda", "quantity": 6}]}
 
 
 def test_region_is_exact_case_sensitive_and_skips_missing(make):
@@ -347,9 +345,9 @@ def test_item_filter_is_exact_and_values_are_never_syntax(make):
 
 
 def test_filters_combine_with_and(make):
-    ctx = make(README_DOCS)
-    _, body = call(ctx, {**WINDOW, "region": "north", "item": "tea", "status": "active"})
-    assert (body["total_quantity"], body["active_customers"]) == (3, 2)
+    ctx = make(SAMPLE_DOCS)
+    _, body = call(ctx, {**WINDOW, "region": "north", "item": "soda", "status": "active"})
+    assert (body["total_quantity"], body["active_customers"]) == (7, 2)
 
 
 def test_ineligible_documents_never_count(make):
@@ -427,14 +425,14 @@ def test_request_values_are_bound_not_interpolated(make):
 @pytest.mark.parametrize("status", ["active", "termed"])
 def test_status_value_is_bound_and_never_spelled_in_sql(make, status):
     """工作区的审计：请求值不在任何语句里，且出现在某个参数里；`status` 的取值也是常量，同样要绑定。"""
-    ctx = make(README_DOCS)
+    ctx = make(SAMPLE_DOCS)
     code, body = call(ctx, {**WINDOW, "status": status})
     assert code == 200
     assert ctx.trace
     assert all(status not in t["statement"] for t in ctx.trace)
     assert any(status in json.dumps(t["parameters"]) for t in ctx.trace)
     # 没有 status 筛选时，资格条件仍然工作（常量来自绑定，不来自请求）
-    assert call(ctx, WINDOW)[1]["total_quantity"] == 18
+    assert call(ctx, WINDOW)[1]["total_quantity"] == 20
 
 
 def test_database_errors_propagate_without_a_service_error(make):
@@ -450,7 +448,7 @@ def test_database_errors_propagate_without_a_service_error(make):
 
 
 def test_concurrent_reports_agree(make):
-    ctx = make(README_DOCS)
+    ctx = make(SAMPLE_DOCS)
     expected = call(ctx, {**WINDOW, "k": 2})
     barrier, results = threading.Barrier(8), []
 

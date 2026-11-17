@@ -25,16 +25,16 @@ def new(service, title="Bug", user="alice", project="demo", key=None, **extra):
     return issue
 
 
-# ---- README 里的例子 ----
+# ---- 合同里的例子 ----
 
-def test_readme_example():
-    service = impl.IssueService({"demo": ["alice"]})
-    status, issue = service.create("alice", "demo", {"title": " Fix login "}, "retry-1")
+def test_contract_example():
+    service = impl.IssueService({"orbit": ["mina"]})
+    status, issue = service.create("mina", "orbit", {"title": " Rotate logs "}, "nightly-1")
     assert status == 201
-    assert issue == {"id": 1, "project": "demo", "creator": "alice", "title": "Fix login",
+    assert issue == {"id": 1, "project": "orbit", "creator": "mina", "title": "Rotate logs",
                      "description": "", "status": "open", "version": 1}
-    assert service.create("alice", "demo", {"title": "Fix login"}, "retry-1") == (200, issue)
-    updated = service.transition("alice", "demo", 1, "closed", 1)
+    assert service.create("mina", "orbit", {"title": "Rotate logs"}, "nightly-1") == (200, issue)
+    updated = service.transition("mina", "orbit", 1, "closed", 1)
     assert updated == {**issue, "status": "closed", "version": 2}
 
 
@@ -196,10 +196,10 @@ def test_replay_returns_the_current_issue_even_after_status_changes():
 
 def test_replay_compares_the_canonical_payload():
     service = make()
-    new(service, title="Fix login", key="r", description="")
-    assert service.create("alice", "demo", {"title": "  Fix login  "}, "r")[0] == 200
-    assert service.create("alice", "demo", {"title": "Fix login", "description": ""}, "r")[0] == 200
-    fails(409, "idempotency_conflict", service.create, "alice", "demo", {"title": "Fix login", "description": " "}, "r")
+    new(service, title="Rotate logs", key="r", description="")
+    assert service.create("alice", "demo", {"title": "  Rotate logs  "}, "r")[0] == 200
+    assert service.create("alice", "demo", {"title": "Rotate logs", "description": ""}, "r")[0] == 200
+    fails(409, "idempotency_conflict", service.create, "alice", "demo", {"title": "Rotate logs", "description": " "}, "r")
     fails(409, "idempotency_conflict", service.create, "alice", "demo", {"title": "fix login"}, "r")
 
 

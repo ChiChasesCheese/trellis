@@ -42,7 +42,7 @@ class ServiceError(Exception):
 
 class IssueService:
     def __init__(self, members: dict[str, Iterable[str]]) -> None:
-        self.members = {project: set(users) for project, users in members.items()}
+        self.members = {name: set(people) for name, people in members.items()}
 
     def create(self, user: str, project: str, payload: object,
                key: str | None = None) -> tuple[int, dict[str, Any]]:

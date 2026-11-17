@@ -12,8 +12,8 @@ impl = importlib.import_module(os.environ.get("IMPL", "solution"))
 
 INT_MAX, INT_MIN = 2**63 - 1, -(2**63)
 BASE = {
-    "rating": 5, "value_cents": 0, "account_age_days": 180,
-    "days_since_purchase": 30, "opened": False, "final_sale": False,
+    "rating": 5, "value_cents": 0, "account_age_days": 400,
+    "days_since_purchase": 7, "opened": False, "final_sale": False,
 }
 
 
@@ -44,9 +44,9 @@ def run(*lines):
 
 # ---- 合同里的例子 ----
 
-def test_readme_example():
-    out = run((line() + "\n").encode())
-    assert out == ['{"eligible":true,"reason":"eligible","risk":0}']
+def test_contract_example():
+    out = run((line(rating=4, value_cents=10000, account_age_days=29, days_since_purchase=30) + "\n").encode())
+    assert out == ['{"eligible":true,"reason":"eligible","risk":50}']
 
 
 def test_day_thirty_is_inside_the_window_and_day_thirty_one_is_not():

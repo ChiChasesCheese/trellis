@@ -15,7 +15,7 @@ tags: [problem]
 **怎么练**：把 `vault/domains/low-level-design/problems/lcp-currency-conversion/starter.py` 的方法体补全，然后在仓库根目录运行
 `IMPL=starter uv run --no-project --python 3.11 --with pytest python -m pytest vault/domains/low-level-design/problems/lcp-currency-conversion -q`。
 
-**和编程智能体一起练**：用编程智能体（Claude Code 或工作区自带的智能体）打开 `starter.py`。第一条指令给规则和 README 里的数字例子（`USD:EUR:0.9,EUR:CAD:1.5,USD:CAD:1.2` 的三个查询、一批含坏记录的登记），一次只让它实现一个方法，一次只给它一个失败的测试，改完立刻运行测试。容差基准、平局顺序、错误优先级这些语义决定自己留着；让它另写一个"子集排列穷举"的对照实现，在随机图上和解答对拍；期望值自己独立写出，不接受"把测试改成通过"。
+**和编程智能体一起练**：用编程智能体（Claude Code 或工作区自带的智能体）打开 `starter.py`。第一条指令给规则和 README 里的数字例子（`SGD:HKD:5.8,HKD:NOK:1.3,SGD:NOK:7.1` 的三个查询、一批含坏记录的登记），一次只让它实现一个方法，一次只给它一个失败的测试，改完立刻运行测试。容差基准、平局顺序、错误优先级这些语义决定自己留着；让它另写一个"子集排列穷举"的对照实现，在随机图上和解答对拍；期望值自己独立写出，不接受"把测试改成通过"。
 
 **评分点**
 - 写得出开工前的合同：整批原子、严格输入、有方向与后写覆盖、错误先格式后货币后路线、最优路线的选择规则、返回快照（[[lcp-currency-conversion-contract-rules]]）。

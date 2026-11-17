@@ -197,6 +197,6 @@ class CurrencyExchangeService:
 
 if __name__ == "__main__":
     service = CurrencyExchangeService()
-    service.register_rates("USD:EUR:0.9,EUR:CAD:1.5,USD:CAD:1.2")
-    print(service.get_single_hop_rates("USD", "CAD"))
-    print(service.get_best_rate("USD", "CAD"))
+    service.register_rates("SGD:HKD:5.8,HKD:NOK:1.3,SGD:NOK:7.1")
+    print(service.get_single_hop_rates("SGD", "NOK"))
+    print(service.get_best_rate("SGD", "NOK"))

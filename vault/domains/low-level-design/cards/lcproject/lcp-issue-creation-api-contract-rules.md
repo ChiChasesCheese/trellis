@@ -43,6 +43,6 @@ def create(self, user, project, payload, key=None):
         return 201, issue.snapshot()
 ```
 
-<details class="pt"><summary>延伸</summary>每条规则配一个带数字的测试：`create(" Fix login ", key="retry-1")` 得 201 与 `title: "Fix login"`，同键再发得 200。顺序决定两条规则同时被违反时谁赢，要先问清并写进测试。</details>
+<details class="pt"><summary>延伸</summary>每条规则配一个带数字的测试：`create(" Rotate logs ", key="nightly-1")` 得 201 与 `title: "Rotate logs"`，同键再发得 200。顺序决定两条规则同时被违反时谁赢，要先问清并写进测试。</details>
 
 **知识点：** 接口的错误契约（Error Contract）、边界校验（Validate at the Boundary）、重试与退避（Retry & Backoff）

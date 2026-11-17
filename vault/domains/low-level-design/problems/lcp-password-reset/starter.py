@@ -40,35 +40,36 @@ from typing import Any
 
 # ---- 存储边界开始：真实工作区由 database.py 提供同样接口的 `db`；放进去时删掉这一段，改成 `from database import db` ----
 class MockDatabase:
-    """内存里的存储：用户（含密码哈希）和每个用户至多一条重置记录。"""
+    """内存存储：账户（含密码哈希）加上每个账户至多一条待用的重置记录。接口与真实工作区的 `db` 相同，内部结构是我们自己的。"""
 
     def __init__(self, users: dict[str, dict[str, Any]] | None = None) -> None:
-        default = {"user_123": {"password_hash": "old_hash_abc", "email": "user@example.com"}}
-        self._users: dict[str, dict[str, Any]] = copy.deepcopy(default if users is None else users)
-        self._reset_codes: dict[str, dict[str, Any]] = {}
+        seed = {"acct_mira": {"password_hash": "pw0", "email": "mira@example.org"}}
+        self._accounts: dict[str, dict[str, Any]] = copy.deepcopy(seed if users is None else users)
+        self._pending: dict[str, dict[str, Any]] = {}
 
     def get_user(self, user_id: str) -> dict[str, Any] | None:
-        """返回副本：改它不会改存储，要改密码必须走 `update_password`。"""
-        user = self._users.get(user_id)
-        return dict(user) if user else None
+        """给调用方一份副本：改副本不会落库，改密码只能走 `update_password`。"""
+        account = self._accounts.get(user_id)
+        return None if account is None else dict(account)
 
     def update_password(self, user_id: str, new_password_hash: str) -> None:
-        if user_id in self._users:
-            self._users[user_id]["password_hash"] = new_password_hash
+        account = self._accounts.get(user_id)
+        if account is not None:
+            account["password_hash"] = new_password_hash
 
     def save_reset_code(self, user_id: str, code: str, timestamp: datetime) -> None:
-        self._reset_codes[user_id] = {"code": code, "created_at": timestamp}
+        self._pending[user_id] = {"code": code, "created_at": timestamp}
 
     def get_reset_code(self, user_id: str) -> dict[str, Any] | None:
-        """返回存储里的那条记录本身（不是副本）。"""
-        return self._reset_codes.get(user_id)
+        """返回库里那条记录本身而不是副本，所以服务只读它。"""
+        return self._pending.get(user_id)
 
     def clear_reset_code(self, user_id: str) -> None:
-        self._reset_codes.pop(user_id, None)
+        self._pending.pop(user_id, None)
 
     def snapshot(self) -> tuple[dict[str, Any], dict[str, Any]]:
-        """（仅本仓库的测试用）深拷贝出全部状态。"""
-        return copy.deepcopy((self._users, self._reset_codes))
+        """（仅供本仓库的测试）把全部状态深拷贝出来，用来断言失败的调用不留痕迹。"""
+        return copy.deepcopy((self._accounts, self._pending))
 
 
 db = MockDatabase()
@@ -95,12 +96,12 @@ class PasswordResetService:
         return str(random.randint(1000, 9999))
 
     def request_reset(self, user_id: str) -> str:
-        now = self._clock()
-        if not db.get_user(user_id):
+        issued_at = self._clock()
+        if db.get_user(user_id) is None:
             raise ValueError("User not found")
-        code = self.generate_code()
-        db.save_reset_code(user_id, code, now)
-        return code
+        token = self.generate_code()
+        db.save_reset_code(user_id, token, issued_at)
+        return token
 
     def verify_and_reset(self, user_id: str, code: str, new_password: str) -> bool:
         row = db.get_reset_code(user_id)

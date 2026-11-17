@@ -30,25 +30,25 @@ def best(service, source, target):
     return body
 
 
-# ---- README 里的例子 ----
+# ---- 合同里的例子 ----
 
-def test_readme_worked_example():
+def test_worked_example():
     service = make()
-    assert service.register_rates("USD:EUR:0.9,EUR:CAD:1.5,USD:CAD:1.2") == (201, {"registered_count": 3})
-    assert service.get_direct_rate("USD", "CAD") == (200, {"from": "USD", "to": "CAD", "rate": 1.2})
-    status, body = service.get_single_hop_rates("USD", "CAD")
-    assert status == 200 and body["rates"] == [pytest.approx(1.2), pytest.approx(1.35)]
-    body = best(service, "USD", "CAD")
-    assert body["path"] == ["USD", "EUR", "CAD"] and body["best_rate"] == pytest.approx(1.35)
+    assert service.register_rates("SGD:HKD:5.8,HKD:NOK:1.3,SGD:NOK:7.1") == (201, {"registered_count": 3})
+    assert service.get_direct_rate("SGD", "NOK") == (200, {"from": "SGD", "to": "NOK", "rate": 7.1})
+    status, body = service.get_single_hop_rates("SGD", "NOK")
+    assert status == 200 and body["rates"] == [pytest.approx(7.1), pytest.approx(7.54)]
+    body = best(service, "SGD", "NOK")
+    assert body["path"] == ["SGD", "HKD", "NOK"] and body["best_rate"] == pytest.approx(7.54)
     assert set(body) == {"from", "to", "best_rate", "path"}
 
 
-def test_readme_rejected_batch_keeps_old_rate():
-    service = make("GBP:JPY:180")
-    fails(400, "invalid_input", service.register_rates, "GBP:JPY:200,JPY:usd:2")
-    assert service.get_direct_rate("GBP", "JPY")[1]["rate"] == 180
-    fails(404, "route_not_found", service.get_direct_rate, "JPY", "GBP")  # 没有反向边
-    assert service.list_pairs()[1] == [{"from_currency": "GBP", "to_currency": "JPY", "rate": 180.0}]
+def test_rejected_batch_keeps_old_rate():
+    service = make("CHF:SEK:11")
+    fails(400, "invalid_input", service.register_rates, "CHF:SEK:12,SEK:chf:2")
+    assert service.get_direct_rate("CHF", "SEK")[1]["rate"] == 11
+    fails(404, "route_not_found", service.get_direct_rate, "SEK", "CHF")  # 没有反向边
+    assert service.list_pairs()[1] == [{"from_currency": "CHF", "to_currency": "SEK", "rate": 11.0}]
 
 
 # ---- 登记：格式 ----

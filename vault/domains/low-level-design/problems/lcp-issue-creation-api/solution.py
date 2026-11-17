@@ -187,8 +187,8 @@ class IssueService:
 
 
 if __name__ == "__main__":
-    service = IssueService({"demo": ["alice", "bob"]})
-    print(service.create("alice", "demo", {"title": " Fix login "}, "retry-1"))
-    print(service.create("alice", "demo", {"title": "Fix login"}, "retry-1"))
-    print(service.transition("bob", "demo", 1, "closed", 1))
-    print(service.list("alice", "demo", status="closed"))
+    service = IssueService({"orbit": ["mina", "omar"]})
+    print(service.create("mina", "orbit", {"title": " Rotate logs "}, "nightly-1"))
+    print(service.create("mina", "orbit", {"title": "Rotate logs"}, "nightly-1"))
+    print(service.transition("omar", "orbit", 1, "closed", 1))
+    print(service.list("mina", "orbit", status="closed"))

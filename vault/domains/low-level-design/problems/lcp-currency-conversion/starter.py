@@ -44,16 +44,16 @@ class CurrencyExchangeService:
         pass
 
     def register_rates(self, rates_stream: str) -> tuple[int, dict]:
-        raise NotImplementedError("Implement atomic rate registration and validation")
+        raise NotImplementedError("todo: validate the whole batch, then publish it in one step")
 
     def get_direct_rate(self, from_currency: str, to_currency: str) -> tuple[int, dict]:
-        raise NotImplementedError("Implement direct rate lookup")
+        raise NotImplementedError("todo: return the registered edge")
 
     def get_single_hop_rates(self, from_currency: str, to_currency: str) -> tuple[int, dict]:
-        raise NotImplementedError("Implement single-hop rate calculation")
+        raise NotImplementedError("todo: direct edge plus every one-intermediate route, sorted")
 
     def get_best_rate(self, from_currency: str, to_currency: str) -> tuple[int, dict]:
-        raise NotImplementedError("Implement optimal multi-hop rate discovery")
+        raise NotImplementedError("todo: search simple paths, apply the tolerance rule")
 
     def list_pairs(self, from_currency: str | None = None) -> tuple[int, list[dict]]:
-        raise NotImplementedError("Implement deterministic currency pair listing")
+        raise NotImplementedError("todo: list edges ordered by source, then target")

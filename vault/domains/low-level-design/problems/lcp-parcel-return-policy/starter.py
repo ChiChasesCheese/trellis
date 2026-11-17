@@ -104,15 +104,10 @@ def evaluate(request: dict[str, int | bool | str]) -> Decision:
         raise InvalidRequest
     if not all(isinstance(x, int) and x >= 0 for x in (value, age, days)):
         raise InvalidRequest
+    # 风险：评分、金额、账龄三项相加
     risk = (5 - rating) * 10
-    if value > 50_000:
-        risk += 30
-    elif value > 10_000:
-        risk += 15
-    if age < 30:
-        risk += 25
-    elif age < 180:
-        risk += 10
+    risk += 30 if value > 50_000 else 15 if value > 10_000 else 0
+    risk += 25 if age < 30 else 10 if age < 180 else 0
     if request["final_sale"]:
         reason = "final_sale"
     elif days >= 30:

@@ -267,35 +267,36 @@ MAX_ATTEMPTS = 1000  # 生成器一直撞车时的上限，防止死循环
 
 # ---- 存储边界开始：真实工作区由 database.py 提供同样接口的 `db`；放进去时删掉这一段，改成 `from database import db` ----
 class MockDatabase:
-    """内存里的存储：用户（含密码哈希）和每个用户至多一条重置记录。"""
+    """内存存储：账户（含密码哈希）加上每个账户至多一条待用的重置记录。接口与真实工作区的 `db` 相同，内部结构是我们自己的。"""
 
     def __init__(self, users: dict[str, dict[str, Any]] | None = None) -> None:
-        default = {"user_123": {"password_hash": "old_hash_abc", "email": "user@example.com"}}
-        self._users: dict[str, dict[str, Any]] = copy.deepcopy(default if users is None else users)
-        self._reset_codes: dict[str, dict[str, Any]] = {}
+        seed = {"acct_mira": {"password_hash": "pw0", "email": "mira@example.org"}}
+        self._accounts: dict[str, dict[str, Any]] = copy.deepcopy(seed if users is None else users)
+        self._pending: dict[str, dict[str, Any]] = {}
 
     def get_user(self, user_id: str) -> dict[str, Any] | None:
-        """返回副本：改它不会改存储，要改密码必须走 `update_password`。"""
-        user = self._users.get(user_id)
-        return dict(user) if user else None
+        """给调用方一份副本：改副本不会落库，改密码只能走 `update_password`。"""
+        account = self._accounts.get(user_id)
+        return None if account is None else dict(account)
 
     def update_password(self, user_id: str, new_password_hash: str) -> None:
-        if user_id in self._users:
-            self._users[user_id]["password_hash"] = new_password_hash
+        account = self._accounts.get(user_id)
+        if account is not None:
+            account["password_hash"] = new_password_hash
 
     def save_reset_code(self, user_id: str, code: str, timestamp: datetime) -> None:
-        self._reset_codes[user_id] = {"code": code, "created_at": timestamp}
+        self._pending[user_id] = {"code": code, "created_at": timestamp}
 
     def get_reset_code(self, user_id: str) -> dict[str, Any] | None:
-        """返回存储里的那条记录本身（不是副本），所以服务只能读，不能改它。"""
-        return self._reset_codes.get(user_id)
+        """返回库里那条记录本身而不是副本，所以服务只读它。"""
+        return self._pending.get(user_id)
 
     def clear_reset_code(self, user_id: str) -> None:
-        self._reset_codes.pop(user_id, None)
+        self._pending.pop(user_id, None)
 
     def snapshot(self) -> tuple[dict[str, Any], dict[str, Any]]:
-        """（仅本仓库的测试用）深拷贝出全部状态，用来断言"失败不留痕"。"""
-        return copy.deepcopy((self._users, self._reset_codes))
+        """（仅供本仓库的测试）把全部状态深拷贝出来，用来断言失败的调用不留痕迹。"""
+        return copy.deepcopy((self._accounts, self._pending))
 
 
 db = MockDatabase()
@@ -401,9 +402,10 @@ class PasswordResetService:
         if not self._store.user_exists(user_id):
             raise ValueError("User not found")  # 在读时钟、写存储之前
         current = self._store.record_of(user_id)
-        code = self._codes.issue(self.generate_code, current.code if current else None)
-        self._store.save(user_id, code, self._clock())
-        return code
+        fresh = self._codes.issue(self.generate_code, current.code if current else None)
+        issued_at = self._clock()
+        self._store.save(user_id, fresh, issued_at)
+        return fresh
 
     def verify_and_reset(self, user_id: str, code: str, new_password: str) -> bool:
         if not self._store.user_exists(user_id):  # 用户被删后残留的记录也不能用
@@ -422,16 +424,16 @@ if __name__ == "__main__":
     now = [datetime(2026, 1, 1, 12, tzinfo=timezone.utc)]
     service = PasswordResetService(clock=lambda: now[0], environment={})
     print("url        :", service.auth_service_url)
-    issued = service.request_reset("user_123")
-    print("wrong code :", service.verify_and_reset("user_123", issued + "x", "pw"))
+    issued = service.request_reset("acct_mira")
+    print("wrong code :", service.verify_and_reset("acct_mira", issued + "x", "pw"))
     now[0] += timedelta(seconds=29.9)
-    print("at 29.9 s  :", service.verify_and_reset("user_123", issued, "pw"))
-    print("replay     :", service.verify_and_reset("user_123", issued, "pw2"))
-    print("password   :", (db.get_user("user_123") or {})["password_hash"])
-    db.save_reset_code("user_123", "legacy", datetime(2026, 1, 1, 12, 0, 0))  # 旧记录：没有时区信息，按 UTC
+    print("at 29.9 s  :", service.verify_and_reset("acct_mira", issued, "pw"))
+    print("replay     :", service.verify_and_reset("acct_mira", issued, "pw2"))
+    print("password   :", (db.get_user("acct_mira") or {})["password_hash"])
+    db.save_reset_code("acct_mira", "legacy", datetime(2026, 1, 1, 12, 0, 0))  # 旧记录：没有时区信息，按 UTC
     now[0] += timedelta(seconds=0.1)  # 现在正好是 12:00:30.0，旧记录年龄 30 秒
-    print("legacy 30 s:", service.verify_and_reset("user_123", "legacy", "pw3"))
-    print("password   :", (db.get_user("user_123") or {})["password_hash"])
+    print("legacy 30 s:", service.verify_and_reset("acct_mira", "legacy", "pw3"))
+    print("password   :", (db.get_user("acct_mira") or {})["password_hash"])
 ```
 %% code:end %%
 
