@@ -219,12 +219,13 @@ def run_agent(question: str, model: Model, tools: Mapping[str, Tool], *, max_tur
 
 
 if __name__ == "__main__":
-    replies = iter([
-        {"text": "Checking both prices", "tool_calls": [
-            {"id": "a", "name": "price", "arguments": {"symbol": "A"}},
-            {"id": "b", "name": "price", "arguments": {"symbol": "B"}}]},
-        {"text": "A is cheaper", "tool_calls": []},
+    scripted_replies = iter([
+        {"text": "Looking up both cities", "tool_calls": [
+            {"id": "x1", "name": "temp", "arguments": {"city": "Oslo"}},
+            {"id": "x2", "name": "temp", "arguments": {"city": "Lima"}}]},
+        {"text": "Lima is warmer", "tool_calls": []},
     ])
-    result = run_agent("Compare A and B", lambda messages: next(replies),
-                       {"price": lambda symbol: {"A": 100, "B": 200}[symbol]}, max_workers=2)
+    readings = {"Oslo": -3, "Lima": 19}
+    result = run_agent("Which is warmer, Oslo or Lima?", lambda messages: next(scripted_replies),
+                       {"temp": lambda city: readings[city]}, max_workers=2)
     print(result["answer"], result["model_calls"], result["tool_calls"])

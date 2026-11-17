@@ -203,7 +203,7 @@ class ShoppingCart:
 
 
 if __name__ == "__main__":
-    demo = ShoppingCart([Product("p1", "Canvas Hat", 1250), Product("p2", "Wool Scarf", 2400)])
+    demo = ShoppingCart([Product("p1", "Linen Shirt", 3175), Product("p2", "Rain Jacket", 5400)])
     demo.addLine("p1")
     demo.addLine("p2")
     demo.updateLine("p1", 0)  # 删除 p1

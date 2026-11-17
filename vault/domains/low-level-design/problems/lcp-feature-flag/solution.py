@@ -72,8 +72,8 @@ _OPS: dict[str, Callable[[Any, Any], bool]] = {
 
 def bucket(flag_key: str, user_id: str) -> int:
     """用户在某个开关里的稳定桶号，范围 0..9999；只依赖 (flag_key, user_id)。"""
-    digest = sha256(f"{flag_key}:{user_id}".encode("utf-8")).hexdigest()
-    return int(digest, 16) % BUCKET_SPACE
+    raw = sha256((flag_key + ":" + user_id).encode("utf-8")).digest()
+    return int.from_bytes(raw, "big") % BUCKET_SPACE
 
 
 @dataclass(frozen=True, slots=True)
@@ -258,8 +258,8 @@ class FeatureFlagService:
 if __name__ == "__main__":
     service = FeatureFlagService()
     service.create_flag({
-        "key": "checkout_flow", "enabled": True, "variants": ["control", "treatment"],
-        "default_variant": "control", "rules": [],
-        "fallthrough": {"rollout": {"control": 80, "treatment": 20}},
+        "key": "search_ranker", "enabled": True, "variants": ["baseline", "candidate"],
+        "default_variant": "baseline", "rules": [],
+        "fallthrough": {"rollout": {"baseline": 80, "candidate": 20}},
     })
-    print(service.evaluate("checkout_flow", "user-1"), service.evaluate("checkout_flow", "user-42"))
+    print(service.evaluate("search_ranker", "acct-1"), service.evaluate("search_ranker", "acct-42"))

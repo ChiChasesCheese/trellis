@@ -70,7 +70,7 @@
 ]
 },
 {
-"point": "能区分原始与剩余的例子：1001 分，先固定 400 再 25%，按原始 250、按剩余 150",
+"point": "能区分原始与剩余的例子：1203 分，先固定 350 再 15%，按原始 180、按剩余 127",
 "cards": [
 "lcp-receivable-allocation-reflection-original-vs-remaining"
 ],

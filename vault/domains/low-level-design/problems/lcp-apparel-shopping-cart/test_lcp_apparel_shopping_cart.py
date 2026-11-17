@@ -28,24 +28,24 @@ def ids(snapshot):
     return [item.id for item in snapshot.items]
 
 
-# ---- README 的例子 ----
+# ---- 带数字的完整例子 ----
 
-def test_readme_example_exact_shape():
-    cart = impl.ShoppingCart([impl.Product("p1", "Canvas Hat", 1250)])
+def test_worked_example_exact_shape():
+    cart = impl.ShoppingCart([impl.Product("p1", "Linen Shirt", 3175)])
     cart.addLine("p1")
-    cart.updateLine("p1", 3)
+    cart.updateLine("p1", 2)
     assert plain(cart.snapshot()) == {
-        "products": [{"id": "p1", "name": "Canvas Hat", "priceCents": 1250, "cartQuantity": 3}],
-        "items": [{"id": "p1", "name": "Canvas Hat", "priceCents": 1250, "quantity": 3, "lineTotalCents": 3750}],
-        "totalQuantity": 3,
-        "totalPriceCents": 3750,
+        "products": [{"id": "p1", "name": "Linen Shirt", "priceCents": 3175, "cartQuantity": 2}],
+        "items": [{"id": "p1", "name": "Linen Shirt", "priceCents": 3175, "quantity": 2, "lineTotalCents": 6350}],
+        "totalQuantity": 2,
+        "totalPriceCents": 6350,
         "empty": False,
     }
     # 能被 JSON 序列化：HTTP 适配器就是这样把快照发出去的
-    assert json.loads(json.dumps(plain(cart.snapshot())))["totalPriceCents"] == 3750
+    assert json.loads(json.dumps(plain(cart.snapshot())))["totalPriceCents"] == 6350
 
 
-def test_readme_example_remove_then_readd_goes_last():
+def test_worked_example_remove_then_readd_goes_last():
     cart = cart_of(10, 20)
     cart.addLine("p1")
     cart.addLine("p2")

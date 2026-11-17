@@ -10,18 +10,18 @@ impl = importlib.import_module(os.environ.get("IMPL", "solution"))
 Transaction, Receivable, Contract = impl.Transaction, impl.Receivable, impl.Contract
 register, allocate = impl.register_receivables, impl.allocate_receivables
 
-DATE = "2026-11-05"
+DATE = "2026-12-05"
 
 
 def tx(customer, merchant, date, card, amount):
     return Transaction(customer_id=customer, merchant_id=merchant, payout_date=date, card_type=card, amount=amount)
 
 
-def rec(merchant="ShopE", card="Visa", date=DATE, amount=1001):
+def rec(merchant="Grocer", card="Visa", date=DATE, amount=1203):
     return Receivable(merchant_id=merchant, card_type=card, payout_date=date, amount=amount)
 
 
-def con(cid, kind, value, merchant="ShopE", card="Visa", date=DATE):
+def con(cid, kind, value, merchant="Grocer", card="Visa", date=DATE):
     return Contract(contract_id=cid, merchant_id=merchant, payout_date=date, card_type=card, kind=kind, value=value)
 
 
@@ -35,64 +35,64 @@ def split(rows_):
     return {r[0]: r[3] for r in rows_}
 
 
-# ---- README 里的例子 ----
+# ---- 带数字的完整例子 ----
 
-def test_readme_aggregation_across_customers():
+def test_worked_aggregation_across_customers():
     result = register([
-        tx("U1", "ShopA", "2026-11-01", "Visa", 150),
-        tx("U2", "ShopA", "2026-11-01", "Visa", 200),
-        tx("U3", "ShopB", "2026-11-02", "MasterCard", 75),
+        tx("P1", "Bakery", "2026-12-01", "Visa", 175),
+        tx("P2", "Bakery", "2026-12-01", "Visa", 225),
+        tx("P3", "Florist", "2026-12-02", "MasterCard", 90),
     ])
-    assert rows(result) == [("ShopA", "Visa", "2026-11-01", 350), ("ShopB", "MasterCard", "2026-11-02", 75)]
+    assert rows(result) == [("Bakery", "Visa", "2026-12-01", 400), ("Florist", "MasterCard", "2026-12-02", 90)]
 
 
-def test_readme_card_types_stay_separate():
-    result = register([tx("U4", "ShopC", "2026-11-03", "Visa", 40), tx("U5", "ShopC", "2026-11-03", "MasterCard", 60)])
-    assert rows(result) == [("ShopC", "MasterCard", "2026-11-03", 60), ("ShopC", "Visa", "2026-11-03", 40)]
+def test_worked_card_types_stay_separate():
+    result = register([tx("P4", "Garage", "2026-12-03", "Visa", 35), tx("P5", "Garage", "2026-12-03", "MasterCard", 65)])
+    assert rows(result) == [("Garage", "MasterCard", "2026-12-03", 65), ("Garage", "Visa", "2026-12-03", 35)]
 
 
-def test_readme_partial_fixed_leaves_merchant_remainder():
-    result = allocate([rec("ShopD", date="2026-11-04", amount=500)], [con("DealA", "fixed", 200, "ShopD", date="2026-11-04")])
-    assert rows(result) == [("DealA", "Visa", "2026-11-04", 200), ("ShopD", "Visa", "2026-11-04", 300)]
+def test_worked_partial_fixed_leaves_merchant_remainder():
+    result = allocate([rec("Kiosk", date="2026-12-04", amount=800)], [con("Split1", "fixed", 250, "Kiosk", date="2026-12-04")])
+    assert rows(result) == [("Kiosk", "Visa", "2026-12-04", 550), ("Split1", "Visa", "2026-12-04", 250)]
 
 
-def test_readme_mixed_percentage_uses_original_amount():
-    result = allocate([rec()], [con("DealB", "fixed", 400), con("DealC", "percentage", 2500)])
-    assert rows(result) == [("DealB", "Visa", DATE, 400), ("DealC", "Visa", DATE, 250), ("ShopE", "Visa", DATE, 351)]
+def test_worked_mixed_percentage_uses_original_amount():
+    result = allocate([rec()], [con("Split2", "fixed", 350), con("Split3", "percentage", 1500)])
+    assert rows(result) == [("Grocer", "Visa", DATE, 673), ("Split2", "Visa", DATE, 350), ("Split3", "Visa", DATE, 180)]
 
 
-def test_readme_later_fixed_takes_what_is_left_and_merchant_row_is_zero():
-    contracts = [con("DealB", "fixed", 400), con("DealC", "percentage", 2500), con("DealD", "fixed", 500)]
-    assert split(rows(allocate([rec()], contracts))) == {"DealB": 400, "DealC": 250, "DealD": 351, "ShopE": 0}
+def test_worked_later_fixed_takes_what_is_left_and_merchant_row_is_zero():
+    contracts = [con("Split2", "fixed", 350), con("Split3", "percentage", 1500), con("Split4", "fixed", 900)]
+    assert split(rows(allocate([rec()], contracts))) == {"Split2": 350, "Split3": 180, "Split4": 673, "Grocer": 0}
 
 
 # ---- 汇总 ----
 
 def test_aggregation_key_is_exact_and_case_sensitive():
     result = register([
-        tx("U1", "ShopA", "2026-11-01", "Visa", 10),
-        tx("U1", "ShopA", "2026-11-01", "visa", 20),  # 卡类型大小写不同
-        tx("U1", "shopA", "2026-11-01", "Visa", 30),  # 商户大小写不同
-        tx("U1", "ShopA", "2026-11-02", "Visa", 40),  # 日期不同
+        tx("U1", "Bakery", "2026-12-01", "Visa", 10),
+        tx("U1", "Bakery", "2026-12-01", "visa", 20),  # 卡类型大小写不同
+        tx("U1", "shopA", "2026-12-01", "Visa", 30),  # 商户大小写不同
+        tx("U1", "Bakery", "2026-12-02", "Visa", 40),  # 日期不同
     ])
     assert sorted(r.amount for r in result) == [10, 20, 30, 40]
 
 
 def test_duplicate_rows_count_separately_and_customer_is_ignored():
-    same = tx("U1", "ShopA", "2026-11-01", "Visa", 100)
-    result = register([same, same, tx("U9", "ShopA", "2026-11-01", "Visa", 100)])
-    assert rows(result) == [("ShopA", "Visa", "2026-11-01", 300)]
+    same = tx("U1", "Bakery", "2026-12-01", "Visa", 100)
+    result = register([same, same, tx("U9", "Bakery", "2026-12-01", "Visa", 100)])
+    assert rows(result) == [("Bakery", "Visa", "2026-12-01", 300)]
 
 
 def test_empty_inputs():
     assert register([]) == []
     assert allocate([], []) == []
-    assert allocate([], [con("DealA", "fixed", 5)]) == []
+    assert allocate([], [con("Split1", "fixed", 5)]) == []
 
 
 def test_aggregation_at_the_documented_bounds():
-    big = [tx(f"U{i}", "ShopA", DATE, "Visa", 100_000) for i in range(10_000)]
-    assert rows(register(big)) == [("ShopA", "Visa", DATE, 1_000_000_000)]
+    big = [tx(f"U{i}", "Bakery", DATE, "Visa", 100_000) for i in range(10_000)]
+    assert rows(register(big)) == [("Bakery", "Visa", DATE, 1_000_000_000)]
 
 
 def test_first_seen_order_is_kept():
@@ -103,52 +103,52 @@ def test_first_seen_order_is_kept():
 # ---- 分账 ----
 
 def test_percentage_is_of_original_not_of_remaining():
-    # 原始 1001、先分走 400：按原始算 25% 是 250，按剩余 601 算只有 150
-    result = split(rows(allocate([rec()], [con("F", "fixed", 400), con("P", "percentage", 2500)])))
-    assert result["P"] == 250 and result["P"] != 601 * 2500 // 10_000
+    # 原始 1203、先分走 350：按原始算 15% 是 180，按剩余 853 算只有 127
+    result = split(rows(allocate([rec()], [con("F", "fixed", 350), con("P", "percentage", 1500)])))
+    assert result["P"] == 180 and result["P"] != 853 * 1500 // 10_000
 
 
 def test_percentage_is_floored_with_integer_arithmetic():
     # 50 分的 58% 是 29；先算 5800/10000 得到 0.58 再乘 50 会得到 28.999999999999996，取整成 28
-    assert split(rows(allocate([rec(amount=50)], [con("P", "percentage", 5800)]))) == {"P": 29, "ShopE": 21}
-    assert split(rows(allocate([rec(amount=1)], [con("P", "percentage", 9999)]))) == {"ShopE": 1}  # 向下取整为 0，不出行
+    assert split(rows(allocate([rec(amount=50)], [con("P", "percentage", 5800)]))) == {"P": 29, "Grocer": 21}
+    assert split(rows(allocate([rec(amount=1)], [con("P", "percentage", 9999)]))) == {"Grocer": 1}  # 向下取整为 0，不出行
 
 
 def test_contract_rows_only_when_positive_merchant_row_always():
-    contracts = [con("Z1", "fixed", 0), con("Z2", "percentage", 0), con("Z3", "percentage", 1)]  # 1 基点 * 1001 = 0.1001 -> 0
-    assert rows(allocate([rec()], contracts)) == [("ShopE", "Visa", DATE, 1001)]
+    contracts = [con("Z1", "fixed", 0), con("Z2", "percentage", 0), con("Z3", "percentage", 1)]  # 1 基点 * 1203 = 0.1203 -> 0
+    assert rows(allocate([rec()], contracts)) == [("Grocer", "Visa", DATE, 1203)]
 
 
 def test_full_assignment_leaves_a_zero_merchant_row():
-    assert rows(allocate([rec(amount=700)], [con("F", "fixed", 700)])) == [("F", "Visa", DATE, 700), ("ShopE", "Visa", DATE, 0)]
-    assert rows(allocate([rec(amount=700)], [con("P", "percentage", 10_000)])) == [("P", "Visa", DATE, 700), ("ShopE", "Visa", DATE, 0)]
+    assert rows(allocate([rec(amount=700)], [con("F", "fixed", 700)])) == [("F", "Visa", DATE, 700), ("Grocer", "Visa", DATE, 0)]
+    assert rows(allocate([rec(amount=700)], [con("P", "percentage", 10_000)])) == [("Grocer", "Visa", DATE, 0), ("P", "Visa", DATE, 700)]
 
 
 def test_zero_amount_receivable_still_gets_its_merchant_row():
-    assert rows(allocate([rec(amount=0)], [con("F", "fixed", 10)])) == [("ShopE", "Visa", DATE, 0)]
+    assert rows(allocate([rec(amount=0)], [con("F", "fixed", 10)])) == [("Grocer", "Visa", DATE, 0)]
 
 
 def test_contract_order_decides_who_gets_the_scarce_money():
     receivable = [rec(amount=1000)]
     first = split(rows(allocate(receivable, [con("A", "fixed", 700), con("B", "fixed", 700)])))
     second = split(rows(allocate(receivable, [con("B", "fixed", 700), con("A", "fixed", 700)])))
-    assert first == {"A": 700, "B": 300, "ShopE": 0}
-    assert second == {"B": 700, "A": 300, "ShopE": 0}
+    assert first == {"A": 700, "B": 300, "Grocer": 0}
+    assert second == {"B": 700, "A": 300, "Grocer": 0}
 
 
 def test_exhausted_funds_give_later_contracts_no_row():
     contracts = [con("A", "percentage", 6000), con("B", "percentage", 6000), con("C", "fixed", 1)]
-    assert split(rows(allocate([rec(amount=1000)], contracts))) == {"A": 600, "B": 400, "ShopE": 0}
+    assert split(rows(allocate([rec(amount=1000)], contracts))) == {"A": 600, "B": 400, "Grocer": 0}
 
 
 def test_contracts_with_unmatched_key_are_ignored():
     contracts = [
         con("X1", "fixed", 100, merchant="Other"),
         con("X2", "fixed", 100, card="visa"),
-        con("X3", "fixed", 100, date="2026-11-06"),
+        con("X3", "fixed", 100, date="2026-12-06"),
         con("Hit", "fixed", 100),
     ]
-    assert split(rows(allocate([rec()], contracts))) == {"Hit": 100, "ShopE": 901}
+    assert split(rows(allocate([rec()], contracts))) == {"Hit": 100, "Grocer": 1103}
 
 
 def test_each_key_is_allocated_independently():
@@ -156,23 +156,23 @@ def test_each_key_is_allocated_independently():
     contracts = [con("A", "fixed", 500, card="Visa"), con("B", "fixed", 500, card="MasterCard")]
     result = rows(allocate(receivables, contracts))
     assert result == [("A", "Visa", DATE, 500), ("B", "MasterCard", DATE, 200),
-                      ("ShopE", "MasterCard", DATE, 0), ("ShopE", "Visa", DATE, 500)]
+                      ("Grocer", "MasterCard", DATE, 0), ("Grocer", "Visa", DATE, 500)]
 
 
 def test_same_merchant_contracts_are_not_merged():
     result = allocate([rec()], [con("A", "fixed", 100), con("B", "fixed", 100)])
-    assert sorted(r.id for r in result) == ["A", "B", "ShopE"]
+    assert sorted(r.id for r in result) == ["A", "B", "Grocer"]
 
 
 def test_empty_contracts_return_every_merchant_row():
-    receivables = [rec("ShopA", amount=5), rec("ShopB", amount=0)]
-    assert rows(allocate(receivables, [])) == [("ShopA", "Visa", DATE, 5), ("ShopB", "Visa", DATE, 0)]
+    receivables = [rec("Bakery", amount=5), rec("Florist", amount=0)]
+    assert rows(allocate(receivables, [])) == [("Bakery", "Visa", DATE, 5), ("Florist", "Visa", DATE, 0)]
 
 
 def test_extreme_amounts_stay_exact():
     top = 1_000_000_000
     result = split(rows(allocate([rec(amount=top)], [con("P", "percentage", 9999), con("Q", "percentage", 10_000)])))
-    assert result == {"P": top * 9999 // 10_000, "Q": top - top * 9999 // 10_000, "ShopE": 0}
+    assert result == {"P": top * 9999 // 10_000, "Q": top - top * 9999 // 10_000, "Grocer": 0}
     assert top * 9999 // 10_000 == 999_900_000
 
 
@@ -232,7 +232,7 @@ def oracle(receivables, contracts):
 @pytest.mark.parametrize("seed", range(40))
 def test_random_cases_match_the_oracle_and_conserve_money(seed):
     rng = random.Random(seed)
-    merchants, cards, dates = ["A", "B", "C"], ["Visa", "visa", "MC"], ["2026-11-01", "2026-11-02"]
+    merchants, cards, dates = ["A", "B", "C"], ["Visa", "visa", "MC"], ["2026-12-01", "2026-12-02"]
     transactions = [
         tx(f"U{rng.randrange(5)}", rng.choice(merchants), rng.choice(dates), rng.choice(cards), rng.randint(1, 10**9 // 50))
         for _ in range(rng.randint(0, 40))
@@ -300,14 +300,14 @@ needs_csv = pytest.mark.skipif(not hasattr(impl, "settle_csv"), reason="CSV help
 
 
 @needs_csv
-def test_csv_round_trip_with_the_readme_example():
-    transactions = "customer_id,merchant_id,payout_date,card_type,amount\nU1,ShopE,2026-11-05,Visa,600\nU2,ShopE,2026-11-05,Visa,401\n"
+def test_csv_round_trip_with_the_worked_example():
+    transactions = "customer_id,merchant_id,payout_date,card_type,amount\nP6,Grocer,2026-12-05,Visa,700\nP7,Grocer,2026-12-05,Visa,503\n"
     contracts = ("contract_id,merchant_id,payout_date,card_type,kind,value\n"
-                 "DealB,ShopE,2026-11-05,Visa,fixed,400\nDealC,ShopE,2026-11-05,Visa,percentage,2500\n")
+                 "Split2,Grocer,2026-12-05,Visa,fixed,350\nSplit3,Grocer,2026-12-05,Visa,percentage,1500\n")
     text = impl.settle_csv(transactions, contracts)
     lines = text.splitlines()
     assert lines[0] == "id,card_type,payout_date,amount" and text.endswith("\n")
-    assert sorted(lines[1:]) == ["DealB,Visa,2026-11-05,400", "DealC,Visa,2026-11-05,250", "ShopE,Visa,2026-11-05,351"]
+    assert sorted(lines[1:]) == ["Grocer,Visa,2026-12-05,673", "Split2,Visa,2026-12-05,350", "Split3,Visa,2026-12-05,180"]
 
 
 @needs_csv
@@ -315,5 +315,5 @@ def test_payout_totals_add_up_across_keys():
     receivables = [rec(card="Visa", amount=1000), rec(card="MasterCard", amount=200)]
     contracts = [con("A", "fixed", 100, card="Visa"), con("A2", "fixed", 100, card="MasterCard")]
     totals = impl.payout_totals(allocate(receivables, contracts))
-    assert totals == {"A": 100, "A2": 100, "ShopE": 1000}
+    assert totals == {"A": 100, "A2": 100, "Grocer": 1000}
     assert sum(totals.values()) == 1200

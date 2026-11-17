@@ -35,26 +35,26 @@ def tool_contents(result):
     return [m["content"] for m in result["messages"] if m["role"] == "tool"]
 
 
-PRICES = {"A": 100, "B": 200}
+READINGS = {"Oslo": -3, "Lima": 19}
 
 
-def price(symbol):
-    return {"symbol": symbol, "cents": PRICES[symbol]}
+def temp(city):
+    return {"city": city, "celsius": READINGS[city]}
 
 
 # ---- 对话记录与返回形状 ----
 
-def test_readme_example_runs_two_tools_and_orders_results():
+def test_worked_example_runs_two_tools_and_orders_results():
     model, _ = scripted(
-        reply("Checking both prices", call("a", "price", symbol="A"), call("b", "price", symbol="B")),
-        reply("A is cheaper"),
+        reply("Looking up both cities", call("x1", "temp", city="Oslo"), call("x2", "temp", city="Lima")),
+        reply("Lima is warmer"),
     )
-    result = run_agent("Compare A and B", model, {"price": price}, max_workers=2)
-    assert result["answer"] == "A is cheaper"
+    result = run_agent("Which is warmer, Oslo or Lima?", model, {"temp": temp}, max_workers=2)
+    assert result["answer"] == "Lima is warmer"
     assert (result["model_calls"], result["tool_calls"]) == (2, 2)
-    assert [m["tool_call_id"] for m in result["messages"] if m["role"] == "tool"] == ["a", "b"]
-    assert tool_contents(result) == [{"ok": True, "value": {"symbol": "A", "cents": 100}},
-                                     {"ok": True, "value": {"symbol": "B", "cents": 200}}]
+    assert [m["tool_call_id"] for m in result["messages"] if m["role"] == "tool"] == ["x1", "x2"]
+    assert tool_contents(result) == [{"ok": True, "value": {"city": "Oslo", "celsius": -3}},
+                                     {"ok": True, "value": {"city": "Lima", "celsius": 19}}]
 
 
 def test_terminal_response_shape_and_empty_text_answer():
@@ -78,7 +78,7 @@ def test_text_beside_calls_is_intermediate_and_messages_are_exact():
 
 
 def test_model_sees_results_before_its_next_call_and_later_turns_depend_on_them():
-    queue = iter([reply("", call("p", "price", symbol="B")), None, reply("done")])
+    queue = iter([reply("", call("p", "temp", city="Lima")), None, reply("done")])
     seen = []
 
     def model(messages):
@@ -88,12 +88,12 @@ def test_model_sees_results_before_its_next_call_and_later_turns_depend_on_them(
             tool_message = messages[-1]
             assert tool_message["role"] == "tool"
             assert messages[-2]["role"] == "assistant"
-            return reply("", call("d", "diff", left=tool_message["content"]["value"]["cents"], right=100))
+            return reply("", call("d", "diff", left=tool_message["content"]["value"]["celsius"], right=10))
         return response
 
-    tools = {"price": price, "diff": lambda left, right: left - right}
+    tools = {"temp": temp, "diff": lambda left, right: left - right}
     result = run_agent("q", model, tools)
-    assert tool_contents(result)[-1] == {"ok": True, "value": 100}
+    assert tool_contents(result)[-1] == {"ok": True, "value": 9}
     assert [len(s) for s in seen] == [1, 3, 5]
     assert result["tool_calls"] == 2 and result["model_calls"] == 3
 
@@ -151,7 +151,7 @@ def test_unknown_tool_and_tool_exception_become_fixed_error_results():
 
 def test_argument_binding_errors_are_tool_errors():
     model, _ = scripted(reply("", call("a", "t", wrong=1), call("b", "t")), reply("end"))
-    result = run_agent("q", model, {"t": lambda symbol: symbol})
+    result = run_agent("q", model, {"t": lambda city: city})
     assert tool_contents(result) == [{"ok": False, "error": "tool_error"}] * 2
 
 

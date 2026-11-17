@@ -20,7 +20,7 @@ tags: [problem]
 **怎么练**：把 `vault/domains/low-level-design/problems/lcp-tool-call-agent/starter.py` 的方法体补全，然后在仓库根目录运行
 `IMPL=starter uv run --with pytest python -m pytest vault/domains/low-level-design/problems/lcp-tool-call-agent -q`。
 
-**和编程智能体一起练**：用 Claude Code 或工作区里的智能体打开 `starter.py`，把十三条规则和 README 的例子交给它，
+**和编程智能体一起练**：用 Claude Code 或工作区里的智能体打开 `starter.py`，把十三条规则和一个带数字的完整例子交给它，
 一次只给它一个失败的测试，先让它写单线程循环，再逐条加错误、重放、预算、并发。预算的报错时刻、「状态只由一个线程写」、
 `BaseException` 的规则这些设计决定自己留着，写在给它的指令里。每次改动之后先跑全部测试，再读 diff：它有没有改测试、有没有改公开签名、
 有没有把并发写成顺序循环、有没有把异常文本放进结果。最后自己写屏障测试和反序完成的测试，不要让它代写。

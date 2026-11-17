@@ -41,7 +41,7 @@ tags: [solution]
 ## 需求与分级
 
 **第 1 关（约 15 分钟，单线程的循环）**：先不管并发，用最朴素的方式把循环跑通。状态是对话记录和一个模型调用计数；每轮把记录的深拷贝交给模型，追加 assistant 消息，没有调用就返回，有调用就逐个执行、按顺序追加 tool 消息。
-这一关就要把返回的四个键、终止判据、记录的消息形状钉死，因为后面三关都建立在它上面。示例：模型第一次要求 `a`、`b` 两个价格查询，第二次直接回答，则记录依次是 user、assistant、tool（a）、tool（b）、assistant，`model_calls` 是 2，`tool_calls` 是 2。
+这一关就要把返回的四个键、终止判据、记录的消息形状钉死，因为后面三关都建立在它上面。示例：模型第一次要求 `x1`、`x2` 两个气温查询（奥斯陆和利马），第二次直接回答，则记录依次是 user、assistant、tool（x1）、tool（x2）、assistant，`model_calls` 是 2，`tool_calls` 是 2。
 
 **第 2 关（约 15 分钟，错误、校验、重放）**：把工具失败收口成两种固定的错误结果；把模型输出的校验写成一个函数，整个响应校验完才进入执行；加上按 ID 的缓存。
 这一关的关键是顺序：校验在前，预检在中，执行在后。重放缓存要同时记名字和参数文本，否则无法发现 ID 被错用。
@@ -396,14 +396,15 @@ def run_agent(question: str, model: Model, tools: Mapping[str, Tool], *, max_tur
 
 
 if __name__ == "__main__":
-    replies = iter([
-        {"text": "Checking both prices", "tool_calls": [
-            {"id": "a", "name": "price", "arguments": {"symbol": "A"}},
-            {"id": "b", "name": "price", "arguments": {"symbol": "B"}}]},
-        {"text": "A is cheaper", "tool_calls": []},
+    scripted_replies = iter([
+        {"text": "Looking up both cities", "tool_calls": [
+            {"id": "x1", "name": "temp", "arguments": {"city": "Oslo"}},
+            {"id": "x2", "name": "temp", "arguments": {"city": "Lima"}}]},
+        {"text": "Lima is warmer", "tool_calls": []},
     ])
-    result = run_agent("Compare A and B", lambda messages: next(replies),
-                       {"price": lambda symbol: {"A": 100, "B": 200}[symbol]}, max_workers=2)
+    readings = {"Oslo": -3, "Lima": 19}
+    result = run_agent("Which is warmer, Oslo or Lima?", lambda messages: next(scripted_replies),
+                       {"temp": lambda city: readings[city]}, max_workers=2)
     print(result["answer"], result["model_calls"], result["tool_calls"])
 ```
 %% code:end %%
@@ -429,7 +430,7 @@ if __name__ == "__main__":
 - **校验**：二十八种畸形响应逐个断言 `ValueError`；一个响应里前面合法、后面畸形，前面的工具也不能执行。
 - **并行运行**：六个线程同时各跑一个 `run_agent`，各自的答案、记录和计数互不串。
 
-给面试官两分钟演示：先跑 README 的价格比较例子，看到 `model_calls` 为 2、`tool_calls` 为 2、两条 tool 消息顺序为 a、b；再把 `max_tool_calls` 设成 1，看到 `tool budget exceeded` 且一个工具都没执行；最后让同一个 ID 带不同参数出现第二次，看到 `ValueError`。
+给面试官两分钟演示：先跑文件末尾的两城气温例子，看到 `model_calls` 为 2、`tool_calls` 为 2、两条 tool 消息顺序为 x1、x2；再把 `max_tool_calls` 设成 1，看到 `tool budget exceeded` 且一个工具都没执行；最后让同一个 ID 带不同参数出现第二次，看到 `ValueError`。
 
 ## 扩展与追问
 

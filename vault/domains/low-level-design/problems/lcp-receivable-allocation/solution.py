@@ -194,11 +194,11 @@ def settle_csv(transactions_csv: str, contracts_csv: str) -> str:
 
 if __name__ == "__main__":
     demo = allocate_receivables(
-        [Receivable("ShopE", "Visa", "2026-11-05", 1001)],
-        [Contract("DealB", "ShopE", "2026-11-05", "Visa", "fixed", 400),
-         Contract("DealC", "ShopE", "2026-11-05", "Visa", "percentage", 2500)],
+        [Receivable("Grocer", "Visa", "2026-12-05", 1203)],
+        [Contract("Split2", "Grocer", "2026-12-05", "Visa", "fixed", 350),
+         Contract("Split3", "Grocer", "2026-12-05", "Visa", "percentage", 1500)],
     )
     for row in demo:
         print(row)
-    print(settle_csv("c,m,d,k,a\nU1,ShopA,2026-11-01,Visa,150\nU2,ShopA,2026-11-01,Visa,200\n",
-                     "i,m,d,k,kind,v\nDealA,ShopA,2026-11-01,Visa,percentage,1000\n"), end="")
+    print(settle_csv("c,m,d,k,a\nP1,Bakery,2026-12-01,Visa,175\nP2,Bakery,2026-12-01,Visa,225\n",
+                     "i,m,d,k,kind,v\nSplit1,Bakery,2026-12-01,Visa,percentage,1000\n"), end="")
