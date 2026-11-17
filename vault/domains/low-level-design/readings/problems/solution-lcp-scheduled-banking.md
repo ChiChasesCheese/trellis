@@ -593,7 +593,7 @@ def run_payment(conn, pid):
 - [[solution-bank-account]]：经典银行账户系统的题解，事件日志加归约、异常层次、返回现金回馈；这里的合同不同（付款计入支出、历史带任意时刻、批次原子），以这里为准。
 - [[problems.marketplaces.bank-account|银行账户系统（Bank Account System）]]：同一类问题的知识树入口。
 - [[problems.components.task-scheduler|任务调度器（Task Scheduler）]]：到期堆与惰性结算的通用形态。
-- [[concurrency-depth.compound-actions|复合操作（Compound Actions）]]：为什么并发下要锁住"结算 + 校验 + 写入"整个方法。
+- **复合操作（Compound Actions）**：为什么并发下要锁住"结算 + 校验 + 写入"整个方法。
 - [Python 文档：heapq](https://docs.python.org/3/library/heapq.html)：最小堆、`nsmallest`，以及用 `(到期, 序号)` 元组做稳定顺序的写法。
 - [Python 文档：bisect](https://docs.python.org/3/library/bisect.html)：`bisect_right` 与"最近的不晚于 t"的查询。
 - [Python 文档：sqlite3 的事务控制](https://docs.python.org/3/library/sqlite3.html#sqlite3-controlling-transactions)：用 `with conn:` 让扣款与改状态同生共死。
