@@ -59,3 +59,7 @@ REFLECTION questions; never touch the repo .venv for 3.11; LeetCode wording kept
   shipping-cost, transactions-list; quick cards for payment-form-validation, payments-api (writing), review-moderation,
   shipping-cost (writing), transactions-list; then their verifiers.
 - Push of main still Chi's.
+- 05:00 11-17: every project has 题目, 题目理解, 快刷 and 综合 in Anki (31/31 gates clean). Next: knowledge leaves the
+  quick cards route to (82 empty on 11-17, 80% of routes); pilot approved by Chi, `proposals/lld/LEAF_FILL_AGENT.md`,
+  most-routed first: api+data, ai+fsm, concurrency-depth running; then errors, fluency, parsing-io, testing,
+  performance, debugging, the rest. Recount with /tmp/leafgroups.py logic (points' `leaves` vs cards' `node`).
