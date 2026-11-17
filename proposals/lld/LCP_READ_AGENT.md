@@ -113,3 +113,7 @@ whole corrected card / `drop`), keep the existing lines, run the gate, and repor
   copying in a second), or a vague 「其他」 row.
 - Tables with long sentences or unbreakable code in cells, or more than 3 columns: they overflow a phone.
 - A cloze whose answer sits next to the blank; a `more` line with a fact found in no file (「8–10 分钟」).
+- A code block labelled 「原样」 that stops partway: label it 「前 N 行」 or 「节选」 and say in one line what the rest does.
+- A claim about what a value becomes on its way in (「缺字段或类型错都变成 `None`」) that was read, not run: run the
+  adapter with a recording stub; wrong types often pass through unchanged.
+- An example whose answer depends on data the stem leaves out (「两对内容不同」): put it in the stem.
