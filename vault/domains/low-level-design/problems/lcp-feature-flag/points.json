@@ -1,0 +1,370 @@
+[
+ {
+  "point": "求值顺序：已停用 → 规则 → 分桶放量",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "bank.machine-coding.rule-engine",
+   "patterns.strategy"
+  ]
+ },
+ {
+  "point": "已停用的开关返回 default_variant，规则与放量都不看",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "bank.machine-coding.rule-engine",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "首个命中的规则赢，rule_index 只在 RULE_MATCH 里出现",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "bank.machine-coding.rule-engine",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "条件之间是 AND，空条件列表命中所有用户",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "bank.machine-coding.rule-engine"
+  ]
+ },
+ {
+  "point": "属性缺失或类型不符：条件为 False 且不抛异常，neq 与 not_in 缺失时也是 False",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "errors.exceptions-vs-values"
+  ]
+ },
+ {
+  "point": "相等看类型：true 不等于 1，10**23 不等于 1e23，5 等于 5.0",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "oop.values",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "gt 与 lt 不把布尔当数字（Python 里 bool 是 int 的子类）",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "python.typing"
+  ]
+ },
+ {
+  "point": "七个操作符用一张名字到函数的表，不建类层次",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "patterns.strategy",
+   "patterns.selection"
+  ]
+ },
+ {
+  "point": "分桶公式：sha256(flag_key:user_id) 取模 10000，范围 0 到 9999",
+  "cards": [
+   "lcp-feature-flag-reflection-stable-assignment"
+  ],
+  "leaves": [
+   "patterns.strategy",
+   "api.specs"
+  ]
+ },
+ {
+  "point": "区间按 variants 列表顺序累计，不按放量表的键顺序",
+  "cards": [
+   "lcp-feature-flag-reflection-stable-assignment",
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "patterns.strategy",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "区间左闭右开：桶号 8000 属于后一个变体",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "哈希里放 flag_key 和 user_id，不放放量比例",
+  "cards": [
+   "lcp-feature-flag-reflection-stable-assignment"
+  ],
+  "leaves": [
+   "patterns.strategy",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "比例 20% 调到 30% 只移动区间边界：已入组用户全部保留",
+  "cards": [
+   "lcp-feature-flag-reflection-stable-assignment"
+  ],
+  "leaves": [
+   "patterns.strategy",
+   "data.invariants"
+  ]
+ },
+ {
+  "point": "调换 variants 的顺序等于重新洗牌",
+  "cards": [
+   "lcp-feature-flag-reflection-stable-assignment"
+  ],
+  "leaves": [
+   "data.invariants",
+   "api.evolution"
+  ]
+ },
+ {
+  "point": "权重 0 的变体无人命中，100 的变体全员命中，未写出的变体权重为 0",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "放量表校验：键是已声明变体、整数（浮点与布尔不行）、非负、总和恰好 100",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "校验矩阵：key 整串匹配、enabled 必须是布尔、variants 非空唯一、serve 与 default 必须是已声明变体",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "key 的正则要整串匹配：re.match 配 $ 会放过末尾换行",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "python.modules"
+  ]
+ },
+ {
+  "point": "条件值的类型随操作符：in 要列表、gt 要数字、contains 要字符串、eq 要标量",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "规范化：丢掉额外属性，rules 与 conditions 缺省为空列表",
+  "cards": [
+   "lcp-feature-flag-contract-rules",
+   "lcp-feature-flag-state-and-atomic-update"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "校验先于存储：非法的创建不留痕，非法的更新保留旧配置",
+  "cards": [
+   "lcp-feature-flag-contract-rules",
+   "lcp-feature-flag-state-and-atomic-update"
+  ],
+  "leaves": [
+   "errors.boundary-validation",
+   "api.error-contract"
+  ]
+ },
+ {
+  "point": "更新时正文 key 必须等于路径 key，先校验再查是否存在",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.taxonomy"
+  ]
+ },
+ {
+  "point": "重复创建抛 ConflictError：判重与插入在同一把锁里，并发下恰好一个成功",
+  "cards": [
+   "lcp-feature-flag-state-and-atomic-update"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "structure.storage"
+  ]
+ },
+ {
+  "point": "evaluate 先校验 user_id 与 attributes，再查开关是否存在",
+  "cards": [
+   "lcp-feature-flag-contract-rules"
+  ],
+  "leaves": [
+   "api.error-contract",
+   "errors.boundary-validation"
+  ]
+ },
+ {
+  "point": "核心不变量：存进去的 Flag 已校验、规范化、不可变",
+  "cards": [
+   "lcp-feature-flag-state-and-atomic-update"
+  ],
+  "leaves": [
+   "data.invariants",
+   "oop.values"
+  ]
+ },
+ {
+  "point": "更新是整份引用替换：求值只看到完整旧版或新版，不会读到一半",
+  "cards": [
+   "lcp-feature-flag-state-and-atomic-update"
+  ],
+  "leaves": [
+   "concurrency-depth.compound-actions",
+   "concurrency-depth.memory-model"
+  ]
+ },
+ {
+  "point": "锁内只取引用，锁外计算：临界区里没有哈希和规则匹配",
+  "cards": [
+   "lcp-feature-flag-state-and-atomic-update"
+  ],
+  "leaves": [
+   "concurrency-depth.safe-structures",
+   "concurrency.primitives"
+  ]
+ },
+ {
+  "point": "返回值隔离：每次由 to_config 生成新字典，in 列表深拷贝",
+  "cards": [
+   "lcp-feature-flag-state-and-atomic-update"
+  ],
+  "leaves": [
+   "data.defensive-copy",
+   "oop.values"
+  ]
+ },
+ {
+  "point": "入参隔离：创建之后再改传入的配置，存储里的开关不变",
+  "cards": [
+   "lcp-feature-flag-state-and-atomic-update"
+  ],
+  "leaves": [
+   "data.defensive-copy"
+  ]
+ },
+ {
+  "point": "list_flags 按创建顺序，更新保持位置，删除后重建排到末尾",
+  "cards": [],
+  "leaves": [
+   "structure.storage",
+   "api.returns"
+  ]
+ },
+ {
+  "point": "分桶不能用 random 或内置 hash()：后者每个进程结果不同",
+  "cards": [
+   "lcp-feature-flag-reflection-stable-assignment"
+  ],
+  "leaves": [
+   "python.modules",
+   "quality.testability"
+  ]
+ },
+ {
+  "point": "多实例：只共享带版本号的配置，分桶是纯函数，不需要共享分配表",
+  "cards": [
+   "lcp-feature-flag-reflection-multi-instance"
+  ],
+  "leaves": [
+   "structure.storage",
+   "concurrency-depth.safe-structures"
+  ]
+ },
+ {
+  "point": "多实例：本地缓存快照，版本只前进，迟到的旧版本直接丢弃",
+  "cards": [
+   "lcp-feature-flag-reflection-multi-instance"
+  ],
+  "leaves": [
+   "structure.storage",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "测试里用独立写的公式重算桶号，边界用户取桶号恰为 0、7999、8000、9999 的人",
+  "cards": [],
+  "leaves": [
+   "quality.testability",
+   "ai.verification"
+  ]
+ },
+ {
+  "point": "放量比例的统计测试：界限由二项分布标准差推出，不是跑出来的",
+  "cards": [],
+  "leaves": [
+   "quality.testability",
+   "concurrency-depth.testing"
+  ]
+ },
+ {
+  "point": "并发测试：屏障起跑，断言不变量（恰一个创建成功、更新中的求值只出整版结果）",
+  "cards": [
+   "lcp-feature-flag-state-and-atomic-update"
+  ],
+  "leaves": [
+   "concurrency-depth.testing",
+   "concurrency-depth.compound-actions"
+  ]
+ },
+ {
+  "point": "指挥编程智能体：先把规则和 user-1 → 6526 这类数字例子交给它，一次只给一个失败的测试",
+  "cards": [],
+  "leaves": [
+   "ai.specs",
+   "ai.decomposition",
+   "ai.delegation"
+  ]
+ },
+ {
+  "point": "智能体常犯的错：用 random 或 hash()、把比例放进哈希、把 True 当数字、原地改存储",
+  "cards": [],
+  "leaves": [
+   "ai.failure-modes",
+   "ai.verification"
+  ]
+ }
+]

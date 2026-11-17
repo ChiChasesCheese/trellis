@@ -1,0 +1,8 @@
+{
+ "lcproject.lcp-feature-flag": [
+  "lcp-feature-flag-contract-rules",
+  "lcp-feature-flag-state-and-atomic-update",
+  "lcp-feature-flag-reflection-stable-assignment",
+  "lcp-feature-flag-reflection-multi-instance"
+ ]
+}

@@ -1,0 +1,265 @@
+"""功能开关与实验分组服务（Feature Flag）的参考解。公开 API 与真实工作区的 `feature_flags.py` 一致，可以原样放进去。
+
+设计五句话：
+1. 配置先经 `parse_flag` 校验并规范化，成为不可变的 `Flag`（含 `Rule`、`Condition`），服务里只存这个冻结对象。
+2. 求值是纯函数：已停用 → 默认变体；否则规则从上到下，第一条全部条件命中的赢；都不命中 → 按分桶落进放量区间。
+3. 分桶只看 `(flag_key, user_id)` 的哈希，放量比例只决定区间边界，所以比例变化时已分到的用户不会被重新洗牌。
+4. 更新是一次字典赋值（换掉整个冻结的 `Flag`）；求值在锁内取出引用，锁外计算，读到的永远是完整的旧版或新版。
+5. 对外进出一律经 `to_config()` 生成新字典，调用方怎么改都碰不到存储里的东西。
+"""
+
+from __future__ import annotations
+
+import copy
+import re
+import threading
+from collections.abc import Callable
+from dataclasses import dataclass
+from hashlib import sha256
+from typing import Any
+
+ALLOWED_OPS = frozenset({"eq", "neq", "in", "not_in", "gt", "lt", "contains"})
+KEY_PATTERN = re.compile(r"[A-Za-z0-9_-]{1,64}")
+BUCKET_SPACE = 10000  # 一个百分点占 100 个桶单位
+
+
+class FeatureFlagError(Exception):
+    """所有服务错误的基类。"""
+
+
+class ValidationError(FeatureFlagError):
+    """输入不合法（HTTP 400）。"""
+
+
+class NotFoundError(FeatureFlagError):
+    """开关不存在（HTTP 404）。"""
+
+
+class ConflictError(FeatureFlagError):
+    """同名开关已存在（HTTP 409）。"""
+
+
+def _require(ok: bool, message: str) -> None:
+    if not ok:
+        raise ValidationError(message)
+
+
+def _is_number(x: Any) -> bool:
+    """JSON 数字：int 或 float，布尔不算。"""
+    return isinstance(x, (int, float)) and not isinstance(x, bool)
+
+
+def _same(a: Any, b: Any) -> bool:
+    """类型感知的相等：true 不等于 1；数字按精确值比较（10**23 不等于 1e23）；容器不相等。"""
+    if isinstance(a, bool) or isinstance(b, bool):
+        return isinstance(a, bool) and isinstance(b, bool) and a == b
+    if _is_number(a) and _is_number(b):
+        return a == b
+    return isinstance(a, str) and isinstance(b, str) and a == b
+
+
+# 七个操作符：一张「名字 → (实际值, 配置值) → bool」的表，不为每个操作符建一个类。
+_OPS: dict[str, Callable[[Any, Any], bool]] = {
+    "eq": _same,
+    "neq": lambda a, v: not _same(a, v),
+    "in": lambda a, v: any(_same(a, x) for x in v),
+    "not_in": lambda a, v: not any(_same(a, x) for x in v),
+    "gt": lambda a, v: _is_number(a) and a > v,
+    "lt": lambda a, v: _is_number(a) and a < v,
+    "contains": lambda a, v: isinstance(a, str) and v in a,
+}
+
+
+def bucket(flag_key: str, user_id: str) -> int:
+    """用户在某个开关里的稳定桶号，范围 0..9999；只依赖 (flag_key, user_id)。"""
+    digest = sha256(f"{flag_key}:{user_id}".encode("utf-8")).hexdigest()
+    return int(digest, 16) % BUCKET_SPACE
+
+
+@dataclass(frozen=True, slots=True)
+class Condition:
+    """一个条件：属性缺失一律不命中，包括 neq 与 not_in。"""
+
+    attribute: str
+    op: str
+    value: Any  # in / not_in 时是 tuple
+
+    def matches(self, attributes: dict[str, Any]) -> bool:
+        if self.attribute not in attributes:
+            return False
+        return _OPS[self.op](attributes[self.attribute], self.value)
+
+    def to_config(self) -> dict[str, Any]:
+        value = list(self.value) if isinstance(self.value, tuple) else self.value
+        return {"attribute": self.attribute, "op": self.op, "value": copy.deepcopy(value)}
+
+
+@dataclass(frozen=True, slots=True)
+class Rule:
+    """条件之间是 AND；空条件列表命中所有用户。"""
+
+    conditions: tuple[Condition, ...]
+    serve: str
+
+    def matches(self, attributes: dict[str, Any]) -> bool:
+        return all(c.matches(attributes) for c in self.conditions)
+
+    def to_config(self) -> dict[str, Any]:
+        return {"conditions": [c.to_config() for c in self.conditions], "serve": self.serve}
+
+
+@dataclass(frozen=True, slots=True)
+class Flag:
+    """校验并规范化之后的开关；冻结，所以可以不加锁地被多个线程同时读。"""
+
+    key: str
+    enabled: bool
+    variants: tuple[str, ...]
+    default_variant: str
+    rules: tuple[Rule, ...]
+    rollout: tuple[tuple[str, int], ...]  # (变体, 百分比)，按 variants 顺序，只含配置里写出的键
+
+    def pick(self, bucket_number: int) -> str:
+        """按 variants 顺序累计区间，返回桶号落入的变体。"""
+        upper = 0
+        for variant, percent in self.rollout:
+            upper += percent * (BUCKET_SPACE // 100)
+            if bucket_number < upper:
+                return variant
+        raise FeatureFlagError("rollout does not cover the bucket space")
+
+    def evaluate(self, user_id: str, attributes: dict[str, Any]) -> dict[str, Any]:
+        if not self.enabled:
+            return {"value": self.default_variant, "reason": "DISABLED"}
+        for index, rule in enumerate(self.rules):
+            if rule.matches(attributes):
+                return {"value": rule.serve, "reason": "RULE_MATCH", "rule_index": index}
+        return {"value": self.pick(bucket(self.key, user_id)), "reason": "FALLTHROUGH"}
+
+    def to_config(self) -> dict[str, Any]:
+        return {
+            "key": self.key,
+            "enabled": self.enabled,
+            "variants": list(self.variants),
+            "default_variant": self.default_variant,
+            "rules": [r.to_config() for r in self.rules],
+            "fallthrough": {"rollout": dict(self.rollout)},
+        }
+
+
+def _parse_condition(raw: Any) -> Condition:
+    _require(isinstance(raw, dict), "condition must be an object")
+    attribute, op, value = raw.get("attribute"), raw.get("op"), raw.get("value")
+    _require(isinstance(attribute, str) and attribute != "", "condition attribute must be a non-empty string")
+    _require(isinstance(op, str) and op in ALLOWED_OPS, "unknown condition op")
+    if op in ("eq", "neq"):
+        _require(isinstance(value, (str, int, float, bool)), f"{op} needs a string, number or boolean")
+    elif op in ("in", "not_in"):
+        _require(isinstance(value, list), f"{op} needs a list")
+        value = tuple(copy.deepcopy(value))
+    elif op in ("gt", "lt"):
+        _require(_is_number(value), f"{op} needs a number")
+    else:
+        _require(isinstance(value, str), "contains needs a string")
+    return Condition(attribute, op, value)
+
+
+def _parse_rule(raw: Any, variants: list[str]) -> Rule:
+    _require(isinstance(raw, dict), "rule must be an object")
+    conditions = raw.get("conditions", [])
+    _require(isinstance(conditions, list), "conditions must be a list")
+    serve = raw.get("serve")
+    _require(isinstance(serve, str) and serve in variants, "serve must be a declared variant")
+    return Rule(tuple(_parse_condition(c) for c in conditions), serve)
+
+
+def parse_flag(config: Any) -> Flag:
+    """校验并规范化一份配置；额外属性丢弃，任何不合法都抛 ValidationError。"""
+    _require(isinstance(config, dict), "config must be an object")
+    key = config.get("key")
+    _require(isinstance(key, str) and KEY_PATTERN.fullmatch(key) is not None, "invalid key")
+    _require(isinstance(config.get("enabled"), bool), "enabled must be a boolean")
+    variants = config.get("variants")
+    _require(
+        isinstance(variants, list)
+        and len(variants) > 0
+        and all(isinstance(v, str) and v != "" for v in variants)
+        and len(set(variants)) == len(variants),
+        "variants must be a non-empty list of unique non-empty strings",
+    )
+    default = config.get("default_variant")
+    _require(isinstance(default, str) and default in variants, "default_variant must be a declared variant")
+    raw_rules = config.get("rules", [])
+    _require(isinstance(raw_rules, list), "rules must be a list")
+    rules = tuple(_parse_rule(r, variants) for r in raw_rules)
+    fallthrough = config.get("fallthrough")
+    _require(isinstance(fallthrough, dict), "fallthrough must be an object")
+    rollout = fallthrough.get("rollout")
+    _require(isinstance(rollout, dict) and len(rollout) > 0, "rollout must be a non-empty object")
+    for variant, percent in rollout.items():
+        _require(variant in variants, "rollout key is not a declared variant")
+        _require(isinstance(percent, int) and not isinstance(percent, bool) and percent >= 0,
+                 "rollout weights must be non-negative integers")
+    _require(sum(rollout.values()) == 100, "rollout weights must sum to 100")
+    ordered = tuple((v, rollout[v]) for v in variants if v in rollout)
+    return Flag(key, config["enabled"], tuple(variants), default, rules, ordered)
+
+
+class FeatureFlagService:
+    """内存里的开关服务：锁只保护字典，校验与求值都在锁外做。"""
+
+    def __init__(self) -> None:
+        self._flags: dict[str, Flag] = {}
+        self._lock = threading.Lock()
+
+    def create_flag(self, config: dict) -> dict:
+        flag = parse_flag(config)  # 先校验：非法配置不碰锁，也不留痕
+        with self._lock:
+            if flag.key in self._flags:
+                raise ConflictError(f"flag {flag.key} already exists")
+            self._flags[flag.key] = flag
+        return flag.to_config()
+
+    def get_flag(self, key: str) -> dict | None:
+        with self._lock:
+            flag = self._flags.get(key)
+        return None if flag is None else flag.to_config()
+
+    def update_flag(self, key: str, config: dict) -> dict:
+        flag = parse_flag(config)
+        _require(flag.key == key, "key in body must match the path")
+        with self._lock:
+            if key not in self._flags:
+                raise NotFoundError(f"flag {key} not found")
+            self._flags[key] = flag  # 一次引用替换：读者看到旧版或新版，没有中间态
+        return flag.to_config()
+
+    def delete_flag(self, key: str) -> bool:
+        with self._lock:
+            return self._flags.pop(key, None) is not None
+
+    def list_flags(self) -> list[dict]:
+        with self._lock:
+            flags = tuple(self._flags.values())
+        return [f.to_config() for f in flags]
+
+    def evaluate(self, key: str, user_id: str, attributes: dict | None = None) -> dict:
+        _require(isinstance(user_id, str) and user_id != "", "user_id must be a non-empty string")
+        if attributes is None:
+            attributes = {}
+        _require(isinstance(attributes, dict), "attributes must be an object")
+        with self._lock:
+            flag = self._flags.get(key)  # 锁内只取引用
+        if flag is None:
+            raise NotFoundError(f"flag {key} not found")
+        return flag.evaluate(user_id, attributes)  # 锁外算：Flag 冻结，不会被别的线程改
+
+
+if __name__ == "__main__":
+    service = FeatureFlagService()
+    service.create_flag({
+        "key": "checkout_flow", "enabled": True, "variants": ["control", "treatment"],
+        "default_variant": "control", "rules": [],
+        "fallthrough": {"rollout": {"control": 80, "treatment": 20}},
+    })
+    print(service.evaluate("checkout_flow", "user-1"), service.evaluate("checkout_flow", "user-42"))
