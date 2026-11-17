@@ -63,3 +63,8 @@ REFLECTION questions; never touch the repo .venv for 3.11; LeetCode wording kept
   quick cards route to (82 empty on 11-17, 80% of routes); pilot approved by Chi, `proposals/lld/LEAF_FILL_AGENT.md`,
   most-routed first: api+data, ai+fsm, concurrency-depth running; then errors, fluency, parsing-io, testing,
   performance, debugging, the rest. Recount with /tmp/leafgroups.py logic (points' `leaves` vs cards' `node`).
+- 11-17 (later): leaf filling done. 78 leaves filled (377 cards, all in Anki, every code block run on 3.11); routes
+  from quick cards to empty leaves 2266/2847 → 9/2861 (the rest are 4 problem-bank leaves). check_lld_concepts: every
+  root ok except amazon (pre-existing over-full leaves). Mistake fixed: 91c886c8 committed other sessions' untracked
+  files (psych, daily LeetCode) and in-progress LLD cards; 8374b4be untracked them (files kept on disk). Rule: stage
+  explicit lists only.
