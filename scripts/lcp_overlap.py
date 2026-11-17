@@ -32,8 +32,14 @@ API = re.compile(r"""^\s*(
     CREATE\s+TABLE\s+\w+\s*\(? | \w+\s+(TEXT|INTEGER|REAL|BLOB|NUMERIC|BOOLEAN|VARCHAR\(\d+\))\b[\w\s()]*,? )\s*(\#.*)?$""", re.X)
 
 
+DDL = re.compile(r"""^\s*(CREATE\s+(UNIQUE\s+)?(TABLE|INDEX)\b[^"']* |
+    [\w\s,()]*\b(INTEGER|TEXT|REAL|BLOB|PRIMARY\s+KEY|REFERENCES)\b[\w\s,()]*;? )\s*$""", re.X | re.I)
+
+
 def is_api(line: str) -> bool:
-    """A pure declaration: its type part, if any, never has two words in a row (prose does)."""
+    """A pure declaration: its type part, if any, never has two words in a row (prose does). A table layout is API."""
+    if DDL.match(line):
+        return True
     m = API.match(line)
     return bool(m) and not re.search(r"\w \w", m.group("type") or "")
 

@@ -42,3 +42,5 @@ Report per project: copied lines before → after, what you rewrote, the test re
   **after the last edit**, and re-embed the article code with `lld_embed_code.py` rather than editing it by hand.
 - Do not start database servers (mongod, postgres) for a check; where the official tests need one, say so in the report.
 - Expected values in tests come from running our solution on the new data, never set by hand.
+- Table names and column layout are API (a hidden test may open the database file): never rename them to pass the
+  overlap check; `lcp_overlap.py` exempts table definitions.
