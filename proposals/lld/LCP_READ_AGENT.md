@@ -123,3 +123,6 @@ whole corrected card / `drop`), keep the existing lines, run the gate, and repor
   question fires, and run them.
 - A recall card asks about an open choice or rule no reading card states: every recall answer must be on a reading card.
 - A count in prose that disagrees with the table under it (「三种结果」 over two rows).
+- A label the files do not give (which files are protected, which 409 text) stated as fact: mark it 「推断」 or 本实现.
+- First person on a card (「我跑了」): state what ran and its result, no 「我」.
+- A measured table that does not say how the state was reached (「Ada 订了两次，名额 3 → 1」): give the steps.
