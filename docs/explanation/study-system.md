@@ -30,6 +30,10 @@ Rules that came out of building it:
 - **AI in two layers.** Mechanics from zero live in `llm-inference` (`basics`, `ml`, then serving and hardware).
   What an engineer talks about lives in `ai-literacy`: using models, how models improve, agents, benchmarks, the
   industry, AI at work, safety, in priority order inside each node (`research/domains/ai-literacy/BUILD.md`).
+- **People and decisions** (`psych`, deck `9 人性与决策`). Findings from psychology, behavioural economics and
+  sociology that hold up when repeated, as field → theme → concept, one card per concept: a situation, the finding,
+  the real story of how it was found, an evidence grade (强, 中, 弱) and an action. Famous results that failed
+  replication have cards too. Sources for every number are in `research/domains/psych/claims-*.md`, never on a card.
 - **新进展 at the bottom of a card.** An AI card may end with a dated block that ties its mechanism to a recent
   development, then a folded 想一想 question answered from the card plus the news. Every dated fact is searched for
   when the card is written (`research/domains/llm-inference/NEWS_TASK.md`).

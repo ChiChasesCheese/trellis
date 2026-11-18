@@ -10,7 +10,7 @@ agent instructions: `CLAUDE.md` just imports it (`@AGENTS.md`). Contributor docs
 | Path | What |
 |---|---|
 | `vault/` | the Obsidian vault, **learning area only**: what Chi studies or practises with, nothing about how it was made (ADR 0011) |
-| `vault/domains/<subject>/` | subject domains: system-design, low-level-design, kafka, snowflake, cdn-content, quant-infra, markets, hft, pl, payments, basketball |
+| `vault/domains/<subject>/` | subject domains: system-design, low-level-design, kafka, snowflake, cdn-content, quant-infra, markets, hft, pl, payments, basketball, ai-literacy, psych |
 | `vault/interviews/core/` | company-agnostic interview material: resume, stories, answers, playbooks, `leetcode/` company tag lists |
 | `vault/interviews/rounds/<round>/` | round-skill domains: `code-core` (coding round, `transfer.<co>` leaves), `leetcode`, `narrative` |
 | `vault/interviews/companies/<co>/` | one self-contained kit per company; entry is `README.md`; `stripe/` mirrors `stripeoa` (the reference methodology) with its trellis deck in `deck/` |
@@ -199,6 +199,11 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   in teaching order, plus due cards of questions done before. The next question is the one adding the most exam-point
   coverage; its sub-deck names the coverage once learnt. Its cards leave every other part of the plan. State:
   `sources/local/plan/deepdive.json`.
+- A new domain reaches Anki with `scripts/anki_refresh.py --add <id-prefix> <domain>`, then `trellis --domain <d>
+  anki-align` for its preset: no other deck is touched and the `Note` fields stay. `scripts/knowledge_tree.py` draws only
+  nodes that have cards; a domain that keeps uncarded leaves on purpose writes its own full map (`psych`).
+- Card agents that research the web share 200 searches a turn and the account's usage window: five in parallel ran out
+  in about 20 minutes. Budget searches in the brief and have agents write card by card (skill `building-study-domains`).
 - A leaf is weak only on cards with a verdict (taken / slipped); young cards are not evidence, and a weak leaf whose grown
   cards are unreviewed is *settling* and is not a `grow` target (ADR 0009).
 

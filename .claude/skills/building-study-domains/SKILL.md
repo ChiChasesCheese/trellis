@@ -79,6 +79,9 @@ finished step, and the next action. A new session resumes from it.
    :8765). Tell the learner the rhythm: daily review through `trellis feed`; weekly
    `trellis pull` → `trellis brief` → `trellis grow --next`. *Done when* the deck shows in Anki and
    `BUILD.md` records the final `stats` line.
+   A new domain alone: `uv run python scripts/anki_refresh.py --dry-run --add <id-prefix> <domain>` (the count must
+   equal the new cards), the same without `--dry-run`, then `uv run trellis --domain <domain> anki-align` to put its
+   decks on their own preset. This keeps the `Note` fields and touches no other deck. Sync before and after.
 
 An older English domain being deepened adds translations instead of rewriting: follow
 `docs/translation-spec.md` and audit a 10% sample by hand.
@@ -98,8 +101,41 @@ clipping and card footers open it; a reading tagged `no-archive` keeps its link 
 - Subagents default to `sonnet`; when sonnet hits its session limit, relaunch on `opus`.
 - Accept a group only after running `validate` and `stats` yourself and reading at least one card;
   commit per group, staging only that group's card folders.
+- Web research has two limits the agents share. All agents of one turn draw on one pool of 200 web searches, and
+  five research-heavy agents in parallel used up the account's usage window in about 20 minutes (twice). Put a search
+  budget in the brief (at most 3 searches a card, fetch the abstract page by URL instead), have each agent write its
+  file and its ledger row card by card, and commit what exists after every interruption. Three agents is the rule;
+  more only when Chi asks.
+- Review the first wave before launching the next and add what you found to the brief as rules: the later waves then
+  need almost no fixes.
 - Leaves in different groups that share one source page produce duplicate cards: after the last
   group, list the questions of every such leaf pair and delete the duplicates from one side.
+
+## A domain of research findings (psychology, economics, health)
+
+Model: `psych` (`research/domains/psych/`: `BUILD.md`, `CARDS_TASK.md`, `tree.txt`, `gen_tree.py`, `review.py`).
+What differs from a technical domain:
+
+- **The tree lives in one text file with an anchor per leaf.** `tree.txt` holds every leaf's title, summary, evidence
+  grade and *anchor* (the studies and numbers to start from, written from memory and treated as unverified). A script
+  turns it into the skeleton, the per-group anchor lists and the full map note. List every concept of the field; mark
+  the first wave `core: true` and leave the rest as leaves without cards.
+- **Grade the evidence on the card.** A: replicated or meta-analytic. B: small, conditional or thinly replicated.
+  C: famous and failed. Give the failed classics their own cards; a deck that only lists effects teaches the wrong ones.
+- **One card per concept, story first.** Situation question → one bold sentence → `**故事。**` one real event with
+  names, year and numbers → evidence line with the grade → who uses it (only when documented) → an action with a
+  trigger. The original experiment is usually the best story.
+- **Every number is checked this session, and the check is logged.** The agent confirms each number against the paper
+  or two reliable summaries and appends a row to `claims-<group>.md` (claim, URL, what differs from the anchor). A
+  number it cannot confirm stays off the card. In `psych` this caught about one anchor error in ten and lowered nine
+  grades; memory alone would have shipped them.
+- **Review by reading, with a script for the rest.** `review.py` checks layout, tags against the tree, length, banned
+  phrases and figure share; `--dump <group>` prints only the cards not yet read. Then read all of them: look for a
+  median written as a mean, a percentage change written as percentage points, an action nobody could carry out, a
+  question whose own numbers do not add up, and a story that only narrates the paper. Sync the grades the agents
+  changed back into the tree.
+- **The generated tree note shows only carded leaves** (`scripts/knowledge_tree.py` skips a node with no cards). When
+  the field's whole map matters, write a second note from the tree file with the uncarded leaves marked.
 
 ## Common mistakes
 
@@ -116,3 +152,5 @@ clipping and card footers open it; a reading tagged `no-archive` keeps its link 
 - Fewer than 25% of cards with a diagram, or svg fenced as ```svg (Obsidian shows it as code).
 - Several decks holding copies of one item: one source, one card; lists and companies are tags (see
   docs/explanation/study-system.md).
+- A number, a quote or an anecdote on a card that nobody looked up this session. Unconfirmed means left out.
+- A card of findings with no size on it: say how big the effect is and whether it replicated.

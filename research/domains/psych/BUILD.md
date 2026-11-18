@@ -73,8 +73,9 @@ Rules this produced are in `CARDS_TASK.md` (the two sections after the format).
 
 ## Next
 
-- 132 leaves without a card are listed in the full map note. A second wave takes them in tree order per field; the
-  anchors are already in `tree.txt` (change `-` to `*` and re-run `gen_tree.py`).
+- Paused (Chi, 2026-11-17): he studies the first 200 before deciding on more. Do not start a second wave unasked.
+- When he asks: the 132 leaves without a card are listed in the full map note; their anchors are already in
+  `tree.txt` (change `-` to `*` and re-run `gen_tree.py`).
 - No readings yet (link coverage 0%): one readable source per theme would be the next step of the skill.
 - The deck is not in the daily planner (`scripts/study_plan.py`); Chi decides whether it joins `1 今日计划`.
 
