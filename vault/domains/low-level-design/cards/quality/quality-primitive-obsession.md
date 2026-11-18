@@ -17,3 +17,10 @@ UserId = NewType("UserId", int)
 def transfer(from_id: UserId, to_id: UserId, amount: int) -> None: ...
 ```
 `NewType` 只是类型检查期的区分，运行时仍是普通 `int`，适合"值本身合法、只是容易传混"的场景；如果这个概念还带有自己的校验规则（比如邮箱必须匹配某个格式），就该升级成一个真正的值对象（value object，通常是 `@dataclass(frozen=True)`），把校验放进构造函数里。
+
+```mermaid
+flowchart TB
+  P["裸 int / str / float 表示领域概念"] --> Q{"概念带自己的校验规则？"}
+  Q -->|"否，值合法只是容易传混"| N["NewType：只在类型检查期区分"]
+  Q -->|"是，如邮箱格式"| V["值对象：frozen dataclass，构造时校验"]
+```

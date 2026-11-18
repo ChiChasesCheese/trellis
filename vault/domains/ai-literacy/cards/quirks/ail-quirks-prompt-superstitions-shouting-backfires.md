@@ -18,6 +18,14 @@ CRITICAL: You MUST use search for EVERY question.
 
 旧模型读了勉强会搜。新模型每个问题都搜，连"你好"也搜，工具调用变多，回复变慢，账单变高。
 
+```mermaid
+flowchart TB
+  P["CRITICAL: You MUST use search"] --> O["旧模型：勉强会搜"]
+  P --> N["新模型：每个问题都搜，连「你好」"]
+  N --> C["工具调用多、回复慢、账单高"]
+  C --> F["改成平常语气，重跑评测"]
+```
+
 Anthropic 的官方提示指南（截至 2026 年 11 月）写到：Claude Opus 4.5 和 4.6 比以前的模型更听系统提示的话，原先为减少"该用没用"而加的强硬措辞，现在可能导致过度触发；建议改成平常的语气。
 
 ```

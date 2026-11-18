@@ -32,4 +32,20 @@ info!("charge started");            // request{req_id="r-42" user=7}: charge sta
 
 **分布式追踪**把同样的想法扩展到跨服务：请求进入系统时生成一个**追踪 ID**（trace id），每经过一个服务/操作产生一个**跨度**（有开始、结束、父子关系），并通过 HTTP 头往下游传递。标准格式是 W3C 的 `traceparent: 00-<32位十六进制trace id>-<16位span id>-01`。OpenTelemetry 是跨语言的统一标准，四门语言都有 SDK。
 
+```mermaid
+sequenceDiagram
+  participant U as 用户
+  participant A as 服务 A
+  participant B as 服务 B
+  participant C as 服务 C
+  U->>A: 请求进入系统
+  Note over A: 生成 trace id，根跨度
+  A->>B: HTTP 头 traceparent（同一 trace id）
+  Note over B: 子跨度，父 = A 的跨度
+  B->>C: traceparent（同一 trace id）
+  C-->>B: 返回
+  B-->>A: 返回
+  A-->>U: 响应
+```
+
 **为什么必须有请求 ID**：线上一个用户请求会经过多个服务、多个线程/协程，日志在时间上交错。没有 ID，就只能按时间猜；有了它，一条查询就能还原一个请求的完整经过。

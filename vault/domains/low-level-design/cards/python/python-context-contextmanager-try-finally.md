@@ -21,3 +21,12 @@ def transaction(conn):
         conn.rollback()
         raise
 ```
+
+```mermaid
+flowchart TB
+  B["conn.begin()"] --> Y["yield conn：执行 with 块"]
+  Y -->|"正常结束"| C["conn.commit()"]
+  Y -->|"块内抛异常，在 yield 处重新抛出"| Q{"yield 在 try 里？"}
+  Q -->|"否"| U["直接冒泡，commit 不执行"]
+  Q -->|"是"| R["except：rollback()，再 raise"]
+```

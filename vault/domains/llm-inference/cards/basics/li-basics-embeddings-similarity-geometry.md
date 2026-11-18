@@ -16,6 +16,28 @@ step: 2
 
 手算：a = `[1, 2]`，b = `[2, 4]`，点积 = 1×2 + 2×4 = 10，长度分别为 √5 和 √20，cos = 10 / 10 = **1.0**，方向完全相同。a 和 c = `[2, -1]`：点积 = 0，cos = **0**，毫不相关。取值在 −1 到 1 之间。
 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 160">
+<g font-size="11" font-family="sans-serif" fill="currentColor">
+<g stroke="currentColor" stroke-opacity="0.35">
+<line x1="20" y1="110" x2="130" y2="110"/>
+<line x1="40" y1="10" x2="40" y2="150"/>
+</g>
+<g stroke="currentColor" stroke-width="2">
+<line x1="40" y1="110" x2="80" y2="30"/>
+<line x1="40" y1="110" x2="80" y2="130"/>
+</g>
+<line x1="40" y1="110" x2="60" y2="70" stroke="currentColor" stroke-width="5"/>
+<circle cx="60" cy="70" r="3"/>
+<circle cx="80" cy="30" r="3"/>
+<circle cx="80" cy="130" r="3"/>
+<text x="86" y="34">b = [2, 4]</text>
+<text x="66" y="74">a = [1, 2]</text>
+<text x="86" y="134">c = [2, -1]</text>
+<text x="140" y="64">a、b 同向：cos = 1</text>
+<text x="140" y="96">a ⊥ c：cos = 0</text>
+</g>
+</svg>
+
 **模型内部也一直在算这种相似度：** 注意力机制（让每个词去看上下文里其他词的计算），核心就是用点积判断"当前这个词和前面哪些词相关"。
 
 **在推理测试里的用法：**

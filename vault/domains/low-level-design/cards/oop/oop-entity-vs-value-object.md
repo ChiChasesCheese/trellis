@@ -12,3 +12,11 @@ step: 1
 - `Money(amount, currency)`：**value object**——不可变、没有 id；相等 = 结构性相等（比所有字段），`__eq__` 建立在字段上，通常用 `@dataclass(frozen=True)` 直接生成。
 
 判据：如果你需要追踪它随时间的变化，它是 entity；如果它的属性就完整描述了它，它是 value。
+
+```mermaid
+flowchart TB
+  Q{"需要追踪它随时间的变化？"} -->|"是"| E["entity，如 Ticket"]
+  Q -->|"否，属性就完整描述它"| V["value object，如 Money"]
+  E --> E2["相等比较业务 id"]
+  V --> V2["不可变；相等比较所有字段"]
+```

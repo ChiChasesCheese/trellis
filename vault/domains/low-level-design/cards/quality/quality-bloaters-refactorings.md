@@ -18,3 +18,12 @@ class OrderProcessor:
         self._charge(cart.customer, total)
 ```
 把 `checkout` 拆成一串同一抽象高度、意图明确的私有方法调用（提炼方法，extract method），是治膨胀者最基础的一步；如果拆出来的私有方法本身又需要自己的状态，通常意味着该提炼出一个新类了（提炼类，extract class）。
+
+```mermaid
+flowchart TB
+  L["长方法：注释在给几行起标题"] -->|"提炼方法"| C["checkout：同一抽象高度的调用"]
+  C --> V["_validate"]
+  C --> P["_price_with_discounts"]
+  C --> G["_charge"]
+  C -.->|"拆出的方法需要自己的状态"| K["提炼类"]
+```

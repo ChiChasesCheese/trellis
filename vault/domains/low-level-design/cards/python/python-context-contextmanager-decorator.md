@@ -19,3 +19,15 @@ def transaction(conn):
     yield conn
     conn.commit()
 ```
+
+```mermaid
+sequenceDiagram
+  participant W as with 语句
+  participant G as 生成器 transaction
+  W->>G: __enter__：启动生成器
+  Note over G: conn.begin()
+  G-->>W: yield conn，绑定给 as 变量
+  Note over W: 执行 with 块
+  W->>G: __exit__：从 yield 处恢复
+  Note over G: conn.commit()
+```

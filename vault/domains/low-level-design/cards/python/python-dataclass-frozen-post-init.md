@@ -19,3 +19,11 @@ class Rect:
     def __post_init__(self):
         object.__setattr__(self, "area", self.w * self.h)
 ```
+
+```mermaid
+flowchart TB
+  A["Rect(w, h)"] --> I["生成的 __init__：用底层赋值写 w、h"]
+  I --> P["__post_init__"]
+  P -->|"self.area = …"| X["被 frozen 拦截，抛异常"]
+  P -->|"object.__setattr__(self, 'area', …)"| OK["绕过本类的赋值逻辑，写入成功"]
+```

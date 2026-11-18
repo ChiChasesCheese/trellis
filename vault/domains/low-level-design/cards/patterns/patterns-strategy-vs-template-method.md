@@ -9,3 +9,16 @@ Strategy（组合）和 Template Method（继承）都能让"某一步怎么做"
 
 ## A
 Template Method 把固定顺序的步骤写在基类里，只留一两个钩子给子类覆盖——继承关系是静态的，子类一旦选定，算法在对象的整个生命周期里都换不掉。Strategy 把整个算法当作一个对象持有，可以随时通过重新赋值换掉。Python 里更进一步：如果只有一个钩子要变，通常直接给固定流程传一个回调函数，比专门声明子类更轻，不必引入继承。经验：步骤顺序固定、只是想复用骨架时用 Template Method（或者干脆传函数）；需要在运行时整体切换算法时用 Strategy。
+
+```mermaid
+flowchart TB
+  subgraph TM["Template Method：继承，静态"]
+    B["基类：固定步骤顺序"] --> HK["钩子"]
+    S1["子类覆盖钩子"] -.-> HK
+  end
+  subgraph ST["Strategy：持有对象，运行时可换"]
+    C["上下文持有 algo"] --> A1["算法对象 1"]
+    C -.->|"重新赋值"| A2["算法对象 2"]
+  end
+  F["Python：只一个钩子就传回调函数"]
+```

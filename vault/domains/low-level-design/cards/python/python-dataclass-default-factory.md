@@ -17,3 +17,15 @@ from dataclasses import dataclass, field
 class Cart:
     items: list[str] = field(default_factory=list)
 ```
+
+```mermaid
+flowchart TB
+  subgraph BAD["若放行 items: list = []"]
+    C1["Cart()"] --> D["类定义时求值一次的同一个列表"]
+    C2["Cart()"] --> D
+  end
+  subgraph GOOD["field(default_factory=list)"]
+    E1["Cart()"] --> L1["新列表"]
+    E2["Cart()"] --> L2["新列表"]
+  end
+```
