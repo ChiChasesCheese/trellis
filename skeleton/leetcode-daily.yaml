@@ -214,6 +214,9 @@ nodes:
   - id: math-bit-sim.calculate-digit-sum-of-a-string
     title: LC 2243 计算字符串的数字和（Calculate Digit Sum of a String）
     summary: Easy；String, Simulation。
+  - id: math-bit-sim.sparse-matrix-multiplication
+    title: LC 311 稀疏矩阵的乘法（Sparse Matrix Multiplication）
+    summary: Medium；Array, Hash Table, Matrix, Linear Algebra。
   core: true
 - id: sorting-permutation
   order: 18
