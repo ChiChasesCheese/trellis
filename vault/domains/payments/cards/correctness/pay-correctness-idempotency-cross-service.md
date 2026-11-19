@@ -15,6 +15,20 @@ step: 5
 2. **订单服务 → 支付服务**：用稳定的业务引用，如订单号加动作（`order:o_88:pay`）。订单服务重试时引用不变；不要每次重试生成新的随机值。
 3. **支付服务 → PSP**：每个**尝试**（attempt）有稳定的 id，作为发给 PSP 的幂等键或商户请求号。同一次尝试的重试复用它；换了卡或换了渠道则是新尝试，用新的值。
 
+```mermaid
+sequenceDiagram
+    participant C as 客户端
+    participant O as 订单服务
+    participant P as 支付服务
+    participant X as PSP
+    C->>O: 下单（客户端幂等键）
+    O->>P: 支付（order:o_88:pay）
+    P->>X: 扣款（attempt id）
+    X-->>P: 超时
+    P->>X: 同一 attempt id 重试 / 按商户请求号查询
+    Note over P,X: 换卡或换渠道 = 新尝试，新 attempt id
+```
+
 **设计原则**
 - 键必须在**第一次发送前**确定并持久化，才能保证崩溃重启后用的还是同一个。
 - 下游的键由上游确定性地派生（相同输入得相同键），不要在重试路径里随机生成。

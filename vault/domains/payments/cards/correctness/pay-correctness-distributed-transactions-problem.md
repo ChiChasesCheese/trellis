@@ -16,6 +16,20 @@ step: 1
 - 外部系统（PSP、银行）不参与你的 2PC，也无法回滚一次已完成的扣款。
 - 吞吐低，跨服务、跨语言不通用。
 
+```mermaid
+sequenceDiagram
+    participant C as 协调者
+    participant A as 订单库
+    participant B as 账本库
+    participant X as PSP
+    C->>A: prepare
+    C->>B: prepare
+    A-->>C: 就绪，持锁等待
+    B-->>C: 就绪，持锁等待
+    Note over C: 决定之前崩溃 → A、B 长时间被锁
+    Note over X: 不参与 2PC，已完成的扣款只能退款补偿
+```
+
 **核心现实**：支付里最重要的一步——向外部渠道扣款——本身就不可回滚，只能**补偿**（退款）。所以问题不是追求全局原子，而是**保证最终一致，并且每一步可重试、可补偿、可对账**。
 
 **替代思路**
