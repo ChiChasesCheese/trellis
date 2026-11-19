@@ -21,11 +21,11 @@ Cerebras 经理面：2 分钟自我介绍，按说出口的顺序有哪几段？
 
 ```mermaid
 flowchart TD
-    A["1 Who: PayPal 近两年 + 实习"] --> B["2 Built: Amex 结算管线"]
-    B --> C["3 验证: parity, cutover, 质量门, on-call"]
-    C --> D["4 工作外: Python 平台, 8-GPU"]
-    D --> E["5 诚实: new to ML internals"]
-    E --> F["6 收尾: RIT 是功能和发布验证之间的桥"]
+    A["1 Who: PayPal"] --> B["2 Built: Amex 管线"]
+    B --> C["3 验证: 质量门"]
+    C --> D["4 工作外: 8-GPU"]
+    D --> E["5 诚实: new to ML"]
+    E --> F["6 收尾: RIT 是桥"]
 ```
 
 > 中文提示：约 270 词。每段结尾都可以被打断；被问 which part was yours：管线从拓扑开始是我的，NULL 事故的止血 PR 是同事的。

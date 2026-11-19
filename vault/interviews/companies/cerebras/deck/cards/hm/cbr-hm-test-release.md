@@ -18,12 +18,12 @@ step: 2
 
 ```mermaid
 flowchart TD
-    A["1 Entry: RC 切出, 各功能验证完, 已知问题记下"] --> B["2 Risk map: 和上次发布比 diff"]
-    B --> C["3 Evidence: 五类结果放进一个视图"]
-    C --> D["4 Matrix: 按客户在跑的加权"]
-    D --> E["5 Triage: 每个失败分类, 真回归 bisect"]
-    E --> F["6 Exit: 无阻塞, 阈值内, 升级回滚已测, 书面 go/no-go"]
-    F --> G["7 上线后: 首轮排查, 漏网缺陷补到正确的层"]
+    A["1 Entry: RC 切出"] --> B["2 Risk map: diff"]
+    B --> C["3 Evidence: 一个视图"]
+    C --> D["4 Matrix: 客户加权"]
+    D --> E["5 Triage: 分类"]
+    E --> F["6 Exit: go/no-go"]
+    F --> G["7 上线后: 补层"]
 ```
 
 > 中文提示：**批大小（batch size）**= 一次一起算的请求数。结尾连到你的质量门："checks are entry criteria, a status is the exit."

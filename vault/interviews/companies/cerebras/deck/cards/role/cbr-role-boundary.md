@@ -21,10 +21,10 @@ Cerebras 的 RIT（发布集成测试）和功能团队怎么分工？
 - **下游**：服务侧每周的端到端发布验证。RIT 要在那之前把跨层缺陷挡住。
 
 ```mermaid
-flowchart LR
-    F["功能团队: 功能单独能用"] --> RIT
-    SI["Software Integration: 快速拼新功能"] --> RIT["RIT: 合在一起穿过整条栈还能用"]
-    RIT --> S["服务侧: 每周端到端发布验证"]
+flowchart TD
+    F["功能团队: 单独能用"] --> RIT
+    SI["SI: 拼新功能"] --> RIT["RIT: 合起来跑整栈"]
+    RIT --> S["服务侧: 每周发布验证"]
 ```
 
 - **英文**："Feature teams prove a feature works alone; RIT proves the features work together across the stack."

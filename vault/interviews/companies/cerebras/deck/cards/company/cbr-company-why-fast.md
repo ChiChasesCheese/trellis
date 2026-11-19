@@ -18,12 +18,12 @@ step: 2
 | 带宽 | 每秒几 TB | 21 PB/s |
 
 ```mermaid
-flowchart LR
+flowchart TD
     subgraph GPU
         H["芯片外 HBM: 参数"] -- "每个 token 搬一次, 几 TB/s" --> C1["计算单元"]
     end
     subgraph WSE
-        S["核心旁的 SRAM: 参数"] -- "就地计算, 21 PB/s" --> C2["900,000 个核心"]
+        S["核心旁 SRAM: 参数"] -- "就地计算, 21 PB/s" --> C2["90 万个核心"]
     end
 ```
 

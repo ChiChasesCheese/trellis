@@ -20,15 +20,15 @@ Cerebras 的 SDET（发布集成测试）岗位在组织里的位置是什么？
 
 ```mermaid
 flowchart TD
-    subgraph CORE["Inference Core: 模型跑在晶圆上"]
-        M["新模型上线, 运行时, 内核, 性能"]
-        SI["Software Integration"]
-        RFQ["Release & Feature Qualification"] --> RIT["RIT: 你在这里"]
-        CI["Core Infrastructure"]
+    subgraph CORE["Inference Core"]
+        M["新模型, 运行时, 内核"]
+        SI["Software Integ."]
+        RFQ["Release Qual."] --> RIT["RIT: 你在这里"]
+        CI["Core Infra"]
     end
-    subgraph SVC["Inference Service: 面向用户"]
-        B["云后端, 平台, 推理 API, 全球路由"]
-        Q["服务侧质量: 每周端到端发布验证"]
+    subgraph SVC["Service"]
+        B["云后端, 推理 API"]
+        Q["服务侧质量: 周验证"]
     end
     RIT -- "在它上游" --> Q
 ```

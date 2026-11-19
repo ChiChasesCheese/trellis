@@ -17,11 +17,11 @@ step: 1
   - WSE-3 片上 SRAM 21 PB/s：读一遍约 0.0008 ms，不再是瓶颈。
 
 ```mermaid
-flowchart LR
-    P["8B 模型 16 GB, 每步读一遍"] --> G["GPU HBM 约 3 TB/s"]
-    P --> W["WSE-3 片上 SRAM 21 PB/s"]
-    G --> G2["约 5.3 ms, 上限约 190 tok/s"]
-    W --> W2["约 0.0008 ms, 不再是瓶颈"]
+flowchart TD
+    P["8B 模型 16 GB"] --> G["GPU HBM 约 3 TB/s"]
+    P --> W["WSE-3 21 PB/s"]
+    G --> G2["约 5.3 ms/步"]
+    W --> W2["约 0.0008 ms/步"]
 ```
 
 - **对照**：Cerebras 2024 年在同样大小的 Llama 3.1 8B 上跑到 1,800 tok/s，超出 GPU 这条上限。

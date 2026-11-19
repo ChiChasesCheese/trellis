@@ -19,11 +19,11 @@ step: 1
 
 ```mermaid
 flowchart TD
-    A["1 Clarify: what changed, 基线"] --> B["2 Contract: schema, streaming, stop, usage"]
-    B --> C["3 Correctness: greedy 对比参考, 容差, eval"]
-    C --> D["4 Performance: 首 token, token 间隔, 吞吐, 并发"]
-    D --> E["5 Robustness: 上限, 取消, 断连, 节点故障"]
-    E --> F["6 Gating: 每次提交, 每晚, 每次发布"]
+    A["1 Clarify: 改了啥"] --> B["2 Contract: 接口"]
+    B --> C["3 Correctness"]
+    C --> D["4 Performance"]
+    D --> E["5 Robustness"]
+    E --> F["6 Gating"]
 ```
 
 > 中文提示：先问"what changed"。结尾一句：It's the parity testing I did for the Java migration, with a tolerance instead of exact equality.

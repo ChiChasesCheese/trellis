@@ -17,10 +17,10 @@ Cerebras 推理云怎么卖、API 长什么样？公开的速度是多少？
 - **两种卖法**：共享推理（公共模型，大家共用）和专属推理（dedicated endpoint，给一个客户单独部署）。
 
 ```mermaid
-flowchart LR
-    C["OpenAI 客户端: 只改密钥, 地址, 模型名"] --> A["api.cerebras.ai/v1"]
+flowchart TD
+    C["OpenAI 客户端"] --> A["cerebras API /v1"]
     A --> S["共享推理: 公共模型"]
-    A --> D["专属推理: dedicated endpoint"]
+    A --> D["专属推理: 独占端点"]
 ```
 
 - **公开速度**（tok/s = 每秒生成的 token 数）：

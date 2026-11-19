@@ -17,10 +17,10 @@ step: 4
 - 存：每步只算新 token 自己的 Q、K、V，从缓存里读旧的 K、V。这份缓存叫 **KV 缓存（KV cache）**。
 
 ```mermaid
-flowchart LR
+flowchart TD
     N["新 token"] --> C["只算它的 Q, K, V"]
     C -- "K, V 追加" --> KV["KV 缓存: 前 500 个位置"]
-    C -- "Q" --> A["Q 和所有 K 比, 加权求和 V"]
+    C -- "Q" --> A["Q 比所有 K, 加权 V"]
     KV --> A
     A --> O["下一个 token"]
 ```

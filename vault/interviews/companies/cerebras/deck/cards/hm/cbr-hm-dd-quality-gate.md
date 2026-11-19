@@ -16,12 +16,12 @@ step: 3
 4. **Gate**: when every enabled check passes, a status flips to **Completed**; downstream **joins on it**. **Eight** subject areas.
 
 ```mermaid
-flowchart LR
-    C["配置表: 一行一个检查"] --> X["通用执行器"]
-    X -- "检查崩溃" --> F["记一条 FAIL, 不宕机"]
-    X --> Q{"所有启用的检查都通过?"}
-    Q -- 是 --> S["状态翻成 Completed"]
-    S --> D["下游 join 这个状态才读"]
+flowchart TD
+    C["配置表: 一行一检查"] --> X["通用执行器"]
+    X -- "检查崩溃" --> F["记 FAIL, 不宕机"]
+    X --> Q{"启用的都通过?"}
+    Q -- 是 --> S["状态: Completed"]
+    S --> D["下游 join 才读"]
 ```
 
 5. **Own flaw**: readiness was per table, so about **fifty bad merchants out of thirty-five thousand** could block everyone; I wrote an **ADR** for merchant-level readiness — "**strictest wins**" — **proposed, not shipped**.

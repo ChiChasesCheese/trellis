@@ -16,8 +16,8 @@ step: 1
 - 中文：常见汉字通常 1 个 token；词表里没有的字会被拆成 UTF-8 字节，一个汉字最多 3 个 token
 
 ```mermaid
-flowchart LR
-    A["文字: Hello world"] --> B["切成 token: 'Hello', ' world'"]
+flowchart TD
+    A["文字: Hello world"] --> B["切成 token"]
     B --> C["查词表: 15496, 995"]
     C --> D["模型只处理编号"]
     D --> E["输出编号"]
