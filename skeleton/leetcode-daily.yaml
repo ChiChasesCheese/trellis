@@ -238,4 +238,7 @@ nodes:
   - id: sorting-permutation.minimum-value-of-merged-integers
     title: LC 4097 合并整数后的最小值（Minimum Value of Merged Integers）
     summary: Easy；。
+  - id: sorting-permutation.minimum-score-by-changing-two-elements
+    title: LC 2567 修改两个元素的最小分数（Minimum Score by Changing Two Elements）
+    summary: Medium；Greedy, Array, Sorting。
   core: true
