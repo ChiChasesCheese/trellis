@@ -87,3 +87,4 @@ Rules this produced are in `CARDS_TASK.md` (the two sections after the format).
 | 2026-11-17 | model cards | loss aversion, rumination, ego depletion |
 | 2026-11-17 | cards, three waves (two cut by the usage limit) | 200 cards, 56 with a figure (28%), 23 mermaid blocks render |
 | 2026-11-17 | review | all 200 read; 0 format defects; `validate` 0 errors, `plain_style` ok, `phone_diagrams` ok |
+| 2026-11-19 | field `persona` (MBTI, Jung's eight functions, Big Five, HEXACO, uses), at Chi's request | 28 leaves, 28 cards (groups F, G), 7 with a figure; claims checked against originals (Pletzer 2019, Schmitt 2008, Lahey 2009, Dyrenforth 2010) and logged in claims-F/G; Anki sub-deck `10 人格：类型与特质` |
