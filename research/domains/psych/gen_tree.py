@@ -37,6 +37,8 @@ GROUPS = {
     "evidence.myth": "C", "learn": "C", "career": "C",
     "social": "D", "life": "D",
     "group": "E", "game": "E",
+    "persona.mbti": "F", "persona.jung": "F", "persona.use": "F",  # added 2026-11-19 at Chi's request
+    "persona.big5": "G",
 }
 
 

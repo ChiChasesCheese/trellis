@@ -1415,3 +1415,152 @@ nodes:
     - id: life.stage.reminiscence-bump
       title: "怀旧高峰（reminiscence bump）"
       summary: "人一生记得最多的是 15 到 30 岁之间的事。"
+- id: persona
+  order: 10
+  title: "人格：类型与特质"
+  summary: "MBTI、荣格八维和大五人格分别从哪来、量的是什么、哪些说法经得起数据，以及怎样用人格知识而不被它框住。"
+  children:
+  - id: persona.mbti
+    title: "MBTI：从哪来、量什么"
+    summary: "一对母女从荣格的理论出发编的商业问卷：四个维度、十六种类型，以及数据怎么看它。"
+    children:
+    - id: persona.mbti.origin
+      core: true
+      title: "MBTI 是怎么来的"
+      summary: "一对母女从荣格的《心理类型》出发，为二战时帮人找合适工作编的问卷，后来成了商业产品；它不是从数据里归纳出来的。"
+    - id: persona.mbti.four-dimensions
+      core: true
+      title: "四个维度与十六型"
+      summary: "E/I、S/N、T/F、J/P 四组二选一，组合成十六型；J/P 是迈尔斯母女加的，荣格原著里没有。"
+    - id: persona.mbti.not-bimodal
+      core: true
+      title: "分数是一座山，不是两座"
+      summary: "每个维度上多数人挤在中间、单峰分布；切点附近差一两分就换字母，「内向的人」「外向的人」是两种人的说法没有数据支持。"
+      requires: [evidence.myth.mbti]
+    - id: persona.mbti.retest
+      core: true
+      title: "重测换型"
+      summary: "单个维度分数的重测还算稳定，但整体四字母类型几周后就有相当多人变了，越靠近中间越容易变。"
+      requires: [persona.mbti.not-bimodal]
+    - id: persona.mbti.prediction
+      core: true
+      title: "MBTI 能不能用来选人"
+      summary: "没有证据说明某个类型更适合某个工作；出版方自己的伦理指南也说不应拿 MBTI 做招聘筛选。"
+    - id: persona.mbti.map-to-big5
+      core: true
+      title: "把 MBTI 换算成大五"
+      summary: "四个维度分别对应大五的外向性、开放性、宜人性、尽责性，唯独没有神经质；当连续分数看才有用。"
+    - id: persona.mbti.16personalities
+      core: true
+      title: "16personalities 不是 MBTI"
+      summary: "最流行的免费测试多一个 A/T（自信/动荡）维度，模型更接近大五，和官方 MBTI 是两套东西。"
+  - id: persona.jung
+    title: "荣格八维：认知功能与功能栈"
+    summary: "荣格的原始理论、后人搭出来的八维功能栈，以及数据对它说了什么。"
+    children:
+    - id: persona.jung.psychological-types
+      core: true
+      title: "荣格《心理类型》的原意"
+      summary: "荣格提出内倾/外倾两种态度和思维、情感、感觉、直觉四种功能，来自他的临床观察；他把类型当成辨认方向的工具，反对拿它给人贴标签。"
+    - id: persona.jung.eight-functions
+      core: true
+      title: "八维与功能栈"
+      summary: "四种功能各分内外向得到 Ni、Te 等八维；「主导、辅助、第三、劣势」的排列是后人（迈尔斯、Beebe 等）推出来的模型，荣格没有这样排。"
+      requires: [persona.jung.psychological-types]
+    - id: persona.jung.type-dynamics-evidence
+      core: true
+      title: "功能栈有证据吗"
+      summary: "用 MBTI 数据检验「主导功能」这类类型动力学，大多不支持；网上的八维测试普遍没有公开的信度、效度数据。"
+      requires: [persona.jung.eight-functions]
+    - id: persona.jung.unfalsifiable
+      core: true
+      title: "为什么八维怎么说都对"
+      summary: "功能栈能解释任何行为（不像就说是劣势功能在起作用），无法被证伪；这让它适合聊天和自我反思，却不能当科学结论。"
+      requires: [persona.jung.type-dynamics-evidence, game.deceive.barnum]
+  - id: persona.big5
+    title: "大五人格：研究里用的那一套"
+    summary: "从词典里归纳出的五个连续维度：怎么来的、怎么测、多少来自遗传、能预测什么、能不能改。"
+    children:
+    - id: persona.big5.lexical
+      core: true
+      title: "大五是怎么从词典里找出来的"
+      summary: "重要的性格差异会进入语言：从词典里挑出描述人的词做因素分析，几十年里反复得到五个大维度。"
+    - id: persona.big5.ocean
+      core: true
+      title: "五个维度各是什么"
+      summary: "开放性、尽责性、外向性、宜人性、神经质；每一维都是连续分数、大致正态分布，下面还分更细的侧面（facet）。"
+      requires: [persona.big5.lexical]
+    - id: persona.big5.measure
+      core: true
+      title: "怎样测一份靠谱的大五"
+      summary: "用公开、有信效度数据的量表（BFI-2、IPIP-NEO），看自己在常模里的百分位，再请熟人评一次。"
+      requires: [persona.big5.ocean]
+    - id: persona.big5.heritability
+      core: true
+      title: "人格有多少来自遗传"
+      summary: "双生子研究汇总：人格差异约四成和基因有关；兄弟姐妹共同的家庭环境几乎不起作用，剩下的是各自独有的经历。"
+    - id: persona.big5.stability
+      core: true
+      title: "人格稳不稳定"
+      summary: "人和人之间的相对排序随年龄越来越稳，五十岁以后很稳；但每个人的平均水平一生都在慢慢变。"
+      requires: [self.identity.personality-change]
+    - id: persona.big5.life-outcomes
+      core: true
+      title: "人格能预测人生结果吗"
+      summary: "尽责性、神经质、宜人性对寿命、离婚、职业成就的预测力，和家庭经济地位、智商在同一量级。"
+    - id: persona.big5.job-performance
+      core: true
+      title: "什么人格和工作表现有关"
+      summary: "尽责性对几乎所有职业都有稳定但不大的预测力；外向性只在销售、管理这类和人打交道的岗位有用。"
+      requires: [persona.big5.life-outcomes]
+    - id: persona.big5.neuroticism
+      core: true
+      title: "神经质：最值得关心的一维"
+      summary: "神经质高的人更容易焦虑、抑郁和身体不适，社会代价很大；它也是干预最容易改变的一维。"
+      requires: [persona.big5.ocean]
+    - id: persona.big5.change
+      core: true
+      title: "想改人格能做到吗"
+      summary: "有目标、落到具体行为的练习能在几个月里让特质小幅移动；做了才有用，只有完成的练习才改变特质。"
+      requires: [persona.big5.stability]
+    - id: persona.big5.gender-culture
+      core: true
+      title: "性别与文化差异"
+      summary: "男女在大五上的平均差异不大但稳定（女性的神经质、宜人性偏高）；反直觉的是，越平等富裕的国家差异越大。"
+    - id: persona.big5.hexaco
+      core: true
+      title: "HEXACO：第六个维度「诚实—谦逊」"
+      summary: "跨语言研究常多出一个诚实—谦逊因子，它比大五更能预测作弊、剥削和职场越轨。"
+      requires: [persona.big5.ocean]
+  - id: persona.use
+    title: "怎样用人格知识，而不被它框住"
+    summary: "为什么类型测试感觉准、人格和情境谁说了算、配对与招聘、其他流行测试，以及把结果用在自己身上的方法。"
+    children:
+    - id: persona.use.person-situation
+      core: true
+      title: "人格和情境，谁决定行为"
+      summary: "一次行为受情境影响很大，人格预测的是平均倾向；看一个人要看很多场合的平均。"
+    - id: persona.use.compatibility
+      core: true
+      title: "什么类型最配"
+      summary: "「INTJ 配 ENFP」这类配对表没有研究支持；伴侣人格相似度对关系满意度几乎没有预测力，各自的情绪稳定性更要紧。"
+      requires: [persona.big5.neuroticism]
+    - id: persona.use.hiring
+      core: true
+      title: "招聘里的人格测试"
+      summary: "合格的人格测评能小幅提升选人，但应聘者会往「理想答案」作答；拿 MBTI 选人既没有效度，也违背出版方规定。"
+      requires: [persona.big5.job-performance, persona.mbti.prediction]
+    - id: persona.use.other-typologies
+      core: true
+      title: "九型人格、DISC 与其他类型测试"
+      summary: "九型人格、DISC 等流行工具大多缺少独立的信度、效度研究，作用接近一张有趣的自我反思清单。"
+    - id: persona.use.astrology-bloodtype
+      core: true
+      title: "星座和血型性格"
+      summary: "双盲检验里占星师猜不中人格；日本和美国上万人的数据里，血型和性格几乎没有关系。"
+      requires: [game.deceive.barnum]
+    - id: persona.use.self-knowledge
+      core: true
+      title: "怎样用人格结果认识自己"
+      summary: "把结果当成「我在这一维大概排第几」的参考，加上熟人评价，用来挑环境、补短板，而不是给自己贴标签。"
+      requires: [persona.big5.measure]
