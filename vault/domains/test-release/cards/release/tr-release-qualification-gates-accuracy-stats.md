@@ -16,6 +16,27 @@ step: 3
 - 两个版本都对、都错的题不提供信息；
 - 只看"不一致"的题：旧对新错 b 道，旧错新对 c 道。
 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 324 172" font-family="sans-serif" font-size="12">
+<text x="192" y="14" text-anchor="middle" fill="currentColor">新版本 →</text>
+<text x="4" y="14" fill="currentColor">旧版本 ↓</text>
+<text x="128" y="34" text-anchor="middle" fill="currentColor">对</text>
+<text x="256" y="34" text-anchor="middle" fill="currentColor">错</text>
+<text x="56" y="77" text-anchor="end" fill="currentColor">对</text>
+<text x="56" y="139" text-anchor="end" fill="currentColor">错</text>
+<rect x="64" y="42" width="128" height="62" fill="none" stroke="currentColor"/>
+<text x="128" y="69" text-anchor="middle" fill="currentColor">都对</text>
+<text x="128" y="87" text-anchor="middle" fill="currentColor">无信息</text>
+<rect x="192" y="42" width="128" height="62" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/>
+<text x="256" y="69" text-anchor="middle" fill="currentColor">b = 30</text>
+<text x="256" y="87" text-anchor="middle" fill="currentColor">旧对新错</text>
+<rect x="64" y="104" width="128" height="62" stroke="currentColor" fill="currentColor" fill-opacity="0.15"/>
+<text x="128" y="131" text-anchor="middle" fill="currentColor">c = 18</text>
+<text x="128" y="149" text-anchor="middle" fill="currentColor">旧错新对</text>
+<rect x="192" y="104" width="128" height="62" fill="none" stroke="currentColor"/>
+<text x="256" y="131" text-anchor="middle" fill="currentColor">都错</text>
+<text x="256" y="149" text-anchor="middle" fill="currentColor">无信息</text>
+</svg>
+
 设 b = 30，c = 18。净少答对 12 道，12 ÷ 1319 ≈ 0.9 个点。
 McNemar 检验统计量 = (b − c)² ÷ (b + c) = 144 ÷ 48 = 3.0，小于 5% 显著性水平的临界值 3.84。**结论：这个差异不显著，不能据此判定回归**。
 

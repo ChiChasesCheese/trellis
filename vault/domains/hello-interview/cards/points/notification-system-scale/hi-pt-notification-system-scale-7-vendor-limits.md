@@ -12,4 +12,17 @@ step: 8
 ## A
 **限速。** 网关内用令牌桶按服务商限速，积压回压到渠道队列而不是丢弃。
 **熔断。** 连续失败率超阈值打开熔断，流量切备用服务商，半开用少量探测流量恢复。
+
+```mermaid
+stateDiagram-v2
+    state "关闭：正常发送" as Closed
+    state "打开：切备用服务商" as Open
+    state "半开：少量探测流量" as Half
+    [*] --> Closed
+    Closed --> Open: 连续失败率超阈值
+    Open --> Half: 试探恢复
+    Half --> Closed: 探测成功
+    Half --> Open: 探测仍失败
+```
+
 **批量。** FCM 一次可提交最多 500 个令牌；邮件按模板批量提交。

@@ -17,4 +17,22 @@ tags: [挑战]
 4. 改法：服务端用模型自己的分词器数 token，按"窗口 − 系统提示 − 历史 − 预留的输出"算出输入预算；前端的字数限制只当粗略提示。
 5. 截断要看得见：检查停止原因是"到长度"还是"正常结束"，是前者就提示用户或续写。
 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 84" font-family="sans-serif" font-size="11">
+<text x="160" y="14" text-anchor="middle" fill="currentColor">8,192 token 窗口：输入和输出共用</text>
+<rect x="10" y="22" width="50" height="28" fill="currentColor" fill-opacity="0.15" stroke="currentColor"/>
+<text x="35" y="40" text-anchor="middle" fill="currentColor">系统提示</text>
+<rect x="60" y="22" width="30" height="28" fill="currentColor" fill-opacity="0.15" stroke="currentColor"/>
+<text x="75" y="40" text-anchor="middle" fill="currentColor">模板</text>
+<rect x="90" y="22" width="60" height="28" fill="currentColor" fill-opacity="0.15" stroke="currentColor"/>
+<text x="120" y="40" text-anchor="middle" fill="currentColor">历史对话</text>
+<rect x="150" y="22" width="100" height="28" fill="none" stroke="currentColor"/>
+<text x="200" y="40" text-anchor="middle" fill="currentColor">用户输入</text>
+<rect x="250" y="22" width="60" height="28" fill="currentColor" fill-opacity="0.3" stroke="currentColor"/>
+<text x="280" y="40" text-anchor="middle" fill="currentColor">预留输出</text>
+<line x1="150" y1="58" x2="250" y2="58" stroke="currentColor"/>
+<line x1="150" y1="54" x2="150" y2="62" stroke="currentColor"/>
+<line x1="250" y1="54" x2="250" y2="62" stroke="currentColor"/>
+<text x="200" y="76" text-anchor="middle" fill="currentColor">输入预算：用分词器数 token</text>
+</svg>
+
 <details class="pt"><summary>参考答案</summary>错在把字数当成 token 数，并且忘了窗口是输入和输出共用的。常见汉字通常是 1 个 token，但生僻字和表情符号可能拆成 2 到 3 个，4,000 字最坏可以到 12,000 token，直接超窗口而被拒。输入里还有系统提示、对话模板的特殊 token 和历史对话，这些都占窗口，剩下的空间不够时回答就被截断。应该在服务端用模型自己的分词器计数，按窗口减去系统提示、历史和预留输出来算输入预算，并检查停止原因来发现截断。</details>
