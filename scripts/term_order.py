@@ -4,7 +4,7 @@
     uv run python scripts/term_order.py k8s --verbose  # also list every term with its teaching leaf
 
 Inputs: skeleton/<d>.yaml (deck order: core leaves first in tree order, then the rest, as `study.order: core-first`
-plays them), research/domains/<d>/terms.yaml (term -> id of the leaf that first teaches it), and the cards under
+plays them), research/domains/<d>/terms.yaml (term -> id of the leaf that first teaches it, or leaf -> [terms]), and the cards under
 vault/domains/<d>/cards/. A card is flagged when it mentions a term whose teaching leaf comes later in deck order and
 the card does not define the term itself — "defined" means the term is followed within a few characters by a
 full-width parenthesis or colon (`etcd（…）`, `**etcd：**`). Terms taught by the card's own leaf are fine.
@@ -52,7 +52,29 @@ def main() -> int:
     domain = args[0]
     order = deck_order(domain)
     terms_file = ROOT / f"research/domains/{domain}/terms.yaml"
-    terms = yaml.safe_load(terms_file.read_text(encoding="utf-8")) or {}
+    raw = yaml.safe_load(terms_file.read_text(encoding="utf-8")) or {}
+    terms: dict[str, str] = {}
+
+    def keep(name: str, leaf: str) -> None:  # a term listed twice counts from its earliest teaching leaf
+        if name not in terms or order.get(leaf, 10**6) < order.get(terms[name], 10**6):
+            terms[name] = leaf
+    for key, val in raw.items():
+        if isinstance(val, list):  # leaf -> [terms it teaches]; "(…)" notes are dropped, "(not used)" entries skipped
+            for item in val:
+                item = str(item)
+                if "not used" in item:
+                    continue
+                name = re.sub(r"\s*\(.*?\)\s*", " ", item).strip()
+                for part in name.split("/") if "/" in name and " " not in name else [name]:
+                    if part:
+                        keep(part.strip(), str(key))
+        else:  # term -> leaf; a "(…)" note after the term is dropped
+            keep(re.sub(r"\s*\(.*?\)\s*", " ", str(key)).strip(), str(val))
+    for term, leaf in list(terms.items()):  # "t05.*" = some leaf of that theme: take its earliest leaf in deck order
+        if leaf.endswith(".*"):
+            inside = [l for l in order if l.startswith(leaf[:-1])]
+            if inside:
+                terms[term] = min(inside, key=order.get)
     problems, unknown = [], []
     for term, leaf in terms.items():
         if leaf not in order:
