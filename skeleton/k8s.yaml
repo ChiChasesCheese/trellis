@@ -1,0 +1,583 @@
+# Generated from research/domains/k8s/outline.md by scripts/outline_to_skeleton.py:
+# edit the outline, not this file. Citations and chapter notes: research/domains/k8s/leaves.yaml.
+domain: k8s
+title: Kubernetes：从零到 2026 实践
+deck: Kubernetes
+lang: zh
+vault: domains/k8s
+deck_depth: 1
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 20
+  reviews_per_day: 200
+nodes:
+- id: p1
+  title: 第 1 部分 从零开始：容器、第一个应用与 API
+  children:
+  - id: p1.t01
+    title: 第 1 章 认识 Kubernetes（KIA2 ch1）
+    children:
+    - id: p1.t01.kubernetes
+      title: 为什么需要 Kubernetes
+      summary: 单机部署到多机部署会遇到的问题；把一堆机器当成一台计算机的想法。
+      core: true
+    - id: p1.t01.cluster-architecture
+      title: Cluster architecture 与应用如何运行
+      summary: 控制面与工作节点的分工，一份描述提交后谁做了什么。
+      core: true
+    - id: p1.t01.cluster-node-pod-deployment-service
+      title: 五个基本名词：Cluster、Node、Pod、Deployment、Service
+      summary: 每个词一句话 + 一张关系图；后面所有卡都默认你认识它们。
+      core: true
+    - id: p1.t01.kubernetes-managed-vs-self-hosted-vanilla-vs-ext
+      title: 要不要用 Kubernetes：managed vs self-hosted, vanilla vs extended
+      summary: 引入组织的取舍，什么时候不该用。
+      core: false
+    summary: 第 1 章 认识 Kubernetes（KIA2 ch1）
+  - id: p1.t02
+    title: 第 2 章 Containers 与容器化应用（KIA2 ch2）
+    children:
+    - id: p1.t02.containers-vs-vms
+      title: Containers vs VMs
+      summary: 共享内核的进程隔离 vs 完整客户机；启动、体积、隔离强度的取舍。
+      core: true
+    - id: p1.t02.image-dockerfile-registry
+      title: Image、Dockerfile 与 registry
+      summary: 分层镜像、构建、推送、拉取；用 Kiada 示例应用走一遍。
+      core: false
+    - id: p1.t02.namespaces-cgroups
+      title: 容器的底层：Namespaces 与 cgroups
+      summary: 进程看到什么由 namespace 决定，能用多少由 cgroup 决定；容器不是一个内核对象。
+      core: true
+    - id: p1.t02.oci-container-runtime-seccomp-capabilities
+      title: OCI、container runtime 与 seccomp/capabilities
+      summary: 镜像与运行时标准；为什么 Kubernetes 不依赖 Docker。
+      core: false
+    summary: 第 2 章 Containers 与容器化应用（KIA2 ch2）
+  - id: p1.t03
+    title: 第 3 章 在 Kubernetes 上部署第一个应用（KIA2 ch3）
+    children:
+    - id: p1.t03.local-cluster-kubectl-kubeconfig
+      title: Local cluster、kubectl 与 kubeconfig
+      summary: kind/minikube/Docker Desktop 起一个集群；kubeconfig 里的 cluster/user/context 三元组。
+      core: false
+    - id: p1.t03.kubectl-imperative-vs-declarative
+      title: kubectl 与 imperative vs declarative
+      summary: kubectl 把请求发给 API server；`kubectl create/scale` 是下命令，`kubectl apply -f` 是交一份「想要的样子」。
+      core: true
+    - id: p1.t03.first-deployment
+      title: First deployment：部署、暴露、扩容第一个应用
+      summary: 一条 Deployment 创建了哪些对象，Service 如何让它可访问，扩副本看到什么。
+      core: true
+    summary: 第 3 章 在 Kubernetes 上部署第一个应用（KIA2 ch3）
+  - id: p1.t04
+    title: 补充章 原理：Control plane、declarative model 与 reconcile loop（Poulton ch2）
+    children:
+    - id: p1.t04.control-plane-node
+      title: Control plane 与 node 组件
+      summary: apiserver、etcd、scheduler、controller-manager、kubelet、kube-proxy、容器运行时各管什么，谁只和谁说话。
+      core: true
+    - id: p1.t04.controller
+      title: Controller 是什么
+      summary: 每类对象背后有一个程序，不停把现实对齐到 spec；Deployment、ReplicaSet、Node 各有自己的 controller。
+      core: true
+    - id: p1.t04.declarative-model-reconcile-loop
+      title: Declarative model 与 reconcile loop
+      summary: 期望状态写进 API，控制器持续把实际状态拉向期望；水平触发为何比事件触发稳。
+      core: true
+    - id: p1.t04.end-to-end-walk-through
+      title: End-to-end walk-through：一条请求的完整旅程
+      summary: 从 `kubectl apply` 到容器在节点上运行，经过 API、etcd、调度、kubelet、CRI 的时序。
+      core: true
+    summary: 补充章 原理：Control plane、declarative model 与 reconcile loop（Poulton ch2）
+  - id: p1.t05
+    title: 第 4 章 导航 API 与 Object model（KIA2 ch4）
+    children:
+    - id: p1.t05.object-manifest-apiversion-kind-metadata-spec-st
+      title: Object manifest 的结构：apiVersion, kind, metadata, spec, status
+      summary: 所有对象的共同骨架；用 Node 对象逐字段读一遍。
+      core: true
+    - id: p1.t05.spec-vs-status-conditions
+      title: spec vs status 与 conditions
+      summary: 谁写 spec、谁写 status；conditions 为什么比一个布尔值有用。
+      core: true
+    - id: p1.t05.events-kubectl-describe
+      title: Events 与 kubectl describe
+      summary: 排查时先看什么；事件会过期。
+      core: false
+    summary: 第 4 章 导航 API 与 Object model（KIA2 ch4）
+  - id: p1.t06
+    title: 补充章 Kubernetes API 与 storage layer（Poulton ch14 + docs）
+    children:
+    - id: p1.t06.api-rest-api-groups-versions
+      title: API 的形状：REST 路径、API groups 与 versions
+      summary: 核心组与命名组、`/api/v1` 与 `/apis/<group>/<version>`、版本弃用。
+      core: true
+    - id: p1.t06.api-server-request-pipeline-authentication-autho
+      title: API server request pipeline：authentication → authorization → admission → persistence
+      summary: 每步能拒绝什么、变更与校验准入的先后。
+      core: true
+    - id: p1.t06.etcd-optimistic-concurrency-resourceversion
+      title: etcd 与 optimistic concurrency（resourceVersion）
+      summary: 唯一真相来源；用 resourceVersion 做 compare-and-swap，冲突返回 409；fsync 延迟如何拖垮集群。
+      core: false
+    - id: p1.t06.watch-informer-work-queue
+      title: Watch、informer 与 work queue
+      summary: list+watch、本地缓存与工作队列让控制器不压垮 etcd；relist 与 bookmark。
+      core: false
+    - id: p1.t06.server-side-apply-finalizers-ownerreferences
+      title: Server-side apply、finalizers 与 ownerReferences
+      summary: managedFields 如何解决多写入者；对象为什么删不掉。
+      core: false
+    summary: 补充章 Kubernetes API 与 storage layer（Poulton ch14 + docs）
+  summary: 第 1 部分 从零开始：容器、第一个应用与 API
+  order: 1
+- id: p2
+  title: 第 2 部分 在 Kubernetes 中运行应用
+  children:
+  - id: p2.t01
+    title: 第 5 章 用 Pod 运行应用（KIA2 ch5）
+    children:
+    - id: p2.t01.pod-container
+      title: Pod 是什么、为什么不直接用 container
+      summary: 共享网络与存储的最小调度单位；何时把容器放进同一个 Pod。
+      core: true
+    - id: p2.t01.pod-manifest
+      title: 写 Pod manifest 并创建、检查
+      summary: 一份最小 Pod YAML 逐行读，创建后看 status。
+      core: false
+    - id: p2.t01.pod-logs-exec-port-forward-ephemeral-containers
+      title: 与 Pod 交互：logs、exec、port-forward、ephemeral containers
+      summary: 排障基本动作。
+      core: true
+    - id: p2.t01.multi-container-pod-init-containers-native-sidec
+      title: Multi-container Pod、init containers 与 native sidecars
+      summary: 启动顺序与「Job 不结束」问题如何被解决。
+      core: true
+    summary: 第 5 章 用 Pod 运行应用（KIA2 ch5）
+  - id: p2.t02
+    title: 第 6 章 管理 Pod lifecycle 与 container health（KIA2 ch6）
+    children:
+    - id: p2.t02.pod-status-phase-conditions-container-states
+      title: Pod status：phase、conditions、container states
+      summary: 为什么 Running 不等于可用。
+      core: true
+    - id: p2.t02.restart-policy-probes-liveness-readiness-startup
+      title: Restart policy 与三种 probes（liveness, readiness, startup）
+      summary: CrashLoopBackOff 的退避；HTTP/exec/tcp 探针的语义与区别。
+      core: true
+    - id: p2.t02.probe
+      title: Probe 设计的最佳实践
+      summary: 什么时候用 startupProbe；liveness 为什么不能检查下游依赖。
+      core: false
+    - id: p2.t02.poststart-prestop-lifecycle
+      title: postStart、preStop 与完整 lifecycle
+      summary: 初始化、运行、终止三阶段的全景时序。
+      core: false
+    - id: p2.t02.graceful-termination
+      title: Graceful termination 与滚动发布时的 502
+      summary: SIGTERM、preStop、`terminationGracePeriodSeconds` 与 endpoint 摘除的竞态。
+      core: true
+    summary: 第 6 章 管理 Pod lifecycle 与 container health（KIA2 ch6）
+  - id: p2.t03
+    title: 第 7 章 用 Namespaces 与 Labels 组织资源（KIA2 ch7）
+    children:
+    - id: p2.t03.namespaces
+      title: Namespaces
+      summary: 逻辑分组而非隔离；跨命名空间访问；删除命名空间时发生什么。
+      core: true
+    - id: p2.t03.labels-selectors
+      title: Labels 与 selectors
+      summary: 标签语法、标准标签键；控制器与 Service 靠选择器认领 Pod。
+      core: true
+    - id: p2.t03.field-selectors-annotations
+      title: Field selectors 与 annotations
+      summary: 与标签的分工：筛选用 vs 附带元数据。
+      core: false
+    summary: 第 7 章 用 Namespaces 与 Labels 组织资源（KIA2 ch7）
+  - id: p2.t04
+    title: 补充章 Resources、scheduling 与 nodes（docs，两本书覆盖很薄）
+    children:
+    - id: p2.t04.resource-requests-limits-qos-classes
+      title: Resource requests、limits 与 QoS classes
+      summary: requests 决定调度，limits 决定节流与 OOM；Guaranteed/Burstable/BestEffort 的驱逐顺序。
+      core: true
+    - id: p2.t04.cpu-throttling-oom-kill
+      title: CPU throttling 与 OOM kill
+      summary: 低 CPU limit 造成尾延迟；何时去掉 CPU limit；内存超限的结局。
+      core: false
+    - id: p2.t04.scheduling-cycle-filter-score-bind
+      title: Scheduling cycle：filter、score、bind
+      summary: 调度器本身是一个控制器；队列、调度周期、绑定周期。
+      core: true
+    - id: p2.t04.affinity-taints-tolerations-topology-spread
+      title: Affinity、taints & tolerations 与 topology spread
+      summary: 高可用放置的工具箱。
+      core: false
+    - id: p2.t04.kubelet-cri-node-pressure-eviction
+      title: kubelet、CRI 与 node-pressure eviction
+      summary: 同步循环、容器运行时接口、软硬驱逐阈值与 OOM killer 的区别。
+      core: true
+    - id: p2.t04.priorityclass-preemption-poddisruptionbudget
+      title: PriorityClass、preemption 与 PodDisruptionBudget
+      summary: 谁能挤掉谁；PDB 配错会让升级卡死。
+      core: false
+    summary: 补充章 Resources、scheduling 与 nodes（docs，两本书覆盖很薄）
+  summary: 第 2 部分 在 Kubernetes 中运行应用
+  order: 2
+- id: p3
+  title: 第 3 部分 应用配置与存储
+  children:
+  - id: p3.t01
+    title: 第 8 章 用 ConfigMap 与 Secret 配置应用（KIA2 ch8）
+    children:
+    - id: p3.t01.command-args-env
+      title: command、args 与 env
+      summary: 容器镜像的 ENTRYPOINT/CMD 与 Pod 字段的对应。
+      core: false
+    - id: p3.t01.configmap-pod-manifest
+      title: ConfigMap：把配置与 Pod manifest 解耦
+      summary: 创建、注入环境变量、更新语义（环境变量不会热更新，卷会）。
+      core: true
+    - id: p3.t01.secret
+      title: Secret 的真实保护程度
+      summary: base64 不是加密；etcd 静态加密、KMS、外部密钥管理。
+      core: true
+    - id: p3.t01.downward-api
+      title: Downward API
+      summary: 把 Pod 自己的元数据暴露给容器。
+      core: false
+    summary: 第 8 章 用 ConfigMap 与 Secret 配置应用（KIA2 ch8）
+  - id: p3.t02
+    title: 第 9 章 添加 Volumes：存储、配置与元数据（KIA2 ch9）
+    children:
+    - id: p3.t02.volumes-emptydir
+      title: Volumes 与 emptyDir
+      summary: 卷的生命周期绑定 Pod 而非容器；容器重启后文件还在。
+      core: true
+    - id: p3.t02.configmap-secret-downwardapi-projected-volumes
+      title: configMap、Secret、downwardAPI 与 projected volumes
+      summary: 以文件形式给配置，热更新机制（符号链接原子替换）。
+      core: false
+    - id: p3.t02.hostpath-image-volume-volume-types
+      title: hostPath、image volume 与其他 volume types
+      summary: 访问节点文件系统的风险；把镜像当卷挂载。
+      core: false
+    summary: 第 9 章 添加 Volumes：存储、配置与元数据（KIA2 ch9）
+  - id: p3.t03
+    title: 第 10 章 用 PersistentVolume 持久化数据（KIA2 ch10）
+    children:
+    - id: p3.t03.pv-pvc-storageclass-dynamic-provisioning
+      title: PV、PVC 与 StorageClass 的 dynamic provisioning
+      summary: 开发者声明需求、管理员或驱动提供卷；绑定模式 WaitForFirstConsumer。
+      core: true
+    - id: p3.t03.access-modes-reclaim-policy-static-provisioning
+      title: Access modes、reclaim policy 与 static provisioning
+      summary: RWO/RWX/RWOP 的区别；Retain 与 Delete 的后果。
+      core: false
+    - id: p3.t03.csi-controller-node-plugin-sidecars
+      title: CSI 架构：controller, node plugin, sidecars
+      summary: 供给、挂载、扩容、快照各由哪个组件完成。
+      core: false
+    - id: p3.t03.resize-volumesnapshot-ephemeral-volume
+      title: Resize、VolumeSnapshot 与 ephemeral volume
+      summary: 在线扩容与快照恢复；按 Pod 生成的临时 PVC。
+      core: false
+    summary: 第 10 章 用 PersistentVolume 持久化数据（KIA2 ch10）
+  summary: 第 3 部分 应用配置与存储
+  order: 3
+- id: p4
+  title: 第 4 部分 连接与暴露应用
+  children:
+  - id: p4.t01
+    title: 第 11 章 用 Service 暴露 Pod（KIA2 ch11）
+    children:
+    - id: p4.t01.service-clusterip
+      title: Service 与 ClusterIP
+      summary: 稳定入口，选择器选出后端；集群内访问。
+      core: true
+    - id: p4.t01.nodeport-loadbalancer-externaltrafficpolicy
+      title: NodePort、LoadBalancer 与 externalTrafficPolicy
+      summary: 外部流量进来的路径、源 IP 保留、节点排空时的丢流量。
+      core: true
+    - id: p4.t01.endpoints-endpointslice-readiness-probe
+      title: Endpoints、EndpointSlice 与 readiness probe
+      summary: 哪些 Pod 进入后端由就绪决定；大规模 Service 的更新放大。
+      core: true
+    - id: p4.t01.service-dns-records-headless-service
+      title: Service 的 DNS records 与 headless Service
+      summary: A/SRV 记录；无头服务直连 Pod；CNAME 别名。
+      core: false
+    - id: p4.t01.internaltrafficpolicy-topology-aware-routing
+      title: 就近路由：internalTrafficPolicy 与 topology-aware routing
+      summary: 省跨区流量费与延迟。
+      core: false
+    summary: 第 11 章 用 Service 暴露 Pod（KIA2 ch11）
+  - id: p4.t02
+    title: 第 12 章 用 Ingress 把流量路由到 Service（KIA2 ch12）
+    children:
+    - id: p4.t02.ingress-ingress-controller
+      title: Ingress 与 Ingress controller
+      summary: 七层路由对象和真正干活的反向代理；基于路径与主机的路由。
+      core: false
+    - id: p4.t02.tls-annotations-ingressclass-backend
+      title: TLS、annotations、IngressClass 与自定义 backend
+      summary: 为什么注解成了 Ingress 的痛点。
+      core: false
+    summary: 第 12 章 用 Ingress 把流量路由到 Service（KIA2 ch12）
+  - id: p4.t03
+    title: 第 13 章 用 Gateway API 路由流量（KIA2 ch13）
+    children:
+    - id: p4.t03.gateway-api-ingress
+      title: 为什么 Gateway API 取代 Ingress
+      summary: 角色分离、可移植性、表达力；与 Ingress 对照。
+      core: true
+    - id: p4.t03.gatewayclass-gateway-httproute
+      title: GatewayClass、Gateway 与 HTTPRoute
+      summary: 三个对象谁归谁管，Gateway 的 status 怎么读。
+      core: true
+    - id: p4.t03.traffic-split-filters-tls
+      title: Traffic split、filters 与 TLS
+      summary: 权重金丝雀、请求头改写、网关终止 TLS 与透传。
+      core: false
+    - id: p4.t03.cross-namespace-tcproute-grpcroute-service-mesh
+      title: Cross-namespace、TCPRoute、GRPCRoute 与 service mesh
+      summary: ReferenceGrant；入口网关到网格的过渡。
+      core: false
+    summary: 第 13 章 用 Gateway API 路由流量（KIA2 ch13）
+  - id: p4.t04
+    title: 补充章 Service discovery 与 cluster networking（Poulton ch9 + docs）
+    children:
+    - id: p4.t04.service-discovery-registry-coredns-ndots
+      title: Service discovery 深入：registry、CoreDNS、ndots 与排查
+      summary: 服务注册表、集群 DNS、搜索域与 `ndots:5` 的额外查询与延迟；DNS/Service/EndpointSlice 逐层排查。
+      core: true
+    - id: p4.t04.pod-network-model-cni
+      title: Pod network model 与 CNI
+      summary: 每个 Pod 一个 IP、无 NAT 互通；CNI 插件在 Pod 创建时做什么。
+      core: false
+    - id: p4.t04.kube-proxy-service-dataplane-iptables-nftables
+      title: kube-proxy 与 Service 的 dataplane：iptables、nftables
+      summary: Service 只是规则不是进程；DNAT 与 conntrack。
+      core: false
+    - id: p4.t04.networkpolicy
+      title: NetworkPolicy
+      summary: 默认全通；白名单模型；策略由 CNI 实现，不支持的 CNI 不生效。
+      core: true
+    - id: p4.t04.ebpf-dataplane-service-mesh
+      title: eBPF dataplane 与 service mesh
+      summary: 绕开 iptables；sidecar 与 ambient 的取舍，只讲 Kubernetes 侧机制。
+      core: false
+    summary: 补充章 Service discovery 与 cluster networking（Poulton ch9 + docs）
+  summary: 第 4 部分 连接与暴露应用
+  order: 4
+- id: p5
+  title: 第 5 部分 大规模管理应用
+  children:
+  - id: p5.t01
+    title: 第 14 章 用 ReplicaSet 扩缩与维护 Pod（KIA2 ch14）
+    children:
+    - id: p5.t01.replicaset-reconciliation-loop
+      title: ReplicaSet 与 reconciliation loop
+      summary: 数 Pod、补 Pod；Pod 所有权（ownerReferences）；改 Pod 模板不会影响已有 Pod；级联删除与保留孤儿 Pod。
+      core: true
+    summary: 第 14 章 用 ReplicaSet 扩缩与维护 Pod（KIA2 ch14）
+  - id: p5.t02
+    title: 第 15 章 用 Deployment 自动更新应用（KIA2 ch15）
+    children:
+    - id: p5.t02.deployment-basics-scale
+      title: Deployment basics：创建与 scale
+      summary: Deployment → ReplicaSet → Pod 的所有权链。
+      core: true
+    - id: p5.t02.rolling-update-pause-rollback
+      title: Rolling update、pause 与 rollback
+      summary: maxSurge/maxUnavailable 怎么算；更新到坏版本时发生什么；revision 历史。
+      core: true
+    - id: p5.t02.recreate-rollout-strategies
+      title: Recreate 及其他 rollout strategies
+      summary: 各策略适用条件，Deployment 自身只做前两种。
+      core: false
+    summary: 第 15 章 用 Deployment 自动更新应用（KIA2 ch15）
+  - id: p5.t03
+    title: 第 16 章 处理有状态应用：StatefulSet（KIA2 ch16）
+    children:
+    - id: p5.t03.stateful-statefulset-deployment
+      title: Stateful 需求：StatefulSet 对比 Deployment
+      summary: 稳定名字、稳定存储、有序启动；无头 Service 的角色。
+      core: true
+    - id: p5.t03.statefulset-scale-down-pvc-retention-policy
+      title: StatefulSet 的行为：节点故障、scale-down 与 PVC retention policy
+      summary: 为什么 Pod 删除不等于卷删除；OrderedReady 管理策略。
+      core: false
+    - id: p5.t03.operator-rollingupdate-partition-ondelete
+      title: 更新策略与 Operator：RollingUpdate partition, OnDelete
+      summary: 分区灰度；用 Operator 管数据库。
+      core: false
+    summary: 第 16 章 处理有状态应用：StatefulSet（KIA2 ch16）
+  - id: p5.t04
+    title: 第 17 章 用 DaemonSet 部署每节点负载（KIA2 ch17）
+    children:
+    - id: p5.t04.daemonset-node-agents
+      title: DaemonSet 与 node agents
+      summary: 每节点一个 Pod；节点选择；特权、hostPath、hostNetwork 的特殊要求；本地通信方式。
+      core: false
+    summary: 第 17 章 用 DaemonSet 部署每节点负载（KIA2 ch17）
+  - id: p5.t05
+    title: 第 18 章 用 Job 与 CronJob 批处理（KIA2 ch18）
+    children:
+    - id: p5.t05.job-completion-parallelism
+      title: Job：completion 语义、失败与 parallelism
+      summary: 一次性任务如何判定成功、如何重试。
+      core: true
+    - id: p5.t05.cronjob
+      title: CronJob
+      summary: 调度表达式、并发策略、启动期限、保留历史。
+      core: false
+    summary: 第 18 章 用 Job 与 CronJob 批处理（KIA2 ch18）
+  summary: 第 5 部分 大规模管理应用
+  order: 5
+- id: p6
+  title: 第 6 部分 安全
+  children:
+  - id: p6.t01
+    title: 补充章 API security、RBAC 与 admission control（Poulton ch13）
+    children:
+    - id: p6.t01.authentication-serviceaccount-token
+      title: Authentication 与 ServiceAccount token
+      summary: 用户证书/OIDC；Pod 的身份与绑定的短期令牌。
+      core: true
+    - id: p6.t01.rbac-authorization-role-clusterrole-binding-esca
+      title: RBAC（authorization）— Role/ClusterRole/Binding 的判定；`escalate`、`bind`、`impersonate` 的提权陷阱。
+      summary: RBAC（authorization）— Role/ClusterRole/Binding 的判定；`escalate`、`bind`、`impersonate` 的提权陷阱。
+      core: true
+    - id: p6.t01.admission-control-pod-security-admission
+      title: Admission control 与 Pod Security Admission
+      summary: 变更与校验两段；privileged/baseline/restricted 三档。
+      core: true
+    summary: 补充章 API security、RBAC 与 admission control（Poulton ch13）
+  - id: p6.t02
+    title: 补充章 Threat modeling 与现实安全（Poulton ch15–16）
+    children:
+    - id: p6.t02.stride-kubernetes-threat-modeling
+      title: 用 STRIDE 给 Kubernetes 做 threat modeling
+      summary: 欺骗、篡改、抵赖、信息泄露、拒绝服务、提权各对应控制面哪里。
+      core: true
+    - id: p6.t02.workload-isolation
+      title: Workload isolation
+      summary: securityContext、用户命名空间、沙箱运行时（gVisor、Kata）的取舍。
+      core: false
+    - id: p6.t02.supply-chain-auditing-runtime-monitoring
+      title: Supply chain、auditing 与 runtime monitoring
+      summary: SBOM、镜像签名、审计策略、异常检测。
+      core: false
+    summary: 补充章 Threat modeling 与现实安全（Poulton ch15–16）
+  summary: 第 6 部分 安全
+  order: 6
+- id: p7
+  title: 第 7 部分 弹性、成本与加速器（两本书都不收，用 docs 与发布博客）
+  children:
+  - id: p7.t01
+    title: 补充章 Autoscaling 与成本（docs）
+    children:
+    - id: p7.t01.hpa-metrics-pipeline
+      title: HPA 与 metrics pipeline
+      summary: '`desired = ceil(current × metric/target)`；稳定窗口与容忍度。'
+      core: true
+    - id: p7.t01.vpa-in-place-resize-requests-right-sizing
+      title: VPA、in-place resize 与 requests right-sizing
+      summary: 为什么多数集群 requests 虚高；与 HPA 的冲突；成本分摊与 FinOps。
+      core: false
+    - id: p7.t01.keda-karpenter
+      title: KEDA 与 Karpenter
+      summary: 按队列伸缩、按 Pending Pod 直接挑实例。
+      core: false
+    summary: 补充章 Autoscaling 与成本（docs）
+  - id: p7.t02
+    title: 补充章 GPU、DRA 与 AI 工作负载（docs）
+    children:
+    - id: p7.t02.device-plugins-dra-dynamic-resource-allocation
+      title: 从 device plugins 到 DRA（Dynamic Resource Allocation）
+      summary: ResourceClaim/DeviceClass/ResourceSlice 取代只会数个数的设备插件。
+      core: true
+    - id: p7.t02.gpu-scheduling-mig-time-slicing
+      title: GPU scheduling：整卡、MIG 与 time-slicing
+      summary: 取舍与拓扑管理器、NUMA 对齐。
+      core: false
+    - id: p7.t02.gang-scheduling-kueue-llm-serving
+      title: Gang scheduling、Kueue 与 LLM serving
+      summary: 全起或全不起；模型冷启动、按并发而非 CPU 伸缩；只讲调度与伸缩，不讲推理引擎。
+      core: false
+    summary: 补充章 GPU、DRA 与 AI 工作负载（docs）
+  summary: 第 7 部分 弹性、成本与加速器（两本书都不收，用 docs 与发布博客）
+  order: 7
+- id: p8
+  title: 第 8 部分 扩展、策略、交付与运维（docs）
+  children:
+  - id: p8.t01
+    title: 补充章 扩展与 policy
+    children:
+    - id: p8.t01.crd-operator-pattern
+      title: CRD 与 Operator pattern
+      summary: 把领域知识写成控制器；CRD 的 CEL 校验与版本转换；与第 16 章数据库 Operator 呼应。
+      core: true
+    - id: p8.t01.validatingadmissionpolicy-mutatingadmissionpolic
+      title: ValidatingAdmissionPolicy 与 MutatingAdmissionPolicy
+      summary: 进程内的 CEL 校验/变更替代 Webhook；对比 Kyverno 与 Gatekeeper。
+      core: true
+    summary: 补充章 扩展与 policy
+  - id: p8.t02
+    title: 补充章 交付、platform 与 operations
+    children:
+    - id: p8.t02.gitops-argo-cd-flux
+      title: GitOps（Argo CD, Flux）
+      summary: Git 为唯一来源、集群内拉取；漂移检测、同步与回滚。
+      core: true
+    - id: p8.t02.helm-kustomize
+      title: Helm 与 Kustomize
+      summary: 模板 vs 补丁。
+      core: false
+    - id: p8.t02.progressive-delivery-argo-rollouts-gateway-api-w
+      title: Progressive delivery（Argo Rollouts, Gateway API weights）
+      summary: 按指标推进或回滚，对比 Deployment 滚动更新。
+      core: false
+    - id: p8.t02.multi-tenancy-multi-cluster-blast-radius
+      title: Multi-tenancy、multi-cluster 与 blast radius
+      summary: 命名空间、配额、策略；一个大集群是单点。
+      core: false
+    - id: p8.t02.cluster-upgrade-strategy
+      title: Cluster upgrade strategy
+      summary: 小版本逐级、弃用 API 检查、版本偏差、PDB 卡升级。
+      core: true
+    - id: p8.t02.observability-opentelemetry
+      title: Observability 与 OpenTelemetry
+      summary: 指标、日志、追踪；控制面自身的指标。
+      core: false
+    summary: 补充章 交付、platform 与 operations
+  summary: 第 8 部分 扩展、策略、交付与运维（docs）
+  order: 8
+- id: p9
+  title: 第 9 部分 工程例子：事故与复盘（k8s.af 与官方复盘）
+  children:
+  - id: p9.t01
+    title: 补充章 Incidents 与 postmortems
+    children:
+    - id: p9.t01.control-plane-node-openai-datadog
+      title: Control plane 与 node 级联故障（OpenAI 2024-12-11；Datadog 2023-03-08）
+      summary: 遥测服务压垮 API Server、自动补丁清掉 Cilium 路由；为什么测试抓不到。
+      core: true
+    - id: p9.t01.networking-dns-throttling-ndots-conntrack-cpu-th
+      title: Networking、DNS 与 throttling 类事故（ndots、conntrack、CPU throttling）
+      summary: Zalando、MindTickle、Buffer、Omio 等案例的故障链。
+      core: false
+    - id: p9.t01.rollout-admission-webhook-gitops-namespace-rolli
+      title: Rollout 与 admission 类事故（webhook 卡死集群、GitOps 误删 namespace、rolling update 502）
+      summary: Jetstack、Skyscanner、Ravelin 等。
+      core: false
+    - id: p9.t01.launch-checklist-postmortem-guardrails
+      title: 把事故变成 launch checklist（postmortem → guardrails）
+      summary: 探针、PDB、requests、ndots、webhook 失败策略、分批发布、爆炸半径。
+      core: true
+    summary: 补充章 Incidents 与 postmortems
+  summary: 第 9 部分 工程例子：事故与复盘（k8s.af 与官方复盘）
+  order: 9

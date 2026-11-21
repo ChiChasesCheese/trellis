@@ -1,0 +1,326 @@
+p1.t01:
+  notes:
+  - 图：① 单机部署 vs 集群上由调度器放置的对比 ② 控制面 + 工作节点的组件框图 ③ 「提交描述 → 应用运行」的流程。
+  - 2026：CNCF 2025 调查「82% 的容器用户在生产跑 Kubernetes」（BUILD.md 来源 6）；当前最新小版本 v1.36（2026-04-22）。托管服务细节待核实，不收。
+p1.t02:
+  notes:
+  - 图：① 容器 vs VM 的分层栈 ② 镜像分层与写时复制 ③ 一个进程在 PID/网络/挂载 namespace 里看到的世界 + cgroup 限额。
+  - 2026：cgroup v1 在 v1.35 被移除（kubelet 起不来）；containerd 1.x 的最后支持版本是 v1.35；用户命名空间（user namespaces）v1.36 GA。
+p1.t03:
+  notes:
+  - 图：① kubectl → 集群 的一次部署链路 ② 创建 Deployment 后出现的对象树（Deployment/ReplicaSet/Pod）③ Service 把流量分给多个 Pod。
+  - 2026：本章只引入名词，机制在第 2 章补充章解释；无新特性（无）。
+p1.t04:
+  notes:
+  - 图：① 控制面组件间的通信图（只有 apiserver 碰 etcd）② 调和循环：观察 → 比较 → 行动 ③ apply 到运行的时序图。
+  - 2026：v1.35 起 kubelet 不支持 cgroup v1；控制面 z-pages：/statusz v1.36 beta（默认开启）；控制器陈旧缓存（staleness）缓解 v1.36 beta。
+p1.t05:
+  notes:
+  - 图：① 对象清单字段的标注解剖图 ② spec/status 与控制器写入方向 ③ 一个 Event 从产生到被 describe 看到。
+  - 2026：无（无）。
+p1.t06:
+  notes:
+  - 图：① 请求链四个关卡的流程 ② resourceVersion 冲突的两次写入时序 ③ informer 内部：reflector → 本地缓存 → 队列 → worker。
+  - 2026：有序命名空间删除（Ordered Namespace deletion）v1.34 GA；其余无。
+p2.t01:
+  notes:
+  - 图：① Pod 内共享 net/IPC/volume 的容器框图 ② init 容器 → 主容器 → sidecar 的启动时序 ③ 临时调试容器附着到运行中的 Pod。
+  - '2026：原生 sidecar（initContainer + `restartPolicy: Always`）v1.33 GA。'
+p2.t02:
+  notes:
+  - 图：① Pod phase 状态机 ② 容器全生命周期时间线（init → postStart → 探针 → preStop → SIGTERM → SIGKILL）③ 终止时 endpoint 摘除与 SIGTERM 的竞态。
+  - 2026：v1.34 起 restricted 级 Pod Security 标准禁止探针与生命周期处理器使用 `host` 字段；其余无。
+p2.t03:
+  notes:
+  - 图：① 命名空间与集群范围对象的包含关系 ② 标签选择器把 Pod 分成不同子集的示意。
+  - 2026：无（无）。
+p2.t04:
+  notes:
+  - 图：① requests/limits 与 cgroup 的对应、QoS 驱逐顺序 ② 调度周期：队列 → 过滤 → 打分 → 绑定 ③ 拓扑分布约束下的 skew 计算例子 ④ kubelet 与 CRI 的调用关系。
+  - 2026：Pod 原地调整大小（in-place resize）v1.35 GA；Pod 级资源（pod-level resources）v1.34 beta；matchLabelKeys 与污点参与 skew 计算 v1.33 GA（取自
+    v1 outline，待在 v1.33 发布博客核实）；PSI 压力指标 v1.36 GA；cgroup v1 v1.35 移除。
+p3.t01:
+  notes:
+  - 图：① 配置注入的三条路径（env、卷、命令行参数）② Secret 从 API 到 etcd 到容器内文件的数据流及各处明文/密文。
+  - 2026：外部令牌签发（External ServiceAccount token signing）v1.36 GA，在第 6 部分展开；本章无其他新特性（无）。
+p3.t02:
+  notes:
+  - 图：① 卷在 Pod 内被多个容器挂载 ② configMap 卷的符号链接原子更新 ③ projected 卷把多个来源合成一个目录。
+  - 2026：OCI 镜像/制品卷（KEP-4639）v1.36 GA，用于分发模型文件；`gitRepo` 卷 v1.36 移除。
+p3.t03:
+  notes:
+  - 图：① PV/PVC/StorageClass 三者的绑定关系 ② 动态供给时序（PVC → provisioner → PV → 绑定 → 挂载）③ CSI 的 controller 与 node 两侧组件。
+  - 2026：VolumeAttributesClass（改卷参数不停机）v1.34 GA；卷扩容失败恢复 v1.34 GA；组快照（VolumeGroupSnapshot）v1.36 GA。
+p4.t01:
+  notes:
+  - 图：① Service 选择器 → EndpointSlice → Pod 的关系 ② 外部流量经 LoadBalancer/NodePort 到 Pod 的路径 ③ 就绪探针失败时端点被摘除的时序。
+  - '2026：Endpoints API v1.33 弃用（改用 EndpointSlice）；`trafficDistribution: PreferClose` v1.33 GA，`PreferSameNode` v1.35 GA，`PreferClose`
+    被 `PreferSameZone` 取代（弃用）；多 Service CIDR v1.33 GA；`.spec.externalIPs` v1.36 弃用。'
+p4.t02:
+  notes:
+  - 图：① Ingress 对象 + 控制器 + 反向代理的三者关系 ② 路径/主机规则的匹配示意。
+  - 2026：Ingress NGINX 于 2026-03-24 退役（无新版本与安全修复）；迁移见下一章。
+p4.t03:
+  notes:
+  - 图：① 三种角色（基础设施提供者、集群运维、应用开发者）与三种对象的对应 ② HTTPRoute 权重切分 90/10 的流量图 ③ 跨命名空间引用与 ReferenceGrant。
+  - 2026：Gateway API v1.0 于 2023-10-31 GA（Gateway、GatewayClass、HTTPRoute 为 v1）；ingress2gateway 迁移工具（待核实版本）。
+p4.t04:
+  notes:
+  - 图：① 查询 `svc.ns.svc.cluster.local` 经搜索域展开的 DNS 查询序列 ② Pod 到 Pod 跨节点的数据包路径（CNI）③ kube-proxy 规则链：ClusterIP → DNAT → Pod ④
+    NetworkPolicy 把默认全通变成白名单。
+  - 2026：kube-proxy nftables 后端 v1.33 GA；`ipvs` 模式 v1.35 弃用；Istio ambient、Cilium 数据面成熟度待核实。
+p5.t01:
+  notes:
+  - 图：① ReplicaSet 控制循环：期望 3 个、实际 2 个 → 创建 ② Pod 的 ownerReferences 指向链。
+  - 2026：无（无）。
+p5.t02:
+  notes:
+  - 图：① Deployment → ReplicaSet → Pod 所有权链 ② 滚动更新时间线（新旧 ReplicaSet 副本数随步变化）③ 金丝雀 vs 蓝绿的流量图。
+  - 2026：原生 sidecar 与滚动更新的交互（v1.33 GA 之后）；渐进式发布工具见第 8 部分。
+p5.t03:
+  notes:
+  - 图：① StatefulSet 的 Pod 序号、PVC、DNS 名一一对应 ② 节点失联时 Pod 被替换的时序（含脑裂风险）③ partition 灰度更新。
+  - 2026：StatefulSet 的 PVC 保留策略（persistentVolumeClaimRetentionPolicy）GA 版本待核实（疑为 v1.32），不上卡前先查；跑数据库的取舍见第 8 部分。
+p5.t04:
+  notes:
+  - 图：① 每个节点一个 Pod 与节点增减时的自动调整 ② 访问本地守护进程的三种方式。
+  - 2026：无（无）。
+p5.t05:
+  notes:
+  - 图：① Job 控制器的完成/失败状态机 ② Indexed Job 并行分片 ③ CronJob → Job → Pod 的三层。
+  - 2026：Job 成功策略（successPolicy）与按索引退避上限 v1.33 GA；原生 sidecar v1.33 GA 解决 Job 不结束。
+p6.t01:
+  notes:
+  - 图：① 认证、鉴权、准入三关口下的一次拒绝示例 ② RBAC 四个对象的关系（subject-binding-role-resource）③ 准入链中的 mutating 与 validating 顺序。
+  - 2026：外部 ServiceAccount 令牌签发 v1.36 GA；细粒度 kubelet API 授权 v1.36 GA；结构化认证配置 v1.34 GA；Pod Security Admission 早在 v1.25 GA（同版移除
+    PodSecurityPolicy）。
+p6.t02:
+  notes:
+  - 图：① STRIDE 六类威胁在集群架构图上的落点 ② 从镜像到运行的供应链各检查点 ③ 容器 vs 沙箱运行时的隔离层对比。
+  - 2026：用户命名空间 v1.36 GA；Sigstore/cosign 具体版本待核实。
+p7.t01:
+  notes:
+  - 图：① HPA 控制循环与指标来源 ② 原地调整的状态流转（Pod resize 条件）③ Cluster Autoscaler 与 Karpenter 的差异。
+  - 2026：原地调整 v1.35 GA；Pod 级资源原地调整 v1.36 beta；HPA 缩到零 v1.36 alpha；HPA 可配置容忍度 v1.33 alpha、v1.35 beta；Karpenter v1.0 于 2024
+    年 8 月（稳定 NodePool/EC2NodeClass API）。
+p7.t02:
+  notes:
+  - 图：① 设备插件 vs DRA 的申领流程 ② GPU 整卡/MIG/时间片三种共享方式 ③ 帮派调度的「全或无」队列。
+  - 2026：DRA 核心 v1.34 GA；管理员访问与优先备选 v1.36 GA；工作负载感知调度（Workload/PodGroup）v1.35 alpha、v1.36 继续推进仍 alpha；OCI 镜像卷 v1.36 GA。
+p8.t01:
+  notes:
+  - 图：① CRD → 自定义控制器的调和循环 ② 准入链里 Webhook vs CEL 策略的位置与失败模式。
+  - 2026：CEL 准入（KEP-3488）v1.30 稳定；MutatingAdmissionPolicy v1.34 beta → v1.36 GA。
+p8.t02:
+  notes:
+  - 图：① GitOps 拉取式同步循环与漂移 ② 金丝雀按指标自动推进/回滚的流程 ③ 升级顺序：控制面 → 节点，版本偏差窗口。
+  - 2026：cgroup v1 移除、v1.36 起不再支持 containerd 1.x（v1.35 是最后支持的版本）、ipvs 弃用（v1.35）都是升级雷；OTel Collector/Operator 的版本事实待核实；Argo
+    CD/Flux/Karpenter 的 CNCF 毕业状态待核实。
+p9.t01:
+  notes:
+  - 图：① 每个案例的故障链：触发 → 放大 → 为何测试没抓到 ② 检查清单对应到各章的回链图。
+  - 2026：事故年份均来自来源，不加新特性；清单回链第 2、4、5、8 部分。
+p1.t01.kubernetes:
+  cite: KIA2 §1.1
+p1.t01.cluster-architecture:
+  cite: KIA2 §1.2
+p1.t01.cluster-node-pod-deployment-service:
+  cite: KIA2 §1.2、§3.3；Poulton ch1
+p1.t01.kubernetes-managed-vs-self-hosted-vanilla-vs-ext:
+  cite: KIA2 §1.3
+p1.t02.containers-vs-vms:
+  cite: KIA2 §2.1.1
+p1.t02.image-dockerfile-registry:
+  cite: KIA2 §2.2
+p1.t02.namespaces-cgroups:
+  cite: KIA2 §2.3.1–2.3.3
+p1.t02.oci-container-runtime-seccomp-capabilities:
+  cite: KIA2 §2.1.4, §2.3.4
+p1.t03.local-cluster-kubectl-kubeconfig:
+  cite: KIA2 §3.1–3.2；Poulton ch3
+p1.t03.kubectl-imperative-vs-declarative:
+  cite: KIA2 §3.2–3.3；Poulton ch2 declarative model
+p1.t03.first-deployment:
+  cite: KIA2 §3.3
+p1.t04.control-plane-node:
+  cite: Poulton ch2
+p1.t04.controller:
+  cite: 'Poulton ch2；docs: https://kubernetes.io/docs/concepts/architecture/controller/'
+p1.t04.declarative-model-reconcile-loop:
+  cite: 'Poulton ch2；docs: https://kubernetes.io/docs/concepts/architecture/controller/'
+p1.t04.end-to-end-walk-through:
+  cite: Poulton ch2；KIA2 §1.2.4
+p1.t05.object-manifest-apiversion-kind-metadata-spec-st:
+  cite: KIA2 §4.1–4.2.2
+p1.t05.spec-vs-status-conditions:
+  cite: KIA2 §4.2.3
+p1.t05.events-kubectl-describe:
+  cite: KIA2 §4.2.4, §4.3
+p1.t06.api-rest-api-groups-versions:
+  cite: Poulton ch14
+p1.t06.api-server-request-pipeline-authentication-autho:
+  cite: 'Poulton ch14；docs: https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/'
+p1.t06.etcd-optimistic-concurrency-resourceversion:
+  cite: 'Poulton ch2；docs: https://kubernetes.io/docs/concepts/architecture/'
+p1.t06.watch-informer-work-queue:
+  cite: 'docs: https://kubernetes.io/docs/reference/using-api/api-concepts/'
+p1.t06.server-side-apply-finalizers-ownerreferences:
+  cite: 'docs: https://kubernetes.io/docs/reference/using-api/server-side-apply/'
+p2.t01.pod-container:
+  cite: KIA2 §5.1
+p2.t01.pod-manifest:
+  cite: KIA2 §5.2
+p2.t01.pod-logs-exec-port-forward-ephemeral-containers:
+  cite: KIA2 §5.3
+p2.t01.multi-container-pod-init-containers-native-sidec:
+  cite: KIA2 §5.4–5.5
+p2.t02.pod-status-phase-conditions-container-states:
+  cite: KIA2 §6.1
+p2.t02.restart-policy-probes-liveness-readiness-startup:
+  cite: KIA2 §6.2
+p2.t02.probe:
+  cite: 'KIA2 §6.2.7；docs: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/'
+p2.t02.poststart-prestop-lifecycle:
+  cite: KIA2 §6.3–6.4
+p2.t02.graceful-termination:
+  cite: 'docs: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/'
+p2.t03.namespaces:
+  cite: KIA2 §7.1
+p2.t03.labels-selectors:
+  cite: KIA2 §7.2–7.3
+p2.t03.field-selectors-annotations:
+  cite: KIA2 §7.4–7.5
+p2.t04.resource-requests-limits-qos-classes:
+  cite: 'docs: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
+p2.t04.cpu-throttling-oom-kill:
+  cite: 'docs: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
+p2.t04.scheduling-cycle-filter-score-bind:
+  cite: 'docs: https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/'
+p2.t04.affinity-taints-tolerations-topology-spread:
+  cite: 'docs: https://kubernetes.io/docs/concepts/scheduling-eviction/'
+p2.t04.kubelet-cri-node-pressure-eviction:
+  cite: 'docs: https://kubernetes.io/docs/concepts/architecture/nodes/'
+p2.t04.priorityclass-preemption-poddisruptionbudget:
+  cite: 'docs: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/'
+p3.t01.command-args-env:
+  cite: KIA2 §8.1
+p3.t01.configmap-pod-manifest:
+  cite: KIA2 §8.2；Poulton ch11
+p3.t01.secret:
+  cite: KIA2 §8.3；Poulton ch11
+p3.t01.downward-api:
+  cite: KIA2 §8.4
+p3.t02.volumes-emptydir:
+  cite: KIA2 §9.1–9.2
+p3.t02.configmap-secret-downwardapi-projected-volumes:
+  cite: KIA2 §9.5
+p3.t02.hostpath-image-volume-volume-types:
+  cite: KIA2 §9.3–9.4, §9.6
+p3.t03.pv-pvc-storageclass-dynamic-provisioning:
+  cite: KIA2 §10.1–10.2；Poulton ch10
+p3.t03.access-modes-reclaim-policy-static-provisioning:
+  cite: KIA2 §10.2.4, §10.3
+p3.t03.csi-controller-node-plugin-sidecars:
+  cite: KIA2 §10.2.6；Poulton ch10
+p3.t03.resize-volumesnapshot-ephemeral-volume:
+  cite: KIA2 §10.4–10.5
+p4.t01.service-clusterip:
+  cite: KIA2 §11.1；Poulton ch7
+p4.t01.nodeport-loadbalancer-externaltrafficpolicy:
+  cite: KIA2 §11.2
+p4.t01.endpoints-endpointslice-readiness-probe:
+  cite: KIA2 §11.3, §11.6
+p4.t01.service-dns-records-headless-service:
+  cite: KIA2 §11.4
+p4.t01.internaltrafficpolicy-topology-aware-routing:
+  cite: KIA2 §11.5
+p4.t02.ingress-ingress-controller:
+  cite: KIA2 §12.1–12.2
+p4.t02.tls-annotations-ingressclass-backend:
+  cite: KIA2 §12.3–12.6
+p4.t03.gateway-api-ingress:
+  cite: KIA2 §13.1；Poulton ch8
+p4.t03.gatewayclass-gateway-httproute:
+  cite: KIA2 §13.2–13.3.1；Poulton ch8
+p4.t03.traffic-split-filters-tls:
+  cite: KIA2 §13.3.2–13.4
+p4.t03.cross-namespace-tcproute-grpcroute-service-mesh:
+  cite: KIA2 §13.5–13.7
+p4.t04.service-discovery-registry-coredns-ndots:
+  cite: Poulton ch9
+p4.t04.pod-network-model-cni:
+  cite: 'docs: https://kubernetes.io/docs/concepts/services-networking/'
+p4.t04.kube-proxy-service-dataplane-iptables-nftables:
+  cite: 'docs: https://kubernetes.io/docs/reference/networking/virtual-ips/'
+p4.t04.networkpolicy:
+  cite: 'docs: https://kubernetes.io/docs/concepts/services-networking/network-policies/'
+p4.t04.ebpf-dataplane-service-mesh:
+  cite: 'docs: https://kubernetes.io/docs/concepts/services-networking/'
+p5.t01.replicaset-reconciliation-loop:
+  cite: KIA2 §14.1–14.3
+p5.t02.deployment-basics-scale:
+  cite: KIA2 §15.1；Poulton ch6
+p5.t02.rolling-update-pause-rollback:
+  cite: KIA2 §15.2；Poulton ch6
+p5.t02.recreate-rollout-strategies:
+  cite: KIA2 §15.2.1, §15.3
+p5.t03.stateful-statefulset-deployment:
+  cite: KIA2 §16.1；Poulton ch12
+p5.t03.statefulset-scale-down-pvc-retention-policy:
+  cite: KIA2 §16.2；Poulton ch12
+p5.t03.operator-rollingupdate-partition-ondelete:
+  cite: KIA2 §16.3–16.4
+p5.t04.daemonset-node-agents:
+  cite: KIA2 §17.1–17.3
+p5.t05.job-completion-parallelism:
+  cite: KIA2 §18.1.1–18.1.4
+p5.t05.cronjob:
+  cite: KIA2 §18.2
+p6.t01.authentication-serviceaccount-token:
+  cite: Poulton ch13
+p6.t01.rbac-authorization-role-clusterrole-binding-esca:
+  cite: Poulton ch13
+p6.t01.admission-control-pod-security-admission:
+  cite: 'Poulton ch13；docs: https://kubernetes.io/docs/concepts/security/pod-security-admission/'
+p6.t02.stride-kubernetes-threat-modeling:
+  cite: Poulton ch15
+p6.t02.workload-isolation:
+  cite: Poulton ch16
+p6.t02.supply-chain-auditing-runtime-monitoring:
+  cite: Poulton ch16
+p7.t01.hpa-metrics-pipeline:
+  cite: 'docs: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/'
+p7.t01.vpa-in-place-resize-requests-right-sizing:
+  cite: 'docs: https://kubernetes.io/docs/concepts/workloads/autoscaling/'
+p7.t01.keda-karpenter:
+  cite: 'docs: https://keda.sh/docs/；https://karpenter.sh/docs/'
+p7.t02.device-plugins-dra-dynamic-resource-allocation:
+  cite: 'docs: https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/'
+p7.t02.gpu-scheduling-mig-time-slicing:
+  cite: 'docs: https://kubernetes.io/docs/tasks/manage-gpus/scheduling-gpus/'
+p7.t02.gang-scheduling-kueue-llm-serving:
+  cite: 'docs: https://kueue.sigs.k8s.io/docs/'
+p8.t01.crd-operator-pattern:
+  cite: 'docs: https://kubernetes.io/docs/concepts/extend-kubernetes/'
+p8.t01.validatingadmissionpolicy-mutatingadmissionpolic:
+  cite: 'docs: https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/'
+p8.t02.gitops-argo-cd-flux:
+  cite: 'docs: https://argo-cd.readthedocs.io/；https://fluxcd.io/docs/'
+p8.t02.helm-kustomize:
+  cite: 'docs: https://helm.sh/docs/；https://kubectl.docs.kubernetes.io/'
+p8.t02.progressive-delivery-argo-rollouts-gateway-api-w:
+  cite: 'docs: https://argo-rollouts.readthedocs.io/'
+p8.t02.multi-tenancy-multi-cluster-blast-radius:
+  cite: 'docs: https://kubernetes.io/docs/concepts/security/multi-tenancy/'
+p8.t02.cluster-upgrade-strategy:
+  cite: 'docs: https://kubernetes.io/docs/tasks/administer-cluster/'
+p8.t02.observability-opentelemetry:
+  cite: 'docs: https://kubernetes.io/docs/concepts/cluster-administration/system-metrics/'
+p9.t01.control-plane-node-openai-datadog:
+  cite: 'docs: https://status.openai.com/incidents/ctrsv3lwd797；https://www.datadoghq.com/blog/engineering/2023-03-08-deep-dive-into-platform-level-impact/'
+p9.t01.networking-dns-throttling-ndots-conntrack-cpu-th:
+  cite: 'docs: https://k8s.af'
+p9.t01.rollout-admission-webhook-gitops-namespace-rolli:
+  cite: 'docs: https://k8s.af'
+p9.t01.launch-checklist-postmortem-guardrails:
+  cite: 'docs: https://k8s.af'

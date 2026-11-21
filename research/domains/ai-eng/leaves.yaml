@@ -1,0 +1,222 @@
+t01.llm-next-token-prediction:
+  cite: ai-engineering Ch.1、Ch.2 §Modeling
+t01.token-tokenizer:
+  cite: ai-engineering Ch.1 §Language models
+t01.context-window:
+  cite: ai-engineering Ch.2、Ch.5
+t01.transformer-attention:
+  cite: ai-engineering Ch.2 §Transformer architecture
+t01.pre-training-post-training-sft-preference-finetu:
+  cite: ai-engineering Ch.2 §Post-Training
+t01.sampling-temperature-top-k-top-p:
+  cite: ai-engineering Ch.2 §Sampling Strategies
+t01.structured-outputs:
+  cite: ai-engineering Ch.2 §Structured Outputs
+t01.embedding:
+  cite: ai-engineering Ch.3 §Embeddings
+t01.model-size-parameters-scaling-law:
+  cite: ai-engineering Ch.2 §Model Size
+t01.foundation-model-model-api:
+  cite: ai-engineering Ch.1
+t02.ai-engineering-stack:
+  cite: ai-engineering Ch.1 The AI Engineering Stack（Three Layers、AI Engineering vs ML / Full-Stack Engineering）；Ch.2 The
+    Probabilistic Nature of AI
+t02.simplest-thing-first-workflow-agent:
+  cite: ai-engineering Ch.10 AI Engineering Architecture（Step 1–5 逐级加复杂度）；Ch.6 Agents；工作流到智能体的分级另见 https://www.anthropic.com/engineering/building-effective-agents
+t02.use-case-evaluation-llm:
+  cite: ai-engineering Ch.1 Planning AI Applications（Use Case Evaluation、Setting Expectations、Milestone Planning）
+t02.model-selection-build-vs-buy:
+  cite: ai-engineering Ch.4 Model Selection（Model Selection Workflow、Model Build Versus Buy）
+t02.public-benchmark:
+  cite: ai-engineering Ch.4 Navigate Public Benchmarks（Benchmark selection and aggregation、Data contamination）
+t02.langchain-llamaindex-api:
+  cite: 无书，https://www.anthropic.com/engineering/building-effective-agents（书中多处顺带提到 LangChain / LlamaIndex，无专节）
+t02.sampling-non-determinism:
+  cite: ai-engineering Ch.2 Sampling
+t02.open-source-open-weights-model-licenses:
+  cite: ai-engineering Ch.4 Open source, open weight, and model licenses
+t02.ai-product-defensibility-milestone-planning-main:
+  cite: ai-engineering Ch.1 AI product defensibility、Milestone Planning、Maintenance
+t03.rag-pipeline-ingestion-chunking-indexing-retriev:
+  cite: ai-engineering Ch.6 RAG Architecture
+t03.chunking-semantic-chunking:
+  cite: ai-engineering Ch.6 Retrieval Optimization → Chunking strategy；RAG Beyond Texts（Multimodal RAG、RAG with tabular data）
+t03.embedding-model:
+  cite: ai-engineering Ch.3 Introduction to Embedding；Ch.6 Embedding-based retrieval
+t03.vector-index-ann-hnsw-ivf-product-quantization:
+  cite: ai-engineering Ch.6 Sparse Versus Dense Retrieval → Embedding-based retrieval（向量搜索算法 HNSW / IVF / PQ）
+t03.hybrid-search-bm25-vector-fusion:
+  cite: ai-engineering Ch.6 Combining retrieval algorithms（含 RRF）；Term-based retrieval
+t03.reranking-cross-encoder:
+  cite: ai-engineering Ch.6 Retrieval Optimization → Reranking
+t03.query-rewriting-expansion-hyde-multi-query-sub-q:
+  cite: ai-engineering Ch.6 Retrieval Optimization → Query rewriting、Contextual retrieval（书中未讲 HyDE）
+t03.metadata-filtering-multi-tenant:
+  cite: 无书，https://docs.pinecone.io/guides/index-data/implement-multitenancy（书中仅在 Ch.6 顺带提 metadata）
+t03.retrieval-evaluation-recall-k-precision-mrr-ndcg:
+  cite: ai-engineering Ch.6 Evaluating Retrieval Solutions
+t03.rag-faithfulness-answer-relevance:
+  cite: ai-engineering Ch.4 Generation Capability → Factual consistency；Ch.3 AI as a Judge
+t03.rag-failure-modes:
+  cite: 无书，https://arxiv.org/abs/2401.05856（可查 Barnett 等《Seven Failure Points When Engineering a RAG System》，待核）
+t03.long-context-vs-rag:
+  cite: ai-engineering Ch.5 Context Length and Context Efficiency；Ch.6 RAG（部分）
+t03.agentic-retrieval-graphrag:
+  cite: 无书，https://arxiv.org/abs/2404.16130（GraphRAG 论文 arXiv 2404.16130，待核；Ch.6 Tools → Knowledge augmentation 仅涉及智能体检索）
+t03.index-incremental-update-data-freshness:
+  cite: 无书，https://blogs.oracle.com/developers/real-time-rag-live-sql-incremental-indexing-and-freshness-tests
+t03.multimodal-tabular-rag:
+  cite: ai-engineering Ch.6 RAG Beyond Texts
+t03.context-restrict-knowledge-to-context:
+  cite: ai-engineering Ch.5 How to Restrict a Model's Knowledge to Only Its Context
+t04.workflow-patterns-prompt-chaining-routing-parall:
+  cite: 无书，https://www.anthropic.com/engineering/building-effective-agents（Ch.6 Planning 只讲控制流：顺序、并行、条件、循环）
+t04.agent-loop-stop-condition-max-steps-budget:
+  cite: ai-engineering Ch.6 Agent Overview、Planning（Reflection and error correction）、Agent Failure Modes and Evaluation →
+    Efficiency
+t04.tool-design-agent-computer-interface:
+  cite: ai-engineering Ch.6 Tools（Knowledge augmentation、Capability extension、Write actions）；Tool selection
+t04.tool-idempotency-permissions-side-effect:
+  cite: ai-engineering Ch.6 Tools → Write actions（部分；幂等键书中无）
+t04.error-handling-retry-observation:
+  cite: ai-engineering Ch.6 Reflection and error correction；Agent Failure Modes → Tool failures；Ch.10 Gateway（Fallback，部分）
+t04.agent-state-memory-session-state-external-store:
+  cite: ai-engineering Ch.6 Memory
+t04.context-engineering:
+  cite: 'ai-engineering Ch.5 Context Length and Context Efficiency、Terminology Ambiguity: Prompt Versus Context；Ch.6 Memory（部分）'
+t04.human-in-the-loop-approval-escalation:
+  cite: 无书，https://www.anthropic.com/engineering/building-effective-agents（书中 Ch.4 仅一处提及）
+t04.durable-execution-checkpoint:
+  cite: 无书，https://docs.temporal.io（待核）
+t04.multi-agent:
+  cite: 无书，https://www.anthropic.com/engineering/multi-agent-research-system（待核；Ch.6 仅少量提及）
+t04.subagents-context-isolation:
+  cite: 无书，同上（Anthropic 多智能体研究系统文章，待核）
+t04.mcp:
+  cite: 无书，https://modelcontextprotocol.io（书未提及 MCP）
+t04.agent-sandbox-execution-environment:
+  cite: 无书，https://www.anthropic.com/engineering/claude-code-sandboxing（Ch.6 Tools → Capability extension 仅提代码解释器）
+t04.agent-compounding-errors-loops-goal-drift-over-a:
+  cite: ai-engineering Ch.6 Agent Failure Modes and Evaluation（Planning failures、Tool failures、Efficiency）
+t04.agent-planning-planning-execution-reflection-too:
+  cite: ai-engineering Ch.6 Planning
+t05.evals-evaluate-debug-change:
+  cite: ai-engineering Ch.4 Evaluation-Driven Development；Ch.3 Challenges of Evaluating Foundation Models
+t05.error-analysis-failure-mode:
+  cite: ai-engineering Ch.4 Step 3 Define Evaluation Methods and Data → Annotate evaluation data、Iterate（部分）；另见 https://hamel.dev/blog/posts/evals/
+t05.eval-assertion-human-model-review-online-a-b:
+  cite: ai-engineering Ch.3 Exact Evaluation、AI as a Judge、Ranking Models with Comparative Evaluation；Ch.4 Step 3 Select evaluation
+    methods
+t05.golden-set:
+  cite: ai-engineering Ch.4 Step 3 → Annotate evaluation data；Ch.8 Data Curation（Quality、Coverage、Quantity）
+t05.code-based-assertions-verifiable-evals:
+  cite: ai-engineering Ch.3 Exact Evaluation → Functional Correctness
+t05.llm-as-judge:
+  cite: ai-engineering Ch.3 AI as a Judge（Why / How / Limitations：Inconsistency、Criteria ambiguity、Biases）
+t05.judge-human-annotation-agreement-rate-precision:
+  cite: ai-engineering Ch.3 How to Use AI as a Judge；Ch.4 Step 3 → Evaluate your evaluation pipeline
+t05.regression-tests-ci-gate:
+  cite: ai-engineering Ch.4 Evaluation-Driven Development、Step 3 → Iterate（部分；CI 门限书中无）
+t05.eval-statistical-power-sample-size-confidence-in:
+  cite: ai-engineering Ch.4 Step 3 → Evaluate your evaluation pipeline（部分）；Ch.2 The Probabilistic Nature of AI → Inconsistency
+t05.agent-evals-trajectory-tool-calls-end-state-chec:
+  cite: ai-engineering Ch.6 Agent Failure Modes and Evaluation；Ch.3 Functional Correctness（pass@k；pass^k 书中无）
+t05.online-evals-production-monitoring-sampled-scori:
+  cite: ai-engineering Ch.10 Monitoring and Observability（Metrics、Drift detection）；Ch.10 User Feedback
+t05.benchmark-integrity-contamination-saturation-gam:
+  cite: ai-engineering Ch.4 Navigate Public Benchmarks → Data contamination with public benchmarks
+t05.evaluation-criteria-domain-capability-generation:
+  cite: ai-engineering Ch.4 Evaluation Criteria
+t05.evaluation-guideline-scoring-rubric:
+  cite: ai-engineering Ch.4 Step 2 Create an Evaluation Guideline
+t05.comparative-evaluation-pairwise-ranking:
+  cite: ai-engineering Ch.3 Ranking Models with Comparative Evaluation
+t06.threat-model-owasp-llm-top:
+  cite: 无书，https://genai.owasp.org/llm-top-10/（Ch.5 Defensive Prompt Engineering 仅涉及其中提示注入与信息泄露）
+t06.direct-indirect-prompt-injection:
+  cite: ai-engineering Ch.5 Jailbreaking and Prompt Injection（Direct manual prompt hacking、Automated attacks、Indirect prompt
+    injection）
+t06.lethal-trifecta:
+  cite: 无书，https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
+t06.excessive-agency-least-privilege:
+  cite: ai-engineering Ch.5 Defenses Against Prompt Attacks → System-level defense（部分）；另见 OWASP LLM Top 10
+t06.output-handling-untrusted-input:
+  cite: ai-engineering Ch.10 Step 2 Put in Guardrails → Output guardrails（部分）；另见 OWASP LLM Top 10
+t06.input-output-guardrails:
+  cite: ai-engineering Ch.10 Step 2 Put in Guardrails（Input guardrails、Output guardrails、Guardrail implementation）
+t06.guardrail-detector:
+  cite: ai-engineering Ch.10 Guardrail implementation；Ch.5 Defenses Against Prompt Attacks
+t06.architectural-defence-patterns-dual-llm-plan-the:
+  cite: 无书，https://arxiv.org/abs/2503.18813（CaMeL 论文，待核）
+t06.jailbreak-red-teaming-adversarial-testing:
+  cite: ai-engineering Ch.5 Jailbreaking and Prompt Injection → Automated attacks
+t06.system-prompt-leakage-data-exfiltration:
+  cite: ai-engineering Ch.5 Proprietary Prompts and Reverse Prompt Engineering；Information Extraction
+t06.unbounded-consumption-abuse-control-rate-limit-q:
+  cite: ai-engineering Ch.10 Step 3 → Gateway（限流，部分）；另见 OWASP LLM Top 10
+t06.structured-outputs-constrained-decoding-guardrai:
+  cite: ai-engineering Ch.2 Structured Outputs（Constrained sampling）
+t07.cost-model-input-output-cache-read-write:
+  cite: ai-engineering Ch.4 Evaluation Criteria → Cost and Latency；Ch.9 Inference Service Optimization → Prompt caching（部分）
+t07.latency-ttft-tpot-end-to-end:
+  cite: ai-engineering Ch.9 Inference Performance Metrics → Latency, TTFT, and TPOT
+t07.prompt-caching-stable-prefix:
+  cite: ai-engineering Ch.9 Inference Service Optimization → Prompt caching；Ch.10 Step 4 Reduce Latency with Caches
+t07.exact-cache-semantic-cache:
+  cite: ai-engineering Ch.10 Step 4 → Exact caching、Semantic caching
+t07.model-routing-cascade:
+  cite: ai-engineering Ch.10 Step 3 Add Model Router and Gateway → Router
+t07.batch-api-async-processing:
+  cite: ai-engineering Ch.9 Online and batch inference APIs
+t07.token-prompt-context-output:
+  cite: ai-engineering Ch.5 Context Length and Context Efficiency（部分）
+t07.reasoning-budget-thinking-mode:
+  cite: ai-engineering Ch.2 Sampling → Test Time Compute
+t07.rate-limit-retry-fallback:
+  cite: ai-engineering Ch.10 Gateway（rate limits、fallback）（部分）
+t07.self-hosting-vs-api-break-even-point:
+  cite: ai-engineering Ch.4 Model Build Versus Buy → Open source models versus model APIs；Ch.9 Selecting Accelerators（部分）
+t08.trace-span:
+  cite: ai-engineering Ch.10 Monitoring Versus Observability → Logs and traces
+t08.logging-privacy-retention:
+  cite: ai-engineering Ch.10 Logs and traces（部分；隐私与留存书中无专节，见 https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/）
+t08.production-traces-eval-set:
+  cite: ai-engineering Ch.10 User Feedback；Ch.4 Step 3 → Annotate evaluation data（部分）
+t08.prompt-versioning:
+  cite: ai-engineering Ch.5 Organize and Version Prompts
+t08.quality-metrics-business-metrics:
+  cite: ai-engineering Ch.10 Metrics；Ch.4 Step 2 → Tie evaluation metrics to business metrics
+t08.provider-incident-silent-model-change:
+  cite: ai-engineering Ch.4 "Are OpenAI's Models Getting Worse?"；Ch.10 Drift detection（部分）
+t09.explicit-implicit-user-feedback:
+  cite: ai-engineering Ch.10 User Feedback → Extracting Conversational Feedback
+t09.feedback-design-bias:
+  cite: ai-engineering Ch.10 Feedback Design、Feedback Limitations（Biases、Degenerate feedback loop）
+t09.defensive-ux:
+  cite: 无书，https://eugeneyan.com/writing/llm-patterns/（待核）
+t09.production-data-eval-set-training-data:
+  cite: ai-engineering Ch.8 Data Curation、Data Processing（Inspect、Deduplicate、Clean and Filter、Format）；Ch.10 User Feedback
+t09.synthetic-data-distillation:
+  cite: ai-engineering Ch.8 Data Augmentation and Synthesis、Model Distillation
+t10.prompting-rag-finetuning:
+  cite: ai-engineering Ch.7 When to Finetune；Finetuning and RAG
+t10.finetuning:
+  cite: ai-engineering Ch.7 Reasons to Finetune、Reasons Not to Finetune
+t10.lora-peft:
+  cite: ai-engineering Ch.7 Parameter-Efficient Finetuning（PEFT techniques、LoRA）；Memory Math
+t10.preference-finetuning-reinforcement-finetuning:
+  cite: ai-engineering Ch.2 Post-Training → Preference Finetuning（Reward model）（部分；DPO 与可验证奖励 RL 书中无专节）
+t10.dataset-engineering:
+  cite: ai-engineering Ch.8 Data Curation（Data Quality、Coverage、Quantity）、Data Processing
+t10.evaluation-rollback:
+  cite: ai-engineering Ch.7 Finetuning Tactics（部分）；Ch.4 Design Your Evaluation Pipeline
+t10.model-merging-multi-task-finetuning:
+  cite: ai-engineering Ch.7 Model Merging and Multi-Task Finetuning
+t11.llm-gateway-api-routing-key-rate-limit-audit:
+  cite: ai-engineering Ch.10 Step 3 → Gateway
+t11.multi-tenant-quota-budget-cost-attribution:
+  cite: ai-engineering Ch.10 Gateway（访问控制、成本，部分）
+t11.orchestration-pipelines-queue-workflow-engine-as:
+  cite: ai-engineering Ch.10 AI Pipeline Orchestration
+t11.prompt-canary-shadow-traffic:
+  cite: 无书，https://martinfowler.com/bliki/CanaryRelease.html

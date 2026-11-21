@@ -6,6 +6,19 @@
 和 ai-literacy 的分工：那边讲「是什么、为什么」（概念层），这里讲「怎么做、哪里会坏、怎么量」（工程层）。
 记号：`*` = 帕累托核心；`(需先: …)` = 真依赖。
 
+## 0. 先修：大模型的基本概念（从零）
+
+- * LLM 是什么：next-token prediction — 模型每次只预测下一个 token 的概率分布，一段回答就是一个个 token 接着生成。 〔出处：ai-engineering Ch.1、Ch.2 §Modeling〕
+- * Token 与 tokenizer — 模型读写的单位不是字也不是词；计费、长度限制都按 token 算。 〔出处：ai-engineering Ch.1 §Language models〕
+- * Context window — 一次调用里模型能看到的 token 上限：prompt、历史对话、检索到的资料、输出都挤在里面。 〔出处：ai-engineering Ch.2、Ch.5〕
+- * Transformer 与 attention（只讲直觉） — 每个 token 生成时会「看」前面所有 token；这就是上下文越长越慢越贵的原因。 〔出处：ai-engineering Ch.2 §Transformer architecture〕
+- * Pre-training 与 post-training（SFT、preference finetuning） — 先读海量文本学语言，再用示范和偏好数据调成「会听指令的助手」。 〔出处：ai-engineering Ch.2 §Post-Training〕
+- * Sampling：temperature、top-k、top-p — 同一个问题为什么每次答案不同；怎么调得更稳定或更有创意。 〔出处：ai-engineering Ch.2 §Sampling Strategies〕
+- * Structured outputs — 让模型按 JSON 等固定格式输出：prompting、post-processing、constrained decoding。 〔出处：ai-engineering Ch.2 §Structured Outputs〕
+- * Embedding — 把一段文本变成一串数字（向量），意思相近的文本向量也相近；RAG 和语义检索的基础。 〔出处：ai-engineering Ch.3 §Embeddings〕
+- Model size、parameters 与 scaling law — 参数量、训练数据量、算力三者的关系；为什么大模型更强也更贵。 〔出处：ai-engineering Ch.2 §Model Size〕
+- Foundation model 与 model API — 自己不训练模型，通过 API 调用别人训练好的模型；输入输出按 token 计费。 〔出处：ai-engineering Ch.1〕
+
 ## 1. 起点：什么时候该做、怎么选
 - * AI engineering stack 与它和传统后端的差别 — 应用层、模型层、基础设施层；输出是概率性的，「正确」要靠评测定义而不是单元测试断言 〔出处：ai-engineering Ch.1 The AI Engineering Stack（Three Layers、AI Engineering vs ML / Full-Stack Engineering）；Ch.2 The Probabilistic Nature of AI〕
 - * Simplest thing first：单次调用 → workflow → agent — 每升一级换来什么、多付什么（延迟、成本、可调试性），用评测结果决定是否升级 〔出处：ai-engineering Ch.10 AI Engineering Architecture（Step 1–5 逐级加复杂度）；Ch.6 Agents；工作流到智能体的分级另见 https://www.anthropic.com/engineering/building-effective-agents〕
