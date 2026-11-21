@@ -97,6 +97,9 @@ nodes:
   - id: tree-dfs.symmetric-tree
     title: LC 101 对称二叉树（Symmetric Tree）
     summary: Easy；Tree, Depth-First Search, Breadth-First Search, Binary Tree。
+  - id: tree-dfs.find-subtree-sizes-after-changes
+    title: LC 3331 修改后子树的大小（Find Subtree Sizes After Changes）
+    summary: Medium；Tree, Depth-First Search, Array, Hash Table。
   core: true
 - id: graph-traversal
   order: 9
