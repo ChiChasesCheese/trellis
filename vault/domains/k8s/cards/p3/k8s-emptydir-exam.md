@@ -23,7 +23,7 @@ tags: [考点]
 | 3 换 node | **不在** | emptyDir 在原来那台 node 上，Pod 换了，卷也没了 |
 
 - **结论：** emptyDir 只适合容器重启后还要的临时数据、缓存，不适合数据库的真正数据。
-- **真正要持久化的数据：** 用 PersistentVolumeClaim，数据在 Pod 之外，Pod 重建后可以再挂回来。
+- **真正要持久化的数据：** 用 PersistentVolumeClaim（Pod 申请持久存储用的对象，下一章细讲），数据在 Pod 之外，Pod 重建后可以再挂回来。
 - **判断口诀：** 问「这份数据比这个 Pod 活得久吗？」是，就不能用 emptyDir。
 
 **出处：** KIA2 §9.2（emptyDir 的数据在 Pod 存续期间保留）、§10.1

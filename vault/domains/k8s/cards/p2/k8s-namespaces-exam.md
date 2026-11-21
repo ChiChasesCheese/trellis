@@ -21,6 +21,6 @@ tags: [考点]
 
 - **名字唯一性：** 同一命名空间内同类型对象不能同名；不同命名空间可以。
 - **提醒：** 删命名空间是最危险的 kubectl 命令之一。操作前先看 `kubectl config get-contexts`，确认当前指向哪个集群。
-- **不属于命名空间：** Node、PersistentVolume 这类集群范围对象，不会被它删掉。
+- **不属于命名空间：** Node、PersistentVolume（集群级的持久存储卷，第 3 部分细讲） 这类集群范围对象，不会被它删掉。
 
 **出处：** KIA2 §7.1；Poulton ch5（default namespaces，cross-namespace）
