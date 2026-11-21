@@ -66,5 +66,6 @@ Survey date 2026-11-20 (steps 1–2 of `building-study-domains`). No skeleton, n
 |---|---|
 | 1 survey | done 2026-11-20 |
 | 2 outline | drafted, awaiting review (`outline.md`) |
+| 4 terms rule | done 2026-11-20: 术语规则 added; 98 of 99 leaf titles and 15 chapter headings rewritten to English terms; 99 leaves, 51 core, 0 no-book; nothing added (no book-gap section) |
 
 **Orchestrator check 2026-11-20 against the v1.33–v1.36 release blogs:** confirmed cgroup v1 removal (v1.35), /statusz beta (v1.36), controller staleness mitigation beta (v1.36), ordered namespace deletion GA (v1.34), volume-expansion-failure recovery GA (v1.34), VolumeAttributesClass GA (v1.34), VolumeGroupSnapshot GA (v1.36), Job successPolicy and backoff-limit-per-index GA (v1.33), structured authentication configuration GA (v1.34), HPA configurable tolerance alpha v1.33 → beta v1.35, kube-proxy nftables GA (v1.33), ipvs deprecated (v1.35), containerd 1.x support ends in v1.36 (v1.34 blog). Pod Security Admission GA v1.25 (kubernetes.io blog 2022-08-25). Still unverified: StatefulSet PVC retention GA version, CNCF maturity of Argo/Flux/KEDA, Istio ambient GA, OTel/Sigstore/ingress2gateway versions.

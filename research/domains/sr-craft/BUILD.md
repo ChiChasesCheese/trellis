@@ -27,6 +27,7 @@ Independent outlines: ladders (1-4), SRE book (5), Larson/Reilly (6-7), Orosz (8
 | 1 survey | done 2026-11-20 (from agent memory + gh repo search; URLs of books not fetched) |
 | 2 outline | drafted, awaiting Chi |
 | 3 book citations | done 2026-11-20: 75 leaves, 67 cited (15 only partly), 8 no book; se-guidebook chapter/section cites; SRE book chapters cited by URL (not ingested locally, slugs unverified); sections "书里有、大纲没有" (10 + 8) and "大纲有、书里没有" added; no leaf wording changed |
+| 4 terms + book leaves + public backing | done 2026-11-20: 术语规则 added; 75 leaf titles and 9 theme headings rewritten to English terms; 18 book-backed leaves merged (10 se-guidebook, 8 SRE book; 书里有、大纲没有 section removed); 5 no-book leaves given URLs; now 93 leaves, 40 core, 8 no-book (all with URL) |
 
 ## Next action
 Chi approves outline.md; then author skeleton/sr-craft.yaml.

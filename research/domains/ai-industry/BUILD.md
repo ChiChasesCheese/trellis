@@ -24,6 +24,7 @@ Heading to leaf map: AI Index chapters 1/2 -> branches 7 and 4; chapter 4 (econo
 |---|---|
 | 1 survey | done 2026-11-20 |
 | 2 outline draft | done, 61 leaves, 34 core; skeleton YAML not written |
+| 3 terms rule | done 2026-11-20: 术语规则 added; 54 leaf titles and 6 theme headings rewritten to English terms; 61 leaves, 34 core |
 
 ## Not confirmed
 - State of AI 2026 numbers (capex of about $733B, revenue run-rate of about $105B, 47% per quarter cost decline): read from a summary of the landing page; verify in the report before use.

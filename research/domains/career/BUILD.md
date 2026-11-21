@@ -23,3 +23,4 @@ Independent outlines: ladders, levels.fyi, Qureshi/McKenzie, Newport, Larson. Of
 | 1 survey | done 2026-11-20 |
 | 2 outline | drafted, awaiting Chi |
 | 3 book citations | done 2026-11-20: 73 leaves, 52 cited (10 only partly), 21 no book; se-guidebook thin on negotiation and comp details, kalzumeus salary-negotiation essay suggested for those; sections added; no leaf wording changed |
+| 4 terms + book leaves + public backing | done 2026-11-20: 术语规则 added; 73 leaf titles and 8 theme headings rewritten to English terms; 9 se-guidebook leaves merged (section removed); 14 待找 replaced by URLs (12 no-book leaves + RSU and option details); now 82 leaves, 37 core, 21 no-book (all with URL) |

@@ -23,3 +23,4 @@ Independent outlines: Google tech-writing (official), Minto, Made to Stick, inte
 | 1 survey | done 2026-11-20 |
 | 2 outline | drafted, awaiting Chi |
 | 3 book citations | done 2026-11-20: 63 leaves, 26 cited (9 only partly), 37 no book (all English-phrase leaves, by design); Minto cited as PDF page runs + chapter names, Google Technical Writing by lesson name (not ingested, lesson names from memory, to verify); sections added; no leaf wording changed |
+| 4 terms + book leaves + public backing | done 2026-11-20: 术语规则 added; 63 leaf titles and 6 theme headings rewritten to English terms; 17 book-backed leaves merged (10 Minto, 7 Google Technical Writing; section removed); 22 English-phrase leaves marked 〔出处：惯用说法〕, 15 others given URLs; now 80 leaves, 32 core, 15 no-book with URL, 22 惯用说法 |

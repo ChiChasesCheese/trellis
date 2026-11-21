@@ -23,6 +23,7 @@ Authoritative outline: source 1 (official docs ToC) with source 2 to 4 for evide
 |---|---|
 | 1 survey | done 2026-11-20; Codex, Cursor, Osmani, Beck, Copilot research not opened |
 | 2 outline draft | done, 69 leaves, 39 core; skeleton YAML not written |
+| 3 terms rule | done 2026-11-20: 术语规则 added; 65 leaf titles and 6 theme headings rewritten to English terms; 69 leaves, 39 core |
 
 ## Not confirmed
 - DORA 2025 specifics (adoption percentage, throughput vs instability, seven capabilities, archetypes): the page fetched had only the headline. Leaf names the finding only at "amplifier" level.
