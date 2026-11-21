@@ -1,0 +1,99 @@
+corpus: never-split-the-difference
+title: 'Never Split the Difference: Negotiating As If Your Life Depended On It'
+sections:
+- id: 001-dedication
+  title: Dedication
+  level: 1
+  locator: text/part0001.html
+- id: 002-chapter-1-the-new-rules
+  title: CHAPTER 1 | THE NEW RULES
+  level: 1
+  children:
+  - How to Become the Smartest Person . . . in Any Room
+  locator: text/part0003.html
+- id: 003-chapter-2-be-a-mirror
+  title: CHAPTER 2 | BE A MIRROR
+  level: 1
+  children:
+  - How to Quickly Establish Rapport
+  locator: text/part0004.html
+- id: 004-chapter-3-don-t-feel-their-pain-label-it
+  title: CHAPTER 3 | DON’T FEEL THEIR PAIN, LABEL IT
+  level: 1
+  children:
+  - How to Create Trust with Tactical Empathy
+  locator: text/part0005.html
+- id: 005-chapter-4-beware-yes-master-no
+  title: CHAPTER 4 | BEWARE “YES”—MASTER “NO”
+  level: 1
+  children:
+  - How to Generate Momentum and Make It Safe to Reveal the Real Stakes
+  locator: text/part0006.html
+- id: 006-chapter-5-trigger-the-two-words-that-immediately-transform-any-negotiation
+  title: CHAPTER 5 | TRIGGER THE TWO WORDS THAT IMMEDIATELY TRANSFORM ANY NEGOTIATION
+  level: 1
+  children:
+  - How to Gain the Permission to Persuade
+  locator: text/part0007.html
+- id: 007-chapter-6-bend-their-reality
+  title: CHAPTER 6 | BEND THEIR REALITY
+  level: 1
+  children:
+  - How to Shape What Is Fair
+  locator: text/part0008.html
+- id: 008-chapter-7-create-the-illusion-of-control
+  title: CHAPTER 7 | CREATE THE ILLUSION OF CONTROL
+  level: 1
+  children:
+  - How to Calibrate Questions to Transform Conflict into Collaboration
+  locator: text/part0009.html
+- id: 009-chapter-8-guarantee-execution
+  title: CHAPTER 8 | GUARANTEE EXECUTION
+  level: 1
+  children:
+  - How to Spot the Liars and Ensure Follow-Through from Everyone Else
+  locator: text/part0010.html
+- id: 010-chapter-9-bargain-hard
+  title: CHAPTER 9 | BARGAIN HARD
+  level: 1
+  children:
+  - How to Get Your Price
+  locator: text/part0011.html
+- id: 011-chapter-10-find-the-black-swan
+  title: CHAPTER 10 | FIND THE BLACK SWAN
+  level: 1
+  children:
+  - How to Create Breakthroughs by Revealing the Unknown Unknowns
+  locator: text/part0012.html
+- id: 012-acknowledgments
+  title: Acknowledgments
+  level: 1
+  locator: text/part0013.html
+- id: 013-appendix-prepare-a-negotiation-one-sheet
+  title: 'Appendix: Prepare a Negotiation One Sheet'
+  level: 1
+  locator: text/part0014.html
+- id: 014-notes
+  title: Notes
+  level: 1
+  locator: text/part0015.html
+- id: 015-index
+  title: Index
+  level: 1
+  locator: text/part0016.html
+- id: 016-about-the-authors
+  title: About the Authors
+  level: 1
+  locator: text/part0017.html
+- id: 017-credits
+  title: Credits
+  level: 1
+  locator: text/part0019.html
+- id: 018-copyright
+  title: Copyright
+  level: 1
+  locator: text/part0020.html
+- id: 019-about-the-publisher
+  title: About the Publisher
+  level: 1
+  locator: text/part0021.html

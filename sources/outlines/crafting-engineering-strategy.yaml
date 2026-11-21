@@ -1,0 +1,408 @@
+corpus: crafting-engineering-strategy
+title: Crafting Engineering Strategy (for True Epub)
+sections:
+- id: 001-preface
+  title: Preface
+  level: 1
+  children:
+  - What This Book Is Not
+  - Navigating This Book
+  - Using Code Examples
+  - O’Reilly Online Learning
+  - How to Contact Us
+  - Acknowledgments
+  locator: OEBPS/preface01.html
+- id: 002-i-introducing-engineering-strategy
+  title: I. Introducing Engineering Strategy
+  level: 1
+  locator: OEBPS/part01.html
+- id: 003-1-introduction
+  title: 1. Introduction
+  level: 1
+  children:
+  - Grounded in My Direct Experience
+  - Adapting Rumelt for Engineering
+  - Iterative, Intellectual, and Mechanical
+  - This Book’s Ambition
+  locator: OEBPS/ch01.html
+- id: 004-2-is-engineering-strategy-useful
+  title: 2. Is Engineering Strategy Useful?
+  level: 1
+  children:
+  - There’s Always a Strategy
+  - Strategy Changes Companies
+  - Inappropriate Strategy Is Especially Impactful
+  - Written Strategy Drives Organizational Learning
+  - Implicit Strategy Comes at a Cost
+  - Writing Strategy Supports Personal Learning
+  - Summary
+  locator: OEBPS/ch02.html
+- id: 005-3-who-gets-to-do-strategy
+  title: 3. Who Gets to Do Strategy?
+  level: 1
+  children:
+  - Doing Strategy as an Engineer
+  - Doing Strategy as an Executive
+  - Doing Strategy in Other Roles
+  - Doing Strategy in Challenging Environments
+  - Low-Trust Environment
+  - Poor-Judgment Environment
+  - Dealing with Missing Strategies
+  - Who Shouldn’t Do Strategy?
+  - Summary
+  locator: OEBPS/ch03.html
+- id: 006-4-when-should-you-write-strategy-and-how-much
+  title: 4. When Should You Write Strategy–and How Much?
+  level: 1
+  children:
+  - When to Write Strategy
+  - Current Strategic State
+  - Trends in Strategic State
+  - Your Context Level
+  - How Much Strategy to Write
+  - Strategy Altitude
+  - Are You Doing Too Much?
+  - Summary
+  locator: OEBPS/ch04.html
+- id: 007-ii-steps-for-building-engineering-strategies
+  title: II. Steps for Building Engineering Strategies
+  level: 1
+  locator: OEBPS/part02.html
+- id: 008-5-steps-to-build-an-engineering-strategy
+  title: 5. Steps to Build an Engineering Strategy
+  level: 1
+  children:
+  - How the Steps Become Strategy
+  - 'Step 1: Exploring'
+  - 'Step 2: Diagnosing'
+  - 'Step 3: Refining'
+  - 'Step 4: Setting Policy'
+  - 'Step 5: Operations'
+  - Is the Structure Sacrosanct?
+  - Summary
+  locator: OEBPS/ch05.html
+- id: 009-6-exploring
+  title: 6. Exploring
+  level: 1
+  children:
+  - What Is Exploration?
+  - When to Explore
+  - How to Explore
+  - Mine Your Organization for Internal Precedent
+  - Using Your Network
+  - Read Widely; Read Narrowly
+  - Each Job Is an Education
+  - Save Judgment for Later
+  - Summary
+  locator: OEBPS/ch06.html
+- id: 010-7-diagnosis
+  title: 7. Diagnosis
+  level: 1
+  children:
+  - Diagnosis Is Strategy’s Foundation
+  - How to Develop Your Diagnosis
+  - Incorporating Data into Your Diagnosis
+  - Whisper the Controversial Parts
+  - Reframe Blockers as Part of Your Diagnosis
+  - The Role of Self-Awareness
+  - Summary
+  locator: OEBPS/ch07.html
+- id: 011-8-refining
+  title: 8. Refining
+  level: 1
+  children:
+  - What Is Strategy Refinement?
+  - Does Refinement Matter?
+  - If It Matters, Why Is It Skipped?
+  - Building Your Toolkit
+  - Strategy Testing
+  - Systems Modeling
+  - Wardley Mapping
+  - Antipatterns in Refinement
+  - Summary
+  locator: OEBPS/ch08.html
+- id: 012-9-setting-policy
+  title: 9. Setting Policy
+  level: 1
+  children:
+  - What Is Policy?
+  - How to Set Policy
+  - How Many Policies?
+  - Kinds of Policies
+  - Approvals
+  - Allocations
+  - Direction
+  - Guidance
+  - Maintaining Strategy Altitude
+  - Criteria for Effective Policies
+  - Developing Novel Policies
+  - Are Competing Policy Proposals an Antipattern?
+  - Recognizing Constraints
+  - Dealing with Missing Strategies
+  - Summary
+  locator: OEBPS/ch09.html
+- id: 013-10-operations
+  title: 10. Operations
+  level: 1
+  children:
+  - What Are Operational Mechanisms?
+  - 'How to Evaluate Mechanisms: A Rubric'
+  - Composing an Operational Plan
+  - Effective Mechanisms and Patterns
+  - Approval and Advice Forums
+  - Inspection
+  - Nudges
+  - Documentation and Training
+  - Automation
+  - Deferral to Future Work
+  - Meetings
+  - Antipatterns and Ineffective Mechanisms
+  - What If You’re Not an Executive?
+  - Beware Cargo-Culting
+  - Summary
+  locator: OEBPS/ch10.html
+- id: 014-11-writing-readable-engineering-strategies
+  title: 11. Writing Readable Engineering Strategies
+  level: 1
+  children:
+  - Why Writing Structure Inhibits Reading
+  - Too Long, Didn’t Read
+  - Approval Meeting to Nowhere
+  - Transient Alignment
+  - Inverting the Document Structure for Reading
+  - Strategy Refactoring
+  - Additional Tips for Writing Effective Strategy Documents
+  - Summary
+  locator: OEBPS/ch11.html
+- id: 015-12-bridging-theory-and-practice
+  title: 12. Bridging Theory and Practice
+  level: 1
+  children:
+  - Clear, Definitive Documents
+  - Doing Strategy Despite Unrealistic Timelines
+  - Using Strategy as a Nonexecutive
+  - Doing Strategy in Chaotic Environments
+  - Unreliable Information
+  - Surviving Other People’s Bad Strategy Work
+  - Summary
+  locator: OEBPS/ch12.html
+- id: 016-iii-refinement-tools
+  title: III. Refinement Tools
+  level: 1
+  locator: OEBPS/part03.html
+- id: 017-13-strategy-testing-for-iterative-refinement
+  title: 13. Strategy Testing for Iterative Refinement
+  level: 1
+  children:
+  - When to Test Strategy
+  - How to Test Strategy
+  - 'Testing Roles: Sponsors and Guides'
+  - Meetings and Metrics
+  - Identifying Untested Strategies
+  - Recovering from Skipped Testing
+  - Summary
+  locator: OEBPS/ch13.html
+- id: 018-14-systems-modeling
+  title: 14. Systems Modeling
+  level: 1
+  children:
+  - A Two-Minute Primer
+  - When Is Systems Modeling Useful?
+  - Tooling
+  - How to Model
+  - Deeper Exploration
+  - How to Document a Model
+  - What Systems Modeling Isn’t
+  - Summary
+  locator: OEBPS/ch14.html
+- id: 019-15-wardley-maps
+  title: 15. Wardley Maps
+  level: 1
+  children:
+  - 'Wardley Mapping: A 10-Minute Primer'
+  - Components of a Wardley Map
+  - X-axis
+  - Y-axis
+  - Tools for Wardley Mapping
+  - When Are Wardley Maps Useful?
+  - How to Wardley Map
+  - Breadcrumbs for Wardley Map Examples
+  - How to Document a Wardley Map
+  - What About Doctrines and Gameplay?
+  - Summary
+  locator: OEBPS/ch15.html
+- id: 020-iv-case-studies
+  title: IV. Case Studies
+  level: 1
+  locator: OEBPS/part04.html
+- id: 021-16-service-migration-strategy
+  title: 16. Service Migration Strategy
+  level: 1
+  children:
+  - Reading These Documents
+  - 'Document 16-1: Service Migration Strategy: Uber'
+  - Policy and Operation
+  - Refine
+  - Diagnose
+  - Explore
+  - 'Document 16-2: Service Onboarding Model'
+  - Learnings
+  - Sketch
+  - Reason
+  - Model
+  - Exercise
+  - 'Document 16-3: Wardley Mapping the Service Orchestration Ecosystem'
+  - How Things Work Today
+  - Transition to Future State
+  - User and Value Chains
+  - Summary
+  locator: OEBPS/ch16.html
+- id: 022-17-llm-adoption-strategy
+  title: 17. LLM Adoption Strategy
+  level: 1
+  children:
+  - Reading These Documents
+  - 'Document 17-1: How Should We Adopt Large Language Models?'
+  - Policy
+  - Diagnose
+  - Explore
+  - 'Document 17-2: Modeling LLMs’ Impact on the Developer Experience'
+  - Learnings
+  - Sketch
+  - Reason
+  - Model
+  - Exercise
+  - 'Document 17-3: Wardley Mapping the LLM Ecosystem'
+  - How Things Work Today
+  - Transition to Future State
+  - User and Value Chains
+  - 'Document 17-4: Modeling Driver Onboarding'
+  - Learnings
+  - Sketch
+  - Reason
+  - Model
+  - Exercise
+  - Summary
+  locator: OEBPS/ch17.html
+- id: 023-18-private-equity-ownership-strategy
+  title: 18. Private Equity Ownership Strategy
+  level: 1
+  children:
+  - Reading These Documents
+  - 'Document 18-1: Navigating Private Equity Ownership'
+  - Policy
+  - Diagnose
+  - Explore
+  - 'Document 18-2: Engineering Organization Seniority-Mix Model'
+  - Learnings
+  - Sketch
+  - Reason
+  - Model and Exercise
+  - Summary
+  locator: OEBPS/ch18.html
+- id: 024-19-customer-data-access-strategy
+  title: 19. Customer Data Access Strategy
+  level: 1
+  children:
+  - Reading This Document
+  - 'Document 19-1: How Should We Control Access to User Data?'
+  - Policy and Operations
+  - Diagnose
+  - Explore
+  - Summary
+  locator: OEBPS/ch19.html
+- id: 025-20-service-architecture-strategy
+  title: 20. Service Architecture Strategy
+  level: 1
+  children:
+  - Reading This Document
+  - 'Document 20-1: Should We Decompose Our Monolith?'
+  - Policy
+  - Diagnose
+  - Explore
+  - Summary
+  locator: OEBPS/ch20.html
+- id: 026-21-product-engineering-strategy
+  title: 21. Product Engineering Strategy
+  level: 1
+  children:
+  - Reading These Documents
+  - 'Document 21-1: “We’re a Product Engineering Company!”: Engineering Strategy at Calm'
+  - Policy and Operation
+  - Diagnose
+  - Explore
+  - 'Document 21-2: How to Resource Engineering-Driven Projects at Calm'
+  - Policy and Operation
+  - Diagnosis
+  - Explore
+  - Summary
+  locator: OEBPS/ch21.html
+- id: 027-22-developer-api-and-acquisition-strategy-at-stripe
+  title: 22. Developer, API, and Acquisition Strategy at Stripe
+  level: 1
+  children:
+  - Reading These Documents
+  - 'Document 22-1: How Should Stripe Deprecate APIs?'
+  - Policy and Operation
+  - Diagnosis
+  - 'Document 22-2: A Systems Model of API Deprecation'
+  - Learnings
+  - Sketch
+  - Reason
+  - Model
+  - Exercise
+  - 'Document 22-3: Why Did Stripe Build Sorbet?'
+  - Policy and Operation
+  - Diagnose
+  - 'Document 22-4: How to Integrate Stripe’s Acquisition of Index?'
+  - Policy and Operation
+  - Diagnose
+  - Explore
+  - Summary
+  locator: OEBPS/ch22.html
+- id: 028-v-going-forward
+  title: V. Going Forward
+  level: 1
+  locator: OEBPS/part05.html
+- id: 029-23-is-this-strategy-any-good
+  title: 23. Is This Strategy Any Good?
+  level: 1
+  children:
+  - How Are Strategies Evaluated Across the Industry?
+  - A Rubric for Evaluating Strategy
+  - Does Stopping a Strategy Mean It’s a Bad Strategy?
+  - The Unpierceable Veil
+  - Learning from Failed Strategies
+  - Summary
+  locator: OEBPS/ch23.html
+- id: 030-24-how-to-get-better-at-strategy
+  title: 24. How to Get Better at Strategy
+  level: 1
+  children:
+  - Exploring Strategy Creation
+  - Public Resources
+  - Private Resources
+  - Working in Community
+  - Diagnosing Your Prior and Current Strategy Work
+  - Policy for Improving at Strategy
+  - What If You’re Not Allowed to Do Strategy?
+  - Operating Your Strategy Improvement Policies
+  - Too Busy for Strategy
+  - Final Words
+  locator: OEBPS/ch24.html
+- id: 031-25-strategy-resources
+  title: 25. Strategy Resources
+  level: 1
+  children:
+  - My Prior Writing
+  - Books
+  - Case Studies
+  locator: OEBPS/ch25.html
+- id: 032-index
+  title: Index
+  level: 1
+  locator: OEBPS/ix01.html
+- id: 033-about-the-author
+  title: About the Author
+  level: 1
+  locator: OEBPS/colophon01.html
