@@ -26,6 +26,7 @@ Independent outlines: ladders (1-4), SRE book (5), Larson/Reilly (6-7), Orosz (8
 |---|---|
 | 1 survey | done 2026-11-20 (from agent memory + gh repo search; URLs of books not fetched) |
 | 2 outline | drafted, awaiting Chi |
+| 3 book citations | done 2026-11-20: 75 leaves, 67 cited (15 only partly), 8 no book; se-guidebook chapter/section cites; SRE book chapters cited by URL (not ingested locally, slugs unverified); sections "书里有、大纲没有" (10 + 8) and "大纲有、书里没有" added; no leaf wording changed |
 
 ## Next action
 Chi approves outline.md; then author skeleton/sr-craft.yaml.

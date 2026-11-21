@@ -22,3 +22,4 @@ Independent outlines: ladders, levels.fyi, Qureshi/McKenzie, Newport, Larson. Of
 |---|---|
 | 1 survey | done 2026-11-20 |
 | 2 outline | drafted, awaiting Chi |
+| 3 book citations | done 2026-11-20: 73 leaves, 52 cited (10 only partly), 21 no book; se-guidebook thin on negotiation and comp details, kalzumeus salary-negotiation essay suggested for those; sections added; no leaf wording changed |

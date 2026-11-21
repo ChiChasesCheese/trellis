@@ -27,6 +27,7 @@ Heading to leaf map: every chapter of source 1 maps to a branch; chapters 2 (mod
 |---|---|
 | 1 survey | done 2026-11-20 |
 | 2 outline draft | done, 89 leaves, 53 core; skeleton YAML not written (waits for Chi's approval) |
+| 3 book citations | done 2026-11-20: 89 leaves, 72 cited (20 only partly), 17 no book; ai-engineering chapter/section cites; 16 leaf titles adopt ai-engineering-zh terms (table at the end of outline.md); 评测 vs 评估 and 提示 vs 提示词 left for Chi; sections added |
 
 ## Not confirmed
 - OpenAI practical guide section list (PDF unreadable here).
