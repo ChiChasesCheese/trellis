@@ -20,9 +20,9 @@
 
 ## 第 1 章 认识 Kubernetes（KIA2 ch1）
 
+- * 五个基本名词：Cluster、Node、Pod、Deployment、Service — 每个词一句话 + 一张关系图，外加 kubectl、controller、replicas 的一句话介绍；第 1 章的第一张，后面所有卡都默认你认识它们。 〔出处：KIA2 §1.2、§3.3；Poulton ch1〕
 - * 为什么需要 Kubernetes — 单机部署到多机部署会遇到的问题；把一堆机器当成一台计算机的想法。 〔出处：KIA2 §1.1〕
 - * Cluster architecture 与应用如何运行 — 控制面与工作节点的分工，一份描述提交后谁做了什么。 〔出处：KIA2 §1.2〕
-- * 五个基本名词：Cluster、Node、Pod、Deployment、Service — 每个词一句话 + 一张关系图；后面所有卡都默认你认识它们。 〔出处：KIA2 §1.2、§3.3；Poulton ch1〕
 - 要不要用 Kubernetes：managed vs self-hosted, vanilla vs extended — 引入组织的取舍，什么时候不该用。 〔出处：KIA2 §1.3〕
 
 图：① 单机部署 vs 集群上由调度器放置的对比 ② 控制面 + 工作节点的组件框图 ③ 「提交描述 → 应用运行」的流程。

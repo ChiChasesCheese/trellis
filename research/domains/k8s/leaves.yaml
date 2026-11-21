@@ -120,12 +120,12 @@ p9.t01:
   notes:
   - 图：① 每个案例的故障链：触发 → 放大 → 为何测试没抓到 ② 检查清单对应到各章的回链图。
   - 2026：事故年份均来自来源，不加新特性；清单回链第 2、4、5、8 部分。
+p1.t01.cluster-node-pod-deployment-service:
+  cite: KIA2 §1.2、§3.3；Poulton ch1
 p1.t01.kubernetes:
   cite: KIA2 §1.1
 p1.t01.cluster-architecture:
   cite: KIA2 §1.2
-p1.t01.cluster-node-pod-deployment-service:
-  cite: KIA2 §1.2、§3.3；Poulton ch1
 p1.t01.kubernetes-managed-vs-self-hosted-vanilla-vs-ext:
   cite: KIA2 §1.3
 p1.t02.containers-vs-vms:

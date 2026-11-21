@@ -1,0 +1,151 @@
+# term -> leaf id that first teaches it (skeleton order). Cards may use a term only after its leaf.
+container: p1.t01.cluster-node-pod-deployment-service
+Pending: p1.t01.kubernetes
+scheduler: p1.t01.kubernetes
+Service: p1.t01.kubernetes
+Deployment: p1.t01.kubernetes
+Cluster: p1.t01.cluster-node-pod-deployment-service
+control plane: p1.t01.cluster-architecture
+worker node: p1.t01.cluster-architecture
+API server: p1.t01.cluster-architecture
+etcd: p1.t01.cluster-architecture
+controller manager: p1.t01.cluster-architecture
+kubelet: p1.t01.cluster-architecture
+container runtime: p1.t01.cluster-architecture
+containerd: p1.t01.cluster-architecture
+quorum: p1.t01.cluster-architecture
+split brain: p1.t01.cluster-architecture
+Node: p1.t01.cluster-node-pod-deployment-service
+Pod: p1.t01.cluster-node-pod-deployment-service
+VM: p1.t02.containers-vs-vms
+image: p1.t02.containers-vs-vms
+hypervisor: p1.t02.containers-vs-vms
+seccomp: p1.t02.containers-vs-vms        # defined in one line on the card
+capabilities: p1.t02.containers-vs-vms   # defined in one line on the card
+namespace (Linux): p1.t02.namespaces-cgroups
+cgroup: p1.t02.namespaces-cgroups
+OOM kill: p1.t02.namespaces-cgroups
+throttle: p1.t02.namespaces-cgroups
+user namespace: p1.t02.namespaces-cgroups
+kubectl: p1.t01.cluster-node-pod-deployment-service
+kubeconfig: p1.t03.kubectl-imperative-vs-declarative
+imperative: p1.t03.kubectl-imperative-vs-declarative
+declarative: p1.t03.kubectl-imperative-vs-declarative
+manifest: p1.t03.kubectl-imperative-vs-declarative
+idempotent: p1.t03.kubectl-imperative-vs-declarative
+ReplicaSet: p1.t03.first-deployment
+LoadBalancer (Service type): p1.t03.first-deployment
+replicas: p1.t01.cluster-node-pod-deployment-service
+controller: p1.t01.cluster-node-pod-deployment-service
+watch: p1.t04.controller
+desired state: p1.t04.declarative-model-reconcile-loop
+actual state: p1.t04.declarative-model-reconcile-loop
+reconcile loop: p1.t04.declarative-model-reconcile-loop
+level-triggered: p1.t04.declarative-model-reconcile-loop
+staleness: p1.t04.declarative-model-reconcile-loop
+nodeName: p1.t04.end-to-end-walk-through
+cloud controller manager: p1.t04.control-plane-node
+kube-proxy: p1.t04.control-plane-node
+apiVersion/kind/metadata/spec/status: p1.t05.object-manifest-apiversion-kind-metadata-spec-st
+labels (as a field): p1.t05.object-manifest-apiversion-kind-metadata-spec-st   # concept taught at p2.t03.labels-selectors
+kubectl explain: p1.t05.object-manifest-apiversion-kind-metadata-spec-st
+conditions: p1.t05.spec-vs-status-conditions
+core API group / named group: p1.t06.api-rest-api-groups-versions
+GVR: p1.t06.api-rest-api-groups-versions
+kubectl api-resources: p1.t03.first-deployment   # named in passing; explained at p1.t05 and p1.t06
+authentication / authorization (401/403): p1.t06.api-server-request-pipeline-authentication-autho
+RBAC: p1.t06.api-server-request-pipeline-authentication-autho   # one line; full at p6.t01
+admission (mutating / validating): p1.t06.api-server-request-pipeline-authentication-autho
+admission webhook: p1.t06.api-server-request-pipeline-authentication-autho   # one line; full at p8.t01
+# ---- p2
+sidecar: p2.t01.pod-container
+IPC: p2.t01.pod-container
+volume (one line): p2.t01.pod-container       # fully taught at p3.t02
+kubectl logs/exec/port-forward/debug: p2.t01.pod-logs-exec-port-forward-ephemeral-containers
+ephemeral container: p2.t01.pod-logs-exec-port-forward-ephemeral-containers
+init container: p2.t01.multi-container-pod-init-containers-native-sidec
+native sidecar: p2.t01.multi-container-pod-init-containers-native-sidec
+Job (one line): p2.t01.multi-container-pod-init-containers-native-sidec   # fully taught at p5.t05
+phase: p2.t02.pod-status-phase-conditions-container-states
+container state: p2.t02.pod-status-phase-conditions-container-states
+Ready condition: p2.t02.pod-status-phase-conditions-container-states
+CrashLoopBackOff: p2.t02.pod-status-phase-conditions-container-states
+liveness/readiness/startup probe: p2.t02.restart-policy-probes-liveness-readiness-startup
+restartPolicy: p2.t02.restart-policy-probes-liveness-readiness-startup
+Pod Security (restricted): p2.t02.restart-policy-probes-liveness-readiness-startup   # one-line mention; full at p6.t01
+preStop hook: p2.t02.graceful-termination
+SIGTERM/SIGKILL: p2.t02.graceful-termination
+terminationGracePeriodSeconds: p2.t02.graceful-termination
+Service backends (endpoints): p2.t02.graceful-termination   # one-line; full at p4.t01
+Kubernetes Namespace: p2.t03.namespaces
+kube-system: p2.t03.namespaces
+NetworkPolicy (mention): p2.t03.namespaces     # full at p4.t04
+label / selector: p2.t03.labels-selectors
+requests / limits: p2.t04.resource-requests-limits-qos-classes
+QoS class (Guaranteed/Burstable/BestEffort): p2.t04.resource-requests-limits-qos-classes
+millicore (m): p2.t04.resource-requests-limits-qos-classes
+OOMKilled: p2.t04.resource-requests-limits-qos-classes
+Pod-level resources: p2.t04.resource-requests-limits-qos-classes
+in-place resize (mention): p2.t04.resource-requests-limits-qos-classes   # full at p7.t01
+taint (mention): p2.t04.scheduling-cycle-filter-score-bind   # one line on card; full at p2.t04.affinity-taints-tolerations-topology-spread (non-core)
+Filter/Score/Bind: p2.t04.scheduling-cycle-filter-score-bind
+CRI: p2.t04.kubelet-cri-node-pressure-eviction
+node-pressure eviction (soft/hard): p2.t04.kubelet-cri-node-pressure-eviction
+PodDisruptionBudget (mention): p2.t04.kubelet-cri-node-pressure-eviction   # full at p2.t04.priorityclass-preemption-poddisruptionbudget
+Evicted: p2.t04.kubelet-cri-node-pressure-eviction
+# ---- p3
+ConfigMap: p3.t01.configmap-pod-manifest
+envFrom/configMapKeyRef: p3.t01.configmap-pod-manifest
+rollout restart: p3.t01.configmap-pod-manifest   # one use; Deployment fully taught at p5.t02
+Base64: p3.t01.secret
+Secret: p3.t01.secret
+encryption at rest / KMS: p3.t01.secret
+Vault (external secret manager): p3.t01.secret
+Volume: p3.t02.volumes-emptydir
+volumeMounts: p3.t02.volumes-emptydir
+emptyDir: p3.t02.volumes-emptydir
+PersistentVolume (PV): p3.t03.pv-pvc-storageclass-dynamic-provisioning
+PersistentVolumeClaim (PVC): p3.t03.pv-pvc-storageclass-dynamic-provisioning
+StorageClass: p3.t03.pv-pvc-storageclass-dynamic-provisioning
+provisioner / dynamic provisioning: p3.t03.pv-pvc-storageclass-dynamic-provisioning
+CSI driver: p3.t03.pv-pvc-storageclass-dynamic-provisioning
+volumeBindingMode (Immediate / WaitForFirstConsumer): p3.t03.pv-pvc-storageclass-dynamic-provisioning
+accessModes (ReadWriteOnce, one line): p3.t03.pv-pvc-storageclass-dynamic-provisioning   # full at p3.t03.access-modes-reclaim-policy-static-provisioning (non-core)
+VolumeAttributesClass: p3.t03.pv-pvc-storageclass-dynamic-provisioning
+VolumeGroupSnapshot: p3.t03.pv-pvc-storageclass-dynamic-provisioning
+# ---- p4
+ClusterIP: p4.t01.service-clusterip
+selector (Service): p4.t01.service-clusterip
+port / targetPort: p4.t01.service-clusterip
+NodePort: p4.t01.nodeport-loadbalancer-externaltrafficpolicy
+externalTrafficPolicy (Cluster/Local): p4.t01.nodeport-loadbalancer-externaltrafficpolicy
+healthCheckNodePort: p4.t01.nodeport-loadbalancer-externaltrafficpolicy
+EndpointSlice: p4.t01.endpoints-endpointslice-readiness-probe
+Endpoints (deprecated): p4.t01.endpoints-endpointslice-readiness-probe
+minReadySeconds (mention): p4.t01.endpoints-endpointslice-readiness-probe   # full at p5.t02
+externalIPs: p4.t01.endpoints-endpointslice-readiness-probe
+Service CIDR: p4.t01.endpoints-endpointslice-readiness-probe
+Ingress: p4.t03.gateway-api-ingress    # mention only; full at p4.t02 (non-core)
+Gateway API: p4.t03.gateway-api-ingress
+annotation: p4.t03.gateway-api-ingress   # one-line mention; full at p2.t03.field-selectors-annotations (non-core)
+GatewayClass / Gateway / HTTPRoute: p4.t03.gatewayclass-gateway-httproute
+parentRefs / backendRefs / weight: p4.t03.gatewayclass-gateway-httproute
+CoreDNS / cluster DNS: p4.t04.service-discovery-registry-coredns-ndots
+search domain / FQDN: p4.t04.service-discovery-registry-coredns-ndots
+ndots: p4.t04.service-discovery-registry-coredns-ndots
+CNI: p4.t04.networkpolicy      # defined in one line; full at p4.t04.pod-network-model-cni (non-core)
+NetworkPolicy (default-deny, additive): p4.t04.networkpolicy
+# ---- p5
+ownerReferences / garbage collector / cascade=orphan: p5.t01.replicaset-reconciliation-loop
+pod-template-hash: p5.t02.deployment-basics-scale
+rolling update: p5.t02.rolling-update-pause-rollback
+maxSurge / maxUnavailable / minReadySeconds: p5.t02.rolling-update-pause-rollback
+rollout pause/undo / revision / revisionHistoryLimit: p5.t02.rolling-update-pause-rollback
+ProgressDeadlineExceeded: p5.t02.rolling-update-pause-rollback
+StatefulSet: p5.t03.stateful-statefulset-deployment
+headless Service: p5.t03.stateful-statefulset-deployment   # defined in one line; full at p4.t01.service-dns-records-headless-service (non-core)
+volumeClaimTemplates: p5.t03.stateful-statefulset-deployment
+at-most-one: p5.t03.stateful-statefulset-deployment
+Job / completions / parallelism / backoffLimit: p5.t05.job-completion-parallelism
+Indexed Job: p5.t05.job-completion-parallelism
+successPolicy / backoffLimitPerIndex: p5.t05.job-completion-parallelism
