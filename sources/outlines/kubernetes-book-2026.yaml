@@ -1,0 +1,495 @@
+corpus: kubernetes-book-2026
+title: kubernetes-book-2026
+sections:
+- id: 001-table-of-contents
+  title: Table of Contents
+  level: 1
+  locator: p. 5-8
+- id: 002-about-this-edition
+  title: About this edition
+  level: 1
+  locator: p. 9-9
+- id: 003-about-the-authors
+  title: About the authors
+  level: 1
+  locator: p. 10-10
+- id: 004-author-nigel-poulton
+  title: 'Author: Nigel Poulton'
+  level: 2
+  locator: p. 10-10
+- id: 005-contributing-author-pushkar-joglekar
+  title: 'Contributing author: Pushkar Joglekar'
+  level: 2
+  locator: p. 10-10
+- id: 006-0-preface
+  title: '0: Preface'
+  level: 1
+  locator: p. 11-11
+- id: 007-paperbacks-hardbacks-ebooks-audio-and-translations
+  title: Paperbacks, hardbacks, eBooks, audio, and translations
+  level: 2
+  locator: p. 11-11
+- id: 008-the-sample-app-and-github-repo
+  title: The sample app and GitHub repo
+  level: 2
+  locator: p. 12-12
+- id: 009-windows-users
+  title: Windows users
+  level: 2
+  locator: p. 12-12
+- id: 010-terminology-and-responsible-language
+  title: Terminology and responsible language
+  level: 2
+  locator: p. 13-13
+- id: 011-feedback
+  title: Feedback
+  level: 2
+  locator: p. 13-13
+- id: 012-1-kubernetes-primer
+  title: '1: Kubernetes primer'
+  level: 1
+  locator: p. 14-14
+- id: 013-important-kubernetes-background
+  title: Important Kubernetes background
+  level: 2
+  locator: p. 14-18
+- id: 014-kubernetes-the-operating-system-of-the-cloud
+  title: 'Kubernetes: the operating system of the cloud'
+  level: 2
+  locator: p. 19-19
+- id: 015-chapter-summary
+  title: Chapter summary
+  level: 2
+  locator: p. 20-20
+- id: 016-2-kubernetes-principles-of-operation
+  title: '2: Kubernetes principles of operation'
+  level: 1
+  locator: p. 21-21
+- id: 017-kubernetes-from-40k-feet
+  title: Kubernetes from 40K feet
+  level: 2
+  locator: p. 21-22
+- id: 018-control-plane-and-worker-nodes
+  title: Control plane and worker nodes
+  level: 2
+  locator: p. 23-28
+- id: 019-packaging-apps-for-kubernetes
+  title: Packaging apps for Kubernetes
+  level: 2
+  locator: p. 29-30
+- id: 020-the-declarative-model-and-desired-state
+  title: The declarative model and desired state
+  level: 2
+  locator: p. 31-31
+- id: 021-pods
+  title: Pods
+  level: 2
+  locator: p. 32-35
+- id: 022-deployments
+  title: Deployments
+  level: 2
+  locator: p. 36-36
+- id: 023-service-objects-and-stable-networking
+  title: Service objects and stable networking
+  level: 2
+  locator: p. 36-36
+- id: 024-chapter-summary
+  title: Chapter summary
+  level: 2
+  locator: p. 37-38
+- id: 025-3-getting-kubernetes
+  title: '3: Getting Kubernetes'
+  level: 1
+  locator: p. 39-39
+- id: 026-install-everything-with-docker-desktop
+  title: Install everything with Docker Desktop
+  level: 2
+  locator: p. 39-41
+- id: 027-akamai-linode-kubernetes-engine-lke
+  title: Akamai Linode Kubernetes Engine (LKE)
+  level: 2
+  locator: p. 42-42
+- id: 028-build-a-multi-node-kubernetes-cluster-in-the-akamai-cloud
+  title: Build a multi-node Kubernetes cluster in the Akamai Cloud
+  level: 2
+  locator: p. 43-44
+- id: 029-configure-kubectl
+  title: Configure kubectl
+  level: 2
+  locator: p. 45-46
+- id: 030-test-your-lke-cluster
+  title: Test your LKE cluster
+  level: 2
+  locator: p. 47-47
+- id: 031-more-about-kubectl-and-your-kubeconfig-file
+  title: More about kubectl and your kubeconfig file
+  level: 2
+  locator: p. 48-48
+- id: 032-chapter-summary
+  title: Chapter summary
+  level: 2
+  locator: p. 49-49
+- id: 033-4-working-with-pods
+  title: '4: Working with Pods'
+  level: 1
+  locator: p. 50-50
+- id: 034-pod-theory
+  title: Pod theory
+  level: 2
+  locator: p. 50-57
+- id: 035-multi-container-pods
+  title: Multi-container Pods
+  level: 2
+  locator: p. 58-61
+- id: 036-hands-on-with-pods
+  title: Hands-on with Pods
+  level: 2
+  locator: p. 62-75
+- id: 037-clean-up
+  title: Clean up
+  level: 2
+  locator: p. 76-76
+- id: 038-chapter-summary
+  title: Chapter Summary
+  level: 2
+  locator: p. 77-77
+- id: 039-5-virtual-clusters-with-namespaces
+  title: '5: Virtual clusters with Namespaces'
+  level: 1
+  locator: p. 78-78
+- id: 040-intro-to-namespaces
+  title: Intro to Namespaces
+  level: 2
+  locator: p. 78-78
+- id: 041-namespace-use-cases
+  title: Namespace use cases
+  level: 2
+  locator: p. 79-79
+- id: 042-default-namespaces
+  title: Default Namespaces
+  level: 2
+  locator: p. 80-80
+- id: 043-creating-and-managing-namespaces
+  title: Creating and managing Namespaces
+  level: 2
+  locator: p. 81-82
+- id: 044-deploying-objects-to-namespaces
+  title: Deploying objects to Namespaces
+  level: 2
+  locator: p. 83-84
+- id: 045-clean-up
+  title: Clean up
+  level: 2
+  locator: p. 85-85
+- id: 046-chapter-summary
+  title: Chapter Summary
+  level: 2
+  locator: p. 85-85
+- id: 047-6-kubernetes-deployments
+  title: '6: Kubernetes Deployments'
+  level: 1
+  locator: p. 86-86
+- id: 048-deployment-theory
+  title: Deployment theory
+  level: 2
+  locator: p. 86-94
+- id: 049-create-a-deployment
+  title: Create a Deployment
+  level: 2
+  locator: p. 95-99
+- id: 050-manually-scale-the-app
+  title: Manually scale the app
+  level: 2
+  locator: p. 100-100
+- id: 051-perform-a-rolling-update
+  title: Perform a rolling update
+  level: 2
+  locator: p. 101-105
+- id: 052-perform-a-rollback
+  title: Perform a rollback
+  level: 2
+  locator: p. 106-108
+- id: 053-clean-up
+  title: Clean up
+  level: 2
+  locator: p. 109-109
+- id: 054-chapter-summary
+  title: Chapter summary
+  level: 2
+  locator: p. 109-110
+- id: 055-7-kubernetes-services
+  title: '7: Kubernetes Services'
+  level: 1
+  locator: p. 111-111
+- id: 056-service-theory
+  title: Service Theory
+  level: 2
+  locator: p. 111-117
+- id: 057-hands-on-with-services
+  title: Hands-on with Services
+  level: 2
+  locator: p. 118-124
+- id: 058-clean-up
+  title: Clean up
+  level: 2
+  locator: p. 125-125
+- id: 059-chapter-summary
+  title: Chapter Summary
+  level: 2
+  locator: p. 125-125
+- id: 060-8-gateway-api
+  title: '8: Gateway API'
+  level: 1
+  locator: p. 126-126
+- id: 061-why-no-more-ingress
+  title: Why no more Ingress
+  level: 2
+  locator: p. 126-126
+- id: 062-how-gateway-api-works
+  title: How Gateway API works
+  level: 2
+  locator: p. 127-141
+- id: 063-hands-on-with-gateway-api
+  title: Hands-on with Gateway API
+  level: 2
+  locator: p. 142-162
+- id: 064-9-service-discovery-deep-dive
+  title: '9: Service discovery deep dive'
+  level: 1
+  locator: p. 163-163
+- id: 065-setting-the-scene
+  title: Setting the scene
+  level: 2
+  locator: p. 163-164
+- id: 066-the-service-registry
+  title: The service registry
+  level: 2
+  locator: p. 165-166
+- id: 067-service-registration
+  title: Service registration
+  level: 2
+  locator: p. 167-167
+- id: 068-service-discovery
+  title: Service discovery
+  level: 2
+  locator: p. 168-170
+- id: 069-service-discovery-and-namespaces
+  title: Service discovery and Namespaces
+  level: 2
+  locator: p. 171-176
+- id: 070-troubleshooting-service-discovery
+  title: Troubleshooting service discovery
+  level: 2
+  locator: p. 177-178
+- id: 071-clean-up
+  title: Clean up
+  level: 2
+  locator: p. 179-179
+- id: 072-chapter-summary
+  title: Chapter summary
+  level: 2
+  locator: p. 179-179
+- id: 073-10-kubernetes-storage
+  title: '10: Kubernetes storage'
+  level: 1
+  locator: p. 180-180
+- id: 074-the-big-picture
+  title: The big picture
+  level: 2
+  locator: p. 180-181
+- id: 075-storage-providers
+  title: Storage Providers
+  level: 2
+  locator: p. 182-182
+- id: 076-the-container-storage-interface-csi
+  title: The Container Storage Interface (CSI)
+  level: 2
+  locator: p. 183-183
+- id: 077-the-kubernetes-persistent-volume-subsystem
+  title: The Kubernetes persistent volume subsystem
+  level: 2
+  locator: p. 183-183
+- id: 078-dynamic-provisioning-with-storage-classes
+  title: Dynamic provisioning with Storage Classes
+  level: 2
+  locator: p. 184-187
+- id: 079-hands-on
+  title: Hands-on
+  level: 2
+  locator: p. 188-195
+- id: 080-clean-up
+  title: Clean up
+  level: 2
+  locator: p. 196-196
+- id: 081-chapter-summary
+  title: Chapter Summary
+  level: 2
+  locator: p. 197-197
+- id: 082-11-configmaps-and-secrets
+  title: '11: ConfigMaps and Secrets'
+  level: 1
+  locator: p. 198-198
+- id: 083-the-big-picture
+  title: The big picture
+  level: 2
+  locator: p. 199-199
+- id: 084-configmap-theory
+  title: ConfigMap theory
+  level: 2
+  locator: p. 200-202
+- id: 085-hands-on-with-configmaps
+  title: Hands-on with ConfigMaps
+  level: 2
+  locator: p. 203-213
+- id: 086-hands-on-with-secrets
+  title: Hands-on with Secrets
+  level: 2
+  locator: p. 214-218
+- id: 087-clean-up
+  title: Clean up
+  level: 2
+  locator: p. 219-219
+- id: 088-chapter-summary
+  title: Chapter Summary
+  level: 2
+  locator: p. 220-220
+- id: 089-12-statefulsets
+  title: '12: StatefulSets'
+  level: 1
+  locator: p. 221-221
+- id: 090-statefulset-theory
+  title: StatefulSet theory
+  level: 2
+  locator: p. 221-225
+- id: 091-hands-on-with-statefulsets
+  title: Hands-on with StatefulSets
+  level: 2
+  locator: p. 226-238
+- id: 092-clean-up
+  title: Clean up
+  level: 2
+  locator: p. 239-239
+- id: 093-chapter-summary
+  title: Chapter Summary
+  level: 2
+  locator: p. 240-240
+- id: 094-13-api-security-and-rbac
+  title: '13: API security and RBAC'
+  level: 1
+  locator: p. 241-241
+- id: 095-api-security-big-picture
+  title: API security big picture
+  level: 2
+  locator: p. 241-241
+- id: 096-authentication
+  title: Authentication
+  level: 2
+  locator: p. 242-243
+- id: 097-authorization-rbac
+  title: Authorization (RBAC)
+  level: 2
+  locator: p. 244-251
+- id: 098-admission-control
+  title: Admission control
+  level: 2
+  locator: p. 252-252
+- id: 099-chapter-summary
+  title: Chapter summary
+  level: 2
+  locator: p. 253-253
+- id: 100-14-the-kubernetes-api
+  title: '14: The Kubernetes API'
+  level: 1
+  locator: p. 254-254
+- id: 101-kubernetes-api-big-picture
+  title: Kubernetes API big picture
+  level: 2
+  locator: p. 254-257
+- id: 102-the-api-server
+  title: The API server
+  level: 2
+  locator: p. 258-263
+- id: 103-the-api
+  title: The API
+  level: 2
+  locator: p. 264-275
+- id: 104-chapter-summary
+  title: Chapter summary
+  level: 2
+  locator: p. 276-278
+- id: 105-15-threat-modeling-kubernetes
+  title: '15: Threat modeling Kubernetes'
+  level: 1
+  locator: p. 279-279
+- id: 106-threat-modeling
+  title: Threat modeling
+  level: 2
+  locator: p. 279-279
+- id: 107-spoofing
+  title: Spoofing
+  level: 2
+  locator: p. 279-281
+- id: 108-tampering
+  title: Tampering
+  level: 2
+  locator: p. 282-283
+- id: 109-repudiation
+  title: Repudiation
+  level: 2
+  locator: p. 284-285
+- id: 110-information-disclosure
+  title: Information Disclosure
+  level: 2
+  locator: p. 286-286
+- id: 111-denial-of-service
+  title: Denial of Service
+  level: 2
+  locator: p. 287-290
+- id: 112-elevation-of-privilege
+  title: Elevation of privilege
+  level: 2
+  locator: p. 291-302
+- id: 113-chapter-summary
+  title: Chapter summary
+  level: 2
+  locator: p. 303-304
+- id: 114-16-real-world-kubernetes-security
+  title: '16: Real-world Kubernetes security'
+  level: 1
+  locator: p. 305-305
+- id: 115-security-in-the-software-delivery-pipeline
+  title: Security in the software delivery pipeline
+  level: 2
+  locator: p. 305-310
+- id: 116-workload-isolation
+  title: Workload isolation
+  level: 2
+  locator: p. 311-315
+- id: 117-identity-and-access-management-iam
+  title: Identity and access management (IAM)
+  level: 2
+  locator: p. 316-316
+- id: 118-security-monitoring-and-auditing
+  title: Security monitoring and auditing
+  level: 2
+  locator: p. 317-320
+- id: 119-real-world-example
+  title: Real-world example
+  level: 2
+  locator: p. 321-321
+- id: 120-chapter-summary
+  title: Chapter summary
+  level: 2
+  locator: p. 321-321
+- id: 121-terminology
+  title: Terminology
+  level: 1
+  locator: p. 322-328
+- id: 122-what-next
+  title: What next
+  level: 1
+  locator: p. 329-331
+- id: 123-more-from-the-author
+  title: More from the author
+  level: 1
+  locator: p. 332-336

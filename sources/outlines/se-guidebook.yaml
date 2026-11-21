@@ -1,0 +1,188 @@
+corpus: se-guidebook
+title: 'The Software Engineer''s Guidebook: Navigating senior, tech lead, and staff engineer positions
+  at tech companies and startups'
+sections:
+- id: 001-cover
+  title: Cover
+  level: 1
+  locator: OEBPS/cover.xhtml
+- id: 002-title-page
+  title: Title Page
+  level: 1
+  locator: OEBPS/title-page.xhtml
+- id: 003-contents
+  title: Contents
+  level: 1
+  locator: OEBPS/contents.xhtml
+- id: 004-copyright
+  title: Copyright
+  level: 1
+  locator: OEBPS/copyright.xhtml
+- id: 005-keep-up-to-date-with-the-tech-industry
+  title: Keep up-to-date with the tech industry
+  level: 1
+  locator: OEBPS/keep-up-to-date-with-the-tech-industry.xhtml
+- id: 006-preface
+  title: Preface
+  level: 1
+  locator: OEBPS/preface.xhtml
+- id: 007-introduction
+  title: Introduction
+  level: 1
+  locator: OEBPS/introduction.xhtml
+- id: 008-i-developer-career-fundamentals
+  title: I. Developer Career Fundamentals
+  level: 1
+  locator: OEBPS/part-001.xhtml
+- id: 009-1-career-paths
+  title: 1. Career Paths
+  level: 2
+  locator: OEBPS/part-001-chapter-001.xhtml
+- id: 010-2-owning-your-career
+  title: 2. Owning Your Career
+  level: 2
+  locator: OEBPS/part-001-chapter-002.xhtml
+- id: 011-3-performance-reviews
+  title: 3. Performance Reviews
+  level: 2
+  locator: OEBPS/part-001-chapter-003.xhtml
+- id: 012-4-promotions
+  title: 4. Promotions
+  level: 2
+  locator: OEBPS/part-001-chapter-004.xhtml
+- id: 013-5-thriving-in-different-environments
+  title: 5. Thriving In Different Environments
+  level: 2
+  locator: OEBPS/part-001-chapter-005.xhtml
+- id: 014-6-switching-jobs
+  title: 6. Switching Jobs
+  level: 2
+  locator: OEBPS/part-001-chapter-006.xhtml
+- id: 015-takeaways
+  title: Takeaways
+  level: 2
+  locator: OEBPS/part-001-takeaways.xhtml
+- id: 016-ii-the-competent-software-developer
+  title: II. The Competent Software Developer
+  level: 1
+  locator: OEBPS/part-002.xhtml
+- id: 017-7-getting-things-done
+  title: 7. Getting Things Done
+  level: 2
+  locator: OEBPS/part-002-chapter-007.xhtml
+- id: 018-8-coding
+  title: 8. Coding
+  level: 2
+  locator: OEBPS/part-002-chapter-008.xhtml
+- id: 019-9-software-development
+  title: 9. Software Development
+  level: 2
+  locator: OEBPS/part-002-chapter-009.xhtml
+- id: 020-10-tools-of-the-productive-developer
+  title: 10. Tools Of The Productive Developer
+  level: 2
+  locator: OEBPS/part-002-chapter-010.xhtml
+- id: 021-takeaways
+  title: Takeaways
+  level: 2
+  locator: OEBPS/part-002-takeaways.xhtml
+- id: 022-iii-the-well-rounded-senior-engineer
+  title: III. The Well-Rounded Senior Engineer
+  level: 1
+  locator: OEBPS/part-003.xhtml
+- id: 023-11-getting-things-done
+  title: 11. Getting Things Done
+  level: 2
+  locator: OEBPS/part-003-chapter-011.xhtml
+- id: 024-12-collaboration-and-teamwork
+  title: 12. Collaboration And Teamwork
+  level: 2
+  locator: OEBPS/part-003-chapter-012.xhtml
+- id: 025-13-software-engineering
+  title: 13. Software Engineering
+  level: 2
+  locator: OEBPS/part-003-chapter-013.xhtml
+- id: 026-14-testing
+  title: 14. Testing
+  level: 2
+  locator: OEBPS/part-003-chapter-014.xhtml
+- id: 027-15-software-architecture
+  title: 15. Software Architecture
+  level: 2
+  locator: OEBPS/part-003-chapter-015.xhtml
+- id: 028-takeaways
+  title: Takeaways
+  level: 2
+  locator: OEBPS/part-003-takeaways.xhtml
+- id: 029-iv-the-pragmatic-tech-lead
+  title: IV. The Pragmatic Tech Lead
+  level: 1
+  locator: OEBPS/part-004.xhtml
+- id: 030-16-project-management
+  title: 16. Project Management
+  level: 2
+  locator: OEBPS/part-004-chapter-016.xhtml
+- id: 031-17-shipping-to-production
+  title: 17. Shipping To Production
+  level: 2
+  locator: OEBPS/part-004-chapter-017.xhtml
+- id: 032-18-stakeholder-management
+  title: 18. Stakeholder Management
+  level: 2
+  locator: OEBPS/part-004-chapter-018.xhtml
+- id: 033-19-team-structure
+  title: 19. Team Structure
+  level: 2
+  locator: OEBPS/part-004-chapter-019.xhtml
+- id: 034-20-team-dynamics
+  title: 20. Team Dynamics
+  level: 2
+  locator: OEBPS/part-004-chapter-020.xhtml
+- id: 035-takeaways
+  title: Takeaways
+  level: 2
+  locator: OEBPS/part-004-takeaways.xhtml
+- id: 036-v-role-model-staff-and-principal-engineers
+  title: V. Role-Model Staff and Principal Engineers
+  level: 1
+  locator: OEBPS/part-005.xhtml
+- id: 037-21-understanding-the-business
+  title: 21. Understanding The Business
+  level: 2
+  locator: OEBPS/part-005-chapter-021.xhtml
+- id: 038-22-collaboration
+  title: 22. Collaboration
+  level: 2
+  locator: OEBPS/part-005-chapter-022.xhtml
+- id: 039-23-software-engineering
+  title: 23. Software Engineering
+  level: 2
+  locator: OEBPS/part-005-chapter-023.xhtml
+- id: 040-24-reliable-software-systems
+  title: 24. Reliable Software Systems
+  level: 2
+  locator: OEBPS/part-005-chapter-024.xhtml
+- id: 041-25-software-architecture
+  title: 25. Software Architecture
+  level: 2
+  locator: OEBPS/part-005-chapter-025.xhtml
+- id: 042-takeaways
+  title: Takeaways
+  level: 2
+  locator: OEBPS/part-005-takeaways.xhtml
+- id: 043-vi-conclusion
+  title: VI. Conclusion
+  level: 1
+  locator: OEBPS/part-006.xhtml
+- id: 044-26-lifelong-learning
+  title: 26. Lifelong Learning
+  level: 2
+  locator: OEBPS/part-006-chapter-026.xhtml
+- id: 045-27-further-reading
+  title: 27. Further Reading
+  level: 2
+  locator: OEBPS/part-006-chapter-027.xhtml
+- id: 046-acknowledgments
+  title: Acknowledgments
+  level: 1
+  locator: OEBPS/acknowledgments.xhtml

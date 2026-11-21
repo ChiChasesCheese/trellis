@@ -1,0 +1,234 @@
+corpus: ai-engineering
+title: AI Engineering
+sections:
+- id: 001-preface
+  title: Preface
+  level: 1
+  children:
+  - What This Book Is About
+  - What This Book Is Not
+  - Who This Book Is For
+  - Navigating This Book
+  - Conventions Used in This Book
+  - Using Code Examples
+  - O’Reilly Online Learning
+  - How to Contact Us
+  - Acknowledgments
+  locator: OEBPS/preface01.html
+- id: 002-1-introduction-to-building-ai-applications-with-foundation-models
+  title: 1. Introduction to Building AI Applications with Foundation Models
+  level: 1
+  children:
+  - The Rise of AI Engineering
+  - From Language Models to Large Language Models
+  - From Large Language Models to Foundation Models
+  - From Foundation Models to AI Engineering
+  - Foundation Model Use Cases
+  - Coding
+  - Image and Video Production
+  - Writing
+  - Education
+  - Conversational Bots
+  - Information Aggregation
+  - Data Organization
+  - Workflow Automation
+  - Planning AI Applications
+  - Use Case Evaluation
+  - Setting Expectations
+  - Milestone Planning
+  - Maintenance
+  - The AI Engineering Stack
+  - Three Layers of the AI Stack
+  - AI Engineering Versus ML Engineering
+  - AI Engineering Versus Full-Stack Engineering
+  - Summary
+  locator: OEBPS/ch01.html
+- id: 003-2-understanding-foundation-models
+  title: 2. Understanding Foundation Models
+  level: 1
+  children:
+  - Training Data
+  - Multilingual Models
+  - Domain-Specific Models
+  - Modeling
+  - Model Architecture
+  - Model Size
+  - Post-Training
+  - Supervised Finetuning
+  - Preference Finetuning
+  - Sampling
+  - Sampling Fundamentals
+  - Sampling Strategies
+  - Test Time Compute
+  - Structured Outputs
+  - The Probabilistic Nature of AI
+  - Summary
+  locator: OEBPS/ch02.html
+- id: 004-3-evaluation-methodology
+  title: 3. Evaluation Methodology
+  level: 1
+  children:
+  - Challenges of Evaluating Foundation Models
+  - Understanding Language Modeling Metrics
+  - Entropy
+  - Cross Entropy
+  - Bits-per-Character and Bits-per-Byte
+  - Perplexity
+  - Perplexity Interpretation and Use Cases
+  - Exact Evaluation
+  - Functional Correctness
+  - Similarity Measurements Against Reference Data
+  - Introduction to Embedding
+  - AI as a Judge
+  - Why AI as a Judge?
+  - How to Use AI as a Judge
+  - Limitations of AI as a Judge
+  - What Models Can Act as Judges?
+  - Ranking Models with Comparative Evaluation
+  - Challenges of Comparative Evaluation
+  - The Future of Comparative Evaluation
+  - Summary
+  locator: OEBPS/ch03.html
+- id: 005-4-evaluate-ai-systems
+  title: 4. Evaluate AI Systems
+  level: 1
+  children:
+  - Evaluation Criteria
+  - Domain-Specific Capability
+  - Generation Capability
+  - Instruction-Following Capability
+  - Cost and Latency
+  - Model Selection
+  - Model Selection Workflow
+  - Model Build Versus Buy
+  - Navigate Public Benchmarks
+  - Design Your Evaluation Pipeline
+  - Step 1. Evaluate All Components in a System
+  - Step 2. Create an Evaluation Guideline
+  - Step 3. Define Evaluation Methods and Data
+  - Summary
+  locator: OEBPS/ch04.html
+- id: 006-5-prompt-engineering
+  title: 5. Prompt Engineering
+  level: 1
+  children:
+  - Introduction to Prompting
+  - 'In-Context Learning: Zero-Shot and Few-Shot'
+  - System Prompt and User Prompt
+  - Context Length and Context Efficiency
+  - Prompt Engineering Best Practices
+  - Write Clear and Explicit Instructions
+  - Provide Sufficient Context
+  - Break Complex Tasks into Simpler Subtasks
+  - Give the Model Time to Think
+  - Iterate on Your Prompts
+  - Evaluate Prompt Engineering Tools
+  - Organize and Version Prompts
+  - Defensive Prompt Engineering
+  - Proprietary Prompts and Reverse Prompt Engineering
+  - Jailbreaking and Prompt Injection
+  - Information Extraction
+  - Defenses Against Prompt Attacks
+  - Summary
+  locator: OEBPS/ch05.html
+- id: 007-6-rag-and-agents
+  title: 6. RAG and Agents
+  level: 1
+  children:
+  - RAG
+  - RAG Architecture
+  - Retrieval Algorithms
+  - Retrieval Optimization
+  - RAG Beyond Texts
+  - Agents
+  - Agent Overview
+  - Tools
+  - Planning
+  - Agent Failure Modes and Evaluation
+  - Memory
+  - Summary
+  locator: OEBPS/ch06.html
+- id: 008-7-finetuning
+  title: 7. Finetuning
+  level: 1
+  children:
+  - Finetuning Overview
+  - When to Finetune
+  - Reasons to Finetune
+  - Reasons Not to Finetune
+  - Finetuning and RAG
+  - Memory Bottlenecks
+  - Backpropagation and Trainable Parameters
+  - Memory Math
+  - Numerical Representations
+  - Quantization
+  - Finetuning Techniques
+  - Parameter-Efficient Finetuning
+  - Model Merging and Multi-Task Finetuning
+  - Finetuning Tactics
+  - Summary
+  locator: OEBPS/ch07.html
+- id: 009-8-dataset-engineering
+  title: 8. Dataset Engineering
+  level: 1
+  children:
+  - Data Curation
+  - Data Quality
+  - Data Coverage
+  - Data Quantity
+  - Data Acquisition and Annotation
+  - Data Augmentation and Synthesis
+  - Why Data Synthesis
+  - Traditional Data Synthesis Techniques
+  - AI-Powered Data Synthesis
+  - Model Distillation
+  - Data Processing
+  - Inspect Data
+  - Deduplicate Data
+  - Clean and Filter Data
+  - Format Data
+  - Summary
+  locator: OEBPS/ch08.html
+- id: 010-9-inference-optimization
+  title: 9. Inference Optimization
+  level: 1
+  children:
+  - Understanding Inference Optimization
+  - Inference Overview
+  - Inference Performance Metrics
+  - AI Accelerators
+  - Inference Optimization
+  - Model Optimization
+  - Inference Service Optimization
+  - Summary
+  locator: OEBPS/ch09.html
+- id: 011-10-ai-engineering-architecture-and-user-feedback
+  title: 10. AI Engineering Architecture and User Feedback
+  level: 1
+  children:
+  - AI Engineering Architecture
+  - Step 1. Enhance Context
+  - Step 2. Put in Guardrails
+  - Step 3. Add Model Router and Gateway
+  - Step 4. Reduce Latency with Caches
+  - Step 5. Add Agent Patterns
+  - Monitoring and Observability
+  - AI Pipeline Orchestration
+  - User Feedback
+  - Extracting Conversational Feedback
+  - Feedback Design
+  - Feedback Limitations
+  - Summary
+  locator: OEBPS/ch10.html
+- id: 012-epilogue
+  title: Epilogue
+  level: 1
+  locator: OEBPS/afterword01.html
+- id: 013-index
+  title: Index
+  level: 1
+  locator: OEBPS/ix01.html
+- id: 014-about-the-author
+  title: About the Author
+  level: 1
+  locator: OEBPS/colophon01.html

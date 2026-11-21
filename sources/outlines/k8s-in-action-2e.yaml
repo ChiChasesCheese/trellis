@@ -1,0 +1,621 @@
+corpus: k8s-in-action-2e
+title: Kubernetes in Action
+sections:
+- id: 001-kubernetes-in-action
+  title: Kubernetes in Action
+  level: 1
+  locator: p. 1-2
+- id: 002-praise-for-the-first-edition
+  title: Praise for the First Edition
+  level: 1
+  locator: p. 3-8
+- id: 003-brief-contents
+  title: brief contents
+  level: 1
+  locator: p. 9-10
+- id: 004-contents
+  title: contents
+  level: 1
+  locator: p. 11-20
+- id: 005-preface
+  title: preface
+  level: 1
+  locator: p. 21-21
+- id: 006-acknowledgments
+  title: acknowledgments
+  level: 1
+  locator: p. 22-23
+- id: 007-about-this-book
+  title: about this book
+  level: 1
+  locator: p. 24-24
+- id: 008-who-should-read-this-book
+  title: Who should read this book
+  level: 2
+  locator: p. 24-24
+- id: 009-how-this-book-is-organized-a-road-map
+  title: 'How this book is organized: A road map'
+  level: 2
+  locator: p. 25-25
+- id: 010-about-the-code
+  title: About the code
+  level: 2
+  locator: p. 26-26
+- id: 011-livebook-discussion-forum
+  title: liveBook discussion forum
+  level: 2
+  locator: p. 27-27
+- id: 012-other-online-resources
+  title: Other online resources
+  level: 2
+  locator: p. 27-27
+- id: 013-about-the-authors
+  title: about the authors
+  level: 1
+  locator: p. 28-29
+- id: 014-about-the-cover-illustration
+  title: about the cover illustration
+  level: 1
+  locator: p. 30-30
+- id: 015-part-1-getting-started
+  title: Part 1 Getting started
+  level: 1
+  locator: p. 31-32
+- id: 016-1-introducing-kubernetes
+  title: 1 Introducing Kubernetes
+  level: 2
+  children:
+  - 1.1 Introducing Kubernetes
+  - 1.1.1 Kubernetes in a nutshell
+  - 1.1.2 About the Kubernetes project
+  - 1.1.3 Understanding why Kubernetes is so popular
+  - 1.2 Understanding Kubernetes
+  - 1.2.1 Understanding how Kubernetes transforms a computer cluster
+  - 1.2.2 The benefits of using Kubernetes
+  - 1.2.3 The architecture of a Kubernetes cluster
+  - 1.2.4 How Kubernetes runs an application
+  - 1.3 Introducing Kubernetes into your organization
+  - 1.3.1 Running Kubernetes on-premises and in the cloud
+  - 1.3.2 To manage or not to manage Kubernetes yourself
+  - 1.3.3 Using vanilla or extended Kubernetes
+  - 1.3.4 Should you even use Kubernetes?
+  - Summary
+  locator: p. 33-54
+- id: 017-2-understanding-containers-and-containerized-applications
+  title: 2 Understanding containers and containerized applications
+  level: 2
+  children:
+  - 2.1 Introducing containers
+  - 2.1.1 Comparing containers to VMs
+  - 2.1.2 Introducing the Docker container platform
+  - 2.1.3 Installing Docker and running a “Hello, World!” container
+  - 2.1.4 Introducing the Open Container Initiative and Docker alternatives
+  - 2.2 Deploying the Kubernetes in Action Demo Application
+  - 2.2.1 Introducing the Kiada Application
+  - 2.2.2 Building the application
+  - 2.2.3 Running the container
+  - 2.2.4 Distributing the container image
+  - 2.2.5 Stopping, resuming, and deleting the container
+  - 2.3 Understanding containers
+  - 2.3.1 Customizing the process environment with Kernel Namespaces
+  - 2.3.2 Exploring the environment of a running container
+  - 2.3.3 Limiting the resources available to a process using cgroups
+  - 2.3.4 Strengthening isolation between containers
+  - Summary
+  locator: p. 55-86
+- id: 018-3-deploying-your-first-application-on-kubernetes
+  title: 3 Deploying your first application on Kubernetes
+  level: 2
+  children:
+  - 3.1 Deploying a Kubernetes cluster
+  - 3.1.1 Using the built-in Kubernetes cluster in Docker Desktop
+  - 3.1.2 Running a local cluster using Minikube
+  - 3.1.3 Running a local cluster using kind (Kubernetes in Docker)
+  - 3.1.4 Creating a managed cluster with Google Kubernetes Engine
+  - 3.1.5 Creating a cluster using Amazon Elastic Kubernetes Service
+  - 3.1.6 Deploying a multi-node cluster from scratch
+  - 3.2 Interacting with Kubernetes
+  - 3.2.1 Setting up kubectl, the Kubernetes command-line client
+  - 3.2.2 Configuring kubectl to use a specific Kubernetes cluster
+  - 3.2.3 Using kubectl
+  - 3.2.4 Interacting with Kubernetes through web dashboards
+  - 3.3 Running your first application on Kubernetes
+  - 3.3.1 Deploying your application
+  - 3.3.2 Exposing your application to the world
+  - 3.3.3 Horizontally scaling the application
+  - 3.3.4 Understanding the deployed application
+  - Summary
+  locator: p. 87-118
+- id: 019-4-navigating-the-kubernetes-api-and-object-model
+  title: 4 Navigating the Kubernetes API and object model
+  level: 2
+  children:
+  - 4.1 Getting familiar with the Kubernetes API
+  - 4.1.1 Introducing the API
+  - 4.1.2 Understanding the structure of an object manifest
+  - 4.2 Examining an object’s individual properties
+  - 4.2.1 Exploring the full manifest of a Node object
+  - 4.2.2 Understanding individual object fields
+  - 4.2.3 Understanding an object’s status conditions
+  - 4.2.4 Inspecting objects using the kubectl describe command
+  - 4.3 Observing cluster events via Event objects
+  - 4.3.1 Introducing the Event object
+  - 4.3.2 Examining the YAML of the Event object
+  - Summary
+  locator: p. 119-138
+- id: 020-part-2-running-applications-in-kubernetes
+  title: Part 2 Running applications in Kubernetes
+  level: 1
+  locator: p. 139-140
+- id: 021-5-running-applications-with-pods
+  title: 5 Running applications with pods
+  level: 2
+  children:
+  - 5.1 Understanding pods
+  - 5.1.1 Understanding the purpose of pods
+  - 5.1.2 Organizing containers into pods
+  - 5.2 Creating pods from YAML or JSON files
+  - 5.2.1 Creating a YAML manifest for a pod
+  - 5.2.2 Creating the Pod object from the YAML file
+  - 5.2.3 Checking the newly created pod
+  - 5.3 Interacting with the application and the pod
+  - 5.3.1 Sending requests to the application in the pod
+  - 5.3.2 Viewing application logs
+  - 5.3.3 Attaching to a running container
+  - 5.3.4 Executing commands in running containers
+  - 5.3.5 Copying files to and from containers
+  - 5.3.6 Debugging pods using ephemeral containers
+  - 5.4 Running multiple containers in a pod
+  - 5.4.1 Extending the Kiada Node.js application using the Envoy proxy
+  - 5.4.2 Adding Envoy proxy to the pod
+  - 5.4.3 Interacting with the two-container pod
+  - 5.5 Running additional containers at pod startup
+  - 5.5.1 Introducing init containers
+  - 5.5.2 Adding init containers to a pod
+  - 5.5.3 Inspecting init containers
+  - 5.5.4 Kubernetes native sidecar containers
+  - 5.6 Deleting pods and other objects
+  - 5.6.1 Deleting a pod by name
+  - 5.6.2 Deleting objects defined in manifest files
+  - 5.6.3 Deleting all pods
+  - 5.6.4 Deleting objects using the “all” keyword
+  - Summary
+  locator: p. 141-179
+- id: 022-6-managing-the-pod-life-cycle-and-container-health
+  title: 6 Managing the pod life cycle and container health
+  level: 2
+  children:
+  - 6.1 Understanding the pod’s status
+  - 6.1.1 Understanding the pod phase
+  - 6.1.2 Understanding pod conditions
+  - 6.1.3 Understanding the container status
+  - 6.2 Keeping containers healthy
+  - 6.2.1 Understanding container auto-restart
+  - 6.2.2 Checking the container’s health using liveness probes
+  - 6.2.3 Creating an HTTP GET liveness probe
+  - 6.2.4 Observing the liveness probe in action
+  - 6.2.5 Using the exec and the tcpSocket liveness probe types
+  - 6.2.6 Using a startup probe when an application is slow to start
+  - 6.2.7 Creating effective liveness probe handlers
+  - 6.3 Executing actions at container start-up and shutdown
+  - 6.3.1 Using post-start hooks to perform actions when the container starts
+  - 6.3.2 Using pre-stop hooks to run a process just before the container terminates
+  - 6.4 Understanding the pod life cycle
+  - 6.4.1 Understanding the initialization stage
+  - 6.4.2 Understanding the run stage
+  - 6.4.3 Understanding the termination stage
+  - 6.4.4 Visualizing the full life cycle of the pod’s containers
+  - Summary
+  locator: p. 180-219
+- id: 023-7-organizing-pods-and-other-resources-using-namespaces-and-labels
+  title: 7 Organizing pods and other resources using namespaces and labels
+  level: 2
+  children:
+  - 7.1 Organizing objects into namespaces
+  - 7.1.1 Listing namespaces and the objects they contain
+  - 7.1.2 Creating namespaces
+  - 7.1.3 Managing objects in other namespaces
+  - 7.1.4 Understanding the (lack of) isolation between namespaces
+  - 7.1.5 Deleting namespaces
+  - 7.2 Organizing pods with labels
+  - 7.2.1 Introducing labels
+  - 7.2.2 Adding labels to pods
+  - 7.2.3 Label syntax rules
+  - 7.2.4 Using standard label keys
+  - 7.3 Filtering objects with label selectors
+  - 7.3.1 Using label selectors for object management with kubectl
+  - 7.3.2 Using label selectors in object manifests
+  - 7.4 Filtering objects with field selectors
+  - 7.4.1 Using a field selector in kubectl
+  - 7.4.2 Using field selectors in object manifests
+  - 7.5 Annotating objects
+  - 7.5.1 Introducing object annotations
+  - 7.5.2 Adding annotations to objects
+  - 7.5.3 Inspecting an object’s annotations
+  - 7.5.4 Updating and removing annotations
+  - Summary
+  locator: p. 220-252
+- id: 024-part-3-application-configuration-and-storage
+  title: Part 3 Application configuration and storage
+  level: 1
+  locator: p. 253-254
+- id: 025-8-configuring-applications-with-configmaps-and-secrets
+  title: 8 Configuring applications with ConfigMaps and Secrets
+  level: 2
+  children:
+  - 8.1 Setting the command, arguments, and environment variables
+  - 8.1.1 Setting the command and arguments
+  - 8.1.2 Setting environment variables in a container
+  - 8.2 Using a ConfigMap to decouple configuration from the pod manifest
+  - 8.2.1 Introducing ConfigMaps
+  - 8.2.2 Creating a ConfigMap object
+  - 8.2.3 Injecting ConfigMap values into environment variables
+  - 8.2.4 Updating and deleting ConfigMaps
+  - 8.3 Using Secrets to pass sensitive data to containers
+  - 8.3.1 Introducing Secrets
+  - 8.3.2 Creating a Secret
+  - 8.3.3 Using Secrets in containers
+  - 8.3.4 Understanding why Secrets aren’t always secure
+  - 8.4 Exposing metadata to containers via the Downward API
+  - 8.4.1 Introducing the Downward API
+  - 8.4.2 Injecting pod metadata into environment variables
+  - Summary
+  locator: p. 255-285
+- id: 026-9-adding-volumes-for-storage-configuration-and-metadata
+  title: 9 Adding volumes for storage, configuration, and metadata
+  level: 2
+  children:
+  - 9.1 Introducing volumes
+  - 9.1.1 Understanding when to use a volume
+  - 9.1.2 Understanding how volumes fit into pods
+  - 9.2 Using an emptyDir volume
+  - 9.2.1 Persisting files across container restarts
+  - 9.2.2 Initializing an emptyDir volume
+  - 9.2.3 Sharing files between containers
+  - 9.3 Mounting a container image as a volume
+  - 9.3.1 Introducing the image volume type
+  - 9.4 Accessing files on the worker node’s filesystem
+  - 9.4.1 Introducing the hostPath volume
+  - 9.4.2 Using a hostPath volume
+  - 9.5 ConfigMap, Secret, Downward API, and projected volumes
+  - 9.5.1 Using a configMap volume to expose ConfigMap entries as files
+  - 9.5.2 How configMap volumes work
+  - 9.5.3 Using Secret volumes
+  - 9.5.4 Setting file permissions and ownership in a secret/configMap volume
+  - 9.5.5 Using a downwardAPI volume to expose Pod metadata as files
+  - 9.5.6 Using projected volumes to combine volumes into one
+  - 9.6 Other volume types at a glance
+  - Summary
+  locator: p. 286-329
+- id: 027-10-persisting-data-with-persistentvolumes
+  title: 10 Persisting data with PersistentVolumes
+  level: 2
+  children:
+  - 10.1 Introducing persistent storage in Kubernetes
+  - 10.1.1 Introducing PersistentVolumeClaims and PersistentVolumes
+  - 10.1.2 Dynamic vs. static provisioning of PersistentVolumes
+  - 10.2 Dynamically provisioning a PersistentVolume
+  - 10.2.1 Creating a PersistentVolumeClaim
+  - 10.2.2 Using PersistentVolumeClaims
+  - 10.2.3 Deleting a PersistentVolumeClaim and PersistentVolume
+  - 10.2.4 Understanding access modes
+  - 10.2.5 Understanding StorageClasses
+  - 10.2.6 About CSI drivers
+  - 10.3 Statically provisioning a PersistentVolume
+  - 10.3.1 Creating a node-local PersistentVolume
+  - 10.3.2 Claiming a pre-provisioned PersistentVolume
+  - 10.3.3 Releasing and recycling a manually provisioned PersistentVolume
+  - 10.4 Managing PersistentVolumes
+  - 10.4.1 Resizing PersistentVolumeClaims
+  - 10.4.2 Creating a snapshot of a PersistentVolumeClaim
+  - 10.4.3 Restoring a PersistentVolume from a snapshot
+  - 10.5 Creating ephemeral PersistentVolumes for individual pods
+  - 10.5.1 Introducing the ephemeral volume type
+  - 10.5.2 Understanding the benefits of using an ephemeral volume
+  - Summary
+  locator: p. 330-370
+- id: 028-part-4-connecting-and-exposing-applications
+  title: Part 4 Connecting and exposing applications
+  level: 1
+  locator: p. 371-372
+- id: 029-11-exposing-pods-with-services
+  title: 11 Exposing pods with services
+  level: 2
+  children:
+  - 11.1 Exposing pods via services
+  - 11.1.1 Introducing services
+  - 11.1.2 Creating and updating services
+  - 11.1.3 Accessing cluster-internal services
+  - 11.2 Exposing services externally
+  - 11.2.1 Exposing pods through a NodePort service
+  - 11.2.2 Exposing a service through an external load balancer
+  - 11.2.3 Configuring the external traffic policy for a service
+  - 11.3 Managing service endpoints
+  - 11.3.1 Introducing the Endpoints object
+  - 11.3.2 Introducing the EndpointSlice object
+  - 11.3.3 Managing service endpoints manually
+  - 11.4 Understanding DNS records for Service objects
+  - 11.4.1 Inspecting a service’s A and SRV records in DNS
+  - 11.4.2 Using headless services to connect to pods directly
+  - 11.4.3 Creating a CNAME alias for an existing service
+  - 11.5 Configuring services to route traffic to nearby endpoints
+  - 11.5.1 Forwarding traffic only within the same node with internalTrafficPolicy
+  - 11.5.2 Topology-aware hints
+  - 11.6 Managing the inclusion of a pod in service endpoints
+  - 11.6.1 Introducing readiness probes
+  - 11.6.2 Adding a readiness probe to a pod
+  - 11.6.3 Implementing real-world readiness probes
+  - Summary
+  locator: p. 373-421
+- id: 030-12-using-ingress-to-route-traffic-to-services
+  title: 12 Using Ingress to route traffic to services
+  level: 2
+  children:
+  - 12.1 Introducing Ingresses
+  - 12.1.1 Introducing the Ingress object kind
+  - 12.1.2 Introducing the Ingress controller and the reverse proxy
+  - 12.1.3 Installing an ingress controller
+  - 12.2 Creating and using Ingress objects
+  - 12.2.1 Exposing a service through an Ingress
+  - 12.2.2 Path-based ingress traffic routing
+  - 12.2.3 Using multiple rules in an Ingress object
+  - 12.2.4 Setting the default backend
+  - 12.3 Configuring TLS for an Ingress
+  - 12.3.1 Configuring the Ingress for TLS passthrough
+  - 12.3.2 Terminating TLS at the Ingress
+  - 12.4 Additional Ingress configuration options
+  - 12.4.1 Configuring the Ingress using annotations
+  - 12.4.2 Configuring the Ingress using additional API objects
+  - 12.5 Using multiple ingress controllers
+  - 12.5.1 Introducing the IngressClass object kind
+  - 12.5.2 Specifying the IngressClass in the Ingress object
+  - 12.5.3 Adding parameters to an IngressClass
+  - 12.6 Using custom resources instead of services as backends
+  - 12.6.1 Using a custom object to configure Ingress routing
+  - Summary
+  locator: p. 422-450
+- id: 031-13-routing-traffic-using-the-gateway-api
+  title: 13 Routing traffic using the Gateway API
+  level: 2
+  children:
+  - 13.1 Introducing the Gateway API
+  - 13.1.1 Comparing Gateway API to Ingress
+  - 13.1.2 Understanding the Gateway API implementation
+  - 13.1.3 Deploying Istio as the Gateway API provider
+  - 13.2 Deploying a Gateway
+  - 13.2.1 Understanding Gateway classes
+  - 13.2.2 Creating a Gateway object
+  - 13.2.3 Exploring the Gateway’s status
+  - 13.3 Exposing HTTP services using HTTPRoute
+  - 13.3.1 Creating a simple HTTPRoute
+  - 13.3.2 Splitting traffic between multiple backends
+  - 13.3.3 Routing HTTP requests to different backends
+  - 13.3.4 Augmenting HTTP traffic with filters
+  - 13.4 Configuring a gateway for TLS
+  - 13.4.1 Terminating TLS sessions at the gateway
+  - 13.4.2 End-to-end encryption using TLSRoutes and pass-through TLS
+  - 13.5 Exposing other types of services
+  - 13.5.1 Exposing a TCP service with a TCPRoute
+  - 13.5.2 UDPRoute
+  - 13.5.3 GRPCRoute
+  - 13.6 Using Gateway API resources across namespaces
+  - 13.6.1 Sharing a gateway across namespaces
+  - 13.6.2 Routing to a service in a different namespace
+  - 13.7 From ingress gateways to service mesh
+  - Summary
+  locator: p. 451-492
+- id: 032-part-5-managing-applications-at-scale
+  title: Part 5 Managing applications at scale
+  level: 1
+  locator: p. 493-494
+- id: 033-14-scaling-and-maintaining-pods-with-replicasets
+  title: 14 Scaling and maintaining pods with ReplicaSets
+  level: 2
+  children:
+  - 14.1 Introducing ReplicaSets
+  - 14.1.1 Creating a ReplicaSet
+  - 14.1.2 Inspecting a ReplicaSet and its pods
+  - 14.1.3 Understanding pod ownership
+  - 14.2 Updating a ReplicaSet
+  - 14.2.1 Scaling a ReplicaSet
+  - 14.2.2 Updating the Pod template
+  - 14.3 Understanding the operation of the ReplicaSet controller
+  - 14.3.1 Introducing the reconciliation control loop
+  - 14.3.2 Understanding how the ReplicaSet controller reacts to pod changes
+  - 14.3.3 Removing a pod from the ReplicaSet’s control
+  - 14.4 Deleting a ReplicaSet
+  - 14.4.1 Deleting a ReplicaSet and all associated pods
+  - 14.4.2 Deleting a ReplicaSet while preserving the pods
+  - Summary
+  locator: p. 495-515
+- id: 034-15-automating-application-updates-with-deployments
+  title: 15 Automating application updates with Deployments
+  level: 2
+  children:
+  - 15.1 Introducing Deployments
+  - 15.1.1 Creating a Deployment
+  - 15.1.2 Scaling a Deployment
+  - 15.1.3 Deleting a Deployment
+  - 15.2 Updating a Deployment
+  - 15.2.1 The Recreate strategy
+  - 15.2.2 The RollingUpdate strategy
+  - 15.2.3 Configuring how many pods are replaced at a time
+  - 15.2.4 Pausing the rollout process
+  - 15.2.5 Updating to a faulty version
+  - 15.2.6 Rolling back a Deployment
+  - 15.3 Implementing other deployment strategies
+  - 15.3.1 The Canary deployment strategy
+  - 15.3.2 The A/B strategy
+  - 15.3.3 The Blue/Green strategy
+  - 15.3.4 Traffic shadowing
+  - Summary
+  locator: p. 516-550
+- id: 035-16-handling-stateful-applications-with-statefulsets
+  title: 16 Handling stateful applications with StatefulSets
+  level: 2
+  children:
+  - 16.1 Introducing StatefulSets
+  - 16.1.1 Understanding stateful workload requirements
+  - 16.1.2 Comparing StatefulSets with Deployments
+  - 16.1.3 Creating a StatefulSet
+  - 16.1.4 Inspecting the StatefulSet, Pods, and PersistentVolumeClaims
+  - 16.1.5 Understanding the role of the headless Service
+  - 16.2 Understanding StatefulSet behavior
+  - 16.2.1 Understanding how a StatefulSet replaces missing pods
+  - 16.2.2 Understanding how a StatefulSet handles node failures
+  - 16.2.3 Scaling a StatefulSet
+  - 16.2.4 Changing the PersistentVolumeClaim retention policy
+  - 16.2.5 Using the OrderedReady Pod management policy
+  - 16.3 Updating a StatefulSet
+  - 16.3.1 Using the RollingUpdate strategy
+  - 16.3.2 RollingUpdate with partition
+  - 16.3.3 OnDelete strategy
+  - 16.4 Managing stateful applications with Kubernetes Operators
+  - 16.4.1 Deploying the MongoDB community operator
+  - 16.4.2 Deploying MongoDB via the operator
+  - 16.4.3 Cleaning up
+  - Summary
+  locator: p. 551-593
+- id: 036-17-deploying-per-node-workloads-with-daemonsets
+  title: 17 Deploying per-node workloads with DaemonSets
+  level: 2
+  children:
+  - 17.1 Introducing DaemonSets
+  - 17.1.1 Understanding the DaemonSet object
+  - 17.1.2 Deploying pods with a DaemonSet
+  - 17.1.3 Deploying to a subset of Nodes with a node selector
+  - 17.1.4 Updating a DaemonSet
+  - 17.1.5 Deleting the DaemonSet
+  - 17.2 Special features in pods running node agents and daemons
+  - 17.2.1 Giving containers access to the OS kernel
+  - 17.2.2 Accessing the node’s filesystem
+  - 17.2.3 Using the node’s network and other namespaces
+  - 17.2.4 Marking daemon Pods as critical
+  - 17.3 Communicating with the local daemon Pod
+  - 17.3.1 Binding directly to a host port
+  - 17.3.2 Using the node’s network stack
+  - 17.3.3 Using a local Service
+  - Summary
+  locator: p. 594-625
+- id: 037-18-batch-processing-with-jobs-and-cronjobs
+  title: 18 Batch processing with Jobs and CronJobs
+  level: 2
+  children:
+  - 18.1 Running tasks with the Job resource
+  - 18.1.1 Introducing the Job resource
+  - 18.1.2 Running a task multiple times
+  - 18.1.3 Understanding how Job failures are handled
+  - 18.1.4 Parameterizing pods in a Job
+  - 18.1.5 Running Jobs with a work queue
+  - 18.1.6 Communication between Job’s Pods
+  - 18.1.7 Sidecar containers in Job pods
+  - 18.2 Scheduling Jobs with CronJobs
+  - 18.2.1 Creating a CronJob
+  - 18.2.2 Configuring the schedule
+  - 18.2.3 Suspending and resuming a CronJob
+  - 18.2.4 Automatically removing finished Jobs
+  - 18.2.5 Setting a start deadline
+  - 18.2.6 Handling Job concurrency
+  - 18.2.7 Deleting a CronJob and its Jobs
+  - Summary
+  locator: p. 626-672
+- id: 038-index
+  title: index
+  level: 1
+  locator: p. 673-673
+- id: 039-a
+  title: A
+  level: 2
+  locator: p. 673-673
+- id: 040-b
+  title: B
+  level: 2
+  locator: p. 673-673
+- id: 041-c
+  title: C
+  level: 2
+  locator: p. 674-674
+- id: 042-d
+  title: D
+  level: 2
+  locator: p. 675-675
+- id: 043-e
+  title: E
+  level: 2
+  locator: p. 676-676
+- id: 044-f
+  title: F
+  level: 2
+  locator: p. 677-677
+- id: 045-g
+  title: G
+  level: 2
+  locator: p. 677-677
+- id: 046-h
+  title: H
+  level: 2
+  locator: p. 678-678
+- id: 047-i
+  title: I
+  level: 2
+  locator: p. 678-678
+- id: 048-j
+  title: J
+  level: 2
+  locator: p. 678-678
+- id: 049-k
+  title: K
+  level: 2
+  locator: p. 679-679
+- id: 050-l
+  title: L
+  level: 2
+  locator: p. 680-680
+- id: 051-m
+  title: M
+  level: 2
+  locator: p. 680-680
+- id: 052-n
+  title: N
+  level: 2
+  locator: p. 680-680
+- id: 053-o
+  title: O
+  level: 2
+  locator: p. 681-681
+- id: 054-p
+  title: P
+  level: 2
+  locator: p. 681-682
+- id: 055-q
+  title: Q
+  level: 2
+  locator: p. 683-683
+- id: 056-r
+  title: R
+  level: 2
+  locator: p. 683-683
+- id: 057-s
+  title: S
+  level: 2
+  locator: p. 684-684
+- id: 058-t
+  title: T
+  level: 2
+  locator: p. 685-685
+- id: 059-u
+  title: U
+  level: 2
+  locator: p. 685-685
+- id: 060-v
+  title: V
+  level: 2
+  locator: p. 686-686
+- id: 061-w
+  title: W
+  level: 2
+  locator: p. 686-686
+- id: 062-y
+  title: Y
+  level: 2
+  locator: p. 686-690

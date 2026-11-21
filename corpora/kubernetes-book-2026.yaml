@@ -1,0 +1,8 @@
+# Second spine of k8s: principles of operation, API, RBAC, security; current to 2026.
+title: "The Kubernetes Book, 2026 Edition"
+author: Nigel Poulton, Pushkar Joglekar
+license: commercial
+domain: k8s
+lang: en
+home: https://leanpub.com/thekubernetesbook
+file: ~/Books/kubernetes-book-2026.pdf

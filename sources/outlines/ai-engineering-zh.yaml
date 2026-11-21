@@ -1,0 +1,83 @@
+corpus: ai-engineering-zh
+title: AI工程：大模型应用开发实战
+sections:
+- id: 001-section
+  title: 内容提要
+  level: 1
+  locator: EPUB/xhtml/Section001.xhtml
+- id: 002-o-reilly-media-inc
+  title: O'Reilly Media, Inc.介绍
+  level: 1
+  locator: EPUB/xhtml/Section003.xhtml
+- id: 003-section
+  title: 对本书的赞誉（中文版）
+  level: 1
+  locator: EPUB/xhtml/Section004.xhtml
+- id: 004-section
+  title: 对本书的赞誉（英文版）
+  level: 1
+  locator: EPUB/xhtml/Section005.xhtml
+- id: 005-section
+  title: 译者序
+  level: 1
+  locator: EPUB/xhtml/Section006.xhtml
+- id: 006-section
+  title: 中文版序
+  level: 1
+  locator: EPUB/xhtml/Section007.xhtml
+- id: 007-section
+  title: 前言
+  level: 1
+  locator: EPUB/xhtml/Section008.xhtml
+- id: 008-1-ai
+  title: 第1章 基于基础模型构建AI应用入门
+  level: 1
+  locator: EPUB/xhtml/Section009.xhtml
+- id: 009-2
+  title: 第2章 理解基础模型
+  level: 1
+  locator: EPUB/xhtml/Section010.xhtml
+- id: 010-3
+  title: 第3章 评估方法论
+  level: 1
+  locator: EPUB/xhtml/Section011.xhtml
+- id: 011-4-ai
+  title: 第4章 评估AI系统
+  level: 1
+  locator: EPUB/xhtml/Section012.xhtml
+- id: 012-5
+  title: 第5章 提示工程
+  level: 1
+  locator: EPUB/xhtml/Section013.xhtml
+- id: 013-6-rag
+  title: 第6章 RAG与智能体
+  level: 1
+  locator: EPUB/xhtml/Section014.xhtml
+- id: 014-7
+  title: 第7章 微调
+  level: 1
+  locator: EPUB/xhtml/Section015.xhtml
+- id: 015-8
+  title: 第8章 数据集工程
+  level: 1
+  locator: EPUB/xhtml/Section016.xhtml
+- id: 016-9
+  title: 第9章 推理优化
+  level: 1
+  locator: EPUB/xhtml/Section017.xhtml
+- id: 017-10-ai
+  title: 第10章 AI工程架构与用户反馈
+  level: 1
+  locator: EPUB/xhtml/Section018.xhtml
+- id: 018-section
+  title: 后记
+  level: 1
+  locator: EPUB/xhtml/Section019.xhtml
+- id: 019-section
+  title: 关于作者
+  level: 1
+  locator: EPUB/xhtml/Section020.xhtml
+- id: 020-section
+  title: 封面简介
+  level: 1
+  locator: EPUB/xhtml/Section021.xhtml

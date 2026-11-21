@@ -1,0 +1,8 @@
+# Backbone of the k8s domain (chapter order). Commercial: text stays in sources/local/ (gitignored).
+title: "Kubernetes in Action, Second Edition"
+author: Marko Lukša, Kevin Conner
+license: commercial
+domain: k8s
+lang: en
+home: https://www.manning.com/books/kubernetes-in-action-second-edition
+file: ~/Books/k8s-in-action-2e.pdf
