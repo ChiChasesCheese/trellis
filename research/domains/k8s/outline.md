@@ -22,6 +22,7 @@
 
 - * 为什么需要 Kubernetes — 单机部署到多机部署会遇到的问题；把一堆机器当成一台计算机的想法。 〔出处：KIA2 §1.1〕
 - * Cluster architecture 与应用如何运行 — 控制面与工作节点的分工，一份描述提交后谁做了什么。 〔出处：KIA2 §1.2〕
+- * 五个基本名词：Cluster、Node、Pod、Deployment、Service — 每个词一句话 + 一张关系图；后面所有卡都默认你认识它们。 〔出处：KIA2 §1.2、§3.3；Poulton ch1〕
 - 要不要用 Kubernetes：managed vs self-hosted, vanilla vs extended — 引入组织的取舍，什么时候不该用。 〔出处：KIA2 §1.3〕
 
 图：① 单机部署 vs 集群上由调度器放置的对比 ② 控制面 + 工作节点的组件框图 ③ 「提交描述 → 应用运行」的流程。
@@ -40,6 +41,7 @@
 ## 第 3 章 在 Kubernetes 上部署第一个应用（KIA2 ch3）
 
 - Local cluster、kubectl 与 kubeconfig — kind/minikube/Docker Desktop 起一个集群；kubeconfig 里的 cluster/user/context 三元组。 〔出处：KIA2 §3.1–3.2；Poulton ch3〕
+- * kubectl 与 imperative vs declarative — kubectl 把请求发给 API server；`kubectl create/scale` 是下命令，`kubectl apply -f` 是交一份「想要的样子」。 〔出处：KIA2 §3.2–3.3；Poulton ch2 declarative model〕
 - * First deployment：部署、暴露、扩容第一个应用 — 一条 Deployment 创建了哪些对象，Service 如何让它可访问，扩副本看到什么。 〔出处：KIA2 §3.3〕
 
 图：① kubectl → 集群 的一次部署链路 ② 创建 Deployment 后出现的对象树（Deployment/ReplicaSet/Pod）③ Service 把流量分给多个 Pod。
@@ -48,6 +50,7 @@
 ## 补充章 原理：Control plane、declarative model 与 reconcile loop（Poulton ch2）
 
 - * Control plane 与 node 组件 — apiserver、etcd、scheduler、controller-manager、kubelet、kube-proxy、容器运行时各管什么，谁只和谁说话。 〔Poulton ch2〕
+- * Controller 是什么 — 每类对象背后有一个程序，不停把现实对齐到 spec；Deployment、ReplicaSet、Node 各有自己的 controller。 〔出处：Poulton ch2；docs: https://kubernetes.io/docs/concepts/architecture/controller/〕
 - * Declarative model 与 reconcile loop — 期望状态写进 API，控制器持续把实际状态拉向期望；水平触发为何比事件触发稳。 〔Poulton ch2；docs: https://kubernetes.io/docs/concepts/architecture/controller/〕
 - * End-to-end walk-through：一条请求的完整旅程 — 从 `kubectl apply` 到容器在节点上运行，经过 API、etcd、调度、kubelet、CRI 的时序。 〔Poulton ch2；KIA2 §1.2.4〕
 
@@ -347,6 +350,7 @@
 - `skeleton/llm-inference.yaml`（GPU/推理）— link：第 7 部分的 GPU 与 LLM 推理叶只讲调度与伸缩，不讲推理引擎内部。
 
 ## 卡片格式建议
+- **自包含（Chi 2026-11-21）：** 卡里出现的每个术语，要么在更靠前的叶子里教过（按卡组顺序），要么在这张卡里用一句话定义。先修卡按教科书写，不默认读者懂任何 K8s。每个领域维护一张「术语首次出现表」，建卡后用脚本检查：没有卡在术语被教之前就用它。
 
 - 每个叶子 = 一篇中文正文（正文）中的一节：从零讲起，每节至少一张图（图用 mermaid 或 SVG，见每章「图：」行），带一个推演过的例子（YAML + `kubectl` 输出，读懂而不是照打）；全文不照抄书，不做实验。
 - 正文下挂四类卡：
