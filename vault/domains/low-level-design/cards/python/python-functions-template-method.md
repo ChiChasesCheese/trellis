@@ -17,4 +17,15 @@ def process_order(order, validate, charge):
     charge(order)
     return "done"
 ```
+
+```mermaid
+flowchart LR
+    O["process_order(order)"] --> V{"validate(order)"}
+    V -->|"否"| E["raise ValueError"]
+    V -->|"是"| C["charge(order)"]
+    C --> R["return done"]
+    H["注入的钩子"] -.-> V
+    H -.-> C
+```
+
 骨架（先校验再扣费的顺序）固定在函数体里，`validate`/`charge` 这两个“钩子”作为可调用对象注入——不需要一个抽象基类和一堆子类。当骨架本身需要在子步骤之间共享大量状态（不只是参数传递），或者钩子彼此有复杂的组合关系时，继承加覆盖方法依然更自然。

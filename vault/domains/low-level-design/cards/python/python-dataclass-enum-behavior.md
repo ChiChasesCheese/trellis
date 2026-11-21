@@ -21,4 +21,14 @@ class OrderState(Enum):
     def is_terminal(self) -> bool:
         return self is OrderState.SHIPPED
 ```
+
+```mermaid
+stateDiagram-v2
+    [*] --> CREATED
+    CREATED --> PAID
+    PAID --> SHIPPED
+    SHIPPED --> [*]
+    note right of SHIPPED: is_terminal() 为真
+```
+
 比起 `is_paid`/`is_shipped` 布尔值组合，`Enum` 把“当前只能处于一种状态”这个不变式直接编码进类型系统，状态相关的行为（如 `is_terminal`）也可以直接挂在枚举上，不用散落成一堆 `if`。

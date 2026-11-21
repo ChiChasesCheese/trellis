@@ -10,6 +10,14 @@ tags: [grown]
 
 ## A
 `heapq` 只需要元素支持 `<`（`__lt__`）。但如果代码里别处还想用 `<=`、`>`、`>=` 比较，手写全部 6 个比较方法很啰嗦。`@functools.total_ordering` 只要求实现 `__eq__` 和其中一个（例如 `__lt__`），就能自动补全其余的比较方法；代价是它用组合调用实现，比手写全套方法稍慢。
+
+```mermaid
+flowchart LR
+    W["你写：__eq__ + __lt__"] --> T["@total_ordering"]
+    T --> G["自动补：__le__、__gt__、__ge__"]
+    W --> H["heapq 只用 __lt__"]
+```
+
 ```python
 from functools import total_ordering
 

@@ -11,4 +11,19 @@ step: 4
 
 ## A
 **要点。** 邮件写入后向 Redis 频道 `mbx:{address}` 发布事件；浏览器建立 SSE 连接，Web API 订阅该频道，收到事件就推新邮件摘要。
+
+```mermaid
+sequenceDiagram
+    participant B as 浏览器
+    participant W as Web API
+    participant R as Redis 频道
+    participant S as 邮件写入
+    B->>W: 建立 SSE 连接
+    W->>R: 订阅 mbx:address
+    S->>R: 发布新邮件事件
+    R-->>W: 事件
+    W-->>B: 推新邮件摘要
+    Note over B,W: SSE 断开时每 5～10 秒轮询
+```
+
 **兜底。** SSE 断开时前端每 5～10 秒轮询一次。

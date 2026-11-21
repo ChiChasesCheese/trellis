@@ -19,6 +19,14 @@ class Floor:
 ## A
 下划线前缀只是约定，Python 没有真正的 private——但即使当作它是私有的，`spots` 这个 property 返回的仍然是内部那个 list 对象本身，调用方拿到手可以 `append`/`clear`，绕开 `Floor` 想强制的每一条规则。构造函数同样有泄漏：直接存下调用方传进来的 list，调用方之后照样能继续改它。
 
+```mermaid
+flowchart LR
+    C["调用方的 spots"] --> L["同一个 list 对象"]
+    F["Floor._spots"] --> L
+    P["floor.spots 返回值"] --> L
+    L --> X["append / clear<br/>绕开 Floor 的规则"]
+```
+
 1. **根本不要暴露** —— 改成暴露操作：`floor.find_free_spot(size)`。
 2. 返回**不可变视图**（`tuple(self._spots)`），并在构造函数里做防御性拷贝：`self._spots = list(spots)`。
 3. 只有当调用方确实需要任意遍历时，才暴露一个只读的迭代器。

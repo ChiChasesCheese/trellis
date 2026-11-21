@@ -24,4 +24,16 @@ def publish(self, topic, severity, message, location=""):
             self._record_dead(dead)
     return event
 ```
+
+```mermaid
+flowchart TB
+    subgraph LK["持锁"]
+        A["_seq += 1"] --> B["建 EmergencyEvent"]
+        B --> C["拍订阅快照 targets"]
+    end
+    C --> D["锁外逐个投递<br/>deliver 或 box.offer"]
+    D --> E["失败的交给 _record_dead"]
+    D -.->|"处理函数再 publish 或退订"| A
+```
+
 锁外调用才允许处理函数再发布或退订而不死锁。
