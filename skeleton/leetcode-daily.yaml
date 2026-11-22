@@ -191,8 +191,17 @@ nodes:
     title: LC 3408 设计任务管理器（Design Task Manager）
     summary: Medium；Design, Hash Table, Ordered Set, Heap (Priority Queue)。
   core: true
-- id: math-bit-sim
+- id: string-parsing
   order: 17
+  title: 字符串处理与表达式解析
+  summary: 字符串处理与表达式解析：Chi 解过的题，按知识点归在一起。
+  children:
+  - id: string-parsing.check-if-all-as-appears-before-all-bs
+    title: LC 2124 检查是否所有 A 都在 B 之前（Check if All A's Appears Before All B's）
+    summary: Easy；String。
+  core: true
+- id: math-bit-sim
+  order: 18
   title: 数学、位运算与模拟
   summary: 数学、位运算与模拟：Chi 解过的题，按知识点归在一起。
   children:
@@ -222,7 +231,7 @@ nodes:
     summary: Medium；Array, Hash Table, Matrix, Linear Algebra。
   core: true
 - id: sorting-permutation
-  order: 18
+  order: 19
   title: 排序、置换环与逆序对
   summary: 排序、置换环与逆序对：Chi 解过的题，按知识点归在一起。
   children:
