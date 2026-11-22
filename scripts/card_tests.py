@@ -6,6 +6,7 @@
     uv run python scripts/card_tests.py review <set> NN [--show]      # a chunk's part files against its todo file; merges them when clean
     uv run python scripts/card_tests.py import <set> <file.json> [--update]
     uv run python scripts/card_tests.py full <set>                    # copy the source cards onto the backs again
+    uv run python scripts/card_tests.py chunks <set> [NN <stage>]     # each chunk's stage (written / verifying / verified / imported); set one
 
 Sets (Chi, 2026-11-22: 「lld 也全量更新，ai 相关卡组也是」): `lld` → deck 3 低层设计测验 from 低层设计（LLD）; `ai` → deck AI 测验 from
 AI 通识, LLM 推理, AI 应用工程 and ML 与 LLM 系统设计. They follow the algorithm deck 算法模式识别 (scripts/daily_quiz.py) and
@@ -274,6 +275,32 @@ def review(kind: str, nn: str, show: bool) -> int:
     return 1 if problems else 0
 
 
+def chunks(kind: str, mark: tuple[str, str] | None = None) -> int:
+    """Where each chunk stands: written (part files exist) → verified (marked by the orchestrator once the verifier's
+    report is read) → imported (every source of the chunk has a question in Anki). `mark` sets a chunk's stage."""
+    state_file = HOME / f"{kind}-state.json"
+    state = json.loads(state_file.read_text(encoding="utf-8")) if state_file.exists() else {}
+    if mark:
+        state[mark[0]] = mark[1]
+        state_file.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
+    have = done(kind)
+    line = []
+    for f in sorted(HOME.glob(f"{kind}-todo-[0-9][0-9].md")):
+        nn = f.stem[-2:]
+        want = re.findall(r"^- source: (\S+)", f.read_text(encoding="utf-8"), flags=re.M)
+        if want and all(x in have for x in want):
+            stage = "imported"
+        elif state.get(nn):
+            stage = state[nn]
+        elif list(HOME.glob(f"{kind}-bulk-{nn}.part*.json")):
+            stage = "written"
+        else:
+            stage = "-"
+        line.append(f"{nn}:{stage}")
+    print(f"{kind}: " + "  ".join(line))
+    return 0
+
+
 def main() -> int:
     args = sys.argv[1:]
     if len(args) < 2 or args[1] not in SETS:
@@ -282,6 +309,8 @@ def main() -> int:
     cmd, kind = args[0], args[1]
     if cmd == "status":
         return status(kind)
+    if cmd == "chunks":
+        return chunks(kind, (args[2], args[3]) if len(args) > 3 else None)
     if cmd == "todo":
         return todo(kind, int(args[args.index("--chunk") + 1]) if "--chunk" in args else 60)
     if cmd == "lint":
