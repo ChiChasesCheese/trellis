@@ -1412,6 +1412,7 @@ def main() -> int:
             daily_cap.apply_caps(apply=True)
             import daily_quiz  # 算法模式识别: the learning cards behind today's problems, counted against the limit just set
             daily_quiz.deal_learn()
+            daily_quiz.refresh_full()  # their backs follow the tree cards (a new daily problem gets its card)
         except Exception as exc:  # a failed cap must not fail the plan that was just built
             print(f"daily_cap: {exc}")
     return 0

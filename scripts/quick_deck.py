@@ -6,12 +6,19 @@
     uv run python scripts/quick_deck.py pages <dir>        # static pages of each format, for a phone-size render check
     uv run python scripts/quick_deck.py push [--dry-run] [--unverified]   # update what is in Anki, import what never was
     uv run python scripts/quick_deck.py report [days]      # pace, pass rates against the main deck, the points missed
+    uv run python scripts/quick_deck.py tap-export         # the self-graded cards (快问, 找错) in chunks, to be rewritten as choice cards
+    uv run python scripts/quick_deck.py tap-gate [t01 ...] # check the rewrites (sources/local/quick/tap/t01.jsonl ...); push then applies them
 
 The deck is the breadth pass of the system-design exam points: the heaviest `cards` points, one card each. The day
 batches (d01 ...) only divide the writing; what is dealt, in which order and how many a day, is quick_plan.py's. A card tests exactly one point, so a miss names the point to
 study in the main deck. Formats are the ones tried in the low-level-design pilot that fit ten seconds: fill-in (cloze),
 choice, spot the flaw, question and answer, ordering, matching. Choice and matching only recognise; the main deck holds
 the recall cards of the same point.
+
+Since 2026-11-22 the deck is Chi's main way into system design, next to the algorithm deck 算法模式识别, and follows the
+same rules (scripts/test_cards.py): the back carries the point's source cards under 原卡 (config `quick.full_back`), and
+the cards he graded himself (快问, 找错) are rewritten as choice cards, which are machine-checked. A rewrite stays on
+its old note, so the history is kept: the QA note type shows options when its Question field holds them.
 
 Everything written is local (sources/local/quick/): the cards are derived from the system-design deck, part of which
 is not public. Agents write cards following research/sysdesign/QUICK_AGENT.md.
@@ -454,6 +461,8 @@ QUICK_CSS = """
 .why { color:var(--dim); font-size:.94em; }
 .pt { margin-top:18px; padding-top:8px; border-top:1px solid var(--rule); font-size:12px; color:var(--dim); }
 .mine { font-size:14px; font-weight:600; margin-bottom:8px; min-height:1em; }
+.q .opts { font-size:0.926em; font-weight:400; line-height:1.6; margin-top:14px; }  /* a choice card hosted by a QA note */
+.q + .mine:empty { display:none; }
 .mine.good { color:#2e9e5b; } .mine.miss { color:#c0392b; }
 .opts, .pool { display:flex; flex-direction:column; gap:8px; margin:6px 0; }
 .opt, .pl, .mit { display:flex; gap:10px; align-items:center; min-height:44px; padding:8px 12px; border:1px solid var(--rule); border-radius:8px; cursor:pointer; -webkit-tap-highlight-color:transparent; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
@@ -535,8 +544,20 @@ IDK = '<button class="idk" onclick="qkIdk()">不会</button>'
 IDK_JS = ('function idk(){if(done){return}done=true;var t=document.querySelectorAll(".tappable");for(var i=0;i<t.length;i++){free(t[i])}'
           'keep("?");say(false," · 不会，看答案");flip(false)}window.qkIdk=idk;')
 
-QA_Q = HEAD % "{{Kind}}" + '<div class="q">{{Question}}</div>'
-QA_A = QA_Q + '<hr id="answer"><div class="a">{{Answer}}</div>' + TAIL
+# A QA note can host a choice card: the options sit inside its Question field as <div class="opts" id="opts" data-c="B">,
+# and these scripts wake up only when that element is there. A self-graded card rewritten as a tap card keeps its note,
+# and with it its history; changing a note's type would force a one-way full sync (Chi, 2026-11-22: 自评卡全部改成点选).
+QA_Q = (HEAD % "{{Kind}}" + '<div class="q">{{Question}}</div><div id="qkx" style="display:none">' + IDK + FB + '</div>'
+        '<script>(function(){var root=document.getElementById("opts");if(!root){return}'
+        'var c=root.getAttribute("data-c"),o=root.querySelectorAll(".opt"),done=false;document.getElementById("qkx").style.display="";' + TOOLS +
+        'function tap(el){if(done){return}done=true;var k=el.getAttribute("data-k");'
+        'for(var i=0;i<o.length;i++){var x=o[i].getAttribute("data-k");o[i].classList.add(x===c?"ok":"bad");if(x===k){o[i].classList.add("sel")}free(o[i])}'
+        'keep(k);say(k===c,k===c?"":"，正确是 "+c);flip(k===c)}'
+        + CLEAR + IDK_JS + 'window.qkTap=tap;arm(o,tap)})();</script>')
+QA_A = (HEAD % "{{Kind}}" + '<div class="q">{{Question}}</div><div class="mine" id="mine"></div><hr id="answer"><div class="a">{{Answer}}</div>' + TAIL +
+        '<script>(function(){var root=document.getElementById("opts");if(!root){return}var c=root.getAttribute("data-c");var o=root.querySelectorAll(".opt");' + SAVED +
+        'for(var i=0;i<o.length;i++){var k=o[i].getAttribute("data-k");o[i].classList.add(k===c?"ok":"bad");if(k===m){o[i].classList.add("sel")}}'
+        'var ok=m===c,miss="：你选了 "+m;' + SHOW + '})();</script>')
 CLOZE_Q = HEAD % "填空" + '<div class="q">{{cloze:Text}}</div>'
 CLOZE_A = CLOZE_Q + '<hr id="answer">' + TAIL
 
@@ -727,6 +748,9 @@ def fields(c: dict, point: dict) -> tuple[str, list[str]]:
         opts = "".join(f'<div class="opt tappable" data-k="{"ABC"[pos]}" onclick="qkTap(this)"><span class="k">{"ABC"[pos]}</span><div class="body">{mark(c["opts"][i])}</div></div>'
                        for pos, i in enumerate(order))
         right = "ABC"[order.index(0)]
+        if c.get("_host") == "qa":  # the note is a QA note (the card used to be self-graded): options go inside its Question field
+            return "qa", [mark(c["q"]) + c.get("_code_q", "") + f'<div class="opts" id="opts" data-c="{right}">{opts}</div>',
+                          f"{right}. {mark(c['opts'][0])}", why, crumb, KIND["mc"], title]
         return "mc", [mark(c["q"]) + c.get("_code_q", ""), opts, right, f"{right}. {mark(c['opts'][0])}", why, crumb, title]
     if f == "multi":
         order = scrambled(len(c["opts"]), c["kp"], identity_ok=True)
@@ -793,7 +817,96 @@ def all_cards(verified_only: bool) -> tuple[list[dict], list[str]]:
         cards, bad = load_cards(day, inputs[day], verified_only)
         problems += bad
         out += [{**c, "_point": points[c["kp"]]} for c in cards if c["kp"] in points]
+    known = {kp: r for day in inputs.values() for kp, r in day.items()}
+    taps = tap_rows()
+    for i, c in enumerate(out):
+        t = taps.get(c["kp"])
+        if not t or c["fmt"] not in SELF_GRADED:
+            continue
+        new = tap_card(c, t)
+        errs = check(new, known)
+        if errs:
+            problems.append(f"tap {c['kp']}: " + "; ".join(errs))   # the self-graded card stays until its rewrite passes
+        else:
+            out[i] = new
     return sorted(out, key=lambda c: c["_point"]["rank"]), problems
+
+
+# ---------------------------------------------------------------- tap: self-graded cards rewritten as choice cards
+
+SELF_GRADED = ("qa", "flaw")   # answered in the head and graded by himself: 97% "right" against 90% on machine-checked choice cards
+TAP_CHUNK = 55
+
+
+def tap_rows() -> dict[str, dict]:
+    """kp -> the choice card that replaces the point's self-graded card (sources/local/quick/tap/t*.jsonl)."""
+    out = {}
+    for f in sorted((HOME / "tap").glob("t*.jsonl")):
+        for r in read_rows(f)[0]:
+            if r.get("kp") and not r.get("skip"):
+                out[r["kp"]] = r
+    return out
+
+
+def tap_card(old: dict, t: dict) -> dict:
+    keep = {k: old[k] for k in ("kp", "more", "_point") if k in old}
+    return {**keep, "fmt": "mc", "q": t.get("q", ""), "opts": t.get("opts", []), "why": t.get("why", ""),
+            "based_on": t.get("based_on") or old.get("based_on")}
+
+
+def tap_export() -> int:
+    """The self-graded cards, 55 to a chunk, with what a writer needs: the point, the card as it stands, its source cards."""
+    inputs = load_inputs()
+    known = {kp: r for day in inputs.values() for kp, r in day.items()}
+    cards, _ = all_cards(verified_only=True)
+    todo = [c for c in cards if c["fmt"] in SELF_GRADED]
+    out = HOME / "tap/input"
+    out.mkdir(parents=True, exist_ok=True)
+    n = 0
+    for n, i in enumerate(range(0, len(todo), TAP_CHUNK), 1):
+        rows = [{"kp": c["kp"], "title": known[c["kp"]]["title"], "summary": known[c["kp"]].get("summary", ""), "kind": known[c["kp"]].get("kind", ""),
+                 "topic": known[c["kp"]].get("topic", ""), "card": {k: c[k] for k in ("fmt", "q", "a", "why", "more", "based_on") if c.get(k)},
+                 "cards": known[c["kp"]]["cards"]} for c in todo[i:i + TAP_CHUNK]]
+        (out / f"t{n:02d}.json").write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"{len(todo)} self-graded cards -> {n} chunk(s) in {out.relative_to(ROOT)}")
+    return 0
+
+
+def tap_gate(chunks: list[str]) -> int:
+    """A chunk of rewrites: one choice card per point of the input, every card passing the ten-second checks, and the
+    right option not standing out by length."""
+    inputs = load_inputs()
+    known = {kp: r for day in inputs.values() for kp, r in day.items()}
+    failed = 0
+    for f in sorted((HOME / "tap/input").glob("t*.json")):
+        if chunks and f.stem not in chunks:
+            continue
+        want = [r["kp"] for r in json.loads(f.read_text(encoding="utf-8"))]
+        out = HOME / "tap" / f"{f.stem}.jsonl"
+        rows, bad = read_rows(out) if out.exists() else ([], [])
+        got = {r.get("kp"): r for r in rows}
+        problems = list(bad) + [f"{kp}: not written" for kp in want if kp not in got] + [f"{kp}: not in this chunk" for kp in got if kp not in want]
+        good = []
+        for kp in want:
+            r = got.get(kp)
+            if not r or r.get("skip"):
+                continue
+            card = tap_card({"kp": kp, "based_on": [c["id"] for c in known[kp]["cards"]]}, r)
+            errs = check(card, known)
+            if errs:
+                problems.append(f"{kp}: " + "; ".join(errs))
+            else:
+                good.append(card)
+        import test_cards
+        far, longest = test_cards.length_tell([([units(o) for o in c["opts"]], 0) for c in good if len(c["opts"]) > 1])
+        if len(good) >= 10 and longest > 0.4 * len(good):
+            problems.append(f"the right option is the longest in {longest} of {len(good)} cards (at most 40%): even them out")
+        skipped = sum(1 for r in rows if r.get("skip"))
+        print(f"{f.stem}: {len(good)} ok, {skipped} skipped, {len(problems)} problem(s); right option longest in {longest}/{len(good)}")
+        for x in problems:
+            print("  ", x)
+        failed += len(problems)
+    return 1 if failed else 0
 
 
 # ---------------------------------------------------------------- pages: the templates outside Anki, for a render check
@@ -897,6 +1010,10 @@ def push(dry: bool, verified_only: bool) -> int:
     for i in range(0, len(ids), 400):
         info += call("notesInfo", notes=ids[i:i + 400])
     present = {next(t[4:] for t in n["tags"] if t.startswith("id::")): n for n in info}
+    for c in cards:  # a self-graded card rewritten as a choice card stays on its QA note (see QA_Q)
+        note = present.get(f"quick.{c['kp']}")
+        if c["fmt"] == "mc" and note and note["modelName"] == MODELS["qa"][0]:
+            c["_host"] = "qa"
     folder = Path(tempfile.mkdtemp(prefix="quick-"))
     built = package(cards, folder / "all.apkg")
     changes, retype = [], []
@@ -1038,6 +1155,10 @@ def main() -> int:
         return push("--dry-run" in args, "--unverified" not in args)
     elif cmd == "report":
         return report(int(args[1]) if len(args) > 1 else 7)
+    elif cmd == "tap-export":
+        return tap_export()
+    elif cmd == "tap-gate":
+        return tap_gate(args[1:])
     else:
         print(__doc__)
         return 2
