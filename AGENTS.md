@@ -128,7 +128,8 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
 - **Citations and interview tails are folded**, never a body line: `scripts/card_normalize.py fold-source|fold-tail`.
 - **No new decks.** New topics become leaves of an existing deck (`research/domains/EXPANSION.md`); write cards only
   when Chi asks, and not while reviews are behind.
-- **One new-card budget.** Plan config `caps` (100 a day, reviews first) is applied by `scripts/daily_cap.py`, which
+- **One new-card budget for the focus decks.** Plan config `caps` (100 a day over the focus decks, reviews first; every
+  other deck stays open at its normal pace — never zero a deck Chi may open) is applied by `scripts/daily_cap.py`, which
   `study_plan.py daily` runs last. Change the split there; a preset changed by hand is reset the next morning.
 - **Nothing in Anki is deleted by a script.** Retire cards with `scripts/anki_archive.py` (suspend + move, restorable);
   clear a backlog with `scripts/anki_spread_due.py` (snapshot + restore).
