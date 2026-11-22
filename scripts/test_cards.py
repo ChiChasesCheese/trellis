@@ -2,11 +2,12 @@
 
 A test card is written from one or two source cards (the learning cards of an exam point, or a problem's card on the
 algorithm tree). Its front is answered by tapping, so the grade is not self-reported; its back is, in this order: the
-answer, why, an optional 延伸 line, then the source cards themselves under 原卡, so a miss is learnt on the spot and
+answer, why, an optional 延伸 line, the card's place in the knowledge graph (图谱), then the source cards under 原卡, so a miss is learnt on the spot and
 Anki's schedule brings it back. This module holds the pieces every such deck needs:
 
     source_notes(idents)        the source cards as they stand in Anki (front and back HTML), by their `id::` tag
     source_block(cards)         the 原卡 block for a back (one card open, a second one folded)
+    graph_block(rows, link)     the 图谱 block above it: what to learn first, what builds on it, where it is used
     length_tell(options)        the checks that keep "pick the longest option" from passing a file of questions
     first_answers(card ids)     each card's first real answer (the honest result of a test card)
 
@@ -29,6 +30,36 @@ SOURCE_CSS = """
 .srcd { margin-top: 12px; }
 .srcd > summary { color: var(--accent); font-size: 0.9em; margin: 6px 0 10px; }
 """
+
+
+GRAPH_CSS = """
+/* ---- test decks: where the card sits in the knowledge graph (图谱) ---- */
+.kg { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--rule); color: var(--ink); font-size: 14.5px; font-weight: 400; line-height: 1.55; }
+.kg-h { font-size: 12px; letter-spacing: 0.04em; color: var(--dim); margin-bottom: 6px; }
+.kg-r { display: flex; gap: 10px; margin: 4px 0; }
+.kg-r > b { flex: 0 0 3.2em; font-size: 12px; font-weight: 600; color: var(--accent); padding-top: 2px; }
+.kg-r > div { flex: 1 1 auto; min-width: 0; }
+.kg-r span { display: block; }
+.kg-r em { font-style: normal; color: var(--dim); font-size: 12px; margin-left: 6px; }
+.kg a { color: var(--accent); text-decoration: none; font-size: 12.5px; }
+.full .kg { margin: 0 0 18px; padding: 0 0 12px; border-top: 0; border-bottom: 1px solid var(--rule); }  /* inside 原题与解法: above the card */
+"""
+
+
+def graph_block(rows: list[tuple[str, list[str]]], link: tuple[str, str] | None = None) -> str:
+    """The 图谱 block: one row per relation (label, items already escaped), then an optional link (text, url)."""
+    rows = [(label, items) for label, items in rows if items]
+    if not rows and not link:
+        return ""
+    body = "".join(f'<div class="kg-r"><b>{label}</b><div>{"".join(f"<span>{x}</span>" for x in items)}</div></div>' for label, items in rows)
+    if link:
+        body += f'<div class="kg-r"><b></b><div><a href="{html.escape(link[1])}">{html.escape(link[0])}</a></div></div>'
+    return f'<div class="kg"><div class="kg-h">图谱</div>{body}</div>'
+
+
+def some(items: list[str], limit: int, unit: str) -> list[str]:
+    """The first `limit` items, and how many more there are: a list is never cut without saying so."""
+    return items[:limit] + ([f"<em>等共 {len(items)} {unit}</em>"] if len(items) > limit else [])
 
 
 def anki(action: str, **params):

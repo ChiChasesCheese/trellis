@@ -72,7 +72,7 @@ LIMITS = {"question": 90, "option": 34, "why": 90, "title": 44, "statement": 100
 
 
 sys.path.insert(0, str(ROOT / "scripts"))
-from test_cards import anki, length_tell  # noqa: E402  (shared with the quick deck: scripts/test_cards.py)
+from test_cards import GRAPH_CSS, anki, graph_block, length_tell, some  # noqa: E402  (shared with the quick deck: scripts/test_cards.py)
 
 
 def settings() -> dict:
@@ -170,7 +170,7 @@ def ensure_models() -> None:
         if mark not in tpl["Back"]:
             raise RuntimeError(f"the back template of {base} changed: no {mark!r} to put the full card after")
         fields = [f for f in anki("modelFieldNames", modelName=base) if f not in ("Note", "NoteAnswer")] + ["Full", "Note", "NoteAnswer"]
-        anki("createModel", modelName=name, inOrderFields=fields, css=anki("modelStyling", modelName=base)["css"] + FULL_CSS,
+        anki("createModel", modelName=name, inOrderFields=fields, css=anki("modelStyling", modelName=base)["css"] + FULL_CSS + GRAPH_CSS,
              cardTemplates=[{"Name": "Choice", "Front": tpl["Front"], "Back": tpl["Back"].replace(mark, mark + FULL_BLOCK)}])
 
 
@@ -189,7 +189,23 @@ def tree_cards() -> dict[str, dict]:
 
 
 def full_html(card: dict) -> str:
-    return f'{card["front"]}<hr>{card["back"]}'
+    """The back's lower half: the problem's place on the algorithm tree (图谱), then its own card."""
+    return graph_block(card.get("graph", []), None) + f'{card["front"]}<hr>{card["back"]}'
+
+
+def with_graph(tree: dict[str, dict]) -> dict[str, dict]:
+    """Each tree card gets its pattern (the leaf's path) and the other problems of that leaf, in the leaf's order."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import lc_tree
+    by_slug = {c["slug"]: c for c in tree.values()}
+    name = {c["slug"]: html.escape(plain(re.sub(r'<span class="meta">.*?</span>', "", c["front"].split("</p>")[0], flags=re.S), 60)) for c in tree.values()}
+    for lst in lc_tree.build()["lists"]:
+        for path, leaf in lc_tree.leaves(lst):
+            here = [s for s in leaf["problems"] if s in by_slug]
+            for s in here:
+                others = [name[x] for x in here if x != s]
+                by_slug[s]["graph"] = [("套路", [html.escape(" › ".join(path))]), ("同套路", some(others, 4, "题"))]
+    return tree
 
 
 def lc_number(title: str) -> str:
@@ -199,7 +215,12 @@ def lc_number(title: str) -> str:
 
 def refresh_full() -> int:
     """Copy each problem's tree card onto the back of its recognition question again (the tree card may have changed)."""
-    tree = tree_cards()
+    tree = with_graph(tree_cards())
+    for name in SETS["recog"]["models"]:   # the 图谱 block's styling, once
+        css = anki("modelStyling", modelName=name)["css"]
+        if GRAPH_CSS not in css:
+            mark = css.find("/* ---- test decks: where the card sits")
+            anki("updateModelStyling", model={"name": name, "css": (css[:mark] if mark >= 0 else css).rstrip() + "\n" + GRAPH_CSS})
     nids = anki("findNotes", query=f'"deck:{SETS["recog"]["deck"]}" tag:recog')
     changed, missing = 0, []
     for i in range(0, len(nids), 200):
@@ -418,7 +439,7 @@ def import_questions(path: Path, kind: str = "quiz", update: bool = False, only_
     target = cfg.get("into", cfg["deck"])
     if kind == "recog":
         ensure_models()
-        tree = tree_cards()
+        tree = with_graph(tree_cards())
         if target not in anki("deckNames"):   # sub-decks share the deck's preset, so its daily limit covers them together
             anki("createDeck", deck=target)
             anki("setDeckConfigId", decks=[target], configId=anki("getDeckConfig", deck=cfg["deck"])["id"])

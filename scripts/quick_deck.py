@@ -7,7 +7,8 @@
     uv run python scripts/quick_deck.py push [--dry-run] [--unverified]   # update what is in Anki, import what never was
     uv run python scripts/quick_deck.py report [days]      # pace, pass rates against the main deck, the points missed
     uv run python scripts/quick_deck.py tap-export         # the self-graded cards (快问, 找错) in chunks, to be rewritten as choice cards
-    uv run python scripts/quick_deck.py tap-gate [t01 ...] # check the rewrites (sources/local/quick/tap/t01.jsonl ...); push then applies them
+    uv run python scripts/quick_deck.py tap-gate [t01 ...] # check the rewrites (sources/local/quick/tap/t01.jsonl ...)
+    uv run python scripts/quick_deck.py tap-accept t01 ... # accept verified chunks; push then applies them
 
 The deck is the breadth pass of the system-design exam points: the heaviest `cards` points, one card each. The day
 batches (d01 ...) only divide the writing; what is dealt, in which order and how many a day, is quick_plan.py's. A card tests exactly one point, so a miss names the point to
@@ -695,7 +696,7 @@ MODEL_OF = {"flaw": "qa"}
 def css() -> str:
     from trellis.build import CSS
     import test_cards
-    return CSS + QUICK_CSS + test_cards.SOURCE_CSS
+    return CSS + QUICK_CSS + test_cards.GRAPH_CSS + test_cards.SOURCE_CSS
 
 
 def mark(s: str) -> str:
@@ -735,9 +736,9 @@ def fields(c: dict, point: dict) -> tuple[str, list[str]]:
         c = {**c, "q": c.get("q", ""), "_code_q": snip(c["code_q"])}
     if c.get("more"):  # kept inside the Why field: a new field forces a one-way full sync of the collection
         why += f'<div class="more"><b>延伸</b>{mark(c["more"])}</div>'
-    if c.get("_sources"):  # the point's source cards under the answer (原卡): a miss is learnt on the spot; same field, same reason
+    if c.get("_graph") or c.get("_sources"):  # under the answer: the point's place in the graph (图谱), then its source cards (原卡)
         import test_cards
-        why += test_cards.source_block(c["_sources"])
+        why += test_cards.graph_block(c.get("_graph", []), c.get("_map")) + test_cards.source_block(c.get("_sources", []))
     if f in ("qa", "flaw"):
         q = ("这句话错在哪？<br>" if f == "flaw" else "") + mark(c["q"]) + c.get("_code_q", "")
         return "qa", [q, mark(c["a"]), why, crumb, KIND[f], title]
@@ -808,6 +809,33 @@ def with_sources(cards: list[dict]) -> int:
     return n
 
 
+def with_graph(cards: list[dict]) -> int:
+    """Every card carries its point's neighbours in the exam-point graph: what to learn first (prereq.json), what
+    builds on it, and the interview questions that use it; plus a link to the point on the map."""
+    import test_cards
+    known = {kp: r for day in load_inputs().values() for kp, r in day.items()}
+    pre = json.loads((HOME / "prereq.json").read_text(encoding="utf-8")) if (HOME / "prereq.json").exists() else {}
+    rank = {c["kp"]: c["_point"]["rank"] for c in cards}
+    title = {c["kp"]: mark(c["_point"]["title"]) for c in cards}
+    after = defaultdict(list)
+    for kp, needs in pre.items():
+        for x in needs:
+            after[x].append(kp)
+    base = (json.loads((ROOT / "sources/local/plan/config.json").read_text(encoding="utf-8")).get("map_url") or "").strip()
+    n = 0
+    for c in cards:
+        kp = c["kp"]
+        first = [title[x] for x in sorted(pre.get(kp, []), key=lambda x: rank.get(x, 1e9)) if x in title]
+        then = [title[x] for x in sorted(after.get(kp, []), key=lambda x: rank.get(x, 1e9)) if x in title]
+        uses = sorted(known.get(kp, {}).get("used_by", []), key=lambda u: u.get("role") != "必讲")
+        used = [mark(u["question"]) + (f'<em>{mark(u["role"])}</em>' if u.get("role") else "") for u in uses]
+        c["_graph"] = [("先学", test_cards.some(first, 4, "个")), ("接着学", test_cards.some(then, 3, "个")), ("用在", test_cards.some(used, 3, "题"))]
+        if base:
+            c["_map"] = ("在知识地图里看这个考点", f"{base}#p/{c['_point']['topic']}/{kp}")
+        n += any(items for _, items in c["_graph"])
+    return n
+
+
 def all_cards(verified_only: bool) -> tuple[list[dict], list[str]]:
     """Every usable card in deal order, each with its point."""
     inputs = load_inputs()
@@ -839,9 +867,14 @@ TAP_CHUNK = 55
 
 
 def tap_rows() -> dict[str, dict]:
-    """kp -> the choice card that replaces the point's self-graded card (sources/local/quick/tap/t*.jsonl)."""
+    """kp -> the choice card that replaces the point's self-graded card (sources/local/quick/tap/t*.jsonl). Only the
+    chunks named in tap/accepted.json count: a chunk is accepted by `tap-accept` once it is verified and read."""
     out = {}
+    ok_file = HOME / "tap/accepted.json"
+    accepted = set(json.loads(ok_file.read_text(encoding="utf-8"))) if ok_file.exists() else set()
     for f in sorted((HOME / "tap").glob("t*.jsonl")):
+        if f.stem not in accepted:
+            continue
         for r in read_rows(f)[0]:
             if r.get("kp") and not r.get("skip"):
                 out[r["kp"]] = r
@@ -852,6 +885,18 @@ def tap_card(old: dict, t: dict) -> dict:
     keep = {k: old[k] for k in ("kp", "more", "_point") if k in old}
     return {**keep, "fmt": "mc", "q": t.get("q", ""), "opts": t.get("opts", []), "why": t.get("why", ""),
             "based_on": t.get("based_on") or old.get("based_on")}
+
+
+def tap_accept(chunks: list[str]) -> int:
+    """Mark verified chunks as accepted (after `tap-gate` is clean and the orchestrator has read them): `push` then applies them."""
+    if tap_gate(chunks):
+        print("not accepted: the gate has problems")
+        return 1
+    ok_file = HOME / "tap/accepted.json"
+    accepted = set(json.loads(ok_file.read_text(encoding="utf-8"))) if ok_file.exists() else set()
+    ok_file.write_text(json.dumps(sorted(accepted | set(chunks))), encoding="utf-8")
+    print("accepted:", " ".join(sorted(accepted | set(chunks))))
+    return 0
 
 
 def tap_export() -> int:
@@ -1003,6 +1048,7 @@ def push(dry: bool, verified_only: bool) -> int:
         print("  ", p)
     if config().get("full_back"):
         print(f"source cards on the back of {with_sources(cards)} of {len(cards)} cards")
+        print(f"graph neighbours on the back of {with_graph(cards)} of {len(cards)} cards")
     pushed_file = HOME / "pushed.json"
     pushed = set(json.loads(pushed_file.read_text(encoding="utf-8"))) if pushed_file.exists() else set()
     ids = call("findNotes", query=f"tag:{TAG}")
@@ -1159,6 +1205,8 @@ def main() -> int:
         return tap_export()
     elif cmd == "tap-gate":
         return tap_gate(args[1:])
+    elif cmd == "tap-accept":
+        return tap_accept(args[1:])
     else:
         print(__doc__)
         return 2
