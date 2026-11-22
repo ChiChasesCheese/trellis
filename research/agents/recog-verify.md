@@ -28,6 +28,9 @@ first). You are the second reader. Assume some questions are flawed and find the
 6. Is a wrong option a throwaway nobody would try (「二分答案再验证」 on a tree problem)? Replace it with the pattern a
    learner would really confuse this problem with.
 
+**Every card, not only the flagged ones.** The flagged list in your task tells you where to look hardest; it does not
+replace the pass over the whole chunk. A report that says some cards were only skimmed is sent back.
+
 ## Repair
 
 Edit the part file with the smallest change that fixes the flaw:
