@@ -2,6 +2,31 @@
 id: hi-tt-tt-query-condition-parser
 node: tt.lld.tt-query-condition-parser.answer
 type: qa
-body: interviews/core/design-questions/tt-query-condition-parser
 meta: "重点题 · 解析器 + 内存表 · 60 分钟内 · 先修见：可配置淘汰策略的内存键值存储、聊天与即时通讯系统"
 ---
+## Q
+**条件解析与内存表查询（SQL 风格）**｜低层设计｜重点题 · 解析器 + 内存表 · 60 分钟内 · 先修见：可配置淘汰策略的内存键值存储、聊天与即时通讯系统
+
+给一个条件字符串，比如 `age >= 18 AND (city = 'NYC' OR city = 'SF')`，在内存里模拟一张表，返回满足条件的行。用 Python 实现，先支持比较、`AND`、`OR` 和括号，`AND` 优先于 `OR`。
+
+面试官可能继续追问 `NOT`、`NULL`、索引，或者字段不固定的文档（NoSQL）。
+
+讲出：难点一句话、必讲的决策、取舍、级别期望。
+
+## A
+**一句话。** 拆成三步：词法（字符串 → token）、语法（token → 语法树）、求值（语法树在每行上算真假）；难点只有一个，`AND` 比 `OR` 优先，靠递归下降的函数调用层次解决。
+
+**必讲。**
+- **词法不能用 `split`：** 引号里的内容整体算一个 token，字符串里的 `AND` 才不会被误认，括号也处理不了。
+- **调用层次就是优先级：** `or_expr` 调 `and_expr`，所以 `AND` 先把操作数收走；括号回到 `or_expr`，优先级重新开始。例：`city = 'SF' OR age > 40 AND city = 'LA'` 中 `AND` 先结合，得 Bob、Dan；加括号 `(city = 'SF' OR age > 40) AND city = 'LA'` 只得 Dan。`a > 1 OR`、`(a > 1`、`a ~ 1` 都抛 `ValueError`。
+- **解析和存储分开：** 语法树只认 `matches(row)`，换存储不改解析，加运算符不改表；查询是全表扫描加过滤，解析 `O(L)`，查询 `O(n·k)`。
+- **为什么递归下降：** 文法和代码一一对应，最易讲清；调度场算法不用递归，但 `IN` 这类多段语法别扭。
+
+**取舍。**
+- `NOT` 和 `IN`：在 `and_expr` 与 `primary` 之间加一层 `not_expr`，`and_expr` 改调它。
+- `NULL`：和 `NULL` 比较结果是“未知”，`matches` 返回 `None`，`NOT 未知` 还是未知，`select` 只保留 `is True` 的行，否则 `NOT age >= 18` 会多返回 `age` 为 `NULL` 的行；排序遇 `NULL` 用元组键 `(v is not None, v)`，因为 `None < 3` 会报错。
+- 等值索引：候选集必须是结果的超集，最后一定复查；`AND` 用一边索引就够，`OR` 只用一边索引会漏行，只能全表扫描。范围查询用 `bisect` 有序列表，查询 `O(log n + 结果数)`、插入 `O(n)`，真实数据库用 B+ 树。
+- `LIKE`：`%` 转 `.*`，`_` 转 `.`，其余 `re.escape`，用 `re.fullmatch`；频繁查询缓存“条件字符串 → 语法树”；并发读多写少用读写锁，行和索引同锁更新。
+- 文档型（NoSQL）：解析和求值不变，只换取字段方式，缺字段当 `NULL`；`JOIN`、`GROUP BY` 要把执行层改成算子链，60 分钟内不会要求写。
+
+**级别。** 高级：再加 `NOT`、`NULL`，错误处理清楚，说清索引为何 `OR` 用不了。资深：解释取舍，主动控制范围，说清什么现在不做、以后怎么演进。
