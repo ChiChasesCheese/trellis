@@ -100,6 +100,16 @@ def load(domains: set[str]) -> list[dict]:
     return notes
 
 
+def pack_name(dom: str, used: set[str]) -> str:
+    """File name for a domain's review pack; domains that differ only in case get a numeric suffix (macOS folds case)."""
+    base = re.sub(r"[^0-9A-Za-z一-鿿-]+", "_", dom)
+    name, i = base, 2
+    while name.lower() in used:
+        name, i = f"{base}-{i}", i + 1
+    used.add(name.lower())
+    return name
+
+
 def flags(n: dict) -> list[str]:
     out = []
     if not n["a"] and not n["code"] and "Cloze" not in n["model"]:
@@ -208,6 +218,7 @@ def main() -> int:
             "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n")
     rows, total = [], collections.Counter()
     rng = random.Random(20261121)
+    used: set[str] = set()
     for dom, ns in sorted(by_dom.items(), key=lambda kv: -len(kv[1])):
         c = collections.Counter(f for n in ns for f in n["flags"])
         cards = sum(n["cards"] for n in ns)
@@ -228,7 +239,7 @@ def main() -> int:
                 marks = ",".join(n["flags"] + ([f"dup:{in_dup[n['id']]}"] if n["id"] in in_dup else []))
                 pack.append(f"\n## [{label}] note {n['id']} {n['ident']} · {n['model']} · A {n['a_len']} chars, code {n['code']}"
                             f"{' · ' + marks if marks else ''}\n**Q:** {n['q'][:600]}\n\n**A:** {n['a'][:1800]}\n")
-        (OUT / "review" / f"{re.sub(r'[^0-9A-Za-z一-鿿-]+', '_', dom)}.md").write_text("".join(pack), encoding="utf-8")
+        (OUT / "review" / f"{pack_name(dom, used)}.md").write_text("".join(pack), encoding="utf-8")
     # leaves.tsv: how many notes each leaf (Crumb) holds; overlap.tsv: leaf names taught in more than one domain
     leaf_count: collections.Counter = collections.Counter((n["domain"], n["crumb"].split("›")[-1].strip()) for n in notes if n["crumb"])
     (OUT / "leaves.tsv").write_text("domain\tleaf\tnotes\n" + "\n".join(
