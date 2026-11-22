@@ -27,8 +27,8 @@ nodes:
     title: Context window 是核心稀缺资源
     summary: 窗口越满表现越差；对话里每一次读文件、跑日志都在占用；清理与压缩的时机
     core: true
-  - id: t01.leaf
-    title: 模型的能力边界：擅长与不擅长
+  - id: t01.capability-boundaries
+    title: Capability boundaries：模型擅长与不擅长
     summary: 擅长：样板、迁移、测试、解释代码、范围明确的改动；不擅长：隐含约束、跨系统一致性、没有验证手段的任务
     core: true
   - id: t01.non-determinism
@@ -306,8 +306,8 @@ nodes:
 - id: t08
   title: 资深工程师的角色转变
   children:
-  - id: t08.leaf-2
-    title: 从写代码到定义问题与验证结果
+  - id: t08.role-shift
+    title: Role shift：从写代码到定义问题与验证结果
     summary: 规格、架构边界、验收标准、取舍成为主要产出
     core: true
   - id: t08.architecture-judgment
@@ -322,12 +322,12 @@ nodes:
     title: Readability 与 testability 成为「agent-friendly」的设计
     summary: 清晰模块边界、快速测试、类型；也是对人好
     core: false
-  - id: t08.leaf-3
-    title: 持续学习：保持手感的做法
+  - id: t08.staying-sharp
+    title: Staying sharp：持续学习、保持手感
     summary: 定期手写、读生成代码、跟踪模型能力变化；每个新模型都重估「它能做什么」
     core: false
-  - id: t08.leaf-4
-    title: 面试与招聘中的变化
+  - id: t08.hiring-interviews
+    title: Hiring & interviews：面试与招聘中的变化
     summary: 允许使用 AI 的考题、评估重点转向验证与设计（只讲趋势，不押具体公司）
     core: false
   summary: 资深工程师的角色转变

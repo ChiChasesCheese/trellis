@@ -29,6 +29,8 @@ NEED = re.compile(r"\s*[（(]需先[:：]\s*(.*?)[）)]")
 def slug(title: str, taken: set[str]) -> str:
     words = re.findall(r"[A-Za-z][A-Za-z0-9+]*", title)
     base = "-".join(w.lower() for w in words)[:48].strip("-") or "leaf"
+    if base == "leaf":
+        print(f"warning: no English word in {title!r}: its id falls back to 'leaf'; add the English term to the title", file=sys.stderr)
     s, n = base, 2
     while s in taken:
         s, n = f"{base}-{n}", n + 1
