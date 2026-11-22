@@ -74,9 +74,12 @@ def load(domains: set[str]) -> list[dict]:
     for ntid, name in db.execute("select ntid, name from fields order by ntid, ord"):
         fields[ntid].append(name)
     decks = {i: n.replace("\x1f", "::") for i, n in db.execute("select id, name from decks")}
+    # mature = interval of three weeks or more AND recalled at least once in a real review. The interval alone lies after
+    # a backlog is spread forward: Anki (FSRS) rewrites it as "days since last review + days ahead".
+    recalled = {cid for (cid,) in db.execute("select distinct cid from revlog where type = 1 and ease > 1")}
     cards: dict[int, list[tuple]] = collections.defaultdict(list)
-    for nid, did, odid, ctype, queue, ivl, lapses in db.execute("select nid, did, odid, type, queue, ivl, lapses from cards"):
-        cards[nid].append((decks.get(odid or did, "?"), ctype, queue, ivl, lapses))
+    for cid, nid, did, odid, ctype, queue, ivl, lapses in db.execute("select id, nid, did, odid, type, queue, ivl, lapses from cards"):
+        cards[nid].append((decks.get(odid or did, "?"), ctype, queue, ivl if cid in recalled else 0, lapses))
     notes = []
     for nid, mid, tags, flds in db.execute("select id, mid, tags, flds from notes"):
         vals = dict(zip(fields[mid], flds.split("\x1f")))
