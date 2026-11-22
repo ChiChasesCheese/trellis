@@ -58,7 +58,7 @@ SETS = {"quiz": {"deck": DECK, "tag": "quiz", "preset": "每日测验", "questio
         "recog": {"deck": "2 算法模式识别", "tag": "recog", "preset": "算法模式识别", "questions": "recog.jsonl", "results": "recog-results.jsonl",
                   "models": ("Trellis Recog Choice", "Trellis Recog Multi"), "into": "2 算法模式识别::2 识别题"}}
 LEARN_DECK = "2 算法模式识别::1 学习卡"   # a leaf's learning card (from the tree deck) waits here until its first problem is near
-FULL_BLOCK = '{{#Full}}<div class="full"><div class="full-h">原题与解法</div>{{Full}}</div>{{/Full}}'
+FULL_BLOCK = '{{#Full}}<div class="full"><div class="full-h">原卡</div>{{Full}}</div>{{/Full}}'
 FULL_CSS = """
 /* ---- 模式识别: the problem's own card under the answer ---- */
 .full { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--rule); }

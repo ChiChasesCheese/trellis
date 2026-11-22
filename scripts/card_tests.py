@@ -159,8 +159,17 @@ def lint_file(kind: str, questions: list[dict], known: set[str] | None = None) -
     return bad
 
 
-def _full(s: dict, group: list[dict]) -> str:
-    others = [html.escape(x["title"]) for x in group if x["id"] != s["id"]]
+def _name(s: dict, titles: dict[str, str]) -> str:
+    """A neighbour's name in the 图谱 block: the title of its test question once it has one, else its own first sentence."""
+    if s["id"] in titles:
+        return titles[s["id"]]
+    text = dq.plain(re.sub(r'<span class="meta">.*?</span>', "", s["front"], flags=re.S), 400)
+    m = re.match(r".{6,60}?[？?。；]", text)
+    return m.group(0) if m else text[:60]
+
+
+def _full(s: dict, group: list[dict], titles: dict[str, str]) -> str:
+    others = [html.escape(_name(x, titles)) for x in group if x["id"] != s["id"]]
     return graph_block([("位置", [html.escape(s["crumb"] or s["deck"])]), ("同组", some(others, 4, "张"))]) + \
         f'{s["front"]}<hr>{s["back"]}'
 
@@ -240,6 +249,7 @@ def import_questions(kind: str, questions: list[dict], update: bool, src: list[d
     ensure_deck(kind, src)
     groups = _siblings(src)
     have = done(kind)
+    titles = {**{k: v["title"] for k, v in have.items()}, **{q["source"]: q["title"] for q in questions}}
     today = str(datetime.date.today())
     notes, records, updated = [], [], 0
     for q in questions:
@@ -256,7 +266,7 @@ def import_questions(kind: str, questions: list[dict], update: bool, src: list[d
         right = sorted(letters[order.index(i)] for i in (q["correct"] if multi else [q["correct"]]))
         answer = "；".join(f'{k}. {html.escape(q["options"][order[letters.index(k)]])}' for k in right)
         fields = {"Question": dq.question_html(q), "Opts": opts, "Correct": "".join(right), "Answer": answer, "Why": html.escape(q["why"]),
-                  "Crumb": html.escape(SETS[kind]["crumb"]), "Point": html.escape(q["point"]), "Full": _full(s, groups[s["deck"]])}
+                  "Crumb": html.escape(SETS[kind]["crumb"]), "Point": html.escape(q["point"]), "Full": _full(s, groups[s["deck"]], titles)}
         if q["source"] in have:
             anki("updateNoteFields", note={"id": have[q["source"]]["note"], "fields": fields})
             updated += 1
@@ -279,6 +289,7 @@ def import_questions(kind: str, questions: list[dict], update: bool, src: list[d
 def refresh_full(kind: str) -> int:
     src = sources(kind)
     by_id, groups, have = {s["id"]: s for s in src}, _siblings(src), done(kind)
+    titles = {k: v["title"] for k, v in have.items()}
     changed, gone = 0, 0
     notes = {n["noteId"]: n for i in range(0, len(have), 200) for n in anki("notesInfo", notes=[q["note"] for q in list(have.values())[i:i + 200]])}
     for source, q in have.items():
@@ -288,7 +299,7 @@ def refresh_full(kind: str) -> int:
         if not s:
             gone += 1
             continue
-        want = _full(s, groups[s["deck"]])
+        want = _full(s, groups[s["deck"]], titles)
         if n["fields"]["Full"]["value"] != want:
             anki("updateNoteFields", note={"id": n["noteId"], "fields": {"Full": want}})
             changed += 1
