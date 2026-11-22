@@ -32,15 +32,18 @@ Resume rule: a card whose answer already passes `scripts/card_len.py --over 700`
   same thing.
 - **`2026 亮点` bullets are kept**: one line, as its own labelled line `**2026 亮点。** …` after 基本回答 (Chi values
   current practice). Shorten it, do not drop it.
-- **举个例子 vs 业务场景:** keep the one with numbers or a step-by-step state change; when 业务场景 is one thin sentence
-  and the example teaches more, keep the example (compressed to 2–4 lines) and fold the scenario into its first clause.
+- **业务场景 always stays** (the 八股 deck's standing rule: every card has a payment or Douyin scenario), 1–2 lines.
+  **举个例子** also stays when it carries numbers or a step-by-step state change, compressed to 2–4 lines; when both are
+  short, merge them into one section. Drop the example only when it restates 基本回答.
+- **Code** stays when it is the point of the card and ≤ 25 lines (a Lua script, a SQL statement, a config); drop only
+  code that repeats what the prose already says.
 
 ## Per family
 
 1. **八股追问模板** (`vault/domains/bagu/cards/**`): keep **基本回答** (3–6 lines, the single statement of the answer),
-   **先看图** (the figure and its one-line reading), **容易错**, and one of **举个例子** / **业务场景** — whichever carries
-   numbers or the payment / Douyin scenario (merge the two when both are short). Delete **一句话**, **讲明白**,
-   **系统设计**, **相关题**; **可能问法** survives only as one line when it opens a different angle.
+   **2026 亮点** (one line, when the original has one), **先看图** (the figure and its one-line reading), **容易错**,
+   **业务场景** (always) and **举个例子** when it has numbers. Delete **一句话**, **讲明白**, **系统设计**, **相关题**;
+   **可能问法** survives only as one line when it opens a different angle.
 2. **完整解答 stubs** (`hi-qb-*`, `hi-tt-*`: the file has `body: <path>` and no Q/A — its text comes from
    `vault/<path>.md`, the full solution article, which must stay untouched): turn the stub into a standalone card.
    Remove the `body:` line; keep the other frontmatter (including `meta:`). Add `## Q` = the article's question, with
