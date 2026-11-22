@@ -51,6 +51,8 @@ def sync() -> None:
 
 def plain(field: str) -> tuple[str, int, bool]:
     """(prose, code chars, has diagram) of one HTML field."""
+    # the folded "相关知识点" block embeds other cards' answers for tapping open: it is navigation, not this card's text
+    field = re.sub(r'<details class="sec related-notes">.*\Z', " ", field, flags=re.S)
     diagram = bool(re.search(r"<svg|<img", field))
     field = re.sub(r"<svg.*?</svg>", " ", field, flags=re.S)
     code = sum(len(re.sub(r"<[^>]+>", "", m)) for m in re.findall(r"<pre.*?</pre>", field, flags=re.S))
