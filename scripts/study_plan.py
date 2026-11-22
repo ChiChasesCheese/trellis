@@ -2,6 +2,7 @@
 
     uv run python scripts/study_plan.py report          # compute and write the report + dashboard, change nothing in Anki
     uv run python scripts/study_plan.py daily           # report, then rebuild the 今日计划 deck and its report card
+                                                        # (config `plan_deck: false`: no such deck; the other daily decks are still dealt)
     uv run python scripts/study_plan.py deep            # deal 系统设计高频题 again, nothing else
     uv run python scripts/study_plan.py serve --host <tailnet ip> [--minutes 30]   # the dashboard, live, then stop
 
@@ -921,15 +922,21 @@ def preset(cfg):
     if empty:
         call("deleteDecks", decks=empty, cardsToo=True)
         names = [d for d in names if d not in empty]
-    current = call("getDeckConfig", deck=DECK)
-    if current["name"] != PLAN_PRESET:
-        cid = call("cloneDeckConfigId", name=PLAN_PRESET, cloneFrom=call("getDeckConfig", deck="系统设计")["id"])
-        call("setDeckConfigId", decks=names, configId=cid)
+    plan_deck = cfg.get("plan_deck", True)
+    if not plan_deck:  # Chi 2026-11-21: no 今日计划 deck, he studies the decks themselves
+        drop_plan_deck()
+        names = [d for d in names if d != DECK and not d.startswith(DECK + "::")]
+        current = call("getDeckConfig", deck=daily_extra.LC_DECK)  # a daily preset to clone from, should one be missing
+    else:
         current = call("getDeckConfig", deck=DECK)
-    parts = list(daily_extra.SUBJECT_DECK.values())
-    # only what is outside the subject parts: resetting those too would lose their own limits and clone a new preset on every run
-    call("setDeckConfigId", decks=[d for d in names if d.split("::")[0] == DECK and not any(d == x or d.startswith(x + "::") for x in parts)],
-         configId=current["id"])
+        if current["name"] != PLAN_PRESET:
+            cid = call("cloneDeckConfigId", name=PLAN_PRESET, cloneFrom=call("getDeckConfig", deck="系统设计")["id"])
+            call("setDeckConfigId", decks=names, configId=cid)
+            current = call("getDeckConfig", deck=DECK)
+        parts = list(daily_extra.SUBJECT_DECK.values())
+        # only what is outside the subject parts: resetting those too would lose their own limits and clone a new preset on every run
+        call("setDeckConfigId", decks=[d for d in names if d.split("::")[0] == DECK and not any(d == x or d.startswith(x + "::") for x in parts)],
+             configId=current["id"])
     # each subject has its own limit; the top deck only adds them up
     presets_file = OUT / "presets.json"
     known = json.loads(presets_file.read_text(encoding="utf-8")) if presets_file.exists() else {}
@@ -953,6 +960,8 @@ def preset(cfg):
         conf["new"]["ints"] = [1, 2, 0]  # an Easy on first sight is re-tested in two days, not left for four or five
         conf["newGatherPriority"], conf["newSortOrder"] = 0, 0
         call("saveDeckConfig", config=conf)
+    if not plan_deck:
+        return
     current["maxTaken"] = 300
     current["new"]["ints"] = [1, 2, 0]
     current["new"]["perDay"] = 9999  # the budgets are enforced by what is dealt, not by Anki
@@ -1077,6 +1086,17 @@ def exclusive_presets(cfg) -> None:
             conf["new"]["perDay"] = 0
             call("saveDeckConfig", config=conf)
     backup_file.write_text(json.dumps(backup, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
+def drop_plan_deck() -> None:
+    """Config `plan_deck: false`: the deck 今日计划 goes once its cards are home. The report card is a generated note and is
+    deleted with it; a deck that still holds anything else is left alone."""
+    report = call("findNotes", query=f'"tag:{REPORT_TAG}"')
+    if report:
+        call("deleteNotes", notes=report)
+    names = [d for d in call("deckNames") if d == DECK or d.startswith(DECK + "::")]
+    if names and not call("findCards", query=f'"deck:{DECK}"'):
+        call("deleteDecks", decks=[DECK], cardsToo=True)
 
 
 def drop_old_deck():
@@ -1273,12 +1293,19 @@ def run(apply_to_anki: bool, deep_only: bool = False) -> None:
     print(f"LeetCode {len(extra.lc_new)} new + {len(extra.lc_similar)} similar · LLD {len(extra.lld_new)} new · reviews {len(extra.reviews)} taken, "
           f"{extra.backlog} waiting · {extra.by_deck}")
     if apply_to_anki:
+        plan_deck = cfg.get("plan_deck", True)
+        if not plan_deck:  # no 今日计划 deck: its cards go home, and nothing of this module's is dealt into it
+            p.picked, stages = [], {}
+            in_plan = {r for r, d in daily_extra.SUBJECT_DECK.items() if d == DECK or d.startswith(DECK + "::")}
+            extra.work_new = []
+            extra.reviews = [r for r in extra.reviews if r["root"] not in in_plan]
         release(p, anki)
         deal(stages, anki)
         daily_extra.release(daily_extra.keep_ids(extra))
         daily_extra.deal(extra)
         exclusive_presets(cfg)
-        report_card(head, body)
+        if plan_deck:
+            report_card(head, body)
         preset(cfg)
         drop_old_deck()
         dealt_on.write_text(now.strftime("%Y-%m-%d"))
@@ -1286,7 +1313,7 @@ def run(apply_to_anki: bool, deep_only: bool = False) -> None:
             deep_dive.save(dd)
         subprocess.run([sys.executable, str(ROOT / "scripts/study_map.py")], cwd=ROOT, check=False)  # the map site follows the plan
         call("sync")
-        print("Anki: 今日计划 rebuilt")
+        print("Anki: daily decks rebuilt" + ("" if cfg.get("plan_deck", True) else " (no 今日计划 deck)"))
 
 
 def deal_deep(items: list[dict]) -> None:

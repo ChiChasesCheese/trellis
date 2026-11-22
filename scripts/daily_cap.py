@@ -6,7 +6,7 @@
 The budget lives in sources/local/plan/config.json:
 
     "caps": {"total": 100, "mix": "reviews-first",
-             "decks": {"1 今日计划": 30, "2 今日算法": 10, ...},      # new cards a day per top-level deck
+             "decks": {"系统设计": 30, "2 今日算法": 10, ...},         # new cards a day per top-level deck
              "zero_under": ["📦 其他"]}                              # every preset used below these decks gets 0
 
 Any top-level deck that is not listed gets 0, so the listed numbers are the whole day (they must sum to `total`).
