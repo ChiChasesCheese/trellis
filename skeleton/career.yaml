@@ -1,0 +1,398 @@
+# Generated from research/domains/career/outline.md by scripts/outline_to_skeleton.py:
+# edit the outline, not this file. Citations and chapter notes: research/domains/career/leaves.yaml.
+domain: career
+title: 职业发展与谈判
+deck: 职业发展与谈判
+lang: zh
+vault: domains/career
+deck_depth: 1
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 20
+  reviews_per_day: 200
+nodes:
+- id: t01
+  title: Leveling & frameworks
+  children:
+  - id: t01.how-levels-work
+    title: How levels work
+    summary: IC 阶梯、各家的维度：范围、自主、影响
+    core: true
+  - id: t01.level-mapping-across-companies
+    title: Level mapping across companies
+    summary: levels.fyi 的对照思路与误区
+    core: true
+  - id: t01.senior-to-staff
+    title: Senior to Staff
+    summary: 从"做好"到"决定做什么"
+    core: true
+  - id: t01.ic-vs-manager-track
+    title: IC vs manager track
+    summary: 区别、可回切（pendulum）
+    core: true
+  - id: t01.title-vs-level
+    title: Title vs level
+    summary: 小公司头衔通胀
+    core: false
+  - id: t01.reading-a-public-ladder
+    title: Reading a public ladder
+    summary: 找缺口而非打勾
+    core: false
+  - id: t01.specialist-vs-generalist
+    title: Specialist vs generalist
+    summary: Specialist vs generalist
+    core: false
+  - id: t01.startup-vs-big-tech-levels
+    title: Startup vs Big Tech levels
+    summary: Startup vs Big Tech levels
+    core: false
+  - id: t01.terminal-level
+    title: Terminal level
+    summary: 很多公司默认停在 Senior，是“资深到 Staff 的分水岭”的前提
+    core: false
+  - id: t01.career-path-variants
+    title: Career path variants
+    summary: 书里列了十多种典型路径（专家、顾问、技术经理往返等），不止 IC 与管理两条
+    core: false
+  summary: Leveling & frameworks
+  order: 1
+- id: t02
+  title: Promotion mechanics
+  children:
+  - id: t02.how-promotions-are-decided
+    title: How promotions are decided
+    summary: 校准、委员会、证据
+    core: true
+  - id: t02.operating-at-the-next-level
+    title: Operating at the next level
+    summary: 先做再升
+    core: true
+  - id: t02.promotion-packet
+    title: Promotion packet
+    summary: 结构：范围、影响、证据、同行评价
+    core: true
+  - id: t02.brag-document
+    title: Brag document
+    summary: 持续记录而不是年底回忆
+    core: true
+  - id: t02.sponsors-visibility
+    title: Sponsors & visibility
+    summary: 谁会在校准会上替你说话
+    core: true
+  - id: t02.after-a-rejection
+    title: After a rejection
+    summary: 问清差距、写成计划
+    core: false
+  - id: t02.promotion-by-switching
+    title: Promotion by switching
+    summary: 外部晋升的利弊
+    core: false
+  - id: t02.performance-cycles-goals
+    title: Performance cycles & goals
+    summary: Performance cycles & goals
+    core: false
+  - id: t02.choosing-promotable-work
+    title: Choosing promotable work
+    summary: 避免"忙而无功"
+    core: false
+  - id: t02.being-seen-as-someone-who-gets-things-done
+    title: Being seen as someone who gets things done
+    summary: 晋升前的口碑建设，与“在岗位上做更高一级的事”并列
+    core: false
+  - id: t02.performance-review-mechanics
+    title: Performance review mechanics
+    summary: 评审前的准备与评审会本身的做法，补“绩效周期”之后的动作
+    core: false
+  - id: t02.interview-preparation-for-switching-jobs
+    title: Interview preparation for switching jobs
+    summary: 链接叶：换公司升级所需的求职面试准备（面试技巧本身不在本域）
+    core: false
+  summary: Promotion mechanics
+  order: 2
+- id: t03
+  title: Choosing teams & companies
+  children:
+  - id: t03.evaluating-a-company
+    title: Evaluating a company
+    summary: 业务健康、增长、文化、技术、资金
+    core: true
+  - id: t03.evaluating-a-team-manager
+    title: Evaluating a team & manager
+    summary: 面试时反问的问题
+    core: true
+  - id: t03.learning-vs-earning
+    title: Learning vs earning
+    summary: 早期职业优先成长
+    core: true
+  - id: t03.startup-vs-scale-up-vs-big-tech
+    title: Startup vs scale-up vs Big Tech
+    summary: Startup vs scale-up vs Big Tech
+    core: true
+  - id: t03.reading-company-finances
+    title: Reading company finances
+    summary: 阶段、跑道、估值信号
+    core: false
+  - id: t03.remote-hybrid-location
+    title: Remote, hybrid & location
+    summary: Remote, hybrid & location
+    core: false
+  - id: t03.green-red-flags
+    title: Green & red flags
+    summary: 面试中可观察的信号
+    core: false
+  - id: t03.visa-immigration-constraints
+    title: Visa & immigration constraints
+    summary: 对选择的影响（通用，不涉个人）
+    core: false
+  - id: t03.leaving-well
+    title: Leaving well
+    summary: Leaving well
+    core: false
+  - id: t03.product-vs-platform-teams-peacetime-vs-wartime
+    title: Product vs platform teams, peacetime vs wartime
+    summary: 团队类型与公司所处状态，影响选团队与晋升打法
+    core: false
+  - id: t03.cost-centers-vs-profit-centers
+    title: Cost centers vs profit centers
+    summary: 决定团队的资源、天花板和裁员风险，选团队时该问
+    core: false
+  summary: Choosing teams & companies
+  order: 3
+- id: t04
+  title: Switching roles & domains
+  children:
+  - id: t04.internal-transfer
+    title: Internal transfer
+    summary: 时机、如何开口
+    core: true
+  - id: t04.changing-domains
+    title: Changing domains
+    summary: 以相邻技能作桥、做小项目证明
+    core: true
+  - id: t04.pivoting-specialties
+    title: Pivoting specialties
+    summary: 通用切换步骤
+    core: true
+  - id: t04.moving-to-management-and-back
+    title: Moving to management and back
+    summary: Moving to management and back
+    core: false
+  - id: t04.boomerang-re-entry
+    title: Boomerang & re-entry
+    summary: Boomerang & re-entry
+    core: false
+  - id: t04.career-gaps
+    title: Career gaps
+    summary: Career gaps
+    core: false
+  - id: t04.side-projects-moonlighting
+    title: Side projects & moonlighting
+    summary: 合规与 IP
+    core: false
+  - id: t04.onboarding-to-a-new-job
+    title: Onboarding to a new job
+    summary: 换岗后头几周怎么站稳
+    core: false
+  summary: Switching roles & domains
+  order: 4
+- id: t05
+  title: Compensation anatomy
+  children:
+  - id: t05.base-bonus-equity
+    title: Base, bonus, equity
+    summary: 各自性质与弹性
+    core: true
+  - id: t05.rsus-vesting
+    title: RSUs & vesting
+    summary: 归属表、cliff、前置/后置
+    core: true
+  - id: t05.stock-options
+    title: Stock options
+    summary: 行权价、409A、税、早期风险
+    core: true
+  - id: t05.refreshers
+    title: Refreshers
+    summary: 为什么重要、如何谈
+    core: true
+  - id: t05.sign-on-relocation
+    title: Sign-on & relocation
+    summary: 弹性最大的部分之一
+    core: true
+  - id: t05.total-compensation-view
+    title: Total compensation view
+    summary: 统一比较方法
+    core: true
+  - id: t05.bands-geo-adjustments
+    title: Bands & geo adjustments
+    summary: Bands & geo adjustments
+    core: false
+  - id: t05.tax-basics-for-comp
+    title: Tax basics for comp
+    summary: 通用，不给具体税率
+    core: false
+  - id: t05.benefits-k-match
+    title: Benefits & 401k match
+    summary: Benefits & 401k match
+    core: false
+  - id: t05.valuing-private-equity
+    title: Valuing private equity
+    summary: 折扣与不确定
+    core: false
+  - id: t05.reading-comp-data
+    title: Reading comp data
+    summary: 样本偏差、自报数据
+    core: false
+  summary: Compensation anatomy
+  order: 5
+- id: t06
+  title: Negotiation
+  children:
+  - id: t06.negotiation-fundamentals
+    title: Negotiation fundamentals
+    summary: BATNA、锚点、对方的约束
+    core: true
+  - id: t06.when-asked-for-a-number
+    title: When asked for a number
+    summary: 推迟、不先报
+    core: true
+  - id: t06.competing-offers-as-leverage
+    title: Competing offers as leverage
+    summary: 真实时间线
+    core: true
+  - id: t06.one-specific-justified-ask
+    title: One specific justified ask
+    summary: One specific justified ask
+    core: true
+  - id: t06.tone-channel
+    title: Tone & channel
+    summary: 与招聘方是同一阵营
+    core: true
+  - id: t06.what-is-negotiable
+    title: What is negotiable
+    summary: 级别 > 股权 > 签约 > 底薪
+    core: true
+  - id: t06.negotiating-level
+    title: Negotiating level
+    summary: 级别决定上限
+    core: true
+  - id: t06.deadlines-exploding-offers
+    title: Deadlines & exploding offers
+    summary: Deadlines & exploding offers
+    core: false
+  - id: t06.declining-well
+    title: Declining well
+    summary: Declining well
+    core: false
+  - id: t06.counteroffers-from-current-employer
+    title: Counteroffers from current employer
+    summary: 风险
+    core: false
+  - id: t06.common-mistakes
+    title: Common mistakes
+    summary: 说谎、报区间、接受太快
+    core: false
+  - id: t06.raise-negotiation-internally
+    title: Raise negotiation internally
+    summary: Raise negotiation internally
+    core: false
+  - id: t06.written-terms-contract-details
+    title: Written terms & contract details
+    summary: 竞业、IP、归属加速
+    core: false
+  - id: t06.down-leveling-up-leveling
+    title: Down-leveling & up-leveling
+    summary: 接受降级的代价与升级的操作，补“级别谈判”
+    core: false
+  - id: t06.calibrated-questions
+    title: Calibrated questions
+    summary: 用 How / What 开头的问题让对方替你解决问题
+    core: false
+  - id: t06.accusation-audit
+    title: Accusation audit
+    summary: 先替对方说出他对你的负面看法
+    core: false
+  - id: t06.that-s-right-vs-you-re-right
+    title: '"That''s right" vs "You''re right"'
+    summary: 让对方真正认同的信号
+    core: false
+  - id: t06.negotiation-one-sheet
+    title: Negotiation one-sheet
+    summary: 谈之前一页纸准备：目标、摘要、标签、问题
+    core: false
+  summary: Negotiation
+  order: 6
+- id: t07
+  title: Long-term career capital
+  children:
+  - id: t07.career-capital
+    title: Career capital
+    summary: 稀缺且有价值的技能；工匠心态
+    core: true
+  - id: t07.deliberate-practice
+    title: Deliberate practice
+    summary: Deliberate practice
+    core: true
+  - id: t07.public-work-reputation
+    title: Public work & reputation
+    summary: 写作、开源、演讲
+    core: true
+  - id: t07.network-weak-ties
+    title: Network & weak ties
+    summary: Network & weak ties
+    core: true
+  - id: t07.bets-optionality
+    title: Bets & optionality
+    summary: Bets & optionality
+    core: false
+  - id: t07.runway-as-leverage
+    title: Runway as leverage
+    summary: Runway as leverage
+    core: false
+  - id: t07.avoiding-burnout
+    title: Avoiding burnout
+    summary: Avoiding burnout
+    core: false
+  - id: t07.staying-current
+    title: Staying current
+    summary: 如 AI 工具
+    core: false
+  - id: t07.annual-career-review
+    title: Annual career review
+    summary: Annual career review
+    core: false
+  summary: Long-term career capital
+  order: 7
+- id: t08
+  title: Managing your manager
+  children:
+  - id: t08.making-s-work
+    title: Making 1:1s work
+    summary: 议程归你
+    core: true
+  - id: t08.aligning-expectations
+    title: Aligning expectations
+    summary: Aligning expectations
+    core: true
+  - id: t08.seeking-feedback
+    title: Seeking feedback
+    summary: Seeking feedback
+    core: true
+  - id: t08.turning-a-manager-into-a-sponsor
+    title: Turning a manager into a sponsor
+    summary: Turning a manager into a sponsor
+    core: true
+  - id: t08.when-it-s-not-working
+    title: When it's not working
+    summary: 升级、换组
+    core: false
+  - id: t08.reorgs-manager-change
+    title: Reorgs & manager change
+    summary: Reorgs & manager change
+    core: false
+  - id: t08.showing-results-upward
+    title: Showing results upward
+    summary: Showing results upward
+    core: false
+  summary: Managing your manager
+  order: 8

@@ -1,0 +1,166 @@
+t01.answer-first:
+  cite: Minto p. 25–32（Ch.1 Why a Pyramid Structure：Ordering from the Top Down）；p. 41–48（Ch.3 How to Build a Pyramid Structure：The
+    Top-Down Approach）
+t01.pyramid-principle:
+  cite: Minto p. 17–32（Ch.1 Why a Pyramid Structure）；p. 33–40（Ch.2 The Substructures Within the Pyramid：Vertical / Horizontal
+    Relationship）
+t01.rule-of-three:
+  cite: Minto p. 17–24（Ch.1：The Magical Number Seven）；p. 33–48（Ch.2：Horizontal Relationship）；注意 Minto 讲分组数量上限，并无"三点法"一说
+t01.scqa-situation-complication-question-answer:
+  cite: Minto p. 33–48（Ch.2 The Substructures Within the Pyramid：The Introductory Flow）；p. 57–64（Ch.4 Fine Points of Introductions：The
+    Story Form）；Minto 的四步原词是 Situation / Complication / Question / Answer
+t01.restate-clarify:
+  cite: 无书，https://www.techinterviewhandbook.org/coding-interview/（面试沟通与澄清要点）
+t01.signposting:
+  cite: Minto p. 185–208（Ch.10 Reflecting the Pyramid on the Face of the Page：Show Transitions Between Groups、Stating Next
+    Steps）；Google Technical Writing One《Documents》（要点放文首）
+t01.recovering-mid-answer:
+  cite: 惯用说法
+t01.seconds-then-layers:
+  cite: Minto p. 33–40（Ch.2：The Vertical Relationship，读者每层产生疑问、下一层回答）（部分）
+t01.answering-under-uncertainty:
+  cite: 惯用说法
+t01.talking-about-numbers:
+  cite: 惯用说法
+t01.ordering-logic-time-structural-degree-order:
+  cite: Minto p. 97–112（Ch.6 Imposing Logical Order：Time Order / Structural Order / Degree Order）
+t01.top-down-vs-bottom-up-pyramid-building:
+  cite: Minto p. 41–56（Ch.3 How to Build a Pyramid Structure）
+t01.deductive-vs-inductive-reasoning:
+  cite: Minto p. 81–96（Ch.5）
+t01.summarizing-grouped-ideas:
+  cite: Minto p. 113–136（Ch.7 Summarizing Grouped Ideas）
+t01.problem-definition-framework:
+  cite: Minto p. 137–160（Ch.8）
+t01.logic-trees-issue-analysis:
+  cite: Minto p. 161–192（Ch.9）
+t01.key-line-complex-introductions:
+  cite: Minto p. 57–64（Ch.4）
+t02.narrating-a-diagram:
+  cite: Minto p. 97–112（Ch.6：Structural Order，Describing a Structure）；p. 209–224（Ch.11 Reflecting the Pyramid on a Screen：Designing
+    Exhibit Slides）（部分）
+t02.whiteboard-layout:
+  cite: 无书，https://www.hellointerview.com/learn/system-design/in-a-hurry/delivery（Hello Interview 系统设计交付章，站点部分付费）
+t02.talk-while-drawing:
+  cite: 无书，https://www.hellointerview.com/learn/system-design/in-a-hurry/delivery（Hello Interview 系统设计交付章）
+t02.walk-a-concrete-example:
+  cite: 无书，https://www.hellointerview.com/learn/system-design/in-a-hurry/delivery（Hello Interview 系统设计交付章）
+t02.zoom-in-zoom-out:
+  cite: Minto p. 33–40（Ch.2 Vertical Relationship）；p. 113–136（Ch.7 Summarizing Grouped Ideas：Distinguish the Levels of Action）（部分）
+t02.diagram-anti-patterns:
+  cite: Google Technical Writing Two《Illustrating》（developers.google.com/tech-writing/two，课程级引用）
+t02.sequence-state-diagrams:
+  cite: 无书，https://www.uml-diagrams.org/sequence-diagrams.html
+t02.screen-share-walkthrough:
+  cite: 无书，https://handbook.gitlab.com/handbook/company/culture/all-remote/meetings/（含 screen sharing 做法）
+t02.illustrations-captions-focus-simplification:
+  cite: Google Technical Writing Two《Illustrating》（developers.google.com/tech-writing/two，课程名依记忆核对，待核）
+t02.slides-storyboards:
+  cite: Minto p. 209–224（Ch.11）
+t03.know-your-audience:
+  cite: Google Technical Writing One《Audience》；Minto p. 57–64（Ch.4：Story Form 中 Situation 即读者已知）
+t03.executives:
+  cite: Minto p. 65–80（Ch.4 Fine Points of Introductions：Some Common Patterns——Giving Direction、Seeking Approval to Spend
+    Money、Choosing Among Alternatives）
+t03.peers:
+  cite: 无书，https://developers.google.com/tech-writing/one/audience（Google Technical Writing One《Audience》）
+t03.non-technical-audiences:
+  cite: 无书，https://developers.google.com/tech-writing/one/audience（Google Technical Writing One《Audience》）
+t03.newcomers:
+  cite: Google Technical Writing One《Audience》（部分）
+t03.explaining-complexity:
+  cite: Minto p. 113–136（Ch.7 Summarizing Grouped Ideas）（部分）；Google Technical Writing One《Audience》
+t03.delivering-bad-news:
+  cite: 无书，https://hbr.org/2022/06/how-to-deliver-bad-news-to-your-boss
+t03.saying-no:
+  cite: 无书，https://parin.work/principal-engineers-guide-to-saying-no.html
+t03.common-opening-templates:
+  cite: Minto p. 65–80（Ch.4 Some Common Patterns）
+t04.active-voice-clear-sentences:
+  cite: Google Technical Writing One《Active voice》《Clear sentences》（developers.google.com/tech-writing/one）
+t04.one-idea-per-sentence:
+  cite: Google Technical Writing One《Short sentences》《Paragraphs》
+t04.precise-words:
+  cite: Google Technical Writing One《Words》（术语一致、首次定义、缩写）
+t04.lists-tables:
+  cite: Google Technical Writing One《Lists and tables》
+t04.document-structure:
+  cite: Google Technical Writing One《Documents》；Google Technical Writing Two《Organizing large documents》
+t04.the-opening-paragraph:
+  cite: Google Technical Writing One《Paragraphs》（开头点明主旨）；Minto p. 33–48（Ch.2：The Introductory Flow）
+t04.writing-code-samples:
+  cite: Google Technical Writing Two《Creating sample code》
+t04.editing-checklist:
+  cite: Google Technical Writing Two《Self-editing》
+t04.made-to-stick-success:
+  cite: 无书，Heath 兄弟《Made to Stick》（商业书，未入库）；免费来源 https://heathbrothers.com/books/made-to-stick/
+t04.email-slack-messages:
+  cite: Minto p. 57–80（Ch.4：Some Common Patterns，备忘录与邮件类开场）（部分）
+t04.readmes-runbooks:
+  cite: se-guidebook Ch.13 §4 Documentation（部分）；Ch.24 §5 Oncall runbooks
+t04.reflecting-the-pyramid-on-the-page:
+  cite: Minto p. 185–208（Ch.10）
+t04.writing-out-a-visual-as-prose:
+  cite: Minto p. 225–232（Ch.12）
+t04.clear-sentence-techniques:
+  cite: Google Technical Writing One《Clear sentences》（待核）
+t04.words-acronyms-pronoun-ambiguity:
+  cite: Google Technical Writing One《Words》（待核）
+t04.punctuation-markdown:
+  cite: Google Technical Writing One《Punctuation》《Markdown》（待核）
+t04.paragraphs-topic-sentences:
+  cite: Google Technical Writing One《Paragraphs》（待核）
+t04.organizing-large-documents:
+  cite: Google Technical Writing Two《Organizing large documents》（待核）
+t04.completing-a-draft:
+  cite: Google Technical Writing Two《Completing a draft》（待核）
+t05.purpose-outcome:
+  cite: 无书，https://handbook.gitlab.com/handbook/company/culture/all-remote/meetings/
+t05.facilitating-summarizing:
+  cite: 无书，https://handbook.gitlab.com/handbook/company/culture/all-remote/meetings/
+t05.getting-into-the-conversation:
+  cite: 惯用说法
+t05.design-review-dialogue:
+  cite: se-guidebook Ch.15 §1 Design Documents, RFCs and Architecture Documents（评审反馈，部分）
+t05.standups-weekly-updates:
+  cite: se-guidebook Ch.16 §5 Day-to-Day Project Management（部分）
+t05.follow-up-notes:
+  cite: 无书，https://handbook.gitlab.com/handbook/company/culture/all-remote/meetings/
+t05.remote-meeting-etiquette:
+  cite: 无书，https://handbook.gitlab.com/handbook/company/culture/all-remote/meetings/
+t06.opening-introduction:
+  cite: 惯用说法
+t06.clarifying-questions:
+  cite: 惯用说法
+t06.when-you-didn-t-catch-it:
+  cite: 惯用说法
+t06.buying-thinking-time:
+  cite: 惯用说法
+t06.hedging:
+  cite: 惯用说法
+t06.disagreeing-politely:
+  cite: 惯用说法
+t06.trade-off-language:
+  cite: 惯用说法
+t06.numbers-in-english:
+  cite: 惯用说法
+t06.agreeing-adding-contrasting:
+  cite: 惯用说法
+t06.transitions-wrap-ups:
+  cite: 惯用说法
+t06.correcting-yourself:
+  cite: 惯用说法
+t06.describing-your-contribution:
+  cite: 惯用说法
+t06.asking-for-help-escalating:
+  cite: 惯用说法
+t06.common-chinglish-fixes:
+  cite: 惯用说法
+t06.pace-clarity-accent:
+  cite: 惯用说法
+t06.small-talk:
+  cite: 惯用说法
+t06.email-chat-phrasing:
+  cite: 惯用说法
+t06.follow-up-thank-you:
+  cite: 惯用说法

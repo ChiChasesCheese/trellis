@@ -1,0 +1,300 @@
+# Generated from research/domains/ai-industry/outline.md by scripts/outline_to_skeleton.py:
+# edit the outline, not this file. Citations and chapter notes: research/domains/ai-industry/leaves.yaml.
+domain: ai-industry
+title: AI 行业与趋势：读懂这个行业
+deck: AI 行业与趋势
+lang: zh
+vault: domains/ai-industry
+deck_depth: 1
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 20
+  reviews_per_day: 200
+nodes:
+- id: t01
+  title: Value chain 与钱怎么流动
+  children:
+  - id: t01.value-chain-chips-foundry-packaging-cloud-data-c
+    title: Value chain 全景：chips → foundry 与 packaging → cloud 与 data center → model labs → applications
+    summary: 每一层谁收钱、谁付钱、利润在哪里集中
+    core: true
+  - id: t01.gross-margin-cash-flow
+    title: 谁赚钱谁烧钱：各层 gross margin 与 cash flow 的差别
+    summary: 芯片设计高毛利；云靠折旧与利用率；实验室训练成本巨大；应用层毛利受推理成本挤压
+    core: true
+  - id: t01.circular-financing
+    title: Circular financing 与交叉持股的结构
+    summary: 芯片商投资实验室、实验室买芯片与云；怎么判断需求是真实终端需求还是循环
+    core: true
+  - id: t01.financial-statements-k-q
+    title: 怎么读 financial statements：10-K 与 10-Q 的阅读顺序
+    summary: 收入分部、剩余履约义务（RPO）、资本开支、折旧年限、客户集中度、风险因素
+    core: true
+  - id: t01.nvidia-data-center-revenue-gross-margin-customer
+    title: 看 NVIDIA 财报：data center revenue、gross margin、customer concentration
+    summary: 哪些行是 AI 需求的直接指标
+    core: true
+    requires:
+    - t01.financial-statements-k-q
+  - id: t01.hyperscaler-cloud-revenue-growth-backlog-capex-g
+    title: 看 hyperscaler 财报：cloud revenue growth、backlog、capex guidance
+    summary: 数据中心资本开支与云收入的比值
+    core: true
+  - id: t01.compute-unit-economics-gpu-hour-payback-period
+    title: Compute 的 unit economics：GPU-hour 成本与 payback period
+    summary: 购置成本、电力、折旧年限；折旧年限假设对利润的影响
+    core: false
+  - id: t01.valuation-bubble-revenue-multiple-capex-to-reven
+    title: Valuation 与 bubble 信号：revenue multiple、capex-to-revenue ratio
+    summary: 与历史上铁路、光纤泡沫的相同与不同
+    core: false
+  summary: Value chain 与钱怎么流动
+  order: 1
+- id: t02
+  title: Chips 与 supply chain
+  children:
+  - id: t02.gpu-nvidia-amd-google-tpu-amazon-trainium-custom
+    title: GPU 之外的格局：NVIDIA、AMD、Google TPU、Amazon Trainium 与其他 custom silicon
+    summary: 通用与定制的取舍；各家大客户与份额趋势
+    core: true
+  - id: t02.software-moat-cuda
+    title: Software moat：CUDA 与替代路线
+    summary: 生态锁定的来源；ROCm、编译器路线能撼动多少
+    core: true
+  - id: t02.hbm-high-bandwidth-memory
+    title: HBM（High Bandwidth Memory）：为什么是瓶颈
+    summary: 带宽决定解码速度；供应商只有三家、产能与堆叠层数；价格与短缺周期
+    core: true
+  - id: t02.advanced-packaging-foundry-cowos-tsmc
+    title: Advanced packaging 与 foundry：CoWoS 与 TSMC
+    summary: 产能分配决定芯片出货；先进制程集中度
+    core: true
+  - id: t02.interconnect-networking-nvlink-ethernet-infiniba
+    title: Interconnect 与 networking：NVLink、Ethernet 与 InfiniBand
+    summary: 集群规模靠网络；光模块与交换机供应商也是受益者
+    core: false
+  - id: t02.chip-depreciation
+    title: Chip 代际节奏与 depreciation
+    summary: 新一代带来的性能价格比；旧芯片的残值
+    core: true
+  - id: t02.export-controls-geopolitics
+    title: Export controls 与 geopolitics
+    summary: 管制的演变、对中国算力的影响、绕行与走私的报道怎么读
+    core: true
+  - id: t02.inference-chips-accelerator
+    title: Inference chips 与 accelerator 新进入者
+    summary: 晶圆级、片上 SRAM 路线等；它们切入的是哪一段延迟与成本曲线（→ llm-inference:accelerators）
+    core: false
+  summary: Chips 与 supply chain
+  order: 2
+- id: t03
+  title: Compute、power 与 data centers
+  children:
+  - id: t03.capex-guidance-hyperscaler
+    title: Capex 规模与 guidance：hyperscaler 的数字
+    summary: 年度资本开支量级、同比增速、占经营现金流比重（做卡时核对最新财报）
+    core: true
+  - id: t03.power
+    title: Power 是新瓶颈
+    summary: 吉瓦（GW）量级的园区、并网排队、变压器与燃气轮机交付周期；为什么电力比芯片更难扩
+    core: true
+  - id: t03.training-compute-epoch-ai
+    title: Training compute 的增长趋势（Epoch AI）
+    summary: 前沿训练算力每年增长倍数、成本、能耗；趋势能延续多久的约束
+    core: true
+  - id: t03.data-center-financing
+    title: Data center 的建设周期与 financing
+    summary: 租赁、表外融资、私募信贷；融资结构的脆弱点
+    core: false
+  - id: t03.local-opposition
+    title: 水、土地与 local opposition
+    summary: 社区反对与审批对进度的影响
+    core: false
+  - id: t03.cooling-liquid-cooling-pue
+    title: Cooling 与能效：liquid cooling、PUE
+    summary: 机架功率密度上升带来的工程变化
+    core: false
+  - id: t03.nuclear-natural-gas-renewables-grid
+    title: 能源路线：nuclear、natural gas、renewables 与 grid
+    summary: 各自的交付时间与成本
+    core: false
+  - id: t03.data-wall-synthetic-data
+    title: Data wall 与 synthetic data：数据会不会用完
+    summary: 公开文本存量的估计、多模态与合成数据的补充
+    core: false
+  summary: Compute、power 与 data centers
+  order: 3
+- id: t04
+  title: Model labs 与 business models
+  children:
+  - id: t04.frontier-labs
+    title: Frontier labs 的格局与竞争轴
+    summary: 能力、价格、生态、分发；领先者轮换得有多快（用榜单排名间隔数据说话）
+    core: true
+  - id: t04.business-model-subscription-usage-based-api-ente
+    title: Business model 分类：subscription、usage-based API、enterprise、ads 与 revenue share
+    summary: 各类收入占比、客户获取与留存
+    core: true
+  - id: t04.inference-gross-margin-price-decline
+    title: Inference 的 gross margin 与 price decline
+    summary: 同等能力的单价下降速度（斯坦福 AI Index：GPT-3.5 级别 2022 年 11 月至 2024 年 10 月降低 280 倍以上）；降价与用量增长的相互抵消
+    core: true
+  - id: t04.application-layer
+    title: Application layer 的利润被谁吃掉
+    summary: 模型供应商提价或自己做应用的风险；编程工具的毛利压力
+    core: true
+  - id: t04.open-weights-vs-closed
+    title: Open weights vs closed：差距、动机与商业逻辑
+    summary: 差距缩小的数据（AI Index：部分基准上 8% 缩至 1.7%）；开放的企业为什么开放；对价格的压制
+    core: true
+  - id: t04.lab-revenue-valuation
+    title: Lab revenue 与 valuation 的数据来源与读法
+    summary: 年化收入口径、融资轮次、传闻与官方披露的区别
+    core: true
+  - id: t04.enterprise-adoption-pilots-scale
+    title: Enterprise adoption 的真实状况：pilots 多、scale 少
+    summary: 采用率、投资回报的调查证据；调查的口径与偏差
+    core: true
+  - id: t04.platform-distribution
+    title: Platform 与 distribution：谁拥有用户入口
+    summary: 搜索、操作系统、办公套件与聊天入口的竞争
+    core: false
+  - id: t04.agents-ai-native-economics
+    title: Agents 与「AI-native」公司的 economics
+    summary: 按结果收费、按席位收费的转变；毛利与规模化
+    core: false
+  - id: t04.open-source-hugging-face-model-licenses
+    title: Open-source 生态的经济：Hugging Face、model licenses
+    summary: 许可证类型、商用限制、衍生模型
+    core: false
+  summary: Model labs 与 business models
+  order: 4
+- id: t05
+  title: 中国生态
+  children:
+  - id: t05.model-labs-open-weights
+    title: 中国 model labs 与 open-weights 路线
+    summary: 主要玩家、发布节奏、与美国前沿的差距（AI Index：主要基准上接近持平）
+    core: true
+  - id: t05.compute-constraints
+    title: Compute constraints 下的工程取舍
+    summary: 出口管制、国产芯片、效率型架构与训练技巧；成本曲线为什么更陡
+    core: true
+  - id: t05.leaf
+    title: 应用与监管环境
+    summary: 备案、内容规则、应用落地的主要场景
+    core: false
+  - id: t05.chips-supply-chain
+    title: 国产 chips 与 supply chain
+    summary: 昇腾等；制程、HBM 与封装的短板
+    core: false
+  - id: t05.price-war-open-source
+    title: Price war 与 open-source 策略
+    summary: 低价、免费策略与海外采用
+    core: false
+  - id: t05.r-d
+    title: 对比：中美投资规模与 R&D 产出
+    summary: 私人投资数额差距（AI Index 2025：美国约 1091 亿美元对中国约 93 亿美元）与不同资本结构的解读
+    core: false
+  summary: 中国生态
+  order: 5
+- id: t06
+  title: Labor market 与岗位
+  children:
+  - id: t06.job-exposure-task-decomposition-usage-data
+    title: Job exposure 怎么测：task decomposition 与 usage data
+    summary: Anthropic 经济指数与类似研究；自动化与增强的占比及其随时间的摆动
+    core: true
+  - id: t06.entry-level
+    title: 已有的就业证据：entry-level 岗位与年轻员工的变化
+    summary: 实证研究的结论、方法（差分比较）与局限；因果还是巧合
+    core: true
+  - id: t06.leaf-2
+    title: 会增长的岗位族与会收缩的岗位族
+    summary: 客服、初级编码、翻译、内容类任务受冲击较早；AI 基础设施、数据中心建设、安全与评测需求增长
+    core: true
+  - id: t06.software-engineering
+    title: Software engineering 岗位的变化
+    summary: 招聘需求、层级结构、技能要求；与 ai-dev 角色转变一叶联动
+    core: true
+  - id: t06.skills-wage-premium
+    title: Skills 与 wage premium
+    summary: 带 AI 技能岗位的薪酬数据与来源可靠性
+    core: false
+  - id: t06.productivity
+    title: Productivity 宏观数据：为什么还看不见
+    summary: 历史上电力与计算机的滞后；统计口径
+    core: false
+  - id: t06.leaf-3
+    title: 教育与技能培养
+    summary: 学生与新人路径；证据有限处明说
+    core: false
+  - id: t06.leaf-4
+    title: 地区与行业差异
+    summary: 不同国家的采用与暴露度
+    core: false
+  summary: Labor market 与岗位
+  order: 6
+- id: t07
+  title: 批判地读趋势与炒作
+  children:
+  - id: t07.leaderboard-benchmark-saturation-contamination-g
+    title: 读 leaderboard 与 benchmark 的方法：saturation、contamination、gaming
+    summary: 新基准几个月到顶；怎么看趋势而不是看名次
+    core: true
+  - id: t07.arr-annualized-revenue
+    title: 读融资新闻与 ARR（annualized revenue）
+    summary: 口径、一次性与可重复收入、烧钱率
+    core: true
+  - id: t07.state-of-ai
+    title: 预测的记分：State of AI 的上年预测自评
+    summary: 命中、部分命中、落空的比例；用来校准对预测的信任
+    core: true
+  - id: t07.primary-secondary
+    title: 识别 primary 与 secondary 数据
+    summary: 官方报告、财报、数据库对媒体转述；每个数字追到源头
+    core: true
+  - id: t07.ai-index-state-of-ai-meeker
+    title: 读大型趋势报告：AI Index、State of AI、Meeker 的立场与盲区
+    summary: 学术、从业者、风险投资三种视角的偏向
+    core: true
+  - id: t07.capability-curve-extrapolation
+    title: Capability curve 与 extrapolation 的陷阱
+    summary: 指数、S 曲线、天花板；任务时长类指标的含义与局限
+    core: false
+  - id: t07.vendor-blog-research-paper
+    title: Vendor blog 与 research paper 的利益相关
+    summary: 自家评测、挑选对比对象
+    core: false
+  - id: t07.leaf-5
+    title: 恐慌与狂热新闻的拆解方法
+    summary: 先问样本、条件、基线、谁受益
+    core: false
+  - id: t07.dashboard
+    title: 做自己的行业 dashboard：该盯的十个指标
+    summary: 资本开支指引、GPU 租价、token 单价、收入年化、电力并网、基准前沿、开源差距、招聘数据等
+    core: false
+  summary: 批判地读趋势与炒作
+  order: 7
+- id: t08
+  title: Governance 与 industrial policy
+  children:
+  - id: t08.regulation
+    title: 美国、欧盟、中国的 regulation 路线差异
+    summary: 欧盟 AI 法案的分级、美国行政令与州法、中国备案制
+    core: true
+  - id: t08.copyright-licensing-deal
+    title: 数据 copyright 诉讼与 licensing deal
+    summary: 主要案件的走向与对数据成本的影响
+    core: false
+  - id: t08.sovereign-ai-industrial-policy
+    title: Sovereign AI 与各国 industrial policy 投资
+    summary: 各国资金承诺与实际落地的差距
+    core: false
+  - id: t08.safety-incidents-self-regulation
+    title: Safety incidents 与行业 self-regulation
+    summary: 事故报告、前沿安全框架、预警机制（对应 ai-literacy:safety.governance，只讲对产业的影响）
+    core: false
+  summary: Governance 与 industrial policy
+  order: 8

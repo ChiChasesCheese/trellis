@@ -1,0 +1,173 @@
+t01.how-levels-work:
+  cite: se-guidebook Ch.1 §2 Typical Software Engineering Career Paths、§5；Part V 引言（levels.fyi 与完整职级阶梯）
+t01.level-mapping-across-companies:
+  cite: se-guidebook Part V 引言 Role-Model Staff and Principal Engineers（levels.fyi 及其局限）；Ch.1 §3 Compensation and "Tiers"
+    of Companies
+t01.senior-to-staff:
+  cite: se-guidebook Ch.1 §2；Ch.4 §3 "Terminal Level"；Part V（Ch.21–25 整体）
+t01.ic-vs-manager-track:
+  cite: se-guidebook Ch.1 §2（含 software engineer/manager pendulum）
+t01.title-vs-level:
+  cite: se-guidebook Ch.1 §2；Ch.19 §1 Roles and Titles
+t01.reading-a-public-ladder:
+  cite: se-guidebook Part V 引言（"What is the full career ladder at a given company?"）；Ch.4 §1 How Promotions Are Decided
+t01.specialist-vs-generalist:
+  cite: se-guidebook Ch.1 §2（generalist/specialist pendulum）；Ch.13 §1 Languages, Platforms, and Domains
+t01.startup-vs-big-tech-levels:
+  cite: se-guidebook Ch.1 §1 Types of Companies、§3；Ch.5 §4 Types of Companies
+t01.terminal-level:
+  cite: se-guidebook Ch.4 §3 "Terminal Level"
+t01.career-path-variants:
+  cite: se-guidebook Ch.1 §2 Typical Software Engineering Career Paths
+t02.how-promotions-are-decided:
+  cite: se-guidebook Ch.4 §1 How Promotions Are Decided、§2 Types of Promotion Processes
+t02.operating-at-the-next-level:
+  cite: se-guidebook Ch.4 §5 Advice for Getting Promoted
+t02.promotion-packet:
+  cite: se-guidebook Ch.4 §4 Promotions at Big Tech、§5
+t02.brag-document:
+  cite: se-guidebook Ch.2 §3 Keep a Work Log；Ch.3 §2 The Power of Habit
+t02.sponsors-visibility:
+  cite: se-guidebook Ch.4 §5（可见度、内部政治）；Ch.22 §6 Helping Others（Sponsor others）
+t02.after-a-rejection:
+  cite: se-guidebook Ch.4 §5（部分）；Ch.6 §2 Waiting on a Promotion vs Switching Jobs
+t02.promotion-by-switching:
+  cite: se-guidebook Ch.6 §2、§5 Up-Leveling
+t02.performance-cycles-goals:
+  cite: se-guidebook Ch.3 Performance Reviews §1–§4
+t02.choosing-promotable-work:
+  cite: se-guidebook Ch.4 §5；Ch.2 §2 Be Seen as Someone Who "Gets Things Done"
+t02.being-seen-as-someone-who-gets-things-done:
+  cite: se-guidebook Ch.2 §2 Be Seen as Someone Who "Gets Things Done"
+t02.performance-review-mechanics:
+  cite: se-guidebook Ch.3 §3–§4
+t02.interview-preparation-for-switching-jobs:
+  cite: se-guidebook Ch.6 §3
+t03.evaluating-a-company:
+  cite: se-guidebook Ch.1 §1、§4 Cost Centers, Profit Centers；Ch.5 §4；Ch.6 §1 Exploring New Opportunities
+t03.evaluating-a-team-manager:
+  cite: se-guidebook Ch.6 §1；Ch.5 §1 Product Teams、§2 Platform Teams
+t03.learning-vs-earning:
+  cite: se-guidebook Ch.1 §5 Alternative Ways to Think About Career Progress；Ch.26 §3 Keep Challenging Yourself（部分）
+t03.startup-vs-scale-up-vs-big-tech:
+  cite: se-guidebook Ch.1 §1；Ch.5 §3 "Peacetime" vs "Wartime"、§4
+t03.reading-company-finances:
+  cite: se-guidebook Ch.21 §3 Your Company、§4 Public Companies、§5 Startups；Ch.5 §3（部分）
+t03.remote-hybrid-location:
+  cite: 无书，https://handbook.gitlab.com/handbook/company/culture/all-remote/guide/
+t03.green-red-flags:
+  cite: se-guidebook Ch.6 §1；Ch.20 §2 Unhealthy Teams
+t03.visa-immigration-constraints:
+  cite: 无书，https://www.uscis.gov/working-in-the-united-states（需专业人士，见大纲"不收"）
+t03.leaving-well:
+  cite: 无书，https://hbr.org/2021/07/yes-you-can-quit-your-job-without-burning-a-bridge
+t03.product-vs-platform-teams-peacetime-vs-wartime:
+  cite: se-guidebook Ch.5 §1–§3
+t03.cost-centers-vs-profit-centers:
+  cite: se-guidebook Ch.1 §4 Cost Centers, Profit Centers
+t04.internal-transfer:
+  cite: se-guidebook Ch.6 §1 Exploring New Opportunities（含 moving internally）
+t04.changing-domains:
+  cite: se-guidebook Ch.1 §2；Ch.13 §1
+t04.pivoting-specialties:
+  cite: se-guidebook Ch.13 §1；Ch.1 §2（部分）
+t04.moving-to-management-and-back:
+  cite: se-guidebook Ch.1 §2（Engineer/manager pendulum）
+t04.boomerang-re-entry:
+  cite: 无书，https://hbr.org/2017/08/what-to-do-when-youre-returning-to-a-company-you-used-to-work-for
+t04.career-gaps:
+  cite: 无书，https://hbr.org/2023/06/how-to-explain-a-gap-in-your-resume
+t04.side-projects-moonlighting:
+  cite: se-guidebook Ch.26 §3（"Build side projects"，部分；合规与 IP 书中无）
+t04.onboarding-to-a-new-job:
+  cite: se-guidebook Ch.6 §6 Onboarding to a New Job
+t05.base-bonus-equity:
+  cite: se-guidebook Ch.1 §3 Compensation and "Tiers" of Companies；Ch.4 §4
+t05.rsus-vesting:
+  cite: se-guidebook Ch.1 §3（部分；cliff 与前置/后置书中无，见 https://www.techinterviewhandbook.org/understanding-compensation/）
+t05.stock-options:
+  cite: se-guidebook Ch.1 §3、Ch.5 §4（创业公司股权，部分；行权价与税书中无，见 https://www.holloway.com/g/equity-compensation）
+t05.refreshers:
+  cite: se-guidebook Ch.4 §4 Promotions at Big Tech（refresher 与 pay for performance）
+t05.sign-on-relocation:
+  cite: 无书，https://www.techinterviewhandbook.org/understanding-compensation/
+t05.total-compensation-view:
+  cite: se-guidebook Ch.1 §3（total compensation）
+t05.bands-geo-adjustments:
+  cite: se-guidebook Ch.4 §4（"A promotion moves compensation to the bottom of the next band"）；Ch.1 §3
+t05.tax-basics-for-comp:
+  cite: 无书，https://www.irs.gov/taxtopics/tc427（需专业人士）
+t05.benefits-k-match:
+  cite: 无书，https://www.irs.gov/retirement-plans/401k-plans
+t05.valuing-private-equity:
+  cite: 无书，https://www.holloway.com/g/equity-compensation
+t05.reading-comp-data:
+  cite: se-guidebook Ch.1 §3；Part V 引言（levels.fyi 的局限）
+t06.negotiation-fundamentals:
+  cite: never-split-the-difference Ch.1 The new rules、Ch.9 Bargain hard（部分：书讲通用谈判，薪资细节看 McKenzie）；另见 https://www.kalzumeus.com/2012/01/23/salary-negotiation/
+t06.when-asked-for-a-number:
+  cite: 无书，https://www.kalzumeus.com/2012/01/23/salary-negotiation/
+t06.competing-offers-as-leverage:
+  cite: 无书，https://www.kalzumeus.com/2012/01/23/salary-negotiation/
+t06.one-specific-justified-ask:
+  cite: never-split-the-difference Ch.9 Bargain hard（Ackerman 出价法，部分）；另见 https://www.kalzumeus.com/2012/01/23/salary-negotiation/
+t06.tone-channel:
+  cite: never-split-the-difference Ch.2 Be a mirror、Ch.3 Label it（tactical empathy）；另见 https://www.kalzumeus.com/2012/01/23/salary-negotiation/
+t06.what-is-negotiable:
+  cite: se-guidebook Ch.6 §4 Down-leveling、§5 Up-Leveling（部分，只涉及级别）；其余无书，https://www.kalzumeus.com/2012/01/23/salary-negotiation/
+t06.negotiating-level:
+  cite: se-guidebook Ch.6 §4 Down-leveling、§5 Up-Leveling
+t06.deadlines-exploding-offers:
+  cite: never-split-the-difference Ch.6 Bend their reality（deadline 的心理效应）；另见 https://www.kalzumeus.com/2012/01/23/salary-negotiation/
+t06.declining-well:
+  cite: 无书，https://www.kalzumeus.com/2012/01/23/salary-negotiation/
+t06.counteroffers-from-current-employer:
+  cite: 无书，https://www.kalzumeus.com/2012/01/23/salary-negotiation/
+t06.common-mistakes:
+  cite: never-split-the-difference Ch.4 Beware "yes"（部分）；另见 https://www.kalzumeus.com/2012/01/23/salary-negotiation/
+t06.raise-negotiation-internally:
+  cite: se-guidebook Ch.4 §4（pay bands 与晋升加薪，部分）；其余无书，https://www.kalzumeus.com/2012/01/23/salary-negotiation/
+t06.written-terms-contract-details:
+  cite: 无书，https://haseebq.com/my-ten-rules-for-negotiating-a-job-offer/（需专业人士）
+t06.down-leveling-up-leveling:
+  cite: se-guidebook Ch.6 §4 Down-leveling、§5 Up-Leveling
+t06.calibrated-questions:
+  cite: never-split-the-difference Ch.7 Create the illusion of control
+t06.accusation-audit:
+  cite: never-split-the-difference Ch.3 Don't feel their pain, label it
+t06.that-s-right-vs-you-re-right:
+  cite: never-split-the-difference Ch.5 Trigger the two words
+t06.negotiation-one-sheet:
+  cite: never-split-the-difference Appendix Prepare a negotiation one-sheet
+t07.career-capital:
+  cite: se-guidebook Ch.26 Lifelong Learning §1–§3；Ch.1 §5
+t07.deliberate-practice:
+  cite: 'se-guidebook Ch.8 §1 Practice Coding: A Lot!；Ch.26 §2 Keep Learning'
+t07.public-work-reputation:
+  cite: se-guidebook Ch.4 §5（公开你的工作）；Ch.22 §5 Expanding Your Network（部分）
+t07.network-weak-ties:
+  cite: se-guidebook Ch.22 §5 Expanding Your Network
+t07.bets-optionality:
+  cite: se-guidebook Ch.1 §5；Ch.4 §6 A Long-Term Career View
+t07.runway-as-leverage:
+  cite: 无书，https://www.kalzumeus.com/2012/01/23/salary-negotiation/；https://haseebq.com/my-ten-rules-for-negotiating-a-job-offer/
+t07.avoiding-burnout:
+  cite: se-guidebook Ch.2 §6 Pace Yourself；Ch.26 §5 Give Yourself a Break；Ch.24 §5（Oncall burnout）
+t07.staying-current:
+  cite: se-guidebook Ch.26 §2 Keep Learning、§4 Keep Up with the Industry
+t07.annual-career-review:
+  cite: 'se-guidebook Ch.3 §1 Start Early: Gather Context and Set Goals；Ch.4 §6 A Long-Term Career View'
+t08.making-s-work:
+  cite: se-guidebook Ch.2 §5 Make Your Manager an Ally（Have regular 1:1 time）
+t08.aligning-expectations:
+  cite: se-guidebook Ch.2 §5；Ch.3 §1
+t08.seeking-feedback:
+  cite: se-guidebook Ch.2 §4 Ask and Give Feedback
+t08.turning-a-manager-into-a-sponsor:
+  cite: se-guidebook Ch.2 §5；Ch.4 §5
+t08.when-it-s-not-working:
+  cite: se-guidebook Ch.6 §1（对经理或团队不满时的选项）；Ch.2 §5
+t08.reorgs-manager-change:
+  cite: 无书，https://hbr.org/2023/02/navigating-uncertainty-about-your-role-during-a-reorg
+t08.showing-results-upward:
+  cite: se-guidebook Ch.2 §2、§3 Keep a Work Log

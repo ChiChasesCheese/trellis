@@ -1,0 +1,364 @@
+# Generated from research/domains/tech-comm/outline.md by scripts/outline_to_skeleton.py:
+# edit the outline, not this file. Citations and chapter notes: research/domains/tech-comm/leaves.yaml.
+domain: tech-comm
+title: 技术表达：把复杂东西讲清楚（中英）
+deck: 技术表达
+lang: zh
+vault: domains/tech-comm
+deck_depth: 1
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 20
+  reviews_per_day: 200
+nodes:
+- id: t01
+  title: Structured speaking
+  children:
+  - id: t01.answer-first
+    title: Answer first
+    summary: 第一句给结论，再给理由；面试和会议中的首句规则
+    core: true
+  - id: t01.pyramid-principle
+    title: Pyramid principle
+    summary: 一个结论、三个以内分组理由、证据在下
+    core: true
+  - id: t01.rule-of-three
+    title: Rule of three
+    summary: 并列项数量上限与排序依据
+    core: true
+  - id: t01.scqa-situation-complication-question-answer
+    title: SCQA（Situation, Complication, Question, Answer）
+    summary: 开场框架，适用于汇报和设计评审
+    core: true
+  - id: t01.restate-clarify
+    title: Restate & clarify
+    summary: 防止答非所问
+    core: true
+  - id: t01.signposting
+    title: Signposting
+    summary: '"我分三点讲，先…"；让听者知道在哪'
+    core: true
+  - id: t01.recovering-mid-answer
+    title: Recovering mid-answer
+    summary: 修正句式
+    core: false
+  - id: t01.seconds-then-layers
+    title: 90 seconds, then layers
+    summary: 先短答，对方追问再下潜（→ narrative.delivery）
+    core: false
+  - id: t01.answering-under-uncertainty
+    title: Answering under uncertainty
+    summary: 说出假设与置信度
+    core: false
+  - id: t01.talking-about-numbers
+    title: Talking about numbers
+    summary: 量级、比较、四舍五入、给基线
+    core: false
+  - id: t01.ordering-logic-time-structural-degree-order
+    title: Ordering logic：time、structural、degree order
+    summary: 三种排序，何时用哪种
+    core: false
+  - id: t01.top-down-vs-bottom-up-pyramid-building
+    title: Top-down vs bottom-up pyramid building
+    summary: 先定主题与读者问题，或先列要点再归纳；补“金字塔原理”缺的怎么搭
+    core: false
+  - id: t01.deductive-vs-inductive-reasoning
+    title: Deductive vs inductive reasoning
+    summary: 判断一组并列理由该用哪种推理，是检查“三点”是否站得住的工具
+    core: false
+  - id: t01.summarizing-grouped-ideas
+    title: Summarizing grouped ideas
+    summary: 同组要点要能写出一句有信息量的概括，避免空洞断言
+    core: false
+  - id: t01.problem-definition-framework
+    title: Problem definition framework
+    summary: 起点、触发事件、期望结果、问题；SCQA 之前的思考步骤
+    core: false
+  - id: t01.logic-trees-issue-analysis
+    title: Logic trees & issue analysis
+    summary: 排故障、做方案前怎么结构化分析
+    core: false
+  - id: t01.key-line-complex-introductions
+    title: Key Line & complex introductions
+    summary: SCQA 只给骨架，复杂开场的写法与介绍要点在这里
+    core: false
+  summary: Structured speaking
+  order: 1
+- id: t02
+  title: Whiteboard & diagrams
+  children:
+  - id: t02.narrating-a-diagram
+    title: Narrating a diagram
+    summary: 先全貌再数据流再例外
+    core: true
+  - id: t02.whiteboard-layout
+    title: Whiteboard layout
+    summary: 左到右、编号、留白、图例
+    core: true
+  - id: t02.talk-while-drawing
+    title: Talk while drawing
+    summary: 不沉默、不背对、点名每个框的职责
+    core: true
+  - id: t02.walk-a-concrete-example
+    title: Walk a concrete example
+    summary: 一个请求从头走到尾
+    core: true
+  - id: t02.zoom-in-zoom-out
+    title: Zoom in, zoom out
+    summary: 何时放大、如何告知
+    core: false
+  - id: t02.diagram-anti-patterns
+    title: Diagram anti-patterns
+    summary: 箭头无语义、框太多、没有边界
+    core: false
+  - id: t02.sequence-state-diagrams
+    title: Sequence & state diagrams
+    summary: Sequence & state diagrams
+    core: false
+  - id: t02.screen-share-walkthrough
+    title: Screen-share walkthrough
+    summary: Screen-share walkthrough
+    core: false
+  - id: t02.illustrations-captions-focus-simplification
+    title: 'Illustrations: captions, focus, simplification'
+    summary: 给“架构图常见错法”提供规则
+    core: false
+  - id: t02.slides-storyboards
+    title: Slides & storyboards
+    summary: 文字页与图表页的写法，对应评审与汇报材料
+    core: false
+  summary: Whiteboard & diagrams
+  order: 2
+- id: t03
+  title: Audiences
+  children:
+  - id: t03.know-your-audience
+    title: Know your audience
+    summary: 他们已知什么、要决定什么、关心什么
+    core: true
+  - id: t03.executives
+    title: Executives：影响与决定
+    summary: 一页，风险与请求放前面
+    core: true
+  - id: t03.peers
+    title: Peers：细节与取舍
+    summary: Peers：细节与取舍
+    core: true
+  - id: t03.non-technical-audiences
+    title: Non-technical audiences：类比与后果
+    summary: 用结果而非机制
+    core: true
+  - id: t03.newcomers
+    title: Newcomers：先给地图
+    summary: 概念依赖顺序
+    core: false
+  - id: t03.explaining-complexity
+    title: Explaining complexity
+    summary: 从具体到抽象，去掉例外
+    core: false
+  - id: t03.delivering-bad-news
+    title: Delivering bad news
+    summary: 事实、影响、计划、请求
+    core: false
+  - id: t03.saying-no
+    title: Saying no
+    summary: 给理由与替代方案
+    core: false
+  - id: t03.common-opening-templates
+    title: Common opening templates
+    summary: 给指示、申请资源、在方案中做选择，可成为“对高层”之下的具体模板
+    core: false
+  summary: Audiences
+  order: 3
+- id: t04
+  title: Technical writing basics
+  children:
+  - id: t04.active-voice-clear-sentences
+    title: Active voice, clear sentences
+    summary: Google Tech Writing 核心规则
+    core: true
+  - id: t04.one-idea-per-sentence
+    title: One idea per sentence
+    summary: One idea per sentence
+    core: true
+  - id: t04.precise-words
+    title: Precise words
+    summary: 一词一义；术语统一；少用"可能/一些"
+    core: true
+  - id: t04.lists-tables
+    title: Lists & tables
+    summary: 何时用有序、无序、表格
+    core: true
+  - id: t04.document-structure
+    title: Document structure
+    summary: 先说目的和读者，再说范围
+    core: true
+  - id: t04.the-opening-paragraph
+    title: The opening paragraph
+    summary: 三句内说完是什么、为什么、读后得到什么
+    core: true
+  - id: t04.writing-code-samples
+    title: Writing code samples
+    summary: Writing code samples
+    core: false
+  - id: t04.editing-checklist
+    title: Editing checklist
+    summary: 删冗词、查歧义、读出声
+    core: false
+  - id: t04.made-to-stick-success
+    title: Made to Stick：SUCCESs
+    summary: 简单、意外、具体、可信、情感、故事
+    core: false
+  - id: t04.email-slack-messages
+    title: Email & Slack messages
+    summary: 标题含动作、一条消息一个请求
+    core: false
+  - id: t04.readmes-runbooks
+    title: READMEs & runbooks
+    summary: READMEs & runbooks
+    core: false
+  - id: t04.reflecting-the-pyramid-on-the-page
+    title: Reflecting the pyramid on the page
+    summary: 层级标题、过渡、结论、下一步，可吸收进“文档结构与标题”
+    core: false
+  - id: t04.writing-out-a-visual-as-prose
+    title: Writing out a visual as prose
+    summary: 把结构写成连贯文字，与“首段”相邻
+    core: false
+  - id: t04.clear-sentence-techniques
+    title: Clear-sentence techniques
+    summary: 强动词、少用 there is/are、少用泛化的形容词副词
+    core: false
+  - id: t04.words-acronyms-pronoun-ambiguity
+    title: Words, acronyms & pronoun ambiguity
+    summary: 首次定义、缩写展开、“this/that”指代不明
+    core: false
+  - id: t04.punctuation-markdown
+    title: Punctuation & Markdown
+    summary: 逗号、分号等硬规则，及文档写作的格式惯例
+    core: false
+  - id: t04.paragraphs-topic-sentences
+    title: 'Paragraphs: topic sentences'
+    summary: 主题句与一段一主题
+    core: false
+  - id: t04.organizing-large-documents
+    title: Organizing large documents
+    summary: 长文档的章节与导航
+    core: false
+  - id: t04.completing-a-draft
+    title: Completing a draft
+    summary: 先骨架后填充、多轮自检，补“编辑与自检清单”之前的流程
+    core: false
+  summary: Technical writing basics
+  order: 4
+- id: t05
+  title: Meetings
+  children:
+  - id: t05.purpose-outcome
+    title: Purpose & outcome
+    summary: 会议要产出什么决定
+    core: true
+  - id: t05.facilitating-summarizing
+    title: Facilitating & summarizing
+    summary: 重述决定与负责人
+    core: true
+  - id: t05.getting-into-the-conversation
+    title: Getting into the conversation
+    summary: 母语者说话快时怎么进入
+    core: true
+  - id: t05.design-review-dialogue
+    title: Design review dialogue
+    summary: Design review dialogue
+    core: true
+  - id: t05.standups-weekly-updates
+    title: Standups & weekly updates
+    summary: Standups & weekly updates
+    core: false
+  - id: t05.follow-up-notes
+    title: Follow-up notes
+    summary: 会后 24 小时内
+    core: false
+  - id: t05.remote-meeting-etiquette
+    title: Remote meeting etiquette
+    summary: Remote meeting etiquette
+    core: false
+  summary: Meetings
+  order: 5
+- id: t06
+  title: English for interviews & meetings
+  children:
+  - id: t06.opening-introduction
+    title: Opening & introduction
+    summary: 三十秒自我介绍的英文句式
+    core: true
+  - id: t06.clarifying-questions
+    title: Clarifying questions
+    summary: '"Could you clarify whether…", "Just to confirm…"'
+    core: true
+  - id: t06.when-you-didn-t-catch-it
+    title: When you didn't catch it
+    summary: 礼貌请对方重复，不装懂
+    core: true
+  - id: t06.buying-thinking-time
+    title: Buying thinking time
+    summary: '"Let me think out loud for a second…"'
+    core: true
+  - id: t06.hedging
+    title: Hedging
+    summary: '"I''d lean towards…", "It depends on…", "My understanding is…"'
+    core: true
+  - id: t06.disagreeing-politely
+    title: Disagreeing politely
+    summary: '"I see your point, though I''m worried about…"'
+    core: true
+  - id: t06.trade-off-language
+    title: Trade-off language
+    summary: '"The upside is… the cost is…", "We trade X for Y"'
+    core: true
+  - id: t06.numbers-in-english
+    title: Numbers in English
+    summary: 千/百万读法、"roughly", "on the order of", 百分比与倍数
+    core: true
+  - id: t06.agreeing-adding-contrasting
+    title: Agreeing, adding, contrasting
+    summary: Agreeing, adding, contrasting
+    core: false
+  - id: t06.transitions-wrap-ups
+    title: Transitions & wrap-ups
+    summary: '"Moving on to…", "To summarize…"'
+    core: false
+  - id: t06.correcting-yourself
+    title: Correcting yourself
+    summary: '"Actually, let me correct that…"'
+    core: false
+  - id: t06.describing-your-contribution
+    title: Describing your contribution
+    summary: I vs we、动词强度（→ narrative.story.i-vs-we）
+    core: false
+  - id: t06.asking-for-help-escalating
+    title: Asking for help, escalating
+    summary: Asking for help, escalating
+    core: false
+  - id: t06.common-chinglish-fixes
+    title: Common Chinglish fixes
+    summary: 冠词、时态、直译
+    core: false
+  - id: t06.pace-clarity-accent
+    title: Pace, clarity, accent
+    summary: 放慢、重音在关键词、停顿
+    core: false
+  - id: t06.small-talk
+    title: Small talk
+    summary: 会前三十秒的话题
+    core: false
+  - id: t06.email-chat-phrasing
+    title: Email & chat phrasing
+    summary: 请求、跟进、拒绝
+    core: false
+  - id: t06.follow-up-thank-you
+    title: Follow-up & thank-you
+    summary: Follow-up & thank-you
+    core: false
+  summary: English for interviews & meetings
+  order: 6

@@ -1,0 +1,138 @@
+t01.completion-chat-agent-background-async:
+  cite: ''
+t01.coding-agent-loop-tools-context:
+  cite: ''
+t01.context-window:
+  cite: ''
+t01.leaf:
+  cite: ''
+t01.non-determinism:
+  cite: ''
+t01.model-tier:
+  cite: ''
+t01.terminal-agent-ide-assistant-cloud-async-agent:
+  cite: ''
+t02.explore-plan-implement-commit:
+  cite: ''
+t02.spec-first-spec-driven-development:
+  cite: ''
+t02.agent-check-tests-type-check-lint-expected-outpu:
+  cite: ''
+t02.prompt-scope-constraints-references:
+  cite: ''
+t02.small-commits:
+  cite: ''
+t02.agent-interview:
+  cite: ''
+t02.tdd-with-agent-red-green:
+  cite: ''
+t02.interrupt-rollback-session:
+  cite: ''
+t02.headless-batch-scheduled-event-triggered:
+  cite: ''
+t02.session-git-worktree:
+  cite: ''
+t02.subagents-context:
+  cite: ''
+t02.checkpoint-progress-file-init-script:
+  cite: ''
+t03.context-file-claude-md-agents-md:
+  cite: ''
+t03.context-file:
+  cite: ''
+t03.hooks-permissions:
+  cite: ''
+t03.skills-slash-commands:
+  cite: ''
+t03.mcp-cli:
+  cite: ''
+t03.context-file-agents-md:
+  cite: ''
+t03.legacy-codebase-architecture-map-glossary-domain:
+  cite: ''
+t04.verification-generation-review-bottleneck:
+  cite: ''
+t04.ai-hallucinated-api-over-engineering:
+  cite: ''
+t04.small-diff-review:
+  cite: ''
+t04.reviewer-session:
+  cite: ''
+t04.tests-as-contract:
+  cite: ''
+t04.end-to-end-verification:
+  cite: ''
+t04.dependency-api:
+  cite: ''
+t04.performance-complexity-regression:
+  cite: ''
+t04.maintainability-duplication-style-drift-consiste:
+  cite: ''
+t04.comprehension-debt:
+  cite: ''
+t04.review-etiquette-ai:
+  cite: ''
+t05.unit-tests:
+  cite: ''
+t05.ai-bug:
+  cite: ''
+t05.legacy-code-characterization-tests:
+  cite: ''
+t05.migration-refactoring:
+  cite: ''
+t05.end-to-end-ui-browser-automation:
+  cite: ''
+t05.fuzzing-property-based-testing:
+  cite: ''
+t05.docs-comments-change-description:
+  cite: ''
+t06.secrets-prompt-repo-log:
+  cite: ''
+t06.prompt-injection-via-repos:
+  cite: ''
+t06.permission-model-sandbox:
+  cite: ''
+t06.supply-chain-hallucinated-packages-malicious-pac:
+  cite: ''
+t06.lethal-trifecta-coding-agent:
+  cite: ''
+t06.ai-security:
+  cite: ''
+t06.license-copyright:
+  cite: ''
+t06.data-exfiltration-compliance:
+  cite: ''
+t06.destructive-operations:
+  cite: ''
+t07.metr-randomized-controlled-trial:
+  cite: ''
+t07.dora-ai-assisted-software-development-report:
+  cite: ''
+t07.stack-overflow-developer-survey:
+  cite: ''
+t07.perception-vs-measurement:
+  cite: ''
+t07.cycle-time-change-failure-rate-recovery-time-rew:
+  cite: ''
+t07.adoption:
+  cite: ''
+t07.context-file-review-rules-disclosure:
+  cite: ''
+t07.token-budget-model-tiering-subagent-cost:
+  cite: ''
+t07.junior-engineer-skill-atrophy:
+  cite: ''
+t07.productivity:
+  cite: ''
+t08.leaf-2:
+  cite: ''
+t08.architecture-judgment:
+  cite: ''
+t08.agents:
+  cite: ''
+t08.readability-testability-agent-friendly:
+  cite: ''
+t08.leaf-3:
+  cite: ''
+t08.leaf-4:
+  cite: ''

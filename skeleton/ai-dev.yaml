@@ -1,0 +1,334 @@
+# Generated from research/domains/ai-dev/outline.md by scripts/outline_to_skeleton.py:
+# edit the outline, not this file. Citations and chapter notes: research/domains/ai-dev/leaves.yaml.
+domain: ai-dev
+title: AI 辅助开发：用 AI 写、审、测代码
+deck: AI 辅助开发
+lang: zh
+vault: domains/ai-dev
+deck_depth: 1
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 20
+  reviews_per_day: 200
+nodes:
+- id: t01
+  title: 工具形态与 mental model
+  children:
+  - id: t01.completion-chat-agent-background-async
+    title: 编程助手的四种形态：completion、chat、agent、background async
+    summary: 各自的上下文来源、自主程度、适用任务；从补全到智能体是权责的转移
+    core: true
+  - id: t01.coding-agent-loop-tools-context
+    title: Coding agent 的工作原理：loop、tools、context
+    summary: 读文件、跑命令、改代码、看结果再继续；能力来自环境反馈，不来自一次写对
+    core: true
+  - id: t01.context-window
+    title: Context window 是核心稀缺资源
+    summary: 窗口越满表现越差；对话里每一次读文件、跑日志都在占用；清理与压缩的时机
+    core: true
+  - id: t01.leaf
+    title: 模型的能力边界：擅长与不擅长
+    summary: 擅长：样板、迁移、测试、解释代码、范围明确的改动；不擅长：隐含约束、跨系统一致性、没有验证手段的任务
+    core: true
+  - id: t01.non-determinism
+    title: Non-determinism 与同题多解
+    summary: 同一提示每次结果不同；需要把「对不对」交给测试，而不是交给「看起来对」
+    core: false
+  - id: t01.model-tier
+    title: Model tier 选择：何时用强模型、何时用快模型
+    summary: 规划用强、批量机械改动用快；成本与吞吐
+    core: false
+  - id: t01.terminal-agent-ide-assistant-cloud-async-agent
+    title: 工具对照：terminal agent、IDE assistant、cloud async agent
+    summary: Claude Code、Codex、Cursor、Copilot 的定位差异（只讲类型，不讲界面）
+    core: false
+  summary: 工具形态与 mental model
+  order: 1
+- id: t02
+  title: Workflow：spec、plan、implement、verify
+  children:
+  - id: t02.explore-plan-implement-commit
+    title: Explore → plan → implement → commit 的四段循环
+    summary: 先只读探索，再让它写计划，再动手；跳过计划的代价
+    core: true
+  - id: t02.spec-first-spec-driven-development
+    title: Spec-first / spec-driven development
+    summary: 先写需求、验收标准、边界条件，再让智能体实现；规格就是评测
+    core: true
+  - id: t02.agent-check-tests-type-check-lint-expected-outpu
+    title: 给 agent 一个可运行的 check：tests、type check、lint、expected output
+    summary: 最高杠杆的一件事；没有检查，「做完了」不可信
+    core: true
+  - id: t02.prompt-scope-constraints-references
+    title: 写具体的 prompt：scope、constraints、references
+    summary: 指向文件与现有模式、说明不要做什么；模糊提示换来过度实现
+    core: true
+  - id: t02.small-commits
+    title: Small commits 与可回退
+    summary: 每个任务一个检查点；用版本控制当撤销键；大改拆成可审查的块
+    core: true
+  - id: t02.agent-interview
+    title: 先问后做：让 agent interview 你
+    summary: 在需求不清时让模型提问，产出规格
+    core: false
+  - id: t02.tdd-with-agent-red-green
+    title: TDD with agent：red → green
+    summary: 先让它写失败的测试并确认失败，再实现；防止它为通过测试而改测试
+    core: true
+  - id: t02.interrupt-rollback-session
+    title: 纠偏的时机：interrupt、rollback、重开 session
+    summary: 同一错误纠正两次仍不对就清空重来；长对话里的纠偏越积越差
+    core: true
+  - id: t02.headless-batch-scheduled-event-triggered
+    title: Headless 与 batch：脚本化运行、scheduled 与 event-triggered
+    summary: 无头模式、CI 里调用；输出格式、权限与预算上限
+    core: false
+  - id: t02.session-git-worktree
+    title: 并行 session 与 Git worktree
+    summary: 每个会话一个隔离目录；合并冲突与任务切分
+    core: true
+  - id: t02.subagents-context
+    title: Subagents：把探索与审查放进独立 context
+    summary: 只回传摘要，保护主上下文；成本的另一面
+    core: false
+  - id: t02.checkpoint-progress-file-init-script
+    title: 长任务：checkpoint、progress file、init script
+    summary: 跨上下文窗口接力；用文件而非对话保存状态
+    core: false
+  summary: Workflow：spec、plan、implement、verify
+  order: 2
+- id: t03
+  title: Context files 与可复用配置
+  children:
+  - id: t03.context-file-claude-md-agents-md
+    title: 项目 context file：CLAUDE.md / AGENTS.md
+    summary: 放命令、约定、坑；每次会话都加载，所以要短；删掉智能体能从代码里读出的内容
+    core: true
+  - id: t03.context-file
+    title: 写好 context file 的规则
+    summary: 具体可检验、不放空话；过长则规则被忽略；定期修剪；分层（用户级、项目级、子目录级）
+    core: true
+  - id: t03.hooks-permissions
+    title: 确定性规则用 hooks 与 permissions，建议性规则用文字
+    summary: 「必须」的事交给 hooks、沙箱、权限规则强制；写在提示里只是请求
+    core: true
+  - id: t03.skills-slash-commands
+    title: Skills 与 slash commands：把团队流程封装起来
+    summary: 按需加载而非常驻；发布、迁移、审查流程
+    core: false
+  - id: t03.mcp-cli
+    title: 连接外部工具：MCP 与 CLI
+    summary: 优先用已有 CLI；MCP 服务器的上下文开销与信任问题
+    core: false
+    requires:
+    - t01.coding-agent-loop-tools-context
+  - id: t03.context-file-agents-md
+    title: Context file 的跨工具标准：AGENTS.md 与各家文件名
+    summary: 多工具共存时单一来源加导入
+    core: false
+  - id: t03.legacy-codebase-architecture-map-glossary-domain
+    title: 对 legacy codebase 的引导：architecture map、glossary、domain conventions
+    summary: 让智能体先建立地图；记录「为什么」而非「是什么」
+    core: false
+  summary: Context files 与可复用配置
+  order: 3
+- id: t04
+  title: Verification 与 code review（AI 写的代码怎么信）
+  children:
+  - id: t04.verification-generation-review-bottleneck
+    title: Verification 优先于 generation：review 成为 bottleneck
+    summary: 生成变便宜后，限制产出的是阅读与验证；审查要变成流程而非凭感觉
+    core: true
+  - id: t04.ai-hallucinated-api-over-engineering
+    title: AI 代码的典型缺陷：几乎对但不对、hallucinated API、吞掉错误、over-engineering、悄悄改测试
+    summary: 每类的识别特征与排查办法
+    core: true
+  - id: t04.small-diff-review
+    title: Small-diff review：限制变更体量、逐段读
+    summary: 大块 AI 差异无人能审；强制拆分
+    core: true
+  - id: t04.reviewer-session
+    title: 独立 reviewer：让另一个 session 或模型审查
+    summary: 新上下文看差异，避免自我认同；审查提示要对照规格
+    core: true
+  - id: t04.tests-as-contract
+    title: Tests as contract：不要让生成者同时定义「对」
+    summary: 人写或人审验收测试；变异测试、属性测试检验测试质量
+    core: true
+  - id: t04.end-to-end-verification
+    title: 运行它：真实环境的 end-to-end verification
+    summary: 启动服务、请求、看日志与界面；类型检查通过不等于功能正确
+    core: true
+  - id: t04.dependency-api
+    title: Dependency 与 API 核实：包是否存在、版本是否匹配
+    summary: 虚构包名（slopsquatting）与过时用法；锁文件与文档对照
+    core: true
+  - id: t04.performance-complexity-regression
+    title: Performance 与 complexity regression
+    summary: AI 常写出 O(n²) 或多余查询；基准与查询计划检查
+    core: false
+  - id: t04.maintainability-duplication-style-drift-consiste
+    title: Maintainability：duplication、style drift、consistency
+    summary: 复制粘贴式生成累积技术债；linter 与架构测试约束
+    core: false
+  - id: t04.comprehension-debt
+    title: Comprehension debt：合并了没人读懂的代码
+    summary: 规则：不能向同事解释的代码不合并
+    core: true
+  - id: t04.review-etiquette-ai
+    title: Review etiquette：披露 AI 参与、责任仍归提交者
+    summary: 团队约定；开源项目对 AI 贡献的政策
+    core: false
+  summary: Verification 与 code review（AI 写的代码怎么信）
+  order: 4
+- id: t05
+  title: 用 AI 做测试与质量工作
+  children:
+  - id: t05.unit-tests
+    title: 生成 unit tests：覆盖路径与边界
+    summary: 好用的前提：被测代码清晰；盯住「只断言实现」的伪测试
+    core: true
+  - id: t05.ai-bug
+    title: 用 AI 复现并定位 bug
+    summary: 给日志、复现步骤与失败测试；让它先写复现再改
+    core: true
+  - id: t05.legacy-code-characterization-tests
+    title: Legacy code 的 characterization tests
+    summary: 先固定现有行为，再重构；AI 适合批量生成
+    core: false
+  - id: t05.migration-refactoring
+    title: 大规模 migration 与 refactoring
+    summary: 框架升级、API 替换：脚本化 + 分批验证 + 每批一个检查点
+    core: false
+  - id: t05.end-to-end-ui-browser-automation
+    title: End-to-end 与 UI 测试：browser automation
+    summary: 让智能体操作页面并截图验证；脆弱点与成本
+    core: false
+  - id: t05.fuzzing-property-based-testing
+    title: Fuzzing 与 property-based testing 辅助
+    summary: 让模型提出不变量与输入生成器
+    core: false
+  - id: t05.docs-comments-change-description
+    title: Docs、comments 与 change description
+    summary: 生成再校对；文档与代码漂移的检查
+    core: false
+  summary: 用 AI 做测试与质量工作
+  order: 5
+- id: t06
+  title: Security 与 risk
+  children:
+  - id: t06.secrets-prompt-repo-log
+    title: Secrets 与敏感数据：不进 prompt、不进 repo、不进 log
+    summary: 环境变量与密钥管理器；让智能体读不到 .env 的权限规则
+    core: true
+  - id: t06.prompt-injection-via-repos
+    title: Prompt injection via repos
+    summary: README、依赖、issue、网页里藏指令；智能体读到即可能执行
+    core: true
+  - id: t06.permission-model-sandbox
+    title: Permission model 与 sandbox
+    summary: 允许/询问/拒绝规则、受限目录、网络出口；自动模式与「跳过所有确认」的风险边界
+    core: true
+  - id: t06.supply-chain-hallucinated-packages-malicious-pac
+    title: Supply chain 风险：hallucinated packages、malicious packages、被投毒的 skills 与 MCP servers
+    summary: 先核实再安装；锁版本；审查第三方技能与服务器
+    core: true
+  - id: t06.lethal-trifecta-coding-agent
+    title: Lethal trifecta 在 coding agent 里的体现
+    summary: 私有代码或密钥 + 不可信内容 + 能联网；拆掉其中一个
+    core: true
+  - id: t06.ai-security
+    title: AI 生成代码的 security 缺陷
+    summary: 注入、鉴权缺失、弱加密、不安全默认值；静态分析与安全测试并入流程
+    core: false
+  - id: t06.license-copyright
+    title: License 与 copyright：生成代码的合规
+    summary: 训练数据与代码相似度；企业条款与赔偿承诺的范围
+    core: false
+  - id: t06.data-exfiltration-compliance
+    title: Data exfiltration 与企业 compliance
+    summary: 哪些代码可发往哪个供应商；零保留、私有部署选项
+    core: false
+  - id: t06.destructive-operations
+    title: Destructive operations 的防护
+    summary: 删库、强推、生产环境；只给最小权限、备份、人工确认点
+    core: false
+  summary: Security 与 risk
+  order: 6
+- id: t07
+  title: 团队 adoption 与 metrics
+  children:
+  - id: t07.metr-randomized-controlled-trial
+    title: 证据 1：METR 2025 randomized controlled trial
+    summary: 16 位有经验的开源开发者、246 个真实任务，允许使用 AI 时平均慢 19%，而他们自己以为快了约 20%；适用范围与局限（样本小、熟悉的大仓库、2025 年初工具）；METR 称结果已过时并发布了后续数据
+    core: true
+  - id: t07.dora-ai-assisted-software-development-report
+    title: 证据 2：DORA 2025 AI-assisted Software Development report
+    summary: 核心结论：AI 是放大器，放大组织已有的强项与弱点；七项 AI 能力模型；吞吐与稳定性的关系（数字需核对原报告）
+    core: true
+  - id: t07.stack-overflow-developer-survey
+    title: 证据 3：Stack Overflow 2025 Developer Survey
+    summary: 84% 使用或计划使用，51% 的专业开发者每天用；信任准确性的只有 33%，最大困扰是「几乎对但不对」（66%）
+    core: true
+  - id: t07.perception-vs-measurement
+    title: Perception vs measurement 的落差：为什么自我感觉不可靠
+    summary: 等待时间、上下文切换、审查成本被忽略；需要实测
+    core: true
+  - id: t07.cycle-time-change-failure-rate-recovery-time-rew
+    title: 该度量什么：cycle time、change failure rate、recovery time、rework
+    summary: 别只数生成的代码行或接受率；先建立基线再比较
+    core: true
+    requires:
+    - t07.dora-ai-assisted-software-development-report
+  - id: t07.adoption
+    title: Adoption 路径：从低风险任务起步
+    summary: 测试、迁移、文档；逐步扩大；培训与分享实践
+    core: true
+  - id: t07.context-file-review-rules-disclosure
+    title: 团队规范：context file、review rules、disclosure 约定
+    summary: 把个人技巧变成共享资产
+    core: false
+  - id: t07.token-budget-model-tiering-subagent-cost
+    title: 成本管理：token budget、model tiering、subagent cost
+    summary: 用量按人与按任务可见；上限与告警
+    core: true
+  - id: t07.junior-engineer-skill-atrophy
+    title: 对 junior engineer 的影响：学习路径与 skill atrophy 风险
+    summary: 调研显示信心下降的信号；刻意练习不借助 AI 的基本功
+    core: false
+  - id: t07.productivity
+    title: 如何批判地读 productivity 研究
+    summary: 样本、任务类型、度量指标、厂商利益；同一结论不要外推到所有场景
+    core: false
+  summary: 团队 adoption 与 metrics
+  order: 7
+- id: t08
+  title: 资深工程师的角色转变
+  children:
+  - id: t08.leaf-2
+    title: 从写代码到定义问题与验证结果
+    summary: 规格、架构边界、验收标准、取舍成为主要产出
+    core: true
+  - id: t08.architecture-judgment
+    title: Architecture 与 judgment 的价值上升
+    summary: 智能体放大局部产出，系统级一致性仍靠人；评审与决策的杠杆
+    core: true
+  - id: t08.agents
+    title: 管理一组 agents 像带一个小团队
+    summary: 任务切分、上下文交接、验收；委派的粒度
+    core: false
+  - id: t08.readability-testability-agent-friendly
+    title: Readability 与 testability 成为「agent-friendly」的设计
+    summary: 清晰模块边界、快速测试、类型；也是对人好
+    core: false
+  - id: t08.leaf-3
+    title: 持续学习：保持手感的做法
+    summary: 定期手写、读生成代码、跟踪模型能力变化；每个新模型都重估「它能做什么」
+    core: false
+  - id: t08.leaf-4
+    title: 面试与招聘中的变化
+    summary: 允许使用 AI 的考题、评估重点转向验证与设计（只讲趋势，不押具体公司）
+    core: false
+  summary: 资深工程师的角色转变
+  order: 8
