@@ -53,7 +53,7 @@
 ## 5. 中国生态
 - * 中国 model labs 与 open-weights 路线 — 主要玩家、发布节奏、与美国前沿的差距（AI Index：主要基准上接近持平）
 - * Compute constraints 下的工程取舍 — 出口管制、国产芯片、效率型架构与训练技巧；成本曲线为什么更陡
-- 应用与监管环境 — 备案、内容规则、应用落地的主要场景
+- Adoption & regulation：应用与监管环境 — 备案、内容规则、应用落地的主要场景
 - 国产 chips 与 supply chain — 昇腾等；制程、HBM 与封装的短板
 - Price war 与 open-source 策略 — 低价、免费策略与海外采用
 - 对比：中美投资规模与 R&D 产出 — 私人投资数额差距（AI Index 2025：美国约 1091 亿美元对中国约 93 亿美元）与不同资本结构的解读
@@ -61,12 +61,12 @@
 ## 6. Labor market 与岗位
 - * Job exposure 怎么测：task decomposition 与 usage data — Anthropic 经济指数与类似研究；自动化与增强的占比及其随时间的摆动
 - * 已有的就业证据：entry-level 岗位与年轻员工的变化 — 实证研究的结论、方法（差分比较）与局限；因果还是巧合
-- * 会增长的岗位族与会收缩的岗位族 — 客服、初级编码、翻译、内容类任务受冲击较早；AI 基础设施、数据中心建设、安全与评测需求增长
+- * Job families：会增长与会收缩的岗位族 — 客服、初级编码、翻译、内容类任务受冲击较早；AI 基础设施、数据中心建设、安全与评测需求增长
 - * Software engineering 岗位的变化 — 招聘需求、层级结构、技能要求；与 ai-dev 角色转变一叶联动
 - Skills 与 wage premium — 带 AI 技能岗位的薪酬数据与来源可靠性
 - Productivity 宏观数据：为什么还看不见 — 历史上电力与计算机的滞后；统计口径
-- 教育与技能培养 — 学生与新人路径；证据有限处明说
-- 地区与行业差异 — 不同国家的采用与暴露度
+- Education & skills：教育与技能培养 — 学生与新人路径；证据有限处明说
+- Regional & sector gaps：地区与行业差异 — 不同国家的采用与暴露度
 
 ## 7. 批判地读趋势与炒作
 - * 读 leaderboard 与 benchmark 的方法：saturation、contamination、gaming — 新基准几个月到顶；怎么看趋势而不是看名次
@@ -76,7 +76,7 @@
 - * 读大型趋势报告：AI Index、State of AI、Meeker 的立场与盲区 — 学术、从业者、风险投资三种视角的偏向
 - Capability curve 与 extrapolation 的陷阱 — 指数、S 曲线、天花板；任务时长类指标的含义与局限
 - Vendor blog 与 research paper 的利益相关 — 自家评测、挑选对比对象
-- 恐慌与狂热新闻的拆解方法 — 先问样本、条件、基线、谁受益
+- Hype & panic headlines：恐慌与狂热新闻的拆解方法 — 先问样本、条件、基线、谁受益
 - 做自己的行业 dashboard：该盯的十个指标 — 资本开支指引、GPU 租价、token 单价、收入年化、电力并网、基准前沿、开源差距、招聘数据等
 
 ## 8. Governance 与 industrial policy

@@ -181,8 +181,8 @@ nodes:
     title: Compute constraints 下的工程取舍
     summary: 出口管制、国产芯片、效率型架构与训练技巧；成本曲线为什么更陡
     core: true
-  - id: t05.leaf
-    title: 应用与监管环境
+  - id: t05.adoption-regulation
+    title: Adoption & regulation：应用与监管环境
     summary: 备案、内容规则、应用落地的主要场景
     core: false
   - id: t05.chips-supply-chain
@@ -210,8 +210,8 @@ nodes:
     title: 已有的就业证据：entry-level 岗位与年轻员工的变化
     summary: 实证研究的结论、方法（差分比较）与局限；因果还是巧合
     core: true
-  - id: t06.leaf-2
-    title: 会增长的岗位族与会收缩的岗位族
+  - id: t06.job-families
+    title: Job families：会增长与会收缩的岗位族
     summary: 客服、初级编码、翻译、内容类任务受冲击较早；AI 基础设施、数据中心建设、安全与评测需求增长
     core: true
   - id: t06.software-engineering
@@ -226,12 +226,12 @@ nodes:
     title: Productivity 宏观数据：为什么还看不见
     summary: 历史上电力与计算机的滞后；统计口径
     core: false
-  - id: t06.leaf-3
-    title: 教育与技能培养
+  - id: t06.education-skills
+    title: Education & skills：教育与技能培养
     summary: 学生与新人路径；证据有限处明说
     core: false
-  - id: t06.leaf-4
-    title: 地区与行业差异
+  - id: t06.regional-sector-gaps
+    title: Regional & sector gaps：地区与行业差异
     summary: 不同国家的采用与暴露度
     core: false
   summary: Labor market 与岗位
@@ -267,8 +267,8 @@ nodes:
     title: Vendor blog 与 research paper 的利益相关
     summary: 自家评测、挑选对比对象
     core: false
-  - id: t07.leaf-5
-    title: 恐慌与狂热新闻的拆解方法
+  - id: t07.hype-panic-headlines
+    title: Hype & panic headlines：恐慌与狂热新闻的拆解方法
     summary: 先问样本、条件、基线、谁受益
     core: false
   - id: t07.dashboard
