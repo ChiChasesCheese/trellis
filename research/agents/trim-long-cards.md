@@ -23,6 +23,18 @@ Resume rule: a card whose answer already passes `scripts/card_len.py --over 700`
 - Target: ≤ 700 Chinese characters per answer (`uv run python scripts/card_len.py --over 700 <files>` prints offenders).
   A card may stay above 700 only when cutting more would lose a probe-worthy fact — list such cards in your report.
 
+## How to work (added after the first batch came back scripted)
+
+- **Card by card, not by a bulk script.** Read each card whole (the backup copy is the original), decide what to keep,
+  then write. A script may only help you list sections or measure length.
+- A recovered fact is **woven into** the section it belongs to (基本回答 if it is part of the answer, 容易错 only if it
+  is a mistake people make). Never append a deleted paragraph as an extra bullet; never leave two bullets saying the
+  same thing.
+- **`2026 亮点` bullets are kept**: one line, as its own labelled line `**2026 亮点。** …` after 基本回答 (Chi values
+  current practice). Shorten it, do not drop it.
+- **举个例子 vs 业务场景:** keep the one with numbers or a step-by-step state change; when 业务场景 is one thin sentence
+  and the example teaches more, keep the example (compressed to 2–4 lines) and fold the scenario into its first clause.
+
 ## Per family
 
 1. **八股追问模板** (`vault/domains/bagu/cards/**`): keep **基本回答** (3–6 lines, the single statement of the answer),
