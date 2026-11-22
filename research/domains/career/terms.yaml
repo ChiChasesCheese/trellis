@@ -1,0 +1,42 @@
+# term -> leaf id that first teaches it (deck order: core leaves first, then the rest). Terms not listed are defined inline.
+IC: t01.how-levels-work
+blast radius: t01.how-levels-work
+levels.fyi: t01.level-mapping-across-companies
+skip-level: t01.senior-to-staff
+dual-track: t01.ic-vs-manager-track
+EM: t01.ic-vs-manager-track
+calibration: t02.how-promotions-are-decided
+promotion packet: t02.promotion-packet
+work log: t02.brag-document
+brag document: t02.brag-document
+sponsor: t02.sponsors-visibility
+profit center: t03.evaluating-a-company
+cost center: t03.evaluating-a-company
+runway: t03.evaluating-a-company
+wartime: t03.evaluating-a-company
+product-market fit: t03.startup-vs-scale-up-vs-big-tech
+platform team: t03.evaluating-a-team-manager
+total compensation: t05.base-bonus-equity
+pay band: t05.base-bonus-equity
+vest: t05.base-bonus-equity
+RSU: t05.rsus-vesting
+cliff: t05.rsus-vesting
+strike price: t05.stock-options
+409A: t05.stock-options
+ISO: t05.stock-options
+NSO: t05.stock-options
+AMT: t05.stock-options
+refresher: t05.refreshers
+sign-on: t05.sign-on-relocation
+BATNA: t06.negotiation-fundamentals
+anchor: t06.negotiation-fundamentals
+Yes-If: t06.negotiation-fundamentals
+tactical empathy: t06.tone-channel
+label: t06.tone-channel
+mirror: t06.tone-channel
+Ackerman: t06.one-specific-justified-ask
+calibrated question: t06.calibrated-questions
+accusation audit: t06.accusation-audit
+one-sheet: t06.negotiation-one-sheet
+weak ties: t07.network-weak-ties
+"1:1": t01.senior-to-staff
