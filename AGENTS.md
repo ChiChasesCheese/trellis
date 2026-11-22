@@ -136,7 +136,12 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   `research/agents/daily-quiz.md`). The tree deck keeps the source cards and their reviews; it deals no new cards.
   Sub-decks `1 学习卡` (a leaf's learning card, dealt by `daily_quiz.py learn` with its first problem) and `2 识别题`.
   Bulk questions: card agents on `research/agents/recog-questions.md`, each chunk checked with `scripts/recog_review.py`.
-- **`1 每日测验`**: 20 test questions a day written from what he studied the day before (scheduled task "Daily quiz").
+- **The two test decks are the main path** (Chi, 2026-11-22): `4 碎片速刷` for system design and `2 算法模式识别` for
+  algorithms. They share one design (`scripts/test_cards.py`): a tap-graded front, and a back that shows the answer,
+  why, an optional 延伸 line, then the source cards under 原卡. Quick cards he used to grade himself (快问, 找错) are being
+  rewritten as choice cards on their own notes (`quick_deck.py tap-export | tap-gate`, briefs
+  `research/sysdesign/TAP_AGENT.md` and `TAP_VERIFY.md`). Every batch of test cards gets a writer and then a verifier.
+- `1 每日测验` is stopped (the scheduled task "Daily quiz" is disabled; its 12 questions stay).
 - **Nothing in Anki is deleted by a script.** Retire cards with `scripts/anki_archive.py` (suspend + move, restorable);
   clear a backlog with `scripts/anki_spread_due.py` (snapshot + restore).
 - **Samples before bulk.** Show 10–20 cards with `scripts/card_gallery.py` and wait for Chi's word. Tell card agents
