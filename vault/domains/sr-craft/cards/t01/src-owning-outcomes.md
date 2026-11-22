@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** 先确认延迟为什么变差（例如多了一次下游调用），拿出数据；然后向经理和 PM 同步："点击率没涨、p99 变差，我的判断是……，建议先……"。不要等别人发现。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你的责任边界在哪里：做完、上线，还是业务结果。资深的信号是"看指标，主动闭环"。
 
 **适合配哪类故事：** 你上线后发现结果没达预期，主动跟进、修复或回滚，并把结果讲清楚的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch11 §1 "Getting Things Done: Perception and Reality"（"Communicate roadblocks early and offer tradeoffs"）；ch11 §4 "The Big Picture"；Part III 引言 "Software development vs software engineering"
+
+</details>

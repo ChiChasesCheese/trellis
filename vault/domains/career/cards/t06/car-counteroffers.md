@@ -32,4 +32,8 @@ flowchart TD
 
 **对方在想什么：** 经理担心项目中断和招聘成本，也可能被上级问"为什么没留住"。他的承诺能否兑现，取决于他的权限。
 
-**出处：** Orosz《Guidebook》Ch.4 §4（promotion、pay band 的周期性）；Ch.6 §2；McKenzie（negotiation 的一般原则）。本卡为通用决策框架，来源没有统计"接受 counteroffer 后的结果"，所以没有给数字
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.4 §4（promotion、pay band 的周期性）；Ch.6 §2；McKenzie（negotiation 的一般原则）。本卡为通用决策框架，来源没有统计"接受 counteroffer 后的结果"，所以没有给数字
+
+</details>

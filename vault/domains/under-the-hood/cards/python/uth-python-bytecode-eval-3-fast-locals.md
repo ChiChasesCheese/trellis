@@ -61,5 +61,3 @@ step: 3
 - 所以全局访问不再慢得夸张，但仍比数组取值多一步版本校验。
 
 **坑。** 名字只要在函数里**任何位置**被赋值，整个函数里它都是局部变量：先 `print(z)` 再 `z = 1`，会抛 `UnboundLocalError`（3.14 的提示是 `cannot access local variable 'z' where it is not associated with a value`）。
-
-**对应 LeetCode：** 无直接对应的题

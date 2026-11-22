@@ -45,8 +45,12 @@ flowchart TD
 
 **回到题目：** 改成："状态：黄。下个里程碑可能延后一周，原因：B 团队接口交付晚两天。缓解：我们先用 mock 联调。请 B 团队负责人本周三前确认交付日期。"后面再放进展和下周计划。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你能否让干系人没有意外，会不会把风险和请求放在最前面。
 
 **适合配哪类故事：** 你及早暴露一个风险，让上级或其他团队有时间决定，避免了延期失控的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch18 §4 "Keep Them in the Loop"；ch16 §5 "Day-to-Day Project Management"（weekly status email、Keep the team accountable）；ch11 §1（Communicate roadblocks early and offer tradeoffs）
+
+</details>

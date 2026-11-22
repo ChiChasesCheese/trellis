@@ -32,4 +32,8 @@ flowchart TD
 
 **对方在想什么：** 经理可能根本不知道你有这些感受。第一次谈清楚，大多数问题能缓解。
 
-**出处：** Orosz《Guidebook》Ch.6 §1 "Exploring New Opportunities"（unhappy at work: manager, team, environment）；Ch.2 §5 "Make Your Manager an Ally"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.6 §1 "Exploring New Opportunities"（unhappy at work: manager, team, environment）；Ch.2 §5 "Make Your Manager an Ally"
+
+</details>

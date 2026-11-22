@@ -40,4 +40,8 @@ flowchart TD
 
 **简单实现：** 一个封装各家 SDK 的统一接口加路由（书里给了一个不含错误处理与优化的示意）；现成的有 Portkey、MLflow AI Gateway、Kong、Cloudflare 等。
 
-**出处：** Huyen《AI Engineering》ch10 §Step 3 → Gateway
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Step 3 → Gateway
+
+</details>

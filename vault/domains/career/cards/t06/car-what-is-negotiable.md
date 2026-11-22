@@ -40,4 +40,8 @@ flowchart TD
 
 **对方在想什么：** 他手里的权限有限，会先给出最容易批准的。你问到点上，他才能帮。
 
-**出处：** McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（Almost everything is negotiable；trade concessions）；Orosz《Guidebook》Ch.6 §4–§5（level）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（Almost everything is negotiable；trade concessions）；Orosz《Guidebook》Ch.6 §4–§5（level）
+
+</details>

@@ -42,8 +42,12 @@ flowchart TD
 
 **回到题目：** 先和经理说明他的具体成果和影响；邀请他在组会上展示；在下一次晋升或项目分配讨论里明确推荐，并给出证据。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否把影响力用于帮助别人，而不仅是自己。
 
 **适合配哪类故事：** 你利用自己的位置让一位同事的工作被看见、获得晋升或关键项目的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch22 §6 "Helping Others"（"Mentor others"、"Sponsor others" 的五种做法）；ch12 §3 "Mentoring"
+
+</details>

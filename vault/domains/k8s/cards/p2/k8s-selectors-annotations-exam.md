@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**YAML 报错 · 考点**｜考点 · 必会
+**YAML 报错**｜考点 · 必会
 
 在 Pod 的 `metadata.annotations` 里写了 `revision: 3` 和 `managed: yes`，`kubectl apply` 报 `unable to decode yaml` 之类难懂的错误。原因是什么？怎么改？
 
@@ -31,4 +31,8 @@ metadata:
 - **想按它过滤呢：** annotation 不能做 selector；需要筛选的信息放 label，说明性的放 annotation。
 - **annotation 键的规则** 与 label 键相同。
 
-**出处：** KIA2 §7.5.2「Specifying annotations in the object manifest」（需加引号的警告）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §7.5.2「Specifying annotations in the object manifest」（需加引号的警告）
+
+</details>

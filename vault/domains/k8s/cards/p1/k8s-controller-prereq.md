@@ -6,7 +6,7 @@ step: 1
 tags: [先修]
 ---
 ## Q
-**Controller 是什么 · 先修**｜先修 · 必会
+**Controller 是什么**｜先修 · 必会
 
 `kubectl apply` 只是把一份 YAML 交给了 API server。之后是谁真的去创建 Pod、换掉坏掉的 Pod？这类角色叫什么？
 
@@ -26,4 +26,8 @@ tags: [先修]
 
 **下一张：** controller 的工作方式就是 reconcile loop（下一张细讲）。
 
-**出处：** Poulton ch2；kubernetes.io Concepts › Controllers
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch2；kubernetes.io Concepts › Controllers
+
+</details>

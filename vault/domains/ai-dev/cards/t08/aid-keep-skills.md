@@ -23,4 +23,8 @@ tags: [实践]
 
 **别做：** 以为一次学会就一劳永逸；或者对每个新工具都追。
 
-**出处：** Claude Code docs《Best practices》（What you can stop doing）；METR 2025（页面更新说明）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（What you can stop doing）；METR 2025（页面更新说明）
+
+</details>

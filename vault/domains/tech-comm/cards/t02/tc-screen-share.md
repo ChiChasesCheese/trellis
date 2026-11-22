@@ -28,4 +28,8 @@ tags: [原则]
 - **跳来跳去：** 想到哪看哪。
 - **屏幕上有私密内容：** 共享前先清理。
 
-**出处：** GitLab Handbook《All-Remote Meetings》（handbook.gitlab.com/handbook/company/culture/all-remote/meetings/，含 screen sharing 做法；页面过长，具体做法按规则推导，非逐条引用）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+GitLab Handbook《All-Remote Meetings》（handbook.gitlab.com/handbook/company/culture/all-remote/meetings/，含 screen sharing 做法；页面过长，具体做法按规则推导，非逐条引用）
+
+</details>

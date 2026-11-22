@@ -34,4 +34,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21。
 
-**出处：** Epoch AI Trends；Stanford HAI AI Index 2025。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Epoch AI Trends；Stanford HAI AI Index 2025。
+
+</details>

@@ -36,4 +36,8 @@ flowchart TD
 - 反馈信号（点赞、编辑）可以变成偏好数据，但有偏差（见 feedback 那组卡）；
 - 谁有权使用用户数据，要先问法务和隐私政策，不是工程师自己决定。
 
-**出处：** Huyen《AI Engineering》ch8 §Data Processing（Inspect、Deduplicate、Clean and Filter、Format）；§Data Quality；ch10 §User Feedback
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch8 §Data Processing（Inspect、Deduplicate、Clean and Filter、Format）；§Data Quality；ch10 §User Feedback
+
+</details>

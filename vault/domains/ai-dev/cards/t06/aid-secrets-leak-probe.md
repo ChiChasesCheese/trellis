@@ -30,4 +30,8 @@ flowchart TD
 
 **别做：** 只删文件。
 
-**出处：** Claude Code docs《Best practices》（Enforce steps with hooks：扫描提交中密钥的 hook 示例，onFailure block）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Enforce steps with hooks：扫描提交中密钥的 hook 示例，onFailure block）
+
+</details>

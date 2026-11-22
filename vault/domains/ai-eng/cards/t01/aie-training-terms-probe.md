@@ -31,4 +31,8 @@ tags: [先修]
 | 门槛 | 低，马上能试 | 高，要训练 |
 | 效果上限 | 复杂任务可能不够 | 质量、延迟、成本都可显著改善 |
 
-**出处：** Huyen《AI Engineering》ch1 §On the Differences Among Training, Pre-Training, Finetuning, and Post-Training、§Model adaptation 段
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch1 §On the Differences Among Training, Pre-Training, Finetuning, and Post-Training、§Model adaptation 段
+
+</details>

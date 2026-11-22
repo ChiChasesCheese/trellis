@@ -42,4 +42,8 @@ flowchart TD
 
 **怎么降：** 前缀缓存（system prompt 和历史不变的部分）、压缩历史、把大块 tool 输出只放摘要、用更小的模型处理简单步骤。
 
-**出处：** Huyen《AI Engineering》ch4 §Cost and Latency（按 token 计费）、ch9 §Prompt caching。agent 的累计账是按上面假设做的算术
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Cost and Latency（按 token 计费）、ch9 §Prompt caching。agent 的累计账是按上面假设做的算术
+
+</details>

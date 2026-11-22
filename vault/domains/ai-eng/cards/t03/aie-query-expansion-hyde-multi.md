@@ -26,4 +26,8 @@ tags: [考点]
 
 **怎么判断值不值：** 用检索评测集比较「加改写前后」的 recall@k，再看延迟。不显著提升就别加。
 
-**出处：** HyDE：Gao 等《Precise Zero-Shot Dense Retrieval without Relevance Labels》arxiv.org/abs/2212.10496（2026-11-21 读摘要）；改写增加模型调用是 Huyen ch6 §Query rewriting 的前提
+<details class="pt" markdown="1"><summary>出处</summary>
+
+HyDE：Gao 等《Precise Zero-Shot Dense Retrieval without Relevance Labels》arxiv.org/abs/2212.10496（2026-11-21 读摘要）；改写增加模型调用是 Huyen ch6 §Query rewriting 的前提
+
+</details>

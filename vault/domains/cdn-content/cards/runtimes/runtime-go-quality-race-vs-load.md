@@ -13,4 +13,4 @@ No. Timing-dependent data races can stay invisible while still corrupting state 
 一个并发 cache map 通过了 unit test 和 load test，这能证明它没有 race 吗？什么测试能补上缺口？
 
 ## A zh
-不能。依赖时序的 data race 可能一直不显现，却在以后破坏状态。要在真实并发测试下运行 `go test -race`；race detector 会 instrument memory access 并报告冲突 stack，但只能发现实际执行到的路径。还要结合高竞争测试和 production-shaped traffic。不要用 sleep “修复”报告；应建立清晰 ownership 或 synchronization，再重跑同一 workload。
+不能。依赖时序的 data race 可能一直不显现，却在以后破坏状态。要在真实并发测试下运行 `go test -race`；race detector 会给内存访问插桩并报告冲突 stack，但只能发现实际执行到的路径。还要结合高竞争测试和 production-shaped traffic。不要用 sleep “修复”报告；应建立清晰 ownership 或 synchronization，再重跑同一 workload。

@@ -33,4 +33,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21。
 
-**出处：** NVIDIA FY2026 10-K MD&A、Q4 FY2026 新闻稿；Federal Register 2026-01-15（BIS）；MoE 定义为通用知识。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+NVIDIA FY2026 10-K MD&A、Q4 FY2026 新闻稿；Federal Register 2026-01-15（BIS）；MoE 定义为通用知识。
+
+</details>

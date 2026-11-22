@@ -28,4 +28,8 @@ tags: [实践]
 
 **折中：** 先写一版裸调用做原型，评测通过后，再判断框架里有哪几块（如文档解析器、向量库适配）值得借用，**按需取用**，不整体绑定。
 
-**出处：** Anthropic《Building effective agents》§Frameworks（anthropic.com/engineering/building-effective-agents，2026-11-21 读）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic《Building effective agents》§Frameworks（anthropic.com/engineering/building-effective-agents，2026-11-21 读）
+
+</details>

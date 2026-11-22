@@ -38,8 +38,12 @@ flowchart TD
 
 **回到题目：** 把第一页换成三五条政策和例外流程，诊断和探索挪到后面，作为"想知道为什么的人再读"；找一位没参与的工程师通读；开两周评论期加一次 office hours。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否从读者角度写作，而不是从作者角度。
 
 **适合配哪类故事：** 你把一份冗长的方案改成结论优先，使它被采纳或被正确执行的经历。
 
 **出处：** Larson《Crafting Engineering Strategy》ch11 "Writing Readable Engineering Strategies"（Why Writing Structure Inhibits Reading；Inverting the Document Structure for Reading；Strategy Refactoring；Additional Tips）
+
+</details>

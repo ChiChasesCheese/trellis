@@ -39,8 +39,12 @@ flowchart TD
 
 **回到题目：** 一周里一对一聊每位成员；问大家团队目标是什么；对照清单，发现 clarity 不一致与好工作没人看见两项最突出，就先组织一次目标同步，并把成果在更大范围展示；其余带着建议告诉经理。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对团队的整体视角：诊断，而不是抱怨或越权。
 
 **适合配哪类故事：** 你诊断了一个团队的问题，从最关键的一点入手并让它改善的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch20 §1 "Healthy Teams"、§2 "Unhealthy Teams"、§3 "Teams with Growing Pains"、§4 "Improving Team Dynamics"；ch19（团队结构，背景）
+
+</details>

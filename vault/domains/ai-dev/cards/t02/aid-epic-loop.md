@@ -33,4 +33,8 @@ flowchart TD
 
 **什么时候可以跳过：** 改动小到你能一句话描述 diff（改个文案、重命名一个变量）。跳过的代价是方向错了你要在 diff 里才发现。
 
-**出处：** Claude Code docs《How Claude Code works》（Control what Claude can do：Plan mode）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《How Claude Code works》（Control what Claude can do：Plan mode）
+
+</details>

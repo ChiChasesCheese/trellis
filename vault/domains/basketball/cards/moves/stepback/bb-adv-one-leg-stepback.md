@@ -6,10 +6,11 @@ type: qa
 ## Q
 **One-legged step-back three（单腿后撤步三分）**｜James Harden
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-one-leg-stepback.mp4]]
 
-**Sequence。** `dribble into the defender → step-back → shoot off one foot, free leg kicked out → fade away`
-**Read。** the defender sets up for the usual two-foot step-back and misjudges the timing of the one-footed release, so the contest comes late.
+**步骤：** 运球顶向防守人 → 后撤步 → 单脚起跳出手，另一条腿向外踢出 → 后仰
+
+**读防守：** 防守人按常见的双脚后撤步站位，判断不准单脚出手的时机，封盖来得晚。

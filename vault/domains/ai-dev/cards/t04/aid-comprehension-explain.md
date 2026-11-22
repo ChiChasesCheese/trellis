@@ -23,4 +23,8 @@ agent 重写了重试逻辑，测试全绿，diff 200 行。你的同事问："�
 
 **别做：** 因为"测试过了""AI 写的应该有道理"就合并。
 
-**出处：** Claude Code docs《Security》（User responsibility：你有责任在批准前审查提议的代码和命令）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Security》（User responsibility：你有责任在批准前审查提议的代码和命令）
+
+</details>

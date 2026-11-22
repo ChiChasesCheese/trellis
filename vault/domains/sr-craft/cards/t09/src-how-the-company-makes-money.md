@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** 先补功课：读上一季度的财报或内部业务评审，和 PM 聊产品的收入贡献；然后回答："我们靠 X 收费，主要成本是 Y，所以团队今年的重点是提高 Z 的可靠性/降低单位成本。"
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你的业务意识，能否把工程选择和公司目标联系。
 
 **适合配哪类故事：** 你因为理解了公司的收入或成本结构，改变了一个工程优先级或方案的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch21 §3 "Your Company"（What is the business model?）、§4 "Public Companies"、§5 "Startups"、§1（KPI 列表与 GMV/收入比例）；ch11 §4（"We are not paid to write code"）
+
+</details>

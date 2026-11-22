@@ -28,4 +28,8 @@ that lets you pick a month and page between years. no new libraries.
 
 **别这么写：** "做一个好看的、可复用的、灵活的日历组件"——形容词没有判据，agent 会按自己的理解补全，通常是最保守或最花哨的一个。
 
-**出处：** Claude Code docs《Best practices》（Write a specific prompt）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Write a specific prompt）
+
+</details>

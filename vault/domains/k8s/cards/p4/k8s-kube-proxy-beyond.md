@@ -27,4 +27,8 @@ mode: nftables     # 显式写，不要依赖默认值
 - **ipvs 为什么退场：** 内核 IPVS 接口和 Service API 不太匹配，维护成本高；nftables 性能不输它。
 - **开箱即用的变化：** 有些 CNI 自己实现 Service 转发，完全不用 kube-proxy（下一卡）。
 
-**出处：** kubernetes.io 发布博客 v1.33（nftables GA，iptables 仍为默认，KEP-3866）、v1.35（Deprecation of ipvs mode，KEP-5495）；v1.37 发布博客（Deprecating kube-proxy's support for ipvs mode，KEP-5495）；Reference › Virtual IPs and Service Proxies（v1.40 起默认关闭、v1.43 移除）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.33（nftables GA，iptables 仍为默认，KEP-3866）、v1.35（Deprecation of ipvs mode，KEP-5495）；v1.37 发布博客（Deprecating kube-proxy's support for ipvs mode，KEP-5495）；Reference › Virtual IPs and Service Proxies（v1.40 起默认关闭、v1.43 移除）
+
+</details>

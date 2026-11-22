@@ -34,4 +34,8 @@ flowchart TD
 
 **时效：** 2026 年有后续研究对前沿模型复测，报告的比例低得多，但威胁依然存在；比例会随模型变，"先核实再安装"不变。
 
-**出处：** Spracklen et al.《We Have a Package for You!》，arXiv:2406.10279（USENIX Security 2025）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Spracklen et al.《We Have a Package for You!》，arXiv:2406.10279（USENIX Security 2025）
+
+</details>

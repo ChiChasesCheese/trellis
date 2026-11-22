@@ -35,4 +35,8 @@ flowchart TD
 
 **示例：** "We cache at two levels, an in-process cache for hot keys and Redis for the rest, because reads are 95 percent of traffic. Want me to go into invalidation or sizing?"
 
-**出处：** Minto p. 33–40（Ch.2 The Vertical Relationship：每一层陈述引出下一层的问题）（部分）；90 秒的长度是练习用的经验值，非引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 33–40（Ch.2 The Vertical Relationship：每一层陈述引出下一层的问题）（部分）；90 秒的长度是练习用的经验值，非引用
+
+</details>

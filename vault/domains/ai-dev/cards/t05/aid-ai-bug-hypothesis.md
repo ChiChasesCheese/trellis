@@ -21,4 +21,8 @@ agent 说："根因是缓存没有失效，我加了一行清缓存。"测试变
 **做：** 让 agent 解释"为什么这个改动能解决"并给出**可观察的证据**（日志、断点输出）；你复述核对。
 **别做：** 看到变绿就合并。
 
-**出处：** Claude Code docs《Best practices》（Give Claude a check to run：ask Claude for evidence）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Give Claude a check to run：ask Claude for evidence）
+
+</details>

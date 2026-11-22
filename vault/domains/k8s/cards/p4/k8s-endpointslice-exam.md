@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**EndpointSlice 与 readiness · 考点**｜考点 · 必会
+**EndpointSlice 与 readiness**｜考点 · 必会
 
 滚动发布时，每次新 Pod 一出现就有一小段请求失败。新应用要 20 秒才能真正接请求，Pod 却在启动 1 秒后就被当成后端了。哪里没配对？怎么修？
 
@@ -40,4 +40,8 @@ readinessProbe:
 - **反过来：** 运行中依赖暂时不可用，readiness 失败，Pod 被临时摘掉，不被重启，故障过去后自动恢复。
 - **要点：** readiness 是 Service 的「准入证」。
 
-**出处：** KIA2 §11.3、§6.2；Poulton ch9
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §11.3、§6.2；Poulton ch9
+
+</details>

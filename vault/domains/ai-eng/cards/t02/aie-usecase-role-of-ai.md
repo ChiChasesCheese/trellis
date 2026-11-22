@@ -28,4 +28,8 @@ tags: [考点]
 
 **例：** 先让 AI 给人工客服推荐回复。如果简单问题的 AI 回复里 95% 被客服原样采用，就可以让客户直接和 AI 对话处理这类简单问题。
 
-**出处：** Huyen《AI Engineering》ch1 §Use Case Evaluation → The role of AI and humans in the application
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch1 §Use Case Evaluation → The role of AI and humans in the application
+
+</details>

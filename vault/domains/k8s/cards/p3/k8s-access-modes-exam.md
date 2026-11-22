@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Multi-Attach 与 Released · 考点**｜考点 · 必会
+**Multi-Attach 与 Released**｜考点 · 必会
 
 两个现象：1）同一个 RWO 的 PVC 被 5 个 Pod 使用，3 个 Running，2 个卡在 `ContainerCreating`，事件里有 `Multi-Attach error`。2）static 的 PV（`Retain`）在 PVC 删掉重建后，新 PVC 和 Pod 一直 Pending。分别为什么？
 
@@ -27,4 +27,8 @@ flowchart TD
 - **RWO 与 RWOP 的差别：** RWO 按 node 限制，RWOP 按 Pod 限制；第二个 RWOP 用户一直 Pending。
 - **排查：** `kubectl describe pod` 看事件（`FailedAttachVolume`），`kubectl get pv` 看 STATUS 和 CLAIM 列。
 
-**出处：** KIA2 §10.2.4（Multi-Attach error）、§10.3.3（Released 后无法重新绑定；删除并重建 PV 或移除 claimRef）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §10.2.4（Multi-Attach error）、§10.3.3（Released 后无法重新绑定；删除并重建 PV 或移除 claimRef）
+
+</details>

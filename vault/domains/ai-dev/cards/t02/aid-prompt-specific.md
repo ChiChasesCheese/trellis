@@ -26,4 +26,8 @@ tags: [摘要]
 
 **模糊的代价：** 模糊提示换来过度实现或做错方向；官方还提到 agent 倾向按最保守的字面理解做最小的事，想要更完整的版本要明说（例如"边界状态、保存流程、键盘操作都要做，不只是布局"）。
 
-**出处：** Claude Code docs《Best practices》（Write a specific prompt）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Write a specific prompt）
+
+</details>

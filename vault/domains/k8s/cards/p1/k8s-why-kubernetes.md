@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**为什么需要 Kubernetes · 摘要**｜摘要 · 必会
+**为什么需要 Kubernetes**｜摘要 · 必会
 
 你的应用现在是一台服务器上的一个进程，流量涨了，要放到十台机器上跑。你会碰到哪些新问题？Kubernetes 的核心想法是什么？
 
@@ -39,4 +39,8 @@ flowchart TB
 - **容器（container）：** 打包好的程序，和机器上别的进程隔离开。Kubernetes 管的就是一批容器（下一章细讲）。
 - **本质：** 书里的说法是，Kubernetes 就是一个 API 加一批简单的 controller，让容器化的应用一直跑着。
 
-**出处：** KIA2 §1.1（Introducing Kubernetes）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §1.1（Introducing Kubernetes）
+
+</details>

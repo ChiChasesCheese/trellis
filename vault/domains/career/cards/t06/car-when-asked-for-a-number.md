@@ -34,4 +34,8 @@ flowchart TD
 
 **对方在想什么：** recruiter 要在 level 区间里筛人。你不给数字时，他会担心你要得太高；所以态度要热情，并主动说"我相信我们能谈拢"。
 
-**出处：** McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（第一条 "Never give a number"；5% 到 10% 建议）；Qureshi https://haseebq.com/my-ten-rules-for-negotiating-a-job-offer/（Rule 3 Information is power）。法律允许的范围因地区而异：部分地区禁止询问薪酬历史，请查当地规定
+<details class="pt" markdown="1"><summary>出处</summary>
+
+McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（第一条 "Never give a number"；5% 到 10% 建议）；Qureshi https://haseebq.com/my-ten-rules-for-negotiating-a-job-offer/（Rule 3 Information is power）。法律允许的范围因地区而异：部分地区禁止询问薪酬历史，请查当地规定
+
+</details>

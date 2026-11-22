@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Namespaces · 考点**｜考点 · 必会
+**Namespaces**｜考点 · 必会
 
 你在 `dev` 命名空间里有一个 Service 叫 `db`。`prod` 里的应用写 `db:5432` 连不上，写什么才对？另外，你对着 `dev` 命名空间执行 `kubectl delete namespace dev`，会发生什么？
 
@@ -23,4 +23,8 @@ tags: [考点]
 - **提醒：** 删命名空间是最危险的 kubectl 命令之一。操作前先看 `kubectl config get-contexts`，确认当前指向哪个集群。
 - **不属于命名空间：** Node、PersistentVolume（集群级的持久存储卷，第 3 部分细讲） 这类集群范围对象，不会被它删掉。
 
-**出处：** KIA2 §7.1；Poulton ch5（default namespaces，cross-namespace）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §7.1；Poulton ch5（default namespaces，cross-namespace）
+
+</details>

@@ -33,4 +33,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21。
 
-**出处：** TrendForce News 2026-08-10；份额数字本身未采用。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+TrendForce News 2026-08-10；份额数字本身未采用。
+
+</details>

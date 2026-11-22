@@ -32,4 +32,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21，数据取自 NVIDIA Q4 FY2026 新闻稿（2026-02）与 10-K MD&A。
 
-**出处：** investor.nvidia.com Q4/FY2026 新闻稿；FY2026 10-K（经 MarketScreener 转载页核对）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+investor.nvidia.com Q4/FY2026 新闻稿；FY2026 10-K（经 MarketScreener 转载页核对）。
+
+</details>

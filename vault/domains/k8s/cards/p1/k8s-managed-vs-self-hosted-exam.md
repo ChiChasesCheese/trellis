@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**要不要用 Kubernetes · 考点**｜考点 · 必会
+**要不要用 Kubernetes**｜考点 · 必会
 
 一个团队有 1 个大单体加 3 个小服务，想引入 Kubernetes「以后好扩展」。你怎么判断？换成 25 个微服务呢？
 
@@ -23,4 +23,8 @@ tags: [考点]
 - **回到题目：** 1 个单体加 3 个小服务属于「少于 5 个」，普通虚拟机或托管的容器服务更合适；25 个微服务就值得上，而且应该选托管或成熟发行版，自建留到团队有经验之后。
 - **阈值只是经验：** 书里明确说不存在精确数字，其他因素也会影响。
 
-**出处：** KIA2 §1.3.4「Should you even use Kubernetes?」
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §1.3.4「Should you even use Kubernetes?」
+
+</details>

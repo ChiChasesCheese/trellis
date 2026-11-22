@@ -35,4 +35,8 @@ def test_apply_discount(price, tier, expected):
 
 **检验：** 把 `apply_discount` 里的 `*rate` 改成 `+rate`，新测试应当红。
 
-**出处：** 示例为教学构造；方法依据 Claude Code docs《Best practices》（Give Claude a check to run）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+示例为教学构造；方法依据 Claude Code docs《Best practices》（Give Claude a check to run）
+
+</details>

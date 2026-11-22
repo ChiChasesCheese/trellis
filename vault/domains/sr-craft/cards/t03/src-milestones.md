@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** M1（第 2 周）：邮件渠道端到端发给内部员工；M2：加短信、推送；M3：重试和限流；M4：迁移旧流量。每个里程碑后发一封进度邮件，包含已发布功能、风险、更新后的日期。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你会不会用小步交付让进展可见，并用里程碑校正估期，而不是靠汇报"在做"。
 
 **适合配哪类故事：** 你把一个大项目切成能上线的小里程碑，因此提早发现问题或让利益相关方持续有信心的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch16 §3 "Establishing milestones"、"Ensure estimates aren't binding"；ch16 §5 "Day-to-Day Project Management"（Iterations and feedback）；ch7 §3
+
+</details>

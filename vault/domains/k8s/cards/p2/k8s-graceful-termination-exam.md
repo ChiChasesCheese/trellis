@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Graceful termination · 考点**｜考点 · 必会
+**Graceful termination**｜考点 · 必会
 
 滚动发布时，用户偶尔看到 502。日志显示：旧 Pod 收到 SIGTERM 后立刻退出了，但那一刻仍有请求被转发给它。为什么会这样？怎么修？
 
@@ -33,4 +33,8 @@ flowchart TB
 - **宽限期是总预算：** preStop 用掉的时间也算在里面；超时直接 SIGKILL。
 - **要点：** 优雅关闭不是应用单方面的事，要给「流量摘除」留出时间。
 
-**出处：** kubernetes.io Concepts › Pod Lifecycle（Termination of Pods）；KIA2 §6.4（宽限期，preStop 在 SIGTERM 之前）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Pod Lifecycle（Termination of Pods）；KIA2 §6.4（宽限期，preStop 在 SIGTERM 之前）
+
+</details>

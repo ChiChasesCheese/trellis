@@ -35,8 +35,12 @@ flowchart TD
 
 **回到题目：** 画出需求→编码→测试→上线→线上问题→回修的流程，给每个环节设比率；改"编码速度"和"测试时间"，看已关闭工单数量如何变化；拿出模型一起讨论哪个假设最不可靠，再决定做什么试点。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你用结构化的方法处理争论和复杂系统，而不是凭感觉。
 
 **适合配哪类故事：** 你用一个简单模型或估算，让团队摆脱直觉之争并发现了真正瓶颈的经历。
 
 **出处：** Larson《Crafting Engineering Strategy》ch14 "Systems Modeling"（When Is Systems Modeling Useful?；How to Model；What Systems Modeling Isn't）；ch17 Document 17-2、17-4
+
+</details>

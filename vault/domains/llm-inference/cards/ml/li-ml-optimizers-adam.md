@@ -44,4 +44,4 @@ flowchart LR
 
 **新进展（2025 年 2 月 – 7 月）。** 月之暗面（Moonshot）提出 Muon 优化器：对每个权重矩阵的更新做“正交化”（让更新在各个方向上力度均匀），并只维护一份动量。其论文称同样效果约只需 AdamW 一半的算力，后来用它预训练了 1 万亿参数、15.5 万亿 token 的 Kimi K2。
 
-<details class="pt"><summary>想一想：本卡说 7B 模型的 Adam 状态要 56 GB。若只存一份 FP32 动量，量级是多少？</summary>7B × 4 字节 ≈ 28 GB，约省一半；实际会略多一些，因为嵌入等参数仍用 Adam 类的更新。</details>
+<details class="pt"><summary>想一想：上面说 7B 模型的 Adam 状态要 56 GB。若只存一份 FP32 动量，量级是多少？</summary>7B × 4 字节 ≈ 28 GB，约省一半；实际会略多一些，因为嵌入等参数仍用 Adam 类的更新。</details>

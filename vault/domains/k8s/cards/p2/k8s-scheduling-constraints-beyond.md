@@ -30,4 +30,8 @@ topologySpreadConstraints:
 - **alpha 默认关闭：** 数字 toleration 不要用在生产，先在测试集群试。
 - **升级前：** 看一下你的 spread 约束有没有因为 taint 被排除的 zone。
 
-**出处：** kubernetes.io 发布博客 v1.33（KEP-3633；PodTopologySpread nodeAffinityPolicy/nodeTaintsPolicy 一节）、v1.35（Extended toleration operators，KEP #5471）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.33（KEP-3633；PodTopologySpread nodeAffinityPolicy/nodeTaintsPolicy 一节）、v1.35（Extended toleration operators，KEP #5471）
+
+</details>

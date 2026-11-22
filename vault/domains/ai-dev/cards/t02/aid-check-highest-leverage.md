@@ -34,4 +34,8 @@ flowchart TD
 
 **一句话进项目说明文件（CLAUDE.md（每次会话自动加载的项目说明），t03 讲）：** 跑测试、type check、lint 的确切命令。
 
-**出处：** Claude Code docs《Best practices》（Give Claude a check to run）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Give Claude a check to run）
+
+</details>

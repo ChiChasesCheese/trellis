@@ -33,4 +33,8 @@ tags: [摘要]
 
 **环境要隔离：** 每次试验从干净环境开始，不留上一次的状态；有状态环境、多轮对话也要这样设计。
 
-**出处：** Anthropic《Demystifying evals for AI agents》anthropic.com/engineering/demystifying-evals-for-ai-agents（2026-11-21 读）；Huyen《AI Engineering》ch3 §Functional Correctness（pass@k）；ch6 §Agent Failure Modes and Evaluation
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic《Demystifying evals for AI agents》anthropic.com/engineering/demystifying-evals-for-ai-agents（2026-11-21 读）；Huyen《AI Engineering》ch3 §Functional Correctness（pass@k）；ch6 §Agent Failure Modes and Evaluation
+
+</details>

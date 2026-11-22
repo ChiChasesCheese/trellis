@@ -41,4 +41,8 @@ flowchart TD
 
 **这些麻烦正是 Temporal 这类引擎替你处理的：** 事件历史加重放。是否自己实现，取决于任务长度和故障成本。
 
-**出处：** 基于 Temporal 文档 Understanding Temporal 的事件历史与重放机制（https://docs.temporal.io/evaluate/understanding-temporal）所做的设计推演，书里无此内容
+<details class="pt" markdown="1"><summary>出处</summary>
+
+基于 Temporal 文档 Understanding Temporal 的事件历史与重放机制（https://docs.temporal.io/evaluate/understanding-temporal）所做的设计推演，书里无此内容
+
+</details>

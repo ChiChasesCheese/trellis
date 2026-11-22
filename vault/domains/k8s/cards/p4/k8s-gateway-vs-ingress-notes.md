@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**为什么 Gateway API 取代 Ingress · 摘要**｜摘要 · 必会
+**为什么 Gateway API 取代 Ingress**｜摘要 · 必会
 
 每个 LoadBalancer Service 要一个云负载均衡器，成本高。多个 HTTP 服务想共用一个入口，以前用 Ingress，现在推荐 Gateway API。它改进了什么？
 
@@ -32,4 +32,8 @@ flowchart TB
 - **云厂商预装的实现：** 可能是私有的，容易造成云锁定。
 - **为什么要换：** Ingress 没有成为战略项目，长期缺乏投入，积累了不少安全隐患。
 
-**出处：** Poulton ch8「Why no more Ingress」「How Gateway API works」；KIA2 ch13
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch8「Why no more Ingress」「How Gateway API works」；KIA2 ch13
+
+</details>

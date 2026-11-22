@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**etcd 与 resourceVersion · 摘要**｜摘要 · 必会
+**etcd 与 resourceVersion**｜摘要 · 必会
 
 两个 controller 同时读了同一个对象、各自改完又写回去。Kubernetes 怎么保证后写的不会悄悄覆盖先写的？
 
@@ -38,4 +38,8 @@ sequenceDiagram
 - **etcd 的位置：** 只有 API server 读写它（第 1 部分前面讲过），所以所有写入都在 API server 这一道关口上串行判定冲突。
 - **没带 resourceVersion 的更新**会无条件覆盖；`kubectl edit`、client 库默认都会带。
 
-**出处：** kubernetes.io Reference › Kubernetes API Concepts（resourceVersion）；Poulton ch14「The API server」
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Reference › Kubernetes API Concepts（resourceVersion）；Poulton ch14「The API server」
+
+</details>

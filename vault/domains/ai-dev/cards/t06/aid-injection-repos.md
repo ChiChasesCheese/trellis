@@ -38,4 +38,8 @@ flowchart TD
 
 **官方建议：** 别把不可信内容直接管道给 agent；用 VM 跑来自外部的脚本。
 
-**出处：** Claude Code docs《Security》（Protect against prompt injection；Best practices for working with untrusted content）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Security》（Protect against prompt injection；Best practices for working with untrusted content）
+
+</details>

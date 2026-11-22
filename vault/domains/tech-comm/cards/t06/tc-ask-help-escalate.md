@@ -24,4 +24,8 @@ tags: [惯用说法]
 
 **语气：** 先说你**已经做了什么**，再说你需要**什么帮助**和**期限**；升级用 flag、heads-up 这类中性词，不指责任何人。
 
-**出处：** 惯用说法，非引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用
+
+</details>

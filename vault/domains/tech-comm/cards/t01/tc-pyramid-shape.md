@@ -38,4 +38,8 @@ flowchart TD
 - Before: "Release takes two hours, the billing team keeps blocking us, last quarter we had two outages, traffic doubles on Fridays…"
 - After: "I recommend splitting into three services, for three reasons: independent releases, independent scaling, and fault isolation. Let me give one data point for each."
 
-**出处：** Minto p. 17–32（Ch.1 Why a Pyramid Structure）；p. 33–40（Ch.2 The Vertical Relationship / The Horizontal Relationship）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 17–32（Ch.1 Why a Pyramid Structure）；p. 33–40（Ch.2 The Vertical Relationship / The Horizontal Relationship）
+
+</details>

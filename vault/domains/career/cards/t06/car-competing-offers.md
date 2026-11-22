@@ -36,4 +36,8 @@ flowchart TD
 
 **对方在想什么：** 公司无法仅凭面试可靠判断候选人。别的公司给了 offer，是一个独立信号，所以他们会更认真、更快。
 
-**出处：** Qureshi https://haseebq.com/my-ten-rules-for-negotiating-a-job-offer/（Rule 6 competing offers 部分；larger companies slower、ask for more time first、email other companies）；Orosz《Guidebook》Ch.6 §5（leverage 的含义）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Qureshi https://haseebq.com/my-ten-rules-for-negotiating-a-job-offer/（Rule 6 competing offers 部分；larger companies slower、ask for more time first、email other companies）；Orosz《Guidebook》Ch.6 §5（leverage 的含义）
+
+</details>

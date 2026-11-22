@@ -35,4 +35,8 @@ flowchart TD
 
 **语气：** 事实、平静、向前看。
 
-**出处：** HBR https://hbr.org/2023/06/how-to-explain-a-gap-in-your-resume（仅见摘要）；Orosz《Guidebook》Ch.1 §2（non-linear career path）。示例措辞为本卡编写，不是 HBR 原句
+<details class="pt" markdown="1"><summary>出处</summary>
+
+HBR https://hbr.org/2023/06/how-to-explain-a-gap-in-your-resume（仅见摘要）；Orosz《Guidebook》Ch.1 §2（non-linear career path）。示例措辞为本卡编写，不是 HBR 原句
+
+</details>

@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**GatewayClass、Gateway 与 HTTPRoute · 摘要**｜摘要 · 必会
+**GatewayClass、Gateway 与 HTTPRoute**｜摘要 · 必会
 
 Gateway API 的三个核心对象各管什么？它们怎么连起来？
 
@@ -40,4 +40,8 @@ spec:
 - **安装一个实现需要三样：** API 资源、Gateway 控制器（盯着新 Gateway 并部署）、一个或几个 GatewayClass。
 - **关联靠引用：** HTTPRoute 用 `parentRefs` 指向 Gateway，用 `backendRefs` 指向 Service，对象之间没有嵌套。
 
-**出处：** Poulton ch8「How Gateway API works」；KIA2 ch13
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch8「How Gateway API works」；KIA2 ch13
+
+</details>

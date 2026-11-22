@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**延迟毛刺 · 考点**｜考点 · 必会
+**延迟毛刺**｜考点 · 必会
 
 一个 4 线程的服务设了 `limits.cpu: 500m`。监控显示 CPU 使用率才 30%，但 p99 延迟周期性出现约 90 毫秒的毛刺。怎么解释？怎么验证、怎么修？
 
@@ -34,4 +34,8 @@ flowchart TB
 - **不要把「CPU 使用率低」当作没有 throttling。**
 - **memory 与此不同：** 限不住就被杀，所以 memory 的 request 和 limit 常设成同样的值。
 
-**出处：** kubernetes.io Concepts › Resource Management（CPU limit 由 throttling 执行）；CFS bandwidth 的 100 ms 周期与 `cpu.stat` 字段为内核文档常识，指标名为 cAdvisor 惯例
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Resource Management（CPU limit 由 throttling 执行）；CFS bandwidth 的 100 ms 周期与 `cpu.stat` 字段为内核文档常识，指标名为 cAdvisor 惯例
+
+</details>

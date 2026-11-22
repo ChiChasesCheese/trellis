@@ -33,4 +33,8 @@ tags: [实践]
 
 **迭代要有节制：** criteria 会随用户行为变，但不能天天改；改的时候做实验追踪，记录评测数据、rubric、judge 的 prompt 和采样参数。
 
-**出处：** Huyen《AI Engineering》ch4 §Step 2 Create an Evaluation Guideline（Define evaluation criteria、Create scoring rubrics、Tie evaluation metrics to business metrics）；§Iterate
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Step 2 Create an Evaluation Guideline（Define evaluation criteria、Create scoring rubrics、Tie evaluation metrics to business metrics）；§Iterate
+
+</details>

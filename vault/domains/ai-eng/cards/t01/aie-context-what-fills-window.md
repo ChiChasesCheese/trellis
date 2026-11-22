@@ -27,4 +27,8 @@ flowchart TD
 - 模型本身不会"记住"上一轮对话。多轮对话要靠应用把前面的消息**再放进这次的输入**，所以历史越长，占的窗口越多（模型的 context 是它的 short-term memory，调用结束就没了）。
 - 窗口的上限是模型的属性：GPT 前三代是 1K、2K、4K；到 2024 年 5 月 Gemini-1.5 Pro 公布 2M，五年里增长约 2,000 倍。100K 能装下一本中等篇幅的书。
 
-**出处：** Huyen《AI Engineering》ch5 §Context Length and Context Efficiency；ch6 §Memory（短期记忆）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch5 §Context Length and Context Efficiency；ch6 §Memory（短期记忆）
+
+</details>

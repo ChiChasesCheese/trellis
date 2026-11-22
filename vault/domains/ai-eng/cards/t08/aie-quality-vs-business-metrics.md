@@ -32,4 +32,8 @@ tags: [摘要]
 - 好的 observability 看三个数：MTTD（发现用时）、MTTR（解决用时）、CFR（变更失败率）；
 - 评测指标应能迁移到监控指标，线上发现的问题要回流到评测集。
 
-**出处：** Huyen《AI Engineering》ch10 §Metrics；§Monitoring and Observability；ch4 §Tie evaluation metrics to business metrics
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Metrics；§Monitoring and Observability；ch4 §Tie evaluation metrics to business metrics
+
+</details>

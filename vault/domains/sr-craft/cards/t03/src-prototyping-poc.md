@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 感谢反馈，说明"这个原型没有错误处理、测试和监控，直接上线会出事故；我需要两周写正式版本，原型帮我们把风险降到了很低"。如果压力很大，就把下一个原型用别的技术栈做。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你会不会用最小成本消除不确定，并对产品化有底线。
 
 **适合配哪类故事：** 你用原型验证了一个高风险想法，并坚持重写而不是上线原型的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch15 §2 "Prototyping and Proof of Concept"（"Build with the intent to throw it away"）；ch16 §6（Technology risk：Prototype a day or two）；ch7 §4
+
+</details>

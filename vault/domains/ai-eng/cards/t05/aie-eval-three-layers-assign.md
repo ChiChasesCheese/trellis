@@ -32,4 +32,8 @@ tags: [考点]
 - 只做 L1：格式都对，回答不好；
 - 太早做 L3：成本高，而 L1/L2 还没把明显的问题清完。
 
-**出处：** Hamel Husain《Your AI Product Needs Evals》（三层）；Huyen《AI Engineering》ch3 §Exact Evaluation、§AI as a Judge
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Hamel Husain《Your AI Product Needs Evals》（三层）；Huyen《AI Engineering》ch3 §Exact Evaluation、§AI as a Judge
+
+</details>

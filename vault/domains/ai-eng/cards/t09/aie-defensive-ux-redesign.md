@@ -30,4 +30,8 @@ flowchart TD
 
 **结果：** 用户错误的代价从"相信编造的判例"变成"点开链接发现没有"，信任来自**可验证**，而不是**永不出错**。
 
-**出处：** Eugene Yan《Patterns for Building LLM-based Systems & Products》（Defensive UX：set expectations、efficient dismissal、attribution）；Huyen《AI Engineering》ch4 §Factual consistency（核对）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Eugene Yan《Patterns for Building LLM-based Systems & Products》（Defensive UX：set expectations、efficient dismissal、attribution）；Huyen《AI Engineering》ch4 §Factual consistency（核对）
+
+</details>

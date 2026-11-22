@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Reconcile loop · 考点**｜考点 · 必会
+**Reconcile loop**｜考点 · 必会
 
 ReplicaSet controller 所在的进程重启了，停了 10 分钟。这期间有人删了 2 个 Pod（期望 3 个）。它恢复后，如果 controller 靠「事件」工作，会丢什么？Kubernetes 实际怎么避免？
 
@@ -21,4 +21,8 @@ ReplicaSet controller 所在的进程重启了，停了 10 分钟。这期间有
 - **设计原则：** 把「要什么」存成状态，而不是把「做什么」存成事件。状态可以反复对比、反复修复，事件错过就没了。
 - **同理：** 你手工多建了 1 个带同样标签的 Pod，也会被发现多了 1 个并删掉一个，而不是「没人通知所以不管」。
 
-**出处：** Poulton ch2；kubernetes.io Concepts › Controllers（controller 通过 API server 观察并驱动状态向期望靠拢）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch2；kubernetes.io Concepts › Controllers（controller 通过 API server 观察并驱动状态向期望靠拢）
+
+</details>

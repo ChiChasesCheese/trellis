@@ -6,7 +6,7 @@ step: 1
 tags: [先修]
 ---
 ## Q
-**Containers vs VMs · 先修**｜先修 · 必会
+**Containers vs VMs**｜先修 · 必会
 
 容器（container）到底是什么？和虚拟机（VM）比，是更小的虚拟机吗？
 
@@ -35,4 +35,8 @@ flowchart TB
 - **Image（镜像）：** 容器的「安装包」：应用和它需要的文件打成一个包。同一个镜像能在任何机器上起出一样的容器。
 - **为什么 Kubernetes 用容器：** 同一台机器上能塞下更多隔离的应用，启动快，每份应用带着自己的依赖，不挤占彼此。
 
-**出处：** KIA2 §2.1（Understanding containers）、§2.3
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §2.1（Understanding containers）、§2.3
+
+</details>

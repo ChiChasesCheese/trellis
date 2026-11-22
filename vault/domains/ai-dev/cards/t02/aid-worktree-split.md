@@ -24,4 +24,8 @@ tags: [实践]
 
 **时效：** `.worktreeinclude` 是 Claude Code 当前的做法，其他工具各有各的约定；"每个 session 一个隔离目录"不变。
 
-**出处：** Claude Code docs《Best practices》（Run sessions in parallel）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Run sessions in parallel）
+
+</details>

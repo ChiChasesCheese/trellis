@@ -37,4 +37,8 @@ flowchart TD
 - Before: "OK, I think we're good. Thanks, everyone."
 - After: "Let me recap. We decided to go with Redis. Priya owns the migration plan, due Friday. Marco checks the cost estimate by Wednesday. Did I miss anything?"
 
-**出处：** GitLab Handbook《All-Remote Meetings》（handbook.gitlab.com/handbook/company/culture/all-remote/meetings/）；句式由规则推导，非引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+GitLab Handbook《All-Remote Meetings》（handbook.gitlab.com/handbook/company/culture/all-remote/meetings/）；句式由规则推导，非引用
+
+</details>

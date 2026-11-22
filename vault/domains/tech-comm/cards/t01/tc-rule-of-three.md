@@ -28,4 +28,8 @@ tags: [原则]
 - Before: "There are seven reasons: cost, licensing, replication lag, schema changes, tooling, hiring, and vendor support."
 - After: "There are three reasons: it costs less to run (cost, licensing), it is easier to operate (replication, schema changes, tooling), and it is easier to staff (hiring, vendor support). Let me start with the biggest, cost."
 
-**出处：** Minto p. 17–24（Ch.1 The Magical Number Seven）；p. 33–48（Ch.2 The Horizontal Relationship）；p. 97–112（Ch.6 Imposing Logical Order）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 17–24（Ch.1 The Magical Number Seven）；p. 33–48（Ch.2 The Horizontal Relationship）；p. 97–112（Ch.6 Imposing Logical Order）
+
+</details>

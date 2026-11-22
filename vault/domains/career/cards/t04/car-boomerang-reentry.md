@@ -32,4 +32,8 @@ flowchart TD
 
 **对方在想什么：** 公司想用熟悉的人降低招聘风险。这是你的筹码，但也要避免让现有员工觉得不公平。
 
-**出处：** HBR https://hbr.org/2017/08/what-to-do-when-youre-returning-to-a-company-you-used-to-work-for（正文需订阅，仅见摘要中的三个问题）。其余为通用做法示例
+<details class="pt" markdown="1"><summary>出处</summary>
+
+HBR https://hbr.org/2017/08/what-to-do-when-youre-returning-to-a-company-you-used-to-work-for（正文需订阅，仅见摘要中的三个问题）。其余为通用做法示例
+
+</details>

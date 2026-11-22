@@ -36,4 +36,8 @@ tags: [摘要]
 
 **起步：** `/init` 从代码库生成初稿，之后的工作主要是删行。
 
-**出处：** Claude Code docs《Best practices》（Keep CLAUDE.md short）；《How Claude remembers your project》
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Keep CLAUDE.md short）；《How Claude remembers your project》
+
+</details>

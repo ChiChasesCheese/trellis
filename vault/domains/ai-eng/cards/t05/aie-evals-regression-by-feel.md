@@ -34,4 +34,8 @@ flowchart TD
   D --> E["全量复测并对比"]
 ```
 
-**出处：** Hamel Husain《Your AI Product Needs Evals》（"teams that focus only on changing the system stall at a demo"）；Huyen《AI Engineering》ch4 §Evaluation-Driven Development
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Hamel Husain《Your AI Product Needs Evals》（"teams that focus only on changing the system stall at a demo"）；Huyen《AI Engineering》ch4 §Evaluation-Driven Development
+
+</details>

@@ -13,4 +13,4 @@ Web cache poisoning: an attacker supplies a malicious unkeyed value, causes the 
 origin 使用 `X-Forwarded-Host` 构建 absolute redirect，但 CDN cache key 忽略该 header。可能发生什么攻击？
 
 ## A zh
-会发生 web cache poisoning：attacker 提供 malicious unkeyed value，让 origin response 包含它，并把该 response 存到之后与 victim 共享的 key 下。应移除 untrusted influence、在 trusted proxy canonicalize host，或把 bounded 且会改变 representation 的 input 放入 key。只测试 cache HIT/MISS 无法发现 key-to-origin mismatch。
+会发生 web cache poisoning：attacker 提供 malicious unkeyed value，让 origin response 包含它，并把该 response 存到之后与 victim 共享的 key 下。应移除 untrusted influence、在 trusted proxy 上规范化 host，或把 bounded 且会改变 representation 的 input 放入 key。只测试 cache HIT/MISS 无法发现 key-to-origin mismatch。

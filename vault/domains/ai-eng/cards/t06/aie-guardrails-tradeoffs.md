@@ -31,4 +31,8 @@ tags: [考点]
 3. 触发率有监控吗（被拦截多少、重试多少、转人工多少）；
 4. 防线之外有没有设计层面的限制（最小权限）。
 
-**出处：** Huyen《AI Engineering》ch10 §Guardrail implementation；ch5 §Defenses Against Prompt Attacks（false refusal rate）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Guardrail implementation；ch5 §Defenses Against Prompt Attacks（false refusal rate）
+
+</details>

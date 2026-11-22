@@ -31,4 +31,8 @@ flowchart TD
 
 **能力从哪来：** 来自**环境反馈**（测试输出、报错、截图），不是来自一次写对。没有反馈的循环，就是模型自说自话。
 
-**出处：** Claude Code docs《How Claude Code works》（The agentic loop；Tools）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《How Claude Code works》（The agentic loop；Tools）
+
+</details>

@@ -30,4 +30,8 @@ tags: [实践]
 3. 重试要有次数上限和总超时，并配合 circuit breaker；
 4. 流式输出中途断开：已发出的部分不能撤回，要么从头重试并告知用户，要么把已收到的内容作为前缀续写（实现复杂，先做前者）。
 
-**出处：** Anthropic 文档 Rate limits（platform.claude.com/docs/en/api/rate-limits，2026-11-21 读）；Huyen《AI Engineering》ch10 §Gateway（fallback policies）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic 文档 Rate limits（platform.claude.com/docs/en/api/rate-limits，2026-11-21 读）；Huyen《AI Engineering》ch10 §Gateway（fallback policies）
+
+</details>

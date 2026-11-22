@@ -23,4 +23,8 @@ tags: [拓展]
 - **限制：** 只读；要 runtime 支持。
 - **同期清理：** `gitRepo` 卷（v1.11 起弃用）在 **v1.36 被移除**，需要从 git 取内容的，改用 init 容器或 image volume。
 
-**出处：** kubernetes.io 发布博客 v1.35（image volume beta 默认开启，需 containerd v2.1+）、v1.36（OCI volume source Stable；gitRepo 移除，KEP-5040）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.35（image volume beta 默认开启，需 containerd v2.1+）、v1.36（OCI volume source Stable；gitRepo 移除，KEP-5040）
+
+</details>

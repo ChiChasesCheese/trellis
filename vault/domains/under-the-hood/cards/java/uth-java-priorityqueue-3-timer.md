@@ -23,5 +23,3 @@ step: 3
 **为什么。** 单线程加堆足够简单，但一个任务出错就拖垮整个 `Timer`；线程池版本每个任务的异常只影响自己的 `Future`。
 
 **坑。** 新代码直接用 `ScheduledThreadPoolExecutor`。
-
-**对应 LeetCode：** 无直接对应的题

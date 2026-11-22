@@ -33,4 +33,8 @@ flowchart TD
 
 **设计指标时：** 先分析模型在哪类问题上最容易编（比如冷门知识、问不存在的事情），测试集里多放这类问题。
 
-**出处：** Huyen《AI Engineering》ch4 §Generation Capability → Factual consistency（local vs global、AI judge、SelfCheckGPT、SAFE）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Generation Capability → Factual consistency（local vs global、AI judge、SelfCheckGPT、SAFE）
+
+</details>

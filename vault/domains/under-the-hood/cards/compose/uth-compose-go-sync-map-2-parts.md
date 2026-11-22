@@ -48,5 +48,3 @@ step: 2
 | `Store` 已有 key | `read`，原子改 `entry` | O(1)，无锁 |
 | `Store` 新 key | 加锁、`dirty`（没有就先复制 `read`）、`amended` 置真 | O(1)，首次复制 O(N) |
 | 提升 | `misses ≥ len(dirty)` 时 `read = dirty`、`dirty = nil` | O(1) |
-
-**对应 LeetCode：** 无直接对应的题

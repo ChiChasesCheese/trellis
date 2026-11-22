@@ -40,8 +40,12 @@ flowchart TD
 
 **回到题目：** 先和另一个相近团队合并值班，人数到 6 人以上；把一半不可操作的告警删掉或降级；给剩下的告警补 runbook；统计半夜被叫醒的次数，作为后续可靠性工作的依据，向经理要时间。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对运维负担的整体视角：不仅能值班，还会改进值班本身。
 
 **适合配哪类故事：** 你改善了值班（减噪音、写手册、调整人数），让团队负担明显下降的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch24 §5 "Oncall"（Typical oncall rotations、Oncall runbooks、Should engineers do normal work while oncall、Oncall burnout）；Google SRE book《Being On-Call》（sre.google/sre-book/being-on-call/：Operational Overload）
+
+</details>

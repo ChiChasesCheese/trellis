@@ -35,4 +35,8 @@ flowchart TD
 
 **边界：** auto mode 连续被拦 3 次（或累计 20 次）会暂停并回到询问；它是分类器，不是保证。
 
-**出处：** Claude Code docs《Security》（Permission-based architecture；Built-in protections）；《Best practices》（Limit access；Change a default）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Security》（Permission-based architecture；Built-in protections）；《Best practices》（Limit access；Change a default）
+
+</details>

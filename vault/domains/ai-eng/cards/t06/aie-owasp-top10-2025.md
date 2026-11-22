@@ -44,4 +44,8 @@ flowchart TD
 
 **怎么用：** 把十项当检查清单，对每一项问：我的应用有没有这个暴露面？现有的防护是什么？没有的补评测或监控。
 
-**出处：** OWASP Top 10 for LLM Applications 2025（https://genai.owasp.org/llm-top-10/）；图和"优先级"为作者归纳
+<details class="pt" markdown="1"><summary>出处</summary>
+
+OWASP Top 10 for LLM Applications 2025（https://genai.owasp.org/llm-top-10/）；图和"优先级"为作者归纳
+
+</details>

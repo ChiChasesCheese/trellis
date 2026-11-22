@@ -33,4 +33,8 @@ flowchart TD
 
 **比较前：** 问口径、问时间点、问有没有拆出一次性收入。
 
-**出处：** 通用 SaaS 指标定义。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用 SaaS 指标定义。
+
+</details>

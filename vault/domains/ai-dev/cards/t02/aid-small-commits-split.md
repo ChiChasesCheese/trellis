@@ -22,4 +22,8 @@ tags: [实践]
 
 **别做：** 做完所有工作再一个"wip"大提交——要审的人只能读 2000 行 diff（见 t04 small-diff review）。
 
-**出处：** Claude Code docs《Best practices》（Run sessions in parallel：/batch 把大改拆成单元，各自一个独立工作目录和 PR）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Run sessions in parallel：/batch 把大改拆成单元，各自一个独立工作目录和 PR）
+
+</details>

@@ -33,4 +33,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21；其他案件结果各不相同。不是法律意见。
 
-**出处：** The Next Web, Anthropic $1.5B copyright settlement approved（2026-07-21）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+The Next Web, Anthropic $1.5B copyright settlement approved（2026-07-21）。
+
+</details>

@@ -35,4 +35,8 @@ flowchart TD
 - Before: "So this is the gateway, and this is the order service, and this is the database, and this one is the queue…"
 - After: "In short, a request comes in through the gateway, the order service writes it to the database, and an event goes to the queue so notifications don't block the user. Let me trace one order."
 
-**出处：** Minto p. 97–112（Ch.6 Imposing Logical Order：Structural Order，描述一个结构）；p. 209–224（Ch.11 Designing Exhibit Slides，部分）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 97–112（Ch.6 Imposing Logical Order：Structural Order，描述一个结构）；p. 209–224（Ch.11 Designing Exhibit Slides，部分）
+
+</details>

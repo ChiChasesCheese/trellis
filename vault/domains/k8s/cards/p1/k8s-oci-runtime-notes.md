@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**OCI、CRI 与 container runtime · 摘要**｜摘要 · 必会
+**OCI、CRI 与 container runtime**｜摘要 · 必会
 
 用 Docker 构建的镜像，为什么能在用 containerd 或 CRI-O 的集群里直接运行？这几个缩写各管哪一段？
 
@@ -30,4 +30,8 @@ flowchart TD
 - **隔离不是 Docker 提供的：** 真正的隔离由 Linux 内核（namespaces、cgroups）完成，Docker 和 runtime 只是用它们。
 - **Kubernetes 早期** 把 Docker 当唯一 runtime，现在通过 CRI 支持多种。
 
-**出处：** KIA2 §2.1.4「Introducing the Open Container Initiative and Docker alternatives」
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §2.1.4「Introducing the Open Container Initiative and Docker alternatives」
+
+</details>

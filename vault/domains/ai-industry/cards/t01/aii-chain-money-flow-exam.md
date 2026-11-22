@@ -28,4 +28,8 @@ flowchart TD
 
 **记法：** 问「这层有几家供应商，换一家难不难」，越难换的层越能留住钱。
 
-**出处：** NVIDIA Q4 与 FY2026 财报新闻稿（investor.nvidia.com, 2026-02）；AI Index 2025 产业章节。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+NVIDIA Q4 与 FY2026 财报新闻稿（investor.nvidia.com, 2026-02）；AI Index 2025 产业章节。
+
+</details>

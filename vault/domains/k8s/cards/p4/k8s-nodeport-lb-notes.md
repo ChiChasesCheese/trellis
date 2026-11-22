@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**NodePort 与 LoadBalancer · 摘要**｜摘要 · 必会
+**NodePort 与 LoadBalancer**｜摘要 · 必会
 
 ClusterIP 只能在集群里访问。外面的用户怎么访问到 Pod？NodePort 和 LoadBalancer 各是什么？
 
@@ -31,4 +31,8 @@ flowchart TB
 - **云上用 NodePort 直连：** 防火墙要放行 30000–32767。
 - **一个 Service 一个负载均衡器：** 服务多了成本高。多个 HTTP 服务共用一个入口，用 Gateway API（下面）。
 
-**出处：** KIA2 §11.2（Making services available externally）、§3.3
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §11.2（Making services available externally）、§3.3
+
+</details>

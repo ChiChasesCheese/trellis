@@ -34,4 +34,8 @@ flowchart TD
 - **状态图漏掉失败和超时的转换。**
 - **时序图的参与方过多。**
 
-**出处：** UML 时序图通用规则（uml-diagrams.org/sequence-diagrams.html，术语为 UML 标准用法）；做法由规则推导
+<details class="pt" markdown="1"><summary>出处</summary>
+
+UML 时序图通用规则（uml-diagrams.org/sequence-diagrams.html，术语为 UML 标准用法）；做法由规则推导
+
+</details>

@@ -34,4 +34,8 @@ flowchart TD
 
 **还有一点：** 同一个输入 LLM 可能给出不同答案，这挑战了界面的"一致性"原则。
 
-**出处：** Eugene Yan《Patterns for Building LLM-based Systems & Products》（Defensive UX；https://eugeneyan.com/writing/llm-patterns/）；Huyen《AI Engineering》ch1 §The role of AI and humans（主动功能质量门槛更高）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Eugene Yan《Patterns for Building LLM-based Systems & Products》（Defensive UX；https://eugeneyan.com/writing/llm-patterns/）；Huyen《AI Engineering》ch1 §The role of AI and humans（主动功能质量门槛更高）
+
+</details>

@@ -28,4 +28,8 @@ tags: [原则]
 - Before: "So we had this order pipeline, and traffic was growing, and we looked at a few queues, and RabbitMQ had some limits on replay, so in the end we went with Kafka."
 - After: "We chose Kafka because we needed to replay events. Two reasons: it keeps messages after they are consumed, and it scales by partition. RabbitMQ would have required extra tooling for both."
 
-**出处：** Minto p. 25–32（Ch.1 Why a Pyramid Structure：Ordering from the Top Down）；p. 41–48（Ch.3 The Top-Down Approach）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 25–32（Ch.1 Why a Pyramid Structure：Ordering from the Top Down）；p. 41–48（Ch.3 The Top-Down Approach）
+
+</details>

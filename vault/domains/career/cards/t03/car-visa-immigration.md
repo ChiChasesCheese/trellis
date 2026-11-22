@@ -35,4 +35,8 @@ flowchart TD
 
 **常见错法：** 为了避免被拒而隐瞒；只看薪酬不看 sponsor 政策；不核实就依赖朋友的经验（个案不同）。
 
-**出处：** USCIS https://www.uscis.gov/working-in-the-united-states（2026-11-21 读取，页面无日期）。一般性信息，不构成法律建议
+<details class="pt" markdown="1"><summary>出处</summary>
+
+USCIS https://www.uscis.gov/working-in-the-united-states（2026-11-21 读取，页面无日期）。一般性信息，不构成法律建议
+
+</details>

@@ -32,4 +32,8 @@ flowchart TD
 - 比喻：pre-training 像读书积累知识，post-training 像学会如何使用这些知识。
 - 资源占比极不均：InstructGPT 里 pre-training 占约 98% 的算力和数据，post-training 约 2%。
 
-**出处：** Huyen《AI Engineering》ch2 §Post-Training、§Supervised Finetuning；ch1 §On the Differences Among Training, Pre-Training, Finetuning, and Post-Training
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Post-Training、§Supervised Finetuning；ch1 §On the Differences Among Training, Pre-Training, Finetuning, and Post-Training
+
+</details>

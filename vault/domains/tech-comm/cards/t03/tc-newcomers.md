@@ -34,4 +34,8 @@ flowchart TD
 - **按历史讲：** 历史顺序不等于理解顺序。
 - **一口气讲所有例外。**
 
-**出处：** Google Technical Writing One《Audience》（developers.google.com/tech-writing/one/audience：知识的诅咒、定义术语）（部分）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Audience》（developers.google.com/tech-writing/one/audience：知识的诅咒、定义术语）（部分）
+
+</details>

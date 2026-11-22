@@ -26,4 +26,8 @@ tags: [原则]
 - **背景放在最前：** 读者要翻很久才到任务。
 - **整份文档只有一种读者路径。**
 
-**出处：** Google Technical Writing Two《Organizing large documents》（developers.google.com/tech-writing/two/large-docs）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing Two《Organizing large documents》（developers.google.com/tech-writing/two/large-docs）
+
+</details>

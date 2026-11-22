@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Finalizers 与 ownerReferences · 考点**｜考点 · 必会
+**Finalizers 与 ownerReferences**｜考点 · 必会
 
 `kubectl delete pvc data` 一直卡着，状态是 `Terminating`；另一次，删了一个 Deployment，下面的 ReplicaSet 和 Pod 自动消失了。这两件事背后分别是什么机制？
 
@@ -32,4 +32,8 @@ flowchart TD
 - **删除开始后：** 可以移除 finalizer，但不能再添加；对象不能「复活」。
 - **Deployment 的例子：** ReplicaSet 的 ownerReferences 指向 Deployment，Pod 的指向 ReplicaSet；删顶端，GC 顺着链往下删。Job 找要清理的 Pod 也是靠 owner reference，不是 label。
 
-**出处：** kubernetes.io Concepts › Finalizers（deletionTimestamp、pv-protection、owner references）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Finalizers（deletionTimestamp、pv-protection、owner references）
+
+</details>

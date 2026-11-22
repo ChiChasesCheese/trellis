@@ -35,4 +35,8 @@ level = go.so.Level(5, 28, 48)
 level = go.so.Level(rank=5, dimension=28, opacity=48)
 ```
 
-**出处：** Google Technical Writing Two《Creating sample code》（developers.google.com/tech-writing/two/sample-code）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing Two《Creating sample code》（developers.google.com/tech-writing/two/sample-code）
+
+</details>

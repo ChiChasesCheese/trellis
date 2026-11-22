@@ -29,4 +29,8 @@ flowchart TD
   A --> L["改液冷"]
 ```
 
-**出处：** 通用数据中心工程知识；PUE 定义见 Power 一卡。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用数据中心工程知识；PUE 定义见 Power 一卡。
+
+</details>

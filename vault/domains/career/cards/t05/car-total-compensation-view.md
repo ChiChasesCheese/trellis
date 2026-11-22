@@ -41,4 +41,8 @@ flowchart TD
 
 **常见错法：** 只比 base；把 sign-on 平摊到四年；忘了 bonus 是 target。
 
-**出处：** Orosz《Guidebook》Ch.1 §3（total compensation 的组成与私有股权难以量化）；数字为虚构演算
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.1 §3（total compensation 的组成与私有股权难以量化）；数字为虚构演算
+
+</details>

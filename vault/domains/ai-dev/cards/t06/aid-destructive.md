@@ -27,4 +27,8 @@ agent 在清理"无用分支"时执行了 `git push --force` 并删除了远程�
 
 **别做：** 把"不要强推"写进 CLAUDE.md 当唯一防线。
 
-**出处：** Claude Code docs《Best practices》（Let Claude run without you；Start runs on a schedule）；《Security》（Cloud execution security：Push restrictions）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Let Claude run without you；Start runs on a schedule）；《Security》（Cloud execution security：Push restrictions）
+
+</details>

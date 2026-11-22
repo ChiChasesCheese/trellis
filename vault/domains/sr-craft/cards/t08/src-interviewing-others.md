@@ -38,8 +38,12 @@ flowchart TD
 
 **回到题目：** 先和团队写下这个岗位的 几条能力，每条配一个问题和一张评分表；统一记录模板；面试后先提交独立评分和证据，再开评审会，会上对照评分表讨论。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否能设计公平、可重复的评估流程，而不只是"我会面试"。
 
 **适合配哪类故事：** 你设计或改进过面试流程（问题库、评分表），让团队的招聘判断更一致的经历。
 
 **出处：** Google re:Work《Use structured interviewing》（rework.withgoogle.com/en/guides/hiring-use-structured-interviewing：定义岗位属性、经过验证的相关问题、记录回答、按预定标准统一评分）
+
+</details>

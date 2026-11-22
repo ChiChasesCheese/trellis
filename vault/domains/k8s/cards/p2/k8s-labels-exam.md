@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Labels 与 selectors · 考点**｜考点 · 必会
+**Labels 与 selectors**｜考点 · 必会
 
 一个 Service 的 selector 是 `app=kiada`，后面有 3 个 Pod。你对其中一个执行 `kubectl label pod kiada-x1 app=debug --overwrite`。会发生什么？Deployment 和 Service 各有什么反应？
 
@@ -28,4 +28,8 @@ flowchart TB
 - **要点：** 控制器和 Service 靠 selector 认领，不靠名字，也不靠谁创建的。
 - **风险：** 手误改了标签，Pod 会被「孤立」或被别的对象错误认领；selector 要写得足够具体。
 
-**出处：** KIA2 §7.2–7.3；kubernetes.io Concepts › Labels and Selectors
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §7.2–7.3；kubernetes.io Concepts › Labels and Selectors
+
+</details>

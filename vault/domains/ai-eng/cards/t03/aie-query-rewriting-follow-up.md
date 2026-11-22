@@ -33,4 +33,8 @@ flowchart TD
 
 **同类做法：** 给每个 chunk 加上下文再索引（contextual retrieval）是在文档一侧补，query rewriting 是在问题一侧补。
 
-**出处：** Huyen《AI Engineering》ch6 §Query rewriting
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Query rewriting
+
+</details>

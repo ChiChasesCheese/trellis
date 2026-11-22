@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**CSI 架构 · 摘要**｜摘要 · 必会
+**CSI 架构**｜摘要 · 必会
 
 PVC 创建后，是哪些组件把一块真实的盘变成容器里的目录？CSI driver 里为什么分 controller 和 node 两部分？
 
@@ -33,4 +33,8 @@ flowchart TD
 - **`CSIDriver` 对象：** `kubectl get csidrivers` 列出已装的 driver；它的名字就是 StorageClass 里的 `provisioner`。
 - **所以分两部分：** 创建卷是对存储系统的操作，不需要在 node 上；mount 必须在用卷的那个 node 上做。
 
-**出处：** KIA2 §10.2.6「About CSI drivers」；kubernetes-csi.github.io Developer Documentation › Deploying CSI Driver on Kubernetes、Sidecar Containers
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §10.2.6「About CSI drivers」；kubernetes-csi.github.io Developer Documentation › Deploying CSI Driver on Kubernetes、Sidecar Containers
+
+</details>

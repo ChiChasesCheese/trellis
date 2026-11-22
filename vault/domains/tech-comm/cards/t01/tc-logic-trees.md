@@ -34,4 +34,8 @@ flowchart TD
 - **分类互相重叠：** 同一原因出现在两个分支里。
 - **漏掉"其他"：** 树没有闭合。
 
-**出处：** Minto p. 161–192（Ch.9 Logic in Problem Analysis：Devising Diagnostic Frameworks；Developing Logic Trees）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 161–192（Ch.9 Logic in Problem Analysis：Devising Diagnostic Frameworks；Developing Logic Trees）
+
+</details>

@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Labels 与 selectors · 摘要**｜摘要 · 必会
+**Labels 与 selectors**｜摘要 · 必会
 
 Service 怎么知道哪些 Pod 归它转发？Deployment 怎么知道哪些 Pod 是自己的？
 
@@ -46,4 +46,8 @@ kubectl label pod mypod rel=canary            # 加标签
 - **标签是松耦合：** 对象之间没有硬引用，改一个 Pod 的标签，它就会被移出或加入某个 Service。
 - **推荐标签：** 官方有一组标准键（如 `app.kubernetes.io/name`），方便工具识别。
 
-**出处：** KIA2 §7.2–7.3（Labels、label selectors）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §7.2–7.3（Labels、label selectors）
+
+</details>

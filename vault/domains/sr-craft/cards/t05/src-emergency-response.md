@@ -39,8 +39,12 @@ flowchart TD
 
 **回到题目：** 在做下线前：演练回滚，设置只影响小批量的限制，加一条"空列表则中止"的检查，明确谁是指挥、在哪个频道通报，并确认有不依赖被操作系统的备用访问方式。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你从别人的事故里提取原则、并提前准备的习惯。
 
 **适合配哪类故事：** 你在做高风险操作前主动演练回滚、加保护，从而避免或快速恢复事故的经历。
 
 **出处：** Beyer 等《Site Reliability Engineering》"Emergency Response"（sre.google/sre-book/emergency-response/，2026-11-21 读取：Test-Induced、Change-Induced、Process-Induced Emergency；Lessons Learned 与"All Incidents Should Be Novel"）
+
+</details>

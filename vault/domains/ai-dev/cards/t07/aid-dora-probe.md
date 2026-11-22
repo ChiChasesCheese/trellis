@@ -21,4 +21,8 @@ tags: [考点]
 
 **追问：** 这个判断有什么不能保证？DORA 是相关性调查，不是随机实验；能说"一致"，不能说"因果已证明"。
 
-**出处：** DORA《2025 State of AI-assisted Software Development》（Google Cloud 博客）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+DORA《2025 State of AI-assisted Software Development》（Google Cloud 博客）
+
+</details>

@@ -32,4 +32,8 @@ flowchart TD
   S --> R["配对的图文靠近"]
 ```
 
-**出处：** Huyen《AI Engineering》ch3 §Introduction to Embedding（MTEB、CLIP、multimodal embedding space）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch3 §Introduction to Embedding（MTEB、CLIP、multimodal embedding space）
+
+</details>

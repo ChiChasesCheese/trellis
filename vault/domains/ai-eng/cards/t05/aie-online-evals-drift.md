@@ -30,4 +30,8 @@ tags: [考点]
 
 CFR 高，要回头改评测流程，让坏改动在上线前被抓住。
 
-**出处：** Huyen《AI Engineering》ch10 §Monitoring and Observability（MTTD、MTTR、CFR）、§Drift detection
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Monitoring and Observability（MTTD、MTTR、CFR）、§Drift detection
+
+</details>

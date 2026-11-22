@@ -36,4 +36,8 @@ flowchart TD
 
 **常见错法：** 一个信号就下结论（可能是个别情况）；忽略自己的直觉，只看薪酬。
 
-**出处：** Orosz《Guidebook》Ch.6 §1；Ch.20 §2 "Unhealthy Teams"；Ch.5 §4（wartime 信号）。上表中的具体问法是练习建议
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.6 §1；Ch.20 §2 "Unhealthy Teams"；Ch.5 §4（wartime 信号）。上表中的具体问法是练习建议
+
+</details>

@@ -36,4 +36,8 @@ flowchart TD
 
 **别指望清零：** 只要系统有能造成影响的能力，prompt 攻击的风险就不会被彻底消除。
 
-**出处：** Huyen《AI Engineering》ch5 §Jailbreaking and Prompt Injection（Automated attacks）；§Defenses Against Prompt Attacks
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch5 §Jailbreaking and Prompt Injection（Automated attacks）；§Defenses Against Prompt Attacks
+
+</details>

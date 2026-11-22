@@ -22,4 +22,8 @@ tags: [考点]
 
 **别做：** 为了省按键，在带密钥的真实环境里开最宽松的模式。
 
-**出处：** Claude Code docs《Security》（Security best practices：Working with sensitive code）；《Best practices》（Let Claude run without you：它能碰什么）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Security》（Security best practices：Working with sensitive code）；《Best practices》（Let Claude run without you：它能碰什么）
+
+</details>

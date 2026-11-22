@@ -30,4 +30,8 @@ flowchart TD
   C --> D["几年后生产率上升"]
 ```
 
-**出处：** Stanford HAI, AI Index Report 2025（78% 采用）；Solow 的评语为经济史常识。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Stanford HAI, AI Index Report 2025（78% 采用）；Solow 的评语为经济史常识。
+
+</details>

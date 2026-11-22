@@ -28,4 +28,8 @@ flowchart TD
 
 **判断：** 要的是**产出与结果**的指标（交付速度、缺陷、人力），而不是产生量。
 
-**出处：** 通用度量方法；Anthropic Economic Index（2026-01）的使用数据口径说明。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用度量方法；Anthropic Economic Index（2026-01）的使用数据口径说明。
+
+</details>

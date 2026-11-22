@@ -31,4 +31,8 @@ flowchart TD
   D --> R["差分 −9"]
 ```
 
-**出处：** Canaries in the Coal Mine?（Brynjolfsson 等，2026-08）关于局限的说明；差分方法为通用计量经济学。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Canaries in the Coal Mine?（Brynjolfsson 等，2026-08）关于局限的说明；差分方法为通用计量经济学。
+
+</details>

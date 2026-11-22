@@ -30,4 +30,8 @@ tags: [考点]
 
 **关键认识：** 注入本身很难百分之百防住，所以**把重点放在限制注入成功后的后果**（能力和权限）。
 
-**出处：** OWASP Top 10 for LLM Applications 2025（LLM01、LLM02、LLM06）；Huyen《AI Engineering》ch5 §Indirect prompt injection 里的邮件助手例子
+<details class="pt" markdown="1"><summary>出处</summary>
+
+OWASP Top 10 for LLM Applications 2025（LLM01、LLM02、LLM06）；Huyen《AI Engineering》ch5 §Indirect prompt injection 里的邮件助手例子
+
+</details>

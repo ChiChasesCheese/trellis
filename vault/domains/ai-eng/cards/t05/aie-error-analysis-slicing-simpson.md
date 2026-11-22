@@ -38,4 +38,8 @@ flowchart TD
 
 **评测集的几种切片：** 反映线上分布的总体集；按用户层级（付费 / 免费）或来源（移动 / 网页）；已知常出错的集合；用户常犯错（如拼写错误）的集合；超出范围的输入集。"你在乎什么，就给它一个测试集。"
 
-**出处：** Huyen《AI Engineering》ch4 §Annotate evaluation data（Table 4-6，Simpson's paradox；slicing）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Annotate evaluation data（Table 4-6，Simpson's paradox；slicing）
+
+</details>

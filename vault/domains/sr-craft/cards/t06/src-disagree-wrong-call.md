@@ -21,6 +21,10 @@ tags: [追问]
 
 **怎么做：** 把"当时的假设"和"现在的事实"并排放，问团队：根据新信息要不要重新评估？提出一个范围小的调整方案。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否尊重决策过程，并有能力在事实变化时推动修正。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch22 §1（"Disagree and commit" 一段）；ch15 §1（ADR 作为决策记录）
+
+</details>

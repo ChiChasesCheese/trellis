@@ -36,4 +36,8 @@ IVF 常与 PQ 合用，是 FAISS 的核心。
 
 **收益与代价：** 越精细的索引（如 HNSW）查询准且快，但**建索引慢、占内存多**；简单的索引（如 LSH）建得快、省内存，查询慢且不够准。
 
-**出处：** Huyen《AI Engineering》ch6 §Embedding-based retrieval（k-NN、ANN 各算法）、§Comparing retrieval algorithms（ANN-Benchmarks）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Embedding-based retrieval（k-NN、ANN 各算法）、§Comparing retrieval algorithms（ANN-Benchmarks）
+
+</details>

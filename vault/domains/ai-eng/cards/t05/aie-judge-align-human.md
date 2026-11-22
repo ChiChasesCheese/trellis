@@ -37,4 +37,8 @@ flowchart TD
 - 重复跑是否得到类似结果（可复现、方差小）？
 - 记录 judge 用的数据、评分标准、prompt、采样参数。
 
-**出处：** Hamel Husain《Your AI Product Needs Evals》（LLM-as-judge alignment）；Huyen《AI Engineering》ch3 §Why AI as a Judge?（85% / 81%）、ch4 §Evaluate your evaluation pipeline；ch2 §Preference Finetuning（73%）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Hamel Husain《Your AI Product Needs Evals》（LLM-as-judge alignment）；Huyen《AI Engineering》ch3 §Why AI as a Judge?（85% / 81%）、ch4 §Evaluate your evaluation pipeline；ch2 §Preference Finetuning（73%）
+
+</details>

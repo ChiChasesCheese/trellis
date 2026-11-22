@@ -24,4 +24,8 @@ agent 生成的一段代码，和某个开源项目里的函数几乎一样。�
 **做：** 法务审一次供应商条款；工程侧做依赖许可证扫描和相似度检查。
 **别做：** 因为"是 AI 写的"就认为没有版权问题，或认为一定有。
 
-**出处：** Claude Code docs《Security》（Privacy safeguards：Commercial vs Consumer Terms）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Security》（Privacy safeguards：Commercial vs Consumer Terms）
+
+</details>

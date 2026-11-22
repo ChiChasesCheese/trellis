@@ -40,8 +40,12 @@ flowchart TD
 
 **回到题目：** 今天就约他当面聊："这两个 PR 里没看到测试，我想听听你的想法。我们这里的规范是……我可以怎么帮你？"一周后回看；评估时就不会有意外。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有勇气尽早说，也有技巧让对方愿意听。
 
 **适合配哪类故事：** 你及时给了一次难的反馈，对方因此改变并成长的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch12 §4 "Giving Feedback"（Ask questions before jumping in；Deliver corrective feedback empathetically）；ch3 §2 "The Power of Habit"（"Ask for specific feedback, every now and then"：managers owe it to their reports to share feedback as soon as possible）；ch2 §4
+
+</details>

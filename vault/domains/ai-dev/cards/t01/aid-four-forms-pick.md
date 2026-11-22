@@ -21,4 +21,8 @@ tags: [考点]
 
 **常见错法：** 无人值守的任务没有 check，周一看到的是"看起来完成了"的 diff，你得自己当测试套件。
 
-**出处：** Claude Code docs《Best practices》（Let Claude run without you：Before a run goes unattended，五个问题）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Let Claude run without you：Before a run goes unattended，五个问题）
+
+</details>

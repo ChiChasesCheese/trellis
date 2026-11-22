@@ -29,4 +29,8 @@ flowchart TD
   F -- "否" --> G["/clear 重写 prompt"]
 ```
 
-**出处：** Claude Code docs《Best practices》（Steer the session）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Steer the session）
+
+</details>

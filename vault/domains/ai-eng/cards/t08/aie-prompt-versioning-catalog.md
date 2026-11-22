@@ -33,4 +33,8 @@ tags: [实践]
 
 **检测未经授权的变更：** system prompt 可能因为模板更新、同事改了一个错字而在你不知道的情况下变了；用简单的哈希比较就能发现。
 
-**出处：** Huyen《AI Engineering》ch5 §Organize and Version Prompts；ch10 §Drift detection（System prompt changes）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch5 §Organize and Version Prompts；ch10 §Drift detection（System prompt changes）
+
+</details>

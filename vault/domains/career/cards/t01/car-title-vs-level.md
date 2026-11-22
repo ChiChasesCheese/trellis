@@ -30,4 +30,8 @@ flowchart TD
 
 **对方在想什么：** 小公司给头衔是便宜的福利，但也说明他们缺人手；你问清范围，反而让他们认真对待。
 
-**出处：** Orosz《Guidebook》Ch.19 §1 "Roles and Titles"；Ch.1 §2；Part V 引言
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.19 §1 "Roles and Titles"；Ch.1 §2；Part V 引言
+
+</details>

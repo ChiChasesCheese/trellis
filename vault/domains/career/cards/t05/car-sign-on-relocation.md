@@ -36,4 +36,8 @@ flowchart TD
 
 **对方在想什么：** sign-on 是一次性成本，招聘经理很清楚可以拿出来。你说明理由并设好终点（"我会尽快决定"），对方更愿意帮。
 
-**出处：** techinterviewhandbook.org/understanding-compensation/（sign-on、relocation、还款提醒）；Kalzumeus https://www.kalzumeus.com/2012/01/23/salary-negotiation/（谈判可调的项目；做不到时换项目）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+techinterviewhandbook.org/understanding-compensation/（sign-on、relocation、还款提醒）；Kalzumeus https://www.kalzumeus.com/2012/01/23/salary-negotiation/（谈判可调的项目；做不到时换项目）
+
+</details>

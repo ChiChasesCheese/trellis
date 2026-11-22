@@ -34,4 +34,8 @@ flowchart TD
   B -- "否" --> D["用规整后的键缓存"]
 ```
 
-**出处：** Huyen《AI Engineering》ch10 §Exact caching 的 Warning（X / Y 泄露例子）、§Semantic caching。"用约束输入或条目 ID 作键"是常见的稳妥做法，书里无此内容
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Exact caching 的 Warning（X / Y 泄露例子）、§Semantic caching。"用约束输入或条目 ID 作键"是常见的稳妥做法，书里无此内容
+
+</details>

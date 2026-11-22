@@ -26,4 +26,8 @@ flowchart TD
 
 **一个简单的核对：** 找云厂商的 capex 里有多少付给了 NVIDIA（NVIDIA 的客户集中度附注：一个直接客户占 2026 财年收入 22%）。自研再多，只要这笔钱还在涨，就没有「失势」。
 
-**出处：** NVIDIA FY2026 10-K（经 MarketScreener 转载页核对）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+NVIDIA FY2026 10-K（经 MarketScreener 转载页核对）。
+
+</details>

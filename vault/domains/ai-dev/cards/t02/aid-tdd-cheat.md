@@ -22,4 +22,8 @@ agent 的修复让测试变绿了，diff 里却有一行：断言从 `== 200` �
 
 **别做：** 只看最终"全绿"。
 
-**出处：** Claude Code docs《Best practices》（Enforce steps with hooks：PreToolUse 拦截对指定路径的编辑）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Enforce steps with hooks：PreToolUse 拦截对指定路径的编辑）
+
+</details>

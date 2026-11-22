@@ -37,4 +37,8 @@ flowchart TD
 
 **对方在想什么：** 他想要一个好谈的候选人，之后一起共事。你让他觉得好谈，他才愿意去争取。
 
-**出处：** McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（email vs phone、follow-up recap）；Voss《Never Split the Difference》Ch.2 "Be a Mirror"、Ch.3 "Don't Feel Their Pain, Label It"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（email vs phone、follow-up recap）；Voss《Never Split the Difference》Ch.2 "Be a Mirror"、Ch.3 "Don't Feel Their Pain, Label It"
+
+</details>

@@ -33,4 +33,8 @@ flowchart TD
 
 **防御要从系统层面做：** OpenAI 提出 **instruction hierarchy**（system prompt > 用户 prompt > 模型输出 > tool 输出，冲突时优先高层），能挡掉不少间接注入，但只是降低风险。
 
-**出处：** Huyen《AI Engineering》ch5 §Jailbreaking and Prompt Injection（Indirect prompt injection）、§Model-level defense
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch5 §Jailbreaking and Prompt Injection（Indirect prompt injection）、§Model-level defense
+
+</details>

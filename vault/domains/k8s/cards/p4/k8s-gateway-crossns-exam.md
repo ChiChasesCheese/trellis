@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Route 不生效 · 考点**｜考点 · 必会
+**Route 不生效**｜考点 · 必会
 
 两个现象：1）`kiada` namespace 里的 TCPRoute 绑定共享 Gateway，status 里 `Accepted` 为 False，原因 `NotAllowedByListeners`。2）HTTPRoute 的 backendRef 指向另一个 namespace 的 Service，`ResolvedRefs` 为 False，原因 `RefNotPermitted`。各缺什么？
 
@@ -27,4 +27,8 @@ flowchart TD
 - **按 namespace 名放行：** 用 label key `kubernetes.io/metadata.name`。
 - **为什么要两边都同意：** 防止一个 namespace 的用户把流量塞进别人的 Gateway，或者偷偷引用别人的 Service。
 
-**出处：** KIA2 §13.3（表 13.2 route 条件）、§13.6.1–13.6.2
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §13.3（表 13.2 route 条件）、§13.6.1–13.6.2
+
+</details>

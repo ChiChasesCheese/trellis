@@ -33,4 +33,8 @@ flowchart TD
 
 **结论：** 没有通用最佳值。用 retrieval 评测（见检索评测那张卡）比较几个 chunk 大小和 overlap，用数据决定。
 
-**出处：** Huyen《AI Engineering》ch6 §Chunking strategy、§Contextual retrieval、§RAG with tabular data
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Chunking strategy、§Contextual retrieval、§RAG with tabular data
+
+</details>

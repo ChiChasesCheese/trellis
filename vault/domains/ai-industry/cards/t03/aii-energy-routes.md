@@ -30,4 +30,8 @@ flowchart TD
 
 **判断：** 对近几年的容量，最快的是现有电网与现有电源的合同；新建核电对应更远的未来。这是一般规律，具体项目要看公告。
 
-**出处：** 通用能源项目阶段划分；Epoch AI Trends（GW 级机房建设约 2.1 年）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用能源项目阶段划分；Epoch AI Trends（GW 级机房建设约 2.1 年）。
+
+</details>

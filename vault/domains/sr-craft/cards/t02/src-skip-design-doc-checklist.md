@@ -38,8 +38,12 @@ flowchart TD
 
 **回到题目：** 加字段：没有歧义，不写，PR 描述里说明即可。会话存储迁移：有取舍（一致性、延迟、运维成本）、影响多个服务、不易回退，写，必要时先做原型。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有判断力，而不是机械地"文档越多越好"或"文档是浪费"。
 
 **适合配哪类故事：** 你在一件有歧义、影响大的事上坚持写了设计文档并避免了返工；或在一件小事上果断跳过文档的经历。
 
 **出处：** Ubl《Design Docs at Google》（industrialempathy.com/posts/design-docs-at-google/）"When not to write a design doc"、"Lifecycle"；Orosz《The Software Engineer's Guidebook》ch15 §1
+
+</details>

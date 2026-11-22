@@ -34,4 +34,8 @@ flowchart TD
 
 **两条经验（论文）：** RAG 系统的**验证只能在运行中进行**；鲁棒性是**逐步演化**出来的，不是一开始设计出来的。
 
-**出处：** Barnett 等《Seven Failure Points When Engineering a Retrieval Augmented Generation System》arxiv.org/abs/2401.05856，§5（2026-11-21 读全文）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Barnett 等《Seven Failure Points When Engineering a Retrieval Augmented Generation System》arxiv.org/abs/2401.05856，§5（2026-11-21 读全文）
+
+</details>

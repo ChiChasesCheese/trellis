@@ -31,4 +31,8 @@ flowchart TD
 
 **杠杆在评审和决策：** 你对一个架构决定的一次判断，会被多个 agent、几十个任务反复使用；错一次的代价同样被放大。
 
-**出处：** DORA《2025 State of AI-assisted Software Development》（amplifier）；Claude Code docs《Best practices》（Tell Claude what it can't see）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+DORA《2025 State of AI-assisted Software Development》（amplifier）；Claude Code docs《Best practices》（Tell Claude what it can't see）
+
+</details>

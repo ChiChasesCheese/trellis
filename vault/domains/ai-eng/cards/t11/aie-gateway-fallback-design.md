@@ -35,4 +35,8 @@ flowchart TD
 
 **书里的补充：** 同一个模型通过不同的 API 提供时，表现可能有细微差异，因为各 API 的优化不同，换 API 时要彻底测试。
 
-**出处：** Huyen《AI Engineering》ch10 §Gateway（fallback policies）；ch4 §Open source models versus model APIs（不同 API 的细微差别）。熔断与评测备用路径为通用的可靠性做法
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Gateway（fallback policies）；ch4 §Open source models versus model APIs（不同 API 的细微差别）。熔断与评测备用路径为通用的可靠性做法
+
+</details>

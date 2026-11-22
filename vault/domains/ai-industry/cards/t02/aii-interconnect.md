@@ -30,4 +30,8 @@ flowchart TD
 
 **怎么读：** 在财报里看 networking 与 compute 的相对增速；在新闻里分清专有互联（锁定）与开放以太网（多供应商）。
 
-**出处：** NVIDIA FY2026 10-K MD&A（经 MarketScreener 转载页）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+NVIDIA FY2026 10-K MD&A（经 MarketScreener 转载页）。
+
+</details>

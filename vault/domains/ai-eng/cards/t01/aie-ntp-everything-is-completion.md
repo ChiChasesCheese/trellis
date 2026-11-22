@@ -30,4 +30,8 @@ Answer:
 
 **对比：** 还有一种 masked language model（BERT 这一类），训练时是"填空"，能同时看空格前后的文字，常用于分类这类理解任务；生成文字用的是 autoregressive 模型。本题库里说的 LLM 都指后者。
 
-**出处：** Huyen《AI Engineering》ch1 §Language models（completion machine、masked vs autoregressive）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch1 §Language models（completion machine、masked vs autoregressive）
+
+</details>

@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**configMap、Secret、downwardAPI 与 projected 卷 · 摘要**｜摘要 · 必会
+**configMap、Secret、downwardAPI 与 projected 卷**｜摘要 · 必会
 
 配置要以**文件**形式给容器，有哪几种 volume 类型？projected 卷又解决什么问题？
 
@@ -41,4 +41,8 @@ volumes:
 - **权限：** configMap 和 secret 卷里文件默认是 `0644`；Secret 建议收紧（`defaultMode`），同时要设对组归属，否则进程读不了。
 - **配置与镜像分开：** 配置、证书放在 ConfigMap 和 Secret 里，换配置不用重新构建镜像。
 
-**出处：** KIA2 §9.5.1–9.5.6
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §9.5.1–9.5.6
+
+</details>

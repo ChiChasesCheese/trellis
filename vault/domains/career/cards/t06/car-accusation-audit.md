@@ -34,4 +34,8 @@ flowchart TD
 
 **对方在想什么：** 他原本准备防守。你先说了，他就没有可防守的，也更愿意听你的理由。
 
-**出处：** Voss《Never Split the Difference》Ch.3 "Don't Feel Their Pain, Label It"（"Do an accusation audit"）；Appendix Section III
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Voss《Never Split the Difference》Ch.3 "Don't Feel Their Pain, Label It"（"Do an accusation audit"）；Appendix Section III
+
+</details>

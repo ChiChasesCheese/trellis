@@ -34,4 +34,8 @@ flowchart TD
 
 **注意：** 两种说法都可能对，取决于年份、芯片型号和负载。没有单一答案，要看租价曲线。
 
-**出处：** 通用成本分析方法；Epoch AI Trends（性能每美元年增 1.49 倍）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用成本分析方法；Epoch AI Trends（性能每美元年增 1.49 倍）。
+
+</details>

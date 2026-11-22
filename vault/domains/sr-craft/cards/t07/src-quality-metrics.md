@@ -49,8 +49,12 @@ flowchart TD
 
 **回到题目：** "我同意追踪，但不作为目标：先让每个团队测出自己的基线；把五项放一起看；用它们讨论瓶颈，例如 lead time 长是因为评审还是发布流程。"
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否理解度量的副作用，能把指标用于改进而不是考核。
 
 **适合配哪类故事：** 你用一组交付指标找到流程瓶颈并改进，同时避免了指标被博弈的经历。
 
 **出处：** DORA《DORA's software delivery performance metrics》（dora.dev/guides/dora-metrics/，2026-11-21 读取：五项指标与 caveats，数字可能随版本变化）；Orosz《The Software Engineer's Guidebook》ch17 §7 "Selecting an Approach"（DORA 段，作者保留意见）；ch21 §1（measurement 可被博弈）
+
+</details>

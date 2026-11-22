@@ -34,4 +34,8 @@ flowchart TD
 
 **对方在想什么：** recruiter 必须在 band 内操作，超过就要审批。你理解 band，就能把请求落在他有权限的范围。
 
-**出处：** Orosz《Guidebook》Ch.4 §4（"A promotion moves compensation to the bottom of the next band"）；Ch.1 §3（tiers）。地区调整的具体规则各公司不同，需向招聘方确认
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.4 §4（"A promotion moves compensation to the bottom of the next band"）；Ch.1 §3（tiers）。地区调整的具体规则各公司不同，需向招聘方确认
+
+</details>

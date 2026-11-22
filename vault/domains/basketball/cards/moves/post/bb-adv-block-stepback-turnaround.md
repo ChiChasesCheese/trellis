@@ -6,10 +6,11 @@ type: qa
 ## Q
 **Block step-back turnaround（低位后撤转身跳投）**｜LaMarcus Aldridge
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-block-stepback-turnaround.mp4]]
 
-**Sequence。** `left-block post-up → drop-step → step back → turnaround mid-range jumper`
-**Read。** the drop-step moves the defender off his line, so he cannot recover to contest the turnaround.
+**步骤：** 左低位背身 → drop-step（撤步摆脱）→ 后撤一步 → 转身中距离跳投
+
+**读防守：** drop-step 把防守人带离原来的站位，他来不及回位去封转身跳投。

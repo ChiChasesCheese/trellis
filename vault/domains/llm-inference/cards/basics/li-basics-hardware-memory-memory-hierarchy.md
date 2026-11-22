@@ -42,4 +42,4 @@ step: 3
 
 **新进展（2026 年 2 月）。** OpenAI 发布 GPT-5.3-Codex-Spark，跑在 Cerebras 的晶圆级芯片上，官方称每秒超过 1,000 个 token。这块芯片把 44 GB SRAM 直接做在芯片上，带宽约 21 PB/s（厂商称约为 H100 显存的 7,000 倍）。
 
-<details class="pt"><summary>想一想：本卡说 7B 的 FP16 模型放不进 GPU 的几十 MB SRAM。44 GB 片上 SRAM 最多放下多大的 FP16 权重？</summary>44 GB ÷ 2 字节 ≈ 220 亿参数，还没给 KV 缓存留位置。更大的模型要拆到多块芯片上。</details>
+<details class="pt"><summary>想一想：上面说 7B 的 FP16 模型放不进 GPU 的几十 MB SRAM。44 GB 片上 SRAM 最多放下多大的 FP16 权重？</summary>44 GB ÷ 2 字节 ≈ 220 亿参数，还没给 KV 缓存留位置。更大的模型要拆到多块芯片上。</details>

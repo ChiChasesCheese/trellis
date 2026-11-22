@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Gateway API vs Ingress · 考点**｜考点 · 必会
+**Gateway API vs Ingress**｜考点 · 必会
 
 你的团队用 Ingress NGINX，靠 annotation 做金丝雀（10% 流量给新版本）。下面三件事，各会对你的选型产生什么影响？
 1. 2026 年 3 月，Ingress NGINX 停止发布和安全修复
@@ -31,4 +31,8 @@ rules:
 - **版本：** Gateway API v1.0 于 2023-10-31 GA，Gateway、GatewayClass、HTTPRoute 为 v1。
 - **迁移时：** 可以先让 Ingress 和 Gateway 并存，按服务逐个切换。
 
-**出处：** Ingress NGINX 退役见 kubernetes.io 博客 2025-11-11 与 v1.36 发布博客；Gateway API v1.0 GA 见 kubernetes.io 博客 2023-10-31；Poulton ch8；KIA2 ch13（HTTPRoute 的 weight）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Ingress NGINX 退役见 kubernetes.io 博客 2025-11-11 与 v1.36 发布博客；Gateway API v1.0 GA 见 kubernetes.io 博客 2023-10-31；Poulton ch8；KIA2 ch13（HTTPRoute 的 weight）
+
+</details>

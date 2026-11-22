@@ -38,8 +38,12 @@ flowchart TD
 
 **回到题目：** 先找运营同学问：为什么要导出？导出后做什么？也许他们只是想每天看某个对账表。看一遍客服工单，确认需求频率；若真的是对账，做一个对账报表比导出更省事；先做最小一版，给两位运营试用。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否有产品意识，而不是只做"接单的工程师"。
 
 **适合配哪类故事：** 你追问需求背后的问题，用更简单或不同的方案解决了真实问题，或者阻止了一个没人用的功能的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch21 §2 "Your Team and Product"（Put yourself in the customer's shoes；Know why customers use your product）；ch5 §1 "Product Teams and Product-Minded Engineers"（Quick product validation cycles；End-to-end product feature ownership）
+
+</details>

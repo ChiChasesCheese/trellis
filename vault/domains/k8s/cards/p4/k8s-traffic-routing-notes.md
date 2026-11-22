@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**就近路由 · 摘要**｜摘要 · 必会
+**就近路由**｜摘要 · 必会
 
 集群内的流量想优先走同 node 或同 zone 的后端，有哪几种办法？「硬性规定」和「尽量」的区别是什么？
 
@@ -40,4 +40,8 @@ flowchart TD
 - **前提：** node 要有 `topology.kubernetes.io/zone` 之类的 label，kube-proxy 才知道谁在哪个 zone。
 - **和 `externalTrafficPolicy` 的区别：** 那个管**外部**进来的流量是否多跳一次；这里管**集群内部**的流量。
 
-**出处：** KIA2 §11.5.1–11.5.2；kubernetes.io Concepts › Service（Traffic distribution control）、Service Internal Traffic Policy
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §11.5.1–11.5.2；kubernetes.io Concepts › Service（Traffic distribution control）、Service Internal Traffic Policy
+
+</details>

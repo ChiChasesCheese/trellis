@@ -42,5 +42,3 @@ InnoDB 同样是 MVCC，旧版本放在哪？一致性读（consistent read）�
 **坑。** 长事务让 undo 越积越多；官方建议定期提交，连只读事务也一样。
 
 **为什么。** PostgreSQL 新旧版本都在表里（要 VACUUM）；InnoDB 表里只留最新版本，代价是读旧版本要回溯。
-
-**对应 LeetCode：** 无直接对应的题

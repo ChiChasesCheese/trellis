@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Pod network model 与 CNI · 摘要**｜摘要 · 必会
+**Pod network model 与 CNI**｜摘要 · 必会
 
 Kubernetes 对 Pod 网络提出了什么要求？是谁来实现它？
 
@@ -34,4 +34,8 @@ flowchart TD
 - **NetworkPolicy** 也要 CNI 支持，没有支持的插件，创建了也不会生效（见后面的卡）。
 - **选哪个插件：** 开源和商业的都有，按需选；本卡不比较具体产品。
 
-**出处：** kubernetes.io Concepts › Cluster Networking；Services, Load Balancing, and Networking；Network Plugins
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Cluster Networking；Services, Load Balancing, and Networking；Network Plugins
+
+</details>

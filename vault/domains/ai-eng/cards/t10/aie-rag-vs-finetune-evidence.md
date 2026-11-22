@@ -29,4 +29,8 @@ tags: [考点]
 
 **例外：** 如果问题是行为类（输出格式、风格、冷门的语法如不常见的 SQL 方言），finetuning 才有用。
 
-**出处：** Huyen《AI Engineering》ch7 §Finetuning and RAG（Table 7-2，Ovadia et al. 2024）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch7 §Finetuning and RAG（Table 7-2，Ovadia et al. 2024）
+
+</details>

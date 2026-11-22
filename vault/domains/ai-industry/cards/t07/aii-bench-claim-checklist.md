@@ -28,4 +28,8 @@ flowchart TD
   C --> D["分差与误差"]
 ```
 
-**出处：** State of AI Report 2026（工具与设置影响成绩的例子）；通用评测读法。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+State of AI Report 2026（工具与设置影响成绩的例子）；通用评测读法。
+
+</details>

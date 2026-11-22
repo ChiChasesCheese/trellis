@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**自管 vs 托管 · 摘要**｜摘要 · 必会
+**自管 vs 托管**｜摘要 · 必会
 
 团队决定上 Kubernetes。要先回答的两个选择是什么？每个选择各自的代价是什么？
 
@@ -32,4 +32,8 @@ flowchart TD
 - **hybrid：** 平时跑自己机房，高峰时溢出到云上，少见但可行。
 - **经验法则：** 试验和学习可以自建；生产优先托管或成熟发行版。
 
-**出处：** KIA2 §1.3.1–1.3.3「To manage or not to manage Kubernetes yourself」「Using vanilla or extended Kubernetes」
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §1.3.1–1.3.3「To manage or not to manage Kubernetes yourself」「Using vanilla or extended Kubernetes」
+
+</details>

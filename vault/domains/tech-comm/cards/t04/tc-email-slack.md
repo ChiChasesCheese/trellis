@@ -36,4 +36,8 @@ flowchart TD
 - Before: "Hi, quick question about the API, also the dashboard is broken, and could you review my PR?"
 - After: "Could you review PR #482 by Thursday? It changes the auth flow for the mobile API. (Separate thread: the dashboard alert is failing, details below.)"
 
-**出处：** Minto p. 57–80（Ch.4：Some Common Patterns，备忘录与邮件类开场）（部分）；具体句式由规则推导
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 57–80（Ch.4：Some Common Patterns，备忘录与邮件类开场）（部分）；具体句式由规则推导
+
+</details>

@@ -6,10 +6,11 @@ type: qa
 ## Q
 **Nick Young's consecutive spin（尼克杨转身 / 连续转身）**｜Nick Young
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-nick-young-spin.mp4]]
 
-**Sequence。** `jab step / push-dribble across → hard plant → spin off the pivot foot, ball on the far hip → keep turning → fadeaway`
-**Read。** the defender chases the first turn, gets cleared out by the second, and the shooter lands with a full step of separation.
+**步骤：** 试探步或推运球过中线 → 用力落脚 → 以轴心脚转身，球放在远侧髋 → 继续转 → 后仰
+
+**读防守：** 防守人追着第一次转身，被第二次转身清出去，投手落地时拉开整整一步。

@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**postStart 与 preStop · 摘要**｜摘要 · 必会
+**postStart 与 preStop**｜摘要 · 必会
 
 postStart 和 preStop 两个 lifecycle hook 分别在什么时刻执行？支持哪些动作？失败了会怎样？
 
@@ -39,4 +39,8 @@ lifecycle:
 - **preStop 只在「被要求终止」时调用**，进程自己退出时不调用。
 - **要靠 preStop 做关键动作：** 要确认它真的跑成功了，失败时只有一条警告事件。
 
-**出处：** KIA2 §6.3.1–6.3.2、§6.4（hooks 与终止顺序）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §6.3.1–6.3.2、§6.4（hooks 与终止顺序）
+
+</details>

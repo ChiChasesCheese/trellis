@@ -31,4 +31,8 @@ tags: [原则]
 - Before: "We can't do that. It's too risky."
 - After: "I want this live next week too. My concern is the missing rollback: a bad deploy could double-charge customers. Could we ship to 5 percent of traffic first and add the rollback in the next sprint?"
 
-**出处：** parin.work《Principal Engineer's Guide to Saying No》（parin.work/principal-engineers-guide-to-saying-no.html）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+parin.work《Principal Engineer's Guide to Saying No》（parin.work/principal-engineers-guide-to-saying-no.html）
+
+</details>

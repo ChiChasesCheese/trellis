@@ -6,7 +6,7 @@ step: 1
 tags: [先修]
 ---
 ## Q
-**五个基本名词 · 先修**｜先修 · 必会
+**五个基本名词**｜先修 · 必会
 
 第一次听人讲 Kubernetes，满嘴都是 Cluster、Node、Pod、Deployment、Service。各是什么？它们之间是什么关系？
 
@@ -39,4 +39,8 @@ flowchart TB
 - **controller：** control plane 里一直在跑的程序，负责把现实对齐到你声明的样子，比如 Pod 少了就补。
 - **replicas：** Deployment 里「要跑几份 Pod」的那个数字。
 
-**出处：** KIA2 §1.2、§3.3；Poulton《The Kubernetes Book 2026》ch1
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §1.2、§3.3；Poulton《The Kubernetes Book 2026》ch1
+
+</details>

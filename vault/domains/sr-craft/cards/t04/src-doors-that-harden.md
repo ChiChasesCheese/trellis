@@ -24,6 +24,10 @@ tags: [追问]
 - 先只给内部用户用，或者标成 beta，把"变硬"的时间往后推。
 - 记下这类决定（ADR），以后的人知道它为什么撤不回。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否理解"可逆性"会随时间和依赖关系变化，而不是一个静态标签。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch25 §4「Two-way doors that become one-way doors」
+
+</details>

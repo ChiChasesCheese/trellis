@@ -37,4 +37,8 @@ flowchart TD
 - 把新发现的线上失败加进回归集；
 - 对关键标准（如安全）设**硬门槛**，对质量类指标设**不得低于基线多少**。
 
-**出处：** Huyen《AI Engineering》ch4 §Tie evaluation metrics to business metrics、§Iterate（experiment tracking）。CI 集成的具体做法书里无，为通用工程实践
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Tie evaluation metrics to business metrics、§Iterate（experiment tracking）。CI 集成的具体做法书里无，为通用工程实践
+
+</details>

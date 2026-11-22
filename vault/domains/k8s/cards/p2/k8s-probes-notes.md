@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Probes 与 restart policy · 摘要**｜摘要 · 必会
+**Probes 与 restart policy**｜摘要 · 必会
 
 liveness、readiness、startup 三种 probe 各问什么？探针失败时分别会发生什么？
 
@@ -39,4 +39,8 @@ containers:
 - **restartPolicy：** Pod 级别，`Always`（默认）/`OnFailure`/`Never`，决定容器退出后要不要重启。Job 的 Pod 用 `OnFailure` 或 `Never`。
 - **CrashLoopBackOff：** 容器反复崩溃时，kubelet 的重启间隔指数增长。
 
-**出处：** KIA2 §6.2（Keeping containers healthy）；kubernetes.io Tasks › Configure Liveness, Readiness and Startup Probes
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §6.2（Keeping containers healthy）；kubernetes.io Tasks › Configure Liveness, Readiness and Startup Probes
+
+</details>

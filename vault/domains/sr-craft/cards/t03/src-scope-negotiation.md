@@ -45,8 +45,12 @@ flowchart TD
 
 **回到题目：** "新增两个需求、少一个人，这两周加班只能补一部分。我建议：A 需求这版先不做，B 保留；日期推三天；或者你能不能让 X 同学回来帮两天。三选一我都能执行，但是继续加班会带来质量风险。"
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你能否用取舍与干系人谈，而不是默默承受或拒绝。资深的信号是"选择砍什么，而不是加班"。
 
 **适合配哪类故事：** 你在压力下提出了范围或日期的替代方案，既保证了关键目标，又保护了团队的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch16 §4 "Software Project Physics"（When scope increases；When the project timeline changes；When fewer people can work on a project；When people working on the project change）
+
+</details>

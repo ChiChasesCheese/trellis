@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Probe 设计 · 摘要**｜摘要 · 必会
+**Probe 设计**｜摘要 · 必会
 
 给一个 Web 服务写 liveness probe 的 handler 时，有哪些规则能避免「probe 本身把应用搞垮」？
 
@@ -31,4 +31,8 @@ flowchart TD
 - **最简单也有用：** 只检查 HTTP 服务器还能响应 `/`，也比没有 liveness 强，因为卡死的进程会被重启。
 - **和 readiness 的分工：** 外部依赖暂时不可用，用 readiness 让流量绕开，不要重启。
 
-**出处：** KIA2 §6.2.6–6.2.7「Using a startup probe…」「Creating effective liveness probe handlers」
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §6.2.6–6.2.7「Using a startup probe…」「Creating effective liveness probe handlers」
+
+</details>

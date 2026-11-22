@@ -30,4 +30,8 @@ flowchart TD
 
 **对方在想什么：** 对方默认你有选择。他们不知道你的缓冲，只能从你的态度判断。
 
-**出处：** McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（"never need a job"、不要显得需要这份工作）；Qureshi https://haseebq.com/my-ten-rules-for-negotiating-a-job-offer/（Always be positive；Information is power）；Orosz《Guidebook》Ch.6 §1
+<details class="pt" markdown="1"><summary>出处</summary>
+
+McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（"never need a job"、不要显得需要这份工作）；Qureshi https://haseebq.com/my-ten-rules-for-negotiating-a-job-offer/（Always be positive；Information is power）；Orosz《Guidebook》Ch.6 §1
+
+</details>

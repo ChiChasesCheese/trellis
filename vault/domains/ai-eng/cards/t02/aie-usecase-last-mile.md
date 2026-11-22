@@ -30,4 +30,8 @@ tags: [考点]
 
 **回到题目：** 告诉老板 demo 只说明"方向可行"，用评测定义可用门槛，按评测结果排时间，并预留最后 20% 的时间。
 
-**出处：** Huyen《AI Engineering》ch1 §Setting Expectations、§Milestone Planning
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch1 §Setting Expectations、§Milestone Planning
+
+</details>

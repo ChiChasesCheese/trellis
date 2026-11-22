@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** "它很吸引人，但数据库不是我们的竞争力，团队也没有运维经验。我们的创新预算花在 X 上。如果你想验证性能收益，可以做一个原型和压测，用数据说话；没有明显的、我们的瓶颈解决不了的问题，就继续用现有的。"
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对技术选型有"成本意识"，知道选择要服务于产品和团队能力，而不是追新。
 
 **适合配哪类故事：** 你否决或推迟了一个时髦但不必要的技术引入，或者在关键点上有意识地花了一次"创新预算"的经历。
 
 **出处：** Dan McKinley《Choose Boring Technology》（boringtechnology.club，innovation tokens）；Orosz《The Software Engineer's Guidebook》ch25 §1 "Keep It As Simple As Possible"、§3 Architecture Debt #4（"stable if unfashionable"）；Larson《Crafting Engineering Strategy》ch4（示例策略条目 "Choose boring technology"）
+
+</details>

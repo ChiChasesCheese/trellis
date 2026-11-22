@@ -24,4 +24,8 @@ agent 需要读 issue tracker、开 PR、查错误面板。接 MCP server，还�
 
 **别做：** 为了"以后可能用到"接一堆 server。
 
-**出处：** Claude Code docs《Best practices》（Connect the tools Claude needs）；《Security》（MCP security）；《How Claude Code works》（When context fills up）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Connect the tools Claude needs）；《Security》（MCP security）；《How Claude Code works》（When context fills up）
+
+</details>

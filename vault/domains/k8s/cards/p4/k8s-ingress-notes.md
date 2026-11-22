@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Ingress 与 Ingress controller · 摘要**｜摘要 · 必会
+**Ingress 与 Ingress controller**｜摘要 · 必会
 
 LoadBalancer Service 每个服务要一个负载均衡器。Ingress 怎么让多个 HTTP 服务共用一个入口？它由哪几部分组成，缺哪个都不行？
 
@@ -48,4 +48,8 @@ spec:
 - **默认没有 URL 改写：** 请求的 path 原样转给后端。
 - **多个 Ingress：** 每个通常有自己的 IP，也有实现用共享入口。
 
-**出处：** KIA2 §12.1.1–12.1.2、§12.2.2
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §12.1.1–12.1.2、§12.2.2
+
+</details>

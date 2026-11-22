@@ -31,4 +31,8 @@ flowchart TD
   GW --> T["对照电网与芯片"]
 ```
 
-**出处：** Epoch AI Trends（epoch.ai/trends，2026-11 核对）；State of AI Report 2026 首页。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Epoch AI Trends（epoch.ai/trends，2026-11 核对）；State of AI Report 2026 首页。
+
+</details>

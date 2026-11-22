@@ -30,4 +30,8 @@ tags: [摘要]
 
 **检查清单：** 许可证文本（版本号）→ 商用 → 用户规模门槛 → 输出可否用于训练 → 训练数据披露程度 → 谁来背侵权风险。许可证版本会变，每次升级模型都重读。
 
-**出处：** Huyen《AI Engineering》ch4 §Open source, open weight, and model licenses；§Data lineage and copyright
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Open source, open weight, and model licenses；§Data lineage and copyright
+
+</details>

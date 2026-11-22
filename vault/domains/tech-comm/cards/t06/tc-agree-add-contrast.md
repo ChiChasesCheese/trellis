@@ -23,4 +23,8 @@ tags: [惯用说法]
 
 **语气：** 同意放前、对比放后；用 "That said" 转折比单独的 "But" 软；对比的对象要说清楚，别让人猜。
 
-**出处：** 惯用说法，非引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用
+
+</details>

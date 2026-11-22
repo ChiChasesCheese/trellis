@@ -31,4 +31,8 @@ flowchart TD
 
 **MCP 让它更容易发生：** 它鼓励你混搭来自不同来源的工具，这些工具里常常有的提供私有数据、有的带来不可信内容、有的能外联。
 
-**出处：** Simon Willison《The lethal trifecta for AI agents》（2025-06-16）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Simon Willison《The lethal trifecta for AI agents》（2025-06-16）
+
+</details>

@@ -32,4 +32,8 @@ flowchart TD
 
 **什么时候不适合：** 用户在等待的流程；需要根据结果立刻做下一步的 agent 循环。
 
-**出处：** Huyen《AI Engineering》ch9 §Online and batch inference APIs（适用场景）。分片、幂等、重试等为通用的批处理工程做法
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch9 §Online and batch inference APIs（适用场景）。分片、幂等、重试等为通用的批处理工程做法
+
+</details>

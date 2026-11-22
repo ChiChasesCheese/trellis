@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 周一和周二：和 PM、支付团队、风控团队各谈一次，写出假设清单。周三到周四：对最不确定的一两件事（下单、回调）写原型。周五：给出方向、已验证和未验证的点、第一版范围。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你面对模糊时是不是主动推进，用实验和文字把问题变小，而不是等人来拆任务。
 
 **适合配哪类故事：** 你拿到一个只有一句话的需求，用原型或调研把它变成清晰的方案和范围的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch15 §2 "Prototyping and Proof of Concept"（含 "Build with the intent to throw it away"）；ch16 §3 "Project Kickoffs and Milestones"
+
+</details>

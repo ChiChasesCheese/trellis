@@ -23,4 +23,8 @@ tags: [拓展]
 - **升级前要做：** 先确认节点用的是 cgroup v2，再升到 v1.35 以上。
 - **版本：** cgroup v1 移除 v1.35；user namespaces beta v1.33 → GA v1.36。
 
-**出处：** kubernetes.io 发布博客 v1.35、v1.36（cgroup v1 removal；user namespaces，KEP-127）；KIA2 §2.3.1 说明 user namespace
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.35、v1.36（cgroup v1 removal；user namespaces，KEP-127）；KIA2 §2.3.1 说明 user namespace
+
+</details>

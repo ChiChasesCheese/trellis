@@ -6,7 +6,7 @@ step: 1
 tags: [先修]
 ---
 ## Q
-**Reconcile loop · 先修**｜先修 · 必会
+**Reconcile loop**｜先修 · 必会
 
 你用 `kubectl apply` 交了一份 Deployment，写着 `replicas: 3`（要 3 个 Pod）。然后你手动删掉其中一个 Pod，几秒后 Pod 又变回 3 个。是谁、按什么规则把它补回来的？
 
@@ -28,4 +28,8 @@ flowchart TD
 - **为什么稳：** 它是 **level-triggered**，只看"现在差多少"，不靠记住"刚才发生了什么事件"。漏掉一个事件、controller 重启了，下一轮照样能补齐。
 - **谁补的：** ReplicaSet controller（在 kube-controller-manager 里）。它只创建 Pod 对象；放到哪个节点是 scheduler 的事，真正起容器是 kubelet 的事。
 
-**出处：** Poulton《The Kubernetes Book 2026》ch2「The declarative model and desired state」
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton《The Kubernetes Book 2026》ch2「The declarative model and desired state」
+
+</details>

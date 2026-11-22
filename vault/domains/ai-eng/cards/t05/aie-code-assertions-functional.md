@@ -37,4 +37,8 @@ def check(gcd):
 
 这类检查便宜、稳定、可复现，适合每次改动都跑。
 
-**出处：** Huyen《AI Engineering》ch3 §Exact Evaluation → Functional Correctness
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch3 §Exact Evaluation → Functional Correctness
+
+</details>

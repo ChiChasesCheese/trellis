@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Image、Dockerfile 与 registry · 摘要**｜摘要 · 必会
+**Image、Dockerfile 与 registry**｜摘要 · 必会
 
 一个 container image 是怎么造出来的、怎么到另一台机器上运行的？为什么拉第二个镜像常常很快？
 
@@ -40,4 +40,8 @@ ENTRYPOINT ["node", "app.js"]  # 容器启动时执行的命令
 - **拉得快的原因：** 新镜像只需下载本机还没有的层。
 - **镜像里不是整台机器：** 只有应用和依赖，内核用宿主机的。
 
-**出处：** KIA2 §2.1.2–2.1.3、§2.2.1（layers、registry、tag、Dockerfile 指令）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §2.1.2–2.1.3、§2.2.1（layers、registry、tag、Dockerfile 指令）
+
+</details>

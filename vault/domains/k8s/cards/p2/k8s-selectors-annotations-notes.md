@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Field selector 与 annotation · 摘要**｜摘要 · 必会
+**Field selector 与 annotation**｜摘要 · 必会
 
 label selector 已经能过滤对象，为什么还有 field selector？annotation 和 label 又差在哪？
 
@@ -31,4 +31,8 @@ kubectl annotate pod kiada created-by='alice@example.com'
 - **annotation 的典型用途：** 描述、联系人、Git 提交、构建时间；工具的开关；新特性在加正式字段之前先用 annotation 试，几个版本后才变成字段（旧 annotation 随后弃用）。
 - **看 annotation：** `kubectl get` 不显示，用 `kubectl describe` 或 `-o yaml`。`kubectl.kubernetes.io/last-applied-configuration` 是 kubectl 自己加的。
 
-**出处：** KIA2 §7.4–7.5
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §7.4–7.5
+
+</details>

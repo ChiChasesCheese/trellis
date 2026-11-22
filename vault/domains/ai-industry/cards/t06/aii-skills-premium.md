@@ -28,4 +28,8 @@ flowchart TD
   H --> K["因果？"]
 ```
 
-**出处：** 通用实证研究读法；本卡不含数字。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用实证研究读法；本卡不含数字。
+
+</details>

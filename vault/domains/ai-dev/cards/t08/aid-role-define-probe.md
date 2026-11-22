@@ -24,4 +24,8 @@ tags: [考点]
 
 **注意：** 80%、1 万条是例子数字，不是建议值。
 
-**出处：** Claude Code docs《Best practices》（Brainstorm with Claude first；Give Claude a check to run）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Brainstorm with Claude first；Give Claude a check to run）
+
+</details>

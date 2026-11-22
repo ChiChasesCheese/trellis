@@ -48,5 +48,3 @@ def tmp():
     finally:
         print("cleanup")   # 去掉 try/finally：块里出错时不会打印
 ```
-
-**对应 LeetCode：** 无直接对应的题

@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Pod status · 摘要**｜摘要 · 必会
+**Pod status**｜摘要 · 必会
 
 `kubectl get pods` 显示 `Running`，是不是说明应用可以用了？Pod 的 phase、conditions、container states 各是什么？
 
@@ -32,4 +32,8 @@ flowchart TB
 - **READY 列 `0/1`：** 一个容器，还没就绪。
 - **要看原因：** `kubectl describe pod` 里的 Conditions 和每个容器的 State、Last State。
 
-**出处：** KIA2 §6.1（Understanding the pod's status）；kubernetes.io Concepts › Pod Lifecycle
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §6.1（Understanding the pod's status）；kubernetes.io Concepts › Pod Lifecycle
+
+</details>

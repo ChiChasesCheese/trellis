@@ -29,4 +29,8 @@ tags: [原则]
 - **把"为什么发生"当成"做什么"：** 写成长篇原因分析，没有行动。
 - **指示只给目标没给步骤。**
 
-**出处：** Minto p. 65–80（Ch.4 Fine Points of Introductions：Some Common Patterns——Giving Direction / Seeking Approval to Spend Money / Choosing Among Alternatives）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 65–80（Ch.4 Fine Points of Introductions：Some Common Patterns——Giving Direction / Seeking Approval to Spend Money / Choosing Among Alternatives）
+
+</details>

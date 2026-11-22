@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** 先统计一周有多少求助是同类问题，把它们写成文档；对新人用提问方式带，不直接给答案；评审时让别人先当主评审，你只补充；腾出的时间做方向性的工作。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否理解高级别的价值在于团队整体产出，而不是个人产出。
 
 **适合配哪类故事：** 你把自己擅长的事教给别人、写成文档或自动化，使团队不再依赖你一人的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch11 §3 "Your Team"（"Unblock your team"、"Document for others"）；ch12 §3 "Mentoring"（"Avoid serving up answers on a silver platter"）；ch22 §1（"Distrusts other engineers"）
+
+</details>

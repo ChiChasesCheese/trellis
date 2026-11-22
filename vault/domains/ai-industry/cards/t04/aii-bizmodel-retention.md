@@ -29,4 +29,8 @@ flowchart TD
   E --> R2["风险：集中"]
 ```
 
-**出处：** 通用 SaaS 指标定义；数字为演示用。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用 SaaS 指标定义；数字为演示用。
+
+</details>

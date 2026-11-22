@@ -31,4 +31,8 @@ tags: [原则]
 - **没有 Complication：** 读者不知道为什么要读。
 - **Key Line 与开场的答案对不上。**
 
-**出处：** Minto p. 57–64（Ch.4 Fine Points of Introductions：Basic Structure / Variations）；p. 185–208（Ch.10：Key Line points）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 57–64（Ch.4 Fine Points of Introductions：Basic Structure / Variations）；p. 185–208（Ch.10：Key Line points）
+
+</details>

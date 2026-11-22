@@ -6,10 +6,11 @@ type: qa
 ## Q
 **Pivot-foot switch（换轴心脚）**｜Kobe Bryant · Nikola Jokic
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-pivot-foot-switch.mp4]]
 
-**Sequence。** `pivot off one foot → rotate and plant on the other → new shooting angle`
-**Read。** a defender set for one angle gets re-pinned, and the shooter's body line to the rim has moved.
+**步骤：** 单脚做轴心 → 转身换到另一只脚落地 → 得到新的出手角度
+
+**读防守：** 防守人按原来的角度站好了，换脚后又被钉住，投篮人到篮筐的身体线已经变了。

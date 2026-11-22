@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**End-to-end walk-through · 考点**｜考点 · 必会
+**End-to-end walk-through**｜考点 · 必会
 
 `kubectl apply` 一个 Deployment（3 副本）后，你看到：Deployment 存在、ReplicaSet 存在、**没有任何 Pod**。问题出在链路的哪一步？如果是 Pod 存在但 `READY 0/1`、状态是 Pending 且已分配了 node，又出在哪？
 
@@ -26,4 +26,8 @@ tags: [考点]
 
 - **方法：** 沿着「一对象 → 下一个对象」的链路，找最后一个正常存在的环节，下一环就是嫌疑。
 
-**出处：** KIA2 §1.2.4、§3.3（Pod 先 Pending 再 Running）；Poulton ch2
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §1.2.4、§3.3（Pod 先 Pending 再 Running）；Poulton ch2
+
+</details>

@@ -38,8 +38,12 @@ flowchart TD
 
 **回到题目：** 找出订单服务拖累业务的具体数字（加功能的周期、事故次数），把重构拆成与两个即将上线的业务功能绑定的部分，对经理讲"能多快、少几次事故"，而不是"代码很乱"。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否能把技术工作翻译成业务价值，并争取到资源。
 
 **适合配哪类故事：** 你把一项技术债或平台工作，借业务项目或量化收益推进下去的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch25 §7 "Architecture Decisions vs Business Priorities"（"Align architecture decisions with the business's goals"、"Tie architecture changes to business initiatives"、"Good enough may be better than perfect"）；ch21 §1 "Northstars, KPIs, OKRs"
+
+</details>

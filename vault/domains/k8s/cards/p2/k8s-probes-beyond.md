@@ -28,4 +28,8 @@ livenessProbe:
 - **同样适用于：** 生命周期 handler（preStop、postStart）里的 `host` 字段。
 - **怎么办：** 删掉 `host`，让 kubelet 默认探测 Pod IP。强制执行靠 Pod Security admission 或第三方策略工具。
 
-**出处：** kubernetes.io 发布博客 v1.34「"Restricted" Pod security standard now forbids remote probes」（KEP-4940）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.34「"Restricted" Pod security standard now forbids remote probes」（KEP-4940）
+
+</details>

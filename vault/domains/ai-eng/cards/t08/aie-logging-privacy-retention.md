@@ -34,4 +34,8 @@ flowchart TD
 
 **不要忘了：** 敏感数据检测也会漏；所以仍要有保留期和权限这两道防线。
 
-**出处：** Huyen《AI Engineering》ch10 §Input guardrails（PII 遮盖与还原）、§User Feedback（用户数据的使用）；OWASP LLM02:2025。分级与保留期的具体做法为通用的工程做法，书里无专节
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Input guardrails（PII 遮盖与还原）、§User Feedback（用户数据的使用）；OWASP LLM02:2025。分级与保留期的具体做法为通用的工程做法，书里无专节
+
+</details>

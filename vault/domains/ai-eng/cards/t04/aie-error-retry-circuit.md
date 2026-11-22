@@ -32,4 +32,8 @@ flowchart TD
 
 **网关层同样做：** 书里提到，模型 API 失败（"不幸很常见"）或被限流时，gateway（统一转发模型请求的中间层）可以路由到备用模型、短暂等待后重试，或优雅降级。
 
-**出处：** Huyen《AI Engineering》ch10 §Gateway（fallback policies）；Anthropic《Building effective agents》（stopping conditions）。退避、熔断是通用的可靠性做法，书里无细节
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Gateway（fallback policies）；Anthropic《Building effective agents》（stopping conditions）。退避、熔断是通用的可靠性做法，书里无细节
+
+</details>

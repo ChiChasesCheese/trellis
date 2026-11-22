@@ -30,4 +30,8 @@ tags: [考点]
 
 **回到题目：** 要问模型方有没有披露污染比例和干净样本得分；并用自己的、未公开的法律问题测。榜单高分只能说明「值得测」。
 
-**出处：** Huyen《AI Engineering》ch4 §Data contamination with public benchmarks（How data contamination happens、Handling data contamination）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Data contamination with public benchmarks（How data contamination happens、Handling data contamination）
+
+</details>

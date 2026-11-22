@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Service 与 ClusterIP · 考点**｜考点 · 必会
+**Service 与 ClusterIP**｜考点 · 必会
 
 下面两个 Service 都「创建成功」，但访问不通。分别为什么？
 ```yaml
@@ -36,4 +36,8 @@ kubectl get pods -l app=kiada      # 先确认 selector 真的能选到 Pod
 - **排查顺序：** selector 能选到 Pod 吗 → 这些 Pod Ready 吗 → `targetPort` 对吗。
 - **`port` 与 `targetPort` 不同是正常的：** 外面连 80，里面转到 8080。
 
-**出处：** KIA2 §11.1；Poulton ch9
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §11.1；Poulton ch9
+
+</details>

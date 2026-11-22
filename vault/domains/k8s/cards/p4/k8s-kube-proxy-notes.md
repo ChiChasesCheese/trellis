@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**kube-proxy 与 Service 的 dataplane · 摘要**｜摘要 · 必会
+**kube-proxy 与 Service 的 dataplane**｜摘要 · 必会
 
 ClusterIP 是个虚拟 IP，没有任何进程监听它。流量到底是怎么被转给某个 Pod 的？iptables、ipvs、nftables 三种模式有什么区别？
 
@@ -32,4 +32,8 @@ flowchart TD
 - **相关策略：** `externalTrafficPolicy`、`internalTrafficPolicy` 都是 kube-proxy 在生成这些规则时遵守的。
 - **所以：** 大集群（成千上万个 Service）选 nftables；Windows node 只有 `kernelspace` 模式。
 
-**出处：** kubernetes.io Reference › Virtual IPs and Service Proxies；kubernetes.io 博客 2025-02-28「NFTables mode for kube-proxy」；发布博客 v1.33、v1.35
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Reference › Virtual IPs and Service Proxies；kubernetes.io 博客 2025-02-28「NFTables mode for kube-proxy」；发布博客 v1.33、v1.35
+
+</details>

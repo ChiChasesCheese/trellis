@@ -24,4 +24,8 @@ agent 给出一个方案：为了让订单服务的新功能"更快做完"，让
 **做：** 让 agent 提供替代方案：调库存服务的接口，或事件订阅；你选。
 **别做：** 因为"能跑、更快"就接受。
 
-**出处：** Claude Code docs《Best practices》（Keep CLAUDE.md short：Decisions that aren't in the repo）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Keep CLAUDE.md short：Decisions that aren't in the repo）
+
+</details>

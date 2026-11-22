@@ -29,4 +29,8 @@ tags: [原则]
 - Before: (silent for 40 seconds, then) "OK, so this is the cache."
 - After: "I'm adding a cache between the service and the database. Its job is to serve hot reads, so the database only sees misses. I'll note that invalidation is a risk and come back to it."
 
-**出处：** hellointerview.com/learn/system-design/in-a-hurry/delivery（talking through your thought process；simple verbal callout and written note, then move on）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+hellointerview.com/learn/system-design/in-a-hurry/delivery（talking through your thought process；simple verbal callout and written note, then move on）
+
+</details>

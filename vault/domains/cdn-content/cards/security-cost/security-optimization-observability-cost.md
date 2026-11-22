@@ -13,4 +13,4 @@ Remove unused high-cardinality labels and duplicate events, shorten retention fo
 observability storage cost 的增长快于 traffic。首先应减少什么，才能不让 on-call 失明？
 
 ## A zh
-删除 unused high-cardinality label 和 duplicate event，缩短 verbose diagnostic 的 retention，聚合 common metric，并 sample routine success，同时保留 security violation、error 和 unbiased baseline。让每个 signal 对应 dashboard、alert、investigation 或 audit need。不要削减 user SLI 或 rollout guardrail，因为它们用来证明其他 cost optimization 是否安全。
+删除 unused high-cardinality label 和 duplicate event，缩短 verbose diagnostic 的 retention，聚合 common metric，并对常规成功请求采样，同时保留 security violation、error 和 unbiased baseline。让每个 signal 对应 dashboard、alert、investigation 或 audit need。不要削减 user SLI 或 rollout guardrail，因为它们用来证明其他 cost optimization 是否安全。

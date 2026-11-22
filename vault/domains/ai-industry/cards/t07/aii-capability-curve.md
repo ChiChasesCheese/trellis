@@ -32,4 +32,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21；METR 自己标注该页部分过时。
 
-**出处：** METR, Measuring AI ability to complete long tasks（metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+METR, Measuring AI ability to complete long tasks（metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks）。
+
+</details>

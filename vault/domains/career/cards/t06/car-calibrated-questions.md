@@ -33,4 +33,8 @@ flowchart TD
 
 **对方在想什么：** 他在想"我能不能给你一个说得过去的理由"。问题让他去找出可行项。
 
-**出处：** Voss《Never Split the Difference》Ch.7 "Create the Illusion of Control"；Appendix "Prepare a Negotiation One Sheet"（Section IV）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Voss《Never Split the Difference》Ch.7 "Create the Illusion of Control"；Appendix "Prepare a Negotiation One Sheet"（Section IV）
+
+</details>

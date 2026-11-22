@@ -4,12 +4,13 @@ node: moves.stepback.in-and-out-stepback
 type: qa
 ---
 ## Q
-**In-and-out dribble into step-back（虚晃运球接后撤步）**｜Paul Pierce signature (clip: trainer demo) · Jalen Brunson
+**In-and-out dribble into step-back（虚晃运球接后撤步）**｜Paul Pierce · Jalen Brunson
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-in-and-out-stepback.mp4]]
 
-**Sequence。** `in-and-out dribble (sell the drive) → step-back → fadeaway pull-up`
-**Read。** a defender who bites on the in-and-out and slides with the fake drive, so the step-back is uncontested.
+**步骤：** in-and-out 运球（假装突破）→ 后撤步 → 后仰急停跳投
+
+**读防守：** 防守人吃了 in-and-out，跟着假突破滑步，后撤步时没人防。

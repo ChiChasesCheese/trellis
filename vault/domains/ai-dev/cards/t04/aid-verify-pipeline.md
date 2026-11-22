@@ -24,4 +24,8 @@ tags: [实践]
 
 **官方框架：** 谁有"最后一句话"——不是 agent 的总结，而是测试、CI、分支保护和批准合并的人。
 
-**出处：** Claude Code docs《Best practices》（Deterministic and non-deterministic instructions 表：Who has the last word）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Deterministic and non-deterministic instructions 表：Who has the last word）
+
+</details>

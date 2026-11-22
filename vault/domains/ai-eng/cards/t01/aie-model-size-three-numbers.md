@@ -38,4 +38,8 @@ tags: [先修]
 - 大不一定强：13B 的模型只喂一句话，不如小模型喂大量数据。
 - 新一代同尺寸更强：Llama 3-8B 在 MMLU 上超过 Llama 2-70B。
 
-**出处：** Huyen《AI Engineering》ch2 §Model Size
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Model Size
+
+</details>

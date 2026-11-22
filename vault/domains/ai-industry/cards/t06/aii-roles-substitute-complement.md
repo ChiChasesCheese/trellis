@@ -31,4 +31,8 @@ flowchart TD
 
 **诚实的边界：** 现有证据多是描述性的，且集中在美国；哪个具体岗位会收缩，今天没有可靠的清单。
 
-**出处：** Canaries in the Coal Mine?（2026-08）；Anthropic Economic Index（2026-01）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Canaries in the Coal Mine?（2026-08）；Anthropic Economic Index（2026-01）。
+
+</details>

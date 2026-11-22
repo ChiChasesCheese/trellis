@@ -28,4 +28,8 @@ flowchart TD
 
 **判断规则：** 供给两头不对称时，出货被**最短的那块板**决定；扩一头不能立刻增加出货。
 
-**出处：** NVIDIA FY2026 10-K MD&A（lead time 与不可撤销订单，经 MarketScreener 转载页）；TrendForce News 2026-08-10。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+NVIDIA FY2026 10-K MD&A（lead time 与不可撤销订单，经 MarketScreener 转载页）；TrendForce News 2026-08-10。
+
+</details>

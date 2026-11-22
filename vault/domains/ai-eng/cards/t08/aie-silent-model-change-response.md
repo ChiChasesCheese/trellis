@@ -30,4 +30,8 @@ tags: [实践]
 
 **局限：** 开源模型可以完全冻结；商业模型只能靠快照加监控。受强监管的应用对此尤其敏感。
 
-**出处：** Huyen《AI Engineering》ch4 §Are OpenAI's Models Getting Worse?；ch10 §Drift detection（Underlying model changes）；§Gateway（fallback）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Are OpenAI's Models Getting Worse?；ch10 §Drift detection（Underlying model changes）；§Gateway（fallback）
+
+</details>

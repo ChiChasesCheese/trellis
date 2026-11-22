@@ -24,4 +24,8 @@ tags: [惯用说法]
 
 **规则：** 数字要带三样东西：**基线**（对比什么）、**量级**（几个数量级）、**四舍五入**到不改变结论的精度。比较时说清是百分比还是倍数，起点和终点各是多少。
 
-**出处：** 惯用说法，非引用；与 Numbers in English 互补（那里讲读法）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用；与 Numbers in English 互补（那里讲读法）
+
+</details>

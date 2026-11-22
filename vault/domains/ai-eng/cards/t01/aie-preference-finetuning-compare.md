@@ -33,4 +33,8 @@ flowchart TD
 
 **别的做法：** DPO（Llama 3 用）去掉了 reward model 这一步，更简单；RLAIF 用 AI 而不是人来给反馈。
 
-**出处：** Huyen《AI Engineering》ch2 §Preference Finetuning（Reward model、Finetuning using the reward model）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Preference Finetuning（Reward model、Finetuning using the reward model）
+
+</details>

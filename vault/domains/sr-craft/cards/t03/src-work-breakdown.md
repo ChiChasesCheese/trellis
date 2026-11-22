@@ -43,8 +43,12 @@ flowchart TD
 
 **回到题目：** 第一个切片：只支持短信验证码，一个设备，跑通"开启 → 登录验证"的主流程，数据库只加这个切片要用的字段。之后再加备用码、重发限流、失败锁定、多设备，每个都是独立切片。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你能否把大工作变成可验证、能尽早拿到反馈的小步，而不是一条长长的、最后才联调的流水线。
 
 **适合配哪类故事：** 你把一个大项目拆成可以逐步上线的小块，早期就拿到真实反馈并据此调整方向的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch7 §3 "Break Down the Work"（Think about stories, tasks, and subtasks；Prioritize work which gets you closer to shipping something；Don't be afraid to add, remove and change tasks）
+
+</details>

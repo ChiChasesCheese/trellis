@@ -45,4 +45,8 @@ To deploy the service:
 | Java | Beta |
 | Python | Experimental |
 
-**出处：** Google Technical Writing One《Lists and tables》（developers.google.com/tech-writing/one/lists-tables）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Lists and tables》（developers.google.com/tech-writing/one/lists-tables）
+
+</details>

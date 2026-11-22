@@ -23,4 +23,8 @@ agent 改了一个下单接口。你要它拿什么证据回来，才算"运行�
 **做：** 把这份清单写进 prompt 或 CLAUDE.md 的"如何验证"一节；要求贴**命令和输出**。
 **别做：** 接受"我测试过了"这种句子。
 
-**出处：** Claude Code docs《Best practices》（Give Claude a check to run：ask Claude for evidence）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Give Claude a check to run：ask Claude for evidence）
+
+</details>

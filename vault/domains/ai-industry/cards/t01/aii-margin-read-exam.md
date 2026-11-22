@@ -28,4 +28,8 @@ flowchart TD
   B --> C["比较剩余变化"]
 ```
 
-**出处：** NVIDIA FY2026 10-K MD&A（经 MarketScreener 转载页核对原句）；NVIDIA Q4 FY2026 新闻稿（毛利率 71.1%/75.0%）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+NVIDIA FY2026 10-K MD&A（经 MarketScreener 转载页核对原句）；NVIDIA Q4 FY2026 新闻稿（毛利率 71.1%/75.0%）。
+
+</details>

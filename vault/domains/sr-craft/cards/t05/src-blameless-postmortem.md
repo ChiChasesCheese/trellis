@@ -49,8 +49,12 @@ flowchart TD
 
 **回到题目：** "他为什么能直接上线？我们缺哪一层验证？"把贡献因素列出来：没有预发校验、没有灰度、告警没有第一时间发现；每一个对应一个行动项，写明负责人和日期。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否把故障当作改进系统的机会；是否理解"blameless"与"accountability"并不矛盾。
 
 **适合配哪类故事：** 你主持或写过一份复盘，把一次事故推到了系统层面的改进，并真正落实了行动项的经历。
 
 **出处：** Google SRE book《Postmortem Culture: Learning from Failure》（sre.google/sre-book/postmortem-culture/：postmortem triggers、blameless、review criteria）；Orosz《The Software Engineer's Guidebook》ch24 §6 #3 "Follow-up after an incident"（Blameless reviews）
+
+</details>

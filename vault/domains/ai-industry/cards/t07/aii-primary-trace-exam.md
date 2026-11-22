@@ -36,4 +36,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21。
 
-**出处：** 9to5Google, Alphabet Q3 2026 earnings（2026-10-28）；一手文件请读 Alphabet 10-Q。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+9to5Google, Alphabet Q3 2026 earnings（2026-10-28）；一手文件请读 Alphabet 10-Q。
+
+</details>

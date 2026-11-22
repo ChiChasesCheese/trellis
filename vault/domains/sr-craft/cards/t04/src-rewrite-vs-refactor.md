@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** 先把"难改"拆开：具体哪些模块、每次改动多慢、事故多少。能通过重构解决的先做；如果决定重写，选一个边界清楚的模块先做，影子运行对比，再灰度。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否对重写保持怀疑，并有分阶段、可回退的方案。
 
 **适合配哪类故事：** 你面对老系统，用小步重构或分阶段替换，而不是推倒重来，最终改善了可维护性的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch25 §3 "Architecture Debt"（#4 Dated languages or frameworks，Khan Academy 例）；§4（"Changes that lead to a full revert/rewrite"）；ch13 §3 "Tech Debt"（bankruptcy）；ch9 §3 "Refactoring"
+
+</details>

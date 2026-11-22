@@ -34,4 +34,8 @@ tags: [摘要]
 - **定期补入新发现的失败样本**；
 - 评测数据别混进训练数据，否则分数虚高（污染）。
 
-**出处：** Huyen《AI Engineering》ch4 §Annotate evaluation data、§Iterate（experiment tracking）；ch4 §Data contamination
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Annotate evaluation data、§Iterate（experiment tracking）；ch4 §Data contamination
+
+</details>

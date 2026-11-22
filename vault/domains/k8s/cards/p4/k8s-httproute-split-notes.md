@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**HTTPRoute 的权重、匹配、filter 与 TLS · 摘要**｜摘要 · 必会
+**HTTPRoute 的权重、匹配、filter 与 TLS**｜摘要 · 必会
 
 用 Gateway API 做金丝雀发布（90% 老版本、10% 新版本）、按 header 路由、改请求头、给入口加 HTTPS，各写在哪里？
 
@@ -50,4 +50,8 @@ flowchart TD
 - **和 Ingress 的区别：** 这些都是标准字段，不靠 controller 私有的 annotation。
 - **状态：** 看 Route 的 `status.parents[].conditions`，`Accepted`、`ResolvedRefs` 说明是否被接受、引用是否有效。
 
-**出处：** KIA2 §13.3.2–13.3.4、§13.4.1–13.4.2
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §13.3.2–13.3.4、§13.4.1–13.4.2
+
+</details>

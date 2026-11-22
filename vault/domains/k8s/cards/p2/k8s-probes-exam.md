@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Probes 与 restart policy · 考点**｜考点 · 必会
+**Probes 与 restart policy**｜考点 · 必会
 
 容器一直崩溃，`kubectl get pods` 显示 `CrashLoopBackOff`。kubelet 重启的间隔怎么变？还有一个相关问题：你给每个 Pod 的 liveness probe 加了「检查数据库连得上」，数据库故障时会发生什么？
 
@@ -33,4 +33,8 @@ flowchart TB
 - **正确分工：** liveness 只检查「这个进程自己卡死了没有」；依赖是否可用，交给 readiness（让流量暂时绕开），不重启。
 - **慢启动的应用：** 用 startup probe，避免 liveness 在启动阶段误杀。
 
-**出处：** KIA2 §6.2、ch6 小结（重启延迟 10 秒起翻倍，封顶 5 分钟）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §6.2、ch6 小结（重启延迟 10 秒起翻倍，封顶 5 分钟）
+
+</details>

@@ -34,4 +34,8 @@ flowchart TD
 
 **读法：** 这是历史拟合，不是预测；每个数都有区间和起点。
 
-**出处：** Epoch AI Trends（https://epoch.ai/trends）；AI Index 2025 称训练算力每 5 个月翻倍（与上表一致）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Epoch AI Trends（https://epoch.ai/trends）；AI Index 2025 称训练算力每 5 个月翻倍（与上表一致）。
+
+</details>

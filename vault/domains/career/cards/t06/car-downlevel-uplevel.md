@@ -33,4 +33,8 @@ flowchart TD
 
 **常见错法：** 为了更高薪水默认接受低级别，却不问之后的晋升路径；升级后不确认期望。
 
-**出处：** Orosz《Guidebook》Ch.6 §4 "Down-leveling"、§5 "Up-Leveling"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.6 §4 "Down-leveling"、§5 "Up-Leveling"
+
+</details>

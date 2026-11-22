@@ -32,4 +32,8 @@ flowchart TD
 
 **术语说明：** 这是业界近年的说法，没有统一定义，来源有争议；这里取上面的含义。
 
-**出处：** 本叶概念的依据：DORA（软件交付研究项目）2025（AI 加速暴露下游弱点）；Stack Overflow Developer Survey 2025（几乎对但不对、调试更费时）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+本叶概念的依据：DORA（软件交付研究项目）2025（AI 加速暴露下游弱点）；Stack Overflow Developer Survey 2025（几乎对但不对、调试更费时）
+
+</details>

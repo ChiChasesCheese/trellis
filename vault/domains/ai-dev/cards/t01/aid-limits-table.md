@@ -31,4 +31,8 @@ flowchart TD
   Q2 -- "是" --> OK["可以交给 agent"]
 ```
 
-**出处：** Claude Code docs《Best practices》（Tell Claude what it can't see；Give Claude a check to run）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Tell Claude what it can't see；Give Claude a check to run）
+
+</details>

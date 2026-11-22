@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Service 与 ClusterIP · 摘要**｜摘要 · 必会
+**Service 与 ClusterIP**｜摘要 · 必会
 
 三个 Pod 是 `app=kiada` 的后端，它们的 IP 随时会变。别的 Pod 怎么稳定地访问它们？Service 具体怎么工作？
 
@@ -43,4 +43,8 @@ flowchart TB
 - **ClusterIP 是虚拟的：** 它所在的「服务网络」没有路由，流量靠 node 内核里的规则拦截并转发。
 - **后端换了：** Pod 增删后，规则更新，客户端仍然用同一个地址。
 
-**出处：** KIA2 §11.1（Exposing pods with services）；Poulton ch9「ClusterIP routing」
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §11.1（Exposing pods with services）；Poulton ch9「ClusterIP routing」
+
+</details>

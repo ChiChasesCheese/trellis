@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** 先花两天对新队列做 spike：写一个最小生产者和消费者，测延迟、重试、顺序性、运维方式。结论出来再排期。如果不行，趁早换方案；CRUD 部分随时可以并行做。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你的优先级是"消除不确定"，而不是"让进度好看"。
 
 **适合配哪类故事：** 你把最大的未知提前验证，因此避免了后期推翻方案或大幅延期的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch16 §6 "Risks and Dependencies"（Technology risk；No true idea how long something will actually take；"doing a spike"）；ch15 §2 "Prototyping and Proof of Concept"
+
+</details>

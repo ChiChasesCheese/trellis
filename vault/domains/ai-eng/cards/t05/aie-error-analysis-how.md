@@ -33,4 +33,8 @@ flowchart TD
 - **降低看数据的摩擦：** 把每条记录的所有信息放在一个界面里，用你领域的方式展示；可以一天内做出一个简单的查看和标注工具。
 - 原则："你永远不能停止看数据"。
 
-**出处：** Hamel Husain《Your AI Product Needs Evals》（Looking at data）；Huyen《AI Engineering》ch4 §Annotate evaluation data
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Hamel Husain《Your AI Product Needs Evals》（Looking at data）；Huyen《AI Engineering》ch4 §Annotate evaluation data
+
+</details>

@@ -30,4 +30,8 @@ flowchart TD
 
 **常见错法：** 把 terminal level 当作"天花板"；或者以为过了就不需要继续学习。
 
-**出处：** Orosz《Guidebook》Ch.4 §3 "Terminal Level"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.4 §3 "Terminal Level"
+
+</details>

@@ -26,4 +26,8 @@ flowchart TD
 
 **接近上限时：** Claude Code 会自动 compaction（把历史压缩成摘要）。摘要保留你的请求和关键代码片段，但**早期的详细指令可能丢失**，所以必须长期有效的规则要写进项目说明文件，不要只说一遍。`/context` 可以看谁在占空间。
 
-**出处：** Claude Code docs《How Claude Code works》（The context window；When context fills up）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《How Claude Code works》（The context window；When context fills up）
+
+</details>

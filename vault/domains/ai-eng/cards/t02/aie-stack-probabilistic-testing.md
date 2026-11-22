@@ -33,4 +33,8 @@ tags: [考点]
 
 开放式输出没法穷举所有"标准答案"来比对，这是 evaluation 在 AI 工程里分量更重的原因。
 
-**出处：** Huyen《AI Engineering》ch2 §The Probabilistic Nature of AI → Inconsistency；ch1 §Application development → Evaluation
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §The Probabilistic Nature of AI → Inconsistency；ch1 §Application development → Evaluation
+
+</details>

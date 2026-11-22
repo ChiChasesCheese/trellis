@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**ndots:5 · 考点**｜考点 · 必会
+**ndots:5**｜考点 · 必会
 
 Pod 里的应用频繁访问外部域名 `api.example.com`，DNS 延迟偏高，集群 DNS 的查询量也很大。`resolv.conf` 里是 `options ndots:5` 和三个搜索域。为什么？怎么缓解？
 
@@ -39,4 +39,8 @@ flowchart TB
 - **逐层排查：** 先在 Pod 里 `nslookup <服务名>`（DNS 对不对）→ 再看 Service 有没有后端（EndpointSlice）→ 再看 Pod 是否 Ready。
 - **为什么是 5：** 为了让集群内 `svc.ns.svc` 之类的多级短名字也能补全，代价是外部域名多查几次。
 
-**出处：** Poulton ch9（resolv.conf 的 search 与 `ndots:5`、troubleshooting）；resolver 对 ndots 的处理见 resolv.conf(5)
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch9（resolv.conf 的 search 与 `ndots:5`、troubleshooting）；resolver 对 ndots 的处理见 resolv.conf(5)
+
+</details>

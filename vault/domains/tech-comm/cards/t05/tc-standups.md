@@ -29,4 +29,8 @@ tags: [原则]
 - Before: "Yesterday I looked into the retry bug and talked to Sam and read some logs."
 - After: "At risk: the retry fix. Root cause found; the fix needs a schema change. I need Sam's review by Wednesday to stay on schedule."
 
-**出处：** Orosz《The Software Engineer's Guidebook》ch16 §5 Day-to-Day Project Management（部分）；句式由规则推导
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《The Software Engineer's Guidebook》ch16 §5 Day-to-Day Project Management（部分）；句式由规则推导
+
+</details>

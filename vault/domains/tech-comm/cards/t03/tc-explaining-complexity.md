@@ -29,4 +29,8 @@ tags: [原则]
 - Before: "Eventual consistency means replicas converge under the absence of further updates, assuming no partitions…"
 - After: "After you change something, other users might see the old version for a few seconds. Then everyone sees the new one."
 
-**出处：** Minto p. 113–136（Ch.7 Summarizing Grouped Ideas）（部分）；Google Technical Writing One《Audience》
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 113–136（Ch.7 Summarizing Grouped Ideas）（部分）；Google Technical Writing One《Audience》
+
+</details>

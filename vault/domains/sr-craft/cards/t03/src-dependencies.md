@@ -40,8 +40,12 @@ flowchart TD
 
 **回到题目：** 直接找对方工程师，说明你的日期和不处理的后果；同时提出你来改，或先用 mock；把约定的接口和日期写下来，每周一个检查点；仍然不动，再带着两个方案找经理。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你推动依赖的方式：主动、尊重对方约束、有备选，而不是抱怨或绕过。
 
 **适合配哪类故事：** 你的项目依赖别的团队，你用 mock、自己动手或明确约定把依赖风险化解的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch16 §6 "Risks and Dependencies"（Engineering dependencies、Non-engineering dependencies）
+
+</details>

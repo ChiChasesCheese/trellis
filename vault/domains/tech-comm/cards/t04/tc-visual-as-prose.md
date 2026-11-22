@@ -29,4 +29,8 @@ tags: [原则]
 - Before: "A key area for improvement is better coordination across layers."
 - After: "Requests enter through the gateway, pass to one of three services, and end in a shared database. Two of the three services each query the database separately; those two queries are the ones to merge."
 
-**出处：** Minto p. 225–232（Ch.12 Logic in Imagery：Create the Image / Copy the Image in Words）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 225–232（Ch.12 Logic in Imagery：Create the Image / Copy the Image in Words）
+
+</details>

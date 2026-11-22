@@ -34,4 +34,8 @@ flowchart TD
 
 **对方在想什么：** 他想把候选人招下来，又要在预算内、能向上解释。你给出让他容易批准的理由，就是帮他。
 
-**出处：** Voss《Never Split the Difference》Appendix "Prepare a Negotiation One Sheet"（BATNA 的陷阱）；Ch.1；McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（Yes-If、不要显得需要这份工作）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Voss《Never Split the Difference》Appendix "Prepare a Negotiation One Sheet"（BATNA 的陷阱）；Ch.1；McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（Yes-If、不要显得需要这份工作）
+
+</details>

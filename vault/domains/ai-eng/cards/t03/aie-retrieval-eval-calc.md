@@ -32,4 +32,8 @@ tags: [考点]
 
 **这两个指标在回答什么问题：** recall = "该找的找到没有"，precision = "找到的有多少是对的"，MRR = "第一个对的有多靠前"。
 
-**出处：** Huyen《AI Engineering》ch6 §Comparing retrieval algorithms（指标定义）；表中数据为出题用的例子
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Comparing retrieval algorithms（指标定义）；表中数据为出题用的例子
+
+</details>

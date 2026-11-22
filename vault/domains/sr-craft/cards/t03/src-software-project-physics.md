@@ -35,8 +35,12 @@ flowchart TD
 
 **回到题目：** "日期提前一周且少一个人，范围不变不可能。选项 A：砍掉 X 功能，按新日期；选项 B：日期不变，范围按原计划，但推迟一周；选项 C：加两位有领域经验的人，但他们需要一周入职，收益有限。你选哪个？"
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否用清晰的模型和业务谈判，而不是默默加班。
 
 **适合配哪类故事：** 你面对被压缩的日期，用选项谈判，最终缩小范围、按时交付核心价值的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch16 §4 ""Software Project Physics""（When scope increases / the timeline changes / fewer people / people change；Brooks 引文）
+
+</details>

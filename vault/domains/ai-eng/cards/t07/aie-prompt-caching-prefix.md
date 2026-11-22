@@ -37,4 +37,8 @@ flowchart TD
   D --> E["只处理新增部分"]
 ```
 
-**出处：** Huyen《AI Engineering》ch9 §Prompt caching（Table 9-3）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch9 §Prompt caching（Table 9-3）
+
+</details>

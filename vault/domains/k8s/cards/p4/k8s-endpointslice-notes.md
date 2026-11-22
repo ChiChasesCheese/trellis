@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**EndpointSlice 与 readiness · 摘要**｜摘要 · 必会
+**EndpointSlice 与 readiness**｜摘要 · 必会
 
 Service 怎么知道现在有哪些 Pod 可以接流量？一个刚启动、还没准备好的 Pod 会被转发请求吗？
 
@@ -30,4 +30,8 @@ flowchart TB
 - **看一眼：** `kubectl get endpointslices -l kubernetes.io/service-name=kiada`。
 - **不是所有后端都是 Pod：** Service 的 endpoint 可以是任何有 IP 的东西。
 
-**出处：** KIA2 §11.3（Managing service endpoints）；Poulton ch9（kube-proxy 监听 Service 与 EndpointSlice）；Endpoints 弃用见 v1.33 发布博客
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §11.3（Managing service endpoints）；Poulton ch9（kube-proxy 监听 Service 与 EndpointSlice）；Endpoints 弃用见 v1.33 发布博客
+
+</details>

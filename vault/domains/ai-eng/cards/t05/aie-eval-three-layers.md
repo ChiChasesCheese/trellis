@@ -33,4 +33,8 @@ flowchart TD
 
 **混用：** 同一标准可以用两种方法：便宜的分类器对 100% 的数据给粗略信号，贵的 LLM judge 只对 1% 的数据给高质量信号。
 
-**出处：** Hamel Husain《Your AI Product Needs Evals》（三个 Level）；Huyen《AI Engineering》ch4 §Select evaluation methods、ch3 §Ranking Models with Comparative Evaluation
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Hamel Husain《Your AI Product Needs Evals》（三个 Level）；Huyen《AI Engineering》ch4 §Select evaluation methods、ch3 §Ranking Models with Comparative Evaluation
+
+</details>

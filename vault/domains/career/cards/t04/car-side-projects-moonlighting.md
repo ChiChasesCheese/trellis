@@ -33,4 +33,8 @@ flowchart TD
 
 **常见错法：** 假设"下班时间归自己"；用公司笔记本跑项目；做了才问。
 
-**出处：** Orosz《Guidebook》Ch.26 §3（Build side projects，仅涉及学习价值）。合规与 IP 部分没有书和官方页面作依据，这里只是通用提醒，请以自己的合同和专业意见为准
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.26 §3（Build side projects，仅涉及学习价值）。合规与 IP 部分没有书和官方页面作依据，这里只是通用提醒，请以自己的合同和专业意见为准
+
+</details>

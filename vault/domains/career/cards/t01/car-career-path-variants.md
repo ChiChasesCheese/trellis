@@ -40,4 +40,8 @@ flowchart TD
 
 **常见错法：** 认为必须一路向上；把中断或转向当成失败。
 
-**出处：** Orosz《Guidebook》Ch.1 §2 "Common career paths"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.1 §2 "Common career paths"
+
+</details>

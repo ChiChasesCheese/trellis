@@ -32,4 +32,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21。口径与最新数请直接读各家 10-Q。
 
-**出处：** State of AI Report 2026 首页（stateof.ai）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+State of AI Report 2026 首页（stateof.ai）。
+
+</details>

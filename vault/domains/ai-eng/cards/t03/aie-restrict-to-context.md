@@ -33,4 +33,8 @@ flowchart TD
   B -- "否" --> D["丢弃，重试或拒答"]
 ```
 
-**出处：** Huyen《AI Engineering》ch5 §How to Restrict a Model's Knowledge to Only Its Context
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch5 §How to Restrict a Model's Knowledge to Only Its Context
+
+</details>

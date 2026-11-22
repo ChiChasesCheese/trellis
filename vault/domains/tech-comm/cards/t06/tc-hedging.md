@@ -24,4 +24,8 @@ tags: [惯用说法]
 
 **语气：** Hedging 的作用是**标出你有多确定**，不是回避。先给倾向，再说取决于什么，最后说你不确定的部分。
 
-**出处：** 惯用说法，非引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用
+
+</details>

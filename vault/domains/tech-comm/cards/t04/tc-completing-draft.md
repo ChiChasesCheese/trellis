@@ -33,4 +33,8 @@ flowchart TD
 - **边写边改措辞：** 草稿永远写不完。
 - **没留自检的时间。**
 
-**出处：** Google Technical Writing Two《Organizing large documents》（outline 先行、先把大纲分享给相关人）、《Self-editing》（自检步骤）；流程由这两课组合而成
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing Two《Organizing large documents》（outline 先行、先把大纲分享给相关人）、《Self-editing》（自检步骤）；流程由这两课组合而成
+
+</details>

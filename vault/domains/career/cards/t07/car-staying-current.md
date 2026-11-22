@@ -34,4 +34,8 @@ flowchart TD
 
 **常见错法：** 只读不动手；每个新工具都追；把"学习"当成焦虑来源。
 
-**出处：** Orosz《Guidebook》Ch.26 §4 "Keep Up with the Industry"、§5（数字：2022 年 11 月发布，3 个月 1 亿月活）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.26 §4 "Keep Up with the Industry"、§5（数字：2022 年 11 月发布，3 个月 1 亿月活）
+
+</details>

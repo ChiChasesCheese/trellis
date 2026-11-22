@@ -6,11 +6,13 @@ type: qa
 ## Q
 **Jab, pump fake, fadeaway（试探步假投后仰）**｜DeMar DeRozan · Kobe Bryant
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-derozan-jab-pump-fadeaway.mp4]]
 
-**Sequence。** `hang dribble → jab step → pump fake → fadeaway jumper`
-**Read。** defender sits on the shot and jumps at the pump fake, so he cannot contest the fade.
-**Cue。** eyes on the rim during the pump; the fade starts only after the defender is in the air.
+**步骤：** 悬停运球（hang dribble）→ 试探步（jab step）→ 假投（pump fake）→ 后仰跳投
+
+**读防守：** 防守人贴着投篮手站，被 pump fake 骗得起跳，封不住后仰。
+
+**要点：** pump 时眼睛看篮筐；防守人腾空之后才开始后仰。

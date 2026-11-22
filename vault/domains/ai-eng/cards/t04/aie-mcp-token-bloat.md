@@ -29,4 +29,8 @@ tags: [实践]
 - 执行 agent 生成的代码需要**安全的执行环境**（sandbox、资源限制、监控），这是新增的运维成本；
 - 远程 MCP server 要做认证，凭据按用户范围下发；工具描述来自外部，属于不可信输入（可能含注入）。
 
-**出处：** Anthropic《Code execution with MCP》anthropic.com/engineering/code-execution-with-mcp（2026-11-21 读）；modelcontextprotocol.io
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic《Code execution with MCP》anthropic.com/engineering/code-execution-with-mcp（2026-11-21 读）；modelcontextprotocol.io
+
+</details>

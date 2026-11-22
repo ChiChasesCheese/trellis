@@ -31,4 +31,8 @@ tags: [原则]
 
 **示例：** "Three risks, in order of impact: data loss, downtime, and cost overrun. Data loss first, because it can't be undone."
 
-**出处：** Minto p. 97–112（Ch.6 Imposing Logical Order：Time Order / Structural Order / Degree Order）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 97–112（Ch.6 Imposing Logical Order：Time Order / Structural Order / Degree Order）
+
+</details>

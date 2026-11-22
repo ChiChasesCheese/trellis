@@ -24,4 +24,8 @@ tags: [考点]
 **做：** 内部审过的 skill 放进团队仓库，大家从那里装；对外部的当作"一段要运行的代码"来审。
 **别做：** 因为"只是一个 markdown 文件"就不看。
 
-**出处：** Claude Code docs《Best practices》（Put team procedures）；《Security》（Best practices for working with untrusted content）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Put team procedures）；《Security》（Best practices for working with untrusted content）
+
+</details>

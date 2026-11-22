@@ -28,4 +28,8 @@ tags: [摘要]
 3. 定期补入新的失败样本；
 4. 评测集用了很久之后也会「过期」，要换新题。
 
-**出处：** Huyen《AI Engineering》ch4 §Navigate Public Benchmarks（Data contamination、Note on saturation、Are OpenAI's Models Getting Worse）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Navigate Public Benchmarks（Data contamination、Note on saturation、Are OpenAI's Models Getting Worse）
+
+</details>

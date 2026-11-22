@@ -31,4 +31,8 @@ flowchart TD
 
 **对方在想什么：** 经理希望你带来可讨论的具体项，而不是"我觉得我该升"。
 
-**出处：** Orosz《Guidebook》Part V 引言（full career ladder 的重要性）；Ch.4 §1、§5（Understand how promotions *really* work）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Part V 引言（full career ladder 的重要性）；Ch.4 §1、§5（Understand how promotions *really* work）
+
+</details>

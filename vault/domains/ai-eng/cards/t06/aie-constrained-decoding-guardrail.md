@@ -34,4 +34,8 @@ tags: [考点]
 
 **与 post-processing 的对比：** 约束解码在生成时挡住格式错误；post-processing 事后修补。无论哪种，都只解决**可解析**问题。
 
-**出处：** Huyen《AI Engineering》ch2 §Constrained sampling；§Structured Outputs
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Constrained sampling；§Structured Outputs
+
+</details>

@@ -40,8 +40,12 @@ flowchart TD
 
 **回到题目：** 先盘点每个会的目的，砍掉或改成异步更新；其余的加议程和实时笔记；每个会结束前读一遍"决定了什么、谁、何时"。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对团队时间的尊重，以及推动流程改进的能力。
 
 **适合配哪类故事：** 你精简或重构了团队会议，让时间花得更值、决定更清楚的经历。
 
 **出处：** GitLab Handbook《All-Remote Meetings》（handbook.gitlab.com/handbook/company/culture/all-remote/meetings/，2026-11-21 读取："No agenda, no attenda"、72 小时/至少 24 小时、speedy meetings、Document everything live）；《Sync vs. Async Culture》（handbook.gitlab.com/handbook/communication/sync-vs-async-culture/）
+
+</details>

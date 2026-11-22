@@ -26,4 +26,8 @@ tags: [原则]
 
 **示例：** Caption: "A cache hit skips the database." 图里只画 Client、Cache、DB 三个框，命中路径加粗，未命中路径变灰。
 
-**出处：** Google Technical Writing Two《Illustrating》（developers.google.com/tech-writing/two/illustrations：写图注、聚焦、简化、迭代）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing Two《Illustrating》（developers.google.com/tech-writing/two/illustrations：写图注、聚焦、简化、迭代）
+
+</details>

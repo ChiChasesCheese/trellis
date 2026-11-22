@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Volumes 与 emptyDir · 摘要**｜摘要 · 必会
+**Volumes 与 emptyDir**｜摘要 · 必会
 
 容器重启后，它文件系统里写的文件就没了。想让文件在容器重启后还在，或者让同一个 Pod 里两个容器共享文件，怎么做？
 
@@ -51,4 +51,8 @@ spec:
 - **用途：** 容器重启后保留数据；容器根文件系统设成只读时，给它一个能写的临时目录；多个容器之间共享数据。
 - **要跨 Pod 保存数据：** 用 PersistentVolume（下一章）。
 
-**出处：** KIA2 §9.1–9.2（Using an emptyDir volume）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §9.1–9.2（Using an emptyDir volume）
+
+</details>

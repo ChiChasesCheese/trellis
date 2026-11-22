@@ -34,4 +34,8 @@ tags: [惯用说法]
 
 **语气：** 大数用 roughly、about、on the order of 表示量级，不必精确；重要的数字说明单位和起点（from … to …）。
 
-**出处：** 惯用说法，非引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用
+
+</details>

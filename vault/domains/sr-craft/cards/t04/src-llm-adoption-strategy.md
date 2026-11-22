@@ -35,8 +35,12 @@ flowchart TD
 
 **回到题目：** "三类需求分开处理：给所有人一个通用工具，给工程师一个编码工具，产品团队选一个高价值场景做试点；先用一家供应商，半年后看数据再决定是否加码。"
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你面对新技术浪潮的判断：不盲目，也不拖延。
 
 **适合配哪类故事：** 你在新技术（LLM、云、新框架）引入时，用试点和复盘代替一次性押注的经历。
 
 **出处：** Larson《Crafting Engineering Strategy》ch17 "LLM Adoption Strategy"（Document 17-1 Policy / Diagnose；17-2 系统模型；17-3 Wardley map；17-4）
+
+</details>

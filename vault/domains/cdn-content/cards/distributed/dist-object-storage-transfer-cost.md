@@ -13,4 +13,4 @@ Use multipart upload to retry independent parts and avoid restarting a huge tran
 对 40 GB object，什么时候应使用 multipart upload 和 parallel range GET？会新增哪些 failure work？
 
 ## A zh
-multipart upload 可独立 retry part，避免重启整个巨大传输；当单连接无法吃满带宽时，parallel range 可提高吞吐。但 concurrency 会增加 memory、request cost 和 downstream pressure。应持久化 upload ID/part checksum、abort abandoned upload、验证最终 object checksum、限制 parallelism，并让 resume idempotent。更多 part 提高 recovery granularity，也增加 coordination overhead。
+multipart upload 可独立 retry part，避免重启整个巨大传输；当单连接无法吃满带宽时，parallel range 可提高吞吐。但 concurrency 会增加 memory、request cost 和 downstream pressure。应持久化 upload ID/part checksum、中止被遗弃的 upload、验证最终 object checksum、限制 parallelism，并让 resume idempotent。更多 part 提高 recovery granularity，也增加 coordination overhead。

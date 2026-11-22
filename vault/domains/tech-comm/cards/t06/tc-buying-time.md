@@ -24,4 +24,8 @@ tags: [惯用说法]
 
 **语气：** 先承认问题，再说明你要做什么（think out loud、organize、sketch）；开始想之后，把想法讲出来，对方才有机会引导你。
 
-**出处：** 惯用说法，非引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用
+
+</details>

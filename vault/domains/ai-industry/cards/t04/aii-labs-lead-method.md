@@ -32,4 +32,8 @@ flowchart TD
 
 **陷阱：** 榜单规则会变，模型有不同版本；比较前固定口径。
 
-**出处：** State of AI Report 2026；方法为通用数据分析。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+State of AI Report 2026；方法为通用数据分析。
+
+</details>

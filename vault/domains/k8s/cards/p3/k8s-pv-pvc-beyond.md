@@ -27,4 +27,8 @@ spec:
 - **前提：** 底层的 CSI 驱动要支持。
 - **用途：** 数据库在线调整磁盘性能；有多个卷的应用（数据加日志）要一致的备份。
 
-**出处：** kubernetes.io 发布博客 v1.34（VolumeAttributesClass GA，KEP-3751；volume expansion failure recovery GA）、v1.36（VolumeGroupSnapshot GA）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.34（VolumeAttributesClass GA，KEP-3751；volume expansion failure recovery GA）、v1.36（VolumeGroupSnapshot GA）
+
+</details>

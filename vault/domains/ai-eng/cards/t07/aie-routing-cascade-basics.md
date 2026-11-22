@@ -35,4 +35,8 @@ flowchart TD
 
 **注意上下文长度：** 如果路由到上下文上限较小的模型，要截断上下文，或改路由到上限更大的模型。
 
-**出处：** Huyen《AI Engineering》ch10 §Router；ch4 §Select evaluation methods（用 logprobs 判断分类把握）；Anthropic《Building effective agents》Routing（简单问题给小模型）。cascade 的做法依据 ch4 里 logprobs 反映把握度的论述
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Router；ch4 §Select evaluation methods（用 logprobs 判断分类把握）；Anthropic《Building effective agents》Routing（简单问题给小模型）。cascade 的做法依据 ch4 里 logprobs 反映把握度的论述
+
+</details>

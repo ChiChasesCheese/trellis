@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**NetworkPolicy · 考点**｜考点 · 必会
+**NetworkPolicy**｜考点 · 必会
 
 命名空间 `prod` 里先创建了「默认拒绝所有入站」的策略，然后给 `db` 加了「允许 `role=frontend` 入站 6379」的策略。判断：
 1. `frontend` 连 `db:6379` 能通吗？
@@ -34,4 +34,8 @@ spec:
 - **别忘了出站：** 只写 `Ingress` 不限制出站；也要限制出站，要另外写 `Egress`。
 - **允许 DNS：** 一旦限制出站，别忘了放行到集群 DNS 的 53 端口，否则 Service 名字解析不了。
 
-**出处：** kubernetes.io Concepts › Network Policies（isolation、additive、plugin 要求）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Network Policies（isolation、additive、plugin 要求）
+
+</details>

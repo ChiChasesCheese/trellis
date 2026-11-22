@@ -30,5 +30,3 @@ step: 3
 **为什么。** C3 保证单调性（monotonic）：父类里已经有的先后关系，到子类里不会被颠倒。矛盾时宁可报错，也不悄悄选一个。
 
 **坑。** 把 `object` 写在别的基类前面，例如 `class B(object, X)`，实测同样报 `Cannot create a consistent method resolution order`。
-
-**对应 LeetCode：** 无直接对应的题

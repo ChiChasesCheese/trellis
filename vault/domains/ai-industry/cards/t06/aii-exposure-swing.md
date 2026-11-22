@@ -31,4 +31,8 @@ flowchart TD
   A --> N["11 月：回摆"]
 ```
 
-**出处：** Anthropic Economic Index: Economic Primitives（2026-01）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic Economic Index: Economic Primitives（2026-01）。
+
+</details>

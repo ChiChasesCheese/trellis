@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Scheduling cycle · 摘要**｜摘要 · 必会
+**Scheduling cycle**｜摘要 · 必会
 
 scheduler 怎么为一个新 Pod 挑 node？它本身是不是也遵循 controller 那套逻辑？
 
@@ -31,4 +31,8 @@ flowchart TB
 - **scheduler 也是 controller 式的：** 它 watch API server 里没有 nodeName 的 Pod，把结果写回 API server，不直接联系 kubelet。
 - **它只看 requests：** 不看 node 上的实际使用量。
 
-**出处：** Poulton ch2「The scheduler」；kubernetes.io Concepts › Kubernetes Scheduler
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch2「The scheduler」；kubernetes.io Concepts › Kubernetes Scheduler
+
+</details>

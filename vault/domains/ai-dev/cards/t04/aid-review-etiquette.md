@@ -22,4 +22,8 @@ tags: [实践]
 
 **别做：** 把 agent 当成"不是我写的"的借口。
 
-**出处：** Claude Code docs《Security》（User responsibility）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Security》（User responsibility）
+
+</details>

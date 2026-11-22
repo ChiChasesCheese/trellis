@@ -23,4 +23,8 @@ tags: [摘要]
 
 **官方例子：** "团队约定用哪个错误处理 helper"属于该写进 CLAUDE.md 的东西；PostToolUse hook 在每次编辑后跑 prettier。
 
-**出处：** Claude Code docs《Best practices》（Keep CLAUDE.md short；Enforce steps with hooks）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Keep CLAUDE.md short；Enforce steps with hooks）
+
+</details>

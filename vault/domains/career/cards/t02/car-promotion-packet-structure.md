@@ -40,4 +40,8 @@ flowchart TD
 
 **对方在想什么：** 委员会的人没时间猜。他们找的是已经被证据证明的下一级运作。
 
-**出处：** Orosz《Guidebook》Ch.4 §2（heavyweight 流程的自评、经理评、同事评）；§4（"What" 与 "How"）；§5
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.4 §2（heavyweight 流程的自评、经理评、同事评）；§4（"What" 与 "How"）；§5
+
+</details>

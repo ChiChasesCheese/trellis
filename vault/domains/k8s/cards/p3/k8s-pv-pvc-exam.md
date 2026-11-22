@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**PV、PVC 与 StorageClass · 考点**｜考点 · 必会
+**PV、PVC 与 StorageClass**｜考点 · 必会
 
 你创建了一个 PVC，StorageClass 的 `volumeBindingMode` 是 `WaitForFirstConsumer`。`kubectl get pvc` 显示 `Pending`，已经好几分钟。是出问题了吗？什么时候才会变成 `Bound`？为什么要这样设计？
 
@@ -30,4 +30,8 @@ flowchart TB
 - **这一步卡住怎么查：** 有没有 Pod 在用这个 PVC；`describe pvc` 看 Events。
 - **PVC 的关系：** PVC 在命名空间里，PV 是集群范围；绑定后一一对应。
 
-**出处：** KIA2 §10.2（volumeBindingMode：Immediate 与 WaitForFirstConsumer）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §10.2（volumeBindingMode：Immediate 与 WaitForFirstConsumer）
+
+</details>

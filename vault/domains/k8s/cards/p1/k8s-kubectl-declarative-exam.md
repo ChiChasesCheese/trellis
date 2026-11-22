@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**kubectl 与 declarative · 考点**｜考点 · 必会
+**kubectl 与 declarative**｜考点 · 必会
 
 对同一个 `kiada.yaml`，依次执行：
 1. `kubectl apply -f kiada.yaml`
@@ -28,4 +28,8 @@ tags: [考点]
 - **所以脚本和 CI 里用 `apply -f`：** 失败重跑也不怕。
 - **注意：** `kubectl scale` 看起来像命令，实质也是修改 Deployment 里的期望副本数，Kubernetes 随后去对齐。
 
-**出处：** KIA2 §3.3（`kubectl scale` 只是修改 Deployment 对象）；kubernetes.io 文档 Declarative Management of Kubernetes Objects
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §3.3（`kubectl scale` 只是修改 Deployment 对象）；kubernetes.io 文档 Declarative Management of Kubernetes Objects
+
+</details>

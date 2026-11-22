@@ -33,4 +33,8 @@ flowchart TD
   H --> F["加用量上限"]
 ```
 
-**出处：** 通用单位经济学演算；数字为演示用。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用单位经济学演算；数字为演示用。
+
+</details>

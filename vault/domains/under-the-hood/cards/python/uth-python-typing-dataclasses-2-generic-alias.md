@@ -40,5 +40,3 @@ step: 2
 - `isinstance(x, list[int])` 直接抛 `TypeError`：运行时不知道元素类型，要写 `isinstance(x, list)`；`isinstance(x, int | str)` 可以用。
 
 **坑。** `int | "Foo"`（`Foo` 是字符串形式的前向引用）在运行时会失败，要把整个表达式写成字符串 `"int | Foo"`。
-
-**对应 LeetCode：** 无直接对应的题

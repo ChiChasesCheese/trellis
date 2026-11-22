@@ -23,4 +23,8 @@ tags: [惯用说法]
 
 **语气：** 转场一句话、不带解释；总结先重复结论，再说下一步。这是书面 signposting 的口语版。
 
-**出处：** 惯用说法，非引用；原则见 Signposting
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用；原则见 Signposting
+
+</details>

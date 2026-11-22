@@ -25,4 +25,8 @@ tags: [摘要]
 
 **别做：** 完全禁用 AI，或完全放开且不看理解程度。
 
-**出处：** METR《Measuring the Impact of Early-2025 AI…》（局限：不显示 AI 对新手无帮助）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+METR《Measuring the Impact of Early-2025 AI…》（局限：不显示 AI 对新手无帮助）
+
+</details>

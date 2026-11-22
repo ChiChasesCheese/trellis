@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Gateway 与 HTTPRoute · 考点**｜考点 · 必会
+**Gateway 与 HTTPRoute**｜考点 · 必会
 
 你创建了 Gateway 和 HTTPRoute，但访问不通。`kubectl get gateway` 的 `PROGRAMMED` 是 `False`；另一种情况是 Gateway 正常，但 HTTPRoute 的 status 里 `ResolvedRefs: False`。分别该往哪查？
 
@@ -26,4 +26,8 @@ kubectl describe httproute kiada      # 看 Status 里每个 parent 的 Conditio
 - **读法：** 和第 1 部分的 conditions 一样，看 `type`、`status`、`reason`、`message`。
 - **顺序：** 先看 GatewayClass 和 Gateway 是否 Accepted、Programmed，再看路由。
 
-**出处：** KIA2 §13（Gateway 与 HTTPRoute 的 status conditions：Accepted、Programmed、ResolvedRefs）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §13（Gateway 与 HTTPRoute 的 status conditions：Accepted、Programmed、ResolvedRefs）
+
+</details>

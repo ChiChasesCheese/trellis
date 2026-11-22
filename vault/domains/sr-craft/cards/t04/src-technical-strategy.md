@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** 诊断：服务数量、归属不清、事故里有多少来自无主服务；政策："新服务需要审批，除非有显著不同的非功能需求；无主服务一季度内认领或合并"；操作：审批频道、每周看迁移进度、例外流程。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否能把模糊的方向变成有诊断、有取舍、有落地机制的文件。
 
 **适合配哪类故事：** 你主导了一份技术方向文件（标准化、迁移、治理），并通过机制让它真的被执行的经历。
 
 **出处：** Larson《Crafting Engineering Strategy》ch1 "Adapting Rumelt for Engineering"（diagnosis / guiding policy / coherent actions）；ch5 "Steps to Build an Engineering Strategy"（五步与"别跳步"）；ch20 Document 20-1 Policy（决策对象示例）
+
+</details>

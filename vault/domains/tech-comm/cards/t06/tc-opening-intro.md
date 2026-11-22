@@ -25,4 +25,8 @@ tags: [惯用说法]
 
 **语气：** 平稳、自然，用现在时讲现在的角色，用过去时讲做过的事。最后留一个口子（Happy to go deeper）让对方挑想问的。
 
-**出处：** 惯用说法，非引用；由规则推导（先结论后细节，见 Answer first）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用；由规则推导（先结论后细节，见 Answer first）
+
+</details>

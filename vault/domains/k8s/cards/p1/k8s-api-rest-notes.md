@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**API 的形状 · 摘要**｜摘要 · 必会
+**API 的形状**｜摘要 · 必会
 
 Kubernetes API 是 REST 风格的。一个 Pod 和一个 Deployment 的 URL 路径分别长什么样？`apiVersion: apps/v1` 里的 `apps` 和 `v1` 对应路径的哪一段？
 
@@ -34,4 +34,8 @@ flowchart TB
 - **命名空间的对象路径多两段：** `namespaces/{ns}/`。
 - **自己看：** `kubectl api-resources` 列出所有资源、简称和是否属于命名空间；`kubectl get --raw /api/v1/nodes` 直接发请求。
 
-**出处：** Poulton ch14「The API」；kubernetes.io Reference › API Concepts
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch14「The API」；kubernetes.io Reference › API Concepts
+
+</details>

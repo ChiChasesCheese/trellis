@@ -33,4 +33,8 @@ flowchart TD
 
 **要点：** 毛利高 ≠ 现金好。判断一家公司，毛利率、capex、经营现金流三个数要一起看。
 
-**出处：** NVIDIA FY2026 10-K MD&A（毛利率 71.1% vs 75.0%）；定义为通用会计概念。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+NVIDIA FY2026 10-K MD&A（毛利率 71.1% vs 75.0%）；定义为通用会计概念。
+
+</details>

@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Local 把应用搞挂了 · 考点**｜考点 · 必会
+**Local 把应用搞挂了**｜考点 · 必会
 
 团队为了省跨 zone 流量，给一个普通后端 Service 设了 `internalTrafficPolicy: Local`。上线后，没有该后端 Pod 的 node 上的客户端全部连接失败。为什么？应该怎么改？
 
@@ -31,4 +31,8 @@ flowchart TD
 - **别用 Local 来「优化」普通服务：** 它是语义保证，不是性能开关。
 - **EndpointSlice 里能看到：** 就近偏好相关的 hints 写在 `endpoints[].hints.forZones`。
 
-**出处：** KIA2 §11.5.1「if no node-local service endpoints, the connection fails」；kubernetes.io Concepts › Service（trafficDistribution 取值）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §11.5.1「if no node-local service endpoints, the connection fails」；kubernetes.io Concepts › Service（trafficDistribution 取值）
+
+</details>

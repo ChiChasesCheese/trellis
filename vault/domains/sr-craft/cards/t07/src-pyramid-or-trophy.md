@@ -20,6 +20,10 @@ tags: [追问]
 
 **怎么做：** 看你的故障和 bug：多出在单个函数里，还是出在组件之间？多在组件之间就多写集成测试。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有主见，并能把选择讲成对系统的判断。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch14 §4（The testing pyramid；The testing trophy）
+
+</details>

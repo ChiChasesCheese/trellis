@@ -38,8 +38,12 @@ flowchart TD
 
 **回到题目：** 约定：日常信息和提案写在文档里，评论期 48 小时；有分歧时约一次重叠时段的短会，会后把结论写回文档；新人第一个月每周与导师和队友同步。（评论期长度是示例，由团队自定。）
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否理解远程协作的取舍，能设计适合团队的规则。
 
 **适合配哪类故事：** 你为分布式团队建立了异步写作和少量同步会议结合的做法，让决策更快、更透明的经历。
 
 **出处：** GitLab Handbook《Communication》"Asynchronous communication" 与《Sync vs. Async Culture》（handbook.gitlab.com/handbook/communication/sync-vs-async-culture/，2026-11-21 读取）；《All-Remote Meetings》（时区、录制）；leaf 引用的 /all-remote/asynchronous/ 页已 404，改用上述官方页
+
+</details>

@@ -32,4 +32,8 @@ flowchart TD
 
 **对方在想什么：** 新经理接手一批陌生的人，没有背景。你给他结构化的材料，他更快建立判断。
 
-**出处：** HBR https://hbr.org/2023/02/navigating-uncertainty-about-your-role-during-a-reorg（仅见摘要：你无法控制 reorg，但能控制回应）；Orosz《Guidebook》Ch.4 §5（"What if your manager changes?"）；Ch.2 §5
+<details class="pt" markdown="1"><summary>出处</summary>
+
+HBR https://hbr.org/2023/02/navigating-uncertainty-about-your-role-during-a-reorg（仅见摘要：你无法控制 reorg，但能控制回应）；Orosz《Guidebook》Ch.4 §5（"What if your manager changes?"）；Ch.2 §5
+
+</details>

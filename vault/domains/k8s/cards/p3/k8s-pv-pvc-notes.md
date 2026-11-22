@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**PV、PVC 与 StorageClass · 摘要**｜摘要 · 必会
+**PV、PVC 与 StorageClass**｜摘要 · 必会
 
 开发者想要「10Gi 的磁盘」，却不想知道底层是云硬盘还是 NFS。Kubernetes 里 PersistentVolume、PersistentVolumeClaim、StorageClass 各是什么？
 
@@ -43,4 +43,8 @@ spec:
 - **Pod 里：** 在 `volumes` 里引用 `persistentVolumeClaim.claimName`，像普通卷一样挂载。
 - **CSI 驱动：** 具体存储技术的实现，通常有一个 controller 部分负责创建卷，每个 node 上有一个部分负责挂载、卸载。
 
-**出处：** KIA2 §10.1–10.2（PersistentVolumes、dynamic provisioning、CSI drivers）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §10.1–10.2（PersistentVolumes、dynamic provisioning、CSI drivers）
+
+</details>

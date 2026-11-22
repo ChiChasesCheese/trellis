@@ -28,4 +28,8 @@ tags: [考点]
 
 **注意：** 需求 3 能用 agent，是因为**测试结果是可验证的反馈**。没有这种反馈的开放任务，agent 的错误更难发现。
 
-**出处：** Anthropic《Building effective agents》（Prompt chaining、Agents、Appendix 1: Agents in practice）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic《Building effective agents》（Prompt chaining、Agents、Appendix 1: Agents in practice）
+
+</details>

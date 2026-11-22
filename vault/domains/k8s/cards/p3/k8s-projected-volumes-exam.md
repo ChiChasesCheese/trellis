@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**挂载吃掉目录 · 考点**｜考点 · 必会
+**挂载吃掉目录**｜考点 · 必会
 
 你把一个只含 `app.conf` 的 ConfigMap 以 volume 挂到容器的 `/etc`，应用起来就报「找不到 `/etc/passwd` 之类的文件」。为什么？有哪几种补救办法，各有什么代价？
 
@@ -28,4 +28,8 @@ flowchart TD
 - **正常 configMap 卷的更新：** 内容变化后，卷里的文件会通过符号链接**原子更新**，应用能看到新文件（需要应用自己重新读取）；环境变量不会更新。
 - **所以：** 想要热更新就不要用 `subPath`；要保留 `/etc` 其他文件就用专用子目录。
 
-**出处：** KIA2 §9.5.2「How configMap volumes work」；§9.5.6（subPath 不随更新、projected 卷）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §9.5.2「How configMap volumes work」；§9.5.6（subPath 不随更新、projected 卷）
+
+</details>

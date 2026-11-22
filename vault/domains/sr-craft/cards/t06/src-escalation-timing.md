@@ -21,6 +21,10 @@ tags: [追问]
 
 **怎么做：** 升级前先和对方说："我打算请 X 一起帮我们定，你有什么要补充的？"说明背景和对方的观点，别只讲自己的版本。同样的，升级后也要执行决定。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否有不绕过对方的处理方式，也不拖到最后。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch16 §6 "Engineering dependencies"（"Before doing this, I suggest always trying engineer-to-engineer communication"）；ch22 §1
+
+</details>

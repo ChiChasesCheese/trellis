@@ -39,4 +39,4 @@ flowchart TD
 
 **新进展（2026 年 2 月）。** OpenAI 的 GPT-5.3-Codex-Spark（较小的编程模型）跑在 Cerebras WSE-3 上，官方称可超过每秒 1,000 个 token，是 OpenAI 第一个跑在 Cerebras 芯片上的模型。
 
-<details class="pt"><summary>想一想：按本卡的带宽算账，选一个更小的模型会怎样改变每秒 token 数？代价是什么？</summary>参数少，每步要读的字节就少，速度上限更高。代价是模型能力比同系列的完整版弱，速度是拿能力换的。</details>
+<details class="pt"><summary>想一想：按上面的带宽算账，选一个更小的模型会怎样改变每秒 token 数？代价是什么？</summary>参数少，每步要读的字节就少，速度上限更高。代价是模型能力比同系列的完整版弱，速度是拿能力换的。</details>

@@ -34,4 +34,8 @@ flowchart TD
 
 **对方在想什么：** 新团队想知道你已经有多少，还差多少。清楚说出差距和补课计划，比假装全会更可信。
 
-**出处：** Orosz《Guidebook》Ch.13 §1；Ch.1 §2（"Generalist/specialist pendulum"、"Software engineer specializing in a niche field"）；Ch.4 §6（Engineer A/B）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.13 §1；Ch.1 §2（"Generalist/specialist pendulum"、"Software engineer specializing in a niche field"）；Ch.4 §6（Engineer A/B）
+
+</details>

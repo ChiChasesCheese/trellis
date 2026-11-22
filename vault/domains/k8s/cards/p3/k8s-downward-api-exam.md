@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**该用哪种注入 · 考点**｜考点 · 必会
+**该用哪种注入**｜考点 · 必会
 
 一个服务要：1）知道自己跑在哪个 node 上（写日志用）；2）把 Pod 的全部 labels 写成文件给 sidecar 读取；3）按内存 limit 设置 JVM 堆大小。分别怎么做？有一项不能照想的做，是哪个？
 
@@ -22,4 +22,8 @@ tags: [考点]
 - **在 volume 里引用资源字段：** 必须写 `containerName`；env 里默认就是所在容器。
 - **别让 sidecar 去调 API server 查这些信息：** 那要额外的 RBAC 权限，Downward API 不需要。
 
-**出处：** KIA2 §8.4 表 8.5/8.6；§9.5.5（volume 里要写 containerName）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §8.4 表 8.5/8.6；§9.5.5（volume 里要写 containerName）
+
+</details>

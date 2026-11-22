@@ -42,8 +42,12 @@ flowchart TD
 
 **回到题目：** "我没用过它的接口，今天只能给范围：顺利的话一周，如果对方接口行为和文档不符、要做绕行，可能三周。给我两天做个原型调通下单和回调，周三我给你一个更准确的数字。"
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你能否在不确定下沟通：既不拒绝，也不乱许诺，会用原型和范围把风险讲清楚。
 
 **适合配哪类故事：** 你用原型或拆解把一个高度不确定的任务变成了较准确的估期，并在里程碑上校正的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch7 §4 "Estimate the Duration of Your Work"（七类工作的估法；ideal / worst-case estimate；timebox）；ch16 §3 "Ensure estimates aren't binding"
+
+</details>

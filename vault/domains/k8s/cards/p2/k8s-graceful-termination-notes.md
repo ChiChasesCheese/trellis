@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Graceful termination · 摘要**｜摘要 · 必会
+**Graceful termination**｜摘要 · 必会
 
 删除一个 Pod 时，容器会经历什么？`terminationGracePeriodSeconds` 管的是哪一段？
 
@@ -32,4 +32,8 @@ flowchart TB
 - **SIGTERM 收不到：** 常见原因是容器启动命令是 shell 脚本，SIGTERM 被 shell 收了，没传给应用。用 `exec` 启动应用，别在 preStop 里手工发信号。
 - **应用要做的：** 收到 SIGTERM 后停止接新请求、把手头的请求处理完、再退出。
 
-**出处：** KIA2 §6.3–6.4（lifecycle hooks、termination grace period）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §6.3–6.4（lifecycle hooks、termination grace period）
+
+</details>

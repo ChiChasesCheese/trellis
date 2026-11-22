@@ -48,8 +48,12 @@ flowchart TD
 
 **回到题目：** 对十个需求打分，把低 Confidence 的先做小实验提高信心；分数和直觉不一致的拿出来讨论；有依赖的前置项目单独标出。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否理解框架的用途，也明白它的局限，并能带着相关人一起讨论。
 
 **适合配哪类故事：** 你用一个排序方法帮团队在多个诉求中做出取舍，并说服了不同意的人的经历。
 
 **出处：** Intercom《RICE: Simple prioritization for product managers》（intercom.com/blog/rice-simple-prioritization-for-product-managers/，2026-11-21 读取：因子定义、刻度、caveats；页面把公式画成图，公式按其"total impact per time worked"描述整理）；Orosz《The Software Engineer's Guidebook》ch7 §1（该书未讲 RICE，只讲先完成 #1 优先级）
+
+</details>

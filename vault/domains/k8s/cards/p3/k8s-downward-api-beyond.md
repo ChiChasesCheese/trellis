@@ -21,4 +21,8 @@ tags: [拓展]
 - **配合：** topology spread 解决「Pod 放哪」，第 4 部分的就近路由解决「流量往哪」，这里解决「应用自己知道在哪」，例如选择同 zone 的缓存节点。
 - **仍是 beta：** 在 v1.35 中默认开启，但不要假设所有集群都已升级。
 
-**出处：** kubernetes.io 发布博客 v1.35（Expose node topology labels via Downward API，beta，KEP #4742）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.35（Expose node topology labels via Downward API，beta，KEP #4742）
+
+</details>

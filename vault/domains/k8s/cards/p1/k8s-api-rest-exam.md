@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**API 的形状 · 考点**｜考点 · 必会
+**API 的形状**｜考点 · 必会
 
 写出下面三项的 REST 路径：
 1. 命名空间 `shield` 里的所有 Pod
@@ -27,4 +27,8 @@ tags: [考点]
 - **为什么分组：** 书里的说法，把 API 拆成较小的组，更容易扩展和导航；新资源都进命名组。
 - **版本：** 同一个资源可能有多个版本（如 `v1beta1` → `v1`），旧版本会被弃用，写 manifest 时用当前的稳定版本。
 
-**出处：** Poulton ch14「The API」（核心组与命名组的路径表）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch14「The API」（核心组与命名组的路径表）
+
+</details>

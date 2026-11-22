@@ -32,4 +32,8 @@ flowchart TD
 
 **别忘了：** 评测集越大，越能抓住小的退步，但跑得越贵；这个取舍要由改动风险决定。
 
-**出处：** Huyen《AI Engineering》ch4 §Annotate evaluation data（Table 4-7、bootstrap）、§Evaluate your evaluation pipeline（temperature 0、variance）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Annotate evaluation data（Table 4-7、bootstrap）、§Evaluate your evaluation pipeline（temperature 0、variance）
+
+</details>

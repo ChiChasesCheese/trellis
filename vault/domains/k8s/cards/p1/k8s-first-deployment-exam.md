@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**First deployment · 考点**｜考点 · 必会
+**First deployment**｜考点 · 必会
 
 kiada 现在有 3 个 Pod。你执行 `kubectl delete pod kiada-5d9c8-p449x`。几秒后 `kubectl get pods` 会看到什么？为什么？如果你用 `kubectl delete deployment kiada` 呢？
 
@@ -27,4 +27,8 @@ kiada 现在有 3 个 Pod。你执行 `kubectl delete pod kiada-5d9c8-p449x`。�
 - **逻辑：** 有人在看着「期望 3 个」。你删的是现实，不是期望。要少一个，得改期望（`scale`）。
 - **这件事是谁做的：** 下一部分讲的 controller。
 
-**出处：** KIA2 §3.3（"Kubernetes ensures that the actual number of pods always matches the desired number"）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §3.3（"Kubernetes ensures that the actual number of pods always matches the desired number"）
+
+</details>

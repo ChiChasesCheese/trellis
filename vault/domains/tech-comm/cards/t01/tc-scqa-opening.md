@@ -35,4 +35,8 @@ flowchart TD
 **改写示例：**
 - "Our payment service retries failed charges (S). Last month a retry storm doubled the load on the bank gateway (C). So how do we retry safely (Q)? I propose capped exponential backoff with a per-merchant budget (A)."
 
-**出处：** Minto p. 33–48（Ch.2 The Introductory Flow）；p. 57–64（Ch.4 Fine Points of Introductions：The Story Form）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 33–48（Ch.2 The Introductory Flow）；p. 57–64（Ch.4 Fine Points of Introductions：The Story Form）
+
+</details>

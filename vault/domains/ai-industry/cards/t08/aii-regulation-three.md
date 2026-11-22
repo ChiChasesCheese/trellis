@@ -32,4 +32,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21；法规可能修订，请查官方文本。以上不是法律意见。
 
-**出处：** AI Act 高层摘要（artificialintelligenceact.eu/high-level-summary）；DLA Piper, New executive order aims to preempt state AI regulation（2025-12）；DLA Piper, China new measures on generative AI（2023-07）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+AI Act 高层摘要（artificialintelligenceact.eu/high-level-summary）；DLA Piper, New executive order aims to preempt state AI regulation（2025-12）；DLA Piper, China new measures on generative AI（2023-07）。
+
+</details>

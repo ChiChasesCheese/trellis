@@ -48,8 +48,12 @@ flowchart TD
 
 **回到题目：** 加一层针对服务边界的集成测试，用真实依赖或契约测试覆盖订单的关键接口；把一小时的端到端精简成几条关键路径，并处理 flaky 的用例，不稳定的先隔离。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你的测试观是否以目标为导向，而不是照搬模型；能否用风险和成本做取舍。
 
 **适合配哪类故事：** 你重新设计了测试结构（补集成测试、减 flaky），让上线问题明显变少、CI 更快的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch14 §4 "Mental Models for Automated Testing"（testing pyramid、testing trophy、"There is no single best approach"）；ch14 §1 "Unit Tests"（fast、reliable、focused）
+
+</details>

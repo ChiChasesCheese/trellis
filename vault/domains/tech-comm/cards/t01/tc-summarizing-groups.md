@@ -28,4 +28,8 @@ tags: [原则]
 - Before: "We should migrate for three reasons: the system is old, it's costly to maintain, and nobody knows it."
 - After: "We should migrate because the old system has become a risk we can no longer staff or afford: it's old, costly to maintain, and nobody knows it."
 
-**出处：** Minto p. 113–136（Ch.7 Summarizing Grouped Ideas：Avoid Intellectually Blank Assertions；State the Effect of Actions）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 113–136（Ch.7 Summarizing Grouped Ideas：Avoid Intellectually Blank Assertions；State the Effect of Actions）
+
+</details>

@@ -26,4 +26,8 @@ flowchart TD
 
 **用法：** 同一个问题，学术报告给基线，从业者报告给最新动向，投资机构报告给市场叙事；三者一致的结论更可信。
 
-**出处：** Stanford HAI, AI Index Report 2025；State of AI Report 2026（stateof.ai）；BOND 一类报告的归类为通用判断，本卡未逐页核对其数字。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Stanford HAI, AI Index Report 2025；State of AI Report 2026（stateof.ai）；BOND 一类报告的归类为通用判断，本卡未逐页核对其数字。
+
+</details>

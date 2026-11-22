@@ -34,4 +34,8 @@ flowchart TD
 
 **常见错法：** 什么都学一点，没有一项能讲出深度；或者把自己锁在一个即将缩小的平台上。
 
-**出处：** Orosz《Guidebook》Ch.1 §2（Generalist/specialist pendulum；software engineer turned specialist）；Ch.13 §1 "Languages, Platforms, and Domains"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.1 §2（Generalist/specialist pendulum；software engineer turned specialist）；Ch.13 §1 "Languages, Platforms, and Domains"
+
+</details>

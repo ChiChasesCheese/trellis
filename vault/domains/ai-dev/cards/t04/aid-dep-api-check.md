@@ -22,4 +22,8 @@ agent 用了 `library.connect(url, timeout=5)`，能跑，但你的版本文档�
 **做：** 让它改完把用到的外部 API 列出来，附文档链接，你抽查。
 **别做：** 因为"跑起来了"就相信——旧用法常常还能跑，只是行为变了或被标记弃用。
 
-**出处：** Claude Code docs《Best practices》（Tell Claude what it can't see：@ 引入文件；Connect the tools：Web 工具查文档）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Tell Claude what it can't see：@ 引入文件；Connect the tools：Web 工具查文档）
+
+</details>

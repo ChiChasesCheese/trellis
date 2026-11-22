@@ -35,4 +35,8 @@ flowchart TD
 
 **为什么这是排障闭环的核心：** 同一个失败第二次出现，说明评测集里没有它。
 
-**出处：** Huyen《AI Engineering》ch4 §Annotate evaluation data（用生产数据）、ch10 §User Feedback（用户编辑作为偏好数据）；Hamel Husain《Your AI Product Needs Evals》（看数据的界面）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Annotate evaluation data（用生产数据）、ch10 §User Feedback（用户编辑作为偏好数据）；Hamel Husain《Your AI Product Needs Evals》（看数据的界面）
+
+</details>

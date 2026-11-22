@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** 点名上下游团队和一位资深评审，约定一个截止日；一周内没反馈就当面问；上线后在文档顶部写明"与实现的差异"并链接新文档，必要时标为 superseded（被取代）。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否把文档当作活的协作工具，会推动评审，也会维护。
 
 **适合配哪类故事：** 你推动一份设计文档拿到关键反馈、改变了方案，或把过期文档整理成团队入口的经历。
 
 **出处：** Ubl《Design Docs at Google》"The design doc lifecycle"（Review、Implementation and iteration、Maintenance and learning）；Orosz《The Software Engineer's Guidebook》ch15 §1 "Reviewing RFCs"；ch13 §4 "Documentation"
+
+</details>

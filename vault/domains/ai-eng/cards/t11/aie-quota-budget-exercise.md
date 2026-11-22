@@ -33,4 +33,8 @@ flowchart TD
   C["在线聊天"] --> D["优先级高，预留额度"]
 ```
 
-**出处：** Huyen《AI Engineering》ch10 §Gateway（usage limits）；ch9 §Online and batch inference APIs。配额与优先级设计为通用的平台做法
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Gateway（usage limits）；ch9 §Online and batch inference APIs。配额与优先级设计为通用的平台做法
+
+</details>

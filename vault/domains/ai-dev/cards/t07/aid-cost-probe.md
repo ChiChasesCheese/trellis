@@ -21,4 +21,8 @@ tags: [考点]
 
 **别做：** 直接给所有人降档——会损失关键任务的质量。
 
-**出处：** Claude Code docs《Best practices》（Keep cost and context down：/clear、/loop 提醒）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Keep cost and context down：/clear、/loop 提醒）
+
+</details>

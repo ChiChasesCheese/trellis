@@ -28,4 +28,8 @@ tags: [摘要]
 
 **什么时候用：** 有多个任务、各自已有微调模型、部署内存紧张。合并后要重新评测每个任务，别假设合并无损。
 
-**出处：** Huyen《AI Engineering》ch7 §Model Merging and Multi-Task Finetuning
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch7 §Model Merging and Multi-Task Finetuning
+
+</details>

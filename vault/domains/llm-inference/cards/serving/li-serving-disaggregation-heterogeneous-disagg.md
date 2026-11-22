@@ -24,4 +24,4 @@ step: 3
 
 **新进展（2026 年 3 月）。** NVIDIA 在 GTC 上发布来自 Groq 技术授权的 LPU（把权重放在片上 SRAM 的推理芯片），作为 Vera Rubin 的解码协处理器，由 Dynamo 调度；Rubin GPU 仍负责预填充。
 
-<details class="pt"><summary>想一想：GPU 本来也能解码，NVIDIA 为什么还要加一种 SRAM 芯片？</summary>解码受带宽限制，SRAM 芯片带宽高、每 token 延迟低，GPU 就可以专做算力密集的预填充。这就是本卡的异构分工：每种芯片只做自己擅长的阶段。</details>
+<details class="pt"><summary>想一想：GPU 本来也能解码，NVIDIA 为什么还要加一种 SRAM 芯片？</summary>解码受带宽限制，SRAM 芯片带宽高、每 token 延迟低，GPU 就可以专做算力密集的预填充。这就是上面的异构分工：每种芯片只做自己擅长的阶段。</details>

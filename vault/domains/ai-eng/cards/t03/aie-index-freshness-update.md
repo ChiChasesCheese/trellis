@@ -30,4 +30,8 @@ tags: [实践]
 - 抽样把索引里的 chunk 和源文档逐一对比；
 - 从用户的负面反馈（点踩、重问）反推。
 
-**出处：** tianpan.co《The RAG Freshness Problem》（2026-04，2026-11-21 读）；Oracle 开发者博客《Real-Time RAG: Live SQL, Incremental Indexing, and Freshness Tests》的新鲜度测试思路
+<details class="pt" markdown="1"><summary>出处</summary>
+
+tianpan.co《The RAG Freshness Problem》（2026-04，2026-11-21 读）；Oracle 开发者博客《Real-Time RAG: Live SQL, Incremental Indexing, and Freshness Tests》的新鲜度测试思路
+
+</details>

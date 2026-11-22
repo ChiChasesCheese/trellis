@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**drain 卡住了 · 考点**｜考点 · 必会
+**drain 卡住了**｜考点 · 必会
 
 一个 Deployment 有 3 个副本，PDB 写了 `minAvailable: 3`。升级 node 时执行 `kubectl drain node-1` 一直不结束。为什么？怎么改才合理？
 
@@ -30,4 +30,8 @@ flowchart TD
 - **为不健康的 Pod 留出路：** 文档建议给 PDB 设 `unhealthyPodEvictionPolicy: AlwaysAllow`，否则应用本身已不健康时，drain 会一直等它们恢复。
 - **和滚动更新无关：** Deployment 的更新节奏由它自己的 `maxUnavailable` 控制，不受 PDB 限制。
 
-**出处：** kubernetes.io Concepts › Disruptions（Eviction API、drain 重试、AlwaysAllow 建议）；Tasks › Specifying a Disruption Budget（minAvailable/maxUnavailable、百分比向上取整）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Disruptions（Eviction API、drain 重试、AlwaysAllow 建议）；Tasks › Specifying a Disruption Budget（minAvailable/maxUnavailable、百分比向上取整）
+
+</details>

@@ -47,8 +47,12 @@ flowchart TD
 
 **回到题目：** 在他入职前先把环境、权限、文档过一遍；指定 buddy；第一周只设一个小目标（修一个小 bug 并上线）；让他边做边修订文档，并作为本次 onboarding 的最后一项任务交回。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否有系统地帮新人成长的意识，并把知识沉淀为团队资产。
 
 **适合配哪类故事：** 你改进了团队的 onboarding（文档、buddy、第一个任务），明显缩短了新人上手时间的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch13 §4 "Documentation"（Onboarding documentation：七项内容，让新人修订文档）；ch6 §6 "Onboarding to a New Job"（onboarding buddy、cheat sheet、ship in week one at small companies）
+
+</details>

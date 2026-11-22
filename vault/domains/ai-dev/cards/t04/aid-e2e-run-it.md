@@ -25,4 +25,8 @@ agent 说"功能完成，类型检查和单元测试通过"。你为什么还要
 
 **官方做法：** 完成后让它跑 `/verify`，构建、运行应用并查看结果，抓测试和类型检查漏掉的问题。
 
-**出处：** Anthropic Engineering《Effective harnesses for long-running agents》（Testing）；Claude Code docs《Best practices》（Give Claude a check to run）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic Engineering《Effective harnesses for long-running agents》（Testing）；Claude Code docs《Best practices》（Give Claude a check to run）
+
+</details>

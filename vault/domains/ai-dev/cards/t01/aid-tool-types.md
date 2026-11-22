@@ -29,4 +29,8 @@ flowchart TD
 
 **核心判断：** 底下是同一种 agent loop；差别是**在哪运行、你怎么介入、结果怎么交回**。多数产品现在同时提供多种形态（2026-11：Claude Code 有终端、桌面、IDE 扩展、网页、Slack、CI 入口；Cursor 有桌面 agent 与 cloud agents；Codex 有 CLI 与 cloud），所以别记品牌的"定位"，记形态的取舍。
 
-**出处：** Claude Code docs《How Claude Code works》（Interfaces）；Cursor docs《Cloud Agents》；OpenAI Codex docs《Cloud》
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《How Claude Code works》（Interfaces）；Cursor docs《Cloud Agents》；OpenAI Codex docs《Cloud》
+
+</details>

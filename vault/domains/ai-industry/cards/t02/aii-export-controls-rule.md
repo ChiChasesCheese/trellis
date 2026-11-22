@@ -34,4 +34,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21；规则可能被后续修订。
 
-**出处：** Federal Register Vol. 91, No. 10（2026-01-15），BIS final rule RIN 0694-AK43（govinfo.gov）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Federal Register Vol. 91, No. 10（2026-01-15），BIS final rule RIN 0694-AK43（govinfo.gov）。
+
+</details>

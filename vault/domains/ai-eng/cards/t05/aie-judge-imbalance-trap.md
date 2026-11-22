@@ -36,4 +36,8 @@ flowchart TD
 - 分别报告 precision 和 recall；
 - 按用途选：**拦截坏回答**更看重 recall，**不想误杀好回答**更看重 precision。
 
-**出处：** Hamel Husain《Your AI Product Needs Evals》（with imbalanced classes, raw agreement is misleading; measure precision and recall separately）。95/100 的数字为出题用的例子
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Hamel Husain《Your AI Product Needs Evals》（with imbalanced classes, raw agreement is misleading; measure precision and recall separately）。95/100 的数字为出题用的例子
+
+</details>

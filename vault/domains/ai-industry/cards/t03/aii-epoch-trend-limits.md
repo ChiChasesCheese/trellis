@@ -33,4 +33,8 @@ flowchart TD
   D --> S
 ```
 
-**出处：** Epoch AI Trends；Epoch AI, Will we run out of data?（epoch.ai/blog/will-we-run-out-of-data-limits-of-llm-scaling-based-on-human-generated-data）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Epoch AI Trends；Epoch AI, Will we run out of data?（epoch.ai/blog/will-we-run-out-of-data-limits-of-llm-scaling-based-on-human-generated-data）。
+
+</details>

@@ -38,4 +38,8 @@ flowchart TD
 
 **注：** 上面的三级是工程实践上的归纳，书里只区分读与写。
 
-**出处：** Huyen《AI Engineering》ch6 §Tools（Write actions）；三级分法为通行的工程做法
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Tools（Write actions）；三级分法为通行的工程做法
+
+</details>

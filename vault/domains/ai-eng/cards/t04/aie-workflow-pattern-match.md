@@ -25,4 +25,8 @@ tags: [考点]
 
 **共同的原则：** 这些模式都是**用延迟和成本换更好的结果**。先用最简单的单次调用，评测发现不够，再选**对应问题形状**的最小模式，不要为了"架构"而加。
 
-**出处：** Anthropic《Building effective agents》（各模式的 When to use；"only increasing complexity when needed"）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic《Building effective agents》（各模式的 When to use；"only increasing complexity when needed"）
+
+</details>

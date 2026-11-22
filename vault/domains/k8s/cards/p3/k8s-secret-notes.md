@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Secret · 摘要**｜摘要 · 必会
+**Secret**｜摘要 · 必会
 
 同事说「我们的数据库密码放在 Secret 里，是加密的，很安全」。这句话对吗？一个 Secret 从 YAML 到容器里，每一处是明文还是密文？
 
@@ -36,4 +36,8 @@ flowchart TB
 - **更稳妥的做法：** 开启 etcd 静态加密；收紧 RBAC；用外部的密钥管理工具（如 HashiCorp Vault）补足加密、细粒度权限、自动轮换和审计。
 - **所以 Secret 比 ConfigMap 好在哪：** 单独授权、可以单独加密存储，不是因为值本身被加密了。
 
-**出处：** KIA2 §8.3（Secrets 的真实安全性：encoded, not encrypted；stored unencrypted unless encryption enabled）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §8.3（Secrets 的真实安全性：encoded, not encrypted；stored unencrypted unless encryption enabled）
+
+</details>

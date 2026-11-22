@@ -29,4 +29,8 @@ tags: [原则]
 - Before: "The connection pool was exhausted because of a retry storm."
 - After: "Between 2:10 and 2:40, about 8 percent of payments failed, and customers could retry successfully afterward. The cause was a traffic spike we didn't handle well. It's fixed, and here is what we're doing so it doesn't recur."
 
-**出处：** Google Technical Writing One《Audience》（匹配词汇、知识的诅咒、用简单词汇、避免习语）；类比与后果的做法由规则推导
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Audience》（匹配词汇、知识的诅咒、用简单词汇、避免习语）；类比与后果的做法由规则推导
+
+</details>

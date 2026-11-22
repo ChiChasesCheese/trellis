@@ -39,4 +39,4 @@ def compare(ref_logits, test_logits):
 
 **新进展（2026 年 2 月）。** 微软和 NVIDIA 在 GB200 上跑 DeepSeek-V3.2 的 NVFP4 版本：权重从 FP8 的 690 GB 降到 415 GB（约 1.7 倍），KV 缓存仍用 FP8。模型卡给出 5 个基准上接近 FP8 的分数，例如 GPQA Diamond 0.849 对 0.835，AIME 2025 0.934 对 0.923，这是厂商数字。
 
-<details class="pt"><summary>想一想：GPQA Diamond 只有 198 题，掉了 1.4 个百分点，能说量化无损吗？本卡的指标能补上什么？</summary>不能：198 题的标准误约 2.5 个百分点，1.4 点在噪声内。基准分只是终点指标，还应在同一批 token 上算 KL 和 top-1 一致率，并先测出 FP8 自比的基线再定阈值。</details>
+<details class="pt"><summary>想一想：GPQA Diamond 只有 198 题，掉了 1.4 个百分点，能说量化无损吗？上面的指标能补上什么？</summary>不能：198 题的标准误约 2.5 个百分点，1.4 点在噪声内。基准分只是终点指标，还应在同一批 token 上算 KL 和 top-1 一致率，并先测出 FP8 自比的基线再定阈值。</details>

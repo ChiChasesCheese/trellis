@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**NetworkPolicy · 摘要**｜摘要 · 必会
+**NetworkPolicy**｜摘要 · 必会
 
 集群里默认任何 Pod 都能连任何 Pod。想让 `db` 只接受 `frontend` 的连接，用什么？它的规则怎么叠加？
 
@@ -47,4 +47,8 @@ flowchart TB
 - **谁来执行：** 由网络插件（**CNI**）实现。集群的网络插件不支持，创建了 NetworkPolicy 也**不起作用**，没有任何提示。
 - **全拒绝：** `podSelector: {}` 加 `policyTypes: [Ingress]` 且没有规则，就是该命名空间默认拒绝所有入站。
 
-**出处：** kubernetes.io Concepts › Network Policies
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Network Policies
+
+</details>

@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Pod status · 考点**｜考点 · 必会
+**Pod status**｜考点 · 必会
 
 三种 `kubectl get pods` 的输出，各是什么问题？
 1. `0/1  Pending`
@@ -24,4 +24,8 @@ tags: [考点]
 - **第 2 行的陷阱：** Running 却不接流量，Service 不会把请求送过来。很多「部署了但访问不到」就是这个。
 - **所以：** 判断一个 Pod 好不好，看 Ready，不看 Running。
 
-**出处：** KIA2 §6.1；KIA2 §6.2（CrashLoopBackOff）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §6.1；KIA2 §6.2（CrashLoopBackOff）
+
+</details>

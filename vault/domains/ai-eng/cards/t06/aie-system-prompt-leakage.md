@@ -34,4 +34,8 @@ tags: [摘要]
 
 **另一类提取：** 通过特定 prompt 让模型吐出训练数据（Nasr 等 2023 让 ChatGPT 重复一个词，直到它「发散」后吐出训练数据的片段），所以别指望模型帮你保守机密。
 
-**出处：** Huyen《AI Engineering》ch5 §Proprietary Prompts and Reverse Prompt Engineering；§Information Extraction
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch5 §Proprietary Prompts and Reverse Prompt Engineering；§Information Extraction
+
+</details>

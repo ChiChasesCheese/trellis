@@ -22,4 +22,8 @@ agent 写的测试覆盖率 95%，全部通过。变异测试报告说 40% 的 m
 
 **怎么处理：** 对存活的 mutant，让 agent 补一个能杀死它的测试（先看它在原实现上通过，在 mutant 上失败）；不要为了数字好看加没有意义的断言。
 
-**出处：** 概念出处：Claude Code docs《Best practices》（Give Claude a check to run：check 要能分辨通过与失败）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+概念出处：Claude Code docs《Best practices》（Give Claude a check to run：check 要能分辨通过与失败）
+
+</details>

@@ -31,4 +31,8 @@ flowchart TD
   R --> M["训练下一代"]
 ```
 
-**出处：** 通用平台竞争分析；本卡不含数字。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用平台竞争分析；本卡不含数字。
+
+</details>

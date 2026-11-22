@@ -40,8 +40,12 @@ flowchart TD
 
 **回到题目：** 先把发布步骤写成脚本并版本化，再让 CI 在干净环境里构建、打唯一版本号；让每个人（不是某一位）一键发布；保留变更报告以便回溯。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否理解发布是工程问题，而非手工活。
 
 **适合配哪类故事：** 你把一个手工、依赖个人的发布流程变成自动、可重复流程的经历。
 
 **出处：** Beyer 等《Site Reliability Engineering》"Release Engineering"（sre.google/sre-book/release-engineering/，2026-11-21 读取：The Role of a Release Engineer、Philosophy、Continuous Build and Deployment、Configuration Management、Key Lessons）；与 Change risk 一卡互补（偏流程与工具）
+
+</details>

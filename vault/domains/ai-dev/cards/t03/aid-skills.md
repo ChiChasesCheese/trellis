@@ -37,4 +37,8 @@ disable-model-invocation: true
 
 **时效（2026-11）：** 文件位置和 frontmatter 字段是 Claude Code 的约定；封装"按需加载的流程说明"这个思路各工具都有。
 
-**出处：** Claude Code docs《Best practices》（Put team procedures in skills）；《How Claude Code works》（Manage context with skills and subagents）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Put team procedures in skills）；《How Claude Code works》（Manage context with skills and subagents）
+
+</details>

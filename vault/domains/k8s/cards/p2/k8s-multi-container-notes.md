@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Init containers 与 native sidecars · 摘要**｜摘要 · 必会
+**Init containers 与 native sidecars**｜摘要 · 必会
 
 一个 Pod 里有多个容器时，启动顺序是怎样的？init container 和普通容器有什么不同？native sidecar 是怎么回事？
 
@@ -42,4 +42,8 @@ spec:
 - **native sidecar 的好处：** 先于主容器（以及排在它后面的 init）启动；崩了会被重启；Pod 关闭时，先通知普通容器退出，再通知 sidecar，所以日志收集器不会比应用先死。
 - **普通 sidecar（放在 `containers` 里）的毛病：** 启动无序，关闭时可能先于主容器退出。
 
-**出处：** KIA2 §5.4–5.5（init containers、native sidecar containers）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §5.4–5.5（init containers、native sidecar containers）
+
+</details>

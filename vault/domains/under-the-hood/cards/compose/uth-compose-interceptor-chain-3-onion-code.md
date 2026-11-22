@@ -71,5 +71,3 @@ trace: list[str] = []
 Invocation([tag("A", trace), tag("B", trace)], lambda: trace.append("目标")).proceed()
 # trace == ["A 前", "B 前", "目标", "B 后", "A 后"]
 ```
-
-**对应 LeetCode：** 无直接对应的题

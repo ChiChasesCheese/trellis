@@ -39,4 +39,8 @@ tags: [考点]
 2. 报告得分时带区间，不只给一个数；
 3. 样本不够时，看逐条的变化（由对变错、由错变对），别只看总分。
 
-**出处：** Huyen《AI Engineering》ch4 §Annotate evaluation data（Table 4-7）、§Evaluate your evaluation pipeline；ch2 §Inconsistency；标准误公式为通用统计
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Annotate evaluation data（Table 4-7）、§Evaluate your evaluation pipeline；ch2 §Inconsistency；标准误公式为通用统计
+
+</details>

@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** 回头为这件事补一份 ADR：背景（半结构化数据、团队不想多运维一套系统）、选项（JSONB、文档数据库）、决定与理由，以及后果（查询要自己建索引、将来数据量大要重新评估）。以后凡是难回退的存储或协议决定，都补 ADR。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否有保存决策背景的习惯，并懂得"只记重要的、不改历史"。
 
 **适合配哪类故事：** 你留下一份决策记录，让之后的人少走弯路，或者帮团队解释了一个"奇怪但有理由"的设计的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch15 §1 "Architecture documents"（ADR、C4、Arc42）；adr.github.io；MADR 模板（github.com/adr/madr，template/adr-template.md）
+
+</details>

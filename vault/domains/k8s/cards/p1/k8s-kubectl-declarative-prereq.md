@@ -6,7 +6,7 @@ step: 1
 tags: [先修]
 ---
 ## Q
-**kubectl 与 declarative · 先修**｜先修 · 必会
+**kubectl 与 declarative**｜先修 · 必会
 
 部署同一个应用，可以敲 `kubectl create deployment kiada --image=luksa/kiada:0.1`，也可以写一个 YAML 文件再 `kubectl apply -f kiada.yaml`。kubectl 是什么？这两种做法差在哪？
 
@@ -41,4 +41,8 @@ spec:
 
 - **关键：** 不管用哪种，结果都是 API server 里存了一个 Deployment 对象，`spec` 里写着「想要什么」。真正把它变成现实的是 controller（下一章）。
 
-**出处：** KIA2 §3.2–3.3（imperative 部署 Kiada）；Poulton ch2（declarative model）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §3.2–3.3（imperative 部署 Kiada）；Poulton ch2（declarative model）
+
+</details>

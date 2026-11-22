@@ -33,4 +33,8 @@ flowchart TD
 
 **常见错法：** 在 wartime 里做看不到短期价值的长线项目；把 platform 当成"安全"，忽略成本中心风险。
 
-**出处：** Orosz《Guidebook》Ch.5 §1–§3 "Product Teams / Platform Teams / Peacetime vs Wartime"、§4；Ch.4 §4
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.5 §1–§3 "Product Teams / Platform Teams / Peacetime vs Wartime"、§4；Ch.4 §4
+
+</details>

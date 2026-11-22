@@ -38,4 +38,8 @@ flowchart TD
 
 **对方在想什么：** 他需要拿着你的理由去找 comp 团队批准。理由越可复述，批准越容易。
 
-**出处：** Voss《Never Split the Difference》Ch.9 "Bargain Hard"（Ackerman model：65/85/95/100；nonround numbers）；McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/；Qureshi（Rule 7 "Proclaim reasons for everything"，仅见标题）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Voss《Never Split the Difference》Ch.9 "Bargain Hard"（Ackerman model：65/85/95/100；nonround numbers）；McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/；Qureshi（Rule 7 "Proclaim reasons for everything"，仅见标题）
+
+</details>

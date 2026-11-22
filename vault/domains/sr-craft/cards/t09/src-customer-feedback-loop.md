@@ -39,8 +39,12 @@ flowchart TD
 
 **回到题目：** 两周内和三个主要使用团队各聊一次；做一份简短满意度问卷；把客服/支持渠道里关于平台的问题汇总；用这些输入排下一个季度的路线图，并回访使用者。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否主动找问题、对客户价值负责。
 
 **适合配哪类故事：** 你通过接近客户（用户访谈、客服工单），发现并解决了一个团队原本没注意的问题的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch21 §2 "Your Team and Product"（Put on a product manager hat、Put yourself in the customer's shoes、Get involved with customer support、Know why customers use your product）；ch5 §1 "Product Teams and Product-Minded Engineers"
+
+</details>

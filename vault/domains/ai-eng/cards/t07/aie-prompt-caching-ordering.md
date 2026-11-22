@@ -33,4 +33,8 @@ flowchart TD
 
 **别忘了：** 缓存的是"处理 prompt"的工作，输出仍要生成；所以它主要降低 **TTFT 和输入成本**，不减少输出的时间。
 
-**出处：** Huyen《AI Engineering》ch9 §Prompt caching（重叠文字段、system prompt 作为公共前缀）；ch10 §Step 4。前缀匹配与排序规则是此类缓存的通用做法，具体条件见各供应商文档
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch9 §Prompt caching（重叠文字段、system prompt 作为公共前缀）；ch10 §Step 4。前缀匹配与排序规则是此类缓存的通用做法，具体条件见各供应商文档
+
+</details>

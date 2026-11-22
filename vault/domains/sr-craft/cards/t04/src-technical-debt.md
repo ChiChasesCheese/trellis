@@ -39,8 +39,12 @@ flowchart TD
 
 **回到题目：** 先还构建慢：用"每次浪费时间 × 每天次数 × 工程师人数"算出每天的总浪费，对比修复需要几周，向经理提项目。复制粘贴的代码，如果在高频改动的模块里，就绑到下一个要改它的功能里一起提成共享库；在快废弃的模块里，记下来不碰。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你能否用影响和成本讨论技术债，而不是情绪。资深的信号是"不为还债而还债"。
 
 **适合配哪类故事：** 你量化了一块技术债的影响，把它绑到一个高优先级项目里清掉，并让团队速度可见地变快的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch13 §3 "Tech Debt"（Paying down tech debt；Couple tech debt removal with high-impact projects；Reduce tech debt accumulation；"Just enough" tech debt）
+
+</details>

@@ -29,4 +29,8 @@ tags: [考点]
 
 **别忘了：** 无论选哪边，都用**标准化的 API**，方便以后换模型；换 API 或换提供商后，要重新评测，因为同一模型在不同 API 上表现可能有细微差别。
 
-**出处：** Huyen《AI Engineering》ch4 §Model Build Versus Buy（Open source models versus model APIs 七条轴）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Model Build Versus Buy（Open source models versus model APIs 七条轴）
+
+</details>

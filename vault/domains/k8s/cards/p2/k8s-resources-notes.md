@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Requests、limits 与 QoS · 摘要**｜摘要 · 必会
+**Requests、limits 与 QoS**｜摘要 · 必会
 
 容器的 `requests` 和 `limits` 各管什么？QoS class 又是怎么由它们决定的？
 
@@ -40,4 +40,8 @@ flowchart TB
 - **`m`：** 毫核，`500m` 是半个 CPU 核。
 - **node 压力下：** 只有用量超过 requests 的 Pod 才是驱逐候选。
 
-**出处：** kubernetes.io Concepts › Resource Management for Pods and Containers；Pod Quality of Service Classes
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Resource Management for Pods and Containers；Pod Quality of Service Classes
+
+</details>

@@ -43,4 +43,8 @@ flowchart TD
 
 **参考值：** lm-evaluation-harness 的基准里，样本数中位数 1,000、平均 2,159；Inverse Scaling 奖的组织者认为 300 是绝对下限，最好 1,000 以上。评测集要**大到结果可靠，小到跑得起**。
 
-**出处：** Huyen《AI Engineering》ch4 §Annotate evaluation data（Table 4-7，OpenAI 的估计；bootstrap）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Annotate evaluation data（Table 4-7，OpenAI 的估计；bootstrap）
+
+</details>

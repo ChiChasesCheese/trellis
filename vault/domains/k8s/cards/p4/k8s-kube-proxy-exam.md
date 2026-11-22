@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**切到 nftables · 考点**｜考点 · 必会
+**切到 nftables**｜考点 · 必会
 
 你们的集群有 8000 个 Service，iptables 模式下 Service 变化后规则同步很慢，新连接的第一个包延迟偏高。打算换成 nftables。要先检查什么？切换要重启 node 吗？
 
@@ -26,4 +26,8 @@ tags: [考点]
 - **显式写出 mode：** 文档建议每个集群都显式配置，免得将来默认值改成 nftables 时，升级悄悄换掉你的后端。
 - **从 ipvs 迁移：** ipvs 已弃用，推荐迁到 nftables；内核太旧用不了 nftables 的，改用 iptables。
 
-**出处：** kubernetes.io 博客 2025-02-28「NFTables mode for kube-proxy」（内核 5.13、nft 版本、NodePort 差异、切换方式）；Reference › Virtual IPs and Service Proxies
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 博客 2025-02-28「NFTables mode for kube-proxy」（内核 5.13、nft 版本、NodePort 差异、切换方式）；Reference › Virtual IPs and Service Proxies
+
+</details>

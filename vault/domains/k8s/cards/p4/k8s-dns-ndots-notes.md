@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Service discovery 与 CoreDNS · 摘要**｜摘要 · 必会
+**Service discovery 与 CoreDNS**｜摘要 · 必会
 
 应用代码里只写了 `http://kiada`，它怎么变成一个 IP？容器里的 `/etc/resolv.conf` 里写了什么？
 
@@ -38,4 +38,8 @@ flowchart TB
 - **ClusterIP 没有路由：** 容器把发往它的流量交给 node，node 内核里 kube-proxy 写的规则把它改成某个健康 Pod 的 IP。
 - **ndots:5：** 名字里点的个数少于 5 时，会先逐个尝试搜索域，下一张卡讲它的代价。
 
-**出处：** Poulton ch9（「Service discovery」、/etc/resolv.conf 示例）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch9（「Service discovery」、/etc/resolv.conf 示例）
+
+</details>

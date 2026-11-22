@@ -31,4 +31,8 @@ flowchart TD
 
 **对方在想什么：** 经理希望你继续留下来，也怕你转身走。明确的计划让他有东西可以承诺。
 
-**出处：** Orosz《Guidebook》Ch.4 §5（"about 30–40% of promotion cases to senior levels are rejected"；Prepare to not be promoted）；Ch.6 §2
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.4 §5（"about 30–40% of promotion cases to senior levels are rejected"；Prepare to not be promoted）；Ch.6 §2
+
+</details>

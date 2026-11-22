@@ -31,4 +31,8 @@ flowchart TD
 
 **对方在想什么：** 上级担心你是不是逃避，也担心团队空缺。你给出清楚的交接和未来贡献，他更愿意支持。
 
-**出处：** Orosz《Guidebook》Ch.1 §2（Software engineer/manager pendulum；Switch between IC and manager tracks）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.1 §2（Software engineer/manager pendulum；Switch between IC and manager tracks）
+
+</details>

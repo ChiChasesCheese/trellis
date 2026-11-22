@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**First deployment · 摘要**｜摘要 · 必会
+**First deployment**｜摘要 · 必会
 
 你执行了 `kubectl create deployment kiada --image=luksa/kiada:0.1`，随后 `kubectl expose deployment kiada --type=LoadBalancer --port 8080`，再 `kubectl scale deployment kiada --replicas=3`。集群里依次出现了什么？
 
@@ -33,4 +33,8 @@ flowchart TB
 - **LoadBalancer：** Kubernetes 不自带负载均衡器，是向云基础设施申请一个。申请到之前 `EXTERNAL-IP` 显示 `<pending>`。
 - **`kubectl get pods -o wide`：** 多出 IP 和 NODE 两列，能看到每个 Pod 被放到了哪台机器。
 
-**出处：** KIA2 §3.3（Running your first application on Kubernetes）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §3.3（Running your first application on Kubernetes）
+
+</details>

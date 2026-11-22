@@ -24,4 +24,8 @@ tags: [实践]
 **做：** 每个新坑（agent 一再犯的错）改一次 CLAUDE.md，提 PR，写明原因。
 **别做：** 每人一份私人 prompt 合集，从不共享。
 
-**出处：** Claude Code docs《Security》（Team security）；《Best practices》（Keep CLAUDE.md short）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Security》（Team security）；《Best practices》（Keep CLAUDE.md short）
+
+</details>

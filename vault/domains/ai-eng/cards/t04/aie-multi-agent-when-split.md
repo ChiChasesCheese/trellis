@@ -34,4 +34,8 @@ tags: [摘要]
 
 **回到题目：** 先用单 agent 加好工具做基线，评测证明有可并行的瓶颈，再拆。
 
-**出处：** Anthropic《How we built our multi-agent research system》anthropic.com/engineering/multi-agent-research-system（2026-11-21 读）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic《How we built our multi-agent research system》anthropic.com/engineering/multi-agent-research-system（2026-11-21 读）
+
+</details>

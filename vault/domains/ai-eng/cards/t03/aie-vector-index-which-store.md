@@ -26,4 +26,8 @@ tags: [考点]
 
 **别忘了：** embedding 检索要多出的延迟（生成查询向量、向量搜索）和一次回答的总延迟相比往往很小，因为大部分延迟来自生成输出；但成本要算清，向量库开销可能占到模型 API 的五分之一到一半。
 
-**出处：** Huyen《AI Engineering》ch6 §Embedding-based retrieval、§Evaluating Retrieval Solutions、§Comparing retrieval algorithms
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Embedding-based retrieval、§Evaluating Retrieval Solutions、§Comparing retrieval algorithms
+
+</details>

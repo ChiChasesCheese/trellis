@@ -27,4 +27,8 @@ tags: [拓展]
 - **迁移：** 把原来 `containers` 里的 sidecar 挪到 `initContainers`，加一行 `restartPolicy: Always`。
 - **仍然适合普通容器的：** 不需要这些顺序保证的并列容器。
 
-**出处：** kubernetes.io 发布博客 v1.33（KEP-753，sidecar GA）；KIA2 §5.5（native sidecar，自 v1.28）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.33（KEP-753，sidecar GA）；KIA2 §5.5（native sidecar，自 v1.28）
+
+</details>

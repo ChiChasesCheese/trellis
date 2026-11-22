@@ -39,4 +39,8 @@ flowchart TD
 
 **对比：** 书里提到 Output guardrails 要抓这类失败：格式错误、事实不一致、有毒内容、含敏感信息、触发远程工具或代码执行、损害品牌的回复。
 
-**出处：** OWASP LLM05:2025 Improper Output Handling（https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/）；Huyen《AI Engineering》ch10 §Output guardrails
+<details class="pt" markdown="1"><summary>出处</summary>
+
+OWASP LLM05:2025 Improper Output Handling（https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/）；Huyen《AI Engineering》ch10 §Output guardrails
+
+</details>

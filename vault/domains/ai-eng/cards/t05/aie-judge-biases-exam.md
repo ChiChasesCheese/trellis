@@ -31,4 +31,8 @@ flowchart TD
 - **judge 有没有变：** 这个月和上个月的 judge model、prompt 是否完全一样？不一样，62% 和上次的数就不能比。
 - **一致性：** 同样的输入跑两次，分数一样吗？Zheng et al. 2023 发现在 prompt 里加评分示例，GPT-4 的一致性从 65% 升到 77.5%，但一致不等于正确。
 
-**出处：** Huyen《AI Engineering》ch3 §Limitations of AI as a judge（Inconsistency、Biases of AI as a judge）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch3 §Limitations of AI as a judge（Inconsistency、Biases of AI as a judge）
+
+</details>

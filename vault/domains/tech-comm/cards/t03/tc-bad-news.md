@@ -36,4 +36,8 @@ flowchart TD
 - Before: "So, we've been working hard and there have been some challenges, and…"
 - After: "I need to flag that the migration will slip by a month. Two customers go live late. We've found the cause, and I'd like your approval to add one engineer to catch up."
 
-**出处：** HBR《How to Deliver Bad News to Your Boss》（hbr.org/2022/06/how-to-deliver-bad-news-to-your-boss，页面只能读到开场摘要；顺序按通用做法推导）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+HBR《How to Deliver Bad News to Your Boss》（hbr.org/2022/06/how-to-deliver-bad-news-to-your-boss，页面只能读到开场摘要；顺序按通用做法推导）
+
+</details>

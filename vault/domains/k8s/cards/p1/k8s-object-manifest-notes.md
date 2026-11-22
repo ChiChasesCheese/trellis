@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Object manifest · 摘要**｜摘要 · 必会
+**Object manifest**｜摘要 · 必会
 
 Kubernetes 里的每个对象（Pod、Service、Node……）的 YAML 都由哪几块组成？各块写什么？
 
@@ -39,4 +39,8 @@ status:                 # 实际状态：由系统写，你不写
 - **读任意对象的办法：** `kubectl get node <name> -o yaml`，然后按这五块逐块看；不认识的字段用 `kubectl explain node.spec` 查。
 - **例外：** ConfigMap（存放配置键值的对象，第 3 部分细讲）、Secret（存放密码、令牌等敏感配置的对象，第 3 部分细讲） 等少数对象没有 `spec`，直接是 `data` 之类的字段。
 
-**出处：** KIA2 §4.1–4.2（Object manifest、用 Node 对象逐字段读）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §4.1–4.2（Object manifest、用 Node 对象逐字段读）
+
+</details>

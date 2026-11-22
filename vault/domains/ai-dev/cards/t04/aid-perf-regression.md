@@ -23,4 +23,8 @@ agent 重写了订单列表接口，功能测试全过，上线后接口变慢�
 **做：** 把性能写进 spec（"1 万条数据 p95 < 200ms"），给一个基准测试当 check；对数据库访问看查询计划。
 **别做：** 只用 3 行 fixture 测性能相关代码。
 
-**出处：** Claude Code docs《Best practices》（Give Claude a check to run：可运行的 check 才是判据）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Give Claude a check to run：可运行的 check 才是判据）
+
+</details>

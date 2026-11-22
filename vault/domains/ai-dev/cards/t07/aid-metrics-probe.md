@@ -22,4 +22,8 @@ tags: [考点]
 **别做：** 只汇报 cycle time。
 **注意：** 这里的 25%、8%、12% 是题目设定的例子数字，不是任何研究的结果。
 
-**出处：** DORA《2025 State of AI-assisted Software Development》（Google Cloud 博客）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+DORA《2025 State of AI-assisted Software Development》（Google Cloud 博客）
+
+</details>

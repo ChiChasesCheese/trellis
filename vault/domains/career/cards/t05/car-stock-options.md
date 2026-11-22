@@ -38,4 +38,8 @@ flowchart TD
 2. 早期风险：公司可能不上市，期权可能一文不值。
 3. 早 exercise 并提交 83(b) election 的期限是 30 天，错过不能补（Holloway）。请专业人士。
 
-**出处：** IRS Topic No. 427 https://www.irs.gov/taxtopics/tc427（页面标注 2026-09-24）；Holloway https://www.holloway.com/g/equity-compensation；Orosz《Guidebook》Ch.1 §3、Ch.5 §4。一般规则，不是税务或法律建议
+<details class="pt" markdown="1"><summary>出处</summary>
+
+IRS Topic No. 427 https://www.irs.gov/taxtopics/tc427（页面标注 2026-09-24）；Holloway https://www.holloway.com/g/equity-compensation；Orosz《Guidebook》Ch.1 §3、Ch.5 §4。一般规则，不是税务或法律建议
+
+</details>

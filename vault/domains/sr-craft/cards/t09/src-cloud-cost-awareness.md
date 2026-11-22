@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 先按服务和团队拆账单，找出涨幅最大的前几项；再除以订单量，看单位成本是上升还是下降。如果是某一类任务的利用率很低，把它列成有明确节省和工时的优化项目；如果单位成本稳定，涨幅主要来自业务增长，就向财务解释。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有成本意识，并能把它放进工程决策中。
 
 **适合配哪类故事：** 你找出云成本的主要来源，用归属和单位成本做出了有数据支撑的优化的经历。
 
 **出处：** FinOps Foundation《What is FinOps?》（finops.org/introduction/what-is-finops/：工程、财务、业务协作；在速度、成本、质量之间取舍；目标是获得最大价值，而不只是省钱）；Orosz《The Software Engineer's Guidebook》ch21 §1（OKR 示例 "Optimize our infrastructure costs"）
+
+</details>

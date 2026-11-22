@@ -21,4 +21,8 @@ tags: [考点]
 
 **做：** 把防线放在**即使模型被骗也无害**的地方：它读不到密钥、发不出数据、没有写生产的权限。
 
-**出处：** Simon Willison《The lethal trifecta for AI agents》（2025-06-16）；Claude Code docs《Best practices》（Deterministic and non-deterministic instructions）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Simon Willison《The lethal trifecta for AI agents》（2025-06-16）；Claude Code docs《Best practices》（Deterministic and non-deterministic instructions）
+
+</details>

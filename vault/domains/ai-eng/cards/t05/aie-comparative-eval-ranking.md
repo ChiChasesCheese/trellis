@@ -32,4 +32,8 @@ Chatbot Arena 让用户在两个匿名回答里投票。这和给每个模型单
 - **新模型、私有模型：** 加入新模型会改变已有排名；私有模型要自己收集比较信号；
 - 还有标准化和质量控制：志愿者不会核对事实，可能偏爱听起来好但错的回答。
 
-**出处：** Huyen《AI Engineering》ch3 §Ranking Models with Comparative Evaluation（Challenges of Comparative Evaluation）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch3 §Ranking Models with Comparative Evaluation（Challenges of Comparative Evaluation）
+
+</details>

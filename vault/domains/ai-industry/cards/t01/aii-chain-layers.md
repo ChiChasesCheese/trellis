@@ -34,4 +34,8 @@ flowchart TD
 - **Training（训练）**：用海量数据把模型一次性「教出来」，成本巨大，一次性发生。
 - **Inference（推理）**：模型每次回答用户时的计算，每次请求都要付，用量越大成本越高。
 
-**出处：** Stanford HAI, AI Index Report 2025（https://hai.stanford.edu/ai-index/2025-ai-index-report）的产业分层；层级划分为本卡作者归纳，非报告原文。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Stanford HAI, AI Index Report 2025（https://hai.stanford.edu/ai-index/2025-ai-index-report）的产业分层；层级划分为本卡作者归纳，非报告原文。
+
+</details>

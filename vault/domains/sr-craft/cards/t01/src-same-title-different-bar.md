@@ -6,7 +6,7 @@ step: 2
 tags: [追问]
 ---
 ## Q
-**Same title, different bar · 追问**｜追问 · 追问
+**Same title, different bar**｜追问 · 追问
 
 面试官追问："你说 senior 看影响范围。那两家公司都给你 senior offer，怎么判断哪一个要求更高？"
 
@@ -21,6 +21,10 @@ tags: [追问]
 
 **怎么做：** 面试时直接问这三项。问不出来的，通常说明岗位定义本身是模糊的。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有看过"职级"背后的实质，而不是被头衔牵着走。
 
 **出处：** Orosz《The Software Engineer's Guidebook》Part V 引言 "Why do titles vary so much between companies?"；Part III 引言 "Typical senior titles"
+
+</details>

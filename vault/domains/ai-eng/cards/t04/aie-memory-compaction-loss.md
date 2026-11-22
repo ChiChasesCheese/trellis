@@ -26,4 +26,8 @@ tags: [考点]
 
 **实践：** 任务的目标、约束、用户明确提出的要求这类"不可丢的"信息，单独存放，每次都放进 context，不参与摘要。
 
-**出处：** Huyen《AI Engineering》ch6 §Memory（FIFO、summarization、contradiction）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Memory（FIFO、summarization、contradiction）
+
+</details>

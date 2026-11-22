@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 向那位同事私下解释：因为你与他同组，规则要求你回避，这不代表你不支持；之后遇到类似情况，提前说明。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对组织动态的敏感度，以及能否保持诚信与影响力。
 
 **适合配哪类故事：** 你在一个被误解的场景里，通过透明和一致的沟通，重新赢得了信任的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch22 §1 "Internal Politics"（The "wrong" type of politics；Problematic perceptions；Giving feedback on "bad" politics）
+
+</details>

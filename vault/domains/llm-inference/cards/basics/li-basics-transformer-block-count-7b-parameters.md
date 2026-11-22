@@ -43,6 +43,6 @@ print(c.num_hidden_layers, c.hidden_size, c.intermediate_size, c.vocab_size)
 # 32 4096 11008 32000
 ```
 
-**新进展（2026 年 4 月）。** DeepSeek V4-Pro 总参数 1.6 万亿，但每个 token 只激活约 490 亿（V4-Flash 为 2,840 亿和 130 亿）。混合专家把本卡里占约 2/3 的前馈网络换成很多“专家”，每个 token 只走其中几个。
+**新进展（2026 年 4 月）。** DeepSeek V4-Pro 总参数 1.6 万亿，但每个 token 只激活约 490 亿（V4-Flash 为 2,840 亿和 130 亿）。混合专家把上面里占约 2/3 的前馈网络换成很多“专家”，每个 token 只走其中几个。
 
 <details class="pt"><summary>想一想：按“每 token 计算量 ≈ 2 × 激活参数”，V4-Pro 每 token 约多少运算？内存要放多少参数？</summary>约 2 × 490 亿 ≈ 98 GFLOP，只有 7B 稠密模型（约 14 GFLOP）的 7 倍；但内存要放下全部 1.6 万亿个参数，显存按总参数算。</details>

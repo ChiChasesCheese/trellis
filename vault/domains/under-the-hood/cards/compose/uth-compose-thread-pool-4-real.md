@@ -21,5 +21,3 @@ step: 4
 **为什么。** 「先排队、队满再扩线程」：线程比队列贵，能排就不新建。
 
 **坑。** `newFixedThreadPool` 用无界的 `LinkedBlockingQueue`，队列永远不满，线程不会超过 core，`maximumPoolSize` 形同虚设，任务堆积会撑爆内存；`newCachedThreadPool` 用 `SynchronousQueue`、最大线程数 `Integer.MAX_VALUE`，线程会无限增长。
-
-**对应 LeetCode：** 无直接对应的题

@@ -30,4 +30,8 @@ flowchart TD
 
 **别做：** 靠"大家认真看一眼"。
 
-**出处：** DORA《2025 State of AI-assisted Software Development》（Google Cloud 博客，2025-09-23）；Stack Overflow Developer Survey 2025（AI）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+DORA《2025 State of AI-assisted Software Development》（Google Cloud 博客，2025-09-23）；Stack Overflow Developer Survey 2025（AI）
+
+</details>

@@ -34,4 +34,8 @@ flowchart TD
 
 **代价：** 效果通常不如全量微调；实现上要改模型代码（热门基础模型的 PEFT 框架如 Hugging Face PEFT、Axolotl、unsloth 一般已支持）。
 
-**出处：** Huyen《AI Engineering》ch7 §Parameter-Efficient Finetuning → LoRA
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch7 §Parameter-Efficient Finetuning → LoRA
+
+</details>

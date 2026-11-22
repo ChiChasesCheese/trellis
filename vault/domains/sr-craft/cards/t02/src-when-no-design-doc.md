@@ -21,6 +21,10 @@ tags: [追问]
 
 **怎么做：** 一个信号：文档读起来像"我们怎么实现"的步骤清单，没有取舍和替代方案，那它多半根本不用写。想把想法记下来，可以只写 1–3 页的 mini design doc，或者在 PR 描述里写清楚。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你不教条：知道文档是为了降低风险，而不是越多越好。
 
 **出处：** Malte Ubl《Design Docs at Google》（industrialempathy.com）"When not to write a design doc"；Orosz《The Software Engineer's Guidebook》ch15 §1
+
+</details>

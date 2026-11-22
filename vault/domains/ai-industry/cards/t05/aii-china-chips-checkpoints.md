@@ -30,4 +30,8 @@ flowchart TD
   K --> S["软件栈"]
 ```
 
-**出处：** 通用供应链分析；TrendForce News 2026-08-10（HBM 供应格局）。本卡不含具体型号数据。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用供应链分析；TrendForce News 2026-08-10（HBM 供应格局）。本卡不含具体型号数据。
+
+</details>

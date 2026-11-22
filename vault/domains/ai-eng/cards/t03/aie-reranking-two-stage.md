@@ -35,4 +35,8 @@ flowchart TD
 
 **注意：** 在检索增强里，名次精确位置不如搜索引擎里那么重要，但顺序仍有影响：模型对 context 开头和结尾的内容理解更好。
 
-**出处：** Huyen《AI Engineering》ch6 §Reranking、§Combining retrieval algorithms；sentence-transformers 文档 Retrieve & Re-Rank / Cross-Encoder（https://www.sbert.net/examples/cross_encoder/applications/README.html）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Reranking、§Combining retrieval algorithms；sentence-transformers 文档 Retrieve & Re-Rank / Cross-Encoder（https://www.sbert.net/examples/cross_encoder/applications/README.html）
+
+</details>

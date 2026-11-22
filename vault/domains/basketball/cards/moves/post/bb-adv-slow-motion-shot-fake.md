@@ -6,10 +6,11 @@ type: qa
 ## Q
 **Slow-motion shot fake（慢动作假投）**｜Al Jefferson
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-slow-motion-shot-fake.mp4]]
 
-**Sequence。** `catch → barely bend the knees, raise the ball slowly as if shooting → defender freezes → drive past`
-**Read。** a defender sold by the slow tempo expects a shot, neither jumps nor pivots, and cannot cover the drive.
+**步骤：** 接球 → 膝盖只微微弯，慢慢把球举起像要投 → 防守人僵住 → 突破过人
+
+**读防守：** 防守人被慢节奏骗住，以为要投，既不起跳也不转身，封不住突破。

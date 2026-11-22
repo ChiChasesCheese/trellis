@@ -26,4 +26,8 @@ tags: [惯用说法]
 
 **评审里的角色：** 作者要说明范围、备选和代价；评审者提出的是"问题和风险"，不是对作者的评价。回复时把"你"换成"这个方案"。
 
-**出处：** 惯用说法，非引用；评审流程参考 Orosz《The Software Engineer's Guidebook》ch15 §1 Design Documents, RFCs and Architecture Documents
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用；评审流程参考 Orosz《The Software Engineer's Guidebook》ch15 §1 Design Documents, RFCs and Architecture Documents
+
+</details>

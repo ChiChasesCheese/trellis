@@ -34,4 +34,8 @@ flowchart TD
 
 **对方在想什么：** 招聘方在算"这个人要多久能独立"。你用相邻技能和小项目缩短这个估算。
 
-**出处：** Orosz《Guidebook》Ch.1 §2（generalist/specialist pendulum；engineer who changes domains）；Ch.13 §1 "Languages, Platforms, and Domains"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.1 §2（generalist/specialist pendulum；engineer who changes domains）；Ch.13 §1 "Languages, Platforms, and Domains"
+
+</details>

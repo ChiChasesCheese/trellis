@@ -13,4 +13,4 @@ Inspect trusted metadata with a hardened decoder and cap decoded pixels, dimensi
 一个 compressed image 只有 2 MB，但 decode 后达到数十 gigapixel。transformation 前必须强制哪些 limit？
 
 ## A zh
-用 hardened decoder 检查 trusted metadata，并限制 decoded pixel、dimension、frame count、color/profile complexity、memory、CPU time、output byte 和 concurrent transform。可行时使用 stream 与 sandbox，deadline 到期就 abort，绝不能把 compressed byte size 当作 resource estimate。只缓存完整验证且成功的 output；failure 不能 poison derived key。
+用 hardened decoder 检查 trusted metadata，并限制 decoded pixel、dimension、frame count、color/profile complexity、memory、CPU time、output byte 和 concurrent transform。可行时使用 stream 与 sandbox，deadline 到期就中止，绝不能把 compressed byte size 当作 resource estimate。只缓存完整验证且成功的 output；failure 不能污染 derived key。

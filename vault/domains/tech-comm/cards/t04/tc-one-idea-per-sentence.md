@@ -31,4 +31,8 @@ tags: [原则]
 - Before: "The parser reads XML files, which were standardized in 1998 by a working group that also defined schemas."
 - After: "The parser reads XML files. XML was standardized in 1998."
 
-**出处：** Google Technical Writing One《Short sentences》（developers.google.com/tech-writing/one/short-sentences）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Short sentences》（developers.google.com/tech-writing/one/short-sentences）
+
+</details>

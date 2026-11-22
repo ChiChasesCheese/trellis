@@ -30,4 +30,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21。
 
-**出处：** Epoch AI, Will we run out of data?（epoch.ai/blog/will-we-run-out-of-data-limits-of-llm-scaling-based-on-human-generated-data）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Epoch AI, Will we run out of data?（epoch.ai/blog/will-we-run-out-of-data-limits-of-llm-scaling-based-on-human-generated-data）。
+
+</details>

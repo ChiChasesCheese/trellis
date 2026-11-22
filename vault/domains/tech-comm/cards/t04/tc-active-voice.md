@@ -30,4 +30,8 @@ tags: [原则]
 - Before: "The flags weren't parsed by the Mungifier."
 - After: "The Mungifier didn't parse the flags."
 
-**出处：** Google Technical Writing One《Active voice》（developers.google.com/tech-writing/one/active-voice）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Active voice》（developers.google.com/tech-writing/one/active-voice）
+
+</details>

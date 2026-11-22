@@ -40,4 +40,8 @@ flowchart TD
 
 **许可：** 很多模型的许可禁止用其输出训练别的模型（尤其是竞争模型），开始前先查教师模型的条款。
 
-**出处：** Huyen《AI Engineering》ch8 §Data Augmentation and Synthesis（Why Data Synthesis、Data verification、Limitations）、§Model Distillation；ch4 §Open source, open weight, and model licenses
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch8 §Data Augmentation and Synthesis（Why Data Synthesis、Data verification、Limitations）、§Model Distillation；ch4 §Open source, open weight, and model licenses
+
+</details>

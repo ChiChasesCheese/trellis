@@ -43,4 +43,8 @@ flowchart TD
 - **prompt：** 你交给模型的、作为"已有文字"的那段输入。
 - **completion：** 模型接在 prompt 后面生成的内容。
 
-**出处：** Huyen《AI Engineering》ch1 §Language models、§Self-supervision（Table 1-1）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch1 §Language models、§Self-supervision（Table 1-1）
+
+</details>

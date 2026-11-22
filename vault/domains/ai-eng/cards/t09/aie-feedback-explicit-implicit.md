@@ -35,4 +35,8 @@ tags: [摘要]
 
 **用途：** 评测（做监控指标）、开发（训练或指导新模型）、个性化。
 
-**出处：** Huyen《AI Engineering》ch10 §Extracting Conversational Feedback
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Extracting Conversational Feedback
+
+</details>

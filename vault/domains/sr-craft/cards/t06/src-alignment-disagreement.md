@@ -40,8 +40,12 @@ flowchart TD
 
 **回到题目：** 约一次小会，每人先复述对方的立场。你们可能发现分歧是"能接受多大的延迟抖动"，那就拿真实的流量数据做压测；若数据不能决定，就带着两个方案的取舍文档去找共同的上级拍板，然后两人都执行。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你处理技术分歧的方式：诊断、数据、升级的时机和方式。
 
 **适合配哪类故事：** 你和同事意见相左，通过找出真正的分歧点或做实验解决，或在必要时有序升级的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch22 §1 "Internal Politics"（Problematic perceptions：inflexible、pull rank；Giving feedback）；ch22 §2；ch18 §5 "Problematic Stakeholders"；ch16 §6 "Engineering dependencies"（先工程师之间沟通，再升级）
+
+</details>

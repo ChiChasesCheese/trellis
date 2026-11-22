@@ -44,8 +44,12 @@ flowchart TD
 
 **回到题目：** 不同意整体去掉；提议分析最近的缺陷是在哪一层被发现的，把没拦住任何东西的重型步骤（比如手工回归）换成自动化或 canary，把省下的时间用在设计评审和关键路径的测试上。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否能在速度和质量之间做有依据的取舍，并知道不同层的成本和收益。
 
 **适合配哪类故事：** 你调整了质量流程（加一层、删一层），既没有拖慢交付又减少了线上问题的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch14 §7 "Benefits and Drawbacks of Automated Testing"；ch17 §4 "Additional Verification Layers"（#1 environments、#3 QA、#4 exploratory testing、#5 canarying、#6 feature flags）；ch15 §1（design doc：发现问题越早越省）
+
+</details>

@@ -31,4 +31,8 @@ flowchart TD
 
 **对方在想什么：** 经理向上汇报时需要清楚、有数字的成绩。你的摘要省他时间，也让他显得消息灵通。
 
-**出处：** Orosz《Guidebook》Ch.2 §2 "Make sure people know you get stuff done"、§3 "Keep a Work Log"；Ch.4 §5（Produce, organize, publish）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.2 §2 "Make sure people know you get stuff done"、§3 "Keep a Work Log"；Ch.4 §5（Produce, organize, publish）
+
+</details>

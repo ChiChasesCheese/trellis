@@ -25,4 +25,8 @@ tags: [考点]
 
 **别忘了回归：** router 和阈值也是会漂移的组件，进入回归测试和监控；路由到不同模型后，注意不同模型对同一个 prompt 的表现不一样，要各自测。
 
-**出处：** Huyen《AI Engineering》ch10 §Router（router 是分类器、应小而快）、ch4 §Design Your Evaluation Pipeline（评测各组件）。验证清单为作者归纳
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Router（router 是分类器、应小而快）、ch4 §Design Your Evaluation Pipeline（评测各组件）。验证清单为作者归纳
+
+</details>

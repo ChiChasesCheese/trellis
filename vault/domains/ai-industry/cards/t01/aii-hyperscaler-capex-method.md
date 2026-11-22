@@ -29,4 +29,8 @@ flowchart TD
 
 **配套三问：** capex 里多少是土地和厂房（寿命长）、多少是 GPU（寿命短）？capex 是否包含融资租赁（finance lease，租来的设备）？指引是上调还是下调？
 
-**出处：** 通用财务分析方法；数字为演示用。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用财务分析方法；数字为演示用。
+
+</details>

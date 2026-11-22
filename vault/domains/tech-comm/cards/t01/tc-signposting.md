@@ -35,4 +35,8 @@ flowchart TD
 - Before: "…and also the old cron jobs are a problem. And then there's the data. Oh, and we need approval."
 - After: "That covers risk one, the cron jobs. Risk two is the data migration. And finally, what I need from you: approval to start in March."
 
-**出处：** Minto p. 185–208（Ch.10 Reflecting the Pyramid on the Face of the Page：Show Transitions Between Groups、Stating Next Steps）；Google Technical Writing One《Documents》（要点放文首）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 185–208（Ch.10 Reflecting the Pyramid on the Face of the Page：Show Transitions Between Groups、Stating Next Steps）；Google Technical Writing One《Documents》（要点放文首）
+
+</details>

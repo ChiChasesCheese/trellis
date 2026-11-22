@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Events 与 kubectl describe · 摘要**｜摘要 · 必会
+**Events 与 kubectl describe**｜摘要 · 必会
 
 Pod 没起来，`kubectl describe pod` 底部有一段 Events。这些 Event 是什么、谁产生的、能留多久？
 
@@ -30,4 +30,8 @@ flowchart TD
 | `kubectl get events` | 整个 namespace 的所有 Events |
 | `kubectl get events --field-selector type=Warning` | 只看 Warning |
 
-**出处：** KIA2 §4.3「Observing cluster events via Event objects」
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §4.3「Observing cluster events via Event objects」
+
+</details>

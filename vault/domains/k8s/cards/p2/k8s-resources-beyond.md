@@ -23,4 +23,8 @@ tags: [拓展]
 - **配合 in-place resize：** Pod 级资源的原地调整是 v1.36 beta（第 7 部分）。
 - **何时用：** sidecar 多、各自用量波动大的 Pod。
 
-**出处：** kubernetes.io 发布博客 v1.34（Pod-level resources，KEP-2837，beta）、v1.36；kubernetes.io Concepts › Pod Quality of Service Classes
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.34（Pod-level resources，KEP-2837，beta）、v1.36；kubernetes.io Concepts › Pod Quality of Service Classes
+
+</details>

@@ -29,4 +29,8 @@ tags: [原则]
 - Before: Title: "Cache performance". Body: a chart and six bullets.
 - After: Title: "Redis cut p99 latency from 400 ms to 90 ms". Body: one chart, one takeaway.
 
-**出处：** Minto p. 209–224（Ch.11 Reflecting the Pyramid on a Screen：Designing Text Slides / Designing Exhibit Slides / Story Boarding）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 209–224（Ch.11 Reflecting the Pyramid on a Screen：Designing Text Slides / Designing Exhibit Slides / Story Boarding）
+
+</details>

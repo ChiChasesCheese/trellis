@@ -32,4 +32,8 @@ flowchart TD
 
 **别做：** 让另一个 agent 来"总结这 3000 行"然后只读总结——总结是模型的文本，不是你读过的证据。
 
-**出处：** Claude Code docs《Best practices》（Run sessions in parallel：/batch 拆成独立单元，各自一个 PR）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Run sessions in parallel：/batch 拆成独立单元，各自一个 PR）
+
+</details>

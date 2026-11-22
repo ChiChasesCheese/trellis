@@ -36,4 +36,8 @@ flowchart TD
 
 **对方在想什么：** 经理想留住你，也想把你放到有价值的地方。你主动提出具体方向，比含糊的"想学东西"好办。
 
-**出处：** Orosz《Guidebook》Ch.26 §3 "Keep Challenging Yourself"（learning curve、expert 之后的选项）；Ch.1 §5；Ch.4 §6
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.26 §3 "Keep Challenging Yourself"（learning curve、expert 之后的选项）；Ch.1 §5；Ch.4 §6
+
+</details>

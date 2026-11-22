@@ -6,10 +6,11 @@ type: qa
 ## Q
 **Pump fake step-through（假投后跨步突破）**｜Kobe Bryant · DeMar DeRozan, Dwyane Wade
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-pump-fake-step-through.mp4]]
 
-**Sequence。** `pump fake → defender leaves his feet → step through → draw the foul or finish`
-**Read。** a defender who jumps at the pump fake is already in the air, so the step-through gets past him as he comes down.
+**步骤：** pump fake（假投）→ 防守人起跳 → 跨步突破（step through）→ 造犯规或完成
+
+**读防守：** 防守人被 pump fake 骗起，已经在空中，持球人跨步在他落地时过掉他。

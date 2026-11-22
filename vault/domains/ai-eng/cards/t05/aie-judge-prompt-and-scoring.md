@@ -43,4 +43,8 @@ tags: [实践]
 - judge 的 temperature 设为 0 减少波动（但不保证一致）；
 - 判断对象不同，用法不同：单独打分、对照 reference、pairwise 比较。
 
-**出处：** Huyen《AI Engineering》ch3 §How to Use AI as a Judge（judge prompt 三要素、Tip、Table 3-4）；ch4 §Evaluate your evaluation pipeline（temperature 0）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch3 §How to Use AI as a Judge（judge prompt 三要素、Tip、Table 3-4）；ch4 §Evaluate your evaluation pipeline（temperature 0）
+
+</details>

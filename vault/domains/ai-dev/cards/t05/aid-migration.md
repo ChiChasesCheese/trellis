@@ -32,4 +32,8 @@ done
 **官方原话的思路：** 先在 3 个文件上试，看出错在哪，改好 prompt，再跑其余。
 **工具里的对应（2026-11）：** `/batch` 把大改拆成 5 到 30 个单元，展示计划，批准后每个单元一个独立工作目录并开 PR。
 
-**出处：** Claude Code docs《Best practices》（Run Claude from a script；Run sessions in parallel）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Run Claude from a script；Run sessions in parallel）
+
+</details>

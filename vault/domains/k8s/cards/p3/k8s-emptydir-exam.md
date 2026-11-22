@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Volumes 与 emptyDir · 考点**｜考点 · 必会
+**Volumes 与 emptyDir**｜考点 · 必会
 
 一个 Pod 里的 MongoDB 容器把数据写在 emptyDir 卷里。依次发生：
 1. MongoDB 容器 OOM 被杀并重启
@@ -26,4 +26,8 @@ tags: [考点]
 - **真正要持久化的数据：** 用 PersistentVolumeClaim（Pod 申请持久存储用的对象，下一章细讲），数据在 Pod 之外，Pod 重建后可以再挂回来。
 - **判断口诀：** 问「这份数据比这个 Pod 活得久吗？」是，就不能用 emptyDir。
 
-**出处：** KIA2 §9.2（emptyDir 的数据在 Pod 存续期间保留）、§10.1
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §9.2（emptyDir 的数据在 Pod 存续期间保留）、§10.1
+
+</details>

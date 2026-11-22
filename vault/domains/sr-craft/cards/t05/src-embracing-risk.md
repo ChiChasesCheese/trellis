@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** "100% 买不到。我们按支付成功率设 SLO，比如 99.9%，并算多一个 9 要多少人力和多久的功能延迟，对比业务损失；预算用完时暂停高风险发布。"
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否能把可靠性当成有成本的权衡来讨论。
 
 **适合配哪类故事：** 你为一个服务定下合理的可靠性目标，把"越高越好"的诉求变成成本收益讨论的经历。
 
 **出处：** Beyer 等《Site Reliability Engineering》"Embracing Risk"（sre.google/sre-book/embracing-risk/，2026-11-21 读取：Managing Risk、Measuring Service Risk、Risk Tolerance of Services、Motivation for Error Budgets）；与 SLO 的关系见同 deck 的 SLOs & error budgets
+
+</details>

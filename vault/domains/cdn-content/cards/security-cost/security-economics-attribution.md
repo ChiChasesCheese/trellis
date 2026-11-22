@@ -13,4 +13,4 @@ Keep operational metrics low-cardinality, then emit sampled or aggregated usage 
 multi-tenant CDN 如何归因 cost，同时避免把 tenant ID 放到每个 Prometheus metric 上？
 
 ## A zh
-保持 operational metric low-cardinality，再把按 authenticated tenant 聚合或 sampled 的 usage record 发送到 billing/analytics pipeline。将总量与 provider bill reconcile，并保留 region、byte、request、transform class 和 cache outcome 等 dimension。cost allocation 需要可审计 record，但 real-time monitoring path 不应承载 unbounded tenant cardinality。
+让监控用的 metric 保持低 cardinality，再把按 authenticated tenant 聚合或 sampled 的 usage record 发送到 billing/analytics pipeline。将总量与 provider 账单对账，并保留 region、byte、request、transform class 和 cache outcome 等 dimension。cost allocation 需要可审计 record，但 real-time monitoring path 不应承载 unbounded tenant cardinality。

@@ -32,4 +32,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21。
 
-**出处：** Anthropic Economic Index: Economic Primitives（anthropic.com/research/anthropic-economic-index-january-2026-report）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic Economic Index: Economic Primitives（anthropic.com/research/anthropic-economic-index-january-2026-report）。
+
+</details>

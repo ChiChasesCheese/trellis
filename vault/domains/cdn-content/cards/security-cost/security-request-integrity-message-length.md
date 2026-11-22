@@ -13,4 +13,4 @@ Request smuggling: the two parsers can disagree on message boundaries, letting a
 edge proxy 与 origin 对同时包含 `Content-Length` 和 `Transfer-Encoding` 的 request 解释不同。会导致哪类 failure，如何防御？
 
 ## A zh
-会导致 request smuggling：两个 parser 对 message boundary 的判断不同，使 attacker-controlled byte 成为另一个用户的 request，或绕过 routing policy。应 reject ambiguous framing、只 normalization 一次、使用 protocol-compliant library，并用 malformed 与 duplicate header 测试 edge-to-origin parser pair。parser 已完成 stream framing 后再隐藏某个 header 已经太晚。
+会导致 request smuggling：两个 parser 对 message boundary 的判断不同，使 attacker-controlled byte 成为另一个用户的 request，或绕过 routing policy。应拒绝有歧义的 framing、只做一次 normalization、使用 protocol-compliant library，并用 malformed 与 duplicate header 测试 edge-to-origin parser pair。parser 已完成 stream framing 后再隐藏某个 header 已经太晚。

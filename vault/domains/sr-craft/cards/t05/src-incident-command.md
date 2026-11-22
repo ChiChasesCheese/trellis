@@ -46,8 +46,12 @@ flowchart TD
 
 **回到题目：** 先找一位同事接 commander，你转为 Ops 继续排查；告诉另外两位："听 Ops 安排，做任何改动先说"。让 commander 发一封邮件给副总和相关方，之后按固定节奏更新，副总就不必来问你。你的任务只剩止血：回滚上一个版本、切流量、扩容，哪个有用做哪个。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你在压力下是否先建立秩序和沟通，而不是自己一头扎进代码；知道"先止血、后找因"。
 
 **适合配哪类故事：** 你在一次严重事故中承担了协调或指挥的角色，把混乱变成有序、更快恢复的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch24 §6 "Incident Management"（#2 Fix it：roles、mitigation、"Assessing the root cause … isn't the biggest priority"）；Google SRE book《Managing Incidents》（sre.google/sre-book/managing-incidents/：roles、live incident state document、clear live handoff）
+
+</details>

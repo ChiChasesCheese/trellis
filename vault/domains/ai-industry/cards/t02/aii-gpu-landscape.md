@@ -33,4 +33,8 @@ flowchart TD
 
 **怎么读份额新闻：** 区分**出货量**（芯片数）、**收入**、**算力总量**；自研芯片多是自用，不进外部市场份额统计。
 
-**出处：** NVIDIA FY2026 10-K MD&A（毛利率）；GPU / TPU / Trainium 的定义为通用产业知识。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+NVIDIA FY2026 10-K MD&A（毛利率）；GPU / TPU / Trainium 的定义为通用产业知识。
+
+</details>

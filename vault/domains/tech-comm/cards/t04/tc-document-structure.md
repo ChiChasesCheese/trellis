@@ -30,4 +30,8 @@ tags: [原则]
 **示例开头：**
 > This document describes the design of the new payment service. It is for backend engineers and assumes you know our current checkout flow. It does not cover refunds. In short: we replace the batch settlement job with an event-driven pipeline.
 
-**出处：** Google Technical Writing One《Documents》（developers.google.com/tech-writing/one/documents）；Google Technical Writing Two《Organizing large documents》
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Documents》（developers.google.com/tech-writing/one/documents）；Google Technical Writing Two《Organizing large documents》
+
+</details>

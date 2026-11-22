@@ -13,4 +13,4 @@ Each Nginx worker runs an event loop. Blocking foreign I/O holds the worker thre
 OpenResty access hook 用 blocking Lua socket library 查询 policy。为什么一个 slow call 会拖住许多请求，需要什么 API model？
 
 ## A zh
-每个 Nginx worker 都运行一个 event loop。blocking foreign I/O 会占住 worker thread，使分配给该 worker 的无关连接也无法前进。应使用 OpenResty cosocket API：等待 readiness 时 yield request coroutine；同时设置 connect/read/write timeout 并复用 connection pool。若 library 无法接入 cosocket，就把它移出 request hot path 或放到独立服务。
+每个 Nginx worker 都运行一个 event loop。blocking foreign I/O 会占住 worker thread，使分配给该 worker 的无关连接也无法前进。应使用 OpenResty cosocket API：等待 readiness 时让出当前 request coroutine；同时设置 connect/read/write timeout 并复用 connection pool。若 library 无法接入 cosocket，就把它移出 request 热路径（hot path）或放到独立服务。

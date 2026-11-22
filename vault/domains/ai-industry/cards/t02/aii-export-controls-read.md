@@ -28,4 +28,8 @@ flowchart TD
   Q --> L["违规 还是 许可"]
 ```
 
-**出处：** BIS final rule（Federal Register 2026-01-15）；NVIDIA FY2026 10-K MD&A、Q4 FY2026 新闻稿。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+BIS final rule（Federal Register 2026-01-15）；NVIDIA FY2026 10-K MD&A、Q4 FY2026 新闻稿。
+
+</details>

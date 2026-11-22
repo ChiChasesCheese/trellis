@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** 一页：为什么现在要迁（风险和业务影响）、建议（分阶段迁移，影子对比后灰度）、代价（几个人几周，期间新功能减慢）、需要的决定（批准资源，本周内）。附上 design doc 链接。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你能否向非技术或时间有限的人，用他们的语言争取资源。
 
 **适合配哪类故事：** 你用一页简洁的文档争取到了一个技术项目的批准或资源的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch18 §4 "Keep Them in the Loop"（定期更新邮件包含进度、风险与缓解、时间线变化；作为 source of truth）；ch16 §5。四要素结构是对这一原则的通用整理，该书没有单独的 "one-pager" 模板。
+
+</details>

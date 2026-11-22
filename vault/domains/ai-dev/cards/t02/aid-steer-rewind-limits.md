@@ -22,4 +22,8 @@ agent 跑了一个脚本，改了 20 个文件还写了一次数据库。你 `/r
 
 **做：** 让 agent 动手前工作区干净、改动在分支上；会写库的任务先在沙箱或副本上跑。
 
-**出处：** Claude Code docs《How Claude Code works》（Undo changes with checkpoints）；《Best practices》（Steer the session）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《How Claude Code works》（Undo changes with checkpoints）；《Best practices》（Steer the session）
+
+</details>

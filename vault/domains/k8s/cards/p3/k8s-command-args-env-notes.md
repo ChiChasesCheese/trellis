@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**command、args 与 env · 摘要**｜摘要 · 必会
+**command、args 与 env**｜摘要 · 必会
 
 不重新构建镜像，怎么改容器启动时跑的命令、参数和环境变量？Dockerfile 里的 `ENTRYPOINT` 和 `CMD` 对应 Pod manifest 里的哪些字段？
 
@@ -41,4 +41,8 @@ containers:
 - **YAML 陷阱：** 数组里的 `1234`、`true`、`yes`、`no`、`on`、`off`、`null` 这类会被解析成别的类型，要加引号。
 - **只改其中一个：** 只写 `args`，沿用镜像的 ENTRYPOINT；只写 `command`，也会让镜像的 `CMD` 失效，参数需要自己补。
 
-**出处：** KIA2 §8.1.1–8.1.2（command/args 与 ENTRYPOINT/CMD；env 按容器设置；YAML 引号提示）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §8.1.1–8.1.2（command/args 与 ENTRYPOINT/CMD；env 按容器设置；YAML 引号提示）
+
+</details>

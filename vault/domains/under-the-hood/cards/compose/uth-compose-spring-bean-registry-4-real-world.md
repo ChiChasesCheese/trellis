@@ -20,5 +20,3 @@ step: 4
 **为什么。** 注册集中在启动阶段，读发生在所有线程。把“写”限制在启动，读路径就不用加锁。
 
 **坑。** 同名定义：Framework 默认允许后者覆盖前者；Spring Boot 2.1 起默认关闭，重名直接启动失败（`spring.main.allow-bean-definition-overriding=true` 可打开）。
-
-**对应 LeetCode：** 无直接对应的题

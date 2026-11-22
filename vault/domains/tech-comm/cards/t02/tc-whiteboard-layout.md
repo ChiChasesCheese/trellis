@@ -31,4 +31,8 @@ tags: [原则]
 
 **示例：** 左侧放 Client，中间放 API 和 Service，右侧放 DB 和 Cache，顶部留一条给 Queue；每条箭头旁写 `1 POST /orders`、`2 write`、`3 publish`。
 
-**出处：** hellointerview.com/learn/system-design/in-a-hurry/delivery（boxes and arrows、字段放数据库旁、提前练习白板工具、不写字段类型）；左到右与编号由规则推导，非引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+hellointerview.com/learn/system-design/in-a-hurry/delivery（boxes and arrows、字段放数据库旁、提前练习白板工具、不写字段类型）；左到右与编号由规则推导，非引用
+
+</details>

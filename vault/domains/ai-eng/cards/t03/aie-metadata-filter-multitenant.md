@@ -29,4 +29,8 @@ tags: [实践]
 
 **检查：** 写一个测试：用租户 A 的身份问只有租户 B 的文档里才有的问题，应当「查无此事」。
 
-**出处：** Pinecone 文档 docs.pinecone.io/guides/index-data/implement-multitenancy（2026-11-21 读）；pre/post-filter 对比为通用向量检索实践
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Pinecone 文档 docs.pinecone.io/guides/index-data/implement-multitenancy（2026-11-21 读）；pre/post-filter 对比为通用向量检索实践
+
+</details>

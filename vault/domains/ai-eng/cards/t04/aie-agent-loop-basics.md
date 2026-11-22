@@ -34,4 +34,8 @@ flowchart TD
 
 **核心代价：错误会累积。** 每步 95% 准确，10 步后整体约 60%（0.95^10），100 步后只剩约 0.6%。所以 agent 通常要更强的模型，且步数越多越要有检查。
 
-**出处：** Huyen《AI Engineering》ch6 §Agent Overview；Anthropic《Building effective agents》（Agents：ground truth from the environment）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Agent Overview；Anthropic《Building effective agents》（Agents：ground truth from the environment）
+
+</details>

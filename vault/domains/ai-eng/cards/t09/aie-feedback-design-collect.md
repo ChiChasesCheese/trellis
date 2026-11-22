@@ -25,4 +25,8 @@ tags: [实践]
 
 **需要上下文才能深入分析：** 只有点赞点踩可以算满意率；要分析原因，需要前后 5–10 轮对话，但可能含个人信息，要用户同意，如服务条款里写明，或让用户"捐赠"最近的数据。
 
-**出处：** Huyen《AI Engineering》ch10 §Feedback Design（When to collect、How to collect）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Feedback Design（When to collect、How to collect）
+
+</details>

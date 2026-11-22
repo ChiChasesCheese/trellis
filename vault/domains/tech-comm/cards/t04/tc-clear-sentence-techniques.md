@@ -31,4 +31,8 @@ tags: [原则]
 - **改成被动再去掉 actor。**
 - **营销腔：** 技术文档是教人，不是推销。
 
-**出处：** Google Technical Writing One《Clear sentences》（developers.google.com/tech-writing/one/clear-sentences）；Short sentences（in order to → to；is able to → can）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Clear sentences》（developers.google.com/tech-writing/one/clear-sentences）；Short sentences（in order to → to；is able to → can）
+
+</details>

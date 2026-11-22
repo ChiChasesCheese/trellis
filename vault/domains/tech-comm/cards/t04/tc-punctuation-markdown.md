@@ -33,4 +33,8 @@ tags: [原则]
 - **用分号做列表分隔：** 并列项里用逗号。
 - **过多括号和破折号。**
 
-**出处：** Google Technical Writing One《Punctuation》（developers.google.com/tech-writing/one/punctuation）；《Markdown》（developers.google.com/tech-writing/one/markdown）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Punctuation》（developers.google.com/tech-writing/one/punctuation）；《Markdown》（developers.google.com/tech-writing/one/markdown）
+
+</details>

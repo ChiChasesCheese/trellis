@@ -34,4 +34,8 @@ flowchart TD
 
 **工具里的对应（2026-11）：** `claude -w feature-auth` 在新 worktree 里开 session。
 
-**出处：** git-scm.com《git-worktree》；Claude Code docs《Best practices》（Run sessions in parallel）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+git-scm.com《git-worktree》；Claude Code docs《Best practices》（Run sessions in parallel）
+
+</details>

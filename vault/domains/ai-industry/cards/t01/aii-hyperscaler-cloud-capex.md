@@ -31,4 +31,8 @@ flowchart TD
 
 **比值：** capex ÷ cloud revenue 看一块钱收入背后砸了几块钱设备。backlog 需要看有多少会在 24 个月内转为收入，越短越可靠。
 
-**出处：** Alphabet Q3 2026 earnings 报道（9to5google.com, 2026-10-28）；backlog 与 capex 的具体数字请直接读 Alphabet 10-Q，本卡不引用。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Alphabet Q3 2026 earnings 报道（9to5google.com, 2026-10-28）；backlog 与 capex 的具体数字请直接读 Alphabet 10-Q，本卡不引用。
+
+</details>

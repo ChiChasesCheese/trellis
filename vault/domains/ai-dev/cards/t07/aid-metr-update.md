@@ -30,4 +30,8 @@ tags: [考点]
 **做：** 引用时说清"2025 年初工具、16 人、+19%（区间 +2% 到 +39%）；2026 更新证据弱，METR 称原结果已过时"。
 **别做：** 只引一个数字。
 
-**出处：** METR《We are Changing our Developer Productivity Experiment Design》（2026-02-24）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+METR《We are Changing our Developer Productivity Experiment Design》（2026-02-24）
+
+</details>

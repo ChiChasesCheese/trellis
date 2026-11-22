@@ -34,4 +34,8 @@ prompt 里写"完成前一定跑 type check"，agent 多数时候照做，偶尔
 
 **时效（2026-11）：** 这类配置的配置格式和字段名随版本变，上面是官方文档当时的写法。
 
-**出处：** Claude Code docs《Best practices》（Enforce the check with a Stop hook）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Enforce the check with a Stop hook）
+
+</details>

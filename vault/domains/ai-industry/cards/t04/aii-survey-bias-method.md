@@ -29,4 +29,8 @@ flowchart TD
   Q --> X["行为数据交叉"]
 ```
 
-**出处：** 通用调查方法；示例标题为虚构。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用调查方法；示例标题为虚构。
+
+</details>

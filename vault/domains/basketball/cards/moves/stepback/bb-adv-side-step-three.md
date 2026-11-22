@@ -6,10 +6,11 @@ type: qa
 ## Q
 **Side-step three（侧步三分）**｜Stephen Curry · James Harden
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-side-step-three.mp4]]
 
-**Sequence。** `dribble → fake or cross one way → lateral step the other way → rise for the three`
-**Read。** the defender is pulled the wrong way by the fake and cannot close out sideways in time.
+**步骤：** 运球 → 向一侧假动作或过人 → 向另一侧横向迈步 → 起跳投三分
+
+**读防守：** 防守人被假动作带错方向，来不及横向补防。

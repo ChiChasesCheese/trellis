@@ -32,4 +32,8 @@ flowchart TD
 
 **MCP 的提醒：** Willison 指出 Model Context Protocol 鼓励用户混搭来自不同来源的 tool；许多 tool 同时带有私有数据、不可信输入或对外通信中的一项或几项，有的 tool 一个就占全三项（如 GitHub MCP 的一个已披露的攻击）。
 
-**出处：** Simon Willison《The lethal trifecta for AI agents》（2025-06-16，https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Simon Willison《The lethal trifecta for AI agents》（2025-06-16，https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/）
+
+</details>

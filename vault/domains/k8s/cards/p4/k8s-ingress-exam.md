@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Ingress 没反应 · 考点**｜考点 · 必会
+**Ingress 没反应**｜考点 · 必会
 
 你创建了 Ingress，`kubectl get ingress` 的 ADDRESS 列一直是空的；另一次有了 IP，但用 `curl http://<IP>/` 得到 404，而 `curl --resolve kiada.example.com:80:<IP> http://kiada.example.com/` 就正常。各是什么原因？
 
@@ -28,4 +28,8 @@ flowchart TD
 - **DNS：** 生产里把域名的 DNS 记录指向 Ingress 的 IP。
 - **排查顺序：** controller 在不在 → Ingress 有没有地址 → Host 对不对 → 后端 Service 有没有 EndpointSlice。
 
-**出处：** KIA2 §12.2.1（地址为空、Host 头、`--resolve`）、§12.2.2、§12.2.4（default backend）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §12.2.1（地址为空、Host 头、`--resolve`）、§12.2.2、§12.2.4（default backend）
+
+</details>

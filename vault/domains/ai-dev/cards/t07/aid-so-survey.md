@@ -31,4 +31,8 @@ flowchart TD
 
 **局限：** 自选参与的在线问卷；"使用"不等于"提速"，调查没有测量实际产出。
 
-**出处：** Stack Overflow Developer Survey 2025（survey.stackoverflow.co/2025/ai）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Stack Overflow Developer Survey 2025（survey.stackoverflow.co/2025/ai）
+
+</details>

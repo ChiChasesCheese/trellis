@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**hostPath 与 image volume · 摘要**｜摘要 · 必会
+**hostPath 与 image volume**｜摘要 · 必会
 
 想让容器读 node 上的文件，或者把一批预先准备好的数据（比如模型权重）以文件形式交给容器，各用哪种 volume？风险和限制是什么？
 
@@ -40,4 +40,8 @@ flowchart TD
 - **image volume 的好处：** 数据和主镜像分开打包、分开发版本，不用在主镜像里塞大文件，也不用 init 容器复制。
 - **其他 volume 类型：** 云盘等已被 CSI 取代，用 PersistentVolume 的 claim 引用。
 
-**出处：** KIA2 §9.3「Mounting a container image as a volume」、§9.4「Accessing files on the worker node's filesystem」
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §9.3「Mounting a container image as a volume」、§9.4「Accessing files on the worker node's filesystem」
+
+</details>

@@ -31,4 +31,8 @@ flowchart TD
 
 **对方在想什么：** 经理想把你放在能产出可见成绩的地方，也想你能多承担团队真正需要的。
 
-**出处：** Orosz《Guidebook》Ch.2 §2 "Get plenty of *impactful* things done"；Ch.4 §4（product vs platform 的影响量化）、§5
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.2 §2 "Get plenty of *impactful* things done"；Ch.4 §4（product vs platform 的影响量化）、§5
+
+</details>

@@ -26,4 +26,8 @@ tags: [先修]
 - 模型的**参数总数不受 context length 影响**，但运行时的显存占用会。
 - 慢和贵体现在账单和延迟上：输入越长，费用与延迟越高（后面成本、延迟的卡再细讲）。
 
-**出处：** Huyen《AI Engineering》ch2 §Attention mechanism（"the longer the sequence, the more key and value vectors need to be computed and stored"）、§Transformer block（Table 2-4 前的说明）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Attention mechanism（"the longer the sequence, the more key and value vectors need to be computed and stored"）、§Transformer block（Table 2-4 前的说明）
+
+</details>

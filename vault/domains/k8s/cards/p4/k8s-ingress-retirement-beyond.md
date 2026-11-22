@@ -22,4 +22,8 @@ tags: [拓展, 时效]
 - **迁移要点：** annotation（如 `nginx.ingress.kubernetes.io/...`）是 controller 私有的，换了 controller 就失效；这些能力在 Gateway API 里多半有标准字段（权重、header 匹配、改写）。
 - **继续用的风险：** 已知漏洞不会再被修，不要继续把它暴露在公网。
 
-**出处：** kubernetes.io 博客 2025-11-11「Ingress NGINX Retirement: What You Need to Know」；v1.36 发布博客（2026-03-24 已退役）；Concepts › Ingress（API frozen）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 博客 2025-11-11「Ingress NGINX Retirement: What You Need to Know」；v1.36 发布博客（2026-03-24 已退役）；Concepts › Ingress（API frozen）
+
+</details>

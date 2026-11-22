@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Ingress 的 TLS、annotation 与 IngressClass · 摘要**｜摘要 · 必会
+**Ingress 的 TLS、annotation 与 IngressClass**｜摘要 · 必会
 
 怎么让 Ingress 提供 HTTPS？Ingress 之外的能力（会话保持、重写等）怎么配？有多个 controller 时由谁处理？
 
@@ -31,4 +31,8 @@ flowchart TD
 - **没写 `ingressClassName`：** 若集群有默认 IngressClass 就用它；否则可能没有 controller 认领。
 - **path 匹配：** `pathType` 必须写：`Exact`（完全相等）、`Prefix`（按 `/` 分段的前缀）、`ImplementationSpecific`（由 controller 决定）。
 
-**出处：** KIA2 §12.3–12.6；kubernetes.io Concepts › Ingress（pathType、default IngressClass）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §12.3–12.6；kubernetes.io Concepts › Ingress（pathType、default IngressClass）
+
+</details>

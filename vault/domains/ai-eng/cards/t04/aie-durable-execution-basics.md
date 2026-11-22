@@ -34,4 +34,8 @@ flowchart TD
 - Activity 失败会按 Retry Policy 重试，worker 死了会被重新调度，所以 **Activity 可能执行多次，必须幂等**（见幂等键那张卡）；
 - Workflow 代码必须是**确定性的**（因为要重放），所以随机、当前时间、调用 LLM 这类不确定的操作要放在 Activity 里。
 
-**出处：** Temporal 文档 Understanding Temporal（https://docs.temporal.io/evaluate/understanding-temporal）。用它承载 agent 循环是常见的做法，书里无此内容
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Temporal 文档 Understanding Temporal（https://docs.temporal.io/evaluate/understanding-temporal）。用它承载 agent 循环是常见的做法，书里无此内容
+
+</details>

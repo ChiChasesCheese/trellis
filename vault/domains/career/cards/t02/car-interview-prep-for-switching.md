@@ -31,4 +31,8 @@ flowchart TD
 
 **常见错法：** 每个岗位发同一份简历；面试前才开始准备；只在没压力时才去面。
 
-**出处：** Orosz《Guidebook》Ch.6 §1、§3 "Preparing for Tech Interviews"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.6 §1、§3 "Preparing for Tech Interviews"
+
+</details>

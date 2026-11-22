@@ -28,4 +28,8 @@ tags: [考点]
 
 **做法：** 书里的建议是限制模型只使用给出的 context，并用 AI judge 检查回答是否被 context 支持。
 
-**出处：** Huyen《AI Engineering》ch4 §Factual consistency（local factual consistency）；ch6 §Comparing retrieval algorithms（逐组件评测）；ch5 §How to Restrict a Model's Knowledge to Only Its Context
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Factual consistency（local factual consistency）；ch6 §Comparing retrieval algorithms（逐组件评测）；ch5 §How to Restrict a Model's Knowledge to Only Its Context
+
+</details>

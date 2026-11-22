@@ -33,4 +33,8 @@ flowchart TD
 
 **对方在想什么：** 经理想要的是稳定接手团队的人；公司也怕失去一个好工程师，所以回切通常有商量空间。
 
-**出处：** Orosz《Guidebook》Ch.1 §2（Single-track、Dual-track、"Software engineer/manager pendulum"）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.1 §2（Single-track、Dual-track、"Software engineer/manager pendulum"）
+
+</details>

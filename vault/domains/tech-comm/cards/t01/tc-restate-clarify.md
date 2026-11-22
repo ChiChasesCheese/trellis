@@ -28,4 +28,8 @@ tags: [原则]
 - Before: (draws a Kafka cluster in silence)
 - After: "So we're building a system that sends push and email notifications to users. Before I start, three quick questions: roughly how many notifications per day, does order matter, and is delivery best-effort or guaranteed?"
 
-**出处：** Tech Interview Handbook（techinterviewhandbook.org/coding-interview，把"提澄清问题、讲清思路"列为面试评分项）；具体做法由规则推导，非引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Tech Interview Handbook（techinterviewhandbook.org/coding-interview，把"提澄清问题、讲清思路"列为面试评分项）；具体做法由规则推导，非引用
+
+</details>

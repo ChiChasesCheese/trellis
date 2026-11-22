@@ -25,6 +25,10 @@ tags: [追问]
 2. 给出两三个具体方案，每个都写清楚代价。
 3. 别接受没有团队输入的自上而下的日期；要拒绝时，也要带着替代方案来。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 面对压价你有没有立场，并且能用取舍而不是情绪来谈。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch16 §6 "Unrealistic timeline"；ch16 §4 "Software Project Physics"
+
+</details>

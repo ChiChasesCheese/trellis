@@ -33,4 +33,8 @@ flowchart TD
 
 **对方在想什么：** 经理最担心的是项目被打断和团队士气。你给出时间表和交接，等于替他回答这两个问题。
 
-**出处：** Orosz《Guidebook》Ch.4 §6（avoid elbowing people，tech industry feels small）；HBR https://hbr.org/2021/07/yes-you-can-quit-your-job-without-burning-a-bridge（页面正文需订阅，仅见摘要：担心损害关系、推荐人、善意）。措辞为练习示例
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.4 §6（avoid elbowing people，tech industry feels small）；HBR https://hbr.org/2021/07/yes-you-can-quit-your-job-without-burning-a-bridge（页面正文需订阅，仅见摘要：担心损害关系、推荐人、善意）。措辞为练习示例
+
+</details>

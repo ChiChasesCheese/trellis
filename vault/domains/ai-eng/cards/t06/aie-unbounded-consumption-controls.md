@@ -39,4 +39,8 @@ tags: [实践]
 
 **看什么指标：** 每用户 token 用量的分布；单请求 token 用量的异常值；成本曲线的突增。
 
-**出处：** OWASP《LLM10:2025 Unbounded Consumption》genai.owasp.org/llmrisk/llm102025-unbounded-consumption/（2026-11-21 读）；Huyen ch10 §Gateway
+<details class="pt" markdown="1"><summary>出处</summary>
+
+OWASP《LLM10:2025 Unbounded Consumption》genai.owasp.org/llmrisk/llm102025-unbounded-consumption/（2026-11-21 读）；Huyen ch10 §Gateway
+
+</details>

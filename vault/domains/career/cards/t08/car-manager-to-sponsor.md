@@ -36,4 +36,8 @@ flowchart TD
 
 **对方在想什么：** 替你出头有风险：如果你的成果被质疑，他的信誉会受损。你让他觉得有把握，他才会出面。
 
-**出处：** Orosz《Guidebook》Ch.2 §5（Understand your manager's goals、Get your work recognized）；Ch.4 §5（managers 的重要性、manager 变更）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.2 §5（Understand your manager's goals、Get your work recognized）；Ch.4 §5（managers 的重要性、manager 变更）
+
+</details>

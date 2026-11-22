@@ -30,4 +30,8 @@ tags: [实践]
 
 **书里的提醒：** 输入和输出 token 越多越贵，很多应用因此去减少输入和输出的 token 数；要区分"必须满足"和"最好有"的成本与延迟要求。
 
-**出处：** Huyen《AI Engineering》ch4 §Cost and Latency；ch10 §Metrics（跟踪 token 数、缓存成本与命中率）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Cost and Latency；ch10 §Metrics（跟踪 token 数、缓存成本与命中率）
+
+</details>

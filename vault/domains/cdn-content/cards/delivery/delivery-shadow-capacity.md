@@ -13,4 +13,4 @@ Mirroring can double origin calls, network bytes, CPU, connection pools, logs, a
 为什么 100% dark launch 可能导致 outage，即使用户永远不会收到 shadow response？
 
 ## A zh
-mirroring 可能让 origin call、network byte、CPU、connection pool、log 和 downstream rate-limit consumption 翻倍。应从 bounded sample 开始，按 request class 建模 amplification，隔离 queue 与 concurrency，并优先 shed shadow work。只有在 production goodput 和 SLO 受到保护时，shadow fidelity 才有价值。
+mirroring 可能让 origin call、network byte、CPU、connection pool、log 和 downstream rate-limit consumption 翻倍。应从 bounded sample 开始，按 request class 建模 amplification，隔离 queue 与 concurrency，并优先丢弃 shadow 的工作。只有在 production goodput 和 SLO 受到保护时，shadow fidelity 才有价值。

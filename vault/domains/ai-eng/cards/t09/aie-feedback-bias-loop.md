@@ -38,4 +38,8 @@ flowchart TD
 
 **回到题目：** 第一个看评分分布；第二个是 degenerate feedback loop，要引入探索（随机展示一部分），并检查反馈覆盖面。
 
-**出处：** Huyen《AI Engineering》ch10 §Feedback Limitations（Biases、Degenerate feedback loop）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Feedback Limitations（Biases、Degenerate feedback loop）
+
+</details>

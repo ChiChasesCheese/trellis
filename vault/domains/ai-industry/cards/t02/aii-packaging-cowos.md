@@ -30,4 +30,8 @@ flowchart TD
 
 **怎么读：** 看到「芯片短缺」，先问短的是**制造**、**封装**还是 **HBM**，三者的解法和周期不同。
 
-**出处：** 通用产业知识（CoWoS 的作用）；TrendForce 2026 HBM 报道（HBM 与封装在同一产线汇合）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用产业知识（CoWoS 的作用）；TrendForce 2026 HBM 报道（HBM 与封装在同一产线汇合）。
+
+</details>

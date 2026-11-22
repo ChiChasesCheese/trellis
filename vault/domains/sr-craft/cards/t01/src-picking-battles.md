@@ -34,8 +34,12 @@ tags: [原则]
 
 **回到题目：** 支付链路的设计坚持（不可回退、影响大），用故障场景和取舍说明；引入库先问能否回退，若容易换就让；命名交给 linter 与风格指南；会议时间让步。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有取舍的判断力，不是什么都争，也不是什么都让。
 
 **适合配哪类故事：** 你在一次关键分歧中坚持（并用数据说服了人），同时在次要问题上主动让步的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch22 §1 "Internal Politics"（"Being inflexible"、"Bulldozing their will through"）；ch7 §1 "Focus on the Most Important Piece of Work"（"Learn to say no"）
+
+</details>

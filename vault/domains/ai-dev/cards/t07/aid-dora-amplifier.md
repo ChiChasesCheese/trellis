@@ -33,4 +33,8 @@ flowchart TD
 
 **所以：** 投资 AI 之前先看**基础**（测试、CI、版本控制、反馈速度）。
 
-**出处：** DORA《2025 State of AI-assisted Software Development》（Google Cloud 博客公告，2025-09-23；dora.dev）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+DORA《2025 State of AI-assisted Software Development》（Google Cloud 博客公告，2025-09-23；dora.dev）
+
+</details>

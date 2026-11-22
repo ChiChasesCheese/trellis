@@ -38,8 +38,12 @@ flowchart TD
 
 **回到题目：** 先写下假设和成功指标：结账完成率；对冲指标：支付错误率、客服工单、延迟；用 flag 随机分组；到期后根据业务指标决定推广或回滚，并清理 flag。"降 20% 延迟"要问：这真的会提高完成率吗？
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对指标的批判性思维，以及实验的方法论。
 
 **适合配哪类故事：** 你质疑了一个指标或设计了对冲指标，避免了团队优化错方向的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch21 §1 "Northstars, KPIs, OKRs"（"Are the right things being measured?"）；ch17 §4（#6 Feature flags and experimentation）；ch23 §2（"Rollouts and experiment hygiene"）；ch11 §3（Uber 内存泄漏实验例）
+
+</details>

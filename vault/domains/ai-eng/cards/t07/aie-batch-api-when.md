@@ -39,4 +39,8 @@ tags: [摘要]
 
 **注意（与传统 ML 的区别）：** 传统 ML 里的 batch inference 是**提前算好**再取；基础模型的输入是开放的，没法预先算，所以这里的 batch 只是"晚点、成批地处理"。
 
-**出处：** Huyen《AI Engineering》ch9 §Online and batch inference APIs
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch9 §Online and batch inference APIs
+
+</details>

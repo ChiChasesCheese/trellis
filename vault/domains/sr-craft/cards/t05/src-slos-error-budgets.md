@@ -44,8 +44,12 @@ flowchart TD
 
 **回到题目：** 召集两边，先选 SLI（成功率和 p99 延迟），再定 SLO 和季度预算；约定"预算有余自由发布，花光暂停并做稳定性工作"。吵架变成看仪表盘。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你能不能用客观机制化解"速度 vs 可靠性"的常见冲突。
 
 **适合配哪类故事：** 你引入了 SLO 或类似的客观指标，把一场反复争吵的取舍变成了数据驱动决定的经历。
 
 **出处：** Google SRE book《Embracing Risk》"Motivation for Error Budgets"、"Forming Your Error Budget"（sre.google/sre-book/embracing-risk/）；《Service Level Objectives》"Indicators"（sre.google/sre-book/service-level-objectives/）
+
+</details>

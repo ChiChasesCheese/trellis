@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**扩容后还是旧大小 · 考点**｜考点 · 必会
+**扩容后还是旧大小**｜考点 · 必会
 
 你把 PVC 的 `requests.storage` 从 1Gi 改成 10Gi，`kubectl apply` 成功了，但 `kubectl get pvc` 的 CAPACITY 仍是 1Gi。哪里不对？你又试图把它缩回 5Gi 呢？
 
@@ -29,4 +29,8 @@ flowchart TD
 - **扩容失败怎么办：** v1.34 起（GA）可以取消不被底层存储支持的扩容，改一个更小的请求重试，不再卡死。
 - **看 CAPACITY 列：** 它显示**已绑定卷的实际大小**，不是 PVC 请求的大小。
 
-**出处：** KIA2 §10.4.1（FileSystemResizePending；只能增大；PVC spec 不可变）；kubernetes.io 发布博客 v1.34（Recovery from volume expansion failure GA，KEP #1790）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §10.4.1（FileSystemResizePending；只能增大；PVC spec 不可变）；kubernetes.io 发布博客 v1.34（Recovery from volume expansion failure GA，KEP #1790）
+
+</details>

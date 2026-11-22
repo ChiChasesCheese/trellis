@@ -30,4 +30,8 @@ flowchart TD
 
 **原则：** 不要指望"模型自己不会这么做"。能力和权限的上限由**代码和下游系统**决定，模型的判断不是安全边界。
 
-**出处：** OWASP LLM06:2025 Excessive Agency（root causes 与 mitigations）；Huyen《AI Engineering》ch5 §System-level defense（高影响 SQL 需人工批准）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+OWASP LLM06:2025 Excessive Agency（root causes 与 mitigations）；Huyen《AI Engineering》ch5 §System-level defense（高影响 SQL 需人工批准）
+
+</details>

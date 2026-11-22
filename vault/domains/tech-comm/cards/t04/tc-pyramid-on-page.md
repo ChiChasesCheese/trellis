@@ -29,4 +29,8 @@ tags: [原则]
 - Before: "This section looked at risks. The next section looks at timelines."
 - After: "Those three risks are manageable if we stage the rollout. The timeline below does exactly that."
 
-**出处：** Minto p. 185–208（Ch.10 Reflecting the Pyramid on the Face of the Page：Reflect the Main Point in the Title / Show Transitions Between Groups / Stating Next Steps）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 185–208（Ch.10 Reflecting the Pyramid on the Face of the Page：Reflect the Main Point in the Title / Show Transitions Between Groups / Stating Next Steps）
+
+</details>

@@ -33,4 +33,8 @@ flowchart TD
 - Parallelization 与 orchestrator-workers：前者子任务**预先定好**，后者由输入**动态决定**。
 - Routing 与 orchestrator-workers：routing 只选一条路；orchestrator 要拆开、并汇总。
 
-**出处：** Anthropic《Building effective agents》（Workflow patterns 五种）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic《Building effective agents》（Workflow patterns 五种）
+
+</details>

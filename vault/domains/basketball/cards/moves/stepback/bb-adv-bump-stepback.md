@@ -6,11 +6,13 @@ type: qa
 ## Q
 **Bump step-back（顶肩后撤步）**｜Shai Gilgeous-Alexander
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-bump-stepback.mp4]]
 
-**Sequence。** `attack the defender → off-arm bump → step-back → rise for the jumper`
-**Read。** a tight on-ball defender gets nudged off his spot, so the release is uncontested.
-**Cue。** the bump creates the gap, the step-back keeps it: gather on the plant foot before the shot.
+**步骤：** 攻向防守人 → 用外侧手臂顶一下 → 后撤步 → 起跳投篮
+
+**读防守：** 贴身防守被顶离站位，出手没有人封。
+
+**要点：** 顶肩制造空间，后撤步保住空间：投篮前先用落脚脚收好球。

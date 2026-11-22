@@ -40,4 +40,8 @@ flowchart TD
 
 **评估编排器的三方面：** 集成与扩展性、对复杂流水线的支持（分支、并行、错误处理）、易用性 / 性能 / 可扩展性（避免隐藏的 API 调用和额外延迟）。
 
-**出处：** Huyen《AI Engineering》ch10 §AI Pipeline Orchestration
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §AI Pipeline Orchestration
+
+</details>

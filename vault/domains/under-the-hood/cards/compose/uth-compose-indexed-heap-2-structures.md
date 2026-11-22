@@ -79,5 +79,3 @@ step: 2
 | `pop()` | 取 `a[0]`，换到末尾删掉，下沉；`pos` 删 key | O(log n) |
 | `remove(key)` | 查 `pos` 得下标，换到末尾删掉，上浮或下沉 | O(log n) |
 | `update(key, p)` | 查 `pos` 得下标，改值，上浮或下沉 | O(log n) |
-
-**对应 LeetCode：** 无直接对应的题

@@ -29,4 +29,8 @@ flowchart TD
 
 **别做：** 把 IMPORTANT、ALWAYS、NEVER 堆满文件。强调越多，agent 越容易把每条规则都过度套用。
 
-**出处：** Claude Code docs《Best practices》（Keep CLAUDE.md short：note）；《How Claude remembers your project》（CLAUDE.md vs auto memory：不是强制配置）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Keep CLAUDE.md short：note）；《How Claude remembers your project》（CLAUDE.md vs auto memory：不是强制配置）
+
+</details>

@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** 不是胡闹：先用 feature flag 和 canary 在生产测，配监控和自动回滚；逐步向多租户演进；对关键路径加 load test 和 smoke test；调试要遵守隐私规则。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对测试环境、风险和合规的综合判断。
 
 **适合配哪类故事：** 你引入了生产中的安全测试（canary、flag）或专项测试，抓到了预发环境发现不了的问题的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch14 §5 "Specialized Tests"（Performance、Load、Chaos、Smoke）、§6 "Testing in Production"（approaches、benefits、challenges）
+
+</details>

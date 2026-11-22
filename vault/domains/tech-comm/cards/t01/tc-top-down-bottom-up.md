@@ -32,4 +32,8 @@ flowchart TD
 - **只列要点不归纳：** 一堆事实没有结论。
 - **硬凑上层：** 归纳不出来时说明要点本身不成组。
 
-**出处：** Minto p. 41–56（Ch.3 How to Build a Pyramid Structure：The Top-Down Approach / The Bottom-Up Approach）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 41–56（Ch.3 How to Build a Pyramid Structure：The Top-Down Approach / The Bottom-Up Approach）
+
+</details>

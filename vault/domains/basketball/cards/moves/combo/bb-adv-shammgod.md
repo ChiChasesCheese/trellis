@@ -6,11 +6,11 @@ type: qa
 ## Q
 **Shammgod（沙姆格德）**｜Donovan Mitchell · Kyrie Irving, Wembanyama
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-shammgod.mp4]]
 
-**Sequence。** `push the ball out one-handed → snatch it back across the body → cross / hesitate off the lunge`
-**Read。** a defender who jumps at the pushed-out ball is a step behind the snatch-back.
+**步骤：** 单手把球推出去 → 横跨身体把球拉回 → 在冲出去的防守人面前接 cross 或 hesitate
 
+**读防守：** 防守人扑向被推出的球，就慢了拉回球的这一步。

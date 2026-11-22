@@ -41,4 +41,8 @@ flowchart TD
 
 **外部存储的另一个好处：** 能保留数据的结构。比如 agent 找销售线索，可以把线索存进一张表，把待办动作存进队列，而不是全塞在 context 的文字里。
 
-**出处：** Huyen《AI Engineering》ch6 §Memory
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Memory
+
+</details>

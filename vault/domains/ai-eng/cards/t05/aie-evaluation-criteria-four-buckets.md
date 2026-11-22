@@ -28,4 +28,8 @@ tags: [摘要]
 
 **评测先行的局限：** 只做可评测的应用容易「在路灯下找钥匙」，漏掉难评测但价值高的方向。所以要同时投资评测能力本身。
 
-**出处：** Huyen《AI Engineering》ch4 §Evaluation Criteria、§Evaluation-Driven Development、§Cost and Latency（Table 4-3）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Evaluation Criteria、§Evaluation-Driven Development、§Cost and Latency（Table 4-3）
+
+</details>

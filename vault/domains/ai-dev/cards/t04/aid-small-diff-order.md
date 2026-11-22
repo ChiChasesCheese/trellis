@@ -22,4 +22,8 @@ tags: [实践]
 **做：** 每读完一段，用自己的话说出它做了什么；说不出来的段落，标记并问 agent 或打回。
 **别做：** 从第一行读到最后一行、读完才发现整个方向偏了。
 
-**出处：** Claude Code docs《Best practices》（Review against your spec）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Review against your spec）
+
+</details>

@@ -38,4 +38,8 @@ flowchart TD
 - **串联：** 先用便宜的关键词检索取候选，再用更精确更贵的向量方法找最好的；
 - **并联：** 两路各取候选，再把两份排名合并（下一张卡讲 RRF）。
 
-**出处：** Huyen《AI Engineering》ch6 §Term-based retrieval、§Embedding-based retrieval、§Comparing retrieval algorithms、§Combining retrieval algorithms
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Term-based retrieval、§Embedding-based retrieval、§Comparing retrieval algorithms、§Combining retrieval algorithms
+
+</details>

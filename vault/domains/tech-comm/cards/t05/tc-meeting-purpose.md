@@ -35,4 +35,8 @@ flowchart TD
 
 **示例开场：** "The goal today is to pick one caching approach for search. By the end I want a decision and an owner."
 
-**出处：** GitLab Handbook《All-Remote Meetings》（handbook.gitlab.com/handbook/company/culture/all-remote/meetings/：议程、异步优先）；具体句式由规则推导，非引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+GitLab Handbook《All-Remote Meetings》（handbook.gitlab.com/handbook/company/culture/all-remote/meetings/：议程、异步优先）；具体句式由规则推导，非引用
+
+</details>

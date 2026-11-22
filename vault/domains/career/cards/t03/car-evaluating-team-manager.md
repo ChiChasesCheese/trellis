@@ -36,4 +36,8 @@ flowchart TD
 
 **对方在想什么：** 好经理愿意详细回答带人的问题。如果他讲不出具体例子，或回避"最近有人为什么离职"，这就是信息。
 
-**出处：** Orosz《Guidebook》Ch.6 §1 "Exploring New Opportunities"；Ch.5 §1 Product Teams、§2 Platform Teams；Ch.2 §5（经理是影响最大的同事关系）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.6 §1 "Exploring New Opportunities"；Ch.5 §1 Product Teams、§2 Platform Teams；Ch.2 §5（经理是影响最大的同事关系）
+
+</details>

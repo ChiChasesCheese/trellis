@@ -13,4 +13,4 @@ Two raw requests can collapse to one cache key while the origin selects differen
 CDN 与 origin router 对 `%2F` 的 normalization 不同。为什么这不只是 cache-hit-ratio 问题？
 
 ## A zh
-两个 raw request 可能 collapse 到同一个 cache key，但 origin 却选择不同 resource；或者同一个 origin resource 可能出现在不同 security policy 下。这种不一致会导致 key confusion、poisoning 和 authorization bypass。应为 path、query、host、duplicate field 与 percent encoding 定义统一 canonicalization contract，reject ambiguous form，并在每个 parser boundary 用同一 corpus 测试。
+两个 raw request 可能 collapse 到同一个 cache key，但 origin 却选择不同 resource；或者同一个 origin resource 可能出现在不同 security policy 下。这种不一致会导致 key confusion、poisoning 和 authorization bypass。应为 path、query、host、duplicate field 与 percent encoding 定义统一 canonicalization contract，拒绝有歧义的写法，并在每个 parser boundary 用同一 corpus 测试。

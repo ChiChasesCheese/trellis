@@ -39,8 +39,12 @@ flowchart TD
 - **两个 Staff 同时当 Tech Lead：** 团队听到两套指令。
 - **不动手也不在值班轮里：** 被同事视为远离一线、做决定不负责的人。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对高级别角色的理解是否具体，是否知道自己的偏好和短板，并能说清怎样和不同类型的 Staff 协作。
 
 **适合配哪类故事：** 你在不同阶段扮演过不同角色（带项目、攻难题、定方向），并因此调整了和同级工程师分工的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch22 §4 "Collaborating with Staff+ Peers"（"Be aware that collaborating with staff+ archetypes is different"，引 Larson，staffeng.com/guides/staff-archetypes）；ch25 §9 "Software Architect Traits"
+
+</details>

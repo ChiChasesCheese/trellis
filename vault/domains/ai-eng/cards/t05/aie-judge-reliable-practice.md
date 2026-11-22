@@ -24,4 +24,8 @@ tags: [实践]
 
 **常见错法：** 应用团队把分数变化归功于自己的改动，其实是 judge 团队悄悄换了 model。
 
-**出处：** Huyen《AI Engineering》ch3 §Criteria ambiguity、§Increased costs and latency（含 Tip：不信看不到 model 和 prompt 的 judge）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch3 §Criteria ambiguity、§Increased costs and latency（含 Tip：不信看不到 model 和 prompt 的 judge）
+
+</details>

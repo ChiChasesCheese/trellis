@@ -31,4 +31,8 @@ flowchart TD
 
 **限制：** 你的验收带宽是上限。五个 agent 同时交活，你只有一个人读 diff——所以并行数量由你的审查能力决定，不是由机器决定。
 
-**出处：** Claude Code docs《Best practices》（Run sessions in parallel；Let Claude run without you）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Run sessions in parallel；Let Claude run without you）
+
+</details>

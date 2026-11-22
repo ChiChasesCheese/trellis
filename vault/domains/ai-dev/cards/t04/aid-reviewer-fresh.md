@@ -31,4 +31,8 @@ flowchart TD
 
 **注意：** 同一个模型审同一个模型有共同盲点；关键代码加一位人，或换另一个模型。
 
-**出处：** Claude Code docs《Best practices》（Give Claude a check to run；Run sessions in parallel）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Give Claude a check to run；Run sessions in parallel）
+
+</details>

@@ -35,4 +35,8 @@ flowchart TD
   B --> R["÷ 利用率 = 平衡租价"]
 ```
 
-**出处：** 通用单位经济学；Epoch AI Trends（性能每美元）；数字为演示用。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用单位经济学；Epoch AI Trends（性能每美元）；数字为演示用。
+
+</details>

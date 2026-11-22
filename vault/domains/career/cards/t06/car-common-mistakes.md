@@ -34,4 +34,8 @@ flowchart TD
 
 **对方在想什么：** 他在看你怎么处理压力，也在判断你好不好共事。
 
-**出处：** McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（Common mistakes）；Qureshi（Rule 1 in writing, Rule 2 keep the door open）；Voss《Never Split the Difference》Ch.4 "Beware 'Yes'"（三种 yes）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（Common mistakes）；Qureshi（Rule 1 in writing, Rule 2 keep the door open）；Voss《Never Split the Difference》Ch.4 "Beware 'Yes'"（三种 yes）
+
+</details>

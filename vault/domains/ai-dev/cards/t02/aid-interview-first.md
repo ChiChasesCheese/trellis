@@ -27,4 +27,8 @@ agent 会返回选择题：按用户还是按 key、超限请求怎么处理、�
 
 **什么时候用：** 你**不知道自己要什么**时。已经很清楚时，直接写具体 prompt 更快。
 
-**出处：** Claude Code docs《Best practices》（Brainstorm with Claude first）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Brainstorm with Claude first）
+
+</details>

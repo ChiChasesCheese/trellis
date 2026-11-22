@@ -33,4 +33,8 @@ tags: [考点]
 
 **原则：** 层层设防——deny 规则拦住常规路径，sandbox 限制 shell 的实际能力，密钥管理器让文件里根本没有密钥。
 
-**出处：** Claude Code docs《Best practices》（Limit access with permission rules and the sandbox）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Limit access with permission rules and the sandbox）
+
+</details>

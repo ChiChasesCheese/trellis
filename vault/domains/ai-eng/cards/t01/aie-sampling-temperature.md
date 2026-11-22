@@ -37,4 +37,8 @@ flowchart TD
 
 **注意：** 就算 temperature 设为 0，也不保证每次一致，因为运行的硬件不同也会带来差别。
 
-**出处：** Huyen《AI Engineering》ch2 §Sampling Fundamentals、§Temperature；§Inconsistency（硬件）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Sampling Fundamentals、§Temperature；§Inconsistency（硬件）
+
+</details>

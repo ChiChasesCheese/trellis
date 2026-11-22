@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**权重与 TLS · 考点**｜考点 · 必会
+**权重与 TLS**｜考点 · 必会
 
 1）HTTPRoute 的 backendRefs 写了 `stable` 权重 9、`new` 权重 1，各得多少流量？两项都不写 `weight` 呢？2）Gateway 做 TLS 终止和 passthrough，对「能不能按 URL 路径路由」各有什么影响？
 
@@ -38,4 +38,8 @@ flowchart TD
 - **需要端到端加密：** 选 passthrough，或终止后再重新加密（后端自己也有 TLS）。
 - **需要路径路由和 header 改写：** 必须 Terminate。
 
-**出处：** KIA2 §13.3.2（权重 9:1；不写 weight 则平分）、§13.4（Terminate 与 Passthrough，SNI）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §13.3.2（权重 9:1；不写 weight 则平分）、§13.4（Terminate 与 Passthrough，SNI）
+
+</details>

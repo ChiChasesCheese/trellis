@@ -38,4 +38,8 @@ flowchart TD
 
 **记住：** 计费、速度、长度上限，下面一律按 **token 数**算，而不是字数或字符数。
 
-**出处：** Huyen《AI Engineering》ch1 §Language models（Figure 1-1 与 Note）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch1 §Language models（Figure 1-1 与 Note）
+
+</details>

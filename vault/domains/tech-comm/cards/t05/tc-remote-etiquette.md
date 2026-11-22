@@ -25,4 +25,8 @@ tags: [惯用说法]
 
 **惯例：** 不说话时静音；想发言用 raise hand 或在聊天里写；重要的话在聊天里再贴一遍；重要的决定会后以文字确认。
 
-**出处：** 惯用说法，非引用；礼仪参考 GitLab Handbook《All-Remote Meetings》（handbook.gitlab.com/handbook/company/culture/all-remote/meetings/）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用；礼仪参考 GitLab Handbook《All-Remote Meetings》（handbook.gitlab.com/handbook/company/culture/all-remote/meetings/）
+
+</details>

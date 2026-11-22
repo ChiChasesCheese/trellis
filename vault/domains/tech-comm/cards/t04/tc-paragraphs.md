@@ -30,4 +30,8 @@ tags: [原则]
 
 **示例（what / why / how）：** "A few extreme values can distort an average. That matters when you're comparing datasets with outliers. Check the median alongside the mean before drawing conclusions."
 
-**出处：** Google Technical Writing One《Paragraphs》（developers.google.com/tech-writing/one/paragraphs）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Paragraphs》（developers.google.com/tech-writing/one/paragraphs）
+
+</details>

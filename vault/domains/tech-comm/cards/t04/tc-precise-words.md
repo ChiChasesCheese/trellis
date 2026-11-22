@@ -29,4 +29,8 @@ tags: [原则]
 - Before: "The worker pulls jobs from the queue. If the agent fails, some jobs may be delayed."
 - After: "The worker pulls jobs from the queue. If a worker fails, its jobs wait up to 30 seconds before another worker takes them."
 
-**出处：** Google Technical Writing One《Words》（developers.google.com/tech-writing/one/words：定义术语、一致使用术语）；《Audience》（避免习语）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Words》（developers.google.com/tech-writing/one/words：定义术语、一致使用术语）；《Audience》（避免习语）
+
+</details>

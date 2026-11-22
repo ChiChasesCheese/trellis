@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**CPU throttling 与 OOM kill · 摘要**｜摘要 · 必会
+**CPU throttling 与 OOM kill**｜摘要 · 必会
 
 同样是 limit，超出 CPU limit 和超出 memory limit 的后果为什么完全不同？内核是怎么执行它们的？
 
@@ -32,4 +32,8 @@ flowchart TD
 - **request 的作用：** scheduler 用它挑 node，kubelet 为容器预留至少这么多；只设 limit 不设 request 时，request 取 limit 的值。
 - **所以：** CPU limit 过紧 → 延迟抖动；memory limit 过紧 → 重启。
 
-**出处：** kubernetes.io Concepts › Resource Management for Pods and Containers（limits 由 kernel 执行；CPU throttling；memory OOM kill 被动执行）；周期数值为 Linux CFS 默认
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Resource Management for Pods and Containers（limits 由 kernel 执行；CPU throttling；memory OOM kill 被动执行）；周期数值为 Linux CFS 默认
+
+</details>

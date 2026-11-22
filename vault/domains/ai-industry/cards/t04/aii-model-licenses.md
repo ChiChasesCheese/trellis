@@ -30,4 +30,8 @@ flowchart TD
   C --> D["衍生要求"]
 ```
 
-**出处：** 通用许可证分类；具体条款请读模型页面的 LICENSE。不是法律意见。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用许可证分类；具体条款请读模型页面的 LICENSE。不是法律意见。
+
+</details>

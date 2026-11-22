@@ -32,4 +32,8 @@ flowchart TD
 
 **做：** 需求没想清时先让 agent 访谈你（见非核心叶 先问后做），写出 SPEC.md，再**开新 session** 实现，这样起点是干净的 context。
 
-**出处：** Claude Code docs《Best practices》（Brainstorm with Claude first；Review against your spec）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Brainstorm with Claude first；Review against your spec）
+
+</details>

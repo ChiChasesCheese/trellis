@@ -35,4 +35,8 @@ flowchart TD
 
 **对方在想什么：** 愿意给你反馈的同事会看你是否真的改。改了一次，他们下次会更愿意给。
 
-**出处：** Orosz《Guidebook》Ch.8 §1 "Practice Coding: A Lot!"；Ch.13 §1（三种语言类型）；Ch.26 §2 "Keep Learning"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.8 §1 "Practice Coding: A Lot!"；Ch.13 §1（三种语言类型）；Ch.26 §2 "Keep Learning"
+
+</details>

@@ -33,4 +33,8 @@ flowchart TD
   Y6 --> P["利润更高"]
 ```
 
-**出处：** 通用会计准则（直线折旧）；数字为演示用。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用会计准则（直线折旧）；数字为演示用。
+
+</details>

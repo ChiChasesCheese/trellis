@@ -34,4 +34,8 @@ flowchart TD
 
 **怎么选：** 单点事实 → 普通 RAG；多步推理 → agentic retrieval；全局主题 → GraphRAG，且要问清「建图的成本值不值」。
 
-**出处：** Huyen《AI Engineering》ch6 §Tools → Knowledge augmentation；Edge 等《From Local to Global: A Graph RAG Approach》arxiv.org/abs/2404.16130（2026-11-21 读摘要）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Tools → Knowledge augmentation；Edge 等《From Local to Global: A Graph RAG Approach》arxiv.org/abs/2404.16130（2026-11-21 读摘要）
+
+</details>

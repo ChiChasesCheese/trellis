@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Namespaces 与 cgroups · 考点**｜考点 · 必会
+**Namespaces 与 cgroups**｜考点 · 必会
 
 下面三个现象，分别是 namespace 还是 cgroup 在起作用？
 1. 容器里 `ps aux` 只列出几个进程，主进程的 PID 是 1
@@ -23,4 +23,8 @@ tags: [考点]
 - **一个对比：** CPU 超额不会杀进程，只会被限速（throttle）；内存超额才会被杀。第 2 部分的 limits 一卡会细讲。
 - **反例：** 用 `--net=host`，容器就不再有自己的 net namespace，用的是宿主机的网络，两个容器监听同一端口就会冲突。
 
-**出处：** KIA2 §2.3.1–2.3.2（含 `--net=host` 的例子）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §2.3.1–2.3.2（含 `--net=host` 的例子）
+
+</details>

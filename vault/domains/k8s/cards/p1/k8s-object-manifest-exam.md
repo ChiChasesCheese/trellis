@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Object manifest · 考点**｜考点 · 必会
+**Object manifest**｜考点 · 必会
 
 下面的 YAML 执行 `kubectl apply` 会报错。错在哪？如何修？
 
@@ -40,4 +40,8 @@ spec:
 - **`kubectl explain deployment`：** 显示该类型的字段说明。
 - **核心组的对象只写版本：** Pod、Service、Node、Namespace 是 `v1`；其余是 `组/版本`。
 
-**出处：** KIA2 §4.2；Poulton ch14「Inspecting the API」（`kubectl api-resources` 输出）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §4.2；Poulton ch14「Inspecting the API」（`kubectl api-resources` 输出）
+
+</details>

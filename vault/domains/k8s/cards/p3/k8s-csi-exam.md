@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**卡在哪一步 · 考点**｜考点 · 必会
+**卡在哪一步**｜考点 · 必会
 
 三种现象：A）PVC 一直 `Pending`，没有 PV 出现。B）PV 有了、PVC 也 Bound，Pod 卡在 `ContainerCreating`，事件有 `FailedAttachVolume`。C）卷挂上了但 Pod 卡在 mount 阶段。分别该查 CSI 的哪一部分？
 
@@ -27,4 +27,8 @@ flowchart TD
 - **分层的好处：** 看事件名就能定位是 controller 侧还是 node 侧出了问题。
 - **先看：** `kubectl describe pvc`、`kubectl describe pod` 的事件，再看 `kubectl -n <csi 所在 namespace> logs` 对应组件。
 
-**出处：** KIA2 §10.2.5–10.2.6（StorageClass、volumeBindingMode、CSI driver）；kubernetes-csi.github.io（controller 与 node 组件分工）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §10.2.5–10.2.6（StorageClass、volumeBindingMode、CSI driver）；kubernetes-csi.github.io（controller 与 node 组件分工）
+
+</details>

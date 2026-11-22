@@ -35,4 +35,8 @@ flowchart TD
 
 **对方在想什么：** 公司想在候选人去别家之前锁定。多数公司愿意给几天；只有真的执行死线的公司，你才要认真考虑是不是愿意接受这种文化。
 
-**出处：** Qureshi https://haseebq.com/my-ten-rules-for-negotiating-a-job-offer/（Exploding offers）；Voss《Never Split the Difference》Ch.6 "Bend Their Reality"（"Deadlines: Make time your ally"）；McKenzie（拒绝爆炸性 offer）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Qureshi https://haseebq.com/my-ten-rules-for-negotiating-a-job-offer/（Exploding offers）；Voss《Never Split the Difference》Ch.6 "Bend Their Reality"（"Deadlines: Make time your ally"）；McKenzie（拒绝爆炸性 offer）
+
+</details>

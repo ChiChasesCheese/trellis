@@ -25,4 +25,8 @@ tags: [惯用说法]
 
 **语气：** 轻、短、开放式，对方回答后给一句回应（"That sounds nice."），再自然转入正题："Shall we get started?"
 
-**出处：** 惯用说法，非引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用
+
+</details>

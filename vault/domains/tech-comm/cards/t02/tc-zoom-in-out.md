@@ -32,4 +32,8 @@ flowchart TD
 - **放大后不缩回：** 细节讲完，大家忘了整体。
 - **在错误的层次回答：** 对方问整体，你答细节；或相反。
 
-**出处：** Minto p. 33–40（Ch.2 The Vertical Relationship）；p. 113–136（Ch.7：Distinguish the Levels of Action）（部分）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 33–40（Ch.2 The Vertical Relationship）；p. 113–136（Ch.7：Distinguish the Levels of Action）（部分）
+
+</details>

@@ -38,4 +38,8 @@ flowchart TD
 
 **常见错法：** 等人来教；一上来就批评"我们以前不这样做"；不记录学到什么。
 
-**出处：** Orosz《Guidebook》Ch.6 §6 "Onboarding to a New Job"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.6 §6 "Onboarding to a New Job"
+
+</details>

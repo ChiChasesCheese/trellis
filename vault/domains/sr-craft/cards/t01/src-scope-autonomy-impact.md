@@ -39,8 +39,12 @@ flowchart TD
 
 **回到题目：** 速度是 Mid 的合格线。把他最近一个 ticket 拿出来问：需求是谁定义的？修完以后同类问题还会不会再发生？别人能不能接手维护？答不上的部分，就是他和 senior 之间的距离。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对 senior 的理解是不是"做更大、更模糊的事并为长期后果负责"，而不是"更快的 Mid"。
 
 **适合配哪类故事：** 你从做一个任务，扩展到定义问题、补上测试和监控、让别人能接手的经历；或者你帮别人把工作变得更清楚、更有影响的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》Part III 引言 "Software development vs software engineering"、"Typical senior engineer expectations"、"Senior as a terminal level"；Part V 引言 "Why do titles vary so much between companies?"（blast radius）
+
+</details>

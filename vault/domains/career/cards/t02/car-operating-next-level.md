@@ -34,4 +34,8 @@ flowchart TD
 
 **对方在想什么：** 经理在想："我替他提名，委员会问起证据时我拿得出什么？" 你替他把证据备好，他的风险就小。
 
-**出处：** Orosz《Guidebook》Ch.4 §5 "Advice for Getting Promoted"（plan in writing、peer feedback、"Be realistic"）；Ch.6 §2（promotions are backward-looking，6–12 个月）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.4 §5 "Advice for Getting Promoted"（plan in writing、peer feedback、"Be realistic"）；Ch.6 §2（promotions are backward-looking，6–12 个月）
+
+</details>

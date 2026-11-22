@@ -32,4 +32,8 @@ flowchart TD
 
 **常见错法：** 把一个数据点当事实；比较时忽略 equity 的差异。
 
-**出处：** Orosz《Guidebook》Ch.1 §3；Part V 引言（levels.fyi 的局限）；techinterviewhandbook.org/understanding-compensation/（数字为 2021 年 8 月）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.1 §3；Part V 引言（levels.fyi 的局限）；techinterviewhandbook.org/understanding-compensation/（数字为 2021 年 8 月）
+
+</details>

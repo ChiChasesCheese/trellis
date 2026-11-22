@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**该上哪一层 · 考点**｜考点 · 必会
+**该上哪一层**｜考点 · 必会
 
 三个团队的诉求：A）有 6000 个 Service，iptables 规则同步太慢；B）监管要求所有服务间通信必须加密，应用不能改；C）想知道每对服务之间的请求延迟和错误率。各该考虑什么？为什么不是「全都上 service mesh」？
 
@@ -28,4 +28,8 @@ flowchart TD
 - **north/south 与 east/west：** Gateway 管集群外到内；mesh 管集群内部服务间。
 - **别把层混了：** NetworkPolicy 管「谁能连谁」，不管加密和重试；mesh 管服务间通信行为，不替代 CNI。
 
-**出处：** KIA2 §13.7（service mesh 定义；Gateway API 与 GAMMA）；kubernetes.io 博客 2025-02-28（nftables 对 iptables 的 O(n)→O(1)）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §13.7（service mesh 定义；Gateway API 与 GAMMA）；kubernetes.io 博客 2025-02-28（nftables 对 iptables 的 O(n)→O(1)）
+
+</details>

@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Conflict · 考点**｜考点 · 必会
+**Conflict**｜考点 · 必会
 
 一个自己写的 controller 日志里不断出现 `the object has been modified; please apply your changes to the latest version and try again`。为什么会这样？写成「失败就原样重发同一个请求」行不行？
 
@@ -31,4 +31,8 @@ flowchart TD
 - **偶尔 409 是正常的：** 多个组件共写一个对象时，冲突是设计内的信号，不是故障。只有持续的、重试也过不去的冲突才需要查。
 - **减少冲突：** 缩小写入范围（只改自己的字段）、缩短「读→写」之间的时间。
 
-**出处：** kubernetes.io Reference › Kubernetes API Concepts（resourceVersion、409 Conflict）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Reference › Kubernetes API Concepts（resourceVersion、409 Conflict）
+
+</details>

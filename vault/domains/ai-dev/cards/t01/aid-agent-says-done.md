@@ -24,4 +24,8 @@ agent 的总结写着"所有测试通过"。你该怎么确认？这句话在 lo
 
 **追问：** 如果它没有任何可运行的检查呢？那就先给它一个（见 t02 的 check 一叶），再让它动手。
 
-**出处：** Claude Code docs《Best practices》（Give Claude a check to run：ask Claude for evidence）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Give Claude a check to run：ask Claude for evidence）
+
+</details>

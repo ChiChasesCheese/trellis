@@ -35,4 +35,8 @@ flowchart TD
 - 输入长度上限要能装下你的 chunk；
 - 维度、速度、费用（生成 embedding 要花钱）。
 
-**出处：** Huyen《AI Engineering》ch3 §Introduction to Embedding；ch6 §Embedding-based retrieval、§Comparing retrieval algorithms（成本段）。1 亿 × 维度的存储数是按 float32 的算术结果
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch3 §Introduction to Embedding；ch6 §Embedding-based retrieval、§Comparing retrieval algorithms（成本段）。1 亿 × 维度的存储数是按 float32 的算术结果
+
+</details>

@@ -33,4 +33,8 @@ flowchart TD
 
 **常见错法：** 只用公司名气判断；只看股权的潜在大回报，忽略股权不能马上变现。
 
-**出处：** Orosz《Guidebook》Ch.1 §1 "Types of Companies"；Ch.5 §3 "Peacetime vs Wartime"、§4 "Types of Companies"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.1 §1 "Types of Companies"；Ch.5 §3 "Peacetime vs Wartime"、§4 "Types of Companies"
+
+</details>

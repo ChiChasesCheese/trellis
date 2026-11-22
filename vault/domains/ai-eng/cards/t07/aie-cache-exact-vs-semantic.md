@@ -35,4 +35,8 @@ flowchart TD
 
 **书里对 semantic cache 的评价：** 价值**更可疑**，因为很多环节容易出错：依赖高质量的 embedding、可用的向量搜索、可靠的相似度度量，阈值也难定；向量搜索本身也耗时耗算力。只有命中率很高时才值得，上之前先评估效率、成本和质量风险。
 
-**出处：** Huyen《AI Engineering》ch10 §Step 4. Reduce Latency with Caches（Exact caching、Semantic caching）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Step 4. Reduce Latency with Caches（Exact caching、Semantic caching）
+
+</details>

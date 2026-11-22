@@ -20,6 +20,10 @@ tags: [追问]
 
 **怎么做：** 让当事人讲清楚当时看到了什么、为什么那样判断。他负责推动自己那条行动项落地。惩罚会让问题被藏起来，风险反而更大；而没被解决的条件，同样会绊倒下一个人。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你能区分文化和责任，并清楚怎样让团队更愿意暴露问题。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch24 §6 #3（"Some people resist the idea of blameless postmortems"）；Google SRE book《Postmortem Culture》（Best Practice: Avoid Blame and Keep It Constructive）
+
+</details>

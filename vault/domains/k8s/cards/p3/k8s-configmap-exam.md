@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**ConfigMap · 考点**｜考点 · 必会
+**ConfigMap**｜考点 · 必会
 
 你修改了 ConfigMap `kiada-config` 里的 `log-level`，改成了 `warn`。有两个 Pod，一个把它注入成**环境变量**，一个挂载成**卷里的文件**。几分钟后，两个 Pod 里的值分别是什么？怎么让环境变量那个也生效？
 
@@ -20,4 +20,8 @@ tags: [考点]
 - **卷里的文件虽然更新了：** 应用要自己重新读文件才会用到新值（很多程序只在启动时读一次）。
 - **这是个取舍：** 环境变量方式更稳（一个 Pod 的配置不会中途变），卷方式更灵活。要不要自动热更新，取决于你的应用能不能安全处理配置变化。
 
-**出处：** KIA2 §8.2（What happens when you modify a ConfigMap）、§9.4（configMap 卷的原子更新）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §8.2（What happens when you modify a ConfigMap）、§9.4（configMap 卷的原子更新）
+
+</details>

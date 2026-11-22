@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Resize、VolumeSnapshot 与 ephemeral volume · 摘要**｜摘要 · 必会
+**Resize、VolumeSnapshot 与 ephemeral volume**｜摘要 · 必会
 
 PVC 创建之后，还能怎么管理它：改大小、做快照、从快照恢复？「ephemeral volume」又和 emptyDir 有什么区别？
 
@@ -42,4 +42,8 @@ flowchart TD
 | 大小上限 | 没有固定上限（可以超） | 有固定大小，超不了 |
 | 能做什么 | 临时目录 | 是正常的 PV，能做快照、克隆、扩容；可以是本地盘也可以是网络盘 |
 
-**出处：** KIA2 §10.4.1–10.4.3、§10.5.1–10.5.2
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §10.4.1–10.4.3、§10.5.1–10.5.2
+
+</details>

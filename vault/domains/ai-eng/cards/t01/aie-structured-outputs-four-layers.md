@@ -30,4 +30,8 @@ flowchart TD
 - ①② 像"创可贴"，模型本来就差不多会时才管用；③④ 才是"重治疗"。
 - 分类任务还可以在模型后接一个分类头，只能输出预先设定的几类。
 
-**出处：** Huyen《AI Engineering》ch2 §Structured Outputs（Prompting、Post-processing、Constrained sampling、Finetuning）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Structured Outputs（Prompting、Post-processing、Constrained sampling、Finetuning）
+
+</details>

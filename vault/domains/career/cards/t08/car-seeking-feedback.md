@@ -36,4 +36,8 @@ flowchart TD
 
 **对方在想什么：** 对方要避免伤害你，也在担心你的反应。你问得具体、听得平静，下次他更愿意说实话。
 
-**出处：** Orosz《Guidebook》Ch.2 §4 "Ask and Give Feedback"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.2 §4 "Ask and Give Feedback"
+
+</details>

@@ -35,4 +35,8 @@ flowchart TD
 
 **示例开头：** "I'm asking for two engineers for one quarter. Without the migration, billing outages continue; with it, we retire the old platform by Q3. The main risk is data mismatch, and we have a reconciliation plan."
 
-**出处：** Minto p. 65–80（Ch.4 Fine Points of Introductions：Some Common Patterns——Giving Direction、Seeking Approval to Spend Money、Choosing Among Alternatives）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 65–80（Ch.4 Fine Points of Introductions：Some Common Patterns——Giving Direction、Seeking Approval to Spend Money、Choosing Among Alternatives）
+
+</details>

@@ -36,4 +36,8 @@ flowchart TD
 
 **区分：** 流式输出是"边生成边返回"，仍占着连接，适合几秒到几十秒的在线回答；几分钟以上的任务用异步任务模式。
 
-**出处：** Huyen《AI Engineering》ch10 §AI Pipeline Orchestration（并行、组件失败通知）；ch9 §Online and batch inference APIs（批量用于不要求即时的场景）。队列与任务模式是通用的后端做法，书里无专节
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §AI Pipeline Orchestration（并行、组件失败通知）；ch9 §Online and batch inference APIs（批量用于不要求即时的场景）。队列与任务模式是通用的后端做法，书里无专节
+
+</details>

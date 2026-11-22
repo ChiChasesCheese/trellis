@@ -21,6 +21,10 @@ tags: [追问]
 
 **怎么做：** 先搞清楚预算是怎么花光的：一次大故障，还是长期的小问题。如果是后者，发布前先补上缺失的验证；如果前者，已经完成复盘，才能谈放行。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否把机制当作沟通基础，同时有判断力，不教条也不绕过。
 
 **出处：** Google SRE book《Embracing Risk》"Benefits"（sre.google/sre-book/embracing-risk/）
+
+</details>

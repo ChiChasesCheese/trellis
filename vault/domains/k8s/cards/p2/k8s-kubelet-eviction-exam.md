@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**node-pressure eviction · 考点**｜考点 · 必会
+**node-pressure eviction**｜考点 · 必会
 
 有两个现象：
 1. 一个容器的内存超过了自己的 limit，`describe` 里 Last State 写着 `OOMKilled`，容器被重启，Pod 还在原来的 node 上。
@@ -33,4 +33,8 @@ flowchart TB
 - **怎么区分：** `OOMKilled` 在容器状态里；`Evicted` 是 Pod 状态，原因里写着 node 的资源压力。
 - **对策不同：** 现象 1 是调大这个容器的 limit 或修内存泄漏；现象 2 是给 Pod 设合理 requests、用 Guaranteed 保护关键 Pod、或加 node。
 
-**出处：** kubernetes.io Concepts › Node-pressure Eviction、Pod Quality of Service Classes；KIA2 §2.3.2
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Node-pressure Eviction、Pod Quality of Service Classes；KIA2 §2.3.2
+
+</details>

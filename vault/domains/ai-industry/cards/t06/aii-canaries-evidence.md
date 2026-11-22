@@ -31,4 +31,8 @@ flowchart TD
   B["有经验员工"] --> N["无明显差距"]
 ```
 
-**出处：** Brynjolfsson, Chandar, Chen, Canaries in the Coal Mine?（digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine，2026-08 修订）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Brynjolfsson, Chandar, Chen, Canaries in the Coal Mine?（digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine，2026-08 修订）。
+
+</details>

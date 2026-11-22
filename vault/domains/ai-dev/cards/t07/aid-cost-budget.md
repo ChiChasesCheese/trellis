@@ -37,4 +37,8 @@ flowchart TD
   D --> E
 ```
 
-**出处：** Claude Code docs《Best practices》（Keep cost and context down；Know what delegation costs；Let Claude run without you）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Keep cost and context down；Know what delegation costs；Let Claude run without you）
+
+</details>

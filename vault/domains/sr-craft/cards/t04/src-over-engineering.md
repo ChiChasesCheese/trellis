@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** "现在有几种后端、几个客户？路线图上哪个季度会需要第二种后端？如果没有，先抽象成一个接口就够，插件框架等第二个需求出现再做。"把这个意见写进评审评论，并提出触发条件。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有克制，也有没有商业意识：复杂度是要被业务需求买单的。
 
 **适合配哪类故事：** 你推动简化了一个过度复杂的设计，或在评审中把"未来可能"换成"何时需要"的触发条件的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch25 §1 "Keep It As Simple As Possible"；§6 "Scalable Architecture"（支付方式框架例子）；§7 "Architecture Decisions vs Business Priorities"
+
+</details>

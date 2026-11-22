@@ -35,4 +35,8 @@ flowchart TD
 
 **回到题目：** 先画出这个 agent 满足三项中的哪几项，拆掉至少一项；检测产品作为补充。
 
-**出处：** Simon Willison《The lethal trifecta for AI agents》（2025-06-16）。表里的具体拆法为设计层面的归纳
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Simon Willison《The lethal trifecta for AI agents》（2025-06-16）。表里的具体拆法为设计层面的归纳
+
+</details>

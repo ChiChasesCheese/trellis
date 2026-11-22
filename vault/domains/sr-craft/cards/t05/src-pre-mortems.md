@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 开一次会：假设迁移失败，写原因：双写不一致、容量、回滚不了、某个依赖团队没准备好；为每一项写检测和预防，并并入迁移的 rollout 计划。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否主动、系统地找风险，而不是等事故。
 
 **适合配哪类故事：** 你在大变更前做了风险推演，提前发现并堵住了一个关键漏洞的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch15 §4 "Software Architecture That Ships"（"Do a 'pre-mortem' exercise"；Quantify the rollout、Have a rollout plan、time to bake、rollback plan）；ch24 §7 "Building Resilient Systems"（Simulate failures）；会议具体做法为通用实践
+
+</details>

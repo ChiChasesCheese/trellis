@@ -32,4 +32,8 @@ flowchart TD
 
 **维护：** `/doctor prompt-audit` 会找出为旧模型写的指令、指向不存在文件的指令、互相矛盾的指令。
 
-**出处：** Claude Code docs《How Claude remembers your project》（Write effective instructions；How CLAUDE.md files load）；《Best practices》
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《How Claude remembers your project》（Write effective instructions；How CLAUDE.md files load）；《Best practices》
+
+</details>

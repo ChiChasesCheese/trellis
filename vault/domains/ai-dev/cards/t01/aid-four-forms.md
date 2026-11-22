@@ -31,4 +31,8 @@ flowchart TD
 
 **时效标注（2026-11 官方文档）：** Claude Code 可在本机、云端 VM、或浏览器远程控制本机三种环境运行；Cursor 的 cloud agents 在隔离 VM 里工作、推到单独分支；Codex cloud 每个任务一个独立工作区，结果可提交或开 PR。产品名和入口会变，形态不变。
 
-**出处：** Claude Code docs《How Claude Code works》（Execution environments）；Cursor docs《Cloud Agents》（background-agent）；OpenAI Codex docs《Cloud》
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《How Claude Code works》（Execution environments）；Cursor docs《Cloud Agents》（background-agent）；OpenAI Codex docs《Cloud》
+
+</details>

@@ -29,4 +29,8 @@ agent 调用 `lbs_to_kg`（只有一个参数 `lbs`）。下面三次调用分�
 
 **测评方法：** 建一个 planning 数据集（任务，tool inventory），让 agent 对每个任务生成多个计划，统计：计划有效比例、tool 调用有效比例、调用了无效 tool 的频率、参数无效频率、参数值错误频率，再看哪类任务、哪个 tool 最常出错。
 
-**出处：** Huyen《AI Engineering》ch6 §Agent Failure Modes and Evaluation → Planning failures；§Function calling（Tip）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Agent Failure Modes and Evaluation → Planning failures；§Function calling（Tip）
+
+</details>

@@ -33,4 +33,8 @@ flowchart TD
   C --> D["评测集对比质量"]
 ```
 
-**出处：** Huyen《AI Engineering》ch5 §Context Length and Context Efficiency；ch4 §Cost and Latency；ch6 §Reranking（减少放进 context 的文档数）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch5 §Context Length and Context Efficiency；ch4 §Cost and Latency；ch6 §Reranking（减少放进 context 的文档数）
+
+</details>

@@ -25,4 +25,8 @@ tags: [摘要]
 - 对 embedding 检索，还要单独评 embedding 质量（如 MTEB）。
 - 评一个检索器，最终要看它是否帮助系统生成高质量回答，所以**检索指标和最终答案质量要分开看**。
 
-**出处：** Huyen《AI Engineering》ch6 §Comparing retrieval algorithms（context precision / recall、NDCG、MAP、MRR）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Comparing retrieval algorithms（context precision / recall、NDCG、MAP、MRR）
+
+</details>

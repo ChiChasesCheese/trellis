@@ -24,4 +24,8 @@ tags: [考点]
 **做：** 审查的输入是 spec 加 diff，输出限定为缺口清单。
 **别做：** 把 reviewer 的输出当成待办清单照单全收。
 
-**出处：** Claude Code docs《Best practices》（Review against your spec）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Review against your spec）
+
+</details>

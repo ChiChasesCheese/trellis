@@ -29,4 +29,8 @@ flowchart TD
 
 **对方在想什么：** 同事会按结果和可预测性判断你。准时、说到做到最能建立信任。
 
-**出处：** Orosz《Guidebook》Ch.2 §2 "Be Seen as Someone Who Gets Things Done"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.2 §2 "Be Seen as Someone Who Gets Things Done"
+
+</details>

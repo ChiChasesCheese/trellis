@@ -34,8 +34,12 @@ flowchart TD
 
 **回到题目：** 换测试框架是 two-way door（新测试用新框架，旧的不用改），让 A 组自己决定。对外 API 换协议是 one-way door：所有客户都要迁移，否则就得长期维护一个兼容层。把评审时间花在 B 组。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你能不能分清轻重，不在小事上消耗团队，在大事上又足够慎重。资深的信号是"决策速度和风险相匹配"。
 
 **适合配哪类故事：** 你拦下或放慢过一个看似简单、其实撤不回的改动；或者你把一个本该很重的决定，拆成了可回退的小步。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch25 §4 One-way door vs two-way door decisions
+
+</details>

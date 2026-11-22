@@ -57,5 +57,3 @@ class IndexedHeap:
 ```
 
 **坑。** 任何一处交换漏了更新 `pos`，之后的取消就会改错元素。优先级相同时，这里按 key 字典序；JDK 另给每个任务一个递增的 `sequenceNumber`，保证先进先出。
-
-**对应 LeetCode：** 无直接对应的题

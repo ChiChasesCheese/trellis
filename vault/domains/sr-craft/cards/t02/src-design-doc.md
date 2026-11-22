@@ -38,8 +38,12 @@ flowchart TD
 
 **回到题目：** 对同事说："文档的目的是在改动还便宜时找错。部分退款会碰到三个团队，现在让他们看一遍，比开发到第四周才发现对账不支持便宜得多。"文档按上面五段写，1–2 周内收完评论再放手开工，或者边评审边做低风险部分。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你把文档当成降低风险、对齐团队的工具，而不是官僚负担；也知道结构和篇幅的取舍。
 
 **适合配哪类故事：** 你靠一份设计文档在评审中拦下了一个设计错误，或者让多个团队在开工前就对齐的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch15 §1 "Design Documents, RFCs and Architecture Documents"（The goal of an RFC、Benefits、Reviewing RFCs）；Malte Ubl《Design Docs at Google》（industrialempathy.com，Anatomy of a design doc、The length of a design doc）
+
+</details>

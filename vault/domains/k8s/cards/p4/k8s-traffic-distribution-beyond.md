@@ -27,4 +27,8 @@ spec:
 - **迁移：** 全文搜 `PreferClose`、`topology-aware-hints`，换成新写法。字段没设置时由实现使用默认策略。
 - **相关：** 同一版本里 `Endpoints` API 已弃用（v1.33），要读 EndpointSlice。
 
-**出处：** kubernetes.io 发布博客 v1.33（topology aware routing，trafficDistribution）、v1.34（PreferClose deprecated，KEP-3015）、v1.35（PreferSameNode stable，PreferClose 改名 PreferSameZone）；Concepts › Service
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.33（topology aware routing，trafficDistribution）、v1.34（PreferClose deprecated，KEP-3015）、v1.35（PreferSameNode stable，PreferClose 改名 PreferSameZone）；Concepts › Service
+
+</details>

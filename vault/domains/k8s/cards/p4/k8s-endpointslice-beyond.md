@@ -28,4 +28,8 @@ kubectl get endpointslices -l kubernetes.io/service-name=kiada
 - **externalIPs 的问题：** 它让任何有权创建 Service 的人声明任意外部 IP，是已知的安全隐患。
 - **升级前：** 全文搜索 `kind: Endpoints`、`externalIPs`，列出还在用的地方。
 
-**出处：** kubernetes.io 发布博客 v1.33（Endpoints 弃用、多 Service CIDR GA，KEP-1880）、v1.36（externalIPs 弃用，计划 v1.43 移除）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.33（Endpoints 弃用、多 Service CIDR GA，KEP-1880）、v1.36（externalIPs 弃用，计划 v1.43 移除）
+
+</details>

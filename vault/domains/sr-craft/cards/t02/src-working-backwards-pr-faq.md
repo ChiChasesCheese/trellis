@@ -39,8 +39,12 @@ flowchart TD
 
 **回到题目：** 先写：商家开通分期不再需要对接两周，一键完成，客户的话"我们的客单价提升了"。内部 FAQ 列出：风控谁负责、坏账怎么算、哪些商家不能开。写完发现风控依赖没人认领，在写代码之前就先找到了风险。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否从客户价值出发思考，并用文字把模糊想法变成可评审的东西。
 
 **适合配哪类故事：** 你在动手前通过写文档（新闻稿、FAQ、一页方案）发现了需求或范围的问题，避免了大量返工的经历。
 
 **出处：** Amazon Leadership Principles, Customer Obsession（atoz.amazon/en-us/discover/leadership-principles，2026-11-21 读取）；PR/FAQ 的具体做法是公开的通用实践（Bryar 与 Carr《Working Backwards》，未入库），卡上不含数字；Orosz《The Software Engineer's Guidebook》ch15 §1（RFC 与同步评审，Amazon 偏好会议式评审）
+
+</details>

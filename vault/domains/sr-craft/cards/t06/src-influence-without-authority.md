@@ -46,8 +46,12 @@ flowchart TD
 
 **回到题目：** 先找出每个团队最在意的痛点（也许是发布等待），测出真实浪费的时间，做一个小范围的试用，用数据证明；提案里写清问题、方案、风险；让试用团队自己讲收益。这样三个团队都觉得是在解决自己的问题。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有一套不靠头衔的推动方法，知道信任是积累出来的，也是可以被设计的。
 
 **适合配哪类故事：** 你没有职权，却靠数据、试点和支持别人，说服多个团队采用某个改变的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch22 §2 "Influencing Others"（Earn trust capital、Explain your point of view、Make your work visible、Support others selflessly）；ch12 §6
+
+</details>

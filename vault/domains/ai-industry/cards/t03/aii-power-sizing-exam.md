@@ -33,4 +33,8 @@ flowchart TD
   U --> T["总电量"]
 ```
 
-**出处：** 通用单位换算；数字为演示用。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用单位换算；数字为演示用。
+
+</details>

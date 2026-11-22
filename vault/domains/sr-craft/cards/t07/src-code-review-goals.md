@@ -45,8 +45,12 @@ flowchart TD
 
 **回到题目：** 先回复："改动太大，描述也不够，能先拆成几个单一目的的 PR 吗？先说明为什么要重构。"如果要先看，就从描述缺失的"为什么"和"测试没改"这两个最大问题入手，其他留到拆分后。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对评审的目的的理解：保证正确和可维护，而不只是找错；以及在有限时间里抓大放小。
 
 **适合配哪类故事：** 你通过一次评审发现了设计或影响范围的问题，避免了线上事故或大返工的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch12 §1 "Code Reviews"（A good code review…、Requesting changes before approving、Nitpick comments）
+
+</details>

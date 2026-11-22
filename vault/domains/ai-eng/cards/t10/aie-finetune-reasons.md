@@ -29,4 +29,8 @@ tags: [摘要]
 
 **结论：** 刚开始的项目，**finetuning 很少是第一件该尝试的事**。
 
-**出处：** Huyen《AI Engineering》ch7 §Reasons to Finetune、§Reasons Not to Finetune
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch7 §Reasons to Finetune、§Reasons Not to Finetune
+
+</details>

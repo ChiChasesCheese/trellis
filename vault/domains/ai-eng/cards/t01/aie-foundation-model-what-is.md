@@ -31,4 +31,8 @@ flowchart TD
   C --> D["具体应用"]
 ```
 
-**出处：** Huyen《AI Engineering》ch1 §From Large Language Models to Foundation Models；§From Foundation Models to AI Engineering
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch1 §From Large Language Models to Foundation Models；§From Foundation Models to AI Engineering
+
+</details>

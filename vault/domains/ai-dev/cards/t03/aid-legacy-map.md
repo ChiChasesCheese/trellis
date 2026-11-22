@@ -25,4 +25,8 @@ tags: [实践]
 
 **别做：** 让 agent 自动生成一整套文档就当真——没人校正过的猜测会固化成"事实"。
 
-**出处：** Claude Code docs《Best practices》（Keep CLAUDE.md short：places where the code is misleading；decisions that aren't in the repo）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Keep CLAUDE.md short：places where the code is misleading；decisions that aren't in the repo）
+
+</details>

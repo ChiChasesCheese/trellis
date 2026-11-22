@@ -61,5 +61,3 @@ step: 1
 - `int`、`list` 这些内置类型也是 `type` 的实例。
 
 **为什么。** 类是对象，运行时就能造类：`type("T", (A,), {"g": lambda self: 1})` 一行得到新类。枚举 `Enum` 和抽象基类 `ABC` 就是靠换掉造类者实现的（它们的类型分别是 `EnumType`、`ABCMeta`）。
-
-**对应 LeetCode：** 无直接对应的题

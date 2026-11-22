@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Local cluster 与 kubectl · 摘要**｜摘要 · 必会
+**Local cluster 与 kubectl**｜摘要 · 必会
 
 想在自己电脑上练习 Kubernetes，有哪些办法？装好之后怎么确认 kubectl 连得上集群？
 
@@ -35,4 +35,8 @@ kubectl get nodes      # 列出节点，STATUS 应为 Ready
 - **指到别的文件：** `export KUBECONFIG=/path/to/custom/kubeconfig`，不用挪文件。
 - **能列出 node，说明** kubectl、网络、凭证三者都通。
 
-**出处：** KIA2 §3.1、§3.2.2–3.2.3
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §3.1、§3.2.2–3.2.3
+
+</details>

@@ -43,8 +43,12 @@ flowchart TD
 
 **回到题目：** 对"发邮件"的回应：影响二十个团队的规范，需要一个能收集意见、有结论的过程。写一份 RFC，设评论期（例如两周），按异步为主；到期由指定的负责人给出决议并记录状态，之后每个团队都能在同一处查到结论。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有设计过"让很多人参与并能收敛"的流程，而不只是写文档。
 
 **适合配哪类故事：** 你推动一个跨团队的决定，通过提案、评论、决议收敛下来，并留下清楚记录的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch15 §1（The goal of an RFC、Reviewing RFCs）；PEP 1（peps.python.org/pep-0001/）；rust-lang/rfcs README "The RFC process"；Kubernetes KEP-0000（kubernetes/enhancements，sig-architecture/0000-kep-process）
+
+</details>

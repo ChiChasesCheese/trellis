@@ -32,4 +32,8 @@ flowchart TD
   B --> W["谁受益"]
 ```
 
-**出处：** Canaries in the Coal Mine?（Stanford Digital Economy Lab，2026-08）；通用信息核对方法。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Canaries in the Coal Mine?（Stanford Digital Economy Lab，2026-08）；通用信息核对方法。
+
+</details>

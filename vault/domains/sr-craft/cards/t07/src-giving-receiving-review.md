@@ -41,8 +41,12 @@ flowchart TD
 
 **回到题目：** 当面或视频聊几分钟，说明你的意图；回头把评论分成"必须改"和"建议"，改写成提问和备选；对他做得好的地方明确点出来。之后他的前几个 PR 你多花时间解释。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否理解评审是协作而不是裁决，会不会照顾对方感受并保持质量标准。
 
 **适合配哪类故事：** 你改变了自己的评审方式，或在团队里推广更好的评审习惯，让评审更快、冲突更少的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch12 §1 "Code Reviews"（The tone of the review、Talking to each other、New joiners and code reviews）
+
+</details>

@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**为什么需要 Kubernetes · 考点**｜考点 · 必会
+**为什么需要 Kubernetes**｜考点 · 必会
 
 凌晨三点，跑着你应用的一台机器宕机了。下面五件事，Kubernetes 替你做了几件？
 
@@ -30,4 +30,8 @@ tags: [考点]
 - **规律：** Kubernetes 保证「份数」和「入口」，不保证「应用对不对」和「数据在哪」。
 - **Pending：** 调度器找不到合适机器时，Pod 的状态。
 
-**出处：** KIA2 §1.1–1.2；Poulton《The Kubernetes Book 2026》ch2（scheduler 找不到节点时标为 pending）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §1.1–1.2；Poulton《The Kubernetes Book 2026》ch2（scheduler 找不到节点时标为 pending）
+
+</details>

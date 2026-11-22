@@ -29,4 +29,8 @@ flowchart TD
 
 **做：** 开始前工作区干净；每完成一个可验证的小目标就提交；让 agent 提交时写清楚改了什么。
 
-**出处：** Claude Code docs《Best practices》（Steer the session：Checkpoints）；《How Claude Code works》（Undo changes with checkpoints）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Steer the session：Checkpoints）；《How Claude Code works》（Undo changes with checkpoints）
+
+</details>

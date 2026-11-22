@@ -32,4 +32,8 @@ flowchart TD
 
 **每行都问：** 这个数比上年变了多少？公司自己怎么解释？有没有一次性项目？
 
-**出处：** SEC 对 10-K / 10-Q 的通用结构（https://www.sec.gov）；NVIDIA FY2026 10-K 的章节编排。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+SEC 对 10-K / 10-Q 的通用结构（https://www.sec.gov）；NVIDIA FY2026 10-K 的章节编排。
+
+</details>

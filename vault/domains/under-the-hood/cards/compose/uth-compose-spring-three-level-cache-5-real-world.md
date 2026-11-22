@@ -20,5 +20,3 @@ step: 5
 **为什么。** 三级缓存是让环“凑合能跑”的补丁，代价是别人会拿到没造完的对象。Spring 的文档建议拆出第三个 Bean 放共同逻辑。
 
 **坑。** Spring Boot 2.6 起默认禁止循环依赖，有环的老项目升级后启动失败；`spring.main.allow-circular-references=true` 可以临时打开。
-
-**对应 LeetCode：** 无直接对应的题

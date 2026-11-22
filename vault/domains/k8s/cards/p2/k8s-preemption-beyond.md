@@ -20,4 +20,8 @@ tags: [拓展]
 - **不变的：** 受害者仍有完整的 graceful termination 宽限期；被抢位置的 Pod 在 status 里记 `nominatedNodeName`，这只是「预留意向」，最终放不放这台 node 还要重新判断。
 - **注意：** preemption 尽力而为，并不保证成功；也不保证 PDB 一定被遵守（文档说明 preemption 对 PDB 只是尽力而为）。
 
-**出处：** kubernetes.io 发布博客 v1.33（Asynchronous preemption in the Kubernetes Scheduler，KEP-4832）；Concepts › Pod Priority and Preemption（nominatedNodeName、graceful termination）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.33（Asynchronous preemption in the Kubernetes Scheduler，KEP-4832）；Concepts › Pod Priority and Preemption（nominatedNodeName、graceful termination）
+
+</details>

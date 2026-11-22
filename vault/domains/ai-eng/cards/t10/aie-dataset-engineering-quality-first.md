@@ -31,4 +31,8 @@ tags: [摘要]
 
 **标注一致性：** 两个标注员标同一条，结果不应差太多；要有好的标注指南（同评测 guideline）；Kern 等发现标注会话后半段的质量更低（疲劳）。
 
-**出处：** Huyen《AI Engineering》ch8 §Data Curation（Data Quality、Data Coverage、Data Quantity）、§Clean and Filter Data
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch8 §Data Curation（Data Quality、Data Coverage、Data Quantity）、§Clean and Filter Data
+
+</details>

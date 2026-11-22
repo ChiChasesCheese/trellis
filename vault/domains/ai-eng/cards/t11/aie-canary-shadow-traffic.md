@@ -39,4 +39,8 @@ flowchart TD
 
 **注意：** 流量太小时，质量指标的噪声大，要先估所需样本量（见 statistical power 那张卡）。prompt 变更和模型变更都应该走同一条发布流程，并在 trace 里记录版本号。
 
-**出处：** Fowler《CanaryRelease》martinfowler.com/bliki/CanaryRelease.html（2026-11-21 读）；shadow traffic 为通用发布实践
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Fowler《CanaryRelease》martinfowler.com/bliki/CanaryRelease.html（2026-11-21 读）；shadow traffic 为通用发布实践
+
+</details>

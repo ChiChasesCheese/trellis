@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**五个基本名词 · 考点**｜考点 · 必会
+**五个基本名词**｜考点 · 必会
 
 你的前端写死了后端 Pod 的 IP `10.1.0.5`。后端 Pod 被删掉重建后，前端报连接失败。为什么？应该改用哪个名词？另外：想把后端从 2 份改成 5 份，该改哪个名词？
 
@@ -30,4 +30,8 @@ flowchart TB
 - **常见误区：** 直接手工创建 Pod 并写死 IP。Pod 没人看护，死了没人补。
 - **Service 怎么知道有哪些 Pod：** 靠标签选出来（第 2 部分）。
 
-**出处：** KIA2 §3.3；Poulton ch2「Pods」「Service objects and stable networking」
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §3.3；Poulton ch2「Pods」「Service objects and stable networking」
+
+</details>

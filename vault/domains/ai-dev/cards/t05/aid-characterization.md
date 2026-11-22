@@ -31,4 +31,8 @@ flowchart TD
 
 **别做：** 让 agent 一边重构一边"顺便修 bug"，行为改变就分不清是故意的还是意外的。
 
-**出处：** 概念；批量机械工作的拆分依据 Claude Code docs《Best practices》（Run sessions in parallel）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+概念；批量机械工作的拆分依据 Claude Code docs《Best practices》（Run sessions in parallel）
+
+</details>

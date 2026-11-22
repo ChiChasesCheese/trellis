@@ -31,4 +31,8 @@ tags: [原则]
 - **想一张图讲完所有事。**
 - **图注只写"系统架构图"：** 没有要点。
 
-**出处：** Google Technical Writing Two《Illustrating》（developers.google.com/tech-writing/two/illustrations）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing Two《Illustrating》（developers.google.com/tech-writing/two/illustrations）
+
+</details>

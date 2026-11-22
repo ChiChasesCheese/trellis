@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Namespaces · 摘要**｜摘要 · 必会
+**Namespaces**｜摘要 · 必会
 
 Kubernetes 的 Namespace 是什么？它和 Linux 的 namespace 是一回事吗？不同命名空间里的对象能互相访问吗？
 
@@ -39,4 +39,8 @@ kubectl create namespace dev
 
 - **所以：** 命名空间是组织和授权的边界，不是网络或安全的边界。
 
-**出处：** KIA2 §7.1（Organizing objects into Namespaces）；Poulton ch5
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §7.1（Organizing objects into Namespaces）；Poulton ch5
+
+</details>

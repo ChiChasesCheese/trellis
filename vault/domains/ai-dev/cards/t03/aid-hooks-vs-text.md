@@ -30,4 +30,8 @@ tags: [摘要]
 
 **界线：** 一条规则**零例外**才做成强制。"优先用具名 export"有例外，留在 CLAUDE.md；强制规则做太多，反而僵化。
 
-**出处：** Claude Code docs《Best practices》（Deterministic and non-deterministic instructions；Enforce the rules that can't have exceptions）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Deterministic and non-deterministic instructions；Enforce the rules that can't have exceptions）
+
+</details>

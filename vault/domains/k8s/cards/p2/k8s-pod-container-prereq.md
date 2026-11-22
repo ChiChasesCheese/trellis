@@ -6,7 +6,7 @@ step: 1
 tags: [先修]
 ---
 ## Q
-**Pod 是什么 · 先修**｜先修 · 必会
+**Pod 是什么**｜先修 · 必会
 
 Kubernetes 为什么不直接调度一个个容器，而要多包一层 Pod？一个 Pod 里的几个容器共享什么？
 
@@ -36,4 +36,8 @@ flowchart TB
 - **何时分开：** 能独立扩缩的部分（前端和数据库）要放进不同的 Pod。
 - **为什么要这层：** 对 Kubernetes 来说，调度、IP、重建的最小粒度是 Pod；容器只是 Pod 里的一部分，不能单独被列出来（`kubectl get pods` 能列，没有 `get containers`）。
 
-**出处：** KIA2 §5.1（Understanding pods）、§5.1.3
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §5.1（Understanding pods）、§5.1.3
+
+</details>

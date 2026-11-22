@@ -41,4 +41,8 @@ flowchart TD
 
 **tool selection：** 工具越多越难用好，要通过实验找合适的工具集。
 
-**出处：** Huyen《AI Engineering》ch6 §Planning（Planning overview、Planning granularity、Complex plans、Reflection and error correction）；§Tool selection
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Planning（Planning overview、Planning granularity、Complex plans、Reflection and error correction）；§Tool selection
+
+</details>

@@ -43,4 +43,8 @@ flowchart TD
 
 **常见陷阱：** 有人坚持要微调，调查后发现是 prompt 实验很少且没系统性：指令不清、例子不代表真实数据、指标不明确。把 prompt 实验做好之后，就够用了。
 
-**出处：** Huyen《AI Engineering》ch7 §When to Finetune、§Finetuning and RAG
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch7 §When to Finetune、§Finetuning and RAG
+
+</details>

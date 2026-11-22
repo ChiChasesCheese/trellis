@@ -36,4 +36,8 @@ flowchart TD
 
 **书里的依据：** gateway 提供**访问控制和成本管理**：监控和限制 API 调用的使用量，防止滥用，并管理成本；并可指定哪个用户或应用能访问哪个模型。
 
-**出处：** Huyen《AI Engineering》ch10 §Gateway（access control and cost management）；ch10 §Metrics（跟踪 token 数与成本）。标签、预算熔断的具体做法为通用的平台做法
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Gateway（access control and cost management）；ch10 §Metrics（跟踪 token 数与成本）。标签、预算熔断的具体做法为通用的平台做法
+
+</details>

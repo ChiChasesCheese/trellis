@@ -43,4 +43,8 @@ flowchart TD
 
 **常见错法：** 用授予日的股价把四年当成确定数字；忘了 cliff 之前走会全部作废。
 
-**出处：** techinterviewhandbook.org/understanding-compensation/（RSU、cliff、4,800 股示例；2021 年页面，仅用作形式示意）；Orosz《Guidebook》Ch.1 §3；归属后税务见 IRS Pub. 525 "Restricted property" 一节与专业人士（不构成税务建议）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+techinterviewhandbook.org/understanding-compensation/（RSU、cliff、4,800 股示例；2021 年页面，仅用作形式示意）；Orosz《Guidebook》Ch.1 §3；归属后税务见 IRS Pub. 525 "Restricted property" 一节与专业人士（不构成税务建议）
+
+</details>

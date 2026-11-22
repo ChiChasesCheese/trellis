@@ -25,4 +25,8 @@ tags: [惯用说法]
 
 **语气：** 首句给请求和期限；跟进语气友好但有具体日期；拒绝说明原因、给替代方案。
 
-**出处：** 惯用说法，非引用；邮件结构见 Email & Slack messages
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用；邮件结构见 Email & Slack messages
+
+</details>

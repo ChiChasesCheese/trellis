@@ -32,4 +32,8 @@ tags: [原则]
 - Before: "This update makes search blazingly quick."
 - After: "This update cuts search time from 4 seconds to 1 second."
 
-**出处：** Google Technical Writing One《Clear sentences》（developers.google.com/tech-writing/one/clear-sentences）；改写例句为演示用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Clear sentences》（developers.google.com/tech-writing/one/clear-sentences）；改写例句为演示用
+
+</details>

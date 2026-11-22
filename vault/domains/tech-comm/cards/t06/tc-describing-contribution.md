@@ -34,4 +34,8 @@ tags: [惯用说法]
 
 **语气：** 背景用 we，行动用 I，成果带数字；被追问时给具体例子。
 
-**出处：** 惯用说法，非引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用
+
+</details>

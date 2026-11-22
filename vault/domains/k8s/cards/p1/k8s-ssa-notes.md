@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Server-side apply · 摘要**｜摘要 · 必会
+**Server-side apply**｜摘要 · 必会
 
 HPA 在改 Deployment 的 `replicas`，你的 CI 又在 `kubectl apply` 同一份 YAML。怎么让两方各管各的字段、不互相覆盖？
 
@@ -37,4 +37,8 @@ kubectl apply --server-side --force-conflicts -f deploy.yaml
 - **对比旧方式（client-side apply）：** 旧方式在对象上存一份 `last-applied-configuration` 注解，靠本地对比算差异；SSA 记录的是「字段归属」，多个控制方共管一个对象时更可靠。
 - **稳定性：** SSA 自 v1.22 起稳定。
 
-**出处：** kubernetes.io Reference › Server-Side Apply（managedFields、field manager、conflicts、stable since v1.22）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Reference › Server-Side Apply（managedFields、field manager、conflicts、stable since v1.22）
+
+</details>

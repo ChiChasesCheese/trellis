@@ -36,4 +36,8 @@ API 每月花 3 万美元，团队想自己买 GPU 部署开源模型。怎么�
 
 **判断流程：** 先量出日均与峰值 token 数 → 用评测确认开源模型质量够用 → 算含利用率的自建成本 → 对比，并留 30–50% 的安全边际（经验取值，不是实测）。
 
-**出处：** Huyen《AI Engineering》ch4 §Cost and Latency；§API cost versus engineering cost；ch2 §Model Size（训练利用率）；ch9 §Selecting Accelerators
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Cost and Latency；§API cost versus engineering cost；ch2 §Model Size（训练利用率）；ch9 §Selecting Accelerators
+
+</details>

@@ -54,5 +54,3 @@ HikariCP 的 `ConcurrentBag` 用哪几个结构分层？借和还各碰哪几个
 | 借 | 本地列表 → `sharedList`（CAS 抢）→ `handoffQueue` 等 | 常数到 O(连接数) |
 | 还 | 改状态为空闲；有人等则入 `handoffQueue`，否则进本地列表 | O(1) |
 | 增删连接 | `sharedList`（写时复制） | O(连接数)，很少发生 |
-
-**对应 LeetCode：** 无直接对应的题

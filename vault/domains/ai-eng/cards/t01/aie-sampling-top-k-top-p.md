@@ -35,4 +35,8 @@ flowchart TD
 
 **停止条件（stopping condition）：** 可设最大 token 数或 stop token（如结束标记）。设得太早会截断输出：要求输出 JSON 时可能少一个右括号，解析失败。
 
-**出处：** Huyen《AI Engineering》ch2 §Top-k、§Top-p、§Stopping condition（概率数值为说明用的举例）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Top-k、§Top-p、§Stopping condition（概率数值为说明用的举例）
+
+</details>

@@ -32,4 +32,8 @@ flowchart TD
 
 **对方在想什么：** 面试委员会可能对你有分歧，hiring manager 愿意为你争取，需要新的证据来说服。
 
-**出处：** Orosz《Guidebook》Ch.6 §4 "Down-leveling"、§5 "Up-Leveling"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.6 §4 "Down-leveling"、§5 "Up-Leveling"
+
+</details>

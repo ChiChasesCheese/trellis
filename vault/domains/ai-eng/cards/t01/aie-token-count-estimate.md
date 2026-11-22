@@ -29,4 +29,8 @@ tags: [先修]
 
 **所以：** 估成本和长度要用你实际用的 tokenizer 去数，英文的 ¾ 只是起点，不能直接套到中文或其他语言上。
 
-**出处：** Huyen《AI Engineering》ch1 §Language models（¾ 词）；ch2 §Multilingual Models（MASSIVE 中位数，Yennie Jun 的测量）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch1 §Language models（¾ 词）；ch2 §Multilingual Models（MASSIVE 中位数，Yennie Jun 的测量）
+
+</details>

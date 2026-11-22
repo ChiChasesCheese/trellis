@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 先把上次的行动项逐条认领或明确放弃；之后每个行动项必须有负责人和日期，进入季度排期；每月看一次未完成的；把相同根因的事故合并分析。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否对结果负责，而不只是执行流程。
 
 **适合配哪类故事：** 你推动一批事故行动项真正完成，并用数据证明同类事故减少的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch24 §6 "Incident follow-up actions"、"Consider whether your incident review process prioritizes learning"（引 Allspaw）；Beyer 等《Site Reliability Engineering》"Postmortem Culture"（sre.google/sre-book/postmortem-culture/：preventive actions、review、"An unreviewed postmortem might as well never have existed"；该章对行动项的后续跟踪描述不多，"负责人加期限"是通用做法）
+
+</details>

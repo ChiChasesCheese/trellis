@@ -35,8 +35,12 @@ flowchart TD
 
 **回到题目：** 先看三份代码的差异是不是真的小、以后会不会继续有第四个团队；若是，先做一个薄的共享库，由一个团队负责，用户反馈驱动；若差异大、归属不清，就继续复制，只记录它们的共同点。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对共享与复制的成本有清楚的认识，并且考虑到组织和成本分摊。
 
 **适合配哪类故事：** 你推动（或阻止）了一个共享组件或平台，并以具体的使用者和成本来论证的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch5 §2 "Platform Teams"；ch25 §6 "Scalable Architecture"（支付方式框架例）；Larson《Crafting Engineering Strategy》ch20 Document 20-1（平台成本分摊与服务数量的取舍）
+
+</details>

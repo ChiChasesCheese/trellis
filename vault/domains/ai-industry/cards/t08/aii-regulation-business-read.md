@@ -26,4 +26,8 @@ flowchart TD
   P --> C["中国：备案"]
 ```
 
-**出处：** AI Act 高层摘要（artificialintelligenceact.eu）；DLA Piper 对美国行政令与中国暂行办法的分析。本卡不是法律意见。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+AI Act 高层摘要（artificialintelligenceact.eu）；DLA Piper 对美国行政令与中国暂行办法的分析。本卡不是法律意见。
+
+</details>

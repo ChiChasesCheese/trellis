@@ -43,5 +43,3 @@ step: 2
 - 生产者 `acks` 从 3.0 起默认 `all`（之前是 1）；`min.insync.replicas` 默认只有 1。
 
 **坑。** “all”指当前 ISR 全体而非全部副本：ISR 缩到 1 个且 `min.insync.replicas=1` 时，`acks=all` 等于只写了 leader。
-
-**对应 LeetCode：** 无直接对应的题

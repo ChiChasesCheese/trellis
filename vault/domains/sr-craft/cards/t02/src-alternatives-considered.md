@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 现场如实回答：outbox 的好处是……，代价是……，对照我们的目标（吞吐、多消费者、重放）选了 Kafka。会后把 outbox 方案补进文档的"替代方案"，附上取舍和决定理由，以后同样的问题直接看文档。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你的决定是不是经过比较，你能不能把取舍说清；资深的信号是主动把对立方案摆出来。
 
 **适合配哪类故事：** 你通过比较方案，发现主方案不是最合适的，或者在评审中用替代方案的比较说服了别人的经历。
 
 **出处：** Malte Ubl《Design Docs at Google》（industrialempathy.com）"Alternatives considered"；Orosz《The Software Engineer's Guidebook》ch15 §1
+
+</details>

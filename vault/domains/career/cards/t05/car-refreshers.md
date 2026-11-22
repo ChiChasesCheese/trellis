@@ -34,4 +34,8 @@ flowchart TD
 
 **对方在想什么：** 招聘方可以讲规则，但很少会承诺金额。你问规则、不要金额承诺，更容易得到真实答复。
 
-**出处：** Orosz《Guidebook》Ch.4 §4 "Promotions at Big Tech"（pay for performance、promotion moves compensation to the bottom of the next band）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.4 §4 "Promotions at Big Tech"（pay for performance、promotion moves compensation to the bottom of the next band）
+
+</details>

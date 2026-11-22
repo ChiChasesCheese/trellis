@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Affinity、taints 与 topology spread · 摘要**｜摘要 · 必会
+**Affinity、taints 与 topology spread**｜摘要 · 必会
 
 想控制 Pod 落在哪些 node 上，有哪几类手段？各自是谁在表态，是 Pod 还是 node？
 
@@ -44,4 +44,8 @@ flowchart TD
 - **名字里的 `IgnoredDuringExecution`：** 调度之后 node 的 label 变了，已运行的 Pod 不会被赶走。
 - **两者配合：** 独占节点池时，给 node 加 taint（挡住别人）并加 label，Pod 同时写 toleration（允许进入）和 nodeSelector/affinity（指定要去）；taint 只拒绝，不负责把 Pod 吸引过去。
 
-**出处：** kubernetes.io Concepts › Assigning Pods to Nodes；Taints and Tolerations
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Assigning Pods to Nodes；Taints and Tolerations
+
+</details>

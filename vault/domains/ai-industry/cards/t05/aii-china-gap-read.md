@@ -28,4 +28,8 @@ flowchart TD
   V --> T["看多榜趋势"]
 ```
 
-**出处：** Stanford HAI, AI Index Report 2025（基准接近持平）；通用评测读法。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Stanford HAI, AI Index Report 2025（基准接近持平）；通用评测读法。
+
+</details>

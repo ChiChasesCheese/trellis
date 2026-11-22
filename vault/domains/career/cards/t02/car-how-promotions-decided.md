@@ -40,4 +40,8 @@ flowchart TD
 
 **常见错法：** 在 heavyweight 流程里只靠经理替你说话；在 informal 流程里闷头写文档不让决策者看到。
 
-**出处：** Orosz《Guidebook》Ch.4 §1 "How Promotions Are Decided"、§2 "Types of Promotion Processes"、§4（12 个月资格）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.4 §1 "How Promotions Are Decided"、§2 "Types of Promotion Processes"、§4（12 个月资格）
+
+</details>

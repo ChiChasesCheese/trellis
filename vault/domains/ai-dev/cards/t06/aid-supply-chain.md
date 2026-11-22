@@ -27,4 +27,8 @@ flowchart TD
 
 **官方态度：** Anthropic 审查连接器是否符合上架标准，但**不对任何 MCP server 做安全审计**；建议自己写或用信任的提供方。
 
-**出处：** Claude Code docs《Security》（MCP security）；Spracklen et al.，arXiv:2406.10279（package hallucination）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Security》（MCP security）；Spracklen et al.，arXiv:2406.10279（package hallucination）
+
+</details>

@@ -32,4 +32,8 @@ flowchart TD
   C --> D["选定模型"]
 ```
 
-**出处：** Huyen《AI Engineering》ch4 §Navigate Public Benchmarks（Benchmark selection and aggregation、Table 4-5、Custom leaderboards）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Navigate Public Benchmarks（Benchmark selection and aggregation、Table 4-5、Custom leaderboards）
+
+</details>

@@ -43,4 +43,8 @@ flowchart TD
 - 对天然不幂等的动作（发邮件）先查再发，或把动作改成"幂等地设置状态"；
 - 配合上一张卡：不可逆的高风险动作，还要人工确认。
 
-**出处：** 幂等键是通用的工程做法，书里无此内容；Temporal 文档说明 Activity 会被重试、Worker 失败后会被重新调度（https://docs.temporal.io/evaluate/understanding-temporal），因此外部调用必须能承受重复执行
+<details class="pt" markdown="1"><summary>出处</summary>
+
+幂等键是通用的工程做法，书里无此内容；Temporal 文档说明 Activity 会被重试、Worker 失败后会被重新调度（https://docs.temporal.io/evaluate/understanding-temporal），因此外部调用必须能承受重复执行
+
+</details>

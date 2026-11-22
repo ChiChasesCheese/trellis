@@ -74,5 +74,3 @@ step: 1
 - 每当 follower 拉取进度更新，leader 就重算高水位（`maybeIncrementLeaderHW`）。
 
 **为什么。** 对比多数派（如 Raft，多数副本确认才算提交）：容忍 f 个故障，ISR 只要 f+1 个副本，多数派要 2f+1 个；代价是慢副本会拖住提交，所以要把它踢出 ISR。
-
-**对应 LeetCode：** 无直接对应的题

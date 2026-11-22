@@ -13,4 +13,4 @@ Send a conditional request with `If-None-Match`. If the selected representation 
 stale cache entry 有 ETag，又收到新请求时，正确流程是什么？
 
 ## A zh
-发送带 `If-None-Match` 的 conditional request。若选定 representation 未变化，origin 返回 `304`；cache 更新相关 metadata，并发送已存 body。若已变化，origin 返回带新 representation 的 `200`。并发 revalidation 应 request coalescing，避免一个 stale hot object fan out 到 origin。
+发送带 `If-None-Match` 的 conditional request。若选定 representation 未变化，origin 返回 `304`；cache 更新相关 metadata，并发送已存 body。若已变化，origin 返回带新 representation 的 `200`。并发 revalidation 应 request coalescing，避免一个过期热门 object 同时扇出大量请求到 origin。

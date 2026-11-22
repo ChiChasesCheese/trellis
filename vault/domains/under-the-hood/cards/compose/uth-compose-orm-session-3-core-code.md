@@ -55,5 +55,3 @@ class Session:
 ```
 
 **坑。** 真实的对象靠属性赋值时的钩子（SQLAlchemy 的属性事件）调用 `touch`；这里假设实体的 `__setattr__` 会调用它。
-
-**对应 LeetCode：** 无直接对应的题

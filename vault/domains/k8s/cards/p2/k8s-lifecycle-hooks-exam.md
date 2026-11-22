@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Hook 的坑 · 考点**｜考点 · 必会
+**Hook 的坑**｜考点 · 必会
 
 有人给 Web 容器加了 postStart hook：`httpGet` 访问**自己**的 `/warmup`。在开发机上正常，上线后偶发容器不停重启。为什么？另外，preStop 里 `exit 1` 会阻止容器终止吗？
 
@@ -21,4 +21,8 @@ tags: [考点]
 - **看现象：** `kubectl get pods -w` 会看到 `PostStartHookError`；事件里有失败命令和退出码；之后变成 `CrashLoopBackOff`。
 - **preStop 常见用途：** 让 nginx 之类不优雅退出的程序先 `nginx -s quit`，或者 `sleep` 几秒给 Service 摘除端点留时间（见 graceful termination）。
 
-**出处：** KIA2 §6.3.1「HTTP GET post-start hook…endless restart loop」、§6.3.2（pre-stop 失败不阻止终止）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §6.3.1「HTTP GET post-start hook…endless restart loop」、§6.3.2（pre-stop 失败不阻止终止）
+
+</details>

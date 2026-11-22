@@ -32,4 +32,8 @@ flowchart TD
 
 **常见错法：** 每个选择都按"能不能升"来评；押上全部再也回不了头。
 
-**出处：** Orosz《Guidebook》Ch.4 §6 "A Long-Term Career View"；Ch.1 §5
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.4 §6 "A Long-Term Career View"；Ch.1 §5
+
+</details>

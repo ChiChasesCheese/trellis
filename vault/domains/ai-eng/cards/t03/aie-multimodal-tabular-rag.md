@@ -37,4 +37,8 @@ WHERE product_name = 'Fruity Fedora'
 - 要按图片内容检索：用 **multimodal embedding model**（如 CLIP）把文本和图片放进同一个向量空间；步骤：①给所有数据（文本和图片）生成 CLIP embedding 存入向量库；②问题也生成 embedding；③取最近的文本和图片；
 - generator 也得是多模态的，才能读图片。
 
-**出处：** Huyen《AI Engineering》ch6 §RAG Beyond Texts（Multimodal RAG、RAG with tabular data）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §RAG Beyond Texts（Multimodal RAG、RAG with tabular data）
+
+</details>

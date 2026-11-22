@@ -29,4 +29,8 @@ tags: [考点]
 
 **抽样不等于统计：** 按负面信号抽出的样本不能用来估计总体质量，只用来找问题；估总体用随机那一层。
 
-**出处：** Huyen《AI Engineering》ch10 §Extracting Conversational Feedback（各信号）、§Metrics；Hamel Husain《Your AI Product Needs Evals》（look at data until you stop learning）。2% 与 50 条为示例数字
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Extracting Conversational Feedback（各信号）、§Metrics；Hamel Husain《Your AI Product Needs Evals》（look at data until you stop learning）。2% 与 50 条为示例数字
+
+</details>

@@ -42,8 +42,12 @@ flowchart TD
 
 **回到题目：** 工单本身是通用功能，买平台；但"按用户权限读业务数据"是和你产品深度绑定的部分，采用混合方案：工单在第三方平台，数据访问由自己的系统根据工单状态授权。这样不需要自建整套工单系统，也不被平台绑死。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有判断"哪些是核心"的框架，并且知道购买的真实成本不只是账单。
 
 **适合配哪类故事：** 你推动在"自建"与"采购"间做出明确决定，并写清了取舍和退出方案的经历。
 
 **出处：** Larson《Crafting Engineering Strategy》ch19 Document 19-1（Customer data access strategy：三种做法与各自代价）；ch4（"Prefer vendors for commoditized functionality"）；Joel Spolsky《In Defense of Not-Invented-Here Syndrome》（"If it's a core business function — do it yourself"）
+
+</details>

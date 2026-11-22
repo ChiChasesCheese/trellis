@@ -34,4 +34,8 @@ flowchart TD
 - **例子太复杂：** 一次塞进所有边缘情况，主路径反而看不清。
 - **只走成功路径：** 简短地走一次失败路径，会更有说服力。
 
-**出处：** hellointerview.com/learn/system-design/in-a-hurry/delivery（start from the API contract, trace each through the design；keep the initial design simple）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+hellointerview.com/learn/system-design/in-a-hurry/delivery（start from the API contract, trace each through the design；keep the initial design simple）
+
+</details>

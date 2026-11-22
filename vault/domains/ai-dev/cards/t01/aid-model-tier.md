@@ -23,4 +23,8 @@ tags: [实践]
 
 **时效：** 具体型号名、默认 effort、价格都会变（2026-11 的文档默认值是 medium）；"规划用强、机械活用快、按任务调 effort"这个结构不变。
 
-**出处：** Claude Code docs《Best practices》（Change the model and effort）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Change the model and effort）
+
+</details>

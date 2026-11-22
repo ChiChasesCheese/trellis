@@ -20,4 +20,8 @@ tags: [拓展]
 - **你要做的：** 升到 v1.36 之后无需额外配置，driver 也需要支持动态上报。
 - **排查时：** `kubectl get csinode <node> -o yaml` 看 allocatable。
 
-**出处：** kubernetes.io 发布博客 v1.35（Mutable Volume attach limits，beta；CSI driver opt-in for service account tokens via secrets field）、v1.36（Mutable CSINode allocatable，Stable）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.35（Mutable Volume attach limits，beta；CSI driver opt-in for service account tokens via secrets field）、v1.36（Mutable CSINode allocatable，Stable）
+
+</details>

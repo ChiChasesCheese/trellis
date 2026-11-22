@@ -24,4 +24,8 @@ subagent 到底是什么？什么时候值得用，代价是什么？
 
 **时效（2026-11 官方）：** 官方已把"用 subagent 保护 context"从必须的建议列入"可以不再做"的旧建议，因为 context 够大且自动压缩；并行、挡噪音、独立审查三项仍成立。
 
-**出处：** Claude Code docs《Best practices》（Know what subagents cost；What you can stop doing）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Know what subagents cost；What you can stop doing）
+
+</details>

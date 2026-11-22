@@ -31,4 +31,8 @@ flowchart TD
 **做：** 在 prompt 里列出要覆盖的边界（"空列表、负数、重复 key"），要求用现有测试文件的风格；然后自己**临时改坏实现**验证测试会红。
 **别做：** 只看覆盖率数字。
 
-**出处：** Claude Code docs《Best practices》（Write a specific prompt：follow the pattern in…；Give Claude a check to run）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Write a specific prompt：follow the pattern in…；Give Claude a check to run）
+
+</details>

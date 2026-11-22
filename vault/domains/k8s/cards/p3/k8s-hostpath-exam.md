@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**hostPath 的危险 · 考点**｜考点 · 必会
+**hostPath 的危险**｜考点 · 必会
 
 安全评审时发现某个 namespace 里有一个 Pod 配了 `hostPath: {path: /}`。这意味着什么？又有人想用 hostPath 存 MongoDB 的数据，有什么问题？
 
@@ -21,4 +21,8 @@ tags: [考点]
 - **要 node 本地存储：** 用 **local PersistentVolume**，带 node affinity，scheduler 会保证 Pod 一直调度到有这块盘的 node；而且 PV 由管理员创建，普通用户没法借它访问任意路径。
 - **查一下：** `kubectl get pods -A -o json` 里搜 `hostPath`，把所有用的 Pod 过一遍。
 
-**出处：** KIA2 §9.4.1–9.4.2（hostPath 危险性）、§10.3.1（local PV 优于 hostPath）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §9.4.1–9.4.2（hostPath 危险性）、§10.3.1（local PV 优于 hostPath）
+
+</details>

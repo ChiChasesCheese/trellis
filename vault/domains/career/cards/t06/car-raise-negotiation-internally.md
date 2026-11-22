@@ -35,4 +35,8 @@ flowchart TD
 
 **对方在想什么：** 经理想留住有产出的人，但要证明预算。你给他一个能向上说明的案子。
 
-**出处：** Orosz《Guidebook》Ch.4 §4（pay bands；promotion 移到新 band 底部）；McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（起薪复利）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.4 §4（pay bands；promotion 移到新 band 底部）；McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（起薪复利）
+
+</details>

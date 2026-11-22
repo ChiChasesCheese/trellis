@@ -28,4 +28,8 @@ tags: [实践]
 
 **维护提醒：** 基座模型升级后，微调往往要**重做**；所以保留数据、训练配置和评测集，让重训可复现。
 
-**出处：** Huyen《AI Engineering》ch7 §Finetuning Tactics（Base models）、§Model Merging and Multi-Task Finetuning（catastrophic forgetting）、§Reasons Not to Finetune；rollback 部分为通用发布实践
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch7 §Finetuning Tactics（Base models）、§Model Merging and Multi-Task Finetuning（catastrophic forgetting）、§Reasons Not to Finetune；rollback 部分为通用发布实践
+
+</details>

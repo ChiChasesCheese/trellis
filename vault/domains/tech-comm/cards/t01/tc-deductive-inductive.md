@@ -30,4 +30,8 @@ tags: [原则]
 - **一组里一半是理由，一半是推论。**
 - **用"三点"伪装推理链：** 三点之间其实有先后依赖。
 
-**出处：** Minto p. 81–96（Ch.5 Deduction and Induction: The Difference）；p. 33–40（Ch.2 The Horizontal Relationship）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 81–96（Ch.5 Deduction and Induction: The Difference）；p. 33–40（Ch.2 The Horizontal Relationship）
+
+</details>

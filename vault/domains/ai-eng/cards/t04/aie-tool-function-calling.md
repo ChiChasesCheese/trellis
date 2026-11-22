@@ -30,4 +30,8 @@ tool_calls: [{ name: "lbs_to_kg", arguments: {"lbs": 40} }]
 - **poka-yoke（防呆）：** 改参数让错误更难发生。例：模型离开根目录后用相对路径出错，改成**必须传绝对路径**就解决了；
 - 格式贴近模型在互联网文本里常见的写法。
 
-**出处：** Huyen《AI Engineering》ch6 §Planning → Function calling；Anthropic《Building effective agents》Appendix 2: Prompt engineering your tools
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Planning → Function calling；Anthropic《Building effective agents》Appendix 2: Prompt engineering your tools
+
+</details>

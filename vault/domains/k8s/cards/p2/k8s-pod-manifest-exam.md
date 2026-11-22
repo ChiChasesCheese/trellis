@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**改 Pod manifest · 考点**｜考点 · 必会
+**改 Pod manifest**｜考点 · 必会
 
 你把 `pod.kiada.yaml` 里的 `containerPort` 改成 9999 再 `kubectl apply`，应用还能通过 8080 访问吗？又把容器的 `image` 改成新版本呢？
 
@@ -21,4 +21,8 @@ tags: [考点]
 - **实际工作中：** 不直接改 Pod，而是改 Deployment 的 Pod 模板，让它换一批新 Pod（第 5 部分）。
 - **验证改动前：** `kubectl diff -f pod.kiada.yaml` 可以看会变什么；`kubectl explain pod.spec.containers` 看字段说明。
 
-**出处：** KIA2 §5.2.2（apply 更新对象，部分字段不可变）、§5.2.1（containerPort 仅作说明）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §5.2.2（apply 更新对象，部分字段不可变）、§5.2.1（containerPort 仅作说明）
+
+</details>

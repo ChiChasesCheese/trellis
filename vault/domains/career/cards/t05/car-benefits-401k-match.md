@@ -33,4 +33,8 @@ flowchart TD
 
 **常见错法：** 不拿满配套（等于放弃已承诺的钱）；不问 match 的 vesting。
 
-**出处：** IRS https://www.irs.gov/retirement-plans/401k-plans（2026-01-30）；IRS 401(k) contribution limits 页面（2026-04-08）。通用信息，不构成建议
+<details class="pt" markdown="1"><summary>出处</summary>
+
+IRS https://www.irs.gov/retirement-plans/401k-plans（2026-01-30）；IRS 401(k) contribution limits 页面（2026-04-08）。通用信息，不构成建议
+
+</details>

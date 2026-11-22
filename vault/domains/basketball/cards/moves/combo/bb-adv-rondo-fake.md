@@ -6,10 +6,11 @@ type: qa
 ## Q
 **Rondo fake（朗多背后假传）**｜Rajon Rondo · Isaiah Thomas
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-rondo-fake.mp4]]
 
-**Sequence。** `drive → ball swings behind the back as if passing → hold it → shoot or finish`
-**Read。** a defender who jumps the pass lane or drops off to help gives up the lane or the shot.
+**步骤：** 突破 → 球从背后甩出，像要传球 → 把球留住 → 投篮或完成
+
+**读防守：** 防守人去封传球线或回缩协防，就把突破线或投篮让了出来。

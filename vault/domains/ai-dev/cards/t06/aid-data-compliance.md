@@ -33,4 +33,8 @@ flowchart TD
 
 **时效（2026-11）：** 具体的保留期和部署选项变化快，以供应商当下条款为准，这里只给结构。
 
-**出处：** Claude Code docs《Security》（Cloud execution security；Team security）；Cursor docs《Cloud Agents》（Security notes）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Security》（Cloud execution security；Team security）；Cursor docs《Cloud Agents》（Security notes）
+
+</details>

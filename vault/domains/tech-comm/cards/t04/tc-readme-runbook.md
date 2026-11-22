@@ -37,4 +37,8 @@ flowchart TD
 - **一次写完就不更新：** 过期的 runbook 比没有更糟。
 - **步骤里有只有作者懂的缩写。**
 
-**出处：** Orosz《The Software Engineer's Guidebook》ch24 §5 Oncall runbooks；ch13 §4 Documentation（部分）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《The Software Engineer's Guidebook》ch24 §5 Oncall runbooks；ch13 §4 Documentation（部分）
+
+</details>

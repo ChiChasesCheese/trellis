@@ -34,4 +34,8 @@ flowchart TD
 
 **判断标准：** 子任务的中间过程量大、结论量小，才值得隔离。
 
-**出处：** Anthropic《Effective context engineering for AI agents》§Sub-agent architectures；《How we built our multi-agent research system》（2026-11-21 读）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic《Effective context engineering for AI agents》§Sub-agent architectures；《How we built our multi-agent research system》（2026-11-21 读）
+
+</details>

@@ -35,8 +35,12 @@ flowchart TD
 
 **回到题目：** "您看到的慢，主要是架构债：十五个小服务各自部署，每次改一个功能要动三个服务。要还它需要一个迁移项目，我们把它和下季度的两个业务功能绑定，分阶段合并；代码债我们每周顺手清理。"
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否能把债分类并给出不同的偿还路径。
 
 **适合配哪类故事：** 你诊断出某个拖累交付的问题其实是架构债，并用迁移方案解决的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch25 §3 "Architecture Debt"（#1–#4）；ch13 §3 "Tech Debt"
+
+</details>

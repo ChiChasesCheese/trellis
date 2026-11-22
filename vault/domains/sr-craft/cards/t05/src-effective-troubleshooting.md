@@ -41,8 +41,12 @@ flowchart TD
 
 **回到题目：** 先缓解（加资源或切流量保住服务），保存日志；看指标和 trace 找延迟在哪个组件；检查最近的配置与负载变化；形成两三个假设，按"可能且安全"的顺序测试，每一步记下来。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你的排障是否有方法，是否优先止血，而不是凭运气。
 
 **适合配哪类故事：** 你用假设驱动的方法定位了一个难查的线上问题，并把方法沉淀成文档或工具的经历。
 
 **出处：** Beyer 等《Site Reliability Engineering》"Effective Troubleshooting"（sre.google/sre-book/effective-troubleshooting/，2026-11-21 读取：Theory、In Practice：Problem Report/Triage/Examine/Diagnose/Test and Treat、Negative Results、Making Troubleshooting Easier）
+
+</details>

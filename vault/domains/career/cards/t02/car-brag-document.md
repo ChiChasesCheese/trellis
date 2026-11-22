@@ -40,4 +40,8 @@ flowchart TD
 
 **对方在想什么：** 经理没读你每个 PR。手里有现成的记录，他在校准会上替你说话就容易得多。
 
-**出处：** Orosz《Guidebook》Ch.2 §3 "Keep a Work Log"（引 Julia Evans 的 brag document）；Ch.3 §2 "The Power of Habit"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.2 §3 "Keep a Work Log"（引 Julia Evans 的 brag document）；Ch.3 §2 "The Power of Habit"
+
+</details>

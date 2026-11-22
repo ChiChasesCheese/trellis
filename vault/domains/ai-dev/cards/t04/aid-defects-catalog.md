@@ -29,4 +29,8 @@ flowchart TD
 
 **为什么这五类：** 它们的共同点是"看上去对"。AI 的输出流畅、风格统一，所以看起来合理不再是信号。
 
-**出处：** Stack Overflow Developer Survey 2025（AI：几乎对但不对）；Claude Code docs《Best practices》（Review against your spec：reviewer 总会找到点什么）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Stack Overflow Developer Survey 2025（AI：几乎对但不对）；Claude Code docs《Best practices》（Review against your spec：reviewer 总会找到点什么）
+
+</details>

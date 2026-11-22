@@ -37,4 +37,8 @@ flowchart TD
 
 **常见错法：** 认为 cost center 一定不好：书里也说它们稳定、工作也重要，只是你要主动证明价值。
 
-**出处：** Orosz《Guidebook》Ch.1 §4 "Cost Centers, Profit Centers"；Ch.5 §4（高增长公司裁员时 cost center 更易受影响）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.1 §4 "Cost Centers, Profit Centers"；Ch.5 §4（高增长公司裁员时 cost center 更易受影响）
+
+</details>

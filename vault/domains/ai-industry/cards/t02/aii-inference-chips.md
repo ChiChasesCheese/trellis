@@ -31,4 +31,8 @@ flowchart TD
   W["晶圆级"] --> L
 ```
 
-**出处：** 通用硬件取舍；本卡不含数字，llm-inference 域有技术细节。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用硬件取舍；本卡不含数字，llm-inference 域有技术细节。
+
+</details>

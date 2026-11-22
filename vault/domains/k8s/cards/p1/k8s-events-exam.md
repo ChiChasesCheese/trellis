@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**排查顺序 · 考点**｜考点 · 必会
+**排查顺序**｜考点 · 必会
 
 你部署后一小时发现某个 Pod 一直 Pending，`kubectl describe` 的 Events 一栏是空的。这是什么情况？接下来怎么查？
 
@@ -23,4 +23,8 @@ tags: [考点]
 - **关系：** status 是「现在的状态」（对象里），Event 是「刚发生的事」（独立对象，会过期）。长期告警要靠外部监控记录。
 - **字段名怎么知道：** `kubectl explain events` 会列出 `type` 等字段和取值。
 
-**出处：** KIA2 §4.3（Event 一小时后删除；`--field-selector type=Warning`；`kubectl explain events`）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §4.3（Event 一小时后删除；`--field-selector type=Warning`；`kubectl explain events`）
+
+</details>

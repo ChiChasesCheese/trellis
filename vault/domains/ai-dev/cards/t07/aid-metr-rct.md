@@ -37,4 +37,8 @@ flowchart TD
 
 **最重要的一点：METR 在原文页面上写明"这些结果已过时"**（见下一张）。
 
-**出处：** METR《Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity》（2025-07-10）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+METR《Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity》（2025-07-10）
+
+</details>

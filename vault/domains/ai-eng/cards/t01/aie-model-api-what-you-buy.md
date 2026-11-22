@@ -32,4 +32,8 @@ flowchart TD
 
 **接口趋同：** 很多模型厂商模仿最流行的那套 API，所以换模型相对容易；但每个模型各有脾气，提示词和数据还是要重新调。
 
-**出处：** Huyen《AI Engineering》ch4 §Open source models versus model APIs；§Cost and Latency；ch1 §Maintenance
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Open source models versus model APIs；§Cost and Latency；ch1 §Maintenance
+
+</details>

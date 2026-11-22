@@ -40,8 +40,12 @@ flowchart TD
 
 **回到题目：** 一周内删掉关闭的开关后面的代码；把 `util` 拆成有明确职责的模块；发布改成每次只带一类改动并记录性能基线，下次出问题能马上定位。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否把简单当成设计目标，而不仅是审美。
 
 **适合配哪类故事：** 你通过删代码、拆模块或缩小发布批次，让系统更可靠、排障更快的经历。
 
 **出处：** Beyer 等《Site Reliability Engineering》"Simplicity"（sre.google/sre-book/simplicity/，2026-11-21 读取：System Stability vs. Agility；The Virtue of Boring；I Won't Give Up My Code；Minimal APIs；Modularity；Release Simplicity）
+
+</details>

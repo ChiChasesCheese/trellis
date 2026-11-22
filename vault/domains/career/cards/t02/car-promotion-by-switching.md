@@ -35,4 +35,8 @@ flowchart TD
 
 **常见错法：** 用外部 offer 威胁；在不够 tenure 的情况下换；只比较头衔。
 
-**出处：** Orosz《Guidebook》Ch.6 §2 "Waiting on a Promotion vs Switching Jobs"、§5 Up-Leveling
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.6 §2 "Waiting on a Promotion vs Switching Jobs"、§5 Up-Leveling
+
+</details>

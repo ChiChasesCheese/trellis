@@ -29,4 +29,8 @@ tags: [摘要]
 
 **监控：** 记录每次请求的 thinking token 数，按接口看分布。
 
-**出处：** Huyen《AI Engineering》ch2 §Test Time Compute；Anthropic 文档 Extended thinking（platform.claude.com/docs/en/build-with-claude/extended-thinking，2026-11-21 读，版本会变）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Test Time Compute；Anthropic 文档 Extended thinking（platform.claude.com/docs/en/build-with-claude/extended-thinking，2026-11-21 读，版本会变）
+
+</details>

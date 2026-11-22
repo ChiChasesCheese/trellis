@@ -34,4 +34,8 @@ flowchart TD
 - 只做能评测的应用，像"在路灯下找钥匙"，会错过很多难以评测的应用。评测是 AI 落地的最大瓶颈（Huyen 的判断）。
 - 应用应从一份**针对该应用的评测标准清单**开始，大类有：领域能力、生成能力（如连贯、忠实）、指令遵循（如格式、长度）、成本与延迟。
 
-**出处：** Hamel Husain《Your AI Product Needs Evals》（https://hamel.dev/blog/posts/evals/）；Huyen《AI Engineering》ch4 §Evaluation-Driven Development
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Hamel Husain《Your AI Product Needs Evals》（https://hamel.dev/blog/posts/evals/）；Huyen《AI Engineering》ch4 §Evaluation-Driven Development
+
+</details>

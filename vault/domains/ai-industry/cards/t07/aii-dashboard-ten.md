@@ -33,4 +33,8 @@ flowchart TD
   D --> Q["季度更新差值"]
 ```
 
-**出处：** 本卡是方法设计；各来源见前面各卡。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+本卡是方法设计；各来源见前面各卡。
+
+</details>

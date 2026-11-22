@@ -31,4 +31,8 @@ flowchart TD
 
 **对方在想什么：** 被人准确地理解时，人会放松并愿意合作；被敷衍时只想结束对话。
 
-**出处：** Voss《Never Split the Difference》Ch.5 "Trigger the Two Words That Immediately Transform Any Negotiation"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Voss《Never Split the Difference》Ch.5 "Trigger the Two Words That Immediately Transform Any Negotiation"
+
+</details>

@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**eBPF dataplane 与 service mesh · 摘要**｜摘要 · 必会
+**eBPF dataplane 与 service mesh**｜摘要 · 必会
 
 有些集群「不装 kube-proxy」，或者说用了 eBPF dataplane；还有 service mesh 里每个 Pod 带一个代理。它们各解决什么问题，代价是什么？
 
@@ -36,4 +36,8 @@ flowchart TD
 - **service mesh：** 专门管服务到服务通信的基础设施层；配置可以通过 Gateway API 的 GAMMA 倡议统一表达。
 - **选择：** 先用最简单的（kube-proxy 的 nftables + NetworkPolicy），遇到规模、策略或加密/观测的真实需求再引入 eBPF CNI 或 mesh。
 
-**出处：** KIA2 §13.7（service mesh、north/south 与 east/west、GAMMA）；eBPF 与 kube-proxy 替代为通用网络知识，具体产品数据未收
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §13.7（service mesh、north/south 与 east/west、GAMMA）；eBPF 与 kube-proxy 替代为通用网络知识，具体产品数据未收
+
+</details>

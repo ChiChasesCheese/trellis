@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Access modes、reclaim policy 与 static provisioning · 摘要**｜摘要 · 必会
+**Access modes、reclaim policy 与 static provisioning**｜摘要 · 必会
 
 PVC 里的 `accessModes` 四个值各是什么意思？删掉 PVC 之后，PV 和里面的数据去哪了？
 
@@ -36,4 +36,8 @@ flowchart TD
 - **删 PV 不删底层存储：** 静态供给的盘要手动清理，避免产生费用。
 - **克隆：** PVC 的 `dataSourceRef` 可以指向另一个 PVC，用它的内容初始化新卷，不论访问模式。
 
-**出处：** KIA2 §10.2.3–10.2.4、§10.3.1–10.3.3
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §10.2.3–10.2.4、§10.3.1–10.3.3
+
+</details>

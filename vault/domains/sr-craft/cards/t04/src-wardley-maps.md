@@ -38,8 +38,12 @@ flowchart TD
 
 **回到题目：** 文档阅读已经商品化，用现成方案；文档搜索多半是 product；文档编辑在 product 与 custom 之间，若它是你的差异点才自建，否则采购或集成供应商，并预判 AI 编辑向右移动。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有一个系统的方法回答自建还是采购，而不是凭"我们能做"。
 
 **适合配哪类故事：** 你用一张图让团队对哪些能力该买、哪些该自建达成共识的经历。
 
 **出处：** Larson《Crafting Engineering Strategy》ch15 "Wardley Maps"（Components of a Wardley Map；X-axis；Y-axis；When Are Wardley Maps Useful?；How to Wardley Map）
+
+</details>

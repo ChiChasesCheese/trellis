@@ -27,4 +27,8 @@ flowchart TD
 **做：** 把共通规则写在 `AGENTS.md`；Claude Code 专有的（如 `/compact` 要保留什么）写在 `CLAUDE.md`，开头一行导入 `AGENTS.md`。
 **别做：** 三份文件各写一遍，一两个月后互相矛盾。
 
-**出处：** Claude Code docs《How Claude remembers your project》（AGENTS.md）；OpenAI Codex docs《AGENTS.md》；Cursor docs《Rules》
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《How Claude remembers your project》（AGENTS.md）；OpenAI Codex docs《AGENTS.md》；Cursor docs《Rules》
+
+</details>

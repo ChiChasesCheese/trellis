@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 先用两周记录每个手动任务的次数和耗时，按总耗时排序；对前三名写自动化或设计消除方案，并向经理要保护的工程时间。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否能把运维负担量化，并把时间投资到杠杆最高的自动化上。
 
 **适合配哪类故事：** 你度量并自动化了一类重复运维工作，让团队腾出明显的时间的经历。
 
 **出处：** Beyer 等《Site Reliability Engineering》"Eliminating Toil"（sre.google/sre-book/eliminating-toil/，2026-11-21 读取：Toil Defined、Why Less Toil Is Better、Calculating Toil、What Qualifies as Engineering?）
+
+</details>

@@ -36,4 +36,8 @@ flowchart TD
 
 **常见错法：** 把 target bonus 当成保证；把私有公司的股权估值当成现金。
 
-**出处：** Orosz《Guidebook》Ch.1 §3 "Compensation and Tiers of Companies"；Ch.4 §4（pay for performance）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.1 §3 "Compensation and Tiers of Companies"；Ch.4 §4（pay for performance）
+
+</details>

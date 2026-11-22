@@ -34,4 +34,8 @@ flowchart TD
 - 前面的 token 包括你输入的，也包括模型已经生成出来的。
 - 几乎总是 **multi-head**：把向量分成许多小份，每份（一个 head）各自关注不同的前文。例如 Llama 2-7B 的向量维度是 4,096，有 32 个 head，每个 head 128 维（4096 ÷ 32）。
 
-**出处：** Huyen《AI Engineering》ch2 §Transformer architecture → Attention mechanism
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Transformer architecture → Attention mechanism
+
+</details>

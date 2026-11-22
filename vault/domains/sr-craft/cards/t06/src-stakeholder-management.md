@@ -36,8 +36,12 @@ flowchart TD
 
 **回到题目：** 回顾后补做干系人清单（法务、安全、客服、下游团队）；在下一个项目 kickoff 就邀请他们；每周发一封更新邮件，业务负责人看邮件，不必天天问。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否系统地管理期望，避免项目被意外打断。
 
 **适合配哪类故事：** 你用早期识别干系人和定期更新，避免了一次项目被外部阻断或重工的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch18 §3 "Figure Out Who Your Stakeholders Are"、§4 "Keep Them in the Loop"、§5 "Problematic Stakeholders"
+
+</details>

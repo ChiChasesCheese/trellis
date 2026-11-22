@@ -54,5 +54,3 @@ step: 3
 - 客户端默认策略是 `[RangeAssignor, CooperativeStickyAssignor]`（3.0 起，之前只有 Range）。
 
 **坑。** Range 对每个主题都让排在前面的消费者多拿：主题越多、分区数越除不尽，前面的消费者越吃重。
-
-**对应 LeetCode：** 无直接对应的题

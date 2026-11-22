@@ -34,4 +34,8 @@ flowchart TD
 
 **对做应用的人意味着什么：** 你不训练模型，但这解释了为什么同一家族有多个尺寸，以及为什么「更大」不是唯一的选择标准。
 
-**出处：** Huyen《AI Engineering》ch2 §Scaling law: Building compute-optimal models；Table 2-5
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Scaling law: Building compute-optimal models；Table 2-5
+
+</details>

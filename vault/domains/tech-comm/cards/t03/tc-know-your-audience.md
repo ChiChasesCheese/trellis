@@ -32,4 +32,8 @@ tags: [原则]
 
 **示例：** 同一件事。给工程师："Upgrade needs a 20-minute read-only window; here is the rollback plan." 给总监："We need approval for one maintenance window; risk is low, rollback is tested."
 
-**出处：** Google Technical Writing One《Audience》（developers.google.com/tech-writing/one/audience）；Minto p. 57–64（Ch.4：Situation 即读者已知）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Audience》（developers.google.com/tech-writing/one/audience）；Minto p. 57–64（Ch.4：Situation 即读者已知）
+
+</details>

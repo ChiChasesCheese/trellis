@@ -35,4 +35,8 @@ flowchart TD
 
 **常见错法：** 把疲惫当作意志力问题；一直 stretch 不休息；把 coasting 当成常态。
 
-**出处：** Orosz《Guidebook》Ch.2 §6 "Pace Yourself"；Ch.26 §5 "Give Yourself a Break"；Ch.24 §5 "Oncall burnout"。不是医疗建议；症状持续请寻求专业帮助
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.2 §6 "Pace Yourself"；Ch.26 §5 "Give Yourself a Break"；Ch.24 §5 "Oncall burnout"。不是医疗建议；症状持续请寻求专业帮助
+
+</details>

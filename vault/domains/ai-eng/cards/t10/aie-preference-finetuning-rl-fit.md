@@ -27,4 +27,8 @@ SFT 之后模型会听指令了，但回答的风格和取舍常不合你们的�
 
 **要知道：** 书里的判断是 RLHF 和 DPO 都比只做 SFT 好，但为什么有效仍有争论；各个算法的细节在变，选之前读最新资料。
 
-**出处：** Huyen《AI Engineering》ch2 §Preference Finetuning（Reward model）；Rafailov 等 arxiv.org/abs/2305.18290；Lambert 等《Tulu 3》arxiv.org/abs/2411.15124（均 2026-11-21 读摘要；RLVR 的适用面表述为通用理解）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Preference Finetuning（Reward model）；Rafailov 等 arxiv.org/abs/2305.18290；Lambert 等《Tulu 3》arxiv.org/abs/2411.15124（均 2026-11-21 读摘要；RLVR 的适用面表述为通用理解）
+
+</details>

@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**路径与主机匹配 · 考点**｜考点 · 必会
+**路径与主机匹配**｜考点 · 必会
 
 一条规则：host `api.example.com`，两个路径：`/quote`（`Exact`）转 quote 服务，`/questions`（`Prefix`）转 quiz 服务。请求 `/quote/today`、`/questions/random`、`/questions`、`/QUOTE` 各去哪里？另外，host 写成 `*.example.com` 能匹配 `a.b.example.com` 吗？
 
@@ -29,4 +29,8 @@ tags: [考点]
 - **没有改写：** 转给后端的路径和请求一样，后端要自己认 `/quote`；要改写得用 controller 的私有 annotation。
 - **规则都不命中：** 用 default backend 或返回 404。
 
-**出处：** KIA2 §12.2.2（pathType 表 12.1，`Exact` 优先，不做 URL 改写）、表 12.4（通配符）；kubernetes.io Concepts › Ingress（区分大小写、通配符只覆盖单个 DNS 标签）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §12.2.2（pathType 表 12.1，`Exact` 优先，不做 URL 改写）、表 12.4（通配符）；kubernetes.io Concepts › Ingress（区分大小写、通配符只覆盖单个 DNS 标签）
+
+</details>

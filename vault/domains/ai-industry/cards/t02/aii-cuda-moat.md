@@ -34,4 +34,8 @@ flowchart TD
 
 **判断标准：** 看大客户是否在**生产环境**里跑非 NVIDIA 芯片的主要负载，而不是只做测试。
 
-**出处：** 通用产业知识（CUDA / ROCm 的角色）；本卡不含数字。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用产业知识（CUDA / ROCm 的角色）；本卡不含数字。
+
+</details>

@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Skew 计算 · 考点**｜考点 · 必会
+**Skew 计算**｜考点 · 必会
 
 三个可用区里匹配的 Pod 数量是 zone-a 2 个、zone-b 2 个、zone-c 1 个。新建一个 Pod，约束是 `maxSkew: 1`、`topologyKey: topology.kubernetes.io/zone`、`whenUnsatisfiable: DoNotSchedule`。它能放进哪些 zone？换成 `ScheduleAnyway` 呢？
 
@@ -33,4 +33,8 @@ flowchart TD
 - **`minDomains`：** 可用的 zone 少于它时，全局最小值当作 0，逼着集群扩出更多 zone。
 - **注意：** `topologyKey` 的 label 必须所有 node 上都有，缺的话会出现意外的调度结果。
 
-**出处：** kubernetes.io Concepts › Pod Topology Spread Constraints（字段说明与 2/2/1 示例）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Pod Topology Spread Constraints（字段说明与 2/2/1 示例）
+
+</details>

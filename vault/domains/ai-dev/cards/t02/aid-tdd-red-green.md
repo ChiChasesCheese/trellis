@@ -28,4 +28,8 @@ flowchart TD
 
 **官方示例的写法：** "users report login fails after the session times out … write a failing test that reproduces it, then fix it"。
 
-**出处：** Claude Code docs《Best practices》（Write a specific prompt：failing test 示例）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Write a specific prompt：failing test 示例）
+
+</details>

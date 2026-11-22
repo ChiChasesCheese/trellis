@@ -41,8 +41,12 @@ flowchart TD
 
 **回到题目：** 先 canary 到一小撮机器，看错误率和延迟，再按阶段扩大；写好回滚命令并演练；通知 on-call；"只改个参数"也走同样的路径。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对发布风险是否有系统的防护意识。
 
 **适合配哪类故事：** 你在一次高风险变更中用金丝雀或灰度提前发现问题并回滚，避免了事故的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch17 §4 "Additional Verification Layers"（#5 Canarying、#6 Feature flags、#7 Staged rollout、#9 Automated rollbacks）、§5 "Taking Pragmatic Risks"；Beyer 等《Site Reliability Engineering》"Emergency Response"（Change-Induced Emergency，sre.google/sre-book/emergency-response/）
+
+</details>

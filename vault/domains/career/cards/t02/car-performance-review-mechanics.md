@@ -36,4 +36,8 @@ flowchart TD
 
 **常见错法：** 只列任务；用同事的缺点来衬托自己；在评审会上发火。
 
-**出处：** Orosz《Guidebook》Ch.3 §3 "Before the Performance Review"、§4；Ch.2 §4（decode 反馈）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.3 §3 "Before the Performance Review"、§4；Ch.2 §4（decode 反馈）
+
+</details>

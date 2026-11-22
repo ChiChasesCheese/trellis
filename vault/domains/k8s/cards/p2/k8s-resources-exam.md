@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Requests、limits 与 QoS · 考点**｜考点 · 必会
+**Requests、limits 与 QoS**｜考点 · 必会
 
 一个 Pod 里只有一个容器：`requests: {cpu: 500m, memory: 256Mi}`，`limits: {cpu: 500m, memory: 512Mi}`。它是哪个 QoS class？如果想让它成为 Guaranteed，怎么改？容器内存涨到 600Mi 会怎样？CPU 要用 800m 呢？
 
@@ -25,4 +25,8 @@ tags: [考点]
 - **想要最不容易被驱逐：** 用 Guaranteed。
 - **常见坑：** 不设 requests，调度器认为这个 Pod 不占资源，node 被塞满；不设 limit，一个 Pod 可以吃光整个 node 的内存。
 
-**出处：** kubernetes.io Concepts › Resource Management for Pods and Containers、Pod Quality of Service Classes；KIA2 §2.3.2（cgroup 限制 CPU 与内存）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Resource Management for Pods and Containers、Pod Quality of Service Classes；KIA2 §2.3.2（cgroup 限制 CPU 与内存）
+
+</details>

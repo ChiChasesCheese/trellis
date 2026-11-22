@@ -40,8 +40,12 @@ flowchart TD
 
 **回到题目：** 会后单独约 A："今天会上我注意到 B 几次被打断，之后就没再开口。我想听听你的看法，也想一起想想怎么让新人更敢说。"如果下次仍发生，把观察告诉经理。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有勇气开口，又有分寸。
 
 **适合配哪类故事：** 你私下处理了一次团队摩擦或行为问题，既解决了问题又保住关系的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch12 §4 "Giving Feedback"（in-person、on their side、end positively）；ch20 §4 "Improving Team Dynamics"（First, observe；Talk privately；Reduce negative interactions in group settings；escalate to your manager）、§5；ch22 §1（Giving feedback on "bad" politics）
+
+</details>

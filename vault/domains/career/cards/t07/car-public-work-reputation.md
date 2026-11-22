@@ -35,4 +35,8 @@ flowchart TD
 
 **对方在想什么：** 读者看的是"这个人做过什么、说得清不清楚"。具体的东西最能建立信任。
 
-**出处：** Orosz《Guidebook》Ch.4 §5（Produce, organize, publish）；Ch.22 §5 "Expanding Your Network"（部分）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.4 §5（Produce, organize, publish）；Ch.22 §5 "Expanding Your Network"（部分）
+
+</details>

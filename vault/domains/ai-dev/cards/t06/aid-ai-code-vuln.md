@@ -37,4 +37,8 @@ flowchart TD
 
 **别做：** 让生成者自己说"我检查过安全"。
 
-**出处：** Claude Code docs《Security》（Related resources：/security-review）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Security》（Related resources：/security-review）
+
+</details>

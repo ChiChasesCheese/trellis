@@ -37,4 +37,8 @@ flowchart TD
 
 **常见错法：** 只看融资额和估值标题；把"独角兽"（估值 $1B 以上的私有公司）当作质量标志，书里说现在已不少见。
 
-**出处：** Orosz《Guidebook》Ch.21 §4 "Public Companies"、§5 "Startups"；Ch.1 §1（unicorn 含义）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.21 §4 "Public Companies"、§5 "Startups"；Ch.1 §1（unicorn 含义）
+
+</details>

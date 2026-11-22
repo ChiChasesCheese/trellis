@@ -35,8 +35,12 @@ flowchart TD
 
 **回到题目：** 会上说完意见就不再重复；写一段话放进 ADR："我倾向 A，原因是……；若出现 X 指标，建议重新评估"。然后在实现 B 时认真做好，发现风险及时同步。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你的成熟度：能坚持观点，也能接受团队决定并负责执行。
 
 **适合配哪类故事：** 你的意见没被采纳，但仍全力执行，并在后来用记录或数据推动了必要调整的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch22 §1 "Internal Politics"（"Bulldozing their will through"：Amazon 的 "have a backbone; disagree and commit"，以及它被武器化的风险）
+
+</details>

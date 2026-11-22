@@ -6,10 +6,11 @@ type: qa
 ## Q
 **Reverse-pivot finish（反向转身上篮）**｜Kobe Bryant
 
-Sequence 是什么？骗防守什么？
+怎么做？骗防守什么？
 
 ## A
 ![[bb-adv-reverse-pivot-finish.mp4]]
 
-**Sequence。** `triple threat → jab step → drive-by → reverse pivot away from the defender → reverse layup`
-**Read。** the rotation and the shielded ball throw off the shot-blocker's timing.
+**步骤：** 三威胁（triple threat）→ 试探步 → 突破 → 背向防守人做反向转身 → 反手上篮
+
+**读防守：** 转身加护球，打乱了盖帽手的时机。

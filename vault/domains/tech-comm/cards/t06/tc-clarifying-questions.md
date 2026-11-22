@@ -26,4 +26,8 @@ tags: [惯用说法]
 
 **一个习惯：** 问完把答案复述一遍："Got it, so per user, about 100 requests a minute."
 
-**出处：** 惯用说法，非引用；做法见 Restate & clarify
+<details class="pt" markdown="1"><summary>出处</summary>
+
+惯用说法，非引用；做法见 Restate & clarify
+
+</details>

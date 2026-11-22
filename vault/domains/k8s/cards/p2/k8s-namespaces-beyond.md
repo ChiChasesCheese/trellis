@@ -28,4 +28,8 @@ flowchart TB
 - **相关：** 官方提到这个改进缓解了 CVE-2024-7598 描述的漏洞。
 - **对你的影响：** 不用改任何配置，升级后自动生效。
 
-**出处：** kubernetes.io 发布博客 v1.34（Ordered Namespace deletion 毕业为 stable）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.34（Ordered Namespace deletion 毕业为 stable）
+
+</details>

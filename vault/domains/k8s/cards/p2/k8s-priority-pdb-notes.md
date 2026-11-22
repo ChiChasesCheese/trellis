@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**PriorityClass、preemption 与 PDB · 摘要**｜摘要 · 必会
+**PriorityClass、preemption 与 PDB**｜摘要 · 必会
 
 集群资源不够时，谁先让路？计划内的维护（drain node）又怎么保证应用不会被一次踢光？
 
@@ -46,4 +46,8 @@ spec:
 | 比例 | `minAvailable: "50%"` 向上取整；`maxUnavailable` 的百分比也向上取整 |
 | 不限制 | Deployment 的滚动更新不受 PDB 限制 |
 
-**出处：** kubernetes.io Concepts › Pod Priority and Preemption；Disruptions；Tasks › Specifying a Disruption Budget
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Pod Priority and Preemption；Disruptions；Tasks › Specifying a Disruption Budget
+
+</details>

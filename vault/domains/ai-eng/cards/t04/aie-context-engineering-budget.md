@@ -37,4 +37,8 @@ flowchart TD
 
 **测它：** 用 needle in a haystack 一类测试，看你的任务在多长时才开始掉准确率；掉得早就缩短 prompt。
 
-**出处：** Huyen《AI Engineering》ch5 §Context Length and Context Efficiency；Anthropic《Effective context engineering for AI agents》（2026-11-21 读）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch5 §Context Length and Context Efficiency；Anthropic《Effective context engineering for AI agents》（2026-11-21 读）
+
+</details>

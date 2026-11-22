@@ -33,4 +33,8 @@ flowchart TD
 
 **对方在想什么：** recruiter 最看重的是不被"放鸽子"。你快速、明确，他以后还会联系你。
 
-**出处：** McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（"never need a job"；不会因谈判被 blackball）；Qureshi（Always be positive）。邮件措辞为示例
+<details class="pt" markdown="1"><summary>出处</summary>
+
+McKenzie https://www.kalzumeus.com/2012/01/23/salary-negotiation/（"never need a job"；不会因谈判被 blackball）；Qureshi（Always be positive）。邮件措辞为示例
+
+</details>

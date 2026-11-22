@@ -27,4 +27,8 @@ flowchart TD
   X --> F["下行：几乎无影响"]
 ```
 
-**出处：** NVIDIA Q4 FY2026 新闻稿 Outlook 段；FY2026 10-K MD&A（H20 费用）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+NVIDIA Q4 FY2026 新闻稿 Outlook 段；FY2026 10-K MD&A（H20 费用）。
+
+</details>

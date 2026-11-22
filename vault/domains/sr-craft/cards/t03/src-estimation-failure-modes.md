@@ -43,8 +43,12 @@ flowchart TD
 
 **回到题目：** 从三个项目的任务记录里抽出"实际用时 − 估期"的差，按漏项、未知、依赖、压价、校正五类打标签；占比最大的那类就是第一个要改的流程。同时开始把里程碑切到几周以内。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你能否从系统层面诊断估期问题，而不是责怪个人或泛泛地"多留 buffer"。
 
 **适合配哪类故事：** 你复盘一次延期，找出结构性原因（漏项、依赖、压价）并改了流程的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch16 §6 "Risks and Dependencies"（八类风险）；ch16 §3 "Establishing milestones"（All estimates will be off by some degree）；ch7 §4
+
+</details>

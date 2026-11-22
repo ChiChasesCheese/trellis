@@ -30,4 +30,8 @@ tags: [实践]
 
 **别忘了时间也是约束：** 比如写标书的 agent，过了截止时间才交，就没有价值。
 
-**出处：** Huyen《AI Engineering》ch6 §Agent Failure Modes and Evaluation（Planning failures、Efficiency）；Anthropic《Building effective agents》（stopping conditions，如 maximum iterations）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Agent Failure Modes and Evaluation（Planning failures、Efficiency）；Anthropic《Building effective agents》（stopping conditions，如 maximum iterations）
+
+</details>

@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Secret · 考点**｜考点 · 必会
+**Secret**｜考点 · 必会
 
 下面四个做法，哪些真的提升了 Secret 的安全？
 1. 把密码从 ConfigMap 挪到 Secret，什么都不再改
@@ -25,4 +25,8 @@ tags: [考点]
 - **答题要点：** 区分三层：存储层（etcd 是否加密）、访问层（RBAC）、使用层（应用如何处理）。
 - **真正的方案：** 外部密钥管理工具，加上轮换和审计。
 
-**出处：** KIA2 §8.3
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §8.3
+
+</details>

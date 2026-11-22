@@ -33,4 +33,8 @@ flowchart TD
 
 **常见错法：** 只问"能不能远程"，不问晋升和项目机会是否一样；把 remote 当作"没有协作"。
 
-**出处：** GitLab Handbook https://handbook.gitlab.com/handbook/company/culture/all-remote/guide/（页面标题与目录，2026-11-21 读取；正文未全读）；Orosz《Guidebook》Ch.1 §5（Flexibility 作为衡量项）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+GitLab Handbook https://handbook.gitlab.com/handbook/company/culture/all-remote/guide/（页面标题与目录，2026-11-21 读取；正文未全读）；Orosz《Guidebook》Ch.1 §5（Flexibility 作为衡量项）
+
+</details>

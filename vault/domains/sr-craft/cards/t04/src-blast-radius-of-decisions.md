@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** "单向门：基本不可回退。影响面：二十个团队加外部客户，大。所以需要 design doc、涉及团队的评审，并且我们先做适配器，对内迁移完成后再谈对外下线。"
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否能系统地评估决定的风险，不只是回退成本。
 
 **适合配哪类故事：** 你通过盘点依赖、做适配器或分阶段，让一个影响面很大的变更平稳落地的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch25 §5 "The Blast Radius of Decisions"；§4 "One-Way Door vs Two-Way Door Decisions"
+
+</details>

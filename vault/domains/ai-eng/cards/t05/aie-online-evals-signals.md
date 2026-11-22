@@ -31,4 +31,8 @@ tags: [摘要]
 
 **与评测的关系：** 线上指标应该和离线评测对应：离线好的模型线上也该好；监控里发现的问题**要回流到评测集**。
 
-**出处：** Huyen《AI Engineering》ch10 §Monitoring and Observability → Metrics
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Monitoring and Observability → Metrics
+
+</details>

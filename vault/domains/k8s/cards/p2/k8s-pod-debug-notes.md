@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**与 Pod 交互 · 摘要**｜摘要 · 必会
+**与 Pod 交互**｜摘要 · 必会
 
 一个 Pod 出了问题，排障时最先用到的四个 kubectl 动作是什么？各看什么？
 
@@ -30,4 +30,8 @@ flowchart TB
 - **为什么需要：** 很多生产镜像不带 shell 和调试工具，`exec` 进去什么也干不了；`debug` 能带来工具，还能 `--target` 加入同一个进程 namespace 看到主容器的进程。
 - **port-forward：** 经过 API server 转发，适合临时调试，不是对外服务的方式。
 
-**出处：** KIA2 §5.3（Interacting with pods）；kubernetes.io Tasks › Debug Running Pods
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §5.3（Interacting with pods）；kubernetes.io Tasks › Debug Running Pods
+
+</details>

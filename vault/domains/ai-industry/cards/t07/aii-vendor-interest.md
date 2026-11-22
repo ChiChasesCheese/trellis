@@ -29,4 +29,8 @@ flowchart TD
   C --> D["数据公开吗"]
 ```
 
-**出处：** State of AI Report 2026（stateof.ai）；通用研究方法。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+State of AI Report 2026（stateof.ai）；通用研究方法。
+
+</details>

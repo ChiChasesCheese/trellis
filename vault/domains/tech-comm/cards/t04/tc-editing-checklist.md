@@ -31,4 +31,8 @@ tags: [原则]
 - Before: "The draft is edited before the audience sees it."
 - After: "Edit the draft before your audience sees it."
 
-**出处：** Google Technical Writing Two《Self-editing》（developers.google.com/tech-writing/two/editing）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing Two《Self-editing》（developers.google.com/tech-writing/two/editing）
+
+</details>

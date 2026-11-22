@@ -32,4 +32,8 @@ flowchart TD
 
 **原则：** 隐式信号**更多但更噪**，要先研究用户为什么这样做，再把它当作指标；多个信号合在一起才可靠。
 
-**出处：** Huyen《AI Engineering》ch10 §Extracting Conversational Feedback（Conversation length、Regeneration、Conversation organization、user edits）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Extracting Conversational Feedback（Conversation length、Regeneration、Conversation organization、user edits）
+
+</details>

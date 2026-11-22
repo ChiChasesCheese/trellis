@@ -53,5 +53,3 @@ print(add.__defaults__)  # ([1, 2],)
 ```
 
 **坑。** 惯用写法是 `acc=None`，函数体里写 `if acc is None: acc = []`。
-
-**对应 LeetCode：** 无直接对应的题

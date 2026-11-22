@@ -29,4 +29,8 @@ tags: [原则]
 - Before: "We'll shard by user id. It scales well."
 - After: "We'll shard by user id. The upside is even load; the cost is that cross-user queries need scatter-gather. I considered sharding by region, but hot regions skew the load. One open question: how do we re-shard later?"
 
-**出处：** Google Technical Writing One《Audience》《Documents》（developers.google.com/tech-writing/one：scope 与 non-scope、对比已知概念）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Audience》《Documents》（developers.google.com/tech-writing/one：scope 与 non-scope、对比已知概念）
+
+</details>

@@ -37,4 +37,8 @@ flowchart TD
 
 **实践：** prompt engineering 阶段先用**最强的模型**验证可行性，再往下试更小的模型；finetuning 则反过来，从小模型开始测试代码，再换大的。
 
-**出处：** Huyen《AI Engineering》ch4 §Model Selection、§Model Selection Workflow
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch4 §Model Selection、§Model Selection Workflow
+
+</details>

@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 先用 work log 把半年里的协调工作列出来，找经理对齐："这些事我认为对团队有价值，你怎么看？"同时确认你的核心交付目标，必要时一起决定哪些协调可以交给别人或自动化。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否有团队意识，同时懂得为自己的工作争取可见度，而不是一味牺牲。
 
 **适合配哪类故事：** 你花时间帮助团队（评审、文档、跨组协调），后来用记录和沟通让这部分贡献被认可，或重新平衡了时间的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch3 §2 "The Power of Habit"（"Help others" 与 "Capture work you do to help others"，引 Reilly《Being Glue》noidea.dog/glue）
+
+</details>

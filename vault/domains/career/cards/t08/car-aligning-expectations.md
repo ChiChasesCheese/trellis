@@ -35,4 +35,8 @@ flowchart TD
 
 **对方在想什么：** 经理有他自己的目标和上级的期待。对齐给他一个可预测的团队。
 
-**出处：** Orosz《Guidebook》Ch.2 §5（Understand your manager's goals；Deliver what you agree on）；Ch.3 §1 "Start Early: Gather Context and Set Goals"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.2 §5（Understand your manager's goals；Deliver what you agree on）；Ch.3 §1 "Start Early: Gather Context and Set Goals"
+
+</details>

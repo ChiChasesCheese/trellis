@@ -23,4 +23,8 @@ tags: [实践]
 
 **时效标注（2026-11 官方文档）：** 多数现行模型的窗口是 1M token，且会自动 compaction，"撑爆"已不常见；但官方仍建议任务间 `/clear`，因为聚焦的 context 答得更好，也更便宜。窗口大小会随模型变，"越满越差、无关内容有成本"这个机制不变。
 
-**出处：** Claude Code docs《Best practices》（Keep cost and context down；What you can stop doing）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Keep cost and context down；What you can stop doing）
+
+</details>

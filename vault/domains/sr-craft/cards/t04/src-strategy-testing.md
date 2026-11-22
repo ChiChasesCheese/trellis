@@ -40,8 +40,12 @@ flowchart TD
 
 **回到题目：** 选一个团队做一次重要发布，用新流程；看发布造成的客户影响和耗时，而不是多少人用了；根据反馈调整，再扩大到第二个团队。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你推动变革时的方法论：先验证再推广，并关注摩擦。
 
 **适合配哪类故事：** 你在大范围推广前用试点发现了关键问题，改进后推广成功的经历。
 
 **出处：** Larson《Crafting Engineering Strategy》ch13 "Strategy Testing for Iterative Refinement"（When to Test Strategy；How to Test Strategy；Testing Roles: Sponsors and Guides）
+
+</details>

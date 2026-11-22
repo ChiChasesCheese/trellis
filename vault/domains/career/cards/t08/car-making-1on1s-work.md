@@ -34,4 +34,8 @@ flowchart TD
 
 **对方在想什么：** 好经理最怕意外。你的议程让他提前知道状况，他会更放心，也更愿意给你自主权。
 
-**出处：** Orosz《Guidebook》Ch.2 §5 "Make Your Manager an Ally"（Have regular 1:1 time、Tell them don't assume、Get your work recognized）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.2 §5 "Make Your Manager an Ally"（Have regular 1:1 time、Tell them don't assume、Get your work recognized）
+
+</details>

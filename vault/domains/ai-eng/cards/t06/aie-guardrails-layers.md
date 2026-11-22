@@ -32,4 +32,8 @@ flowchart TD
 
 **分层的意义：** 便宜的结构校验（格式、长度）放前面；内容安全分类和语义、事实性检查更贵，放后面或抽样；PII 脱敏在输入端。每一层有各自的**误杀**（拦了好请求）和**漏放**。
 
-**出处：** Huyen《AI Engineering》ch10 §Step 2. Put in Guardrails（Input guardrails、Output guardrails）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Step 2. Put in Guardrails（Input guardrails、Output guardrails）
+
+</details>

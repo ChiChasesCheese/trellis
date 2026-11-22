@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**End-to-end walk-through · 摘要**｜摘要 · 必会
+**End-to-end walk-through**｜摘要 · 必会
 
 从你敲下 `kubectl apply -f kiada.yaml` 到容器在某台 node 上跑起来，中间经过哪些组件？每一步写了什么？
 
@@ -34,4 +34,8 @@ flowchart TB
 - **没有「总指挥」：** 每个组件只看自己关心的对象，做完就写回 API server，下一个组件靠 watch 看到变化接着做。
 - **所以 Pod 刚创建时是 Pending：** 步骤 4–6 还没走完。
 
-**出处：** Poulton ch2；KIA2 §1.2.4（提交应用描述后集群里发生什么）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch2；KIA2 §1.2.4（提交应用描述后集群里发生什么）
+
+</details>

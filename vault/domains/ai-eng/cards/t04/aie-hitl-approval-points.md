@@ -38,4 +38,8 @@ flowchart TD
 
 **可撤销设计：** 能撤回的动作，比"先批准后执行"更顺滑；做不到撤回的才必须事先批准。
 
-**出处：** Anthropic《Building effective agents》（Agents：pause at checkpoints or blockers for human feedback）；Anthropic《Claude Code sandboxing》（默认只读、越界提示）；Huyen《AI Engineering》ch1 §The role of AI and humans in the application（Crawl-Walk-Run）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic《Building effective agents》（Agents：pause at checkpoints or blockers for human feedback）；Anthropic《Claude Code sandboxing》（默认只读、越界提示）；Huyen《AI Engineering》ch1 §The role of AI and humans in the application（Crawl-Walk-Run）
+
+</details>

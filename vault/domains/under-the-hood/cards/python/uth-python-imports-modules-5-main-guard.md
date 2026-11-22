@@ -37,5 +37,3 @@ step: 5
 **细节。**
 
 - `python -m pkg` 执行的是包里的 `__main__.py`。
-
-**对应 LeetCode：** 无直接对应的题

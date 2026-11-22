@@ -35,4 +35,8 @@ flowchart TD
 - **每一段可以单独测**。先判断是"检索错了"还是"生成错了"，再下手（见考点卡）。
 - 好处：只放与问题相关的信息，能减少 hallucination、减少输入 token 数；也方便只给某个用户放他自己的数据。
 
-**出处：** Huyen《AI Engineering》ch6 §RAG、§RAG Architecture
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §RAG、§RAG Architecture
+
+</details>

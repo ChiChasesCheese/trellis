@@ -6,7 +6,7 @@ step: 1
 tags: [先修]
 ---
 ## Q
-**Cluster architecture · 先修**｜先修 · 必会
+**Cluster architecture**｜先修 · 必会
 
 一个 Kubernetes 集群里的机器，分成哪两类？各干什么？
 
@@ -45,4 +45,8 @@ flowchart TB
 - **规模：** 实验集群一个 control plane 节点就行；生产一般 3 或 5 个，分散在不同可用区。
 - **用户应用：** 一般只放在 worker 上，让 control plane 专心管集群。
 
-**出处：** Poulton《The Kubernetes Book 2026》ch2「Control plane and worker nodes」；KIA2 §1.2
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton《The Kubernetes Book 2026》ch2「Control plane and worker nodes」；KIA2 §1.2
+
+</details>

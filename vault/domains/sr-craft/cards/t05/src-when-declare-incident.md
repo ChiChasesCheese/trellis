@@ -24,6 +24,10 @@ tags: [追问]
 2. 事故流程要常用：用在平时的跨团队变更上，演练和角色扮演，否则真出事时已经生疏。
 3. 事故分级用容易测量的指标（如 SLI），有清楚的严重度标准。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有"尽早升级"的意识，并知道流程要靠平时练习。
 
 **出处：** Google SRE book《Managing Incidents》"When to Declare an Incident"；Orosz《The Software Engineer's Guidebook》ch24 §6（Categorizing and prioritizing an incident）
+
+</details>

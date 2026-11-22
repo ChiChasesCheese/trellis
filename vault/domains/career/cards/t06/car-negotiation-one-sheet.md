@@ -36,4 +36,8 @@ flowchart TD
 
 **常见错法：** 写成脚本，对方不按脚本走就慌（Voss 反对预设脚本）；把底线当成目标，只准备 BATNA。
 
-**出处：** Voss《Never Split the Difference》Appendix "Prepare a Negotiation One Sheet"（Sections I–V）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Voss《Never Split the Difference》Appendix "Prepare a Negotiation One Sheet"（Sections I–V）
+
+</details>

@@ -33,4 +33,8 @@ flowchart TD
 
 **别做：** 把"提示词写得好"当成新的核心技能；核心是**问题定义和验证**，提示只是其中一环。
 
-**出处：** Claude Code docs《Best practices》（Let Claude run without you：The parts that stay with you）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Let Claude run without you：The parts that stay with you）
+
+</details>

@@ -39,4 +39,8 @@ flowchart TD
 - 功能受限：不能让 privileged 模型直接读邮件内容后再决策；
 - CaMeL 的安全性来自解释器和策略，不来自模型本身。
 
-**出处：** Willison《The Dual LLM pattern》simonwillison.net/2023/Apr/25/dual-llm-pattern/；Debenedetti 等《Defeating Prompt Injections by Design》arxiv.org/abs/2503.18813（均 2026-11-21 读）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Willison《The Dual LLM pattern》simonwillison.net/2023/Apr/25/dual-llm-pattern/；Debenedetti 等《Defeating Prompt Injections by Design》arxiv.org/abs/2503.18813（均 2026-11-21 读）
+
+</details>

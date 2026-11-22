@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**API server request pipeline · 摘要**｜摘要 · 必会
+**API server request pipeline**｜摘要 · 必会
 
 一个请求到达 API server，到对象被存进 etcd，要过哪几关？每一关能拒绝什么？
 
@@ -32,4 +32,8 @@ flowchart TB
 - **为什么 mutating 在前：** 先改完，validating 才能校验最终的样子。
 - **RBAC：** Role/ClusterRole 授予权限，RoleBinding/ClusterRoleBinding 把权限绑给用户（第 6 部分详讲）。
 
-**出处：** Poulton ch13「Admission control」、ch14「The API server」；kubernetes.io Reference › Controlling Access to the Kubernetes API
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch13「Admission control」、ch14「The API server」；kubernetes.io Reference › Controlling Access to the Kubernetes API
+
+</details>

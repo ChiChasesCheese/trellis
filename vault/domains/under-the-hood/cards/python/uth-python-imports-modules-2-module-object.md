@@ -47,5 +47,3 @@ import cfg
 cfg.level = 2
 print(level, cfg.level)    # 1 2
 ```
-
-**对应 LeetCode：** 无直接对应的题

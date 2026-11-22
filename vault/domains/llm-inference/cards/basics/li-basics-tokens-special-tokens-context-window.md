@@ -33,4 +33,4 @@ flowchart TB
 
 **新进展（2026 年 3 月）。** Anthropic 宣布 Claude Opus 4.6 和 Sonnet 4.6 的 100 万 token 窗口正式可用，整段按标准价计费，没有长上下文加价；而 Gemini 3.1 Pro 超过 20 万、GPT-5.4 超过 27.2 万 token 就要加价。
 
-<details class="pt"><summary>想一想：按本卡的说法，100 万 token 大约能装多少汉字？</summary>本卡说 1 万字约 1–3 万 token，所以 100 万 token 约合 33 万–100 万字。输入和输出共用这扇窗，要给输出留位置。</details>
+<details class="pt"><summary>想一想：按上面的说法，100 万 token 大约能装多少汉字？</summary>上面说 1 万字约 1–3 万 token，所以 100 万 token 约合 33 万–100 万字。输入和输出共用这扇窗，要给输出留位置。</details>

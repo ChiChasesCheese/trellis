@@ -21,5 +21,3 @@ LMAX Disruptor 在这个骨架上加了什么？它和 `ArrayBlockingQueue` 的�
 **为什么。** `ArrayBlockingQueue`（JDK 21）同样是环形数组，但用 `takeIndex`、`putIndex`、`count` 加一把锁，两端每次操作都争这把锁。
 
 **坑。** `next()` 后忘了 `publish`（异常时没放进 `finally`），这个序号永远读不到，后面的事件全被卡住。槽里的对象反复复用，填字段要全部覆盖。
-
-**对应 LeetCode：** 无直接对应的题

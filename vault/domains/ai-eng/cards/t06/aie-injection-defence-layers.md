@@ -28,4 +28,8 @@ tags: [考点]
 
 **回到题目：** 加上 system 层：外部内容不能触发有副作用的工具，或触发前人工确认；用评测集（含已知攻击样本）测 violation rate 和 false refusal rate。
 
-**出处：** Huyen《AI Engineering》ch5 §Defenses Against Prompt Attacks（Model-level、Prompt-level、System-level）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch5 §Defenses Against Prompt Attacks（Model-level、Prompt-level、System-level）
+
+</details>

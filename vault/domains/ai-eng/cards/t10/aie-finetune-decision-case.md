@@ -33,4 +33,8 @@ flowchart TD
   D -- "是" --> F["微调并回归评测"]
 ```
 
-**出处：** Huyen《AI Engineering》ch7 §Reasons to Finetune、§Reasons Not to Finetune、§Finetuning and RAG
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch7 §Reasons to Finetune、§Reasons Not to Finetune、§Finetuning and RAG
+
+</details>

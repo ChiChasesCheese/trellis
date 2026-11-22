@@ -31,4 +31,8 @@ flowchart TD
   C --> D["吞吐 + 稳定性一起看"]
 ```
 
-**出处：** DORA《2025 State of AI-assisted Software Development》（throughput 与 instability 的关系）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+DORA《2025 State of AI-assisted Software Development》（throughput 与 instability 的关系）
+
+</details>

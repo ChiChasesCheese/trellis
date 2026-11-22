@@ -38,8 +38,12 @@ flowchart TD
 
 **回到题目：** 先道歉没早同步。约定每周固定 1:1，提前准备一页：已完成、风险与缓解、需要他决定的事；另外每周发一封短的项目进度邮件，并抄送给相关方。这样他向上汇报时手里有现成材料。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否会管理和上级的信息流，并主动建立可预测性。
 
 **适合配哪类故事：** 你改进了与上级的沟通节奏，让对方更放心、你得到更多支持或自主权的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch2 §5 "Make Your Manager an Ally"（Tell them, don't assume；Understand your manager's goals；Deliver what you agree on）；ch22 §3 "Collaborating with Managers"
+
+</details>

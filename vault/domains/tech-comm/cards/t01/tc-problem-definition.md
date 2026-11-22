@@ -35,4 +35,8 @@ flowchart TD
 - **把现象当问题：** "延迟高"不是问题，没有说明高到什么程度算差距。
 - **没有期望结果：** 没人知道做到什么算解决。
 
-**出处：** Minto p. 137–160（Ch.8 Logic in Problem Solving：The Problem-Definition Framework）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Minto p. 137–160（Ch.8 Logic in Problem Solving：The Problem-Definition Framework）
+
+</details>

@@ -31,4 +31,8 @@ tags: [实践]
 - 但**系统要对波动本身有韧性**：解析容错、重试、多次采样取多数，而不是假设输出可复现；
 - 想用 **test time compute**（对同一输入多采样几次）提升质量时，反而要保留多样性：采样 2 次约花 2 倍钱。
 
-**出处：** Huyen《AI Engineering》ch2 §Inconsistency；§Stopping condition；§Test Time Compute
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Inconsistency；§Stopping condition；§Test Time Compute
+
+</details>

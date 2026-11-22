@@ -40,8 +40,12 @@ flowchart TD
 
 **回到题目：** 设计评审里加一节"可观测性"：关键流程的指标、日志字段、告警条件和 runbook；统一用团队的日志框架；上线前演练一次"这个告警响了我会看哪里"。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否把运维视角带进设计，而不是只写功能。
 
 **适合配哪类故事：** 你在设计阶段补上监控和日志，使后来的故障能被快速发现和定位的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch24 §2 "Logging"（Make your logging practices explicit、Events To Log、What To Log）、§3 "Monitoring"（percentiles、Monitoring business metrics）、§7 "Building Resilient Systems"（Planning phase）；ch23 §5（PII 与日志）
+
+</details>

@@ -36,4 +36,8 @@ done
 
 **时效：** 参数名以官方文档为准（2026-11 的写法）。
 
-**出处：** Claude Code docs《Best practices》（Let Claude run without you：Run Claude from a script）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Let Claude run without you：Run Claude from a script）
+
+</details>

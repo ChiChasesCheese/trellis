@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**API server request pipeline · 考点**｜考点 · 必会
+**API server request pipeline**｜考点 · 必会
 
 三条报错，各是哪一关拒绝的？
 1. `error: You must be logged in to the server (Unauthorized)`
@@ -24,4 +24,8 @@ tags: [考点]
 - **顺序的推论：** 只要看到准入层的报错，说明认证和鉴权已经通过了。
 - **admission webhook：** 准入阶段可以调用外部服务做检查，故障时会拖慢或拒绝所有相关请求（第 8 部分的内容）。
 
-**出处：** Poulton ch13（authentication、authorization、admission control）；kubernetes.io Reference › Controlling Access to the Kubernetes API
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch13（authentication、authorization、admission control）；kubernetes.io Reference › Controlling Access to the Kubernetes API
+
+</details>

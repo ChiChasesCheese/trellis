@@ -39,8 +39,12 @@ flowchart TD
 
 **回到题目：** 给上季度所有事故补上分类标签和影响，统计各类原因占比；用这份数据向经理要可靠性投入，也供 error budget 使用。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否用数据驱动可靠性工作，而不是凭印象。
 
 **适合配哪类故事：** 你建立了事故统计，并用它揭示了一个隐藏的主要痛点、推动了专项改进的经历。
 
 **出处：** Beyer 等《Site Reliability Engineering》"Tracking Outages"（sre.google/sre-book/tracking-outages/，2026-11-21 读取：Escalator、Outalator、Aggregation、Tagging、Analysis、Unexpected Benefits）；Orosz《The Software Engineer's Guidebook》ch17 §5（"Track incidents and measure their impact"）
+
+</details>

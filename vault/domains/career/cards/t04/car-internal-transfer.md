@@ -35,4 +35,8 @@ flowchart TD
 
 **对方在想什么：** 现经理担心空档和你离开的信号；目标经理想知道你是不是在逃离问题。你用交接计划和明确的目标回答这两个担心。
 
-**出处：** Orosz《Guidebook》Ch.6 §1 "Exploring New Opportunities"（internal moves 作为替代；不满意时的选项）；Ch.5 §4（高速增长公司里内部转岗的机会）；转岗流程部分为通用做法，各公司规则不同
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.6 §1 "Exploring New Opportunities"（internal moves 作为替代；不满意时的选项）；Ch.5 §4（高速增长公司里内部转岗的机会）；转岗流程部分为通用做法，各公司规则不同
+
+</details>

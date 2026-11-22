@@ -29,4 +29,8 @@ flowchart TD
 **做：** 最容易的往往是拆**外联**（网络出口白名单）加拆**私有数据**（专用环境不放凭据）。
 **别做：** 加一个"检测恶意 issue"的 guardrail 就算完事——检出率不是 100%。
 
-**出处：** Simon Willison《The lethal trifecta for AI agents》（2025-06-16）；Claude Code docs《Security》（Network command approval；sandbox network isolation）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Simon Willison《The lethal trifecta for AI agents》（2025-06-16）；Claude Code docs《Security》（Network command approval；sandbox network isolation）
+
+</details>

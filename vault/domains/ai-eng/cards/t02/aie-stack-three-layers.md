@@ -39,4 +39,8 @@ flowchart TD
 
 **不变的原则：** 仍然要把业务指标映射到技术指标、系统化地做实验、建立用生产数据迭代的反馈回路。不同的是实验的对象变成 model、prompt、retrieval（从资料库里找出相关内容） 方案、sampling 参数这些。
 
-**出处：** Huyen《AI Engineering》ch1 §The AI Engineering Stack（Three Layers of the AI Stack、AI Engineering Versus ML Engineering）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch1 §The AI Engineering Stack（Three Layers of the AI Stack、AI Engineering Versus ML Engineering）
+
+</details>

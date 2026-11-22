@@ -45,8 +45,12 @@ flowchart TD
 
 **回到题目：** 约同事当面谈："上周那个 bug 影响了 X。我想听你怎么看，下次能怎么提早发现？我不是你的经理，只是希望一起把这个环节做好。"自己收到的模糊反馈，回问"能给我一个具体的 PR 吗？"
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你的反馈是否让人变好、关系不变坏；你接受反馈时是否成熟。
 
 **适合配哪类故事：** 你给了一次让对方真正改变的反馈，或把一条模糊的反馈变成了可行动的改进的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch12 §4 "Giving Feedback"（Better ways to give positive feedback；Giving constructive or negative feedback）；ch2 §4 "Ask and Give Feedback"（Ask for feedback；Give feedback to others；Decode poorly delivered feedback）
+
+</details>

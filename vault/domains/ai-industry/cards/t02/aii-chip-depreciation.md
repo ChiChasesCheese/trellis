@@ -29,4 +29,8 @@ flowchart TD
 
 **核对日期：** 2026-11-21。
 
-**出处：** Epoch AI Trends（https://epoch.ai/trends）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Epoch AI Trends（https://epoch.ai/trends）。
+
+</details>

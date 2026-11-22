@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 选一个最痛的问题（例如线上 bug）；试行一项实践（PR 模板里加测试清单）；见效后写进团队文档，并在评审里一致执行。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否能系统地提升团队，而不是个人英雄主义。
 
 **适合配哪类故事：** 你引入模板、检查清单或自动化，使团队的质量或速度可见提升的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch13 §5 "Scaling Best Practices Across the Team"；ch23 §2 "Helpful Engineering Processes"（Define "done"、Coding style guidelines）
+
+</details>

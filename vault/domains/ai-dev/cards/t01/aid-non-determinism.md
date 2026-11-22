@@ -23,4 +23,8 @@ tags: [考点]
 
 官方文档对这一点的分类：提示、CLAUDE.md、skills（按需加载的流程说明）是"模型自己决定"（non-deterministic）；hook（harness 在固定时点执行的脚本）、deny rule、测试、CI 是"harness 必然执行"（deterministic）。必须每次都成立的事，放进后一类。
 
-**出处：** Claude Code docs《Best practices》（Deterministic and non-deterministic instructions）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Deterministic and non-deterministic instructions）
+
+</details>

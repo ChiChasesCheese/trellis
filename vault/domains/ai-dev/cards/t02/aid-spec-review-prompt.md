@@ -28,4 +28,8 @@ report gaps that affect correctness and skip style.
 **做：** 审查的依据是 spec，输出限定为"影响正确性的缺口"。
 **别做：** 开放式"找所有问题"。
 
-**出处：** Claude Code docs《Best practices》（Review against your spec）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Review against your spec）
+
+</details>

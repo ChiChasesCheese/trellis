@@ -27,4 +27,8 @@ tags: [摘要]
 **做：** 只对关键用户路径做 E2E；其余靠单元和集成测试。
 **别做：** 把所有测试都做成 E2E。
 
-**出处：** Anthropic Engineering《Effective harnesses for long-running agents》（Testing）；Claude Code docs《Best practices》（Give Claude a check to run：浏览器截图）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic Engineering《Effective harnesses for long-running agents》（Testing）；Claude Code docs《Best practices》（Give Claude a check to run：浏览器截图）
+
+</details>

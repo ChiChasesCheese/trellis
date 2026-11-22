@@ -48,8 +48,12 @@ flowchart TD
 
 **回到题目：** "旧支付模块导致最近三个月 X 起故障，影响可用时间 KPI；每新增一个支付渠道要多花 Y 周，已经因此推迟了 Z 项业务。重写用一个季度，分两阶段，第一阶段先迁移最频繁出故障的部分。"
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你能否站在业务角度讲技术价值，并和 EM、PM 用同一种语言。
 
 **适合配哪类故事：** 你把一项技术工作用数据翻译成业务收益，成功争取到资源并最终兑现的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch21 §1 "Northstars, KPIs, OKRs"；ch21 §2 "Understand the product's business value"；ch11 §4（"we are not paid to write code … solve problems for the business"）
+
+</details>

@@ -31,4 +31,8 @@ tags: [考点]
 
 **对方在想什么：** 招聘方要用自己 ladder 的语言给你定档。你把 scope 和影响讲清楚，他们才有依据。
 
-**出处：** Orosz《Guidebook》Part V 引言 "Why do titles vary so much between companies?"（blast radius 与 $1M/$500M 例子）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Part V 引言 "Why do titles vary so much between companies?"（blast radius 与 $1M/$500M 例子）
+
+</details>

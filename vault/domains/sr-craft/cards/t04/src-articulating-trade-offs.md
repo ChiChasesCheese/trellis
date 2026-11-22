@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** "A 的好处是……代价是……；B 的好处是……代价是……。现在业务目标是 X，所以我选 B，放弃 A 的 Y。如果前提 Z 变了，我们会重新看 A。"并把它记在文档里。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你的判断是否透明、有依据，而不是靠资历说服。
 
 **适合配哪类故事：** 你面对多个可行方案，把取舍摆到桌面上，让团队或业务做出选择（并在之后验证了前提）的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch25 §7 "Architecture Decisions vs Business Priorities"；ch16 §6（Unrealistic timeline 里的取舍话术）；ch12 §3 "Mentoring"（"Help mentees come up with multiple solutions…articulate tradeoffs"）；ch11 §4（product/engineering tradeoffs）
+
+</details>

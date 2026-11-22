@@ -44,5 +44,3 @@ step: 2
 - 位点默认保留 7 天（`offsets.retention.minutes`），从组变空开始计时。
 
 **为什么。** 按组名哈希分到 50 个分区，各组的协调工作就均匀分给不同的 broker。
-
-**对应 LeetCode：** 无直接对应的题

@@ -24,4 +24,8 @@ tags: [考点]
 
 **在应用里：** 如果你的系统能**自动验证**（跑测试、检查 SQL 是否合法）并在失败时重新生成，pass@k 反映的就是你系统的真实能力；如果没有自动验证，用户只看到一份答案，应看 pass@1。
 
-**出处：** Huyen《AI Engineering》ch3 §Functional Correctness（pass@k 的定义和 10 题解决 5 题的例子）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch3 §Functional Correctness（pass@k 的定义和 10 题解决 5 题的例子）
+
+</details>

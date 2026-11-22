@@ -30,4 +30,8 @@ flowchart TD
 - 升级的依据是**评测结果**：在你的测试样本上，下一级是否明显更好，而不是"听起来更先进"。
 - agent 在每一步要从环境拿到"地面真相"（tool 的返回、代码执行结果）来判断进展，并设停止条件，如最大迭代次数。
 
-**出处：** Anthropic《Building effective agents》（Workflows vs. agents、When to use agents、Agents）；Huyen《AI Engineering》ch10 §AI Engineering Architecture（从最简架构逐步加组件）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic《Building effective agents》（Workflows vs. agents、When to use agents、Agents）；Huyen《AI Engineering》ch10 §AI Engineering Architecture（从最简架构逐步加组件）
+
+</details>

@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**spec vs status 与 conditions · 摘要**｜摘要 · 必会
+**spec vs status 与 conditions**｜摘要 · 必会
 
 一个对象里的 `spec` 和 `status` 分别是谁写的？controller 的工作怎么体现在这两块上？
 
@@ -31,4 +31,8 @@ flowchart TB
 - **为什么 conditions 比一个布尔值有用：** 一个「健康/不健康」说不清哪里出问题。conditions 能同时给出多个独立维度，并带上 reason 和 message，告诉你为什么，也不用靠猜。
 - **`Unknown`：** 表示系统不知道，比如 node 失联后 kubelet 没法汇报。这和 `False` 不一样。
 
-**出处：** KIA2 §4.2.3（spec、status、conditions）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §4.2.3（spec、status、conditions）
+
+</details>

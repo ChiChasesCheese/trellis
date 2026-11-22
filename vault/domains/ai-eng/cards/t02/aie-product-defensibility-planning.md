@@ -32,4 +32,8 @@ tags: [摘要]
 - 换模型有适配成本：提示词、数据都要调，需要版本管理和评测基础设施。
 - 难应对的变化：法规（算力、数据、IP 归属）。
 
-**出处：** Huyen《AI Engineering》ch1 §AI product defensibility、§Milestone Planning、§Maintenance
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch1 §AI product defensibility、§Milestone Planning、§Maintenance
+
+</details>

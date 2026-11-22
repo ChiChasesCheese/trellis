@@ -31,4 +31,8 @@ flowchart TD
   P --> D["对照口径与期间"]
 ```
 
-**出处：** NVIDIA FY2026 10-K customer concentration（MarketScreener 转载页）；通用信息核对方法。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+NVIDIA FY2026 10-K customer concentration（MarketScreener 转载页）；通用信息核对方法。
+
+</details>

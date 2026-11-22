@@ -39,8 +39,12 @@ flowchart TD
 
 **回到题目：** 下次他来问，先反问："你试过什么？你觉得有哪几种做法？"让他讲取舍，你补充遗漏的点。定一个下个月的小目标（比如独立写完一份设计文档），每两周回顾一次。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否在放大别人，而不是自己成为瓶颈。
 
 **适合配哪类故事：** 你带一位同事成长到能独立负责一块工作，你从答题人变成教练的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch12 §3 "Mentoring"（Kicking off mentoring；When you're the mentor：Avoid serving up answers on a silver platter；Help mentees come up with multiple solutions）
+
+</details>

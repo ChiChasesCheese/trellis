@@ -33,4 +33,8 @@ flowchart TD
 
 **对方在想什么：** 决策者问的是"如果没有这个人，org 会失去什么？"和"预算里有没有位置？"
 
-**出处：** Orosz《Guidebook》Part V 引言；Ch.4 §1、§4（"promotion-driven development"）、§5（Produce, organize, publish；skip-level）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Part V 引言；Ch.4 §1、§4（"promotion-driven development"）、§5（Produce, organize, publish；skip-level）
+
+</details>

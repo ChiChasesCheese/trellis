@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 开头用文档加 kickoff，邀请业务和客户支持；写好 done 的定义。收尾用复盘和一封点名的最终更新邮件，发给所有相关团队，并庆祝一下。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你对项目完整生命周期的责任心，而不是只管写代码。
 
 **适合配哪类故事：** 你用一次 kickoff 暴露了关键分歧，或用一个收尾总结让团队的成果被看见的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch16 §3 "Project Kickoffs and Milestones"；§7 "Wrapping Up Projects"
+
+</details>

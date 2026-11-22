@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Containers vs VMs · 考点**｜考点 · 必会
+**Containers vs VMs**｜考点 · 必会
 
 三种场景，该用容器还是 VM，为什么？
 A. 同一台 Linux 机器上并排跑 20 个自己团队写的无状态服务
@@ -23,4 +23,8 @@ C. 一个平台要让互不信任的外部客户上传代码并运行
 - **C 的做法：** 先用 seccomp（限制进程能发哪些系统调用）、capabilities（把 root 的权力拆成小块，只留需要的）收紧容器（第 6 部分），仍不够时用 VM 级的隔离。
 - **反过来看：** 隔离更强就要更多开销，所以大多数「自己人的服务」选容器。
 
-**出处：** KIA2 §2.1.1、§2.3.4（Strengthening isolation between containers）；Poulton ch2（Windows worker node）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §2.1.1、§2.3.4（Strengthening isolation between containers）；Poulton ch2（Windows worker node）
+
+</details>

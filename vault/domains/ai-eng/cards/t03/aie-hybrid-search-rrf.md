@@ -40,4 +40,8 @@ flowchart TD
   C --> D["按总分排序"]
 ```
 
-**出处：** Huyen《AI Engineering》ch6 §Combining retrieval algorithms（RRF，k 典型值 60）。上表的名次是出题用的例子，分数是按公式算出
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Combining retrieval algorithms（RRF，k 典型值 60）。上表的名次是出题用的例子，分数是按公式算出
+
+</details>

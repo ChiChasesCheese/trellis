@@ -30,4 +30,8 @@ flowchart TD
 
 **还要分层看：** 每个用户、每个功能、每个版本分别看，才知道规模变大时系统怎么表现。
 
-**出处：** Huyen《AI Engineering》ch9 §Latency, TTFT, and TPOT（10 个请求的例子，平均 390 ms、percentile）；ch10 §Metrics（按用户跟踪）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch9 §Latency, TTFT, and TPOT（10 个请求的例子，平均 390 ms、percentile）；ch10 §Metrics（按用户跟踪）
+
+</details>

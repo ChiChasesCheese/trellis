@@ -42,4 +42,8 @@ flowchart TD
 > Priya, migration plan, Friday. Marco, cost estimate, Wednesday.
 > Open: eviction policy. Revisit next Tuesday.
 
-**出处：** GitLab Handbook《All-Remote Meetings》（handbook.gitlab.com/handbook/company/culture/all-remote/meetings/）；"24 小时内"为本卡的建议值，不是引用
+<details class="pt" markdown="1"><summary>出处</summary>
+
+GitLab Handbook《All-Remote Meetings》（handbook.gitlab.com/handbook/company/culture/all-remote/meetings/）；"24 小时内"为本卡的建议值，不是引用
+
+</details>

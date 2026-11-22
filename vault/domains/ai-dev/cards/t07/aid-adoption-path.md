@@ -35,4 +35,8 @@ flowchart TD
 
 **别做：** 第一周就让 agent 动支付核心或生产部署。
 
-**出处：** Claude Code docs《Best practices》（Let Claude run without you：五问）；DORA 2025（基础先行）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Let Claude run without you：五问）；DORA 2025（基础先行）
+
+</details>

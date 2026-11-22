@@ -28,5 +28,3 @@ def f():
 ```
 
 **坑。** 这些情形不会执行 `finally`：`os._exit()`（直接退出、不跑清理）、进程被 `kill -9`（信号 `SIGKILL` 无法捕获）、断电。`Ctrl+C` 引发的 `KeyboardInterrupt` 是普通异常，`finally` 照常执行。
-
-**对应 LeetCode：** 无直接对应的题

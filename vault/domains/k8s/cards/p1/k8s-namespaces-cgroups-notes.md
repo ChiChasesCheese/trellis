@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Namespaces 与 cgroups · 摘要**｜摘要 · 必会
+**Namespaces 与 cgroups**｜摘要 · 必会
 
 Linux 里没有「容器」这个内核对象。那一个进程怎么就变成了「容器」？
 
@@ -37,4 +37,8 @@ flowchart TB
 - **两者缺一不可：** 光有 namespace 看不到别人，但仍能把 CPU 吃光；光有 cgroup 能限量，但还看得到别人。
 - **Pod 里的容器：** 同一个 Pod 的容器共享其中一部分 namespace（网络、IPC（进程间通信，比如共享内存） 等），所以它们用 localhost 互通（第 2 部分）。
 
-**出处：** KIA2 §2.3.1（Kernel Namespaces）、§2.3.2（cgroups）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §2.3.1（Kernel Namespaces）、§2.3.2（cgroups）
+
+</details>

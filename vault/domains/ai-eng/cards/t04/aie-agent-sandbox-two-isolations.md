@@ -31,4 +31,8 @@ tags: [摘要]
 
 **检查清单：** 容器或沙箱、网络出口白名单、资源限额（CPU、内存、时间）、凭据不在沙箱里、代码解释器和浏览器各自隔离。
 
-**出处：** Anthropic《Making Claude Code more secure and autonomous with sandboxing》anthropic.com/engineering/claude-code-sandboxing（2026-11-21 读）；Huyen ch6 §Capability extension（代码解释器）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic《Making Claude Code more secure and autonomous with sandboxing》anthropic.com/engineering/claude-code-sandboxing（2026-11-21 读）；Huyen ch6 §Capability extension（代码解释器）
+
+</details>

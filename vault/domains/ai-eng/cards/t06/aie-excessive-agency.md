@@ -29,4 +29,8 @@ tags: [摘要]
 
 **注：** 日志、监控、限流不能阻止 excessive agency，但能限制损害。
 
-**出处：** OWASP LLM06:2025 Excessive Agency（https://genai.owasp.org/llmrisk/llm062025-excessive-agency/）；Huyen《AI Engineering》ch5 §System-level defense
+<details class="pt" markdown="1"><summary>出处</summary>
+
+OWASP LLM06:2025 Excessive Agency（https://genai.owasp.org/llmrisk/llm062025-excessive-agency/）；Huyen《AI Engineering》ch5 §System-level defense
+
+</details>

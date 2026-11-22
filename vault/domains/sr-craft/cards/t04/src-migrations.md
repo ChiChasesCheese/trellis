@@ -40,8 +40,12 @@ flowchart TD
 
 **回到题目：** 提出分阶段：先让新服务接影子流量，对比订单金额和状态，两周内差异清零；再灰度一小部分内部或低风险用户；逐步放量，每步看支付成功率和延迟；全量稳定一段时间后才关旧服务。停机夜只留给无法并行的部分（如果真有的话）。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你知道迁移的风险在"切换"本身，并用并行、灰度和回退来降低。
 
 **适合配哪类故事：** 你主导一次不停机的迁移，通过影子对比或灰度发现了问题，并平稳下线旧系统的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch17 §4 "Additional Verification Layers"（#5 Canarying、#6 Feature flags、staged rollouts）；ch11 §1（shadow outputs 的迁移验证例子）；ch25 §4 "In-between decisions"；Larson《Crafting Engineering Strategy》ch16 Document 16-1（迁移策略：先把流程做成自助、定期复查指标）
+
+</details>

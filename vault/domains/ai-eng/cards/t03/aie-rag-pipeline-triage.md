@@ -31,4 +31,8 @@ flowchart TD
 
 **为什么这样分：** RAG 系统的成功取决于 retriever 的质量；而每一段都能单独评测。书里的建议是：评测要**逐个组件加端到端**，既评检索（context precision：取回的里相关的比例；recall：相关的里被取回的比例），也评最终回答，对 embedding 模型也单独评。
 
-**出处：** Huyen《AI Engineering》ch6 §RAG Architecture、§Comparing retrieval algorithms（"the quality of a RAG system should be evaluated both component by component and end to end"）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §RAG Architecture、§Comparing retrieval algorithms（"the quality of a RAG system should be evaluated both component by component and end to end"）
+
+</details>

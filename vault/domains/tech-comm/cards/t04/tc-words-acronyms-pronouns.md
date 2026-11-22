@@ -31,4 +31,8 @@ tags: [原则]
 - Before: "Running the process configures permissions and generates a user ID. This lets users authenticate."
 - After: "Running the process configures permissions and generates a user ID. This user ID lets users authenticate."
 
-**出处：** Google Technical Writing One《Words》（developers.google.com/tech-writing/one/words）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Words》（developers.google.com/tech-writing/one/words）
+
+</details>

@@ -41,4 +41,8 @@ flowchart TD
 
 **每天人工看一些线上数据：** Shankar 等（2024）发现，开发者对"好与坏"的看法会随着看更多数据而变化，从而既改 prompt 也更新评测。
 
-**出处：** Huyen《AI Engineering》ch10 §Logs and traces
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Logs and traces
+
+</details>

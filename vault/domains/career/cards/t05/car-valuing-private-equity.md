@@ -35,4 +35,8 @@ flowchart TD
 
 **常见错法：** 用最近一轮估值乘以你的占比当作自己的钱；忽略稀释和优先股；不看 strike price 和行权成本。
 
-**出处：** Holloway https://www.holloway.com/g/equity-compensation（2026-11-21 读取，部分页面）；Orosz《Guidebook》Ch.1 §3。文中没有折扣的具体百分比，因为来源没有给出
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Holloway https://www.holloway.com/g/equity-compensation（2026-11-21 读取，部分页面）；Orosz《Guidebook》Ch.1 §3。文中没有折扣的具体百分比，因为来源没有给出
+
+</details>

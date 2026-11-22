@@ -55,5 +55,3 @@ step: 2
 | 当前个数 | `write - read` | O(1) |
 
 **为什么。** 序号只往前走，`write - read` 永远不二义。`write` 只有生产者改，`read` 只有消费者改，一个生产者加一个消费者时不用锁。Linux 内核的 `kfifo`（`in`、`out`、`mask`）用的就是这个结构；Disruptor 的序号从 -1 起，记的是最后一个序号而不是个数，思路相同。
-
-**对应 LeetCode：** 无直接对应的题

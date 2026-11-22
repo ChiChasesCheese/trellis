@@ -33,4 +33,8 @@ tags: [考点]
 
 **时效（2026-11 官方）：** 官方"可以不再做的事"列表里有：给 agent 一再忽略的指令加 IMPORTANT 或全大写、在 CLAUDE.md 里描述架构和文件布局。
 
-**出处：** Claude Code docs《Best practices》（Keep CLAUDE.md short；What you can stop doing）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Keep CLAUDE.md short；What you can stop doing）
+
+</details>

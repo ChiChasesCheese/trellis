@@ -36,4 +36,8 @@ flowchart TD
 
 **所以怎么用：** 拿到 level 名字先别比较，先找这家公司的 ladder（职级说明）里该 level 的描述，对着三个维度看。
 
-**出处：** Orosz《The Software Engineer's Guidebook》Ch.1 §2 "Typical Software Engineering Career Paths"；Part V 引言 "Role-Model Staff and Principal Engineers"；Ch.4 §1
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《The Software Engineer's Guidebook》Ch.1 §2 "Typical Software Engineering Career Paths"；Part V 引言 "Role-Model Staff and Principal Engineers"；Ch.4 §1
+
+</details>

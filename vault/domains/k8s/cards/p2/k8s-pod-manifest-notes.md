@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Pod manifest · 摘要**｜摘要 · 必会
+**Pod manifest**｜摘要 · 必会
 
 用 YAML 创建一个 Pod，最小的 manifest 长什么样？创建之后读回来的对象为什么比你写的长得多？
 
@@ -42,4 +42,8 @@ kubectl describe pod kiada        # 详情 + 底部 Events
 - **为什么用 YAML 文件：** 可重复部署，放进版本库有变更历史；JSON 也行，YAML 能写注释。
 - **`containerPort` 只是文档：** 不写也能访问，写错也不会拦；但写上并起名字，别人一看就知道端口，后面 Service 也可以按名字引用。
 
-**出处：** KIA2 §5.2.1–5.2.3
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §5.2.1–5.2.3
+
+</details>

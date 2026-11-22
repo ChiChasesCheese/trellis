@@ -31,4 +31,8 @@ flowchart TD
 - 语法检查会增加生成延迟；
 - 有人认为这些资源不如用来训练模型更好地服从指令。
 
-**出处：** Huyen《AI Engineering》ch2 §Structured Outputs（JSON mode、Constrained sampling）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch2 §Structured Outputs（JSON mode、Constrained sampling）
+
+</details>

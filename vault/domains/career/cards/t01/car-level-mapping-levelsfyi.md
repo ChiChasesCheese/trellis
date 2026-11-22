@@ -33,4 +33,8 @@ flowchart TD
 
 **对方在想什么：** 招聘方的 level 是根据面试表现和 ladder 定的，不是根据你旧头衔。你给出可对照的事实，他们更容易给对档位。
 
-**出处：** Orosz《Guidebook》Part V 引言（levels.fyi 及其局限）；Ch.1 §3 "Compensation and Tiers of Companies"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Part V 引言（levels.fyi 及其局限）；Ch.1 §3 "Compensation and Tiers of Companies"
+
+</details>

@@ -21,4 +21,8 @@ tags: [考点]
 
 **更好的写法：** 用 SO 说明"工具已普及、验证是共同痛点"，用**自己团队的基线和试点**（cycle time、change failure rate）说明效果。
 
-**出处：** Stack Overflow Developer Survey 2025（survey.stackoverflow.co/2025/ai）；METR 2025（自我感觉与测量的差距）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Stack Overflow Developer Survey 2025（survey.stackoverflow.co/2025/ai）；METR 2025（自我感觉与测量的差距）
+
+</details>

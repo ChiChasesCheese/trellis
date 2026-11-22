@@ -32,4 +32,8 @@ flowchart TD
 3. 默认拒绝：用户没回应，就当作没批准；
 4. 高风险的动作用更醒目的方式，与普通提示区分开。
 
-**出处：** Anthropic《Claude Code sandboxing》（approval fatigue、84% 为其内部使用的报告数字，页面未给年份）。第 3、4 条是常见的设计做法
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic《Claude Code sandboxing》（approval fatigue、84% 为其内部使用的报告数字，页面未给年份）。第 3、4 条是常见的设计做法
+
+</details>

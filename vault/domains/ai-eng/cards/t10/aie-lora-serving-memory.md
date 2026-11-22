@@ -34,4 +34,8 @@ flowchart TD
 
 **训练要更多：** 训练内存 = 权重 + activation + gradient + optimizer state。gradient 和 optimizer state 与**可训练参数的个数**成正比，所以 LoRA 只训小矩阵，能大幅降低训练显存。
 
-**出处：** Huyen《AI Engineering》ch7 §Serving LoRA adapters、§Memory Math
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch7 §Serving LoRA adapters、§Memory Math
+
+</details>

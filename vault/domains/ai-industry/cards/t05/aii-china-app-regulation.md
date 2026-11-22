@@ -30,4 +30,8 @@ flowchart TD
 
 **对产业的含义：** 合规是上线的前置步骤，增加了进入成本，也使本地提供者有天然的先发优势。不是法律意见。
 
-**出处：** DLA Piper, China new measures on generative AI（2023-07）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+DLA Piper, China new measures on generative AI（2023-07）。
+
+</details>

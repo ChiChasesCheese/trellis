@@ -33,4 +33,8 @@ flowchart TD
 
 **用途：** 分类、推荐、语义检索，以及 RAG（先按意思找出相关资料再交给模型）都靠 embedding。任何数据都可以有 embedding：商品、图片、用户。
 
-**出处：** Huyen《AI Engineering》ch3 §Introduction to Embedding（Table 3-2）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch3 §Introduction to Embedding（Table 3-2）
+
+</details>

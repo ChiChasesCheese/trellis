@@ -39,4 +39,8 @@ flowchart TD
 
 **生成式 AI 的标准：** OpenTelemetry 为 GenAI 客户端定义了 spans、metrics、events 的语义约定（已迁到 semantic-conventions-genai 仓库），统一不同工具记录模型调用的方式。
 
-**出处：** Huyen《AI Engineering》ch10 §Logs and traces；OpenTelemetry semantic-conventions-genai 仓库说明（https://github.com/open-telemetry/semantic-conventions-genai）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Logs and traces；OpenTelemetry semantic-conventions-genai 仓库说明（https://github.com/open-telemetry/semantic-conventions-genai）
+
+</details>

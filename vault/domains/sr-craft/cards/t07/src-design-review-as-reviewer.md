@@ -43,8 +43,12 @@ flowchart TD
 
 **回到题目：** 在文档里留评论：依赖 X 不可用时是什么行为？峰值 QPS 的估算依据？上线失败如何回滚？哪个指标告诉我们它坏了？把最关键的两三个标成"需要回答"。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你的评审视角是否覆盖运维、规模和回退，而不是只看功能。
 
 **适合配哪类故事：** 你在评审别人的设计时问出了一个关键失败场景，使方案在上线前被修正的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch15 §1（RFC 的目标与评审方式）；ch15 §4（rollout 计划、rollback、pre-mortem）；ch24 §7（Planning phase、Simulate failures）。提问清单是对这些章节的整理，该书没有单列的 "reviewer checklist"
+
+</details>

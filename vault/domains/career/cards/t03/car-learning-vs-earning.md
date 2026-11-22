@@ -32,4 +32,8 @@ flowchart TD
 
 **对方在想什么：** 招聘方会看你的履历有没有成长轨迹。能讲出"这几年我在学什么"，比只讲涨薪更有说服力。
 
-**出处：** Orosz《Guidebook》Ch.1 §5 "Alternative Ways to Think About Career Progress"；Ch.4 §6 "Many career investments only pay off much later"；Ch.26 §3
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.1 §5 "Alternative Ways to Think About Career Progress"；Ch.4 §6 "Many career investments only pay off much later"；Ch.26 §3
+
+</details>

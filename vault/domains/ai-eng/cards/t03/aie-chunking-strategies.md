@@ -25,4 +25,8 @@ tags: [摘要]
 
 **semantic chunking（按语义切）：** 目标是让每块是一个"意思完整的单位"，而不是一刀切；上面的 recursive 和按结构都是朝这个方向走。没有放之四海皆准的最佳 chunk 大小或 overlap，要在你的数据上实验。
 
-**出处：** Huyen《AI Engineering》ch6 §Retrieval Optimization → Chunking strategy
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Retrieval Optimization → Chunking strategy
+
+</details>

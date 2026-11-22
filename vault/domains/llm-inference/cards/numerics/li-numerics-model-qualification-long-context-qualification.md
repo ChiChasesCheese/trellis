@@ -30,4 +30,4 @@ step: 3
 
 **新进展（2026 年 3 月）。** Anthropic 把 Opus 4.6 和 Sonnet 4.6 的 100 万 token 上下文转为正式可用，并且不再对长提示加价；Gemini 3.1 Pro 超过 20 万 token、GPT-5.4 超过 27.2 万 token 仍要加价。窗口一旦开到这么长，资格报告就得写清验证到多长、在什么并发下。
 
-<details class="pt"><summary>想一想：按本卡的 128 KB 每 token，把窗口开到 100 万 token 对资格验证意味着什么？</summary>单个请求的缓存约 128 GB，比一张 80 GB 的卡还大，所以要说明硬件和并发，验证不到的长度标为未验证或限制开放。</details>
+<details class="pt"><summary>想一想：按上面的 128 KB 每 token，把窗口开到 100 万 token 对资格验证意味着什么？</summary>单个请求的缓存约 128 GB，比一张 80 GB 的卡还大，所以要说明硬件和并发，验证不到的长度标为未验证或限制开放。</details>

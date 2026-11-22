@@ -33,4 +33,8 @@ flowchart TD
 
 **别做：** 只贴报错一句话，让它"修一下"；或让它直接改代码。
 
-**出处：** Claude Code docs《Best practices》（Write a specific prompt：fix the login bug 对照）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Write a specific prompt：fix the login bug 对照）
+
+</details>

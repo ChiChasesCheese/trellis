@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Cluster architecture · 考点**｜考点 · 必会
+**Cluster architecture**｜考点 · 必会
 
 control plane 整个不可用了（比如 etcd 因网络分区进入只读）。已经在 worker 上跑着的应用，会怎样？你还能做什么、不能做什么？
 
@@ -24,4 +24,8 @@ control plane 整个不可用了（比如 etcd 因网络分区进入只读）。
 - **为什么生产要 3 或 5 个 control plane 节点：** etcd 要多数派（quorum）才能写，奇数个副本能避免两边各占一半、谁都不够多数的僵局（split brain）。
 - **高可用不是备份：** 多副本不能代替对 etcd 的备份和恢复方案。
 
-**出处：** Poulton ch2「The cluster store」「Control plane and worker nodes」
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch2「The cluster store」「Control plane and worker nodes」
+
+</details>

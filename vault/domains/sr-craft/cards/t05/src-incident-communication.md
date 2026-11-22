@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 指定一个人做 Comms；在一个频道和一份文档里集中信息；对 VP 和客服发第一条更新：影响、已知/未知、下次更新时间；之后按时更新。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你在压力下是否能让信息有秩序，并理解沟通是事故响应的一部分。
 
 **适合配哪类故事：** 你在一次事故中承担沟通或指挥角色，让团队和相关方都保持同步的经历。
 
 **出处：** Beyer 等《Site Reliability Engineering》"Managing Incidents"（sre.google/sre-book/managing-incidents/，2026-11-21 读取：Communications、live incident document、handoff）；Orosz《The Software Engineer's Guidebook》ch24 §6（"Communicate with stakeholders"、roles）；"已知/未知/下次更新" 的措辞是通用做法，该书没有给模板
+
+</details>

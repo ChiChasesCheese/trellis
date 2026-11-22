@@ -27,4 +27,8 @@ tags: [考点]
 2. 再把检测器当作额外一层，降低被碰到的概率，并用攻击成功率衡量；
 3. 默认假设检测器会被绕过，设计「被绕过之后最坏会发生什么」。
 
-**出处：** Huyen《AI Engineering》ch10 §Guardrail implementation；ch5 §Defenses Against Prompt Attacks；Willison《The lethal trifecta》simonwillison.net/2025/Jun/16/the-lethal-trifecta/（2026-11-21 读）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Guardrail implementation；ch5 §Defenses Against Prompt Attacks；Willison《The lethal trifecta》simonwillison.net/2025/Jun/16/the-lethal-trifecta/（2026-11-21 读）
+
+</details>

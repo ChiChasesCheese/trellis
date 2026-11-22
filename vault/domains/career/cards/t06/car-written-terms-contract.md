@@ -38,4 +38,8 @@ flowchart TD
 
 **常见错法：** 签字后才读；以为 HR 的话就是合同；接受"以后再补"。
 
-**出处：** Qureshi https://haseebq.com/my-ten-rules-for-negotiating-a-job-offer/（Rule 1: Have everything in writing）；McKenzie（follow-up recap email）；条款清单为通用提醒，不构成法律建议
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Qureshi https://haseebq.com/my-ten-rules-for-negotiating-a-job-offer/（Rule 1: Have everything in writing）；McKenzie（follow-up recap email）；条款清单为通用提醒，不构成法律建议
+
+</details>

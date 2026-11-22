@@ -38,4 +38,8 @@ flowchart TD
 
 **看用户感知的延迟：** agent 或 CoT 场景里模型会先生成用户看不到的中间步骤，用户感知的 TTFT 要长得多，所以有人用 time to publish（用户看到的第一个 token）。
 
-**出处：** Huyen《AI Engineering》ch9 §Latency, TTFT, and TPOT；ch4 §Cost and Latency
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch9 §Latency, TTFT, and TPOT；ch4 §Cost and Latency
+
+</details>

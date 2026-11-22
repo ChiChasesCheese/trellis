@@ -34,4 +34,8 @@ flowchart TD
 
 **常见错法：** 只看头衔；或者因为降级把一个总包更高、学习曲线更陡的机会拒掉。
 
-**出处：** Orosz《Guidebook》Ch.6 §4 "Down-leveling"（moving up a tier）；Ch.1 §3；Ch.5 §4
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.6 §4 "Down-leveling"（moving up a tier）；Ch.1 §3；Ch.5 §4
+
+</details>

@@ -21,4 +21,8 @@ tags: [考点]
 
 **对 (b) 的做法：** 先把它变成可检验的目标："p95 延迟从 X 降到 Y，不改变对账结果"，再让 agent 写基准和回归测试，最后才动代码。官方文档的建议是先让 agent 访谈你，直到能写出规格。
 
-**出处：** Claude Code docs《Best practices》（Brainstorm with Claude first；Tell Claude what it can't see）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Brainstorm with Claude first；Tell Claude what it can't see）
+
+</details>

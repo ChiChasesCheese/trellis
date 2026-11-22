@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 统计上个月所有告警的 precision，把大量误报的告警降级或删除；对没有告警的那次故障加症状告警，如请求成功率下降；每月看 precision 和 recall。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你是否把告警当作需要度量和迭代的产品。
 
 **适合配哪类故事：** 你通过减少噪声告警并补上盲区，使值班体验和故障发现速度同时改善的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch24 §4 "Alerting"（Urgency of alerts、Alert noise：precision / recall）；Beyer 等《Site Reliability Engineering》"Monitoring Distributed Systems"（sre.google/sre-book/monitoring-distributed-systems/：good pages、四个 golden signals、告警规则自问清单）
+
+</details>

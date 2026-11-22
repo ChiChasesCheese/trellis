@@ -21,4 +21,8 @@ tags: [拓展]
 - **前提：** 这两项都依赖 **cgroup v2**；v1.35 起 kubelet 不再支持 cgroup v1。
 - **节点驱逐：** PSI 也可用来参与 node 压力判断，具体见 kubelet 文档（本卡不展开）。
 
-**出处：** kubernetes.io 发布博客 v1.36（Support PSI based on cgroupv2 GA，KEP-4205；Memory QoS with cgroups v2，KEP-2570，列在 Beta 一节）；v1.37 博客 2026-09-14「Memory QoS Graduates to Beta」（默认开启，memoryThrottlingFactor 默认改为 null）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 发布博客 v1.36（Support PSI based on cgroupv2 GA，KEP-4205；Memory QoS with cgroups v2，KEP-2570，列在 Beta 一节）；v1.37 博客 2026-09-14「Memory QoS Graduates to Beta」（默认开启，memoryThrottlingFactor 默认改为 null）
+
+</details>

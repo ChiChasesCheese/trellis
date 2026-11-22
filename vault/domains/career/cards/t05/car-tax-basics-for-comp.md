@@ -35,4 +35,8 @@ flowchart TD
 
 **常见错法：** 用税前数字做大额行权决定；忽略 AMT；错过 83(b) 的 30 天期限。
 
-**出处：** IRS Topic No. 427 https://www.irs.gov/taxtopics/tc427（2026-09-24 复核）；IRS Publication 525 (2025) "Bonuses and awards"；通用信息，不构成税务建议
+<details class="pt" markdown="1"><summary>出处</summary>
+
+IRS Topic No. 427 https://www.irs.gov/taxtopics/tc427（2026-09-24 复核）；IRS Publication 525 (2025) "Bonuses and awards"；通用信息，不构成税务建议
+
+</details>

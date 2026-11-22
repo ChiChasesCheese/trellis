@@ -38,8 +38,12 @@ flowchart TD
 
 **回到题目：** 先找对方的工程师谈：你的日期、你需要的接口、对方为什么排到下季度。如果可以，提出自己提 PR 来实现，由他们评审；同时让你的代码对着 mock 先开发，约定每两周一个检查点。写进文档并发给双方的经理知情。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 跨团队协作的成熟度：尊重对方的约束，同时让自己的项目不被卡死。
 
 **适合配哪类故事：** 你被另一个团队的依赖卡住，通过协商、mock 或共同开发解决，并留下清楚约定的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch12 §5 "Working with Other Engineering Teams"（Draw a map of teams；Introduce yourself）；ch16 §6 "Engineering dependencies"（mitigations）
+
+</details>

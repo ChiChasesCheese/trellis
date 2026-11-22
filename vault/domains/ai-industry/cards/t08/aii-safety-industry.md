@@ -28,4 +28,8 @@ flowchart TD
   C --> P["发布节奏与采购"]
 ```
 
-**出处：** artificialintelligenceact.eu 高层摘要；State of AI Report 2026（stateof.ai）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+artificialintelligenceact.eu 高层摘要；State of AI Report 2026（stateof.ai）。
+
+</details>

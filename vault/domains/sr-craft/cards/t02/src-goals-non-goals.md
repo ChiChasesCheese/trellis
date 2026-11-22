@@ -40,8 +40,12 @@ flowchart TD
 
 **回到题目：** 指出这两条是被否定的目标，没有给出范围。让作者改成这样："不支持任务之间的跨地域强一致""不提供图形化管理界面，第一版只有 API""不做优先级抢占"。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有范围意识：知道一份设计要说清"不做什么"，评审才有焦点。
 
 **适合配哪类故事：** 你通过明确写出"不做什么"，避免了需求膨胀或拦下了一场无谓争论的经历。
 
 **出处：** Malte Ubl《Design Docs at Google》（industrialempathy.com）"Goals and non-goals"
+
+</details>

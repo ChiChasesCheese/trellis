@@ -32,4 +32,8 @@ flowchart TD
 
 **常见错法：** 完全依赖公司评审；目标太多；不写下来。
 
-**出处：** Orosz《Guidebook》Ch.3 §1 "Start Early: Gather Context and Set Goals"；Ch.4 §6；Ch.1 §5
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.3 §1 "Start Early: Gather Context and Set Goals"；Ch.4 §6；Ch.1 §5
+
+</details>

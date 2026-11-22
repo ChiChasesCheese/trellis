@@ -31,4 +31,8 @@ def fetch_rate(currency):
 
 **别做：** 因为"绿"就合并。
 
-**出处：** Stack Overflow Developer Survey 2025（AI：几乎对但不对）；Claude Code docs《Best practices》（Give Claude a check to run：ask for evidence）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Stack Overflow Developer Survey 2025（AI：几乎对但不对）；Claude Code docs《Best practices》（Give Claude a check to run：ask for evidence）
+
+</details>

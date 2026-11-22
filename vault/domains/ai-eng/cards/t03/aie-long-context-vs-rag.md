@@ -29,4 +29,8 @@ tags: [考点]
 
 **别忘了：** 上下文再长也会有应用的数据需求超过它。
 
-**出处：** Huyen《AI Engineering》ch6 §RAG（Note）；ch5 §Context Length and Context Efficiency
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §RAG（Note）；ch5 §Context Length and Context Efficiency
+
+</details>

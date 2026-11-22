@@ -40,5 +40,3 @@ step: 4
 **结构。** 所以等价类只在连接域（join domain）内成立：彼此内连接的一组表是一个域，每个外连接再给它可为空的那一侧另开一个域。
 
 **坑。** `a LEFT JOIN (SELECT * FROM b WHERE b.z = 1) b ON a.x = b.y WHERE a.x = 1`：两处都是「等于 1」，却不能把 `a.x`、`b.z` 并进同一个类，否则会错误地得出 `a.x = b.z`。
-
-**对应 LeetCode：** 无直接对应的题

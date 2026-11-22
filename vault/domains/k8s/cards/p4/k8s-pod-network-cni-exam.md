@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Pod 之间不通 · 考点**｜考点 · 必会
+**Pod 之间不通**｜考点 · 必会
 
 新装的集群里所有 Pod 都起不来，`kubectl describe pod` 事件里有「network plugin not ready / cni not initialized」，node 也是 `NotReady`。又一个情形：集群升级后，Pod 的 IP 和 Service 的 IP 段发生了重叠。各是什么问题，怎么排查？
 
@@ -27,4 +27,8 @@ flowchart TD
 - **不要指望 kube-proxy 修这个：** 它只管 Service 的转发，Pod 到 Pod 的连通在 CNI 这一层。
 - **经验：** 装集群时第一件事是装 CNI；`kube-system` 里 CoreDNS 的 Pod 先 Pending 往往也是同一个原因。
 
-**出处：** kubernetes.io Concepts › Network Plugins（需要 CNI 插件；runtime 加载 CNI；v1.24 起不由 kubelet 管理）、Cluster Networking（IP 段不重叠）；排查步骤为常规做法
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Network Plugins（需要 CNI 插件；runtime 加载 CNI；v1.24 起不由 kubelet 管理）、Cluster Networking（IP 段不重叠）；排查步骤为常规做法
+
+</details>

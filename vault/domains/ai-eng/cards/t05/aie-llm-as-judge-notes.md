@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**LLM-as-judge · 摘要**｜摘要 · 必会
+**LLM-as-judge**｜摘要 · 必会
 
 你的客服机器人每天回答上万个问题，没法每条都请人看。用另一个 LLM 来打分，有哪三种基本用法？各适合什么场景？
 
@@ -29,4 +29,8 @@ flowchart TD
 - **为什么流行：** 比人便宜、快，还能顺带给出打分理由。
 - **最大的前提：** judge 本身也是一个 AI 应用，它的 model 和 prompt 一变，分数就不可比了（见考点卡）。
 
-**出处：** Huyen《AI Engineering》ch3 §AI as a Judge · How to use AI as a judge
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch3 §AI as a Judge · How to use AI as a judge
+
+</details>

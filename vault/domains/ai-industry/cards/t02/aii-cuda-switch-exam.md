@@ -34,4 +34,8 @@ flowchart TD
   U --> D{"净节省 > 0？"}
 ```
 
-**出处：** 通用成本分析方法；30% 为演示数字。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+通用成本分析方法；30% 为演示数字。
+
+</details>

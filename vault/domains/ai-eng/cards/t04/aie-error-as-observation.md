@@ -37,4 +37,8 @@ flowchart TD
 
 **代价：** 反思会生成大量 token，增加成本和延迟；ReAct、Reflexion 的 prompt 里也要放很多示例。
 
-**出处：** Huyen《AI Engineering》ch6 §Reflection and error correction、§Agent Failure Modes → Tool failures
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Reflection and error correction、§Agent Failure Modes → Tool failures
+
+</details>

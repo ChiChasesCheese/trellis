@@ -26,4 +26,8 @@ tags: [先修]
 - 测试用的 needle 要用**私有信息**；用公开事实的话，模型可能是在凭训练时记住的知识回答，而不是真的在读你给的文本。
 - 性能随长度变差就缩短 prompt。RULER 等测试也是用来衡量这一点的。
 
-**出处：** Huyen《AI Engineering》ch5 §Context Length and Context Efficiency（Liu et al., 2023；NIAH；RULER）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch5 §Context Length and Context Efficiency（Liu et al., 2023；NIAH；RULER）
+
+</details>

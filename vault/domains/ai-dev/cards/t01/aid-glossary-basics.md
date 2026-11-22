@@ -29,4 +29,8 @@ flowchart TD
   R --> M
 ```
 
-**出处：** Claude Code docs《How Claude Code works》（The agentic loop；The context window）；Claude Code docs《Security》（Protect against prompt injection）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《How Claude Code works》（The agentic loop；The context window）；Claude Code docs《Security》（Protect against prompt injection）
+
+</details>

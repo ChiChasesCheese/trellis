@@ -23,4 +23,8 @@ controller 对比的「现在几个 Pod」来自它本地缓存的数据，缓�
 - **v1.36：** Kubernetes 针对 controller 的 staleness 加了缓解和可观测手段，处于 **beta**。v1.37 仍是 beta，范围扩到 HorizontalPodAutoscaler controller，并多了「熔断式」变体（node-lifecycle 这类对延迟敏感的 controller 在做破坏性决定前，直接向 API server 读一次，缓存没追上就不动手）。
 - **写自己的 controller 时：** 不要假设本地缓存永远是最新的；动作要能容忍重复执行（幂等）。
 
-**出处：** kubernetes.io 博客「Kubernetes v1.36: Staleness Mitigation and Observability for Controllers」；beta 阶段见 v1.36 发布说明；v1.37 发布博客（Stale controller mitigation，KEP-5647）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io 博客「Kubernetes v1.36: Staleness Mitigation and Observability for Controllers」；beta 阶段见 v1.36 发布说明；v1.37 发布博客（Stale controller mitigation，KEP-5647）
+
+</details>

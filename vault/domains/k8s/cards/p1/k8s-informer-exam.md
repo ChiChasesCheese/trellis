@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Watch 断了怎么办 · 考点**｜考点 · 必会
+**Watch 断了怎么办**｜考点 · 必会
 
 controller 的 watch 连接断了 5 分钟，重连时 API server 回复 `410 Gone`。这是什么意思？controller 接下来做什么？它的本地缓存这段时间是对的吗？
 
@@ -29,4 +29,8 @@ flowchart TD
 - **bookmark：** 客户端可以请求 BOOKMARK 事件，服务端定期推一个只带最新 resourceVersion 的事件，这样重连时版本更新，减少 410 的概率。
 - **为什么不每次都 list：** 全量 list 对 API server 和 etcd 都重，watch 是增量，只有断得太久才退回 list。
 
-**出处：** kubernetes.io Reference › Kubernetes API Concepts（Semantics for watch、410 Gone responses、Watch bookmarks）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Reference › Kubernetes API Concepts（Semantics for watch、410 Gone responses、Watch bookmarks）
+
+</details>

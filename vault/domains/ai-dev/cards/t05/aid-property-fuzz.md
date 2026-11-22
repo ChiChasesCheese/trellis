@@ -33,4 +33,8 @@ def test_never_crashes(s):
 **做：** 让 agent 提出 5 条不变量，**你筛选**（它可能给错的性质）；让它写输入生成器（strategy）。
 **别做：** 直接信任它提出的"性质"，错误的性质会产生假失败，或根本测不到东西。
 
-**出处：** 概念；hypothesis 是 Python 常用的 property-based testing 库
+<details class="pt" markdown="1"><summary>出处</summary>
+
+概念；hypothesis 是 Python 常用的 property-based testing 库
+
+</details>

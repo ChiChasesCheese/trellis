@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**与 Pod 交互 · 考点**｜考点 · 必会
+**与 Pod 交互**｜考点 · 必会
 
 一个 Pod 的 `RESTARTS` 在不断增加。`kubectl logs <pod>` 只看到刚启动的一两行，看不出为什么崩。你接下来怎么查？另外，镜像是不带 shell 的精简镜像，`kubectl exec -it <pod> -- sh` 报找不到 `sh`，怎么办？
 
@@ -33,4 +33,8 @@ kubectl debug -it mypod --image=busybox:1.36 --target=app -- sh
 
 - **别用 exec 修东西：** 在运行的容器里手工改的东西，容器一重建就没了。排障完要回到改 manifest。
 
-**出处：** KIA2 §5.3；KIA2 §6.1（container 状态里的 Last State 与退出码）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §5.3；KIA2 §6.1（container 状态里的 Last State 与退出码）
+
+</details>

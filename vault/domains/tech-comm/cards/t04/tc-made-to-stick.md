@@ -33,4 +33,8 @@ tags: [原则]
 - **只讲道理不讲具体。**
 - **故事和要点无关。**
 
-**出处：** Chip & Dan Heath《Made to Stick》（官方页面 heathbrothers.com/books/made-to-stick/ 未列出这六项；SUCCESs 的六个词取自该书通行的概括）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Chip & Dan Heath《Made to Stick》（官方页面 heathbrothers.com/books/made-to-stick/ 未列出这六项；SUCCESs 的六个词取自该书通行的概括）
+
+</details>

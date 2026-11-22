@@ -6,7 +6,7 @@ step: 3
 tags: [实践]
 ---
 ## Q
-**应用架构怎么一步步长大 · 实践**｜实践 · 追问
+**应用架构怎么一步步长大**｜实践 · 追问
 
 最简单的 AI 应用只有"请求 → 模型 → 回答"。生产里随着需求增加，通常按什么顺序往里加东西？每加一步，换来什么、要警惕什么？
 
@@ -32,4 +32,8 @@ flowchart TD
 
 **代价：** 书里的提醒：系统越复杂，能解决的任务越多，**失败点也越多，更难排查**。所以每一步都应由具体问题推动，并且配上监控与观测。写入类操作（write actions）风险最大，要格外小心。
 
-**出处：** Huyen《AI Engineering》ch10 §AI Engineering Architecture（Step 1–5）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §AI Engineering Architecture（Step 1–5）
+
+</details>

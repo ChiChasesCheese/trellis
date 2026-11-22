@@ -33,4 +33,8 @@ flowchart TD
   C --> D["比较基线"]
 ```
 
-**出处：** METR《Measuring the Impact of Early-2025 AI…》（2025-07-10）；METR《We are Changing our Developer Productivity Experiment Design》（2026-02-24）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+METR《Measuring the Impact of Early-2025 AI…》（2025-07-10）；METR《We are Changing our Developer Productivity Experiment Design》（2026-02-24）
+
+</details>

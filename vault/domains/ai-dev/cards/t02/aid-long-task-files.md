@@ -34,4 +34,8 @@ flowchart TD
   D --> E["提交 + 更新 progress"]
 ```
 
-**出处：** Anthropic Engineering《Effective harnesses for long-running agents》
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Anthropic Engineering《Effective harnesses for long-running agents》
+
+</details>

@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**Control plane 与 node 组件 · 考点**｜考点 · 必会
+**Control plane 与 node 组件**｜考点 · 必会
 
 下面三个现象，哪个组件出了问题？
 1. 新建的 Pod 一直 Pending，`kubectl describe pod` 里 NODE 一栏是 `<none>`
@@ -23,4 +23,8 @@ tags: [考点]
 - **排查顺序的思路：** 顺着「一条请求的旅程」找它停在了哪一步（见 end-to-end 一卡）。
 - **注意：** 现象 1 的另一种原因是资源不够，所有 node 都装不下。这时 describe 的 Events 里会有 scheduler 写的原因。
 
-**出处：** Poulton ch2（scheduler 找不到合适节点则标记 pending；kubelet 汇报任务状态）；KIA2 §1.2
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton ch2（scheduler 找不到合适节点则标记 pending；kubelet 汇报任务状态）；KIA2 §1.2
+
+</details>

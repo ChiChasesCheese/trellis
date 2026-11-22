@@ -31,4 +31,8 @@ flowchart TD
 
 **事实参照：** NVIDIA 2026 财年 10-K：一个直接客户占收入 22%，另一个 14%；上一年是 12%、11%、11%（直接客户，不含间接客户）。
 
-**出处：** NVIDIA FY2026 10-K customer concentration（经 MarketScreener 转载页核对）。
+<details class="pt" markdown="1"><summary>出处</summary>
+
+NVIDIA FY2026 10-K customer concentration（经 MarketScreener 转载页核对）。
+
+</details>

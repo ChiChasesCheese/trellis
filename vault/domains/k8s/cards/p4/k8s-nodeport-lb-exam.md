@@ -6,7 +6,7 @@ step: 2
 tags: [考点]
 ---
 ## Q
-**externalTrafficPolicy · 考点**｜考点 · 必会
+**externalTrafficPolicy**｜考点 · 必会
 
 LoadBalancer Service 的后端有 3 个 Pod：node A 上 1 个，node B 上 2 个。云负载均衡器把流量平分给 node A 和 node B。`externalTrafficPolicy` 分别设成 `Cluster` 和 `Local`，每个 Pod 收到多少流量？客户端 IP 能看到吗？
 
@@ -29,4 +29,8 @@ flowchart TB
 - **为什么 Cluster 要换源 IP：** 回包必须沿原路回到最初接收连接的 node，所以转发时把源 IP 换成该 node 的 IP。
 - **选择：** 需要真实客户端 IP（日志、风控）或想少一跳，选 Local；要均匀分布、省心，选 Cluster。
 
-**出处：** KIA2 §11.2（externalTrafficPolicy：Cluster 与 Local 的对比，图 11.10）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §11.2（externalTrafficPolicy：Cluster 与 Local 的对比，图 11.10）
+
+</details>

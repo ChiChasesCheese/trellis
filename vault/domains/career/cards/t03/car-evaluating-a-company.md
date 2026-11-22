@@ -35,4 +35,8 @@ flowchart TD
 
 **对方在想什么：** 招聘方愿意回答这些问题，你问得具体，他们会觉得你认真。回避的公司本身就是信号。
 
-**出处：** Orosz《Guidebook》Ch.1 §1、§4 "Cost Centers, Profit Centers"、§5；Ch.5 §3–§4；Ch.6 §1
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.1 §1、§4 "Cost Centers, Profit Centers"、§5；Ch.5 §3–§4；Ch.6 §1
+
+</details>

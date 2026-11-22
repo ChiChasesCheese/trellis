@@ -29,4 +29,8 @@ flowchart TD
 
 **漂移检查：** CI 里加一步：文档示例能运行、链接有效；改代码的 PR 要同时改文档。
 
-**出处：** Claude Code docs《Best practices》（What you can stop doing：Describe your architecture in CLAUDE.md；只写 Claude 读不出来的东西）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（What you can stop doing：Describe your architecture in CLAUDE.md；只写 Claude 读不出来的东西）
+
+</details>

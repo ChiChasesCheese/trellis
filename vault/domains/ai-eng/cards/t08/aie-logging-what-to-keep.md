@@ -27,4 +27,8 @@ tags: [考点]
 - 访问原文需要权限并留下审计记录；
 - 在隐私政策里写明用途。
 
-**出处：** Huyen《AI Engineering》ch10 §Logs and traces（记录什么）、§Input guardrails（脱敏）。保留期与分级为通用做法，书里无具体规定
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch10 §Logs and traces（记录什么）、§Input guardrails（脱敏）。保留期与分级为通用做法，书里无具体规定
+
+</details>

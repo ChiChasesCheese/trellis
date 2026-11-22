@@ -29,4 +29,8 @@ flowchart TD
   A -- "是，且靠前" --> D["不需要"]
 ```
 
-**出处：** Huyen《AI Engineering》ch6 §Reranking（用途：减少放进 context 的文档数）；sentence-transformers 文档（候选数与逐对打分）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Reranking（用途：减少放进 context 的文档数）；sentence-transformers 文档（候选数与逐对打分）
+
+</details>

@@ -37,5 +37,3 @@ step: 3
 - `python -P`（3.11 起）或环境变量 `PYTHONSAFEPATH` 可以去掉这个自动加入的目录。
 
 **坑。** 自己的 `random.py`、`logging.py` 会遮蔽标准库。3.13 起，报错会提示 `consider renaming ... since it has the same name as the standard library module`。
-
-**对应 LeetCode：** 无直接对应的题

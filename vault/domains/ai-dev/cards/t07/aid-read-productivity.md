@@ -27,4 +27,8 @@ tags: [摘要]
 
 **别做：** 只引用支持自己立场的那一个数字。
 
-**出处：** METR 2025 与 2026-02 更新；Stack Overflow Developer Survey 2025；DORA 2025
+<details class="pt" markdown="1"><summary>出处</summary>
+
+METR 2025 与 2026-02 更新；Stack Overflow Developer Survey 2025；DORA 2025
+
+</details>

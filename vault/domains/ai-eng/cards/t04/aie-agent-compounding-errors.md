@@ -42,4 +42,8 @@ flowchart TD
   D --> E["补测试或改工具"]
 ```
 
-**出处：** Huyen《AI Engineering》ch6 §Agent Failure Modes and Evaluation（Planning failures、Tool failures、Efficiency）；0.95²⁰ 为算术
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Huyen《AI Engineering》ch6 §Agent Failure Modes and Evaluation（Planning failures、Tool failures、Efficiency）；0.95²⁰ 为算术
+
+</details>

@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**Control plane 与 node 组件 · 摘要**｜摘要 · 必会
+**Control plane 与 node 组件**｜摘要 · 必会
 
 control plane 和 worker node 上各有哪些组件？谁和谁直接说话，谁又只能通过别人？
 
@@ -38,4 +38,8 @@ flowchart TB
 - **为什么都经 API server：** 认证、校验、审计只需要做在一个地方；组件之间不直接依赖，坏一个不牵连别的。
 - **etcd 高可用：** 副本数取奇数，才有多数派。
 
-**出处：** Poulton《The Kubernetes Book 2026》ch2「Control plane and worker nodes」；kubernetes.io Concepts › Cluster Architecture
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Poulton《The Kubernetes Book 2026》ch2「Control plane and worker nodes」；kubernetes.io Concepts › Cluster Architecture
+
+</details>

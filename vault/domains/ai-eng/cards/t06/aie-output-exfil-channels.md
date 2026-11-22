@@ -32,4 +32,8 @@ flowchart TD
 
 **注：** 这个具体攻击形式不在 OWASP LLM05 页面的正文里；机制是 trifecta 的"对外通信"条件在渲染场景的实例，防线按 LLM05 的"零信任、编码、CSP"思路推出。
 
-**出处：** 机制依据 Simon Willison《The lethal trifecta for AI agents》（对外通信）；防线依据 OWASP LLM05:2025 的 CSP 与零信任建议
+<details class="pt" markdown="1"><summary>出处</summary>
+
+机制依据 Simon Willison《The lethal trifecta for AI agents》（对外通信）；防线依据 OWASP LLM05:2025 的 CSP 与零信任建议
+
+</details>

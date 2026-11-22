@@ -29,4 +29,8 @@ flowchart TD
 
 **别做：** 让同一个 session 先写实现，再"为它写测试"。
 
-**出处：** Claude Code docs《Best practices》（Give Claude a check to run；Review against your spec）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Give Claude a check to run；Review against your spec）
+
+</details>

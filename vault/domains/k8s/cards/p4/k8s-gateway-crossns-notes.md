@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**跨 namespace、其他 Route 与 service mesh · 摘要**｜摘要 · 必会
+**跨 namespace、其他 Route 与 service mesh**｜摘要 · 必会
 
 Gateway API 里，route 怎么引用别的 namespace 的 Gateway 和 Service？除了 HTTP，还能路由什么？它和 service mesh 有什么关系？
 
@@ -33,4 +33,8 @@ flowchart TD
 - **service mesh：** 专门负责服务之间通信的基础设施层，不用改应用就能管理流量。Gateway API 管的是入口（**north/south**，集群外到内）；同一套 API 稍加扩展也能管集群内服务之间（**east/west**），这就是 **GAMMA** 倡议：route 的 `parentRefs` 里把 `kind: Service`、`group: core` 当作父对象。
 - **版本要核对：** 书里 TCPRoute 示例的 API 版本是 `v1alpha2`（尚在实验阶段），GRPCRoute 也不是每个实现都支持；用之前确认你选的实现支持哪些 Route。
 
-**出处：** KIA2 §13.5–13.7
+<details class="pt" markdown="1"><summary>出处</summary>
+
+KIA2 §13.5–13.7
+
+</details>

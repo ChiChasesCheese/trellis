@@ -38,8 +38,12 @@ flowchart TD
 
 **回到题目：** 向同事道歉并还给他；重新约定：结果是什么、什么时候做第一次检查、哪些风险随时来聊。他的做法只要达到目标就接受，如有顾虑在检查点以提问的形式提出。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你有没有扩展团队产能的能力，而不是所有事都自己做。
 
 **适合配哪类故事：** 你把一个重要工作交给别人，通过检查点保证结果，并看到对方因此成长的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch16 §5 "Day-to-Day Project Management"（Delegate generously；"Consider empowering the person with the most information to decide"）；ch22 §1（"Distrusts other engineers" 一段）；Part IV 引言
+
+</details>

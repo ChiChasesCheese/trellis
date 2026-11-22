@@ -37,8 +37,12 @@ flowchart TD
 
 **回到题目：** 设计阶段列出会接触的数据类型并问合规团队适用的规定；信用卡信息走受支持的支付方案，不自己存；日志脱敏；规划时拉安全团队做威胁评审。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你的责任意识与风险敏感度。
 
 **适合配哪类故事：** 你在设计阶段提前引入合规或安全评审，避免了后期返工或违规的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch23 §5 "Compliance and Privacy"（Regulations、Logging、Auditing）、§6 "Secure Development"；本卡不是法律建议，具体规定以合规团队为准
+
+</details>

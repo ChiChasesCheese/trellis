@@ -38,4 +38,8 @@ flowchart TD
 
 **对方在想什么：** 他想知道帮你要花多少精力，以及帮你会不会让他丢脸。具体、礼貌、容易回答的请求最容易得到帮助。
 
-**出处：** Orosz《Guidebook》Ch.22 §5 "Expanding Your Network"
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Orosz《Guidebook》Ch.22 §5 "Expanding Your Network"
+
+</details>

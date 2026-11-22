@@ -34,8 +34,12 @@ flowchart TD
 
 **回到题目：** 按风险分级：内部小工具走轻流程；支付链路走 canary、staged rollout 和自动回滚；紧急修复也要至少一人评审和回滚方案。
 
+<details class="pt" markdown="1"><summary>面试官看什么 · 配哪类故事 · 出处</summary>
+
 **面试官在考什么：** 你理解发布速度与风险的取舍，能按情境选择。
 
 **适合配哪类故事：** 你为不同风险的服务设计了差异化的发布流程，提升速度同时降低事故的经历。
 
 **出处：** Orosz《The Software Engineer's Guidebook》ch17 §1 "Extremes in Shipping to Production"、§2 "Typical Shipping Processes"、§5 "Taking Pragmatic Risks"、§7 "Selecting an Approach"
+
+</details>

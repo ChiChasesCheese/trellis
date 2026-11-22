@@ -29,4 +29,8 @@ agent 要跑集成测试，需要数据库密码。你把密码贴进了 prompt�
 
 **别做：** 只靠 CLAUDE.md 写"不要读 .env"——那是请求，不是强制（见 t03）。
 
-**出处：** Claude Code docs《Best practices》（Limit access with permission rules）；《Security》（Secure credential storage）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Limit access with permission rules）；《Security》（Secure credential storage）
+
+</details>

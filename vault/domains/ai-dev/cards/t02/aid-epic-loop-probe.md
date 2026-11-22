@@ -22,4 +22,8 @@ agent 交来的限流计划是："新建 RateLimiter 类，在所有路由前加
 
 **追问：** 计划本身要不要存下来？要。写成文件（如 SPEC.md），之后可以在**新 session** 里照着它实现，也可以拿它当审查标准。见下一叶。
 
-**出处：** Claude Code docs《Best practices》（Brainstorm with Claude first）；《How Claude Code works》（Plan mode）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Claude Code docs《Best practices》（Brainstorm with Claude first）；《How Claude Code works》（Plan mode）
+
+</details>

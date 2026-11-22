@@ -26,4 +26,8 @@ tags: [摘要]
 **做：** 把"一条命令验证"当第一优先级。
 **别做：** 为了 agent 去重写整个代码库。
 
-**出处：** DORA《2025 State of AI-assisted Software Development》；Claude Code docs《Best practices》（Give Claude a check to run）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+DORA《2025 State of AI-assisted Software Development》；Claude Code docs《Best practices》（Give Claude a check to run）
+
+</details>

@@ -29,4 +29,8 @@ tags: [原则]
 - Before: "Incident management is a critical part of operating any large-scale system, and over the years we have developed various processes."
 - After: "On March 3, a bad config push took checkout down for 42 minutes. This postmortem explains the cause, why our rollout checks missed it, and the three fixes we are making."
 
-**出处：** Google Technical Writing One《Paragraphs》（developers.google.com/tech-writing/one/paragraphs：strong opening sentence、一段一主题、what/why/how、三到五句）；Minto p. 33–48（Ch.2 The Introductory Flow）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+Google Technical Writing One《Paragraphs》（developers.google.com/tech-writing/one/paragraphs：strong opening sentence、一段一主题、what/why/how、三到五句）；Minto p. 33–48（Ch.2 The Introductory Flow）
+
+</details>

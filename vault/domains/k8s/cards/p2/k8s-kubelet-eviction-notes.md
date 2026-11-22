@@ -6,7 +6,7 @@ step: 1
 tags: [摘要]
 ---
 ## Q
-**kubelet、CRI 与 node-pressure eviction · 摘要**｜摘要 · 必会
+**kubelet、CRI 与 node-pressure eviction**｜摘要 · 必会
 
 kubelet 怎么让容器跑起来？node 内存快用完时，是 kubelet 在驱逐 Pod，还是内核在杀进程？
 
@@ -33,4 +33,8 @@ flowchart TB
 - **先回收再驱逐：** 先清理 node 级的资源（如未使用的镜像），不够再驱逐 Pod。
 - **监控的信号：** `memory.available`、`nodefs.available`、`pid.available` 等。
 
-**出处：** kubernetes.io Concepts › Node-pressure Eviction；Poulton ch2（kubelet、runtime）
+<details class="pt" markdown="1"><summary>出处</summary>
+
+kubernetes.io Concepts › Node-pressure Eviction；Poulton ch2（kubelet、runtime）
+
+</details>
