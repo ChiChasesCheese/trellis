@@ -31,3 +31,5 @@ Independent outlines: ladders (1-4), SRE book (5), Larson/Reilly (6-7), Orosz (8
 
 ## Next action
 Chi approves outline.md; then author skeleton/sr-craft.yaml.
+
+| 2026-11-21 | cards, all leaves (wave 1 core + wave 2 rest) | 110 cards; validate 0 errors; term_order 0 used before taught; plain_style / phone_diagrams / check_mermaid ok; Anki deck live |

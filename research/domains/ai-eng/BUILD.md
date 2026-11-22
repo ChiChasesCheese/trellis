@@ -37,3 +37,5 @@ Heading to leaf map: every chapter of source 1 maps to a branch; chapters 2 (mod
 
 ## Next action
 Chi reviews outline.md; then write skeleton/ai-eng.yaml (Chinese titles, requires edges from the 需先 marks).
+
+| 2026-11-21 | cards, all leaves (wave 1 core + wave 2 rest) | 177 cards; validate 0 errors; term_order 0 used before taught; plain_style / phone_diagrams / check_mermaid ok; Anki deck live |

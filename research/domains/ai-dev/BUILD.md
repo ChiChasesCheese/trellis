@@ -32,3 +32,5 @@ Authoritative outline: source 1 (official docs ToC) with source 2 to 4 for evide
 
 ## Next action
 Chi reviews outline.md; then skeleton/ai-dev.yaml.
+
+| 2026-11-21 | cards, all leaves (wave 1 core + wave 2 rest) | 107 cards; validate 0 errors; term_order 0 used before taught; plain_style / phone_diagrams / check_mermaid ok; Anki deck live |

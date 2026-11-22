@@ -34,3 +34,5 @@ Heading to leaf map: AI Index chapters 1/2 -> branches 7 and 4; chapter 4 (econo
 
 ## Next action
 Chi decides: new domain (recommended) or extend ai-literacy industry; then skeleton.
+
+| 2026-11-21 | cards, all leaves (wave 1 core + wave 2 rest) | 93 cards; validate 0 errors; term_order 0 used before taught; plain_style / phone_diagrams / check_mermaid ok; Anki deck live |
