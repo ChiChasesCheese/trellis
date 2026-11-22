@@ -1,10 +1,11 @@
 """A test deck written from a learning deck: one choice question per learning card, the card itself on the back.
 
     uv run python scripts/card_tests.py status <set>                  # how many source cards, how many have a question
-    uv run python scripts/card_tests.py todo <set> [--chunk 60]       # source cards with no question yet → sources/local/quiz/<set>-todo-NN.md
+    uv run python scripts/card_tests.py todo <set> [--chunk 60] [--start N]   # source cards with no question yet → sources/local/quiz/<set>-todo-NN.md
     uv run python scripts/card_tests.py lint <set> <file.json>        # the importer's checks alone
     uv run python scripts/card_tests.py review <set> NN [--show]      # a chunk's part files against its todo file; merges them when clean
-    uv run python scripts/card_tests.py import <set> <file.json> [--update]
+    uv run python scripts/card_tests.py import-ready <set>            # import the verified chunks' questions, in study order, as far as they reach
+    uv run python scripts/card_tests.py import <set> <file.json> [--update]   # one file as it is (use --update to rewrite questions already in Anki)
     uv run python scripts/card_tests.py full <set>                    # copy the source cards onto the backs again
     uv run python scripts/card_tests.py chunks <set> [NN <stage>]     # each chunk's stage (written / verifying / verified / imported); set one
 
@@ -39,12 +40,17 @@ MODELS = dq.SETS["recog"]["models"]
 SOURCE_MODELS = ("Trellis QA", "Trellis Cloze")
 EXCERPT = {"front": 350, "back": 900}   # what a writer sees of each side; the vault file has the rest
 # set -> its deck, and where its source cards come from: (sub-deck of the test deck, Anki query), in study order
+AI = '("tag:ai-literacy::*" OR "tag:llm-inference::*" OR "tag:ml-system-design::*")'
 SETS = {
     "lld": {"deck": "3 低层设计测验", "tag": "tlld", "preset": "低层设计测验", "crumb": "低层设计", "per_day": 20,
             "sources": [("", '"deck:低层设计（LLD）"')]},
+    # AI: the reading order of 「AI 从零开始」 in the Cerebras deck comes first (basics before everything), then the rest
     "ai": {"deck": "AI 测验", "tag": "tai", "preset": "AI 测验", "crumb": "AI", "per_day": 20,
-           "sources": [("1 AI 通识", '"tag:ai-literacy::*"'), ("2 LLM 推理", '"tag:llm-inference::*"'),
-                       ("3 AI 应用工程", '"deck:AI 应用工程"'), ("4 ML 与 LLM 系统设计", '"tag:ml-system-design::*"')]},
+           "sources": [("1 AI 从零开始", f'"deck:6 Cerebras::04 AI 从零开始" {AI}'), ("2 机器学习基础", f'"deck:6 Cerebras::05 机器学习基础" {AI}'),
+                       ("3 LLM 推理", f'"deck:6 Cerebras::08 LLM 推理" {AI}'), ("4 加速器与编译器", f'"deck:6 Cerebras::09 加速器与编译器" {AI}'),
+                       ("5 AI 应用工程", '"deck:AI 应用工程"'), ("6 ML 与 LLM 系统设计", f'"deck:6 Cerebras::10 ML 与 LLM 系统设计" {AI}'),
+                       ("7 生成式 AI 与经典 ML 设计题", f'"deck:6 Cerebras::16 生成式 AI 与经典 ML 设计题" {AI}'),
+                       ("8 AI 通识 · 扩展", f'"deck:6 Cerebras::18 AI 通识 · 扩展" {AI}'), ("9 其他", AI)]},
 }
 for _name, _cfg in SETS.items():   # settle and score in daily_quiz.py work on these sets too
     dq.SETS[_name] = {**_cfg, "questions": f"{_name}.jsonl", "results": f"{_name}-results.jsonl", "models": MODELS}
@@ -104,13 +110,27 @@ def status(kind: str) -> int:
     return 0
 
 
-def todo(kind: str, chunk: int) -> int:
-    have = done(kind)
+def written(kind: str) -> set[str]:
+    """Sources that already have a question in a part file (written, perhaps not imported yet)."""
+    out = set()
+    for f in HOME.glob(f"{kind}-bulk-*.part*.json"):
+        try:
+            out |= {q.get("source") for q in json.loads(f.read_text(encoding="utf-8"))}
+        except json.JSONDecodeError:
+            pass
+    return out
+
+
+def todo(kind: str, chunk: int, start: int = 1) -> int:
+    """Chunk files for the source cards that have no question yet (neither imported nor written), numbered from `start`;
+    chunk files below `start` are left as they are."""
+    have = set(done(kind)) | written(kind)
     rows = [s for s in sources(kind) if s["id"] not in have]
-    for old in HOME.glob(f"{kind}-todo-*.md"):
-        old.rename(old.with_suffix(".md.old"))
+    for old in HOME.glob(f"{kind}-todo-[0-9][0-9].md"):
+        if int(old.stem[-2:]) >= start:
+            old.unlink()
     parts = [rows[i:i + chunk] for i in range(0, len(rows), chunk)]
-    for k, part in enumerate(parts, 1):
+    for k, part in enumerate(parts, start):
         lines = [f"# {SETS[kind]['deck']}：{len(part)} 张原卡，每张写一道测试题\n",
                  f"规则见 research/agents/card-test-questions.md。**保持下面的顺序**，写进 sources/local/quiz/{kind}-bulk-{k:02d}.part1.json "
                  f"和 part2.json（各一半）。\n"]
@@ -119,7 +139,7 @@ def todo(kind: str, chunk: int) -> int:
             lines.append(f"- source: {s['id']}\n  - 位置：{s['crumb'] or s['deck']}\n  - 正面：{dq.plain(s['front'], front)}\n"
                          f"  - 背面：{dq.plain(s['back'], EXCERPT['back']) or '（填空卡：正面已含全部内容）'}")
         (HOME / f"{kind}-todo-{k:02d}.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"{len(rows)} source cards -> {len(parts)} file(s) sources/local/quiz/{kind}-todo-NN.md")
+    print(f"{len(rows)} source cards -> {len(parts)} file(s) sources/local/quiz/{kind}-todo-NN.md, from {start:02d}")
     return 0
 
 
@@ -174,10 +194,42 @@ def ensure_deck(kind: str, src: list[dict]) -> None:
         anki("setDeckConfigId", decks=[d], configId=cid)
 
 
+def import_ready(kind: str) -> int:
+    """Import what is ready, in study order: the questions of the verified chunks, group by group, up to the first
+    source card that has no verified question yet. New cards take their position from the order they are added in, so
+    a later card is never added before an earlier one of its group."""
+    state_file = HOME / f"{kind}-state.json"
+    state = json.loads(state_file.read_text(encoding="utf-8")) if state_file.exists() else {}
+    pool = {}
+    for nn, stage in state.items():
+        f = HOME / f"{kind}-bulk-{nn}.json"
+        if stage == "verified" and f.exists():
+            pool.update({q["source"]: q for q in json.loads(f.read_text(encoding="utf-8"))})
+    src, have = sources(kind), done(kind)
+    ready, waiting = [], {}
+    for group in dict.fromkeys(s["group"] for s in src):
+        for s in (x for x in src if x["group"] == group):
+            if s["id"] in have:
+                continue
+            if s["id"] not in pool:
+                waiting[group or SETS[kind]["deck"]] = s["id"]
+                break
+            ready.append(pool[s["id"]])
+    for g, sid in waiting.items():
+        print(f"  {g}: waits for {sid}")
+    if not ready:
+        print(f"{kind}: nothing ready to import")
+        return 0
+    return import_questions(kind, ready, update=False, src=src)
+
+
 def import_file(kind: str, path: Path, update: bool) -> int:
+    return import_questions(kind, json.loads(path.read_text(encoding="utf-8")), update)
+
+
+def import_questions(kind: str, questions: list[dict], update: bool, src: list[dict] | None = None) -> int:
     cfg = dq.SETS[kind]
-    questions = json.loads(path.read_text(encoding="utf-8"))
-    src = sources(kind)
+    src = src or sources(kind)
     by_id = {s["id"]: s for s in src}
     bad = lint_file(kind, questions, set(by_id))
     for i, e in bad:
@@ -313,7 +365,10 @@ def main() -> int:
     if cmd == "chunks":
         return chunks(kind, (args[2], args[3]) if len(args) > 3 else None)
     if cmd == "todo":
-        return todo(kind, int(args[args.index("--chunk") + 1]) if "--chunk" in args else 60)
+        return todo(kind, int(args[args.index("--chunk") + 1]) if "--chunk" in args else 60,
+                    int(args[args.index("--start") + 1]) if "--start" in args else 1)
+    if cmd == "import-ready":
+        return import_ready(kind)
     if cmd == "lint":
         qs = json.loads(Path(args[2]).read_text(encoding="utf-8"))
         bad = lint_file(kind, qs)
