@@ -71,17 +71,8 @@ DAILY_DECKS = ("1 每日测验", "2 今日算法", "3 今日低层设计", "4 �
 LIMITS = {"question": 90, "option": 34, "why": 90, "title": 44, "statement": 100}   # characters; a test card is read in seconds
 
 
-def anki(action: str, **params):
-    req = urllib.request.Request("http://127.0.0.1:8765", json.dumps({"action": action, "version": 6, "params": params}).encode())
-    for _ in range(60):
-        out = json.load(urllib.request.urlopen(req, timeout=300))
-        if out["error"] and "lifecycle" in str(out["error"]):
-            time.sleep(2)
-            continue
-        if out["error"]:
-            raise RuntimeError(out["error"])
-        return out["result"]
-    raise RuntimeError("Anki stayed busy for two minutes")
+sys.path.insert(0, str(ROOT / "scripts"))
+from test_cards import anki, length_tell  # noqa: E402  (shared with the quick deck: scripts/test_cards.py)
 
 
 def settings() -> dict:
@@ -368,12 +359,10 @@ def lint(q: dict) -> list[str]:
 
 def lint_file(questions: list[dict]) -> list[tuple[int, str]]:
     bad = [(i, e) for i, q in enumerate(questions) for e in lint(q)]
-    single = [q for q in questions if isinstance(q.get("correct"), int) and q.get("options")]
-    longest = [q for q in single if 0 <= q["correct"] < len(q["options"])
-               and len(q["options"][q["correct"]]) > max(len(o) for i, o in enumerate(q["options"]) if i != q["correct"])]
-    if len(single) >= 10 and len(longest) > 0.4 * len(single):   # "pick the longest" must not pass the test
-        bad.append((-1, f"the correct option is the longest in {len(longest)} of {len(single)} questions (at most 40%): "
-                        "even them out, e.g. " + "; ".join(q.get("title", q["question"])[:20] for q in longest[:6])))
+    single = [q for q in questions if isinstance(q.get("correct"), int) and len(q.get("options", [])) > 1 and 0 <= q["correct"] < len(q["options"])]
+    _far, longest = length_tell([([len(o) for o in q["options"]], q["correct"]) for q in single])
+    if len(single) >= 10 and longest > 0.4 * len(single):   # "pick the longest" must not pass the test
+        bad.append((-1, f"the correct option is the longest in {longest} of {len(single)} questions (at most 40%): even them out"))
     return bad
 
 

@@ -396,6 +396,7 @@ def gate(days: list[str]) -> int:
     inputs = load_inputs()
     failed = 0
     mix = Counter()
+    seen_cards: list[dict] = []
     for day in days or sorted(inputs):
         rows, _ = day_rows("cards", day)
         if not rows:
@@ -407,6 +408,7 @@ def gate(days: list[str]) -> int:
         missing = set(inputs[day]) - written
         day_mix = Counter(c["fmt"] for c in cards)
         mix.update(day_mix)
+        seen_cards += cards
         bare = sum(1 for c in cards if not c.get("more"))
         print(f"{day}: {len(cards)} ok, {len(problems)} failing, {len(skipped)} skipped, {len(dropped)} dropped, {len(missing)} not written"
               + (f", {bare} without more" if bare else "") + "  " + " ".join(f"{f} {day_mix[f]}" for f in FORMATS if day_mix[f]))
@@ -418,7 +420,16 @@ def gate(days: list[str]) -> int:
     if mix:
         n = sum(mix.values())
         print("mix: " + " ".join(f"{f} {mix[f] / n:.0%}" for f in FORMATS))
+        print(choice_tell(seen_cards))
     return 1 if failed else 0
+
+
+def choice_tell(cards: list[dict]) -> str:
+    """How often the right option of a choice card is the longest: with three options, chance is a third."""
+    import test_cards
+    mc = [c for c in cards if c.get("fmt") == "mc" and len(c.get("opts", [])) > 1]
+    far, longest = test_cards.length_tell([([units(o) for o in c["opts"]], 0) for c in mc])
+    return f"choice cards: the right option is the longest in {longest} of {len(mc)} ({100 * longest // max(1, len(mc))}%; aim for at most 40%)"
 
 
 def show(chunks: list[str]) -> None:
@@ -662,7 +673,8 @@ MODEL_OF = {"flaw": "qa"}
 
 def css() -> str:
     from trellis.build import CSS
-    return CSS + QUICK_CSS
+    import test_cards
+    return CSS + QUICK_CSS + test_cards.SOURCE_CSS
 
 
 def mark(s: str) -> str:
@@ -702,6 +714,9 @@ def fields(c: dict, point: dict) -> tuple[str, list[str]]:
         c = {**c, "q": c.get("q", ""), "_code_q": snip(c["code_q"])}
     if c.get("more"):  # kept inside the Why field: a new field forces a one-way full sync of the collection
         why += f'<div class="more"><b>延伸</b>{mark(c["more"])}</div>'
+    if c.get("_sources"):  # the point's source cards under the answer (原卡): a miss is learnt on the spot; same field, same reason
+        import test_cards
+        why += test_cards.source_block(c["_sources"])
     if f in ("qa", "flaw"):
         q = ("这句话错在哪？<br>" if f == "flaw" else "") + mark(c["q"]) + c.get("_code_q", "")
         return "qa", [q, mark(c["a"]), why, crumb, KIND[f], title]
@@ -753,6 +768,20 @@ def fields(c: dict, point: dict) -> tuple[str, list[str]]:
     right = "".join(item.format(i=i, t=mark(c["pairs"][i][1])) for i in order)
     solution = '<table class="sol">' + "".join(f"<tr><td>{mark(a)}</td><td>→</td><td>{mark(b)}</td></tr>" for a, b in c["pairs"]) + "</table>"
     return "match", [mark(c["q"]), left, right, solution, why, crumb, title]
+
+
+def with_sources(cards: list[dict]) -> int:
+    """Config `quick.full_back`: every card carries its point's source cards, as they stand in Anki, for its back.
+    Returns how many cards got at least one."""
+    import test_cards
+    found = test_cards.source_notes([i for c in cards for i in c.get("based_on", [])])
+    n = 0
+    for c in cards:
+        src = [found[i] for i in c.get("based_on", []) if i in found]
+        if src:
+            c["_sources"] = src
+            n += 1
+    return n
 
 
 def all_cards(verified_only: bool) -> tuple[list[dict], list[str]]:
@@ -859,6 +888,8 @@ def push(dry: bool, verified_only: bool) -> int:
     cards, problems = all_cards(verified_only)
     for p in problems:
         print("  ", p)
+    if config().get("full_back"):
+        print(f"source cards on the back of {with_sources(cards)} of {len(cards)} cards")
     pushed_file = HOME / "pushed.json"
     pushed = set(json.loads(pushed_file.read_text(encoding="utf-8"))) if pushed_file.exists() else set()
     ids = call("findNotes", query=f"tag:{TAG}")
