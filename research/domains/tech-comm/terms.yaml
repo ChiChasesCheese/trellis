@@ -1,0 +1,15 @@
+# term -> leaf id that first teaches it (skeleton order). Terms not listed here are defined inline on the card.
+Answer first: t01.answer-first
+Signposting: t01.signposting
+SCQA: t01.scqa-situation-complication-question-answer
+Key Line: t01.key-line-complex-introductions
+MECE: t01.logic-trees-issue-analysis
+SUCCESs: t04.made-to-stick-success
+Follow-up notes: t05.follow-up-notes
+Restate & clarify: t01.restate-clarify
+Hedging: t06.hedging
+Active voice: t04.active-voice-clear-sentences
+runbook: t04.readmes-runbooks
+sequence diagram: t02.sequence-state-diagrams
+deductive: t01.deductive-vs-inductive-reasoning
+inductive: t01.deductive-vs-inductive-reasoning
