@@ -5,6 +5,9 @@
     uv run python scripts/daily_quiz.py settle                       # answered questions: record the result, move them to their topic's 考察题 deck
     uv run python scripts/daily_quiz.py score [--weak]               # accuracy per topic from the results (guides what to relearn)
 
+    uv run python scripts/daily_quiz.py import <file> --set recog    # 模式识别: one recognition question per LeetCode problem,
+    uv run python scripts/daily_quiz.py score --set recog [--weak]   # kept in its own deck; missed problems feed the LeetCode plan
+
 How it fits (Chi, 2026-11-21): the quiz is independent of the learning flow and may steer it. A scheduled writer
 (brief: research/agents/daily-quiz.md) runs settle → pick → writes questions → import each morning. A question is a
 test card, not a teaching card: one interview-style probe, three or four short options, one correct, wrong options
@@ -39,9 +42,15 @@ CONFIG = ROOT / "sources/local/plan/config.json"
 COLLECTION = Path(os.path.expanduser("~/Library/Application Support/Anki2/User 1/collection.anki2"))
 DECK = "1 每日测验"
 MODEL = "Trellis Quick Choice"
+MULTI = "Trellis Quick Multi"
+# a set = its own deck, tag and record files. `recog` is the pattern-recognition pass over the algorithm tree: every card
+# shows only "模式识别" as its crumb (the topic would give the answer away) and stays in its deck after it is answered.
+SETS = {"quiz": {"deck": DECK, "tag": "quiz", "preset": "每日测验", "questions": "questions.jsonl", "results": "results.jsonl"},
+        "recog": {"deck": "2 算法模式识别", "tag": "recog", "preset": "算法模式识别", "questions": "recog.jsonl", "results": "recog-results.jsonl"}}
+STATEMENT = '<div style="font-size:.86em;opacity:.8;margin:.35em 0 .55em">{}</div>'
 RECAP = "考察题"
 DAILY_DECKS = ("1 每日测验", "2 今日算法", "3 今日低层设计", "4 碎片速刷", "5 系统设计高频题", "6 Cerebras", "7 Cerebras 力扣", "8 LC Project")
-LIMITS = {"question": 90, "option": 34, "why": 90}   # characters; a test card is read in seconds
+LIMITS = {"question": 90, "option": 34, "why": 90, "title": 44, "statement": 100}   # characters; a test card is read in seconds
 
 
 def anki(action: str, **params):
@@ -59,7 +68,7 @@ def anki(action: str, **params):
 
 def settings() -> dict:
     cfg = json.loads(CONFIG.read_text(encoding="utf-8")).get("quiz", {}) if CONFIG.exists() else {}
-    return {"domains": ["sysdesign", "leetcode-tree"], "per_day": 12, "rest_days": 7, **cfg}
+    return {"domains": ["sysdesign", "leetcode-tree"], "per_day": 20, "rest_days": 7, **cfg}
 
 
 def plain(field: str, limit: int) -> str:
@@ -143,12 +152,18 @@ def pick(hours: int, n: int) -> int:
 def lint(q: dict) -> list[str]:
     errs = []
     opts = q.get("options", [])
-    if not 3 <= len(opts) <= 4:
-        errs.append("needs 3 or 4 options")
-    if not isinstance(q.get("correct"), int) or not 0 <= q["correct"] < len(opts):
-        errs.append("correct must be the index of one option")
-    if len(q.get("question", "")) > LIMITS["question"]:
-        errs.append(f"question over {LIMITS['question']} characters")
+    right = q.get("correct")
+    multi = isinstance(right, list)
+    if not 3 <= len(opts) <= (5 if multi else 4):
+        errs.append("needs 3 or 4 options (up to 5 when several are correct)")
+    if multi:
+        if not (2 <= len(right) < len(opts) and all(isinstance(i, int) and 0 <= i < len(opts) for i in right)):
+            errs.append("multi-select: correct must list 2 or more option indexes, not all of them")
+    elif not isinstance(right, int) or not 0 <= right < len(opts):
+        errs.append("correct must be the index of one option (or a list of indexes for multi-select)")
+    for key in ("question", "title", "statement"):
+        if len(q.get(key, "")) > LIMITS[key]:
+            errs.append(f"{key} over {LIMITS[key]} characters")
     if any(len(o) > LIMITS["option"] for o in opts):
         errs.append(f"an option over {LIMITS['option']} characters")
     if len(q.get("why", "")) > LIMITS["why"] or not q.get("why"):
@@ -159,9 +174,11 @@ def lint(q: dict) -> list[str]:
         errs.append('no "all / none of the above" options')
     if len(set(opts)) != len(opts):
         errs.append("duplicate options")
-    for key in ("topic", "point", "source"):
+    for key in ("topic", "point"):
         if not q.get(key):
             errs.append(f"missing {key}")
+    if q.get("topic", "").startswith("leetcode") and not q.get("statement"):
+        errs.append("an algorithm question needs a statement: what the problem asks, in one or two lines")
     return errs
 
 
@@ -179,7 +196,15 @@ def home_deck(source: list[int]) -> str:
     return ""
 
 
-def import_questions(path: Path) -> int:
+def question_html(q: dict) -> str:
+    """Title, then what the problem asks in small print, then the question itself."""
+    head = f'<b>{html.escape(q["title"])}</b>' if q.get("title") else ""
+    stmt = STATEMENT.format(html.escape(q["statement"])) if q.get("statement") else ("<br>" if head else "")
+    return head + stmt + html.escape(q["question"])
+
+
+def import_questions(path: Path, kind: str = "quiz") -> int:
+    cfg = SETS[kind]
     questions = json.loads(path.read_text(encoding="utf-8"))
     bad = [(i, e) for i, q in enumerate(questions) for e in lint(q)]
     for i, e in bad:
@@ -188,63 +213,72 @@ def import_questions(path: Path) -> int:
         print(f"{len({i for i, _ in bad})} of {len(questions)} questions fail the lint; nothing imported")
         return 1
     today = str(datetime.date.today())
-    known = {q["id"] for q in jsonl("questions.jsonl")}
-    if DECK not in anki("deckNames"):
-        anki("createDeck", deck=DECK)
+    known = {q["id"] for q in jsonl(cfg["questions"])}
+    if cfg["deck"] not in anki("deckNames"):
+        anki("createDeck", deck=cfg["deck"])
         base = anki("getDeckConfig", deck="4 碎片速刷")
-        cid = anki("cloneDeckConfigId", name="每日测验", cloneFrom=base["id"])
+        cid = anki("cloneDeckConfigId", name=cfg["preset"], cloneFrom=base["id"])
         if cid:
-            anki("setDeckConfigId", decks=[DECK], configId=cid)
-            conf = anki("getDeckConfig", deck=DECK)
-            conf["new"]["perDay"], conf["rev"]["perDay"] = 9999, 9999   # the deck holds exactly the day's questions
+            anki("setDeckConfigId", decks=[cfg["deck"]], configId=cid)
+            conf = anki("getDeckConfig", deck=cfg["deck"])
+            conf["new"]["perDay"], conf["rev"]["perDay"] = 9999, 9999   # the deck holds exactly what is meant to be answered
+            conf["newSortOrder"] = 2 if kind == "recog" else conf.get("newSortOrder", 0)   # recognition: random order, never by topic
             anki("saveDeckConfig", config=conf)
     notes, records = [], []
     for q in questions:
-        qid = "quiz-" + hashlib.sha1((q["topic"] + q["question"]).encode()).hexdigest()[:10]
+        qid = f"{cfg['tag']}-" + hashlib.sha1((q["topic"] + q.get("title", "") + q["question"]).encode()).hexdigest()[:10]
         if qid in known:
             continue
         order = list(range(len(q["options"])))
         random.Random(qid).shuffle(order)   # the writer tends to put the right answer first
-        letters = "ABCD"
+        letters = "ABCDE"
         opts = "".join(f'<div class="opt tappable" data-k="{letters[pos]}" onclick="qkTap(this)"><span class="k">{letters[pos]}</span>'
                        f'<div class="body">{html.escape(q["options"][i])}</div></div>' for pos, i in enumerate(order))
-        right = letters[order.index(q["correct"])]
-        home = home_deck([int(c) for c in q["source"]])
-        notes.append({"deckName": DECK, "modelName": MODEL,
-                      "fields": {"Question": html.escape(q["question"]), "Opts": opts, "Correct": right,
-                                 "Answer": f'{right}. {html.escape(q["options"][q["correct"]])}', "Why": html.escape(q["why"]),
-                                 "Crumb": html.escape(q.get("crumb") or q["point"]), "Point": html.escape(q["point"])},
-                      "tags": ["quiz", f"quiz::{today}", f"quiz::id::{qid}", f"quiz::leaf::{q['topic']}"],
+        multi = isinstance(q["correct"], list)
+        right = sorted(letters[order.index(i)] for i in (q["correct"] if multi else [q["correct"]]))
+        answer = "；".join(f'{k}. {html.escape(q["options"][order[letters.index(k)]])}' for k in right)
+        source = [int(c) for c in q.get("source", [])]
+        home = home_deck(source) if source and kind == "quiz" else ""
+        crumb = "模式识别" if kind == "recog" else q.get("crumb") or q["point"]
+        notes.append({"deckName": cfg["deck"], "modelName": MULTI if multi else MODEL,
+                      "fields": {"Question": question_html(q), "Opts": opts, "Correct": "".join(right), "Answer": answer,
+                                 "Why": html.escape(q["why"]), "Crumb": html.escape(crumb), "Point": html.escape(q["point"])},
+                      "tags": [cfg["tag"], f"{cfg['tag']}::{today}", f"{cfg['tag']}::id::{qid}", f"{cfg['tag']}::leaf::{q['topic']}"],
                       "options": {"allowDuplicate": True}})
-        records.append({"id": qid, "date": today, "topic": q["topic"], "point": q["point"], "source": q["source"], "home": home})
+        records.append({"id": qid, "date": today, "topic": q["topic"], "point": q["point"], "source": source, "home": home,
+                        "title": q.get("title", "")})
     if notes:
         ids = anki("addNotes", notes=notes)
-        with (HOME / "questions.jsonl").open("a", encoding="utf-8") as fh:
+        with (HOME / cfg["questions"]).open("a", encoding="utf-8") as fh:
             for rec, nid in zip(records, ids):
                 fh.write(json.dumps({**rec, "note": nid}, ensure_ascii=False) + "\n")
         anki("sync")
-    print(f"{len(notes)} question(s) added to {DECK}")
+    print(f"{len(notes)} question(s) added to {cfg['deck']}")
     return 0
 
 
 # ---------------------------------------------------------------- settle and score
 
-def settle() -> int:
-    """Answered questions leave the quiz deck: the first answer is the result, the card goes to its topic's 考察题 deck."""
-    cards = anki("cardsInfo", cards=anki("findCards", query=f'"deck:{DECK}" tag:quiz -is:new'))
+def settle(kind: str = "quiz") -> int:
+    """Answered questions: the first answer is the result. Quiz cards then go to their topic's 考察题 deck; recognition
+    cards stay where they are and come back on Anki's schedule."""
+    cfg = SETS[kind]
+    done = {r["id"] for r in jsonl(cfg["results"])}
+    cards = anki("cardsInfo", cards=anki("findCards", query=f'"deck:{cfg["deck"]}" tag:{cfg["tag"]} -is:new'))
+    by_note = {q["note"]: q for q in jsonl(cfg["questions"])}
+    cards = [c for c in cards if c["note"] in by_note and by_note[c["note"]]["id"] not in done]
     if not cards:
         print("nothing answered since the last settle")
         return 0
-    by_note = {q["note"]: q for q in jsonl("questions.jsonl")}
     reviews = anki("getReviewsOfCards", cards=[str(c["cardId"]) for c in cards])
     moves: dict[str, list[int]] = collections.defaultdict(list)
-    with (HOME / "results.jsonl").open("a", encoding="utf-8") as fh:
+    with (HOME / cfg["results"]).open("a", encoding="utf-8") as fh:
         for c in cards:
             q = by_note.get(c["note"])
             log = sorted(reviews.get(str(c["cardId"]), []), key=lambda r: r["id"])
             if not q or not log:
                 continue
-            fh.write(json.dumps({"id": q["id"], "topic": q["topic"], "point": q["point"], "correct": log[0]["ease"] > 1,
+            fh.write(json.dumps({"id": q["id"], "topic": q["topic"], "point": q["point"], "title": q.get("title", ""), "correct": log[0]["ease"] > 1,
                                  "ease": log[0]["ease"], "date": str(datetime.date.fromtimestamp(log[0]["id"] / 1000))},
                                 ensure_ascii=False) + "\n")
             if q.get("home"):
@@ -260,8 +294,17 @@ def settle() -> int:
     return 0
 
 
-def score(weak_only: bool) -> int:
-    results = jsonl("results.jsonl")
+def score(weak_only: bool, kind: str = "quiz") -> int:
+    results = jsonl(SETS[kind]["results"])
+    if kind == "recog":   # per problem: the missed ones are what the LeetCode plan should bring back
+        missed = [r for r in results if not r["correct"]]
+        (HOME / "recog-missed.json").write_text(json.dumps([{"title": r["title"], "topic": r["topic"]} for r in missed],
+                                                           ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"{len(results)} problems answered, {len(results) - len(missed)} recognised ({100 * (len(results) - len(missed)) // max(1, len(results))}%); "
+              f"{len(missed)} missed -> sources/local/quiz/recog-missed.json")
+        for r in missed:
+            print("  ✗", r["title"])
+        return 0
     by_topic: dict[str, list[bool]] = collections.defaultdict(list)
     for r in results:
         by_topic[r["topic"]].append(r["correct"])
@@ -284,12 +327,16 @@ def main() -> int:
         hours = int(args[args.index("--hours") + 1]) if "--hours" in args else 30
         n = int(args[args.index("--n") + 1]) if "--n" in args else settings()["per_day"]
         return pick(hours, n)
+    kind = args[args.index("--set") + 1] if "--set" in args else "quiz"
+    if kind not in SETS:
+        print(f"unknown set {kind!r}; one of {sorted(SETS)}")
+        return 2
     if args[0] == "import":
-        return import_questions(Path(args[1]))
+        return import_questions(Path(args[1]), kind)
     if args[0] == "settle":
-        return settle()
+        return settle(kind)
     if args[0] == "score":
-        return score("--weak" in args)
+        return score("--weak" in args, kind)
     print(__doc__)
     return 2
 
