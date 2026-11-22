@@ -10,6 +10,9 @@ first). You are the second reader. Assume some questions are flawed and find the
 
 ## Check every question, one by one
 
+0. **Do the options belong to this problem at all?** Writers' patch scripts have shifted whole option lists onto
+   neighbouring questions. If the options or `why` talk about another problem, find where they belong and move them
+   back, or write new ones.
 1. **Is the correct option right**, and does it agree with 解法要点? (If the entry's solution itself looks wrong, do not
    change the answer; report it.)
 2. **Is any wrong option actually a valid solution** under the statement as written? Think of the standard alternatives

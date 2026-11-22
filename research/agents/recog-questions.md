@@ -70,6 +70,12 @@ Sixty finished examples: `sources/local/quiz/recog-2026-11-21.json`. Read ten of
    decides it into the statement.
 8. No "all / none of the above", no joke options, no Markdown, no code blocks; inline symbols like `dp[i]`, `O(n)` are fine.
 
+## Fixing after a lint failure
+
+Edit the one question the lint names, by hand, and read the whole question again afterwards. Do not patch options with
+a script that addresses questions by position: in one chunk such a script shifted the option lists of nine questions
+onto their neighbours, and the lint cannot see that the options no longer belong to the problem.
+
 ## Report (your final message, nothing else)
 
 - Parts written and the lint line of each.
