@@ -926,6 +926,9 @@ def preset(cfg):
     if not cfg.get("lc_deck", True):  # Chi 2026-11-21: 算法模式识别 is the algorithm deck, 今日算法 goes
         drop_daily_deck(daily_extra.LC_DECK)
         names = [d for d in names if d != daily_extra.LC_DECK and not d.startswith(daily_extra.LC_DECK + "::")]
+    if not cfg.get("lld_deck", True):
+        drop_daily_deck(daily_extra.LLD_DECK)
+        names = [d for d in names if d != daily_extra.LLD_DECK and not d.startswith(daily_extra.LLD_DECK + "::")]
     if not plan_deck:  # Chi 2026-11-21: no 今日计划 deck, he studies the decks themselves
         drop_plan_deck()
         names = [d for d in names if d != DECK and not d.startswith(DECK + "::")]
@@ -1266,6 +1269,9 @@ def run(apply_to_anki: bool, deep_only: bool = False) -> None:
                                 skip={anki[i]["cardId"] for i in dive if i in anki})
     if not cfg.get("lc_deck", True):  # no 今日算法 deck: its problems go home, new ones come from 算法模式识别
         extra.lc_new, extra.lc_similar, extra.lc_focus = [], [], []
+    if not cfg.get("lld_deck", True):  # no 今日低层设计 deck (Chi 2026-11-22): new cards come from 3 低层设计测验, reviews stay in the LLD deck
+        extra.lld_new = []
+        extra.reviews = [r for r in extra.reviews if r["root"] != daily_extra.LLD_ROOT]
     if dd:
         extra.deep = [{"card": anki[i]["cardId"], "stage": f"{deep_dive.stage(dd)}::{part['label']}"}
                       for part in dd["parts"] for i in part["cards"] if i in anki]
