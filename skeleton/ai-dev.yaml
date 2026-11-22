@@ -8,8 +8,8 @@ vault: domains/ai-dev
 deck_depth: 1
 study:
   order: core-first
-  mix: reviews-first
-  new_per_day: 0
+  mix: new-first
+  new_per_day: 20
   reviews_per_day: 200
 nodes:
 - id: t01

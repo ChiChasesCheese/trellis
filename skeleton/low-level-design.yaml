@@ -8,8 +8,8 @@ vault: domains/low-level-design
 # Anki 里怎么学（ADR 0010）：`core: true` 先学；卡片的 `step:` 决定叶子内顺序。
 study:
   order: core-first
-  mix: reviews-first
-  new_per_day: 0
+  mix: new-first
+  new_per_day: 9999
   reviews_per_day: 9999
 nodes:
   - id: method
