@@ -26,7 +26,7 @@
 - 要不要用 Kubernetes：managed vs self-hosted, vanilla vs extended — 引入组织的取舍，什么时候不该用。 〔出处：KIA2 §1.3〕
 
 图：① 单机部署 vs 集群上由调度器放置的对比 ② 控制面 + 工作节点的组件框图 ③ 「提交描述 → 应用运行」的流程。
-2026：CNCF 2025 调查「82% 的容器用户在生产跑 Kubernetes」（BUILD.md 来源 6）；当前最新小版本 v1.36（2026-04-22）。托管服务细节待核实，不收。
+2026：CNCF 2025 调查「82% 的容器用户在生产跑 Kubernetes」（BUILD.md 来源 6）；当前最新小版本 v1.37 "Garhwal"（2026-08-26；v1.36 是 2026-04-22）。托管服务细节待核实，不收。
 
 ## 第 2 章 Containers 与容器化应用（KIA2 ch2）
 
@@ -55,7 +55,7 @@
 - * End-to-end walk-through：一条请求的完整旅程 — 从 `kubectl apply` 到容器在节点上运行，经过 API、etcd、调度、kubelet、CRI 的时序。 〔Poulton ch2；KIA2 §1.2.4〕
 
 图：① 控制面组件间的通信图（只有 apiserver 碰 etcd）② 调和循环：观察 → 比较 → 行动 ③ apply 到运行的时序图。
-2026：v1.35 起 kubelet 不支持 cgroup v1；控制面 z-pages：/statusz v1.36 beta（默认开启）；控制器陈旧缓存（staleness）缓解 v1.36 beta。
+2026：v1.35 起 kubelet 不支持 cgroup v1；控制面 z-pages：/statusz v1.36 beta（默认开启）；控制器陈旧缓存（staleness）缓解 v1.36 beta（v1.37 仍 beta，扩到 HPA controller）；Memory QoS v1.37 默认开启；`metrics.k8s.io` v1.37 Stable。
 
 ## 第 4 章 导航 API 与 Object model（KIA2 ch4）
 
@@ -198,7 +198,7 @@
 - eBPF dataplane 与 service mesh — 绕开 iptables；sidecar 与 ambient 的取舍，只讲 Kubernetes 侧机制。 〔docs: https://kubernetes.io/docs/concepts/services-networking/〕
 
 图：① 查询 `svc.ns.svc.cluster.local` 经搜索域展开的 DNS 查询序列 ② Pod 到 Pod 跨节点的数据包路径（CNI）③ kube-proxy 规则链：ClusterIP → DNAT → Pod ④ NetworkPolicy 把默认全通变成白名单。
-2026：kube-proxy nftables 后端 v1.33 GA；`ipvs` 模式 v1.35 弃用；Istio ambient、Cilium 数据面成熟度待核实。
+2026：kube-proxy nftables 后端 v1.33 GA；`ipvs` 模式 v1.35 弃用（v1.37 博客确认 v1.40 默认关闭、v1.43 移除）；Istio ambient、Cilium 数据面成熟度待核实。
 
 ---
 
@@ -277,7 +277,7 @@
 - KEDA 与 Karpenter — 按队列伸缩、按 Pending Pod 直接挑实例。 〔docs: https://keda.sh/docs/；https://karpenter.sh/docs/〕
 
 图：① HPA 控制循环与指标来源 ② 原地调整的状态流转（Pod resize 条件）③ Cluster Autoscaler 与 Karpenter 的差异。
-2026：原地调整 v1.35 GA；Pod 级资源原地调整 v1.36 beta；HPA 缩到零 v1.36 alpha；HPA 可配置容忍度 v1.33 alpha、v1.35 beta；Karpenter v1.0 于 2024 年 8 月（稳定 NodePool/EC2NodeClass API）。
+2026：原地调整 v1.35 GA；Pod 级资源原地调整 v1.36 beta；HPA 缩到零 v1.36 alpha → v1.37 beta（默认开启）；HPA 可配置容忍度 v1.33 alpha、v1.35 beta、v1.37 Stable；Karpenter v1.0 于 2024 年 8 月（稳定 NodePool/EC2NodeClass API）。
 
 ## 补充章 GPU、DRA 与 AI 工作负载（docs）
 
@@ -286,7 +286,7 @@
 - Gang scheduling、Kueue 与 LLM serving — 全起或全不起；模型冷启动、按并发而非 CPU 伸缩；只讲调度与伸缩，不讲推理引擎。 〔docs: https://kueue.sigs.k8s.io/docs/〕
 
 图：① 设备插件 vs DRA 的申领流程 ② GPU 整卡/MIG/时间片三种共享方式 ③ 帮派调度的「全或无」队列。
-2026：DRA 核心 v1.34 GA；管理员访问与优先备选 v1.36 GA；工作负载感知调度（Workload/PodGroup）v1.35 alpha、v1.36 继续推进仍 alpha；OCI 镜像卷 v1.36 GA。
+2026：DRA 核心 v1.34 GA；管理员访问与优先备选 v1.36 GA；DRA 扩展资源请求、设备 taint/toleration v1.37 GA；工作负载感知调度（Workload/PodGroup，gang scheduling）v1.35 alpha、v1.36 仍 alpha、v1.37 beta（`GenericWorkload` 默认关）；OCI 镜像卷 v1.36 GA。
 
 ---
 

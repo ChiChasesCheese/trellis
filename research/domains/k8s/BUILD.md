@@ -29,6 +29,7 @@ Survey date 2026-11-20 (steps 1–2 of `building-study-domains`). No skeleton, n
 | Endpoints API | deprecated v1.33 (use EndpointSlice) | v1.33 post |
 | DRA core (`resource.k8s.io/v1`, KEP-4381) | GA v1.34 | v1.34 post |
 | DRA admin access, prioritized alternatives | beta v1.34 → GA v1.36 | v1.34, v1.36 posts |
+| DRA extended resource requests (KEP-5004), device taints/tolerations (KEP-5055), ResourceClaim status.devices (KEP-4817) | extended resources alpha v1.35 → beta v1.36 → **GA v1.37**; the other two **GA v1.37** | v1.37 post |
 | VolumeAttributesClass (KEP-3751) | GA v1.34 | v1.34 post |
 | CEL admission, ValidatingAdmissionPolicy ("CEL for Admission Control", KEP-3488) | stable v1.30 | v1.30 post (listed as KEP 3488; the post does not name the VAP object) |
 | MutatingAdmissionPolicy (KEP-3962) | beta v1.34 → GA v1.36 | v1.34, v1.36 posts |
@@ -39,8 +40,8 @@ Survey date 2026-11-20 (steps 1–2 of `building-study-domains`). No skeleton, n
 | External ServiceAccount token signing (KEP-740) | beta v1.34 → GA v1.36 | v1.34, v1.36 posts |
 | Fine-grained kubelet API authorization | GA v1.36 | v1.36 post |
 | PSI metrics | GA v1.36 | v1.36 post |
-| Gang / workload-aware scheduling (KEP-4671) | alpha v1.35 (Workload/PodGroup APIs advanced in v1.36, still alpha) | v1.35, v1.36 posts |
-| HPA scale-to-zero (KEP-2021) | alpha v1.36 | v1.36 post |
+| Gang / workload-aware scheduling (KEP-4671) | alpha v1.35 (Workload/PodGroup APIs advanced in v1.36, still alpha) → **beta v1.37** (`v1beta1`, `GenericWorkload` gate beta, off by default) | v1.35, v1.36, v1.37 posts |
+| HPA scale-to-zero (KEP-2021) | alpha v1.36 → **beta v1.37** (on by default; object/external metrics only) | v1.36, v1.37 posts |
 | cgroup v1 support | removed (kubelet fails to start) in v1.35 | v1.35 post |
 | kube-proxy `ipvs` mode | deprecated v1.35 | v1.35 post |
 | containerd 1.x | v1.35 last release supporting it | v1.34, v1.35 posts |
@@ -68,4 +69,55 @@ Survey date 2026-11-20 (steps 1–2 of `building-study-domains`). No skeleton, n
 | 2 outline | drafted, awaiting review (`outline.md`) |
 | 4 terms rule | done 2026-11-20: 术语规则 added; 98 of 99 leaf titles and 15 chapter headings rewritten to English terms; 99 leaves, 51 core, 0 no-book; nothing added (no book-gap section) |
 
-**Orchestrator check 2026-11-20 against the v1.33–v1.36 release blogs:** confirmed cgroup v1 removal (v1.35), /statusz beta (v1.36), controller staleness mitigation beta (v1.36), ordered namespace deletion GA (v1.34), volume-expansion-failure recovery GA (v1.34), VolumeAttributesClass GA (v1.34), VolumeGroupSnapshot GA (v1.36), Job successPolicy and backoff-limit-per-index GA (v1.33), structured authentication configuration GA (v1.34), HPA configurable tolerance alpha v1.33 → beta v1.35, kube-proxy nftables GA (v1.33), ipvs deprecated (v1.35), containerd 1.x support ends in v1.36 (v1.34 blog). Pod Security Admission GA v1.25 (kubernetes.io blog 2022-08-25). Still unverified: StatefulSet PVC retention GA version, CNCF maturity of Argo/Flux/KEDA, Istio ambient GA, OTel/Sigstore/ingress2gateway versions.
+**Orchestrator check 2026-11-20 against the v1.33–v1.36 release blogs:** confirmed cgroup v1 removal (v1.35), /statusz beta (v1.36), controller staleness mitigation beta (v1.36), ordered namespace deletion GA (v1.34), volume-expansion-failure recovery GA (v1.34), VolumeAttributesClass GA (v1.34), VolumeGroupSnapshot GA (v1.36), Job successPolicy and backoff-limit-per-index GA (v1.33), structured authentication configuration GA (v1.34), HPA configurable tolerance alpha v1.33 → beta v1.35 → Stable v1.37 (confirmed in v1.37 release post, see v1.37 check), kube-proxy nftables GA (v1.33), ipvs deprecated (v1.35), containerd 1.x support ends in v1.36 (v1.34 blog). Pod Security Admission GA v1.25 (kubernetes.io blog 2022-08-25). Still unverified: StatefulSet PVC retention GA version, CNCF maturity of Argo/Flux/KEDA, Istio ambient GA, OTel/Sigstore/ingress2gateway versions.
+
+## v1.37 check (2026-11-21)
+
+Source: v1.37 "Garhwal" release post https://kubernetes.io/blog/2026/08/26/kubernetes-v1-37-release/ (2026-08-26; 67 enhancements: 16 Stable, 23 Beta, 27 Alpha, 1 deprecation) and the v1.37 feature posts linked from https://kubernetes.io/blog/. Stage in v1.36 is from the deck's earlier rows or the v1.37 post's own history; "?" = not stated.
+
+| Feature | v1.36 | v1.37 | KEP | Post |
+|---|---|---|---|---|
+| HPA configurable tolerance | beta (since v1.35) | **Stable** | ? (not in post) | release post |
+| HPA scale to zero | alpha | **beta**, default on | 2021 | https://kubernetes.io/blog/2026/09/02/kubernetes-v1-37-hpa-scale-to-zero-beta/ |
+| Gang scheduling, Workload/PodGroup (`v1beta1`), workload-aware preemption | alpha | **beta**, `GenericWorkload` off by default; preemption gate merged into it | 4671, 5710 | https://kubernetes.io/blog/2026/09/08/kubernetes-v1-37-advancing-workload-aware-scheduling/ |
+| CompositePodGroup, WAS controller APIs, Job `spec.scheduling` | (Job integration limited) | alpha | 6012, 6089, 5547 | same |
+| DRA extended resource requests | beta | **GA** | 5004 | https://kubernetes.io/blog/2026/09/03/kubernetes-v1-37-dra-updates/ |
+| DRA device taints/tolerations | ? | **GA** | 5055 | same |
+| DRA ResourceClaim `status.devices` | ? | **GA** | 4817 | same |
+| DRA `numaNode` standard attribute | none | **Stable** (born stable) | 6072 | same |
+| DRA ResourceClaim for workloads | ? | **beta**, `DRAWorkloadResourceClaims` off | 5729 | same |
+| DRA node allocatable resources, derived attributes, compatibility groups | alpha / new | alpha (derived attrs, compat groups new) | 5517, 6080, 5963 | same |
+| In-place Pod resize | GA (v1.35) | GA; **scheduler preemption for resize alpha** | 1287, 5836 | https://kubernetes.io/blog/2026/09/10/kubernetes-v1-37-scheduler-preemption-for-in-place-pod-resize-alpha/ |
+| In-place resize of memory-backed emptyDir `sizeLimit` | none | alpha | 6030 | release post |
+| Pod-level resources (`spec.resources`) | beta (resize beta) | not mentioned in v1.37 posts (unchanged here) | 2837 | ? |
+| Pod-level resource managers | alpha | **beta**, off by default | 5526 | https://kubernetes.io/blog/2026/09/15/kubernetes-v1-37-pod-level-resource-managers-beta/ |
+| User namespaces (pods) | GA | GA (post refers to it as GA since v1.36) | 127 | https://kubernetes.io/blog/2026/09/04/kubernetes-v1-37-rootless-beta/ |
+| KubeletInUserNamespace (rootless node components) | alpha (since v1.22) | **beta** | 2033 | same |
+| MutatingAdmissionPolicy | GA | not mentioned (unchanged) | 3962 | ? |
+| Manifest-based admission config | ? | **beta** (`staticManifestsDir`) | 5793 | release post |
+| OCI image volumes | GA | not mentioned (unchanged) | 4639 | ? |
+| PSI metrics | GA | not mentioned (unchanged) | 4205 | ? |
+| Memory QoS | v1.36 post lists beta; v1.37 post says "graduates to Beta", on by default, `memoryThrottlingFactor` default null | **beta**, default on | 2570 | https://kubernetes.io/blog/2026/09/14/kubernetes-v1-37-memory-qos-graduates-to-beta/ |
+| `trafficDistribution` PreferSameNode/PreferSameZone | GA (v1.35) | not mentioned (unchanged) | 3015 | ? |
+| kube-proxy ipvs | deprecated (v1.35 post) | warns at startup; default off v1.40, removed v1.43 | 5495 | release post |
+| kube-proxy nftables | GA | GA; adds localhost NodePort userspace proxy (alpha), netlink-based rule ops | 6032 | release post |
+| Controller staleness mitigation | beta | beta; extended to HPA controller, circuit-breaking variant | 5647 | release post |
+| `/statusz` | beta (v1.36 post) | not mentioned (unconfirmed) | ? | ? |
+| `metrics.k8s.io` | beta (since v1.8) | **Stable** (`v1`) | 5207 | https://kubernetes.io/blog/2026/08/27/kubernetes-v1-37-metrics-api-ga/ |
+| PVC unused condition (`PersistentVolumeClaimUnusedSinceTime`) | alpha | **beta**, on by default | 5541 | https://kubernetes.io/blog/2026/09/21/kubernetes-v1-37-pvc-last-used-time/ |
+| Node lifecycle conditions (DrainInProgress, Drained, MaintenancePlanned, MaintenanceInProgress, GracefulNodeShutdownInProgress) | none | alpha (gate effectively a no-op) | 5683 | https://kubernetes.io/blog/2026/09/09/kubernetes-v1-37-node-lifecycle-conditions/ |
+| emptyDir permission modes, volume bind mount options (noexec/nosuid/nodev) | none | alpha (gates `EmptyDirVolumeMode`, `VolumeBindMountOptions`) | ? | https://kubernetes.io/blog/2026/09/16/kubernetes-v1-37-hardening-container-storage/ |
+| Pod certificates, ClusterTrustBundles | ? | **Stable** | 4317, 3257 | https://kubernetes.io/blog/2026/08/28/kubernetes-v1-37-pod-certificates-and-cluster-trust-bundles/ |
+| StorageVersionMigration | ? | **Stable**, on by default | 4192 | https://kubernetes.io/blog/2026/08/31/kubernetes-v1-37-storage-version-migration-ga/ |
+| SELinuxMount, SELinuxChangePolicy | ? | **Stable**, on by default | 1710 | https://kubernetes.io/blog/2026/04/22/breaking-changes-in-selinux-volume-labeling/ |
+| KYAML (`kubectl get -o kyaml`) | beta (since v1.35) | **Stable** | 5295 | release post |
+| etcd RangeStream | none | beta (born beta; needs etcd 3.7+) | 5966 | https://kubernetes.io/blog/2026/09/01/kubernetes-v1-37-etcd-range-stream/ |
+| Native histograms | alpha | **beta** | 5808 | https://kubernetes.io/blog/2026/09/11/kubernetes-v1-37-native-histograms-beta/ |
+| Static Pods referencing Secrets/ConfigMaps | allowed (bug) | prohibited; gate removed | - | release post |
+| Other Stable in v1.37 | | node declared features (5328), relaxed Service names, FQDN pod hostname, sandbox-creation condition, resource health status in Pod status, resilient watchcache init (4568), numaNode | | release post |
+| StatefulSet `maxUnavailable` | disabled after bug | back on by default | - | release post |
+| kube-dns | - | deprecated; no new packages after v1.40 | - | release post |
+
+Not confirmed from the v1.37 posts: HPA tolerance KEP number; v1.36 stage of device taints and ResourceClaim status; v1.37 status of /statusz, MutatingAdmissionPolicy, image volumes, PSI, trafficDistribution, pod-level resources (none mentioned, so treated as unchanged); v1.36 stage of pod certificates, StorageVersionMigration, SELinuxMount and manifest-based admission (the v1.37 posts give only the new stage); whether v1.36's Memory QoS was beta or alpha (the v1.36 release post lists it under Beta, the v1.37 post says it graduates to Beta in v1.37).
+
+| 2026-11-21 | wave 2 + v1.37 refresh | 250 cards, 28 articles, all 102 leaves; v1.37 (2026-08-26) stages applied; validate 0 errors; term_order clean; p5-p9 and 4 p1-p4 files local only |
