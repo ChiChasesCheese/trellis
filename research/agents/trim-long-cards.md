@@ -4,6 +4,15 @@ Chi reviewed 20 before/after samples and approved them (「很好 开始搞」).
 The samples are the standard: `sources/local/plan/samples-src/sysdesign-trim/before/` and `after/`, and the per-family
 rules in `…/sysdesign-trim/REPORT.md`. **Read REPORT.md and at least three before/after pairs of your family first.**
 
+## The one test (Chi, 2026-11-21: 「我们的核心是去掉废话」)
+
+The job is to remove filler, not to preserve sections. Every line that stays must pass: **does it tell the learner
+something the rest of the card does not — a mechanism, a number, a failure, a decision, a concrete scene?** A line that
+restates the answer, generalises ("要根据业务场景权衡"), announces what follows, or pads a template slot goes — whatever
+section it sits in. That applies to 业务场景, 举个例子, 2026 亮点 and code too: keep each **only when it carries
+information**; a scenario that just repeats the answer with a product name in front is filler and goes. Never restore
+a section merely because the original had it. When in doubt, cut.
+
 ## Your batch
 
 A text file under `sources/local/audit/trim/` lists the card files, one path per line. Edit those files in place and no
@@ -32,7 +41,8 @@ Resume rule: a card whose answer already passes `scripts/card_len.py --over 700`
   same thing.
 - **`2026 亮点` bullets are kept**: one line, as its own labelled line `**2026 亮点。** …` after 基本回答 (Chi values
   current practice). Shorten it, do not drop it.
-- **业务场景 always stays** (the 八股 deck's standing rule: every card has a payment or Douyin scenario), 1–2 lines.
+- **业务场景** stays, in 1–2 lines, when it adds a concrete scene (who, what goes wrong, what number); a scenario that only
+  repeats the answer is filler.
   **举个例子** also stays when it carries numbers or a step-by-step state change, compressed to 2–4 lines; when both are
   short, merge them into one section. Drop the example only when it restates 基本回答.
 - **Code** stays when it is the point of the card and ≤ 25 lines (a Lua script, a SQL statement, a config); drop only
@@ -42,7 +52,7 @@ Resume rule: a card whose answer already passes `scripts/card_len.py --over 700`
 
 1. **八股追问模板** (`vault/domains/bagu/cards/**`): keep **基本回答** (3–6 lines, the single statement of the answer),
    **2026 亮点** (one line, when the original has one), **先看图** (the figure and its one-line reading), **容易错**,
-   **业务场景** (always) and **举个例子** when it has numbers. Delete **一句话**, **讲明白**, **系统设计**, **相关题**;
+   **业务场景** and **举个例子** each only when it passes the one test above. Delete **一句话**, **讲明白**, **系统设计**, **相关题**;
    **可能问法** survives only as one line when it opens a different angle.
 2. **完整解答 stubs** (`hi-qb-*`, `hi-tt-*`: the file has `body: <path>` and no Q/A — its text comes from
    `vault/<path>.md`, the full solution article, which must stay untouched): turn the stub into a standalone card.
