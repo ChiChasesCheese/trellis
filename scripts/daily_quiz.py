@@ -1,6 +1,6 @@
 """每日测验: a small daily deck of test cards written from what Chi studied, separate from the learning decks.
 
-    uv run python scripts/daily_quiz.py pick [--hours 30] [--n 12]   # choose topics from real answers → sources/local/quiz/pick-<date>.md
+    uv run python scripts/daily_quiz.py pick [--hours 30] [--n 20]   # choose topics from real answers → sources/local/quiz/pick-<date>.md
     uv run python scripts/daily_quiz.py import <questions.json>      # lint, then add the questions to the deck 1 每日测验
     uv run python scripts/daily_quiz.py settle                       # answered questions: record the result, move them to their topic's 考察题 deck
     uv run python scripts/daily_quiz.py score [--weak]               # accuracy per topic from the results (guides what to relearn)
