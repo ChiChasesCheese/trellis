@@ -128,12 +128,14 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
 - **Citations and interview tails are folded**, never a body line: `scripts/card_normalize.py fold-source|fold-tail`.
 - **No new decks.** New topics become leaves of an existing deck (`research/domains/EXPANSION.md`); write cards only
   when Chi asks, and not while reviews are behind.
-- **One new-card budget for the focus decks.** Plan config `caps` (100 a day over the focus decks, reviews first; every
+- **One new-card budget for the focus decks.** Plan config `caps` (120 a day over the focus decks since 2026-11-21, 30 of them 算法模式识别; reviews first; every
   other deck stays open at its normal pace — never zero a deck Chi may open) is applied by `scripts/daily_cap.py`, which
   `study_plan.py daily` runs last. Change the split there; a preset changed by hand is reset the next morning.
 - **Algorithms are studied in `2 算法模式识别`** (it replaced 今日算法): a recognition question on the front, the
   problem's whole tree card on the back (`scripts/daily_quiz.py todo | import --set recog | full`, rules in
   `research/agents/daily-quiz.md`). The tree deck keeps the source cards and their reviews; it deals no new cards.
+  Sub-decks `1 学习卡` (a leaf's learning card, dealt by `daily_quiz.py learn` with its first problem) and `2 识别题`.
+  Bulk questions: card agents on `research/agents/recog-questions.md`, each chunk checked with `scripts/recog_review.py`.
 - **`1 每日测验`**: 20 test questions a day written from what he studied the day before (scheduled task "Daily quiz").
 - **Nothing in Anki is deleted by a script.** Retire cards with `scripts/anki_archive.py` (suspend + move, restorable);
   clear a backlog with `scripts/anki_spread_due.py` (snapshot + restore).
