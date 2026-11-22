@@ -60,7 +60,7 @@ Sixty finished examples: `sources/local/quiz/recog-2026-11-21.json`. Read ten of
    greedy where DP is needed, per-level sums on a tree DP, counters for bracket matching), not filler. 「二分答案再验证」
    or 「排序后双指针」 may appear only where someone would plausibly think of it.
 4. **Length must not give the answer away.** In a file the correct option may be the longest in at most 40% of the
-   questions, and it is never more than 1.25 times the longest wrong option; no option is more than 2.5 times the
+   questions and the shortest in at most 40%, and it is never more than 1.25 times the longest wrong option; no option is more than 2.5 times the
    shortest. Give the wrong options the same level of detail as the right one.
 5. **The pattern never appears on the front.** Not in the title beyond the problem's own name, not in the statement,
    not as a hint in the question.

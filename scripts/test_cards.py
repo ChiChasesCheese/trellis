@@ -105,18 +105,20 @@ def source_block(cards: list[dict]) -> str:
     return f'<div class="src"><div class="src-h">原卡</div>{body}</div>'
 
 
-def length_tell(options: list[tuple[list[float], int]], share: float = 0.4, ratio: float = 1.25) -> tuple[list[int], int]:
+def length_tell(options: list[tuple[list[float], int]], ratio: float = 1.25) -> tuple[list[int], int, int]:
     """`options`: per single-answer question, (the length of each option, the index of the right one).
-    -> (questions whose right option is more than `ratio` times the longest wrong one, how many have it strictly longest).
-    A file passes when the first list is empty and the count is at most `share` of the questions."""
-    far, longest = [], 0
+    -> (questions whose right option is more than `ratio` times the longest wrong one,
+        how many have the right option strictly longest, how many have it strictly shortest).
+    A file passes when the first list is empty and neither count is above 40% of the questions: evening out the
+    lengths must not turn "pick the longest" into "pick the shortest"."""
+    far, longest, shortest = [], 0, 0
     for i, (lens, right) in enumerate(options):
-        wrong = max(n for k, n in enumerate(lens) if k != right)
-        if lens[right] > ratio * wrong:
+        wrong = [n for k, n in enumerate(lens) if k != right]
+        if lens[right] > ratio * max(wrong):
             far.append(i)
-        if lens[right] > wrong:
-            longest += 1
-    return far, longest
+        longest += lens[right] > max(wrong)
+        shortest += lens[right] < min(wrong)
+    return far, longest, shortest
 
 
 def first_answers(card_ids: list[int]) -> dict[int, dict]:

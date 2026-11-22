@@ -436,8 +436,9 @@ def choice_tell(cards: list[dict]) -> str:
     """How often the right option of a choice card is the longest: with three options, chance is a third."""
     import test_cards
     mc = [c for c in cards if c.get("fmt") == "mc" and len(c.get("opts", [])) > 1]
-    far, longest = test_cards.length_tell([([units(o) for o in c["opts"]], 0) for c in mc])
-    return f"choice cards: the right option is the longest in {longest} of {len(mc)} ({100 * longest // max(1, len(mc))}%; aim for at most 40%)"
+    far, longest, shortest = test_cards.length_tell([([units(o) for o in c["opts"]], 0) for c in mc])
+    return (f"choice cards: the right option is the longest in {longest} and the shortest in {shortest} of {len(mc)} "
+            f"({100 * longest // max(1, len(mc))}% / {100 * shortest // max(1, len(mc))}%; aim for at most 40% each)")
 
 
 def show(chunks: list[str]) -> None:
@@ -943,11 +944,12 @@ def tap_gate(chunks: list[str]) -> int:
             else:
                 good.append(card)
         import test_cards
-        far, longest = test_cards.length_tell([([units(o) for o in c["opts"]], 0) for c in good if len(c["opts"]) > 1])
-        if len(good) >= 10 and longest > 0.4 * len(good):
-            problems.append(f"the right option is the longest in {longest} of {len(good)} cards (at most 40%): even them out")
+        far, longest, shortest = test_cards.length_tell([([units(o) for o in c["opts"]], 0) for c in good if len(c["opts"]) > 1])
+        for n, word in ((longest, "longest"), (shortest, "shortest")):
+            if len(good) >= 10 and n > 0.4 * len(good):
+                problems.append(f"the right option is the {word} in {n} of {len(good)} cards (at most 40%): even them out")
         skipped = sum(1 for r in rows if r.get("skip"))
-        print(f"{f.stem}: {len(good)} ok, {skipped} skipped, {len(problems)} problem(s); right option longest in {longest}/{len(good)}")
+        print(f"{f.stem}: {len(good)} ok, {skipped} skipped, {len(problems)} problem(s); right option longest in {longest}, shortest in {shortest} of {len(good)}")
         for x in problems:
             print("  ", x)
         failed += len(problems)

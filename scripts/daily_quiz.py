@@ -381,9 +381,10 @@ def lint(q: dict) -> list[str]:
 def lint_file(questions: list[dict]) -> list[tuple[int, str]]:
     bad = [(i, e) for i, q in enumerate(questions) for e in lint(q)]
     single = [q for q in questions if isinstance(q.get("correct"), int) and len(q.get("options", [])) > 1 and 0 <= q["correct"] < len(q["options"])]
-    _far, longest = length_tell([([len(o) for o in q["options"]], q["correct"]) for q in single])
-    if len(single) >= 10 and longest > 0.4 * len(single):   # "pick the longest" must not pass the test
-        bad.append((-1, f"the correct option is the longest in {longest} of {len(single)} questions (at most 40%): even them out"))
+    _far, longest, shortest = length_tell([([len(o) for o in q["options"]], q["correct"]) for q in single])
+    for n, word in ((longest, "longest"), (shortest, "shortest")):   # neither "pick the longest" nor "pick the shortest" may pass the test
+        if len(single) >= 10 and n > 0.4 * len(single):
+            bad.append((-1, f"the correct option is the {word} in {n} of {len(single)} questions (at most 40%): even them out"))
     return bad
 
 
