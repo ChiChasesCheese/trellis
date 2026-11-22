@@ -115,7 +115,8 @@ def todo(kind: str, chunk: int) -> int:
                  f"规则见 research/agents/card-test-questions.md。**保持下面的顺序**，写进 sources/local/quiz/{kind}-bulk-{k:02d}.part1.json "
                  f"和 part2.json（各一半）。\n"]
         for s in part:
-            lines.append(f"- source: {s['id']}\n  - 位置：{s['crumb'] or s['deck']}\n  - 正面：{dq.plain(s['front'], EXCERPT['front'])}\n"
+            front = EXCERPT["front"] if s["back"] else EXCERPT["front"] + EXCERPT["back"]   # a cloze card is all front
+            lines.append(f"- source: {s['id']}\n  - 位置：{s['crumb'] or s['deck']}\n  - 正面：{dq.plain(s['front'], front)}\n"
                          f"  - 背面：{dq.plain(s['back'], EXCERPT['back']) or '（填空卡：正面已含全部内容）'}")
         (HOME / f"{kind}-todo-{k:02d}.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"{len(rows)} source cards -> {len(parts)} file(s) sources/local/quiz/{kind}-todo-NN.md")
