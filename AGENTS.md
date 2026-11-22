@@ -117,6 +117,25 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
    (lodely, vervecopilot) are never cited; a single fetch failure never condemns a site —
    record which path failed (see `research/companies/stripe/HANDOFF.md` §2 for the reachability table).
 
+## Deck rules set by Chi in 2026-11 (they outrank older per-deck habits)
+
+- **Remove filler first.** A line stays only if it tells the learner something the rest of the card does not (a
+  mechanism, a number, a failure, a decision, a concrete scene). No section is kept for its name — not 业务场景, not
+  2026 亮点, not an example. Brief for trimming: `research/agents/trim-long-cards.md`.
+- **Self-contained, in order.** A card uses a term only if an earlier leaf teaches it or the card defines it in one
+  line; each new domain keeps `research/domains/<d>/terms.yaml`, and `scripts/term_order.py <d>` must report 0.
+- **English technical terms, Chinese prose** in every domain created after 2026-11-20 (older decks are not converted).
+- **Citations and interview tails are folded**, never a body line: `scripts/card_normalize.py fold-source|fold-tail`.
+- **No new decks.** New topics become leaves of an existing deck (`research/domains/EXPANSION.md`); write cards only
+  when Chi asks, and not while reviews are behind.
+- **One new-card budget.** Plan config `caps` (100 a day, reviews first) is applied by `scripts/daily_cap.py`, which
+  `study_plan.py daily` runs last. Change the split there; a preset changed by hand is reset the next morning.
+- **Nothing in Anki is deleted by a script.** Retire cards with `scripts/anki_archive.py` (suspend + move, restorable);
+  clear a backlog with `scripts/anki_spread_due.py` (snapshot + restore).
+- **Samples before bulk.** Show 10–20 cards with `scripts/card_gallery.py` and wait for Chi's word. Tell card agents
+  "card by card": given a section rule alone they script the whole batch.
+- **Check the current version before writing version claims** (Kubernetes 1.37 was missed for a day: kubernetes.io/releases).
+
 ## Orchestration rules for multi-agent work in this repo
 
 - The main session orchestrates; **subagents are `sonnet`, at most 3 in parallel, and never spawn their own agents**.
@@ -235,4 +254,17 @@ uv run python scripts/design_problem_survey.py           # problems x sources, f
 uv run trellis --domain <d> steps                  # which leaves have no card order yet
 uv run trellis --domain <d> steps --branch B -o p.md   # → {leaf: [card ids]} → steps --import a.json [--check]
 uv run trellis --domain <d> anki-align             # converge positions + deck options without importing
+
+# new domain from a reviewed outline, and deck upkeep (briefs: research/agents/*.md)
+uv run python scripts/outline_to_skeleton.py <d> --title T --deck D   # outline.md → skeleton + leaves.yaml (keeps an existing study block)
+uv run python scripts/term_order.py <d>                # no card uses a term before the deck teaches it
+uv run python scripts/card_gallery.py -o sources/local/plan/x.html --group "Title|sub" a.md b.md   # phone-width sample page
+uv run python scripts/deck_audit.py                    # every Anki deck: sizes, progress, long cards, duplicates → sources/local/audit/
+uv run python scripts/deck_verdicts.py                 # reviewer verdicts (research/agents/deck-review.md) scaled to whole decks
+uv run python scripts/card_normalize.py <rules> <d> [--apply]      # mechanical fixes on vault cards; then anki_refresh.py <d>
+uv run python scripts/anki_field_fix.py unwrap '<query>' [--apply]   # the same for notes that live only in Anki
+uv run python scripts/card_len.py --over 700 <cards>   # answers longer than 700 CJK characters
+uv run python scripts/daily_cap.py [--apply]           # the day's new-card budget on every preset, reviews first
+uv run python scripts/anki_archive.py '<query>' '<name>' [--apply]   # suspend + move to 📦 其他::归档; --restore '<name>'
+uv run python scripts/anki_spread_due.py --days 30 [--apply]         # spread overdue cards forward; --restore <snapshot>
 ```

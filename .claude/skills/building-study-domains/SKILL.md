@@ -15,6 +15,14 @@ drills. Technical terms stay English in full-width parentheses on first use, e.g
 微分区（micro-partition）. Sources may be English. `lang: zh` is the default; only an older English
 domain says `lang: en`.
 
+**Domains created after 2026-11-20** differ in three ways (Chi's rules, `AGENTS.md` § Deck rules): technical terms are
+written in English as they are (prose stays Chinese); every card is self-contained in deck order (`terms.yaml` +
+`scripts/term_order.py`); and a new subject is first tried as leaves of an existing deck (`research/domains/EXPANSION.md`)
+— a new deck needs Chi's word. The flow that worked for seven domains: survey → `research/domains/<d>/outline.md`
+(Chi reviews it) → `scripts/outline_to_skeleton.py` → 10–20 sample cards shown with `scripts/card_gallery.py` → card
+agents on `research/agents/new-domains-cards.md`. A book Chi owns goes in `~/Books/` and is ingested as a `commercial`
+corpus; plain PyMuPDF (the built-in pdf adapter) kept code indentation where Docling and PyMuPDF4LLM did not.
+
 Put a new subject's content in `vault/domains/<domain>/` (skeleton `vault: domains/<domain>`) and keep
 `vault/<folder>/BUILD.md` as the durable record: the source survey, one ledger row per
 finished step, and the next action. A new session resumes from it.
