@@ -10,6 +10,7 @@ go back to the topic's 考察题 deck and serve later as a fast recap. 「内容
 uv run python scripts/daily_quiz.py settle          # yesterday's answered questions: results recorded, cards moved to 考察题
 uv run python scripts/daily_quiz.py score --weak    # read it: topics he got wrong come first in what you write today
 uv run python scripts/daily_quiz.py settle --set recog   # 模式识别: record what he answered there too
+uv run python scripts/daily_quiz.py full                 # 模式识别: backs follow the tree cards (new daily problems get theirs)
 uv run python scripts/daily_quiz.py pick            # → sources/local/quiz/pick-<date>.md (20 topics + their source cards)
 # write sources/local/quiz/questions-<date>.json (rules below)
 uv run python scripts/daily_quiz.py import sources/local/quiz/questions-<date>.json
@@ -51,16 +52,35 @@ Put the correct option first (`"correct": 0`); the importer shuffles the order. 
 - **20 questions a day**: one per topic in the pick file; two when the pick marks it 答错过 and the cards hold two
   distinct probes.
 
-## 模式识别 (set `recog`) — one recognition question per LeetCode problem
+## 模式识别 (set `recog`) — the algorithm deck: one recognition question per LeetCode problem
 
-Chi's gap is seeing which technique a problem calls for. Each problem on the algorithm tree gets one question in the
-deck `2 算法模式识别`: title, statement, then 「该用哪种思路？」 (or 「最直接的判断是什么？」 for an insight problem, or a
-multi-select 「需要哪几样配合？」). The options are concrete approaches, the wrong ones being the patterns a learner
-would reach for by mistake; `why` names the signal in the statement that points to the right one and what breaks the
-tempting one. The card's crumb is always 模式识别 and the deck deals in random order — the topic would give the answer
-away, so never put the pattern in the title or statement. Import with `--set recog`; `score --set recog` lists the
-missed problems (→ `sources/local/quiz/recog-missed.json`, which the LeetCode plan should bring back first).
-Samples Chi saw: `sources/local/quiz/recog-sample-2026-11-21.json`.
+Chi's gap is seeing which technique a problem calls for. Since 2026-11-21 the deck `2 算法模式识别` is where he studies
+algorithms (it replaced 今日算法): the front is a recognition question, the back is the answer, the why, and then the
+problem's whole tree card (statement, solution, pitfalls), copied in by the importer. A miss is learnt on the spot and
+comes back on Anki's schedule.
+
+```
+uv run python scripts/daily_quiz.py todo --n 60     # next problems in plan order → sources/local/quiz/recog-todo-<date>.md
+# write sources/local/quiz/recog-<date>.json, one question per problem, in the same order
+uv run python scripts/daily_quiz.py import sources/local/quiz/recog-<date>.json --set recog
+uv run python scripts/daily_quiz.py full            # re-copy the tree cards onto the backs (run after tree cards change)
+```
+
+- Title, statement, then 「该用哪种思路？」 (or 「最直接的判断是什么？」 for an insight problem, or a multi-select
+  「需要哪几样配合？」 when the answer is a combination of basic moves). Topic is `leetcode-tree::<slug>`.
+- The options are concrete approaches. The wrong ones are the patterns a learner would reach for by mistake, and each
+  must be **actually wrong for this problem**: it answers a different question, breaks on a stated property (negative
+  numbers, duplicates, not a BST), or violates a constraint written in the statement (one pass, O(1) space, n up to
+  10⁵). Put that constraint in the statement when a distractor depends on it.
+- **Never list a second valid solution as wrong** (sweep line next to the heap for meeting rooms, BFS next to
+  backtracking, sort-and-compare next to counting). If the textbook alternative is correct, leave it out.
+- `why` names the signal in the statement that points to the right approach and what breaks the most tempting wrong
+  one, with a tiny counter-example where one exists (`[2,1,1,2]`, `([)]`).
+- The crumb is always 模式识别 and the leaf never appears in the title or statement: the topic would give the answer away.
+- New cards follow the import order (the plan's order: core problems first, one more problem per leaf each round, two
+  lists alternating) and are shuffled within a day. The deck's preset inserts sequentially; `forgetCards` on never-seen
+  cards renumbers them in creation order if positions ever get mixed.
+- Samples Chi saw: `sources/local/quiz/recog-sample-2026-11-21.json`; the first wave: `recog-2026-11-21.json`.
 
 ## After the run
 

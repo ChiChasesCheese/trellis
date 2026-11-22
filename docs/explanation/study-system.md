@@ -48,7 +48,7 @@ Rules that came out of building it:
 | Deck | Built by | What |
 |---|---|---|
 | 1 今日计划 | `scripts/study_plan.py daily` (3:58) | the plan's system-design / LLD / review cards |
-| 2 今日算法 | same | new problems from the knowledge tree, two lists at a time |
+| 2 算法模式识别 | `daily_quiz.py` (`--set recog`) | one recognition question per tree problem, the problem's own card on the back; replaced 今日算法 on 2026-11-21 |
 | 3 今日低层设计 | same | LLD by topic |
 | 4 碎片速刷 | `scripts/quick_plan.py` | ten-second cards |
 | 5 系统设计高频题 | `scripts/deep_dive.py` (inside the daily run) | one design question at a time: mock fixes, then the foundations of every exam point it needs (prerequisites first), then 完整答案 and its other parts |

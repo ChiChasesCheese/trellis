@@ -923,10 +923,14 @@ def preset(cfg):
         call("deleteDecks", decks=empty, cardsToo=True)
         names = [d for d in names if d not in empty]
     plan_deck = cfg.get("plan_deck", True)
+    if not cfg.get("lc_deck", True):  # Chi 2026-11-21: 算法模式识别 is the algorithm deck, 今日算法 goes
+        drop_daily_deck(daily_extra.LC_DECK)
+        names = [d for d in names if d != daily_extra.LC_DECK and not d.startswith(daily_extra.LC_DECK + "::")]
     if not plan_deck:  # Chi 2026-11-21: no 今日计划 deck, he studies the decks themselves
         drop_plan_deck()
         names = [d for d in names if d != DECK and not d.startswith(DECK + "::")]
-        current = call("getDeckConfig", deck=daily_extra.LC_DECK)  # a daily preset to clone from, should one be missing
+        # a daily preset to clone from, should one be missing
+        current = call("getDeckConfig", deck=next((d for d in (daily_extra.LC_DECK, daily_extra.LLD_DECK, daily_extra.DEEP_DECK) if d in names), "系统设计"))
     else:
         current = call("getDeckConfig", deck=DECK)
         if current["name"] != PLAN_PRESET:
@@ -1099,6 +1103,13 @@ def drop_plan_deck() -> None:
         call("deleteDecks", decks=[DECK], cardsToo=True)
 
 
+def drop_daily_deck(deck: str) -> None:
+    """A retired daily deck goes once the cards it borrowed are home; one that still holds a card is left alone."""
+    names = [d for d in call("deckNames") if d == deck or d.startswith(deck + "::")]
+    if names and not call("findCards", query=f'"deck:{deck}"'):
+        call("deleteDecks", decks=[deck], cardsToo=True)
+
+
 def drop_old_deck():
     names = sorted((d for d in call("deckNames") if d == OLD_DECK or d.startswith(OLD_DECK + "::")), key=len, reverse=True)
     empty = [d for d in names if not call("findCards", query=f'"deck:{d}"')]
@@ -1253,6 +1264,8 @@ def run(apply_to_anki: bool, deep_only: bool = False) -> None:
         lc_analysis.main()
     extra = daily_extra.prepare(cfg, sd_value, carry=carry, points=kp_state.get("model"),
                                 skip={anki[i]["cardId"] for i in dive if i in anki})
+    if not cfg.get("lc_deck", True):  # no 今日算法 deck: its problems go home, new ones come from 算法模式识别
+        extra.lc_new, extra.lc_similar, extra.lc_focus = [], [], []
     if dd:
         extra.deep = [{"card": anki[i]["cardId"], "stage": f"{deep_dive.stage(dd)}::{part['label']}"}
                       for part in dd["parts"] for i in part["cards"] if i in anki]

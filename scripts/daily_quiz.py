@@ -5,8 +5,15 @@
     uv run python scripts/daily_quiz.py settle                       # answered questions: record the result, move them to their topic's 考察题 deck
     uv run python scripts/daily_quiz.py score [--weak]               # accuracy per topic from the results (guides what to relearn)
 
-    uv run python scripts/daily_quiz.py import <file> --set recog    # 模式识别: one recognition question per LeetCode problem,
-    uv run python scripts/daily_quiz.py score --set recog [--weak]   # kept in its own deck; missed problems feed the LeetCode plan
+    uv run python scripts/daily_quiz.py todo [--n 60]                # 模式识别: the next tree problems with no question yet, in plan order
+    uv run python scripts/daily_quiz.py import <file> --set recog    # one recognition question per LeetCode problem, in its own deck;
+    uv run python scripts/daily_quiz.py full                         # the back carries the problem's own card (re-copied from the tree)
+    uv run python scripts/daily_quiz.py score --set recog            # recognised / missed per problem
+
+模式识别 is the algorithm deck (Chi, 2026-11-21: it replaces 今日算法). Front: the problem and "which approach?". Back: the
+answer, why, then the problem's whole tree card (statement, solution, pitfalls), so a miss is learnt on the spot and
+Anki's own schedule brings it back. Its notes use the models Trellis Recog Choice / Multi: the quick-choice templates
+plus a field `Full`. New cards come in plan order (core problems first, one per leaf a round), shuffled within the day.
 
 How it fits (Chi, 2026-11-21): the quiz is independent of the learning flow and may steer it. A scheduled writer
 (brief: research/agents/daily-quiz.md) runs settle → pick → writes questions → import each morning. A question is a
@@ -46,7 +53,15 @@ MULTI = "Trellis Quick Multi"
 # a set = its own deck, tag and record files. `recog` is the pattern-recognition pass over the algorithm tree: every card
 # shows only "模式识别" as its crumb (the topic would give the answer away) and stays in its deck after it is answered.
 SETS = {"quiz": {"deck": DECK, "tag": "quiz", "preset": "每日测验", "questions": "questions.jsonl", "results": "results.jsonl"},
-        "recog": {"deck": "2 算法模式识别", "tag": "recog", "preset": "算法模式识别", "questions": "recog.jsonl", "results": "recog-results.jsonl"}}
+        "recog": {"deck": "2 算法模式识别", "tag": "recog", "preset": "算法模式识别", "questions": "recog.jsonl", "results": "recog-results.jsonl",
+                  "models": ("Trellis Recog Choice", "Trellis Recog Multi")}}
+FULL_BLOCK = '{{#Full}}<div class="full"><div class="full-h">原题与解法</div>{{Full}}</div>{{/Full}}'
+FULL_CSS = """
+/* ---- 模式识别: the problem's own card under the answer ---- */
+.full { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.full-h { font-size: 12px; letter-spacing: 0.04em; color: var(--dim); margin-bottom: 10px; }
+.full hr { border: 0; border-top: 1px solid var(--rule); margin: 14px 0; }
+"""
 STATEMENT = '<div style="font-size:.86em;opacity:.8;margin:.35em 0 .55em">{}</div>'
 RECAP = "考察题"
 DAILY_DECKS = ("1 每日测验", "2 今日算法", "3 今日低层设计", "4 碎片速刷", "5 系统设计高频题", "6 Cerebras", "7 Cerebras 力扣", "8 LC Project")
@@ -147,6 +162,118 @@ def pick(hours: int, n: int) -> int:
     return 0
 
 
+# ---------------------------------------------------------------- 模式识别: models and the problem's own card
+
+def ensure_models() -> None:
+    """Trellis Recog Choice / Multi: the quick-choice note types plus the field `Full`, shown under the answer. A new note
+    type syncs normally; adding a field to an existing one would force a full sync, hence the separate types."""
+    have = set(anki("modelNames"))
+    for base, name in zip((MODEL, MULTI), SETS["recog"]["models"]):
+        if name in have:
+            continue
+        tpl = next(iter(anki("modelTemplates", modelName=base).values()))
+        mark = '<div class="pt">考点：{{Point}}</div>'
+        if mark not in tpl["Back"]:
+            raise RuntimeError(f"the back template of {base} changed: no {mark!r} to put the full card after")
+        fields = [f for f in anki("modelFieldNames", modelName=base) if f not in ("Note", "NoteAnswer")] + ["Full", "Note", "NoteAnswer"]
+        anki("createModel", modelName=name, inOrderFields=fields, css=anki("modelStyling", modelName=base)["css"] + FULL_CSS,
+             cardTemplates=[{"Name": "Choice", "Front": tpl["Front"], "Back": tpl["Back"].replace(mark, mark + FULL_BLOCK)}])
+
+
+def tree_cards() -> dict[str, dict]:
+    """LC number -> {slug, front, back, card} of the problem's card on the algorithm tree."""
+    out = {}
+    nids = anki("findNotes", query='"tag:id::lct-*" -"tag:id::lct-learn-*"')
+    for i in range(0, len(nids), 400):
+        for n in anki("notesInfo", notes=nids[i:i + 400]):
+            front = n["fields"]["Question"]["value"]
+            m = re.search(r"LC (\d+)", front)
+            slug = next((t[len("id::lct-"):] for t in n["tags"] if t.startswith("id::lct-")), "")
+            if m and slug:
+                out[m.group(1)] = {"slug": slug, "front": front, "back": n["fields"]["Answer"]["value"], "card": n["cards"][0]}
+    return out
+
+
+def full_html(card: dict) -> str:
+    return f'{card["front"]}<hr>{card["back"]}'
+
+
+def lc_number(title: str) -> str:
+    m = re.search(r"LC (\d+)", title)
+    return m.group(1) if m else ""
+
+
+def refresh_full() -> int:
+    """Copy each problem's tree card onto the back of its recognition question again (the tree card may have changed)."""
+    tree = tree_cards()
+    nids = anki("findNotes", query=f'"deck:{SETS["recog"]["deck"]}" tag:recog')
+    changed, missing = 0, []
+    for i in range(0, len(nids), 200):
+        for n in anki("notesInfo", notes=nids[i:i + 200]):
+            if "Full" not in n["fields"]:
+                continue
+            title = plain(n["fields"]["Question"]["value"], 60)
+            card = tree.get(lc_number(title))
+            if not card:
+                missing.append(title[:40])
+                continue
+            want = full_html(card)
+            if n["fields"]["Full"]["value"] != want:
+                anki("updateNoteFields", note={"id": n["noteId"], "fields": {"Full": want}})
+                changed += 1
+    print(f"{len(nids)} recognition questions; {changed} backs updated; {len(missing)} with no tree card yet")
+    for t in missing:
+        print("  no card:", t)
+    if changed:
+        anki("sync")
+    return 0
+
+
+def plan_order() -> list[tuple[str, tuple]]:
+    """Every tree problem once, in the order the plan studies them: the core problems first, a round taking one more
+    problem from every leaf (most asked first), two lists alternating. -> [(slug, leaf path)]"""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import lc_tree
+    built = lc_tree.build()
+    core, out, seen = set(built["core"]), [], set()
+    for only in (core, None):
+        per_list = []
+        for lst in built["lists"]:
+            leaves = [(path, [s for s in leaf["problems"] if only is None or s in only]) for path, leaf in lc_tree.leaves(lst)]
+            per_list.append(leaves)
+        for r in range(max((len(p) for leaves in per_list for _, p in leaves), default=0)):
+            rows = [[(p[r], path) for path, p in leaves if r < len(p)] for leaves in per_list]
+            rows = [row for row in rows if row]
+            for a in range(0, len(rows), 2):   # two lists at a time, one problem each in turn
+                pair = rows[a:a + 2]
+                for k in range(max(map(len, pair))):
+                    for row in pair:
+                        if k < len(row) and row[k][0] not in seen:
+                            seen.add(row[k][0])
+                            out.append(row[k])
+    return out
+
+
+def todo(n: int) -> int:
+    """The next `n` tree problems with no recognition question, with what the writer needs: statement and the gist."""
+    tree = {c["slug"]: (num, c) for num, c in tree_cards().items()}
+    have = {lc_number(q.get("title", "")) for q in jsonl(SETS["recog"]["questions"])}
+    rows = [(slug, path) for slug, path in plan_order() if slug in tree and tree[slug][0] not in have]
+    today = str(datetime.date.today())
+    lines = [f"# 模式识别：接下来 {min(n, len(rows))} 道题（共 {len(rows)} 道还没有识别题）\n",
+             "按 research/agents/daily-quiz.md 的「模式识别」一节，每题写一道识别题，**保持下面的顺序**，写进 "
+             f"sources/local/quiz/recog-{today}.json，然后 `uv run python scripts/daily_quiz.py import <该文件> --set recog`。\n"]
+    for slug, path in rows[:n]:
+        num, card = tree[slug]
+        front = plain(re.sub(r'<span class="meta">.*?</span>', " ｜ ", card["front"], flags=re.S), 260)
+        gist = plain(card["back"].split("</p>")[0], 160)
+        lines.append(f"- topic: leetcode-tree::{slug}\n  - 题目：{front}\n  - 所在叶子（不要写进题目）：{' › '.join(path)}\n  - 解法要点：{gist}")
+    target = HOME / f"recog-todo-{today}.md"
+    target.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"{min(n, len(rows))} of {len(rows)} problems -> {target.relative_to(ROOT)}")
+    return 0
+
+
 # ---------------------------------------------------------------- import
 
 def lint(q: dict) -> list[str]:
@@ -222,9 +349,15 @@ def import_questions(path: Path, kind: str = "quiz") -> int:
             anki("setDeckConfigId", decks=[cfg["deck"]], configId=cid)
             conf = anki("getDeckConfig", deck=cfg["deck"])
             conf["new"]["perDay"], conf["rev"]["perDay"] = 9999, 9999   # the deck holds exactly what is meant to be answered
-            conf["newSortOrder"] = 2 if kind == "recog" else conf.get("newSortOrder", 0)   # recognition: random order, never by topic
+            if kind == "recog":   # the day's cards are the next ones in plan order, shown shuffled: a run of one topic gives the answer away
+                conf["newGatherPriority"], conf["newSortOrder"] = 0, 4
+                conf["new"]["order"] = 1   # a new note takes the next position; the quick deck's preset inserts at random
             anki("saveDeckConfig", config=conf)
     notes, records = [], []
+    tree = {}
+    if kind == "recog":
+        ensure_models()
+        tree = tree_cards()
     for q in questions:
         qid = f"{cfg['tag']}-" + hashlib.sha1((q["topic"] + q.get("title", "") + q["question"]).encode()).hexdigest()[:10]
         if qid in known:
@@ -240,9 +373,13 @@ def import_questions(path: Path, kind: str = "quiz") -> int:
         source = [int(c) for c in q.get("source", [])]
         home = home_deck(source) if source and kind == "quiz" else ""
         crumb = "模式识别" if kind == "recog" else q.get("crumb") or q["point"]
-        notes.append({"deckName": cfg["deck"], "modelName": MULTI if multi else MODEL,
-                      "fields": {"Question": question_html(q), "Opts": opts, "Correct": "".join(right), "Answer": answer,
-                                 "Why": html.escape(q["why"]), "Crumb": html.escape(crumb), "Point": html.escape(q["point"])},
+        choice, several = cfg.get("models", (MODEL, MULTI))
+        fields = {"Question": question_html(q), "Opts": opts, "Correct": "".join(right), "Answer": answer,
+                  "Why": html.escape(q["why"]), "Crumb": html.escape(crumb), "Point": html.escape(q["point"])}
+        if kind == "recog":   # the problem's own card goes under the answer; a problem not on the tree yet gets it at the next `full`
+            own = tree.get(lc_number(q.get("title", "")))
+            fields["Full"] = full_html(own) if own else ""
+        notes.append({"deckName": cfg["deck"], "modelName": several if multi else choice, "fields": fields,
                       "tags": [cfg["tag"], f"{cfg['tag']}::{today}", f"{cfg['tag']}::id::{qid}", f"{cfg['tag']}::leaf::{q['topic']}"],
                       "options": {"allowDuplicate": True}})
         records.append({"id": qid, "date": today, "topic": q["topic"], "point": q["point"], "source": source, "home": home,
@@ -296,7 +433,7 @@ def settle(kind: str = "quiz") -> int:
 
 def score(weak_only: bool, kind: str = "quiz") -> int:
     results = jsonl(SETS[kind]["results"])
-    if kind == "recog":   # per problem: the missed ones are what the LeetCode plan should bring back
+    if kind == "recog":   # per problem; a missed one is relearnt from its own back and returns on Anki's schedule
         missed = [r for r in results if not r["correct"]]
         (HOME / "recog-missed.json").write_text(json.dumps([{"title": r["title"], "topic": r["topic"]} for r in missed],
                                                            ensure_ascii=False, indent=1), encoding="utf-8")
@@ -331,6 +468,10 @@ def main() -> int:
     if kind not in SETS:
         print(f"unknown set {kind!r}; one of {sorted(SETS)}")
         return 2
+    if args[0] == "todo":
+        return todo(int(args[args.index("--n") + 1]) if "--n" in args else 60)
+    if args[0] == "full":
+        return refresh_full()
     if args[0] == "import":
         return import_questions(Path(args[1]), kind)
     if args[0] == "settle":

@@ -6,7 +6,7 @@
 The settings live in sources/local/plan/config.json:
 
     "caps": {"total": 100, "mix": "reviews-first",
-             "decks": {"系统设计": 30, "2 今日算法": 10, ...},   # the focus decks: their numbers must sum to `total`
+             "decks": {"系统设计": 30, "2 算法模式识别": 10, ...},   # the focus decks: their numbers must sum to `total`
              "open": {"Sr 工作方法": 20, ...},                   # other decks: every card stays available at a normal pace
              "open_mix": "new-first",                            # how the open decks order new cards and reviews
              "zero": ["算法知识树（灵神题单）"],                  # top-level decks whose new cards come only through a daily deck

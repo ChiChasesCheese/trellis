@@ -131,6 +131,10 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
 - **One new-card budget for the focus decks.** Plan config `caps` (100 a day over the focus decks, reviews first; every
   other deck stays open at its normal pace — never zero a deck Chi may open) is applied by `scripts/daily_cap.py`, which
   `study_plan.py daily` runs last. Change the split there; a preset changed by hand is reset the next morning.
+- **Algorithms are studied in `2 算法模式识别`** (it replaced 今日算法): a recognition question on the front, the
+  problem's whole tree card on the back (`scripts/daily_quiz.py todo | import --set recog | full`, rules in
+  `research/agents/daily-quiz.md`). The tree deck keeps the source cards and their reviews; it deals no new cards.
+- **`1 每日测验`**: 20 test questions a day written from what he studied the day before (scheduled task "Daily quiz").
 - **Nothing in Anki is deleted by a script.** Retire cards with `scripts/anki_archive.py` (suspend + move, restorable);
   clear a backlog with `scripts/anki_spread_due.py` (snapshot + restore).
 - **Samples before bulk.** Show 10–20 cards with `scripts/card_gallery.py` and wait for Chi's word. Tell card agents
@@ -211,8 +215,8 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   too, at the end, or its notes have nowhere for Chi's questions. Adding a field to a note type that exists forces a
   one-way full sync. AnkiConnect refuses a full sync, so the upload is done once in the desktop app. Importing a whole
   package over existing notes (`anki-push`) would blank both fields.
-- Anki lists decks only alphabetically. The daily decks carry numbers so they sort first (1 今日计划, 2 今日算法,
-  3 今日低层设计, 4 碎片速刷); their presets kept the old names (`PLAN_PRESET`, `quick_deck.PRESET`). Rarely used
+- Anki lists decks only alphabetically. The daily decks carry numbers so they sort first (1 每日测验, 2 算法模式识别,
+  3 今日低层设计, 4 碎片速刷; 今日计划 and 今日算法 were retired on 2026-11-21: `plan_deck` / `lc_deck: false`); their presets kept the old names (`PLAN_PRESET`, `quick_deck.PRESET`). Rarely used
   domains live under `📦 其他` through their skeleton's `deck:`. Rename a deck with Anki closed (`col.decks.rename`):
   AnkiConnect cannot, and a running Anki keeps the old names.
 - `5 系统设计高频题` (scripts/deep_dive.py, run inside `study_plan.py daily`): one design question a day, all its cards
@@ -266,6 +270,7 @@ uv run python scripts/card_normalize.py <rules> <d> [--apply]      # mechanical 
 uv run python scripts/anki_field_fix.py unwrap '<query>' [--apply]   # the same for notes that live only in Anki
 uv run python scripts/card_len.py --over 700 <cards>   # answers longer than 700 CJK characters
 uv run python scripts/daily_cap.py [--apply]           # the day's new-card budget on every preset, reviews first
+uv run python scripts/daily_quiz.py pick|import|settle|score   # 每日测验; `todo|import --set recog|full` for 算法模式识别
 uv run python scripts/anki_archive.py '<query>' '<name>' [--apply]   # suspend + move to 📦 其他::归档; --restore '<name>'
 uv run python scripts/anki_spread_due.py --days 30 [--apply]         # spread overdue cards forward; --restore <snapshot>
 ```
