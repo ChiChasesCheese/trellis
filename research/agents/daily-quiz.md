@@ -77,9 +77,14 @@ uv run python scripts/daily_quiz.py full            # re-copy the tree cards ont
 - `why` names the signal in the statement that points to the right approach and what breaks the most tempting wrong
   one, with a tiny counter-example where one exists (`[2,1,1,2]`, `([)]`).
 - The crumb is always 模式识别 and the leaf never appears in the title or statement: the topic would give the answer away.
-- New cards follow the import order (the plan's order: core problems first, one more problem per leaf each round, two
-  lists alternating) and are shuffled within a day. The deck's preset inserts sequentially; `forgetCards` on never-seen
-  cards renumbers them in creation order if positions ever get mixed.
+- **Length must not give the answer away**: in a file the correct option may be the longest in at most 40% of the
+  questions and is never more than 1.25 times the longest wrong one (the lint checks both; my first 80 had it longest
+  in 74%). A corrected question is re-imported with `import … --update`.
+- The deck has two sub-decks that Anki deals in this order: `1 学习卡` (a leaf's learning card, moved in by
+  `daily_quiz.py learn` the morning its first problem is due; `study_plan.py daily` runs it) and `2 识别题` (the
+  questions, in import order = the plan's order: core problems first, one more problem per leaf each round, two lists
+  alternating). A problem costs one card of the day's limit, two when its leaf's learning card is still unseen.
+- Bulk writing by card agents: brief `research/agents/recog-questions.md`, chunks from `todo --n … --chunk 100`.
 - Samples Chi saw: `sources/local/quiz/recog-sample-2026-11-21.json`; the first wave: `recog-2026-11-21.json`.
 
 ## After the run
