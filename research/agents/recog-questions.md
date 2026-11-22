@@ -50,7 +50,9 @@ Sixty finished examples: `sources/local/quiz/recog-2026-11-21.json`. Read ten of
 
 1. **Every wrong option is actually wrong for this problem.** It answers a different question, breaks on a property in
    the statement, or violates a constraint written in the statement. If your distractor is only "slower", write the
-   constraint that rules it out into the statement (and only a constraint the real problem has).
+   size limit that rules it out into the statement, and only a limit the real problem has. If you are not sure the
+   real problem has it, use a distractor that is wrong for a structural reason instead. Never invent a requirement
+   (a complexity bound, a memory rule, "one pass") to make a valid alternative wrong.
 2. **Never list a second valid solution as wrong.** Many problems have two textbook solutions (heap or sweep line,
    BFS or DFS, sort or counting, DP or combinatorics, union-find or graph search). Leave the alternative out, or put
    both into the correct option (「带权并查集或建图搜路径」).
@@ -73,3 +75,6 @@ Sixty finished examples: `sources/local/quiz/recog-2026-11-21.json`. Read ten of
 - Parts written and the lint line of each.
 - Up to 12 questions you are least sure of: `LC <n>` and one sentence on the doubt (a distractor that may be valid, a
   solution you could not verify, a statement you had to guess a constraint for).
+
+A second agent then verifies and repairs the chunk: `research/agents/recog-verify.md`. The orchestrator checks it with
+`scripts/recog_review.py NN`, reads the change list and a sample, and imports the chunks in order.

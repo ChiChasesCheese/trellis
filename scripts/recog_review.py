@@ -5,8 +5,7 @@
 
 Checks against the chunk's todo file (sources/local/quiz/recog-todo-<date>-NN.md): every problem answered once, in
 order, with the entry's topic and LC number; the importer's lint (per question and the length tell over the file); no
-technique name from the problem's leaf in the statement or question; no option repeated as filler across the chunk more
-than a few times. The reading itself (is each wrong option really wrong?) stays with the orchestrator: `--show`.
+option repeated as filler across the chunk more than a few times. Leaf words on the front are listed as notes. The reading itself (is each wrong option really wrong?) stays with the orchestrator: `--show`.
 """
 from __future__ import annotations
 
@@ -42,7 +41,7 @@ def main() -> int:
     want = entries(todo)
     parts = sorted(HOME.glob(f"recog-bulk-{nn}.part*.json"))
     qs = [q for p in parts for q in json.loads(p.read_text(encoding="utf-8"))]
-    problems = []
+    problems, notes = [], []   # notes: worth a look, not blocking (a tree problem has to say 二叉树)
     if [q.get("topic") for q in qs] != [e["topic"] for e in want]:
         got, need = [q.get("topic") for q in qs], [e["topic"] for e in want]
         missing = [t for t in need if t not in got]
@@ -57,10 +56,10 @@ def main() -> int:
         if not q.get("title", "").startswith(e["lc"] + " "):
             problems.append(f"{i}: title {q.get('title', '')[:24]!r} is not {e['lc']}")
         front = q.get("statement", "") + q.get("question", "")
-        for name in e["leaf"]:
+        for name in e["leaf"][1:]:   # the list's own title (链表、二叉树与回溯) names structures, not techniques
             for piece in re.split(r"[（）()/、 ]+", name):
                 if len(piece) >= 3 and piece not in GENERIC and piece in front:
-                    problems.append(f"{i}: {e['lc']} names its leaf on the front: {piece!r}")
+                    notes.append(f"{i}: {e['lc']} has a leaf word on the front: {piece!r}")
     for i, err in daily_quiz.lint_file(qs):
         problems.append(f"{i + 1 if i >= 0 else 'file'}: {err}")
     filler = collections.Counter(o for q in qs for k, o in enumerate(q.get("options", []))
@@ -74,6 +73,8 @@ def main() -> int:
           f"correct option longest in {longest}/{len(single)}; {len(problems)} problem(s)")
     for p in problems:
         print("  ", p)
+    for p in sorted(set(notes)):
+        print("   note:", p)
     if "--show" in sys.argv:
         for i, q in enumerate(qs, 1):
             right = q["correct"] if isinstance(q["correct"], list) else [q["correct"]]
