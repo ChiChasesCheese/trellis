@@ -34,3 +34,44 @@ test pyramid: t07.test-strategy
 shift left / cost of quality: t07.cost-of-quality
 delegation: t08.delegation
 unit economics: t09.cloud-cost-awareness
+archetype (Tech Lead / Architect / Solver / Right Hand): t01.staff-archetypes
+glue work: t01.glue-work
+work log: t01.glue-work
+bottleneck: t01.being-the-strongest
+design doc lifecycle: t02.doc-review-lifecycle
+one-pager: t02.one-pager-for-leadership
+working backwards / PR/FAQ: t02.working-backwards-pr-faq
+dependency (engineering / non-engineering): t03.dependencies
+kickoff / closeout / retrospective: t03.kickoff-closeout
+RICE: t03.prioritization-frameworks
+technical roadmap / North Star / KPI: t03.technical-roadmapping
+internal open source: t06.cross-team-work
+trade-off: t04.articulating-trade-offs
+over-engineering: t04.over-engineering
+diagnosis / guiding policy / coherent actions: t04.technical-strategy
+platform team: t04.platform-economics
+strategy testing: t04.strategy-testing
+systems modeling / stock / flow: t04.systems-modeling
+Wardley map: t04.wardley-maps
+blast radius of a decision: t04.blast-radius-of-decisions
+architecture debt: t04.architecture-debt-vs-tech-debt
+essential vs accidental complexity: t04.simplicity
+canary / feature flag / staged rollout: t05.change-risk
+precision / recall (alerts): t05.alert-quality
+pre-mortem: t05.pre-mortems
+YOLO shipping: t05.release-spectrum
+toil: t05.eliminating-toil
+hypothesis-driven troubleshooting / triage: t05.effective-troubleshooting
+hermetic build: t05.release-engineering
+sponsor / mentor: t06.sponsorship-vs-mentorship
+situation-impact feedback: t06.feedback
+async / sync: t06.async-remote
+upstream stakeholder / downstream stakeholder: t06.stakeholder-management
+healthy team traits: t06.team-health-dynamics
+observability (logs / metrics / alerts): t07.observability-by-design
+DORA metrics: t07.quality-metrics
+testing in production / multi-tenancy: t07.testing-in-production-specialised-testing
+PII / GDPR: t07.compliance-privacy-secure-development
+engineering practices: t08.raising-the-bar
+A/B test (treatment / control): t09.metrics-experiments
+customer feedback loop: t09.customer-feedback-loop
