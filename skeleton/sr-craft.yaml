@@ -8,8 +8,8 @@ vault: domains/sr-craft
 deck_depth: 1
 study:
   order: core-first
-  mix: new-first
-  new_per_day: 20
+  mix: reviews-first
+  new_per_day: 8
   reviews_per_day: 200
 nodes:
 - id: t01

@@ -11,8 +11,8 @@ vault: domains/psych
 deck_depth: 1
 study:
   order: core-first
-  mix: new-first
-  new_per_day: 20
+  mix: reviews-first
+  new_per_day: 6
   reviews_per_day: 200
 nodes:
 - id: evidence

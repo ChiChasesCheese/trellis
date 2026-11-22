@@ -116,9 +116,12 @@ def main() -> int:
     nodes, meta = parse(outline)
     head = (f"# Generated from research/domains/{args.domain}/outline.md by scripts/outline_to_skeleton.py:\n"
             f"# edit the outline, not this file. Citations and chapter notes: research/domains/{args.domain}/leaves.yaml.\n")
+    out_path = ROOT / f"skeleton/{args.domain}.yaml"
+    kept = (yaml.safe_load(out_path.read_text(encoding="utf-8")) or {}).get("study") if out_path.exists() else None
     doc = {"domain": args.domain, "title": args.title, "deck": args.deck, "lang": "zh",
            "vault": f"domains/{args.domain}", "deck_depth": 1,
-           "study": {"order": args.order, "mix": "new-first", "new_per_day": args.new_per_day, "reviews_per_day": 200},
+           # an existing skeleton keeps its study block: the daily budget (scripts/daily_cap.py) edits it
+           "study": kept or {"order": args.order, "mix": "reviews-first", "new_per_day": args.new_per_day, "reviews_per_day": 200},
            "nodes": nodes}
     out = ROOT / f"skeleton/{args.domain}.yaml"
     out.write_text(head + yaml.safe_dump(doc, allow_unicode=True, sort_keys=False, width=120), encoding="utf-8")

@@ -1366,6 +1366,12 @@ def main() -> int:
             print("another daily run holds the lock; nothing done")
             return 1
         run(apply_to_anki=True, deep_only=cmd == "deep")
+        # last word on new-card limits: the day's budget (config `caps`), after every planner has set its own preset
+        try:
+            import daily_cap
+            daily_cap.apply_caps(apply=True)
+        except Exception as exc:  # a failed cap must not fail the plan that was just built
+            print(f"daily_cap: {exc}")
     return 0
 
 

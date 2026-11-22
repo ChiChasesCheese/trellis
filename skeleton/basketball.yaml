@@ -3,13 +3,13 @@
 # records where each came from.
 domain: basketball
 title: 篮球
-deck: 篮球（Basketball）
+deck: "📦 其他::篮球（Basketball）"
 lang: zh
 vault: domains/basketball
 study:
   order: core-first
-  mix: new-first
-  new_per_day: 10
+  mix: reviews-first
+  new_per_day: 0
   reviews_per_day: 100
 nodes:
 - id: moves

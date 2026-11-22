@@ -12,8 +12,8 @@ fold_code: 25
 vault: domains/python
 study:
   order: core-first
-  mix: new-first
-  new_per_day: 70
+  mix: reviews-first
+  new_per_day: 0
   reviews_per_day: 400
 nodes:
 - id: model
