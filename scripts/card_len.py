@@ -17,7 +17,7 @@ def measure(path: Path) -> tuple[int, int]:
     a = text.split("\n## A\n", 1)[1] if "\n## A\n" in text else ""
     a = re.sub(r"```.*?```", "", a, flags=re.S)
     a = re.sub(r"<svg.*?</svg>", "", a, flags=re.S)
-    a = re.sub(r"<[^>]+>|\s", "", a)
+    a = re.sub(r"</?[A-Za-z][^>]*>|\s", "", a)   # real tags only: a bare "<" in prose ("< 200 ms") must not eat text
     return len(a), len(re.findall(r"[一-鿿]", a))
 
 
