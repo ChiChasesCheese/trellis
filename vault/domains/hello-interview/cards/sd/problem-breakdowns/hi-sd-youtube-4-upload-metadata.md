@@ -18,3 +18,10 @@ YouTube 的视频元数据存哪里、按什么分区？视频文件怎么上传
 - 像这里只做点查的系统，几乎不需要精心分区，按 videoId 分即可
 
 **视频内容。** 和 Dropbox 一样，客户端用预签名 URL 以分段上传（multipart upload）直传 S3，后端不接触视频字节；上传接口因此改为请求预签名 URL。这是处理大文件（Handling Large Blobs）模式的典型例子。
+
+```mermaid
+flowchart LR
+    C["客户端"] -->|"请求预签名 URL"| B["后端"]
+    B -->|"元数据，按 videoId 分区"| DB["Cassandra"]
+    C -->|"multipart upload 直传视频字节"| S["S3"]
+```

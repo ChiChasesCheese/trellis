@@ -20,4 +20,17 @@ YouTube 观看视频有哪三种做法？为什么最终选自适应码率流（
 3. 播放的同时继续取后续片段
 4. 网速变慢就换成压缩更多、分辨率更低的片段，变快再升上去
 
+```mermaid
+sequenceDiagram
+    participant C as 客户端
+    participant B as 服务端
+    participant S as S3
+    C->>B: 取 VideoMetadata
+    B-->>C: 清单文件 URL
+    C->>S: 下载清单
+    C->>S: 取所选格式的第一个片段
+    C->>S: 边播边取后续片段
+    Note over C: 网速变慢换低分辨率片段，变快再升
+```
+
 **代价。** 客户端更主动，并依赖上游的切片、多格式存储和清单生成。

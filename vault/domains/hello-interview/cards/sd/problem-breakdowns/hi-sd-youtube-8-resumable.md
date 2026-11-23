@@ -19,6 +19,22 @@ YouTube 的大视频怎样支持断点续传？分块状态怎么记录，S3 事
 
 **事件通知。** 客户端调用 CompleteMultipartUpload 后，S3 对该对象只发一次对象级通知，这个通知触发下游后处理；而分块级的进度仍由客户端驱动。
 
+```mermaid
+sequenceDiagram
+    participant C as 客户端
+    participant B as 后端
+    participant S as S3
+    participant P as 后处理
+    C->>B: POST 把所有块登记为 NotUploaded
+    C->>S: 上传一块
+    S-->>C: 分块号和 ETag
+    C->>B: PATCH chunks
+    B->>S: 验证指纹或 ETag
+    B->>B: 标记该块 Uploaded
+    C->>S: CompleteMultipartUpload
+    S->>P: 一次对象级通知
+```
+
 **说法。** 实际中这由 AWS multipart upload 处理，但面试里仍要讲清机制来体现深度。
 
 **提醒。** 这里的续传指原始文件的上传进度，和后面的转码流水线不是一回事。

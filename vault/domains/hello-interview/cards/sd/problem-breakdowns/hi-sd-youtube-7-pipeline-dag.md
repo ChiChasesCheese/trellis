@@ -20,6 +20,20 @@ step: 7
 
 **DAG。** 片段之间互不依赖，可在不同 worker 上并行，这些步骤构成有向无环图（directed acyclic graph）：有扇出（fan-out）、有扇入（fan-in）。
 
+```mermaid
+flowchart LR
+    O["原文件"] --> SP["ffmpeg 切片"]
+    SP -->|"fan-out"| T1["片段 1：转码"]
+    SP --> T2["片段 2：转码"]
+    SP --> T3["片段 N：转码"]
+    SP --> AU["音频、字幕转写"]
+    T1 -->|"fan-in"| M["生成清单文件"]
+    T2 --> M
+    T3 --> M
+    AU --> M
+    M --> D["标记上传完成"]
+```
+
 **最重的是转码。** CPU 密集，应在很多机器、很多核上极度并行。
 
 **编排。** 用现成的编排系统，如 Temporal，它支持媒体处理工作流；中间产物（片段、音频）放 S3，worker 之间只传 URL，不传文件本身。
