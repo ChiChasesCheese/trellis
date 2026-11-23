@@ -83,7 +83,7 @@ def settings() -> dict:
 def plain(field: str, limit: int) -> str:
     field = re.sub(r"<svg.*?</svg>", " [图] ", field, flags=re.S)
     field = re.sub(r'<details class="sec related-notes">.*\Z', " ", field, flags=re.S)
-    text = html.unescape(re.sub(r"<[^>]+>", " ", field))
+    text = html.unescape(re.sub(r"</?[A-Za-z!][^>]*>", " ", field))   # a real tag only: `1 << 20` in code is text
     return re.sub(r"\s+", " ", text).strip()[:limit]
 
 

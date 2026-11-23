@@ -128,7 +128,7 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
 - **Citations and interview tails are folded**, never a body line: `scripts/card_normalize.py fold-source|fold-tail`.
 - **No new decks.** New topics become leaves of an existing deck (`research/domains/EXPANSION.md`); write cards only
   when Chi asks, and not while reviews are behind.
-- **One new-card budget for the focus decks.** Plan config `caps` (120 a day over the focus decks since 2026-11-21, 30 of them 算法模式识别; reviews first; every
+- **One new-card budget for the focus decks.** Plan config `caps` (160 a day over the focus decks since 2026-11-22: 120 as before, 30 of them 算法模式识别, plus 20 each for `3 低层设计测验` and `AI 测验`; reviews first; every
   other deck stays open at its normal pace — never zero a deck Chi may open) is applied by `scripts/daily_cap.py`, which
   `study_plan.py daily` runs last. Change the split there; a preset changed by hand is reset the next morning.
 - **Algorithms are studied in `2 算法模式识别`** (it replaced 今日算法): a recognition question on the front, the
@@ -141,6 +141,14 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   why, an optional 延伸 line, then the source cards under 原卡. Quick cards he used to grade himself (快问, 找错) are being
   rewritten as choice cards on their own notes (`quick_deck.py tap-export | tap-gate`, briefs
   `research/sysdesign/TAP_AGENT.md` and `TAP_VERIFY.md`). Every batch of test cards gets a writer and then a verifier.
+- **LLD and AI are studied through test decks too** (Chi, 2026-11-22): `3 低层设计测验` (1,818 questions, one per card
+  of 低层设计（LLD）; it replaced 3 今日低层设计, `lld_deck: false`) and `AI 测验` (868 questions in sub-decks that follow
+  the AI reading order: the ai-literacy, llm-inference and ml-system-design cards borrowed by 6 Cerebras, and AI 应用工程).
+  Same card design; `scripts/card_tests.py` (`status | todo | review | import-ready | full | chunks`), briefs
+  `research/agents/card-test-questions.md` and `card-test-verify.md`. The source decks keep their cards for the backs and
+  for reviews and deal no new ones (`caps.zero_under`). `study_plan.py daily` re-copies the source cards onto the backs.
+  New source cards: `card_tests.py todo <set>` writes the next chunk; writer, verifier, `review`, `import-ready`.
+  Slips the writers and verifiers found in source cards wait in `sources/local/quiz/source-card-issues.md` for Chi.
 - `1 每日测验` is stopped (the scheduled task "Daily quiz" is disabled; its 12 questions stay).
 - **Nothing in Anki is deleted by a script.** Retire cards with `scripts/anki_archive.py` (suspend + move, restorable);
   clear a backlog with `scripts/anki_spread_due.py` (snapshot + restore).
@@ -223,7 +231,7 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   one-way full sync. AnkiConnect refuses a full sync, so the upload is done once in the desktop app. Importing a whole
   package over existing notes (`anki-push`) would blank both fields.
 - Anki lists decks only alphabetically. The daily decks carry numbers so they sort first (1 每日测验, 2 算法模式识别,
-  3 今日低层设计, 4 碎片速刷; 今日计划 and 今日算法 were retired on 2026-11-21: `plan_deck` / `lc_deck: false`); their presets kept the old names (`PLAN_PRESET`, `quick_deck.PRESET`). Rarely used
+  3 低层设计测验, 4 碎片速刷; 今日计划 and 今日算法 were retired on 2026-11-21 and 今日低层设计 on 2026-11-22: `plan_deck` / `lc_deck` / `lld_deck: false`); their presets kept the old names (`PLAN_PRESET`, `quick_deck.PRESET`). Rarely used
   domains live under `📦 其他` through their skeleton's `deck:`. Rename a deck with Anki closed (`col.decks.rename`):
   AnkiConnect cannot, and a running Anki keeps the old names.
 - `5 系统设计高频题` (scripts/deep_dive.py, run inside `study_plan.py daily`): one design question a day, all its cards
@@ -278,6 +286,7 @@ uv run python scripts/anki_field_fix.py unwrap '<query>' [--apply]   # the same 
 uv run python scripts/card_len.py --over 700 <cards>   # answers longer than 700 CJK characters
 uv run python scripts/daily_cap.py [--apply]           # the day's new-card budget on every preset, reviews first
 uv run python scripts/daily_quiz.py pick|import|settle|score   # 每日测验; `todo|import --set recog|full` for 算法模式识别
+uv run python scripts/card_tests.py status|todo|review|import-ready|full <set>   # 低层设计测验 (lld), AI 测验 (ai): one question per source card
 uv run python scripts/anki_archive.py '<query>' '<name>' [--apply]   # suspend + move to 📦 其他::归档; --restore '<name>'
 uv run python scripts/anki_spread_due.py --days 30 [--apply]         # spread overdue cards forward; --restore <snapshot>
 ```

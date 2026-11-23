@@ -38,7 +38,7 @@ from test_cards import anki, graph_block, some  # noqa: E402
 HOME = dq.HOME
 MODELS = dq.SETS["recog"]["models"]
 SOURCE_MODELS = ("Trellis QA", "Trellis Cloze")
-EXCERPT = {"front": 350, "back": 900}   # what a writer sees of each side; the vault file has the rest
+EXCERPT = {"front": 1200, "back": 1800}   # what a writer sees of each side: whole cards (writers did not open cut-off ones)
 # set -> its deck, and where its source cards come from: (sub-deck of the test deck, Anki query), in study order
 AI = '("tag:ai-literacy::*" OR "tag:llm-inference::*" OR "tag:ml-system-design::*")'
 SETS = {
