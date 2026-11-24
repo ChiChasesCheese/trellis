@@ -128,7 +128,7 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
 - **Citations and interview tails are folded**, never a body line: `scripts/card_normalize.py fold-source|fold-tail`.
 - **No new decks.** New topics become leaves of an existing deck (`research/domains/EXPANSION.md`); write cards only
   when Chi asks, and not while reviews are behind.
-- **One new-card budget for the focus decks.** Plan config `caps` (160 a day over the focus decks since 2026-11-22: 120 as before, 30 of them 算法模式识别, plus 20 each for `3 低层设计测验` and `AI 测验`; reviews first; every
+- **One new-card budget for the focus decks.** Plan config `caps` (180 a day over the focus decks: 120 as before, 30 of them 算法模式识别, plus 20 each for `3 低层设计测验` and `AI 测验` since 2026-11-22, and `5 系统设计高频题` 10 → 30 since 2026-11-23; these are ceilings, Chi studies at his own pace; reviews first; every
   other deck stays open at its normal pace — never zero a deck Chi may open) is applied by `scripts/daily_cap.py`, which
   `study_plan.py daily` runs last. Change the split there; a preset changed by hand is reset the next morning.
 - **Algorithms are studied in `2 算法模式识别`** (it replaced 今日算法): a recognition question on the front, the
