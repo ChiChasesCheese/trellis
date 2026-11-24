@@ -74,6 +74,12 @@ A generated note mirroring one node, listing its prerequisites, children, cards,
 readings, and drills. Everything outside its managed block is the reader's own.
 _Avoid_: index note, MOC, hub
 
+**Overview card**:
+A Card attached to a node that has children. It carries that branch's frame (what the branch contains, in order,
+complete and not deep), is met before the branch's leaves, and files into the deck the skeleton's `own_decks` names
+for the node, or else the branch's own deck (ADR 0013).
+_Avoid_: summary leaf, TOC card
+
 **Sequence**:
 The one order in which a domain's new cards are first met: the Core, then the
 rest, each pass in the skeleton's order, and inside a leaf by Step. Computed

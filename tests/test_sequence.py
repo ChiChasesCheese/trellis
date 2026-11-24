@@ -101,6 +101,15 @@ def test_declaring_a_branch_core_covers_its_leaves_and_requiring_a_branch_pulls_
     assert core_leaves(load(tmp_path, data)) == {"a.one", "a.two", "b.one"}
 
 
+def test_a_branchs_own_cards_are_met_before_anything_below_it(tmp_path):
+    sk = load(tmp_path)
+    cards = [card("log", "storage.log"), card("index", "storage.index"), card("overview", "storage"), card("history", "intro.history")]
+    # skeleton order: the overview on `storage` comes before both of its leaves
+    assert [c.id for c in sequence(sk, cards, "skeleton")] == ["history", "overview", "log", "index"]
+    # core-first: `storage` holds a core leaf, so its overview opens the core pass
+    assert [c.id for c in sequence(sk, cards)][0] == "overview"
+
+
 def test_adopted_cards_are_not_sequenced(tmp_path):
     mine, theirs = card("mine", "intro.model"), card("theirs", "intro.model")
     theirs.anki = 12345

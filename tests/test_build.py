@@ -250,3 +250,21 @@ def test_deck_moves_file_a_subtree_into_another_deck(tmp_path):
     assert sk.deck_name(sk.by_id["a.b.c"]) == "E::11 HI::B"
     assert sk.deck_name(sk.by_id["a"]) == "E::11 HI"
     assert sk.deck_name(sk.by_id["z"]) == "D::02 Z"
+
+
+def test_a_branchs_own_cards_can_file_into_a_deck_of_their_own(tmp_path):
+    from trellis.skeleton import SkeletonError, load_skeleton
+    y = tmp_path / "d.yaml"
+    body = "nodes:\n- id: a\n  title: A\n  children:\n  - id: a.b\n    title: B\n    children:\n    - id: a.b.c\n      title: C\n"
+    y.write_text("domain: d\ntitle: D\ndeck_depth: 2\nown_decks:\n  a.b: D::00 Tour::01 A\n" + body, encoding="utf-8")
+    sk = load_skeleton(y)
+    assert sk.deck_name(sk.by_id["a.b"]) == "D::00 Tour::01 A"   # the branch's own cards
+    assert sk.deck_name(sk.by_id["a.b.c"]) == "D::01 A::B"       # its subtree stays where it was
+    y.write_text("domain: d\ntitle: D\nown_decks:\n  nope: X\n" + body, encoding="utf-8")
+    try:
+        load_skeleton(y)
+    except SkeletonError as exc:
+        assert "own_decks: unknown node 'nope'" in str(exc)
+    else:
+        raise AssertionError("an unknown node in own_decks must be refused")
+

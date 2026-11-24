@@ -61,11 +61,8 @@ def validate(
         node = skeleton.by_id.get(card.node)
         if node is None:
             report.errors.append(f"{card.path}: node {card.node!r} not in skeleton")
-        elif not node.is_leaf:
-            report.warnings.append(
-                f"{card.path}: attached to non-leaf node {card.node!r} "
-                "(allowed, but prefer leaves)"
-            )
+        # A card on a node that has children is that branch's overview: met before the detail below it (sequence),
+        # and filed where the skeleton's `own_decks` says, or else in the branch's own deck.
 
     from .cards import leans_on_source
     leaning = [(c.id, leans_on_source(c.question + " " + c.answer + " " + c.text))

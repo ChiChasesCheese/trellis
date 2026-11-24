@@ -15,6 +15,8 @@ Two decisions make a Sequence:
   requires; and the Core is closed under `requires`, so neither pass can.
   This is the 80/20 made operational: one short pass through what matters
   most, in textbook order, before the long one.
+* **A branch's own cards first.** A card may sit on a node that has children: it is that branch's overview, and
+  it is met before anything below the branch.
 * **Which card first inside a leaf.** The `step` its author gave it; then
   cards without one; grown cards last, since a second route is only useful
   after the first has been tried. File name breaks ties, so the order is
@@ -77,7 +79,9 @@ def sequence(skeleton: Skeleton, cards: list[Card], order: str = CORE_FIRST) -> 
     """Every card Trellis owns, in the order it should first be shown.
     Adopted cards are left out: their positions belong to whoever owns them."""
     core = core_leaves(skeleton) if order == CORE_FIRST else set()
-    place = {leaf.id: i for i, leaf in enumerate(skeleton.leaves())}
+    if core:  # a branch's own cards (its overview) are met in the pass that first enters the branch
+        core |= {n.id for n in skeleton.walk() if not n.is_leaf and any(leaf.id in core for leaf in _leaves_under(skeleton, n.id))}
+    place = {node.id: i for i, node in enumerate(skeleton.walk())}  # depth-first: a node before its children
     own = [c for c in cards if not c.adopted and c.node in place]
     return sorted(own, key=lambda c: (
         c.node not in core if core else False,

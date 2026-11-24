@@ -148,6 +148,9 @@ class Skeleton:
     # positions still follow the full tree. 0 = no limit.
     deck_depth: int = 0
     deck_moves: dict[str, str] = field(default_factory=dict)  # node id -> the deck path its subtree files into instead
+    # node id -> the deck for the cards attached to that node itself, not to its subtree: a branch's overview cards
+    # can be gathered in a deck of their own, to be read through before the detail below each branch.
+    own_decks: dict[str, str] = field(default_factory=dict)
     # This domain's cards reach Anki only through the named domain, which includes them: pushing it would bring back
     # decks that were merged away.
     anki_via: str = ""
@@ -182,6 +185,8 @@ class Skeleton:
         Top-level branches carry a 1-based ordinal so Anki's alphabetical
         deck list follows study order.
         """
+        if node.id in self.own_decks:
+            return self.own_decks[node.id]
         parts = [self.root_deck]
         path = node.path()
         moved = next((i for i, n in enumerate(path) if n.id in self.deck_moves), None)
@@ -313,13 +318,17 @@ def load_skeleton(path: str | Path) -> Skeleton:
     if not isinstance(deck_moves, dict):
         errors.append(f"invalid deck_moves: {deck_moves!r} (want node id -> deck path)")
         deck_moves = {}
+    own_decks = data.get("own_decks", {}) or {}
+    if not isinstance(own_decks, dict) or not all(isinstance(k, str) and isinstance(v, str) and v.strip() for k, v in own_decks.items()):
+        errors.append(f"invalid own_decks: {own_decks!r} (want node id -> deck path)")
+        own_decks = {}
     anki_via = data.get("anki_via", "") or ""
     if not isinstance(anki_via, str):
         errors.append(f"invalid anki_via: {anki_via!r}")
         anki_via = ""
 
     skeleton = Skeleton(domain=domain, title=title.strip(), roots=roots, by_id={},
-                        include=list(include), deck_depth=deck_depth, deck_moves=deck_moves, anki_via=anki_via,
+                        include=list(include), deck_depth=deck_depth, deck_moves=deck_moves, own_decks=own_decks, anki_via=anki_via,
                         lang=lang, show=str(data.get("show", "") or ""), folder=folder, deck=deck, examples_from=examples_from, fold=data.get("fold") if data.get("fold") == "bullets" else bool(data.get("fold", False)), fold_code=int(data.get("fold_code", 0) or 0),
                         study=_parse_study(data.get("study"), errors))
     for node in skeleton.walk():
@@ -333,6 +342,10 @@ def load_skeleton(path: str | Path) -> Skeleton:
                 errors.append(f"node {node.id!r}: requires unknown node {req!r}")
             elif req == node.id:
                 errors.append(f"node {node.id!r}: requires itself")
+
+    for node_id in skeleton.own_decks:
+        if node_id not in skeleton.by_id:
+            errors.append(f"own_decks: unknown node {node_id!r}")
 
     cycle = _find_requires_cycle(skeleton)
     if cycle:

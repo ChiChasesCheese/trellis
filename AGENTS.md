@@ -149,6 +149,13 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   for reviews and deal no new ones (`caps.zero_under`). `study_plan.py daily` re-copies the source cards onto the backs.
   New source cards: `card_tests.py todo <set>` writes the next chunk; writer, verifier, `review`, `import-ready`.
   Slips the writers and verifiers found in source cards wait in `sources/local/quiz/source-card-issues.md` for Chi.
+- **Overview cards (通览), Chi 2026-11-24**: the detail cards of an article lose its shape, so every Hello Interview
+  article gets three cards one level above its leaves: 这一章的地图 (the article's blocks in order, one sideways tree),
+  做法一览 (each method: what it does; what it solves; its cost) and 什么时候用 (signals, scenarios, when not, common
+  follow-ups). Complete, not deep, at most 350 汉字 each. They attach to the article's own node (ADR 0013), come before
+  everything below it, and all file into the tour deck `系统设计::00 通览::<NN branch>` through the skeleton's
+  `own_decks`. Brief `research/sysdesign/OVERVIEW_AGENT.md`; cards in `cards/premium/overview/<slug>/` (local only);
+  `research/sysdesign/gen.py` brings a page that has such cards back as its topic's first leaf.
 - `1 每日测验` is stopped (the scheduled task "Daily quiz" is disabled; its 12 questions stay).
 - **Nothing in Anki is deleted by a script.** Retire cards with `scripts/anki_archive.py` (suspend + move, restorable);
   clear a backlog with `scripts/anki_spread_due.py` (snapshot + restore).
