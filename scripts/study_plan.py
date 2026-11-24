@@ -1421,12 +1421,13 @@ def main() -> int:
             daily_quiz.refresh_full()  # their backs follow the tree cards (a new daily problem gets its card)
         except Exception as exc:  # a failed cap must not fail the plan that was just built
             print(f"daily_cap: {exc}")
-        try:
-            import card_tests  # 低层设计测验 and AI 测验: the backs follow their source cards when those are edited
-            for kind in card_tests.SETS:
-                card_tests.refresh_full(kind)
-        except Exception as exc:
-            print(f"card_tests: {exc}")
+        if cmd != "deep":  # the morning run only: `deep` re-deals one deck and its last line is read by mock_fix.py
+            try:
+                import card_tests  # 低层设计测验 and AI 测验: the backs follow their source cards when those are edited
+                for kind in card_tests.SETS:
+                    card_tests.refresh_full(kind)
+            except Exception as exc:
+                print(f"card_tests: {exc}")
     return 0
 
 
