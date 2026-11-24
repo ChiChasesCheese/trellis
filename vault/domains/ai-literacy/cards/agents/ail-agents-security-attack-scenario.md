@@ -16,6 +16,22 @@ step: 3
 3. 维护者让智能体"看看这个 issue 怎么修"。智能体读到指令，调用工具读私有文件，再发评论。
 4. 数据现在公开了。每一步都是合法的工具调用，没有任何漏洞被利用。
 
+```mermaid
+sequenceDiagram
+    participant X as 攻击者
+    participant I as 公开仓库 issue
+    participant M as 维护者
+    participant A as 编程智能体
+    participant P as 私有仓库
+    X->>I: 提 issue，正文夹着指令
+    M->>A: 看看这个 issue 怎么修
+    A->>I: 读 issue，读到指令
+    A->>P: 调用工具读 private-repo/config
+    P-->>A: 文件内容
+    A->>I: 发评论，贴出内容
+    Note over I: 数据现在公开了
+```
+
 **三要素都在：** 私有仓库（私有数据）、公开 issue（不可信内容）、发评论（对外发送）。
 
 **哪些防线会失效：**

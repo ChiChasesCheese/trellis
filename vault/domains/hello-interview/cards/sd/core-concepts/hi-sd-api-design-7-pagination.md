@@ -16,6 +16,16 @@ step: 7
 
 **游标分页。** 响应带一个指向最后一条记录的 `next_cursor`（常是记录 ID 或时间戳的编码），下一页 `?cursor=...&limit=10`。不受新增数据影响，更稳定；缺点是难以实现“跳到第 5 页”。
 
+```mermaid
+sequenceDiagram
+    participant C as 客户端
+    participant S as 服务端
+    C->>S: GET /events?limit=10
+    S-->>C: 10 条记录 + next_cursor（指向最后一条）
+    C->>S: GET /events?cursor=...&limit=10
+    S-->>C: 游标之后的 10 条 + 新的 next_cursor
+```
+
 **取舍。** 除非数据是实时变化的、或面试官问到大数据量，偏移分页通常足够。多数面试官更在意你有没有想到分页。
 
 **过滤排序。** 用查询参数：`?city=NYC&status=upcoming`，`?sort=-date` 表示按日期降序。关键是各端点保持一致，演示一个带过滤的接口，再说同样的约定适用于全部即可。
