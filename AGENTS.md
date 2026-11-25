@@ -150,7 +150,8 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   New source cards: `card_tests.py todo <set>` writes the next chunk; writer, verifier, `review`, `import-ready`.
   Slips the writers and verifiers found in source cards wait in `sources/local/quiz/source-card-issues.md` for Chi.
 - **Overview cards (通览), Chi 2026-11-24**: the detail cards of an article lose its shape, so every Hello Interview
-  article gets three cards one level above its leaves: 这一章的地图 (the article's blocks in order, one sideways tree),
+  article gets three cards one level above its leaves: 这一章的地图 (one sideways tree that names the blocks and methods, then
+  only what the tree cannot show: 关键直觉, 2–4 ideas, and 容易漏的细节; nothing under the tree repeats it),
   做法一览 (each method: what it does; what it solves; its cost) and 什么时候用 (signals, scenarios, when not, common
   follow-ups). Complete, not deep, at most 350 汉字 each. They attach to the article's own node (ADR 0013), come before
   everything below it, and all file into the tour deck through the skeleton's `own_decks`, one sub-deck per chapter
