@@ -33,6 +33,11 @@ ROLE = {"必讲": 0, "追问": 1, "加分": 2}
 NOT_A_QUESTION = {"q.in-the-wild"}  # 真实系统案例: a collection of real systems, not one problem to design
 
 
+# 通览 cards (an article's frame, ADR 0013) stay in the tour deck 系统设计::00 通览: a deep dive does not borrow them, so
+# the tour can always be read through whole.
+TOUR_CARDS = "hi-ov-"
+
+
 def is_question(top: str, topic: str) -> bool:
     return (top == "s05" or topic.startswith("tt.sd.")) and topic not in NOT_A_QUESTION
 
@@ -86,7 +91,7 @@ def pick(cards, model, card_mastery: dict[str, float], top, title, seen: set[str
     state = load()
     by_q: dict[str, list] = defaultdict(list)
     for c in cards:
-        if is_question(top(c.topic), c.topic) and c.id in model.cards:
+        if is_question(top(c.topic), c.topic) and c.id in model.cards and not c.id.startswith(TOUR_CARDS):
             by_q[c.topic].append(c)
     if not by_q:
         return None
@@ -99,7 +104,8 @@ def pick(cards, model, card_mastery: dict[str, float], top, title, seen: set[str
             own = {c.id for c in by_q[q]}
             base_of[q] = {}
             for cid, t in found:
-                if cid in by_id and cid not in own and cid not in base_of[q] and not is_question(top(by_id[cid].topic), by_id[cid].topic):
+                if (cid in by_id and cid not in own and cid not in base_of[q] and not cid.startswith(TOUR_CARDS)
+                        and not is_question(top(by_id[cid].topic), by_id[cid].topic)):
                     base_of[q][cid] = t
             by_q[q] = [by_id[i] for i in base_of[q]] + by_q[q]
     held = dict(card_mastery)

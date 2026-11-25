@@ -153,8 +153,11 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   article gets three cards one level above its leaves: 这一章的地图 (the article's blocks in order, one sideways tree),
   做法一览 (each method: what it does; what it solves; its cost) and 什么时候用 (signals, scenarios, when not, common
   follow-ups). Complete, not deep, at most 350 汉字 each. They attach to the article's own node (ADR 0013), come before
-  everything below it, and all file into the tour deck `系统设计::00 通览::<NN branch>` through the skeleton's
-  `own_decks`. Brief `research/sysdesign/OVERVIEW_AGENT.md`; cards in `cards/premium/overview/<slug>/` (local only);
+  everything below it, and all file into the tour deck through the skeleton's `own_decks`, one sub-deck per chapter
+  and under it one per article: `系统设计::00 通览::<NN chapter>::<NN article>` (228 cards, 76 articles, done
+  2026-11-24). A deep dive never borrows them (`deep_dive.TOUR_CARDS`), so the tour stays whole. Other article kinds
+  (key technology, problem breakdown, framework page, case study) have their own three titles in the brief; gate
+  `research/sysdesign/overview_check.py`, import by section with `overview_import.py`. Brief `research/sysdesign/OVERVIEW_AGENT.md`; cards in `cards/premium/overview/<slug>/` (local only);
   `research/sysdesign/gen.py` brings a page that has such cards back as its topic's first leaf.
 - `1 每日测验` is stopped (the scheduled task "Daily quiz" is disabled; its 12 questions stay).
 - **Nothing in Anki is deleted by a script.** Retire cards with `scripts/anki_archive.py` (suspend + move, restorable);
