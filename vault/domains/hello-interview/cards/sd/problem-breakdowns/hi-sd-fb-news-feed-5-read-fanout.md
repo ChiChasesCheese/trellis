@@ -14,6 +14,13 @@ step: 5
 
 办法是在发帖时就算好：建一张 PrecomputedFeed 表，键是 userId，值是按时间倒序的 postId 列表，只保留约 200 条，保持紧凑。只按 userId 访问，不需要二级索引。发新帖时，把它加入相关用户的动态。
 
+```mermaid
+flowchart LR
+    P["发新帖"] -->|"加入相关用户的动态"| T["PrecomputedFeed 表：userId → 约 200 个 postId"]
+    R["读动态"] -->|"只按 userId 访问"| T
+    R -.->|"200 条以外"| N["朴素方案：查 Follow 和 Post 表"]
+```
+
 **为什么。** 没有人会往回翻一百页（连 Google 也翻不了几十页）。200 条以外如有需要，可以退回朴素方案，查 Follow 和 Post 表。
 
 **取舍。** 先问面试官能不能调整产品：Facebook 把好友上限设为 5,000；对于关注十万人的用户，动态晚几分钟他们未必察觉。

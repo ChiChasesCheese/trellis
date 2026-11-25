@@ -10,6 +10,24 @@ TTFT、TPOT、ITL、端到端延迟和吞吐各怎么精确定义？给一个请
 ## A
 **一个流式请求的时间戳（单位毫秒）：** 0 发出请求；300 收到第 1 个 token（token 是文字切成的小片段）；之后又收到 99 个 token，最后一个在 2,280 到达。共 100 个输出 token。
 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 98" font-family="sans-serif" font-size="11">
+<text x="20" y="12" fill="currentColor">0 发出请求</text>
+<text x="300" y="12" text-anchor="end" fill="currentColor">2,280 最后一个 token</text>
+<text x="57" y="26" fill="currentColor">300 第 1 个 token</text>
+<line x1="20" y1="38" x2="300" y2="38" stroke="currentColor"/>
+<line x1="20" y1="16" x2="20" y2="42" stroke="currentColor"/>
+<line x1="57" y1="30" x2="57" y2="42" stroke="currentColor"/>
+<line x1="300" y1="16" x2="300" y2="42" stroke="currentColor"/>
+<rect x="20" y="46" width="37" height="8" fill="currentColor" fill-opacity="0.35" stroke="currentColor"/>
+<rect x="57" y="46" width="243" height="8" fill="none" stroke="currentColor"/>
+<text x="38" y="68" text-anchor="middle" fill="currentColor">TTFT</text>
+<text x="178" y="68" text-anchor="middle" fill="currentColor">99 个间隔，平均 20 ms（TPOT）</text>
+<line x1="20" y1="78" x2="300" y2="78" stroke="currentColor"/>
+<line x1="20" y1="74" x2="20" y2="82" stroke="currentColor"/>
+<line x1="300" y1="74" x2="300" y2="82" stroke="currentColor"/>
+<text x="160" y="94" text-anchor="middle" fill="currentColor">端到端延迟 2,280 ms</text>
+</svg>
+
 - **TTFT（time to first token，首 token 延迟）：** 发出请求到收到第一个 token。= **300 ms**。包含排队、对输入做预填充（一次性处理整段输入）、第一步生成、网络。
 - **端到端延迟（E2E latency）：** 发出到收到最后一个 token。= **2,280 ms**。
 - **TPOT（time per output token，每输出 token 时间）：** 第一个 token 之后，平均每个 token 的间隔：

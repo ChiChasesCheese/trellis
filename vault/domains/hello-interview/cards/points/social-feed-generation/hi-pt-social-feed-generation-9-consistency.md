@@ -12,3 +12,14 @@ step: 9
 ## A
 **一致。** 扇出稍后到是可接受的最终一致；作者读自己时合并最近发布，或写后读自己的分片，立即可见。
 **删除。** 帖子对象标记删除，读取时过滤；收件箱里的 ID 不主动清理，到期自然被裁掉。
+
+```mermaid
+sequenceDiagram
+    participant A as 作者
+    participant P as 帖子库
+    participant I as 粉丝收件箱
+    A->>P: 发帖
+    A->>P: 读自己：合并最近发布
+    P-->>A: 立即可见
+    P-->>I: 扇出稍后到（最终一致）
+```
