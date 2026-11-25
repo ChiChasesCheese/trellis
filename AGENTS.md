@@ -155,10 +155,12 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   做法一览 (each method: what it does; what it solves; its cost) and 什么时候用 (signals, scenarios, when not, common
   follow-ups). Complete, not deep, at most 350 汉字 each. They attach to the article's own node (ADR 0013), come before
   everything below it, and all file into the tour deck through the skeleton's `own_decks`, one sub-deck per chapter
-  and under it one per article: `系统设计::00 通览::<NN chapter>::<NN article>` (228 cards, 76 articles, done
-  2026-11-24). A deep dive never borrows them (`deep_dive.TOUR_CARDS`), so the tour stays whole. Other article kinds
+  and under it one per article: `系统设计::00 通览::<NN chapter>::<NN article>` (261 cards: 76 articles, done
+  2026-11-24, plus 11 topics that have no article — 估算, 幂等, 可靠性, 排行与检索, 分布式锁 and six payment domains in a
+  chapter `07 支付系统` — written from those topics' detail cards on made-up pages `ov.<slug>`, `EXTRA_OV` in gen.py,
+  numbered after the chapter's articles so no deck is renamed). A deep dive never borrows them (`deep_dive.TOUR_CARDS`), so the tour stays whole. Other article kinds
   (key technology, problem breakdown, framework page, case study) have their own three titles in the brief; gate
-  `research/sysdesign/overview_check.py`, import by section with `overview_import.py`. Brief `research/sysdesign/OVERVIEW_AGENT.md`; cards in `cards/premium/overview/<slug>/` (local only);
+  `research/sysdesign/overview_check.py`, import by section with `overview_import.py`. Briefs `research/sysdesign/OVERVIEW_AGENT.md`, `OVERVIEW_MAP_AGENT.md` (card 1) and `OVERVIEW_EXTRA_AGENT.md` (topics without an article); cards in `cards/premium/overview/<slug>/` (local only);
   `research/sysdesign/gen.py` brings a page that has such cards back as its topic's first leaf.
 - `1 每日测验` is stopped (the scheduled task "Daily quiz" is disabled; its 12 questions stay).
 - **Nothing in Anki is deleted by a script.** Retire cards with `scripts/anki_archive.py` (suspend + move, restorable);
