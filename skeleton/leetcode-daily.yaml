@@ -235,6 +235,9 @@ nodes:
   - id: math-bit-sim.maximum-subarray-with-equal-products
     title: LC 3411 最长乘积等价子数组（Maximum Subarray With Equal Products）
     summary: Easy；Array, Math, Enumeration, Number Theory。
+  - id: math-bit-sim.stone-removal-game
+    title: LC 3360 移除石头游戏（Stone Removal Game）
+    summary: Easy；Math, Simulation。
   core: true
 - id: sorting-permutation
   order: 19
