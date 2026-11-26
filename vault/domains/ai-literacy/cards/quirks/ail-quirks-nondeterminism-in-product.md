@@ -26,4 +26,13 @@ def cached(prompt, call, store):
     return store[key]
 ```
 
+```mermaid
+flowchart TB
+    P["prompt"] --> K["key = sha256(prompt)"]
+    K --> D{"key 在 store 里"}
+    D -->|"不在：第一次"| C["真调模型<br/>存下回答"]
+    D -->|"在"| S["取存下的回答"]
+    C --> S
+```
+
 测试里用 `cached`：第一次真调模型，之后同一个提示直接取存下的回答，用例才稳定。真正评估模型质量时，则要关掉缓存，多跑几次看比例。

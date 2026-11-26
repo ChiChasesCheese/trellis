@@ -17,3 +17,14 @@ OpenAI 合同给 Cerebras 带来哪些风险？面试里哪一点可以拿来讲
   - "Reliability is in the contract: an SLA miss is a commercial problem, so release quality connects straight to revenue."
   - 类比你的经历：支付里一笔漏掉的费用就是钱。
 - **别做的事**：不评论交付进度，不评论股价，不猜毛利原因。
+
+```mermaid
+flowchart LR
+    C["OpenAI 合同"] --> A["交付风险"]
+    C --> B["集中度风险"]
+    C --> S["SLA 风险"]
+    C --> E["排他条款"]
+    C --> G["毛利压力"]
+    S --> R["可靠性就是合同"]
+    R --> Q["发布质量连到收入"]
+```

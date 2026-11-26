@@ -16,5 +16,23 @@ step: 2
 | **对 AI 代理的价值**：速度直接缩短代理任务的等待 | **生态**：没有 CUDA；共享推理只有 2 个模型 |
 | | **集中度**：少数客户占大头 |
 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 136">
+<g font-size="12" font-family="sans-serif" fill="currentColor">
+<text x="0" y="12">gpt-oss-120B 首个回答 token 时间（秒）</text>
+<rect x="84" y="24" width="18" height="14" opacity="0.55"/>
+<text x="0" y="36">Cerebras</text>
+<text x="108" y="36">1.79</text>
+<rect x="84" y="52" width="47" height="14" opacity="0.55"/>
+<text x="0" y="64">Groq</text>
+<text x="137" y="64">4.63</text>
+<rect x="84" y="80" width="60" height="14" opacity="0.55"/>
+<text x="0" y="92">SambaNova</text>
+<text x="150" y="92">5.85</text>
+<rect x="84" y="108" width="200" height="14" opacity="0.55"/>
+<text x="0" y="120">Bedrock</text>
+<text x="290" y="120">19.58</text>
+</g>
+</svg>
+
 - **首个 token 时间（TTFT, time to first token）**：从发出请求到收到第一个输出 token 的时间。
 - **一句话**："Cerebras sells the lowest single-user latency; it pays in capacity, so big models span many wafers."
