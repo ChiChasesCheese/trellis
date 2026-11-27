@@ -28,4 +28,12 @@ def test_batch_preserves_request_order(server):
 - **一条测试只验证一种行为**：一个测试里混十个断言，失败时难以判断属于哪个问题，也无法单独隔离。
 - **记录测试档和超时**：标记所在档；超时用 pytest-timeout 的 `@pytest.mark.timeout(300)`。
 
+```mermaid
+flowchart LR
+    T["测试失败"] --> P["结果上报，带元数据"]
+    P -->|"owner"| O["工单分给 runtime-team"]
+    P -->|"component"| C["batching"]
+    T -->|"断言消息"| M["坏了什么、期望、实际、先查哪里"]
+```
+
 **为什么重要**：发布当天有 30 条失败时，分诊者需要在几分钟内知道每条是谁的、坏的是什么。没有负责人的失败最终无人处理，没有含义的失败只能靠重跑碰运气。

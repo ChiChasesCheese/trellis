@@ -19,6 +19,19 @@ step: 2
 | Anthropic | 租用 TPU、Trainium、GPU | 经三大云出售 | Claude | Claude Code |
 | 英伟达 | GPU | 无 | 无 | 无 |
 
+```mermaid
+flowchart LR
+    subgraph G["谷歌：四层都占"]
+        direction TB
+        G1["芯片：TPU（自研）"] --> G2["云：Google Cloud"]
+        G2 --> G3["模型：Gemini 4"]
+        G3 --> G4["应用：Gemini 应用"]
+    end
+    subgraph N["英伟达：专注一层"]
+        N1["芯片：GPU"]
+    end
+```
+
 - **专注一层：** 英伟达只做芯片，毛利约 75%，这是它的客户的成本。
 - **跨层：** 谷歌用自研 TPU 训练和运行 Gemini，等于少付一份英伟达的利润。
 

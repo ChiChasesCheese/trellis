@@ -12,6 +12,19 @@ step: 3
 
 **场景：** 主智能体对三个子智能体都只说"调研一下支付行业"。三个子智能体不约而同去查 Stripe，没人查 Adyen；其中一个把一个具体的交易额数字概括成"体量很大"交回来，主智能体写结论时已经没有这个数字。
 
+```mermaid
+sequenceDiagram
+    participant M as 主智能体
+    participant S1 as 子智能体 1
+    participant S2 as 子智能体 2
+    participant S3 as 子智能体 3
+    M->>S1: 调研一下支付行业
+    M->>S2: 调研一下支付行业
+    M->>S3: 调研一下支付行业
+    Note over S1,S3: 都去查 Stripe，没人查 Adyen
+    S1-->>M: 「体量很大」，具体数字丢了
+```
+
 **别的典型失败：**
 - 对简单问题派出几十个子智能体，成本爆炸。
 - 明明已经找到答案还继续搜，或一直搜不存在的来源。

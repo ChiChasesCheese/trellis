@@ -19,4 +19,16 @@ step: 3
 - **可复现**：同样的输入和参数两次编译，产物逐字节相同（或差异只在明确的元数据字段），否则缓存和二分定位都无法工作。
 - **环境依赖**：不同的 `PATH`、语言环境（`LANG=C`）、当前工作目录下行为一致。
 
+```mermaid
+flowchart LR
+    A["命令行参数"] --> C["compile"]
+    F["输入文件 model.onnx"] --> C
+    E["环境：PATH、LANG、工作目录"] --> C
+    S["信号：SIGINT"] --> C
+    C --> X["退出码"]
+    C --> O["stdout：结果"]
+    C --> R["stderr：日志和错误"]
+    C --> P["产物：不留半个，可复现"]
+```
+
 **怎么写**：用 `subprocess.run([...], capture_output=True, text=True)` 调用，断言 `returncode`、`stdout`、`stderr`；pytest 的 `tmp_path` 夹具给每个测试一个独立目录。

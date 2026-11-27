@@ -20,4 +20,10 @@ step: 3
 
 **新进展（2026 年 10 月）。** Artificial Analysis 在指数 v5 里按每任务成本列出前十名：从 0.96 美元（GPT-6.1 Terra）到 13.04 美元（Claude Fable 5.1）。
 
+```mermaid
+flowchart LR
+    A["榜单"] -->|"谁值得试"| B["两三个候选"]
+    B -->|"自己的几十条真实对话"| C["谁适合你"]
+```
+
 <details class="pt"><summary>想一想：客服场景里，你会拿榜单做什么，不拿它做什么？</summary>用榜单把候选缩到两三个，再用自己的几十条真实对话测。榜单告诉你谁值得试，不能告诉你谁适合你。</details>

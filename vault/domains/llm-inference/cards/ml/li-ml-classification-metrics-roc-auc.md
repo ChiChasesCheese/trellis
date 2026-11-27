@@ -22,6 +22,27 @@ ROC 曲线和 AUC 是什么？AUC = 0.9 是什么意思？它和 PR 曲线该怎
 
 **手算一个小例子：** 2 个阳性分数 `[0.9, 0.4]`，2 个阴性分数 `[0.6, 0.2]`。四种阳性—阴性配对中，(0.9, 0.6)、(0.9, 0.2)、(0.4, 0.2) 排序正确，(0.4, 0.6) 错误，AUC = 3/4 = **0.75**。
 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 212" font-family="sans-serif" font-size="11">
+<polygon points="50,180 50,100 130,100 130,20 210,20 210,180" fill="currentColor" fill-opacity="0.15"/>
+<line x1="50" y1="180" x2="210" y2="180" stroke="currentColor"/>
+<line x1="50" y1="180" x2="50" y2="20" stroke="currentColor"/>
+<line x1="50" y1="180" x2="210" y2="20" stroke="currentColor" stroke-dasharray="4 3"/>
+<polyline points="50,180 50,100 130,100 130,20 210,20" fill="none" stroke="currentColor" stroke-width="2.5"/>
+<circle cx="50" cy="100" r="3" fill="currentColor"/>
+<circle cx="130" cy="100" r="3" fill="currentColor"/>
+<circle cx="130" cy="20" r="3" fill="currentColor"/>
+<text x="46" y="184" text-anchor="end" fill="currentColor">0</text>
+<text x="46" y="104" text-anchor="end" fill="currentColor">0.5</text>
+<text x="46" y="24" text-anchor="end" fill="currentColor">1</text>
+<text x="130" y="194" text-anchor="middle" fill="currentColor">0.5</text>
+<text x="210" y="194" text-anchor="middle" fill="currentColor">1</text>
+<text x="130" y="208" text-anchor="middle" fill="currentColor">FPR</text>
+<text x="12" y="64" fill="currentColor">TPR</text>
+<text x="170" y="120" text-anchor="middle" fill="currentColor">面积 0.75</text>
+<text x="222" y="60" fill="currentColor">粗线：例子的 ROC</text>
+<text x="222" y="78" fill="currentColor">虚线：随机猜测</text>
+</svg>
+
 ```python
 from sklearn.metrics import roc_auc_score, average_precision_score
 print(roc_auc_score([1, 1, 0, 0], [0.9, 0.4, 0.6, 0.2]))           # 0.75
