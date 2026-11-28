@@ -1,0 +1,51 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "trellis.card/1",
+ "title": "Atlas card line (one per line of cards.jsonl)",
+ "type": "object",
+ "required": [
+  "schema",
+  "id",
+  "node",
+  "type",
+  "step",
+  "q",
+  "a",
+  "tags"
+ ],
+ "properties": {
+  "schema": {
+   "const": "trellis.card/1"
+  },
+  "id": {
+   "type": "string"
+  },
+  "node": {
+   "type": "string"
+  },
+  "type": {
+   "enum": [
+    "qa",
+    "cloze"
+   ]
+  },
+  "step": {
+   "type": [
+    "integer",
+    "null"
+   ]
+  },
+  "q": {
+   "type": "string"
+  },
+  "a": {
+   "type": "string"
+  },
+  "tags": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  }
+ }
+}

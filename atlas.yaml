@@ -1,0 +1,59 @@
+# What the Atlas may publish (ADR 0014). Read by `trellis export`.
+#
+# A domain is published only when it is listed here. Inside a published domain, a subtree is left out when its node id
+# names a company (every folder under `companies_from`, plus `aliases`), or when it is listed under `exclude`. A card is
+# left out when its node is, or when its id names a company. Company tags are stripped from every card.
+# Some company words are subject matter, not interview prep: list those node ids (or a whole domain) under `allow`.
+# `trellis export --check` prints every subtree and card left out, so a new company branch shows up before it ships.
+
+companies_from: vault/interviews/companies
+aliases:            # words in ids that mean a company without naming its folder
+  tt: tiktok
+  amz: amazon
+  gofundme: gofundme
+
+domains:
+  - system-design
+  - low-level-design
+  - hello-interview
+  - code-core
+  - leetcode
+  - leetcode-tops
+  - leetcode-daily
+  - under-the-hood
+  - hft
+  - payments
+  - cdn-content
+  - kafka
+  - snowflake
+  - k8s
+  - test-release
+  - pl
+  - python
+  - llm-inference
+  - ai-literacy
+  - ai-eng
+  - ai-dev
+  - ai-industry
+  - ml-system-design
+  - quant-infra
+  - markets
+  - sr-craft
+  - tech-comm
+  - narrative
+  - career
+  - psych
+  - basketball
+
+exclude:            # subtrees that are personal or company prep without a company word in their id
+  hello-interview: [fix]          # Chi's own mock-interview fixes
+  code-core: [transfer]           # how the coding core transfers to named companies' assessments
+
+allow:              # company words that are the subject itself
+  - snowflake                                            # the domain is Snowflake internals
+  - ai-industry:t02.gpu-nvidia-amd-google-tpu-amazon-trainium-custom
+  - low-level-design:problems.machines.amazon-locker     # a standard LLD problem, asked everywhere
+  - hello-interview:lld.problem-breakdowns.amazon-locker # the same problem in Hello Interview's breakdowns
+
+strip_tags:         # tag prefixes removed from published cards
+  - "公司::"

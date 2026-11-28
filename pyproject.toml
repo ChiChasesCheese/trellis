@@ -36,7 +36,7 @@ build-backend = "setuptools.build_meta"
 include = ["trellis*"]
 
 [tool.setuptools.package-data]
-trellis = ["workbench.html"]
+trellis = ["workbench.html", "atlas_schema/*.json"]
 
 [tool.pytest.ini_options]
 # Only the trellis package tests. The interview kits under vault/interviews/companies/*

@@ -164,20 +164,25 @@ def pull(
         if owner is None:
             continue
         existing = traces.get(owner)
-        trace = Trace(
-            card_id=owner,
-            reps=int(row.get("reps") or 0),
-            lapses=int(row.get("lapses") or 0),
-            interval=int(row.get("interval") or 0),
-            ease=(row.get("factor") or 0) / 1000,
-            type=int(row.get("type") or 0),
-            due=int(row.get("due") or 0),
-            last_review=int(row.get("mod") or 0),
-        )
+        trace = trace_from_row(owner, row)
         traces[owner] = trace if existing is None else _weakest(existing, trace)
 
     return TraceFile(domain=skeleton.domain, pulled_at=now_stamp(),
                      traces=traces, unmapped=unmapped)
+
+
+def trace_from_row(owner: str, row: dict) -> Trace:
+    """One Trace from one `cardsInfo` row."""
+    return Trace(
+        card_id=owner,
+        reps=int(row.get("reps") or 0),
+        lapses=int(row.get("lapses") or 0),
+        interval=int(row.get("interval") or 0),
+        ease=(row.get("factor") or 0) / 1000,
+        type=int(row.get("type") or 0),
+        due=int(row.get("due") or 0),
+        last_review=int(row.get("mod") or 0),
+    )
 
 
 def _weakest(a: Trace, b: Trace) -> Trace:

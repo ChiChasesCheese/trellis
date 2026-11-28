@@ -1,0 +1,28 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "trellis.daily/1",
+ "title": "Atlas daily review counts",
+ "type": "object",
+ "required": [
+  "schema",
+  "date",
+  "daily"
+ ],
+ "properties": {
+  "schema": {
+   "const": "trellis.daily/1"
+  },
+  "date": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "daily": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "integer"
+   }
+  }
+ }
+}

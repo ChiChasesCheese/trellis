@@ -850,7 +850,61 @@ def cmd_kit(args) -> int:
     return kit_cli.run(args)
 
 
+def _published(args, count_untracked: bool = False):
+    """What the Atlas may publish: atlas.yaml's scope over the files git tracks."""
+    from .atlas import AtlasError, Scope, company_words, load_config, load_published, tracked_files
+    try:
+        config = load_config(args.root)
+        tracked = tracked_files(args.root)
+    except (AtlasError, OSError, __import__("subprocess").CalledProcessError) as exc:
+        _fail(str(exc))
+    scope = Scope(config, company_words(config, tracked))
+    published, notes = load_published(args.root, scope, tracked, count_untracked=count_untracked)
+    return published, notes
+
+
+def cmd_export(args) -> int:
+    """Write the Atlas data contract from tracked files and the Snapshots."""
+    import subprocess
+    from .atlas import check_report
+    from .export import export
+    from .snapshot import load_snapshots
+    published, notes = _published(args, count_untracked=args.check)
+    if args.check:
+        for line in check_report(published, notes):
+            print(line)
+        return 0
+    for line in notes:
+        print(f"note: {line}")
+    snapshots = load_snapshots(args.root)
+    head = subprocess.run(["git", "log", "-1", "--format=%cI"], cwd=args.root, capture_output=True, text=True)
+    generated = head.stdout.strip() if head.returncode == 0 else ""
+    out = args.out if args.out.is_absolute() else args.root / args.out
+    counts = export(published, snapshots, out, generated_at=generated)
+    print(f"{counts['domains']} domain(s), {counts['nodes']} node(s), {counts['cards']} card(s) -> {out} "
+          f"(snapshot: {snapshots[-1]['date'] if snapshots else 'none yet'})")
+    return 0
+
+
+def cmd_snapshot(args) -> int:
+    """Read Anki once and write snapshots/<date>.json: per-node aggregates, nothing finer than a day."""
+    from .anki import AnkiConnectError
+    from .snapshot import build_snapshot, write_snapshot
+    published, notes = _published(args)
+    for line in notes:
+        print(f"note: {line}")
+    try:
+        snap = build_snapshot(published, _anki_client(args.anki_url), date=args.date)
+    except AnkiConnectError as exc:
+        _fail(str(exc))
+    path = write_snapshot(args.root, snap)
+    print(f"{len(snap['domains'])} domain(s), {sum(len(d['nodes']) for d in snap['domains'].values())} node(s), "
+          f"{len(snap['daily'])} day(s) of reviews -> {path}")
+    return 0
+
+
 CROSS_DOMAIN = {
+    "export": cmd_export, "snapshot": cmd_snapshot,
     "ingest": cmd_ingest, "seed": cmd_seed, "triage": cmd_triage,
     "accept": cmd_accept, "digest": cmd_digest, "grow": cmd_grow,
     "brief": cmd_brief, "adopt": cmd_adopt, "feed": cmd_feed, "serve": cmd_serve,
@@ -1108,6 +1162,21 @@ def main(argv: list[str] | None = None) -> int:
              "importing the new .apkg; needs desktop Anki + AnkiConnect)",
     )
     p_align.add_argument("--anki-url", default="http://127.0.0.1:8765")
+    p_export = _subcommand(
+        "export",
+        help="write the Atlas data contract (atlas-data/) from atlas.yaml, the tracked skeletons and cards, "
+             "and snapshots/ — no Anki needed",
+    )
+    p_export.add_argument("--out", type=Path, default=Path("atlas-data"))
+    p_export.add_argument("--check", action="store_true",
+                          help="print every subtree and card left out, per domain, and write nothing")
+    p_snapshot = _subcommand(
+        "snapshot",
+        help="read Reach, Hold and daily review counts out of Anki into snapshots/<date>.json "
+             "(the only step of the Atlas that needs Anki)",
+    )
+    p_snapshot.add_argument("--date", help="YYYY-MM-DD (default: today)")
+    p_snapshot.add_argument("--anki-url", default="http://127.0.0.1:8765")
     from .kit import cli as kit_cli
     kit_cli.add_parser(sub, parents=[after_command])
 

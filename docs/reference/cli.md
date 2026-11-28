@@ -43,6 +43,8 @@ Global options (also accepted after the subcommand): `--root ROOT` project root 
 | `anki-push` | `--lang LANG`, `--apkg PATH`, `--anki-url URL` | build, sync AnkiWeb, import, align, sync again (needs desktop Anki + AnkiConnect) |
 | `anki-align` | `--anki-url URL` | move cards to the decks and positions the skeleton defines; delete stale empty decks |
 | `pull` | `--anki-url URL` | read review history into `traces/<domain>.json` (the only command that asks Anki a question) |
+| `snapshot` | `--date YYYY-MM-DD`, `--anki-url URL` | read Reach, Hold and daily review counts into `snapshots/<date>.json`: per-node aggregates, nothing finer than a day (needs Anki; the Atlas's only such step, ADR 0014) |
+| `export` | `--out DIR` (default `atlas-data`), `--check` | write the Atlas data contract from `atlas.yaml`, tracked skeletons and cards, and `snapshots/`; `--check` prints every subtree and card left out and writes nothing |
 | `brief` | `--print` | write `vault/Brief.md`: what to do next, ranked across domains |
 | `feed` | `-n LIMIT`, `--include-sealed` | print the filtered-deck recipe for one interleaved stream; sealed leaves held back unless `--include-sealed` |
 | `serve` | `--port PORT`, `--no-open` | open the local Workbench page |

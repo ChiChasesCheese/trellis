@@ -1,0 +1,184 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "trellis.domain/1",
+ "title": "Atlas domain",
+ "type": "object",
+ "required": [
+  "schema",
+  "id",
+  "title",
+  "lang",
+  "cards",
+  "nodes",
+  "snapshot_date"
+ ],
+ "properties": {
+  "schema": {
+   "const": "trellis.domain/1"
+  },
+  "id": {
+   "type": "string"
+  },
+  "title": {
+   "type": "string"
+  },
+  "lang": {
+   "type": "string"
+  },
+  "cards": {
+   "type": "integer"
+  },
+  "studied": {
+   "type": [
+    "integer",
+    "null"
+   ]
+  },
+  "reach": {
+   "type": [
+    "number",
+    "null"
+   ]
+  },
+  "level": {
+   "type": [
+    "integer",
+    "null"
+   ]
+  },
+  "hold": {
+   "type": [
+    "number",
+    "null"
+   ]
+  },
+  "weak": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "uncovered": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "snapshot_date": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "nodes": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "parent",
+     "title",
+     "summary",
+     "core",
+     "requires",
+     "depth",
+     "order",
+     "cards",
+     "studied",
+     "reach",
+     "level",
+     "hold",
+     "flags",
+     "readings"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "parent": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "title": {
+      "type": "string"
+     },
+     "summary": {
+      "type": "string"
+     },
+     "core": {
+      "type": "boolean"
+     },
+     "requires": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "depth": {
+      "type": "integer"
+     },
+     "order": {
+      "type": "integer"
+     },
+     "leaf": {
+      "type": "boolean"
+     },
+     "cards": {
+      "type": "integer"
+     },
+     "studied": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "reach": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "level": {
+      "type": [
+       "integer",
+       "null"
+      ],
+      "minimum": -1,
+      "maximum": 5
+     },
+     "hold": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "flags": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "readings": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "title"
+       ],
+       "properties": {
+        "title": {
+         "type": "string"
+        },
+        "url": {
+         "type": "string"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

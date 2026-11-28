@@ -1,0 +1,42 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "trellis.history/1",
+ "title": "Atlas history",
+ "type": "object",
+ "required": [
+  "schema",
+  "domains"
+ ],
+ "properties": {
+  "schema": {
+   "const": "trellis.history/1"
+  },
+  "domains": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "date",
+      "cards"
+     ],
+     "properties": {
+      "date": {
+       "type": "string"
+      },
+      "cards": {
+       "type": "integer"
+      },
+      "studied": {
+       "type": "integer"
+      },
+      "hold": {
+       "type": "number"
+      }
+     }
+    }
+   }
+  }
+ }
+}

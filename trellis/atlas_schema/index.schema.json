@@ -1,0 +1,108 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "trellis.index/1",
+ "title": "Atlas index",
+ "type": "object",
+ "required": [
+  "schema",
+  "generated_at",
+  "snapshot_date",
+  "reach_definition",
+  "domains"
+ ],
+ "properties": {
+  "schema": {
+   "const": "trellis.index/1"
+  },
+  "generated_at": {
+   "type": "string"
+  },
+  "snapshot_date": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "reach_definition": {
+   "type": "string"
+  },
+  "domains": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "lang",
+     "nodes",
+     "leaves",
+     "cards",
+     "studied",
+     "reach",
+     "level",
+     "hold",
+     "weak",
+     "uncovered"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     },
+     "lang": {
+      "type": "string"
+     },
+     "nodes": {
+      "type": "integer"
+     },
+     "leaves": {
+      "type": "integer"
+     },
+     "cards": {
+      "type": "integer"
+     },
+     "studied": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "reach": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "level": {
+      "type": [
+       "integer",
+       "null"
+      ],
+      "minimum": -1,
+      "maximum": 5
+     },
+     "hold": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "weak": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "uncovered": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ }
+}
