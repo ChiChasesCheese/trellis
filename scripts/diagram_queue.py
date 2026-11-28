@@ -21,10 +21,10 @@ sys.path.insert(0, str(ROOT / "scripts"))
 SKIP = ROOT / "sources/local/plan/diagram_skip.txt"
 DIAGRAM = re.compile(r"^```(?:mermaid|svg)\b|^<svg\b|!\[\[[^\]]+\.(?:png|jpe?g|svg|gif|webp)\]\]|!\[[^\]]*\]\([^)]+\)", re.M)
 FLOOR = 0.25
-NO_DIAGRAMS = {"basketball"}  # video clips carry these cards
+NO_DIAGRAMS: set[str] = set()  # domains whose cards carry video instead of diagrams
 # among domains equally far below the floor, the ones he studies most come first
 STUDIED = ["hello-interview", "low-level-design", "leetcode-tree", "python", "code-core", "narrative", "pl", "kafka", "payments",
-           "hft", "snowflake", "cdn-content", "stripe", "headlands", "system-design", "leetcode", "tiktok-lc", "tiktok-lc-drill"]
+           "hft", "snowflake", "cdn-content", "stripe", "headlands", "system-design"]
 
 
 def index() -> tuple[dict[str, Path], dict[str, list[str]], dict[str, float]]:

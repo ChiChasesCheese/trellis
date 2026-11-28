@@ -60,7 +60,7 @@ LC_DEFAULTS = {"since": "2026-11-12T04:00", "per_topic": 5, "per_section": 1}
 PREFER = ("lct-{s}", "tlc-tops-{s}-0-whole", "tlc-{s}-0-whole", "tlc-core-{s}", "lca-{s}", "tlc-daily-{s}-0-whole")
 DEFAULT_DECKS = {"系统设计": 1.0, TREE_ROOT: 1.0, "Under the Hood": 0.3, "低层设计（LLD）": 0.6, "Kafka": 0.5, "Python": 0.5,
                  "Code Core": 0.5, "Narrative Round": 0.4, "编程语言原理：Go · Java · Rust · Python · C++": 0.3,
-                 "Snowflake 原理": 0.3, "HFT 低延迟交易系统": 0.2, "CDN Content": 0.2, "Stripe": 0.2, "篮球（Basketball）": 0.2,
+                 "Snowflake 原理": 0.3, "HFT 低延迟交易系统": 0.2, "CDN Content": 0.2, "Stripe": 0.2,
                  "Headlands": 0.1, "Markets & Factors": 0.1, "Quant Infrastructure": 0.1}
 
 

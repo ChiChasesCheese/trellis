@@ -1,1 +1,0 @@
-moves.stepback.in-and-out-stepback, moves.stepback.stepback-baifo-between-legs, moves.spin.fake-spin
