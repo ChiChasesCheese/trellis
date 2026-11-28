@@ -92,6 +92,10 @@ def _anki_ids(query: str, limit: int) -> list[str]:
     return out
 
 
+# The 2026-11 refresh: problems in the company tag lists and the recent OA reports (sliding-window substring, spreadsheet
+# column notation) that the September kit did not have; 2484 and 2603 are not on the tree and are left out.
+LC_RECENT = ["design-circular-queue", "longest-substring-without-repeating-characters", "minimum-window-substring",
+             "excel-sheet-column-title"]
 SIBLINGS = 8   # same-pattern problems per leaf: 19 problems open about a hundred
 
 
@@ -126,8 +130,8 @@ def lc_plan(targets: list[str]) -> list[dict]:
         qs = [recog[num[p]] for p in ts + sibs if num.get(p) in recog]
         tag += [(int(q["note"]), q["id"]) for q in qs]
         ids = ([lc_tree.card_id(lid)] if lc_tree.card_id(lid) in learn else []) + [f"lct-{s}" for s in ts] + [q["id"] for q in qs]
-        generic = {"综合应用", "其他", "基础", "进阶", "求最小", "求最大"}   # a leaf name that needs its parent to say anything
-        name = " · ".join(path[-2:]) if path[-1] in generic or path[-1].startswith("其他") else path[-1]
+        generic = {"综合应用", "其他", "基础", "进阶", "求最小", "求最大", "设计"}   # a leaf name that needs its parent to say anything
+        name = " · ".join(path[-2:]) if path[-1] in generic or path[-1].startswith("其他") or "/" in path[-1] else path[-1]
         if path[-1] == "基础":
             name = " · ".join(path[-3:-1])
         plan.append({"label": f"{k:02d} {name}", "ids": ids})
@@ -143,7 +147,7 @@ def main() -> int:
     plan = [
         {"label": "01 招聘方电话", "ids": company(["call"])},
         {"label": "02 公司与岗位", "ids": company(["company"])},
-        {"label": "03 编程题", "ids": company(["coding"])},
+        {"label": "03 编程题", "ids": company(["coding"]) + company(["traps"])},   # code reading sits with coding
         {"label": "04 经理面与行为面", "ids": company(["hm"])},
         {"label": "05 项目深挖", "ids": company(["deepdive"]) + bt_ids},
         {"label": "06 Python 内功", "ids": vault_ids(ROOT / "vault/domains/python/cards", PY_LEAVES, 3)},
@@ -157,7 +161,8 @@ def main() -> int:
         {"label": "11 谈判", "ids": anki_ids('"deck:职业发展与谈判::05 Compensation anatomy"', 99)
          + anki_ids('"deck:职业发展与谈判::06 Negotiation"', 99)},
     ]
-    lc = lc_plan([s for s in LC_SEEN] + [i[4:] for i in anki_ids('"tag:公司::Millennium"', 99) if i[4:] not in LC_SEEN])
+    tagged = [i[4:] for i in anki_ids('"tag:公司::Millennium"', 99) if i[4:] not in LC_SEEN]
+    lc = lc_plan(LC_SEEN + tagged + [s for s in LC_RECENT if s not in LC_SEEN + tagged])
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "plan.json").write_text(json.dumps(plan, ensure_ascii=False, indent=1), encoding="utf-8")
     (OUT / "lc_plan.json").write_text(json.dumps(lc, ensure_ascii=False, indent=1), encoding="utf-8")

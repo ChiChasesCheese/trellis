@@ -65,3 +65,10 @@
 - techinterview.org 的 pod 数、"5% rule"——SEO folklore。
 - QuantVault 的概率/期权/统计题——QR/QT 岗，LEaD SWE 不考；只保留 LRU/Median/OA 编码题。
 - Angular/前端题（1p3a 1149521）——LEaD 不是前端岗。
+
+## 2026-11-27 refresh（`raw/refresh_2026-11_{questions,process,company}.md`）
+
+- **LeetCode company tags:** liquidslr (`Millennium/`, changed 2026-10-21) and snehasishroy (`millennium/`) do list Millennium; the 30-day / 3-month / 6-month windows are empty, everything sits in "more than six months". New against the 15 above: 301, 2484, 2603, 139, 437, 98, 49, 622. Deck: 301, 139, 437, 98, 49 were already tagged `公司::Millennium`; 622 added; 2484 and 2603 are not on the tree (hard, old) and are left out.
+- **New practical questions (PracHub, 2026-11, medium; order book attribution medium-low):** order book matching engine (pc11), floating-point equality `0.9 - 0.8`, mutable hash keys in Java HashSet/ArrayList, unbounded session cache with a thread stop flag, client-service protocols at scale. OA content (QuantVault 2026-10, low-medium): PnL calculation (pc12), permutation divisible by 8 (pc13), spreadsheet-column notation (LC 168), sliding-window substring (LC 3, 76); technical rounds: Python async debugging, streaming quote buffer (pc14).
+- **Later rounds (general Millennium SWE, no LEaD first-hand):** onsite with 2 technical interviews and 1 short behavioural (Miami, offer July, Glassdoor snippet); 45-minute full-stack round with project Q&A and reading the output of three Java snippets (1p3a 2026-11-20, summary); PM / pod-fit final for pod roles (QuantVault, low-medium).
+- **Company (high unless marked):** 2025 +10.5%; 2026 YTD +5.7% at end of October, about $95bn; AI lab (June 2026); Anthropic digital risk analyst and broad Claude Code use (August 2026, both official pages read); digital twins (September 2026); co-CIO retires end of 2026; ~15% stake sold Nov 2025 at ~$14bn valuation.

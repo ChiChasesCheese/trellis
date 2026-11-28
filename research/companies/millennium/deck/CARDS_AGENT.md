@@ -90,3 +90,14 @@ diagram renders. Resume rule: a leaf that already has its cards is done; skip it
 ## Report (final message, at most 10 lines)
 
 Per branch: number of cards and one line on what they cover. Then any leaf you could not fill from the sources.
+
+## Additions, 2026-11-27 (research refresh)
+
+- Map cards use `step: 1` (the validator rejects 0); file names equal the card id.
+- New sources: `research/companies/millennium/catalog/raw/refresh_2026-11_questions.md`, `refresh_2026-11_process.md`,
+  `refresh_2026-11_company.md`. Use only facts marked high or medium confidence there; numbers exactly as given, with
+  their date ("截至 2026 年 10 月"). Where sources disagree on a number, leave the number out.
+- Questions without a kit solution (order book, PnL, divisible-by-8, quote buffer, language traps) are written from
+  general knowledge: every code block must be run before it goes on a card, and every "this prints X" must be checked
+  by running it (`python3`; for Java, `java File.java` if a JDK is installed, else state only what the language
+  specification guarantees and keep examples to cases you are certain of).

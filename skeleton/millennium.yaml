@@ -32,6 +32,9 @@ nodes:
   - id: call.comp
     title: 薪资期望怎么答
     summary: 先不报数、把问题推回区间；必须给数时给一个有依据的区间；轮岗项目的薪资结构要问清楚。
+  - id: call.team-round
+    title: 团队轮可能是什么样
+    summary: Millennium 软件岗近一年报告里的后续轮次：项目深挖、实用编程或读代码、行为面，以及怎么各自准备。
   - id: call.ask
     title: 要问招聘方的问题
     summary: 团队轮几轮、每轮多长、考什么、面试官是谁、用什么工具、决定多久出来。
@@ -59,6 +62,14 @@ nodes:
     title: Why Millennium、Why LEaD、Why Miami
     summary: 三个为什么的英文答法，每个都挂在具体事实和你的经历上。
     requires: [company.role]
+  - id: company.news
+    title: 2026 年的 Millennium：业绩、资金与人事
+    summary: 今年的收益和规模、新一轮募资、首席投资官办公室的变化、交易团队的进出，以及这些对技术部门意味着什么。
+    requires: [company.business]
+  - id: company.ai
+    title: Millennium 的 AI：实验室、和 Anthropic 的合作、数字分身
+    summary: 2026 年的 AI 动作：独立的 AI 实验室、和 Anthropic 共建的数字风险分析师、给员工的数字分身；工程上的看点和怎么在面试里聊。
+    requires: [company.tech]
   - id: company.ask
     title: 团队轮要问面试官的问题
     summary: 问工程师、问经理、问项目负责人各问什么，各想听出什么；哪些不问。
@@ -98,6 +109,18 @@ nodes:
   - id: coding.pc10
     title: SQL 小题
     summary: 分组、窗口函数、join 加汇率、连续区间（gaps and islands）、NULL 陷阱。
+  - id: coding.pc11
+    title: 订单簿撮合引擎
+    summary: 限价单与市价单、撤单、价格优先时间优先、最优买卖价、成交记录；改单失去排队位置、前五档、撤单多时的结构选择。
+  - id: coding.pc12
+    title: 盈亏计算（PnL）
+    summary: 按先进先出把买卖配对，算已实现和未实现盈亏；空头、部分成交、手续费。
+  - id: coding.pc13
+    title: 能否重排成 8 的倍数
+    summary: 只看最后三位：一个数能被 8 整除当且仅当末三位能被 8 整除；数字计数加枚举三位倍数。
+  - id: coding.pc14
+    title: 流式报价缓冲
+    summary: 每个代码保留最近 N 条报价，查最新价、窗口内均价和最高最低价；环形缓冲、单调队列、线程安全。
 - id: data
   order: 8
   title: 数据处理：pandas 与 SQL
@@ -109,6 +132,26 @@ nodes:
   - id: data.sql
     title: SQL 分析查询
     summary: GROUP BY 与 HAVING、窗口函数排名与累计、连续区间、as-of 关联、NULL 的三值逻辑。
+- id: traps
+  order: 9
+  title: 语言陷阱与读代码
+  summary: 面试里"这段代码输出什么""这里有什么问题"：浮点相等、可变对象当哈希键、无界缓存与线程停止、Java 和 Python 的经典陷阱。
+  children:
+  - id: traps.float
+    title: 浮点数相等与金额
+    summary: 0.9 - 0.8 为什么不等于 0.1；容差比较、Decimal 与 BigDecimal、金额用整数最小单位。
+  - id: traps.hash-keys
+    title: 可变对象当哈希键
+    summary: 放进 HashSet 后改字段就再也找不到；equals 与 hashCode 的约定；Python 里 list 不能当键、tuple 里套 list 也不行。
+  - id: traps.cache-thread
+    title: 无界缓存与线程停止标志
+    summary: 只增不减的会话缓存让内存一直涨；后台线程靠一个布尔标志停止时，Java 要 volatile，Python 用 Event；怎么修。
+  - id: traps.java-output
+    title: 读 Java 代码说输出
+    summary: 字符串 == 与 equals、Integer 缓存、传值与引用、重载与重写、finally 覆盖返回值、整数溢出、remove(int) 与 remove(Object)。
+  - id: traps.python-output
+    title: 读 Python 代码说输出
+    summary: 可变默认参数、循环里闭包的晚绑定、列表乘法共享引用、生成器只能用一次、is 与 ==、链式比较。
 - id: hm
   order: 4
   core: true
@@ -153,6 +196,9 @@ nodes:
   title: 设计轮：行情与价格数据服务
   summary: Millennium 报过的设计题：采集、存储、某时刻查询、下游订阅；对应编程题里价格数据存储的系统版。
   children:
+  - id: design.protocols
+    title: 客户端与服务之间用什么协议通信
+    summary: REST、gRPC、WebSocket、消息队列各适合什么；请求响应还是推送、延迟与吞吐、规模变大后怎么选。
   - id: design.sd01
     title: 行情与价格数据服务
     summary: 需求与规模、数据模型、写入路径、as-of 查询、订阅推送、回补与纠错。
