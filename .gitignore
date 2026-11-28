@@ -75,9 +75,7 @@ vault/interviews/core/low-level-design/work/
 vault/interviews/core/low-level-design/progress.jsonl
 vault/interviews/core/low-level-design/PROGRESS.md
 
-# Bagu deck: draws directly on third-party material, so it stays on this machine and in Anki
-skeleton/bagu.yaml
-vault/domains/bagu/
+# Bagu deck: public since 2026-11-28 (Chi); its raw research material stays on this machine
 research/domains/bagu/
 
 # merged system-design view: includes the local-only bagu domain (Chi, 2026-11-07)

@@ -12,48 +12,19 @@ aliases:            # words in ids that mean a company without naming its folder
   amz: amazon
   gofundme: gofundme
 
-domains:
-  - system-design
+domains:            # Chi's whitelist of 2026-11-28; nothing else is published
+  - sysdesign         # 系统设计, from atlas/skeletons/sysdesign.yaml (scripts/atlas_project.py)
   - low-level-design
-  - hello-interview
-  - code-core
-  - leetcode
-  - leetcode-tops
-  - leetcode-daily
-  - under-the-hood
-  - hft
-  - payments
-  - cdn-content
-  - kafka
-  - snowflake
-  - k8s
-  - test-release
-  - pl
   - python
-  - llm-inference
-  - ai-literacy
-  - ai-eng
-  - ai-dev
-  - ai-industry
-  - ml-system-design
-  - quant-infra
-  - markets
-  - sr-craft
-  - tech-comm
-  - narrative
-  - career
-  - psych
-  - basketball
+  - pl
+  - hft
+  - leetcode-tree     # the 0x3F tree
 
 exclude:            # subtrees that are personal or company prep without a company word in their id
-  hello-interview: [fix]          # Chi's own mock-interview fixes
-  code-core: [transfer]           # how the coding core transfers to named companies' assessments
+  sysdesign: [s08]                # the TikTok branch (its leaves also carry the alias `tt`)
 
 allow:              # company words that are the subject itself
-  - snowflake                                            # the domain is Snowflake internals
-  - ai-industry:t02.gpu-nvidia-amd-google-tpu-amazon-trainium-custom
   - low-level-design:problems.machines.amazon-locker     # a standard LLD problem, asked everywhere
-  - hello-interview:lld.problem-breakdowns.amazon-locker # the same problem in Hello Interview's breakdowns
 
 strip_tags:         # tag prefixes removed from published cards
   - "公司::"

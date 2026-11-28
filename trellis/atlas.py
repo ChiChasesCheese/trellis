@@ -197,9 +197,15 @@ def load_published(root: str | Path, scope: Scope, tracked: set[str],
     notes: list[str] = []
     for domain in scope.config.domains:
         rel = f"skeleton/{domain}.yaml"
-        if rel not in tracked:
-            notes.append(f"{domain}: skeleton/{domain}.yaml is not tracked by git; domain skipped")
-            continue
+        proj = projection_path(domain)
+        if proj in tracked:
+            rel = proj      # a projection (atlas/skeletons/) stands in for a local skeleton
+        else:
+            if (root / proj).exists():
+                notes.append(f"{domain}: {proj} exists but is not tracked by git; using skeleton/{domain}.yaml")
+            if rel not in tracked:
+                notes.append(f"{domain}: skeleton/{domain}.yaml is not tracked by git; domain skipped")
+                continue
         if not scope.domain_published(domain):
             notes.append(f"{domain}: the domain name itself names a company; domain skipped")
             continue
@@ -265,3 +271,95 @@ def check_report(published: dict[str, PublishedDomain], notes: list[str]) -> lis
         for card_id in pub.card_ids_left_out:
             lines.append(f"    - card {card_id}  [company word in id]")
     return lines
+
+
+# -- the projection: a published copy of a local skeleton ----------------------------------------
+
+PROJECTION_DIR = "atlas/skeletons"
+_PROJECTION_KEYS = ("domain", "title", "lang", "show", "vault", "include")
+_NODE_KEYS = ("id", "title", "summary", "core", "requires", "order")
+
+
+@dataclass
+class Projection:
+    data: dict
+    kept: int = 0
+    dropped: int = 0
+    dropped_by: dict[str, int] = field(default_factory=dict)    # why: "untracked:<folder>", "no cards", "private term"
+    top_level: int = 0
+
+
+def projection_path(domain: str) -> str:
+    return f"{PROJECTION_DIR}/{domain}.yaml"
+
+
+def project_skeleton(data: dict, node_cards: dict[str, set[str]], tracked: set[str],
+                     private: "re.Pattern | None" = None) -> Projection:
+    """The tracked-only copy of a skeleton mapping (as read from YAML).
+
+    node_cards: node id -> the vault folders (as in `vault:` / `include:`) holding a card of that node, for tracked
+    and untracked cards alike, with tracked ones marked by the folder name itself and untracked ones as `!<folder>`.
+    A node stays when its own or any descendant's cards include a tracked one; its title and summary must not match
+    the private-term pattern (a match drops the whole subtree). `requires` pointing at a dropped node are removed.
+    """
+    dropped_by: dict[str, int] = {}
+    kept_ids: set[str] = set()
+
+    def bump(why: str) -> None:
+        dropped_by[why] = dropped_by.get(why, 0) + 1
+
+    def has_tracked(node: dict) -> bool:
+        if any(not f.startswith("!") for f in node_cards.get(node["id"], ())):
+            return True
+        return any(has_tracked(c) for c in node.get("children") or [])
+
+    def private_hit(node: dict) -> bool:
+        return bool(private and (private.search(str(node.get("title", ""))) or private.search(str(node.get("summary", "")))))
+
+    def count_subtree(node: dict, why_of) -> None:
+        bump(why_of(node))
+        for c in node.get("children") or []:
+            count_subtree(c, why_of)
+
+    def reason(node: dict) -> str:
+        folders = sorted({f[1:] for f in node_cards.get(node["id"], ()) if f.startswith("!")})
+        return f"untracked cards in {'+'.join(folders)}" if folders else "no cards"
+
+    def walk(node: dict) -> dict | None:
+        if private_hit(node):
+            count_subtree(node, lambda n: "private term")
+            return None
+        if not has_tracked(node):
+            count_subtree(node, reason)
+            return None
+        children = [k for k in (walk(c) for c in node.get("children") or []) if k is not None]
+        kept_ids.add(node["id"])
+        out = {k: node[k] for k in _NODE_KEYS if k in node and node[k] not in (None, "", [], False)}
+        out["_children"] = children
+        return out
+
+    roots = [r for r in (walk(n) for n in data.get("nodes") or []) if r is not None]
+
+    def finish(node: dict) -> dict:
+        kids = node.pop("_children")
+        if "requires" in node:
+            node["requires"] = [r for r in node["requires"] if r in kept_ids]
+            if not node["requires"]:
+                del node["requires"]
+        if kids:
+            node["children"] = [finish(k) for k in kids]
+        return node
+
+    nodes = [finish(r) for r in roots]
+    out = {k: data[k] for k in _PROJECTION_KEYS if k in data and k != "include"}
+    include = [f for f in data.get("include") or [] if any(p.startswith(f"vault/{f}/") for p in tracked)]
+    if include:
+        out["include"] = include
+    out["nodes"] = nodes
+    return Projection(data=out, kept=len(kept_ids), dropped=sum(dropped_by.values()), dropped_by=dropped_by,
+                      top_level=len(nodes))
+
+
+def projection_header(domain: str) -> str:
+    return (f"# Generated by scripts/atlas_project.py from skeleton/{domain}.yaml (a local, gitignored file). Do not edit.\n"
+            f"# Only nodes whose subtree holds a git-tracked card are kept; the Atlas reads this file instead of the source.\n")

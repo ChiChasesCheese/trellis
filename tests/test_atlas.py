@@ -398,3 +398,78 @@ def test_atlas_yaml_of_this_repo_parses():
         pytest.skip("atlas.yaml is not in this checkout")
     config = load_config(root)
     assert isinstance(config, AtlasConfig) and config.domains
+
+
+# -- the projection of a local skeleton ----------------------------------------------------------
+
+from trellis.atlas import project_skeleton, projection_path   # noqa: E402
+
+PROJ_SRC = {
+    "domain": "merged", "title": "Merged", "lang": "zh", "vault": "domains/open",
+    "include": ["domains/closed", "domains/also-open"], "deck": "Merged", "own_decks": {"a": "X"}, "deck_moves": {"a": "Y"},
+    "study": {"x": 1},
+    "nodes": [
+        {"id": "a", "title": "A", "core": True, "children": [
+            {"id": "a.one", "title": "One", "requires": ["b.gone", "a.two"]},
+            {"id": "a.two", "title": "Two"},
+        ]},
+        {"id": "b", "title": "B", "children": [{"id": "b.gone", "title": "Gone"}]},
+        {"id": "c", "title": "Leaks acme-secret", "children": [{"id": "c.x", "title": "X"}]},
+    ],
+}
+PROJ_CARDS = {"a.one": {"domains/open"}, "a.two": {"!domains/closed"}, "b.gone": {"!domains/closed"}, "c.x": {"domains/open"}}
+PROJ_TRACKED = {"vault/domains/open/cards/x.md", "vault/domains/also-open/cards/y.md"}
+
+
+def test_projection_keeps_tracked_nodes_and_drops_untracked_ones():
+    proj = project_skeleton(PROJ_SRC, PROJ_CARDS, PROJ_TRACKED, None)
+    ids = [n["id"] for n in proj.data["nodes"]]
+    assert ids == ["a", "c"] and proj.top_level == 2
+    kids = [c["id"] for c in proj.data["nodes"][0]["children"]]
+    assert kids == ["a.one"]                                        # a.two holds only an untracked card
+    assert proj.dropped_by == {"untracked cards in domains/closed": 2, "no cards": 1}     # a.two, b.gone; b
+    assert proj.kept == 4 and proj.dropped == 3
+
+
+def test_projection_removes_dangling_requires_and_anki_keys():
+    proj = project_skeleton(PROJ_SRC, PROJ_CARDS, PROJ_TRACKED, None)
+    one = proj.data["nodes"][0]["children"][0]
+    assert "requires" not in one                                    # b.gone and a.two are both dropped
+    assert proj.data["nodes"][0]["core"] is True
+    assert set(proj.data) == {"domain", "title", "lang", "vault", "include", "nodes"}
+    assert proj.data["include"] == ["domains/also-open"]            # only folders with tracked files
+
+
+def test_projection_keeps_a_requires_to_a_kept_node():
+    src = {**PROJ_SRC, "nodes": [{"id": "a", "title": "A", "children": [
+        {"id": "a.one", "title": "One", "requires": ["a.two"]}, {"id": "a.two", "title": "Two"}]}]}
+    cards = {"a.one": {"domains/open"}, "a.two": {"domains/open"}}
+    proj = project_skeleton(src, cards, PROJ_TRACKED, None)
+    assert proj.data["nodes"][0]["children"][0]["requires"] == ["a.two"]
+
+
+def test_projection_drops_a_node_whose_title_hits_a_private_term():
+    pat = re.compile(r"(?<![A-Za-z0-9_])(acme-secret)(?![A-Za-z0-9_])")
+    proj = project_skeleton(PROJ_SRC, PROJ_CARDS, PROJ_TRACKED, pat)
+    assert [n["id"] for n in proj.data["nodes"]] == ["a"]
+    assert proj.dropped_by["private term"] == 2                     # the node and its subtree
+    assert "acme-secret" not in "".join(f"{k}{v}" for k, v in proj.dropped_by.items())
+
+
+def test_export_prefers_the_projection_over_the_local_skeleton(repo):
+    proj = {"domain": "alpha", "title": "Alpha (projection)", "vault": "domains/alpha",
+            "nodes": [{"id": "basics", "title": "Basics", "children": [{"id": "basics.one", "title": "One"}]}]}
+    p = repo / projection_path("alpha")
+    p.parent.mkdir(parents=True)
+    p.write_text(yaml.safe_dump(proj, allow_unicode=True), encoding="utf-8")
+    config = load_config(repo)
+    tracked = tracked_of(repo)
+    scope = Scope(config, company_words(config, tracked))
+    published, _ = load_published(repo, scope, tracked)
+    assert published["alpha"].skeleton.title == "Alpha (projection)"
+    assert "basics.two" not in published["alpha"].nodes
+    assert {c.node for c in published["alpha"].cards} == {"basics.one"}   # cards of dropped nodes are not published
+    # an untracked projection is ignored
+    tracked -= {projection_path("alpha")}
+    published, notes = load_published(repo, scope, tracked)
+    assert published["alpha"].skeleton.title == "Alpha" and any("not tracked" in n for n in notes)
