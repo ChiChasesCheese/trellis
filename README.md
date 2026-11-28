@@ -147,12 +147,10 @@ by hand with the extension (point it at `<domain>/clippings/`) is picked up
 identically. Pages that are the resource itself (videos) or that hide behind
 JavaScript are skipped with a reason and stay web links.
 
-Clippings **are committed**, because this repository is private and a clone is
-how the archive reaches a phone. They remain other people's writing: making the
-repository public again means removing them first (`git rm -r --cached
-vault/*/clippings` and restoring the ignore rule that is kept, commented, in
-`.gitignore`). They are reproducible either way — `trellis clip` rebuilds them
-anywhere.
+Clippings **are not committed**: this repository is public and they are other
+people's writing. They live in the vault on your own devices (Obsidian Sync
+carries them to the phone) and are reproducible anywhere — `trellis clip`
+rebuilds them from the reading URLs.
 
 - **Anki**: import `dist/system-design.apkg`. After editing or adding cards,
   rebuild and re-import — note GUIDs are stable, so edits update in place and

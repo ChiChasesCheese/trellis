@@ -5,10 +5,12 @@ target/
 dist/
 .pytest_cache/
 .obsidian/
-# The repository is public. Clipped article text (vault/**/clippings/*.md) is committed by choice;
-# clipped PDFs are not: they stay in the vault on Chi's devices through Obsidian Sync (private) and
-# render there via the `![[name.pdf]]` embed; `trellis clip` re-fetches them from the source URL.
-vault/**/clippings/*.pdf
+# The repository is public. Clippings are other people's writing: they stay in the vault on Chi's devices
+# through Obsidian Sync and render there via `![[name-clip]]`; `trellis clip` re-fetches them (ADR 0014).
+vault/**/clippings/
+
+# Review history pulled from Anki stays on this machine; the dated, per-node record is snapshots/ (ADR 0014)
+traces/
 .trellis/
 
 # Browser-automation scratch output (screenshots, page snapshots) — never source
