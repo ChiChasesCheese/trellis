@@ -49,9 +49,26 @@ vault/interviews/core/leetcode/mustread/
 vault/domains/basketball/media/
 research/domains/basketball/clips.json.lock
 
-# Hello Interview cards written from logged-in pages: commercial site, public repo. Local vault and Anki only.
-vault/domains/hello-interview/cards/premium/
-vault/domains/hello-interview/premium/
+# Hello Interview premium cards are public since 2026-11-28 (Chi): our own writing. Kept local: Chi's mock-interview
+# fixes (their nodes live only in the merged sysdesign view) and files private_guard refuses.
+vault/domains/hello-interview/cards/premium/fix/
+vault/domains/hello-interview/cards/premium/mock/
+# overview cards for topics with no article (ov.* nodes exist only in the merged view, until the Atlas projection has them)
+/vault/domains/hello-interview/cards/premium/overview/dlock/
+/vault/domains/hello-interview/cards/premium/overview/estimation/
+/vault/domains/hello-interview/cards/premium/overview/idempotency/
+/vault/domains/hello-interview/cards/premium/overview/pay-card-lifecycle/
+/vault/domains/hello-interview/cards/premium/overview/pay-correctness/
+/vault/domains/hello-interview/cards/premium/overview/pay-ledger/
+/vault/domains/hello-interview/cards/premium/overview/pay-platform/
+/vault/domains/hello-interview/cards/premium/overview/pay-reconciliation/
+/vault/domains/hello-interview/cards/premium/overview/pay-risk-compliance/
+/vault/domains/hello-interview/cards/premium/overview/ranking/
+/vault/domains/hello-interview/cards/premium/overview/reliability/
+/vault/domains/hello-interview/cards/premium/sd/deep-dives/dynamodb/hi-c-sd-dynamodb-y01-ttl-archive.md
+/vault/domains/hello-interview/cards/premium/sd/deep-dives/kafka/hi-c-sd-kafka-n08-scalability.md
+/vault/domains/hello-interview/cards/premium/sd/problem-breakdowns/bitly/hi-c-sd-bitly-n03-entities-api.md
+/vault/domains/hello-interview/cards/premium/sdx/more.email-service/hi-sdx-email-spf-dkim-dmarc.md
 
 # LLD study plan: personal attempts and progress
 vault/interviews/core/low-level-design/work/
@@ -83,9 +100,7 @@ skeleton/headlands.yaml
 # mock interviews recorded by the sysdesign-board tool: personal, never public
 vault/system_design_mocks/
 
-# the LeetCode knowledge tree built from 0x3F (灵茶山艾府) posts: derived from his text, local only
-skeleton/leetcode-tree.yaml
-vault/interviews/core/leetcode/tree/
+# the LeetCode knowledge tree built from 0x3F (灵茶山艾府) posts is public since 2026-11-28 (Chi)
 
 # Obsidian daily notes (vault/日记/) and personal job notes: local only, synced by Obsidian Sync, never git (Chi, 2026-11-28)
 vault/日记/

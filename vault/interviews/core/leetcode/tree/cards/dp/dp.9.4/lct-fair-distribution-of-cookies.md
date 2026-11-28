@@ -1,0 +1,8 @@
+---
+id: lct-fair-distribution-of-cookies
+node: dp.9.4
+type: qa
+step: 8
+body: interviews/core/leetcode/problems/fair-distribution-of-cookies
+meta: "灵神题单 · 动态规划 › 状态压缩 DP（状压 DP） › 子集状压 DP"
+---
