@@ -6,7 +6,8 @@
 domain: quant-infra
 title: Quant Infrastructure
 deck: "📦 其他::Quant Infrastructure"
-lang: en
+lang: zh
+show: zh
 vault: domains/quant-infra
 nodes:
   - id: foundations

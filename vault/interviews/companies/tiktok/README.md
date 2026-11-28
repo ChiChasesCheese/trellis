@@ -30,7 +30,7 @@
 
 | 轮 | Anki | Obsidian |
 |---|---|---|
-| 编码 | `LeetCode Tops::24 TikTok 字节高频 · 整题答案` 的 `01 A 档：最高频` | [[interviews/core/leetcode/tiktok/README\|A 档总表]] · [[interviews/core/leetcode/tiktok/map/patterns\|模式识别]] |
+| 编码 | 算法知识树（灵神题单）里 `榜单::TikTok_近半年`、`公司::TikTok`、`公司::ByteDance` 标签的题 | 每题一张整题卡，按叶子看方法 |
 | 类设计 | `::26 工具里的数据结构与算法` 的 `12 数据结构组合` | [[07-class-design]] · [[ood20-wallet]] · [[ood18-aws-billing]] · [[ood03-checkout-discount]] |
 | 支付系统设计 | `支付系统核心`：先「正确性工程」和「账务与资金」 | [[tiktok-sd-index]]：SD01 → SD09 → SD11 → SD10 → SD12 |
 | 支付领域与消费金融 | `支付系统核心`：「跨境与换汇」 | [[05-payment-domain]] · [[02-role-and-team]] 第 2 节 |

@@ -27,7 +27,6 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
-import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -38,7 +37,7 @@ DAY = 86400
 SUBJECT = {
     "deck_root": "算法知识树（灵神题单）",  # one card per problem since 2026-11-14 (research/leetcode-unify)
     "items": ROOT / "vault/interviews/core/leetcode/problems",
-    "groups_skeleton": ROOT / "skeleton/leetcode-tops.yaml",  # top-level branches = groups
+    "groups": ROOT / "research/leetcode-tops/groups.json",  # branches of the retired Tops skeleton = groups
     # the decks shown in the per-deck panel: label -> regex on the Anki deck name
     "decks": {"知识树": r"^算法知识树", "今日算法": r"^2 今日算法", "今日计划": r"^1 今日计划", "冲刺": r"^\d+ \S+ 力扣"},
 }
@@ -79,9 +78,9 @@ def deck_label(name: str) -> str:
 
 def collect_anki() -> dict:
     probs = items()
-    sk = yaml.safe_load(SUBJECT["groups_skeleton"].read_text(encoding="utf-8"))
-    gtitle = {n["id"]: re.sub(r"（.*?）", "", n["title"]) for n in sk["nodes"]}
-    group = {c["id"].split(".", 1)[1]: n["id"] for n in sk["nodes"] for c in n["children"]}
+    g = json.loads(SUBJECT["groups"].read_text(encoding="utf-8"))
+    gtitle = {k: re.sub(r"（.*?）", "", v) for k, v in g["branches"].items()}
+    group = g["slugs"]
     sel = {p["slug"]: p for p in json.loads((ROOT / "research/leetcode-tops/selection.json").read_text(encoding="utf-8"))}
     tt = json.loads((ROOT / "research/companies/tiktok/index.json").read_text(encoding="utf-8"))
 

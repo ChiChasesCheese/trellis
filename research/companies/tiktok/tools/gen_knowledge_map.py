@@ -67,7 +67,7 @@ PATTERNS = [
   "取模与溢出、最大公约数、快速幂、异或去重、矩阵旋转与螺旋、按规则模拟。往往是一个「看出规律」的问题。"),
 ]
 ORDER = [p[0] for p in PATTERNS]
-pattern_cards = ROOT / "vault/interviews/core/leetcode/tiktok/cards/patterns"
+pattern_cards = ROOT / "vault/interviews/core/leetcode/tiktok/cards/patterns"  # retired 2026-11-28: the dir is gone, so in_cards is empty and membership comes from LeetCode tags only
 card_names = {"hashing": "hashing", "prefix-sum": "prefix-sum", "two-pointers": "two-pointers", "sliding-window": "sliding-window",
               "monotonic-stack": "monotonic-stack", "binary-search": "binary-search", "heap": "heap-patterns",
               "intervals": "intervals-sweep", "linked-list": "linked-list", "tree-dfs": "tree-dfs", "tree-bfs-bst": "tree-bfs-bst",
@@ -106,8 +106,8 @@ def line(i: int) -> str:
     marks += [n for n in CLASSIC if i in lists[n]]
     d = {"EASY": "简单", "MEDIUM": "中等", "HARD": "困难"}.get(m.get("d", ""), "")
     title = f"LC {i} {m.get('zh') or (by_id[i][1].get('title_zh') if i in by_id else '')}"
-    if i in by_id and list((ROOT / "vault/interviews/core/leetcode/tiktok/cards").glob(f"*/tlc-{by_id[i][0]}-0-whole.md")):
-        title = f"[[tlc-{by_id[i][0]}-0-whole|{title}]]"
+    if i in by_id and list((ROOT / "vault/interviews/core/leetcode/tree/cards").glob(f"**/lct-{by_id[i][0]}.md")):
+        title = f"[[lct-{by_id[i][0]}|{title}]]"  # the tree card; the TikTok deck was retired 2026-11-28
     return f"- {title}（{d}）· " + " · ".join(marks)
 
 

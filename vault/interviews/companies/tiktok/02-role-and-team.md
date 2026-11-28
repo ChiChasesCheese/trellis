@@ -79,7 +79,7 @@
 
 拆分金额时要保证各部分加起来等于总数：$100.00 分三期是 $33.33、$33.33、$33.34，余下的一分钱按固定规则给某一期。面试里被问「汇率换算」的编码题，也会追问精度和舍入。
 
-链接：[[domains/payments/map/ledger.multi-currency-ledger|多币种账务]] · [[domains/payments/map/cross-border.fx-rates|汇率来源与报价锁定]] · [[domains/payments/map/cross-border.multi-currency-pricing|多币种定价与结算币种]] · [[domains/payments/map/cross-border.fx-risk|汇率风险与对冲]] · 编码：[[tlc-tt-currency-conversion-queries-0-whole|汇率换算查询]]
+链接：[[domains/payments/map/ledger.multi-currency-ledger|多币种账务]] · [[domains/payments/map/cross-border.fx-rates|汇率来源与报价锁定]] · [[domains/payments/map/cross-border.multi-currency-pricing|多币种定价与结算币种]] · [[domains/payments/map/cross-border.fx-risk|汇率风险与对冲]] · 编码：[[lct-tt-currency-conversion-queries|汇率换算查询]]
 
 ### 2.5 跨区域容灾
 

@@ -77,7 +77,7 @@ def problems() -> dict[str, dict]:
                            "tiktok": 0.0, "tiktok_recent": False, "breadth": 0.0, "companies": 0}
     for f in sorted((LC / "knowledge-map").glob("[0-9][0-9]-*.md")):
         for line in f.read_text(encoding="utf-8").splitlines():
-            m = re.search(r"\[\[tlc-([a-z0-9-]+?)-0-whole\|", line)
+            m = re.search(r"\[\[lct-([a-z0-9-]+?)\|", line)
             if m and m.group(1) in rows:
                 p = rows[m.group(1)]
                 if f.stem not in p["patterns"]:
@@ -85,7 +85,7 @@ def problems() -> dict[str, dict]:
     gh = github_frequency()
     for slug, p in rows.items():
         p.update(gh.get(slug, {}))
-    sk = (ROOT / "skeleton/leetcode-tops.yaml").read_text(encoding="utf-8")
+    groups = json.loads((ROOT / "research/leetcode-tops/groups.json").read_text(encoding="utf-8"))["slugs"]  # slug -> branch of the retired Tops skeleton
     branch_pattern = {"arrays-hashing": "01-hashing", "prefix-sum": "02-prefix-sum", "two-pointers": "03-two-pointers",
                       "sliding-window": "04-sliding-window", "stack": "05-monotonic-stack", "monotonic-stack": "05-monotonic-stack",
                       "binary-search": "06-binary-search", "heap": "07-heap", "intervals": "08-intervals", "linked-list": "09-linked-list",
@@ -94,8 +94,7 @@ def problems() -> dict[str, dict]:
                       "backtracking": "16-backtracking", "dp": "17-dp", "dynamic-programming": "17-dp", "greedy": "18-greedy",
                       "trie": "19-trie", "design": "20-design", "strings": "21-string", "string": "21-string", "math": "22-math-bit",
                       "bit-manipulation": "22-math-bit", "math-bit": "22-math-bit"}
-    for m in re.finditer(r"- id: ([a-z0-9-]+)\.([a-z0-9-]+)\n", sk):
-        branch, slug = m.group(1), m.group(2)
+    for slug, branch in groups.items():
         if slug in rows and not rows[slug]["patterns"]:
             pat = branch_pattern.get(branch) or next((v for k, v in branch_pattern.items() if branch.startswith(k)), None)
             if pat:

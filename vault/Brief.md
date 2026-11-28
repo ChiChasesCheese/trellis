@@ -20,7 +20,6 @@
 - [[networking.proxies|Reverse Proxies, Gateways & Routing]]：还在长，4 张新卡里 4 张没见过、0 张还嫩 · `tag:cdn-content::networking::proxies tag:grown`
 - [[rules.money|Money as Integer Minor Units]]：还在长，4 张新卡里 4 张没见过、0 张还嫩 · `tag:code-core::rules::money tag:grown`
 - [[performance.budget|Reading the Constraints]]：还在长，3 张新卡里 3 张没见过、0 张还嫩 · `tag:code-core::performance::budget tag:grown`
-- [[greedy-sorting.greedy|贪心（Greedy）]]：还在长，4 张新卡里 4 张没见过、0 张还嫩 · `tag:leetcode::greedy-sorting::greedy tag:grown`
 
 ## 值得写
 

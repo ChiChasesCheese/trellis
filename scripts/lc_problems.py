@@ -24,10 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LC = ROOT / "vault/interviews/core/leetcode"
 PROBLEMS = LC / "problems"
 DECKS = {  # deck folder -> (glob, slug from file name)
-    "tiktok": ("tiktok/cards/*/tlc-*-0-whole.md", re.compile(r"^tlc-(.+)-0-whole$")),
-    "tops": ("tops/cards/*/tlc-tops-*-0-whole.md", re.compile(r"^tlc-tops-(.+)-0-whole$")),
     "daily": ("daily/cards/tlc-daily-*-0-whole.md", re.compile(r"^tlc-daily-(.+)-0-whole$")),
-    "core": ("tiktok-core/cards/*/tlc-core-*.md", re.compile(r"^tlc-core-(.+)$")),
 }
 HEADER = re.compile(r"^(\*\*[^*\n]+\*\*)｜(.*)$", re.M)
 FRONT = re.compile(r"^---\n(.*?)\n---\n", re.S)
@@ -57,13 +54,10 @@ def stub(path: Path, slug: str, header_meta: str) -> None:
 
 
 def migrate() -> int:
-    index = json.loads((ROOT / "research/companies/tiktok/index.json").read_text(encoding="utf-8"))
     PROBLEMS.mkdir(parents=True, exist_ok=True)
     made = stubs = 0
     for slug, where in sorted(cards().items()):
-        band = index.get(slug, {}).get("band", "")
-        order = ["tiktok", "tops", "daily", "core"] if (band.startswith("p") or slug.startswith("tt-")) \
-            else ["tops", "tiktok", "daily", "core"]
+        order = ["daily"]  # the tiktok / tops / core decks were retired 2026-11-28; this migration only matters for daily now
         src = next(where[d] for d in order if d in where)
         dest = PROBLEMS / f"{slug}.md"
         if not dest.exists():

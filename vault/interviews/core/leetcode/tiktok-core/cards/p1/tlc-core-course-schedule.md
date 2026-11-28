@@ -1,7 +1,0 @@
----
-id: tlc-core-course-schedule
-node: p1.course-schedule
-type: qa
-body: interviews/core/leetcode/problems/course-schedule
-meta: "Medium · LC TikTok 近 30 天热度 100/100（全时段 88） · 近一年被问：美国 15 次、国内 4 次 · CodeTop 国内累计 35 次 · 最近 2026-10-15（美国面试记录） · 也在：Amazon、LeetCode Hot 100、Blind 75、NeetCode 150、Top Interview 150"
----

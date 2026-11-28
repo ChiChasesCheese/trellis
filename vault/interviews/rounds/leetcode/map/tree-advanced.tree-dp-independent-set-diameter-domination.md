@@ -1,8 +1,0 @@
-%% trellis:begin %%
-# 树上最大独立集 DP（tree-dp-independent-set-diameter-domination）
-*树形结构进阶（tree DP / LCA / 虚树）*
-
-树上选择相邻节点互斥时，使用 树上最大独立集 DP。
-%% trellis:end %%
-
-## Notes

@@ -19,9 +19,7 @@ are committed and pushed by the Git plugin every 10 min (vault folder only).
 - First connect pulled 81 pre-restructure copies (old `headlands/study/…`, `04_sd`, `catalog` paths) — deleted on chi-mini,
   so Sync removed them everywhere. Before connecting another git checkout to a Sync vault, pause the Git plugin's
   auto commit (`autoSaveInterval` 0), let Sync finish, compare `git status` with `main`, clean up, then turn it back on.
-- Kept out of git through `~/Code/trellis/.git/info/exclude` (they still sync privately):
-  `vault/interviews/core/leetcode/tops/` (2216 cards whose `skeleton/leetcode-tops.yaml` and `scripts/leetcode_tops/`
-  exist only on another machine — commit all three together from there), and two personal notes
+- Kept out of git through `~/Code/trellis/.git/info/exclude` (they still sync privately): two personal notes
   (`core/踩过的坑.md`, `abnormal/study/20-cards/claude_prompts.md`; the repo is public).
 - Obsidian CLI is on (`obsidian help`; `obsidian sync:status`).
 
@@ -31,7 +29,7 @@ are committed and pushed by the Git plugin every 10 min (vault folder only).
    for the Git plugin to run).
 2. **Phone**: Settings → Appearance → CSS snippets → check `no-wrap-code` is on (it arrives through Sync).
 3. **MacBook**: if it also runs the Git plugin on a Sync-connected checkout, set its auto commit to 0 — chi-mini is the only
-   machine that commits Sync edits. Push `skeleton/leetcode-tops.yaml`, `scripts/leetcode_tops/` and the tops cards from there.
+   machine that commits Sync edits.
 
 ## Another machine with a git checkout
 

@@ -91,6 +91,33 @@ nodes:
   - id: python.imports-modules
     title: 模块与导入系统
     summary: import 时查 sys.modules 缓存，模块代码只执行一次；模块也是对象；循环导入为什么会拿到「半初始化」的模块；if __name__ == '__main__' 的意思。
+  - id: python.toolkit-collections
+    title: 刷题工具箱：collections 与 dict / set 写法
+    summary: Counter、defaultdict、deque、OrderedDict 的构造、复杂度和常见坑；dict 省代码的写法；set 与可哈希性。
+  - id: python.toolkit-heapq
+    title: 刷题工具箱：heapq 的用法
+    summary: 小顶堆怎样当大顶堆用、元组与自定义比较、nlargest / nsmallest、堆与排序或桶怎么选、懒删除。
+  - id: python.toolkit-bisect-sorted
+    title: 刷题工具箱：bisect 与有序序列
+    summary: bisect_left / bisect_right 的边界查询、对答案二分的写法、key 参数、没有 SortedList 时怎么办。
+  - id: python.toolkit-idioms
+    title: 刷题工具箱：解包、切片、推导式与小技巧
+    summary: 解包与交换、enumerate / zip、推导式与 any / all / max(key=)、海象运算符、切片的真实代价、sorted 的 key 与稳定性、字符串与数字的常用写法。
+  - id: python.toolkit-itertools-functools
+    title: 刷题工具箱：itertools 与 functools
+    summary: accumulate、pairwise、product / combinations / permutations、groupby、chain / islice、functools.cache、cmp_to_key、reduce 与 math.gcd 各自替代哪段手写循环。
+  - id: python.toolkit-recursion-memo
+    title: 刷题工具箱：递归、记忆化与显式栈
+    summary: 用 @cache 写记忆化搜索、改成自底向上、记忆化状态怎样设计才合法、闭包里的 nonlocal、生成器递归、把遍历改成显式栈。
+  - id: python.toolkit-dp-space-compression
+    title: 刷题工具箱：动态规划的空间压缩
+    summary: 二维 DP 压成一维或几个变量时的遍历方向、覆盖顺序与常见错误。
+  - id: python.toolkit-classes-design
+    title: 刷题工具箱：设计题里的类写法
+    summary: 用 OrderedDict 写 LRU、dataclass 与 __slots__、迭代器类、让对象能进堆（__lt__ 与 total_ordering）、数据流类、__eq__ / __hash__ / __repr__ 与容器协议、类型注解。
+  - id: python.toolkit-pitfalls
+    title: 刷题工具箱：Python 的陷阱与常数
+    summary: 递归深度上限、[[0] * n] * m 的别名、看似 O(1) 实际 O(n) 的内置操作、可变默认参数与回溯里的 res.append(path)、浮点比较、if not x 与 is None、超时时怎样压常数。
 - id: java
   order: 2
   title: Java 集合与并发工具
@@ -403,3 +430,14 @@ nodes:
   - id: compose.ring-buffer
     title: LMAX Disruptor：环形数组 + 序号
     summary: 高性能的生产者-消费者队列：长度为 2 的幂的环形数组，生产者和消费者用只增不减的序号推进，下标用位与取模；预先分配、对缓存友好，单生产者时可以完全不加锁。
+- id: lc-patterns
+  order: 13
+  title: 刷题模式识别：题面信号与哈希
+  summary: 看到题面先判断用哪类方法：从数据范围倒推复杂度、从问法和输入形态选结构、识别长得像却要换算法的近似信号；哈希表的信号、模板、变形与代价。各个具体题型的方法在算法知识树里。
+  children:
+  - id: lc-patterns.signals
+    title: 从题面信号到模式：总览
+    summary: 数据范围倒推复杂度、从「问什么」判断大类、从「输入长什么样」选结构、近似信号、从暴力解到最优解的五个提问、每个模式对应的 Python 工具、45 分钟面试的说话与写码顺序。
+  - id: lc-patterns.hashing
+    title: 哈希：查找、计数与分组
+    summary: 补数查找、频次统计、签名分组、去重；什么时候用 set、dict、Counter；哈希的代价与有序需求，以及哈希该让位给排序、双指针或前缀和的信号。

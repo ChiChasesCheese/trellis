@@ -24,7 +24,7 @@
 | 周日 | 15 | 30 min | 晚上：一页结论、反问、周一清单 |
 | 周一 | — | 到 11:00 | 热身，然后停 |
 
-块与块之间休息 10 分钟。Anki 只在零碎时间刷：`LeetCode Tops::24 TikTok 字节高频 · 整题答案` 的 `01 A 档：最高频`，和 `支付系统核心` 的「正确性工程」「账务与资金」两个分支。
+块与块之间休息 10 分钟。Anki 只在零碎时间刷：算法知识树（灵神题单）里带 `榜单::TikTok_近半年` 标签的题，和 `支付系统核心` 的「正确性工程」「账务与资金」两个分支。
 
 ## 限时自测怎么做
 
@@ -55,7 +55,7 @@
 
 周一最可能出的就是这一类：一个带几个操作的小类，然后加追问。每道读整题答案 10 分钟：识别信号、代码、复杂度、追问。
 
-[[tlc-lru-cache-0-whole|LC 146 LRU 缓存]] → [[tlc-tt-lru-cache-ttl-0-whole|带 TTL 的 LRU]] → [[tlc-lfu-cache-0-whole|LC 460 LFU]] → [[tlc-tt-rate-limiter-implementation-0-whole|限流器]] → [[tlc-time-based-key-value-store-0-whole|LC 981 时间戳 KV]] → [[tlc-tt-kv-store-snapshot-restore-0-whole|KV 快照与恢复]]
+[[lct-lru-cache|LC 146 LRU 缓存]] → [[lct-tt-lru-cache-ttl|带 TTL 的 LRU]] → [[lct-lfu-cache|LC 460 LFU]] → [[lct-tt-rate-limiter-implementation|限流器]] → [[lct-time-based-key-value-store|LC 981 时间戳 KV]] → [[lct-tt-kv-store-snapshot-restore|KV 快照与恢复]]
 
 最后 25 分钟：从空文件限时写一遍 LRU，带自己的 `assert`。写不出来就再读一遍答案，明早再写。**23:00 停。**
 
@@ -67,11 +67,11 @@
 
 先读整题答案（1.5 小时，每道约 8 分钟，只读识别信号、代码和追问）：
 
-[[tlc-longest-substring-without-repeating-characters-0-whole|LC 3]] · [[tlc-find-all-anagrams-in-a-string-0-whole|LC 438]] · [[tlc-subarray-sum-equals-k-0-whole|LC 560]] · [[tlc-number-of-islands-0-whole|LC 200]] 及 [[tlc-tt-islands-follow-ups-0-whole|岛屿追问]] · [[tlc-course-schedule-0-whole|LC 207]] · [[tlc-course-schedule-ii-0-whole|LC 210]] · [[tlc-kth-largest-element-in-an-array-0-whole|LC 215]] · [[tlc-top-k-frequent-elements-0-whole|LC 347]] · [[tlc-merge-k-sorted-lists-0-whole|LC 23]] · [[tlc-merge-intervals-0-whole|LC 56]] · [[tlc-meeting-rooms-ii-0-whole|LC 253]]
+[[lct-longest-substring-without-repeating-characters|LC 3]] · [[lct-find-all-anagrams-in-a-string|LC 438]] · [[lct-subarray-sum-equals-k|LC 560]] · [[lct-number-of-islands|LC 200]] 及 [[lct-tt-islands-follow-ups|岛屿追问]] · [[lct-course-schedule|LC 207]] · [[lct-course-schedule-ii|LC 210]] · [[lct-kth-largest-element-in-an-array|LC 215]] · [[lct-top-k-frequent-elements|LC 347]] · [[lct-merge-k-sorted-lists|LC 23]] · [[lct-merge-intervals|LC 56]] · [[lct-meeting-rooms-ii|LC 253]]
 
 LC 438 要说出「26 个计数的数组代替哈希表」这一步优化；LC 560 要说出为什么前缀和哈希表里要先放 `{0: 1}`。只给出能跑的解、说不出最优解的理由，会被判不通过。
 
-然后 3 道限时自测（每道 25 分钟 + 5 分钟复盘）：LC 560、LC 210（输出一个可行顺序，有环返回空）、[[tlc-tt-basic-calculator-ladder-0-whole|计算器梯度题]]（先做无括号版）。
+然后 3 道限时自测（每道 25 分钟 + 5 分钟复盘）：LC 560、LC 210（输出一个可行顺序，有环返回空）、[[lct-tt-basic-calculator-ladder|计算器梯度题]]（先做无括号版）。
 
 ### 块 4 · 项目深挖：S1（1.5 h）
 
@@ -98,7 +98,7 @@ LC 438 要说出「26 个计数的数组代替哈希表」这一步优化；LC 5
 
 ### 块 7 · 编码 A 档第三组 + 限时自测（2 h）
 
-读整题答案（1 小时）：[[tlc-tt-currency-conversion-queries-0-whole|汇率换算查询]] · [[tlc-evaluate-division-0-whole|LC 399]] · [[tlc-tt-seller-task-scheduler-0-whole|卖家任务调度器]] · [[tlc-tt-removable-timestamp-task-scheduler-0-whole|可删除任务的调度器]] · [[tlc-tt-concurrency-limited-runner-0-whole|限并发的任务执行器]] · [[tlc-search-in-rotated-sorted-array-0-whole|LC 33]] · [[tlc-binary-tree-maximum-path-sum-0-whole|LC 124]]
+读整题答案（1 小时）：[[lct-tt-currency-conversion-queries|汇率换算查询]] · [[lct-evaluate-division|LC 399]] · [[lct-tt-seller-task-scheduler|卖家任务调度器]] · [[lct-tt-removable-timestamp-task-scheduler|可删除任务的调度器]] · [[lct-tt-concurrency-limited-runner|限并发的任务执行器]] · [[lct-search-in-rotated-sorted-array|LC 33]] · [[lct-binary-tree-maximum-path-sum|LC 124]]
 
 然后 2 道限时自测：汇率换算查询（无解返回 -1，再追问精度）、带 TTL 的 LRU（从空文件写，不看答案）。
 
@@ -139,7 +139,7 @@ cd /tmp/dw && IMPL=starter uv run --with pytest python -m pytest -q
 
 ### 块 11 · 编码模拟（1.5 h）
 
-按考场条件做一次完整模拟：50 分钟连做两道没做过的 A 档 medium，边写边说英文，每道都写自己的测试。做完复盘 30 分钟：哪里卡住、哪句话没说出来、复杂度有没有主动讲。可以从 [[interviews/core/leetcode/tiktok/README|A 档总表]] 里挑没读过的题。
+按考场条件做一次完整模拟：50 分钟连做两道没做过的 A 档 medium，边写边说英文，每道都写自己的测试。做完复盘 30 分钟：哪里卡住、哪句话没说出来、复杂度有没有主动讲。可以从 算法知识树里 `榜单::TikTok_近半年` 标签下挑没读过的题。
 
 ### 块 12 · 系统设计 SD10、SD12，消费金融五题（2 h）
 
