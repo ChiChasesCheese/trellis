@@ -143,7 +143,7 @@ Full procedure, lessons and red flags: `.claude/skills/building-company-intervie
   `research/sysdesign/TAP_AGENT.md` and `TAP_VERIFY.md`). Every batch of test cards gets a writer and then a verifier.
 - **LLD and AI are studied through test decks too** (Chi, 2026-11-22): `3 低层设计测验` (1,818 questions, one per card
   of 低层设计（LLD）; it replaced 3 今日低层设计, `lld_deck: false`) and `AI 测验` (868 questions in sub-decks that follow
-  the AI reading order: the ai-literacy, llm-inference and ml-system-design cards borrowed by 6 Cerebras, and AI 应用工程).
+  the AI reading order: the ai-literacy, llm-inference and ml-system-design cards in the order the Cerebras sprint deck had them, kept as a snapshot `sources/local/quiz/ai-groups.json` since that deck was released, and AI 应用工程).
   Same card design; `scripts/card_tests.py` (`status | todo | review | import-ready | full | chunks`), briefs
   `research/agents/card-test-questions.md` and `card-test-verify.md`. The source decks keep their cards for the backs and
   for reviews and deal no new ones (`caps.zero_under`). `study_plan.py daily` re-copies the source cards onto the backs.
