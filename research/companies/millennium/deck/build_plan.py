@@ -56,6 +56,18 @@ def company(branches: list[str]) -> list[str]:
     return [r[2] for r in sorted(rows)]
 
 
+def branch_ids(domain: str, branch: str) -> list[str]:
+    """Every card of one branch of a general domain, in skeleton order (the branch's own map card first), then by step."""
+    sk = load_skeleton(ROOT / f"skeleton/{domain}.yaml")
+    place = {n.id: i for i, n in enumerate(sk.walk())}
+    rows = []
+    for f in (ROOT / "vault/domains" / domain / "cards" / branch).glob("*.md"):
+        m = fm(f)
+        if m.get("node", "").split(".")[0] == branch:
+            rows.append((place.get(m["node"], 9999), int(m.get("step", 99)), m["id"]))
+    return [r[2] for r in sorted(rows)]
+
+
 def vault_ids(folder: Path, nodes: list[str], per: int) -> list[str]:
     by: dict[str, list] = {}
     for f in folder.rglob("*.md"):
@@ -148,6 +160,8 @@ def main() -> int:
         {"label": "01 招聘方电话", "ids": company(["call"])},
         {"label": "02 公司与岗位", "ids": company(["company"])},
         {"label": "03 编程题", "ids": company(["coding"]) + company(["traps"])},   # code reading sits with coding
+        {"label": "03 编程题::1 读代码说输出 · Python", "ids": branch_ids("python", "output")},
+        {"label": "03 编程题::2 读代码说输出 · Java 与跨语言", "ids": branch_ids("pl", "output")},
         {"label": "04 经理面与行为面", "ids": company(["hm"])},
         {"label": "05 项目深挖", "ids": company(["deepdive"]) + bt_ids},
         {"label": "06 Python 内功", "ids": vault_ids(ROOT / "vault/domains/python/cards", PY_LEAVES, 3)},

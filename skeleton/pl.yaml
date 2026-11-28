@@ -780,3 +780,38 @@ nodes:
     summary: 按延迟与吞吐、团队、生态、部署、正确性要求做决策；同一个系统里多语言并存的常见分工。
     requires:
     - signatures.gotchas
+- id: output
+  order: 17
+  title: 读代码说输出：Java 与跨语言对比
+  summary: 看一段短代码说出输出，背面讲清语言规范到底怎么规定，以及为什么这样设计；同一个现象在 Python、Java、Go、Rust、C++、JavaScript 里各是什么样。
+  children:
+  - id: output.java-objects
+    title: Java：对象、相等与缓存
+    summary: == 与 equals、字符串常量池与编译期常量、Integer 缓存、equals 与 hashCode 的约定。
+  - id: output.java-numbers
+    title: Java：数值与类型转换
+    summary: 整数溢出、整数除法与取模、char 参与运算、自动拆箱的空指针、三元运算符的类型提升、浮点。
+  - id: output.java-dispatch
+    title: Java：重载、重写与分派
+    summary: 重载在编译期按静态类型选、重写在运行时按实际对象选；字段和静态方法不多态；构造器里调可重写方法。
+  - id: output.java-control
+    title: Java：控制流、异常与集合
+    summary: finally 覆盖返回值、try-with-resources 的关闭顺序、switch 穿透、遍历中修改集合、remove(int) 与 remove(Object)。
+  - id: output.java-init
+    title: Java：初始化顺序
+    summary: 静态块、实例块、字段初始化与构造器在父类和子类之间的先后；字段默认值。
+  - id: output.cross-closures
+    title: 跨语言：循环里的闭包
+    summary: 同一个"循环里创建函数再调用"在 Python、Java、Go（1.22 前后）、JavaScript（var 与 let）、C++ lambda 捕获里各输出什么。
+  - id: output.cross-numbers
+    title: 跨语言：除法、取模与溢出
+    summary: 负数整除和取模的方向；整数溢出时 Python、Java、Go、Rust（debug 与 release）、C++ 各怎么处理。
+  - id: output.cross-passing
+    title: 跨语言：传参与赋值
+    summary: Python 传对象引用、Java 传引用的值、Go 的值拷贝与共享底层数组的切片、Rust 的移动、C++ 的拷贝与引用。
+  - id: output.cross-equality
+    title: 跨语言：相等与字符串比较
+    summary: 值相等与身份相等在各语言里的写法；字符串比较；JavaScript 的 == 与 ===。
+  - id: output.go
+    title: Go 的经典输出题
+    summary: nil 接口不等于 nil、append 共享底层数组、map 遍历顺序随机、defer 的参数在注册时求值、range 的副本。

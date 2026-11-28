@@ -1054,3 +1054,35 @@ nodes:
       requires:
       - engineering.logging-config
       - engineering.testing
+- id: output
+  order: 13
+  title: 读代码说输出：Python 的语义陷阱
+  summary: 看一段短代码说出输出，背面讲清解释器到底做了什么，以及 Python 为什么这样设计、别的语言怎么选。
+  children:
+  - id: output.scope
+    title: 作用域与闭包
+    summary: LEGB 查找顺序、赋值让名字变成局部（UnboundLocalError）、循环里闭包的晚绑定、nonlocal 与 global、类体作用域与推导式。
+  - id: output.mutation
+    title: 可变性与别名
+    summary: 默认参数只求值一次、列表乘法共享引用、+= 与 = 的区别、切片复制是浅拷贝、元组里放列表。
+  - id: output.identity
+    title: 身份、相等与缓存
+    summary: is 与 ==、小整数缓存与字符串驻留、True == 1 当字典键、NaN 不等于自己、容器比较先看身份。
+  - id: output.iteration
+    title: 迭代与生成器
+    summary: 生成器和迭代器只能用一次、惰性求值的时机、遍历时修改列表、zip 与 map 的惰性、range 的切片与成员测试。
+  - id: output.evaluation
+    title: 求值顺序与运算符
+    summary: 链式比较、and 与 or 返回操作数本身、短路、海象运算符、解包赋值的顺序、-2 ** 2 这类优先级。
+  - id: output.numbers
+    title: 数字与字符串
+    summary: 负数的整除与取模、round 的银行家舍入、浮点表示、int 没有上限、字符串的不可变与切片。
+  - id: output.classes
+    title: 类与对象
+    summary: 类属性与实例属性、可变类属性被所有实例共享、MRO 与 super 的调用顺序、__eq__ 与 __hash__、property。
+  - id: output.exceptions
+    title: 异常与控制流
+    summary: finally 改写返回值、try 的 else、except 结束后异常变量被删除、for 与 while 的 else、异常链。
+  - id: output.dicts
+    title: 字典与集合
+    summary: 插入顺序、相等的键互相覆盖、遍历时改字典报错、defaultdict 与 setdefault、集合与字典键的哈希要求。

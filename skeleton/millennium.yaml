@@ -134,8 +134,8 @@ nodes:
     summary: GROUP BY 与 HAVING、窗口函数排名与累计、连续区间、as-of 关联、NULL 的三值逻辑。
 - id: traps
   order: 9
-  title: 语言陷阱与读代码
-  summary: 面试里"这段代码输出什么""这里有什么问题"：浮点相等、可变对象当哈希键、无界缓存与线程停止、Java 和 Python 的经典陷阱。
+  title: 语言陷阱
+  summary: 面试里"这里有什么问题"：浮点相等与金额、可变对象当哈希键、无界缓存与线程停止。
   children:
   - id: traps.float
     title: 浮点数相等与金额
@@ -146,12 +146,6 @@ nodes:
   - id: traps.cache-thread
     title: 无界缓存与线程停止标志
     summary: 只增不减的会话缓存让内存一直涨；后台线程靠一个布尔标志停止时，Java 要 volatile，Python 用 Event；怎么修。
-  - id: traps.java-output
-    title: 读 Java 代码说输出
-    summary: 字符串 == 与 equals、Integer 缓存、传值与引用、重载与重写、finally 覆盖返回值、整数溢出、remove(int) 与 remove(Object)。
-  - id: traps.python-output
-    title: 读 Python 代码说输出
-    summary: 可变默认参数、循环里闭包的晚绑定、列表乘法共享引用、生成器只能用一次、is 与 ==、链式比较。
 - id: hm
   order: 4
   core: true
