@@ -33,12 +33,14 @@ class Project:
     cases: list[Reading] = field(default_factory=list)
     case_errors: list[str] = field(default_factory=list)
     clippings: dict[str, Clipping] = field(default_factory=dict)
+    # Nodes of the merged view a domain reaches Anki through (`anki_via`): its cards may hang on them.
+    via_nodes: frozenset[str] = frozenset()
 
     def report(self):
         return validate(self.skeleton, self.cards, self.card_errors,
                         self.readings, self.reading_errors,
                         self.drills, self.drill_errors, self.clippings,
-                        self.cases, self.case_errors)
+                        self.cases, self.case_errors, also_nodes=self.via_nodes)
 
     def content_dir(self, root: Path) -> Path:
         """This domain's folder inside the Obsidian vault. Not the vault
@@ -83,7 +85,20 @@ def load_project(root: Path, domain: str) -> Project:
         project.cases, project.case_errors = load_cases(vault / CASES_DIRNAME)
     if (vault / CLIPPINGS_DIRNAME).exists():
         project.clippings = load_clippings(vault / CLIPPINGS_DIRNAME)
+    project.via_nodes = via_nodes(root, project.skeleton)
     return project
+
+
+def via_nodes(root: Path, skeleton: Skeleton) -> frozenset[str]:
+    """The node ids of the merged view this domain reaches Anki through. The view's skeleton may be local (gitignored);
+    then its public projection under atlas/skeletons/ stands in, so a clone without the local file validates the same."""
+    if not skeleton.anki_via:
+        return frozenset()
+    for path in (Path(root) / "skeleton" / f"{skeleton.anki_via}.yaml",
+                 Path(root) / "atlas" / "skeletons" / f"{skeleton.anki_via}.yaml"):
+        if path.exists():
+            return frozenset(load_skeleton(path).by_id)
+    return frozenset()
 
 
 def load_loop(root: Path, names: list[str] | None = None):

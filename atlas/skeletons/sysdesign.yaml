@@ -8,6 +8,59 @@ include:
 - domains/bagu
 - domains/payments
 nodes:
+- id: s00
+  title: 重点补强（Weak Spots）
+  summary: 重点补强（Weak Spots）
+  children:
+  - id: fix.gofundme
+    title: GoFundMe：逐条改进
+    summary: GoFundMe 常见追问：弱回答、差在哪、应该怎么说、白板怎么改。
+  - id: fix.retry-key
+    title: 副作用之前先定重试键
+    summary: 扣款、下单、抢票之前，先让客户端拿到一个每次重试都带上的键。
+  - id: fix.apply-once
+    title: 派生状态只应用一次
+    summary: 总额、计数、库存这类派生值：队列会重放，用已应用表保证每个事件只加一次。
+  - id: fix.bounded-read
+    title: 热点页面读有界的小结构
+    summary: 最近 N 条、最大 N 条、排行榜：每个字段对应一个裁剪到固定长度的结构。
+  - id: fix.component-cost
+    title: 加组件先说职责和新问题
+    summary: 加 Redis、队列、分片之前，说清它做什么、带来什么新故障、怎么处理。
+  - id: fix.scope-math
+    title: 范围和估算
+    summary: 面试官划掉的范围不再花时间；估算当场算对，并用它推出设计。
+  - id: fix.airbnb-wallet
+    title: Airbnb Wallet：逐条改进
+    summary: Airbnb Wallet 模拟面试的每条反馈：弱回答、差在哪、应该怎么说、白板怎么改。
+  - id: fix.bound-external
+    title: 用户能触发的外部调用要有上限
+    summary: 读请求不等外部服务：新鲜度窗口、每笔一次排队刷新、全局限速。
+  - id: fix.asked-race
+    title: 先答被问的那个竞态
+    summary: 两笔不同的并发扣款靠一条条件更新；重试幂等是另一个问题，分开说。
+  - id: fix.recon-sweep
+    title: 回调是常态路径，扫描兜底
+    summary: webhook 正常收尾；定时扫描仍在 pending 的转账，按同一事务规则落状态。
+  - id: fix.notification
+    title: 通知系统：逐条改进
+    summary: 通知系统模拟面试的每条反馈：弱回答、差在哪、应该怎么说、白板怎么改。
+  - id: fix.ack-point
+    title: 先说清 200 在哪一步返回
+    summary: 确认（ack）放在哪个持久化步骤之后，决定崩溃时丢什么；每种顺序各丢什么要能一句话说出。
+  - id: fix.resumable-job
+    title: 批量任务可续跑：游标和分块状态
+    summary: 千万级扇出或回填：任务表记游标和分块状态，与该块的写入同一事务，重启从游标继续，唯一约束吸收重叠。
+  - id: fix.gofundme-mock
+    title: 模拟面试 · GoFundMe
+    summary: 按面试的真实进程一问一答：每一步说什么、白板画到哪。
+  - id: fix.airbnb-wallet-mock
+    title: 模拟面试 · Airbnb Wallet
+    summary: 按 60 分钟的真实进程一问一答：每一步说什么、白板画到哪，达到 Senior。
+  - id: fix.notification-mock
+    title: 模拟面试 · 通知系统
+    summary: 按 45 分钟的真实进程一问一答：每一步说什么、白板画到哪，达到 Senior。
+  order: 0
 - id: s01
   title: 答题框架与估算
   summary: 答题框架与估算
@@ -79,6 +132,9 @@ nodes:
     title: 速览：概念、技术、模式
     summary: 速览：概念、技术、模式
     children:
+    - id: tt.sd.tt-flash-sale-ticketing.pre-sd-in-a-hurry-patterns
+      title: 先修 · 常见模式速览
+      summary: 秒杀抢票（排队、限流、防超卖） 用到的概念。
     - id: sd.in-a-hurry.core-concepts
       title: 核心概念速览
       summary: Hello Interview：Core Concepts for System Design Interviews。
@@ -127,6 +183,9 @@ nodes:
     children:
     - id: sd.core-concepts.numbers-to-know
       title: 通览 · 必须知道的数字
+      summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
+    - id: ov.estimation
+      title: 通览 · 范围和估算
       summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
     - id: sd.core-concepts.numbers-to-know.notes
       title: 摘要 · 必须知道的数字
@@ -390,6 +449,9 @@ nodes:
     - id: qb.sd.distributed-rate-limiter.pre-sd-core-concepts-cap-theorem
       title: 先修 · CAP 定理
       summary: 分布式限流器 用到的概念。
+    - id: sd.core-concepts.cap-theorem.notes
+      title: 摘要 · CAP 定理
+      summary: 按小节总结这一章的核心内容。
     - id: a.distributed.cap-base
       title: CAP 与 BASE：一致性的取舍
       summary: CAP 不是三选二而是分区发生时在 C 与 A 间取舍，BASE 与最终一致是工程折中。
@@ -420,6 +482,9 @@ nodes:
     title: 分布式锁
     summary: 分布式锁
     children:
+    - id: ov.dlock
+      title: 通览 · 分布式锁
+      summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
     - id: a.distributed.lock-redis-setnx
       title: 用 Redis 实现分布式锁（SET NX PX + Lua）
       summary: SET key uuid NX PX 加锁、Lua 比对 value 再删除释放，是最基础的 Redis 分布式锁。
@@ -458,6 +523,9 @@ nodes:
     title: 可靠性与服务保护
     summary: 可靠性与服务保护
     children:
+    - id: ov.reliability
+      title: 通览 · 可靠性与服务保护
+      summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
     - id: a.protect.retry
       title: 重试的原则与为什么不能无限重试（Backoff, Budget）
       summary: 只重试幂等的临时错误，指数退避加抖动，设置总预算，防止逐层重试放大。
@@ -613,6 +681,9 @@ nodes:
     title: 幂等与结果未知
     summary: 幂等与结果未知
     children:
+    - id: ov.idempotency
+      title: 通览 · 幂等与结果未知
+      summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
     - id: a.idem.idempotency-design
       title: 幂等是什么、怎么实现（Idempotency Keys, Unique Index, Token）
       summary: 幂等的含义、重复来源与实现方式：唯一索引、状态机条件更新、去重表、乐观锁、token。
@@ -766,6 +837,9 @@ nodes:
     title: 排行与检索
     summary: 排行与检索
     children:
+    - id: ov.ranking
+      title: 通览 · 排行与检索
+      summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
     - id: sd.cross.ranking-and-leaderboards
       title: 排序、排行榜与 Top-K (Ranking / Leaderboards / Top-K)
       summary: 排序要么在读取时对少量候选做（漏斗），要么在写入后预计算成有序集合或滑动窗口聚合，选择取决于基数、实时性和精确或近似。（涉及 7 题）
@@ -784,6 +858,9 @@ nodes:
     - id: sd.deep-dives.redis
       title: 通览 · Redis
       summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
+    - id: qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
+      title: 先修 · Redis
+      summary: 聊天与即时通讯系统 用到的概念。
     - id: sd.deep-dives.redis.notes
       title: 摘要 · Redis
       summary: 按小节总结这一章的核心内容。
@@ -856,6 +933,9 @@ nodes:
     - id: sd.deep-dives.kafka
       title: 通览 · Kafka
       summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
+    - id: qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+      title: 先修 · Kafka
+      summary: 分布式任务调度器（含 cron 与一年执行历史） 用到的概念。
     - id: sd.deep-dives.kafka.notes
       title: 摘要 · Kafka
       summary: 按小节总结这一章的核心内容。
@@ -999,6 +1079,9 @@ nodes:
     - id: sd.deep-dives.elasticsearch
       title: 通览 · Elasticsearch
       summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
+    - id: qb.sd.hotel-booking-system.pre-sd-deep-dives-elasticsearch
+      title: 先修 · Elasticsearch
+      summary: 酒店预订系统（Expedia 型聚合与自营） 用到的概念。
     - id: sd.deep-dives.elasticsearch.notes
       title: 摘要 · Elasticsearch
       summary: 按小节总结这一章的核心内容。
@@ -1024,6 +1107,9 @@ nodes:
     - id: sd.deep-dives.dynamodb
       title: 通览 · DynamoDB
       summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
+    - id: qb.sd.messenger-chat-system.pre-sd-deep-dives-dynamodb
+      title: 先修 · DynamoDB
+      summary: 聊天与即时通讯系统 用到的概念。
     - id: sd.deep-dives.dynamodb.notes
       title: 摘要 · DynamoDB
       summary: 按小节总结这一章的核心内容。
@@ -1103,6 +1189,9 @@ nodes:
     - id: sd.deep-dives.api-gateway
       title: 通览 · API 网关
       summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
+    - id: qb.sd.distributed-rate-limiter.pre-sd-deep-dives-api-gateway
+      title: 先修 · API 网关
+      summary: 分布式限流器 用到的概念。
     - id: sd.deep-dives.api-gateway.notes
       title: 摘要 · API 网关
       summary: 按小节总结这一章的核心内容。
@@ -1179,6 +1268,9 @@ nodes:
     - id: sd.deep-dives.vector-databases
       title: 通览 · 向量数据库
       summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
+    - id: qb.sd.chatbot-design.pre-sd-deep-dives-vector-databases
+      title: 先修 · 向量数据库
+      summary: 对话式 AI 聊天服务 用到的概念。
     - id: sd.deep-dives.vector-databases.notes
       title: 摘要 · 向量数据库
       summary: 按小节总结这一章的核心内容。
@@ -1195,6 +1287,9 @@ nodes:
     - id: sd.deep-dives.time-series-databases
       title: 通览 · 时序数据库
       summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
+    - id: qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases
+      title: 先修 · 时序数据库
+      summary: Top-K 热门榜（视频播放、歌曲、话题标签） 用到的概念。
     - id: sd.deep-dives.time-series-databases.notes
       title: 摘要 · 时序数据库
       summary: 按小节总结这一章的核心内容。
@@ -1245,6 +1340,7 @@ nodes:
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
       - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
       - qb.sd.online-chess-platform.pre-sd-core-concepts-consistent-hashing
     - id: sd.problem-breakdowns.bitly.exam
       title: 考点 · 短链接服务（Bitly）
@@ -1340,6 +1436,8 @@ nodes:
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
       - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
     - id: sd.problem-breakdowns.fb-news-feed.exam
       title: 考点 · Facebook 信息流
       summary: 这一章里的内容会怎么被问到。
@@ -1406,6 +1504,7 @@ nodes:
       title: 解答 · 分布式限流器
       summary: 被报告 63 次。
       requires:
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
       - qb.sd.online-chess-platform.pre-sd-core-concepts-consistent-hashing
     - id: sd.problem-breakdowns.distributed-rate-limiter.exam
@@ -1452,6 +1551,8 @@ nodes:
       requires:
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
     - id: sd.problem-breakdowns.top-k.exam
       title: 考点 · YouTube 热门 Top K
       summary: 这一章里的内容会怎么被问到。
@@ -1523,6 +1624,9 @@ nodes:
     - id: sd.problem-breakdowns.uber.more
       title: 补充 · 网约车（Uber）
       summary: 细节、故障场景和追问，补本页没讲到的。
+    - id: sd.problem-breakdowns.uber.mock
+      title: 模拟面试 · 网约车（Uber）
+      summary: 按面试的真实进程一问一答：每一步说什么、白板画到哪。
   - id: q.live-comments
     title: 直播评论
     summary: 直播评论
@@ -1638,6 +1742,7 @@ nodes:
       requires:
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
     - id: sd.problem-breakdowns.job-scheduler.exam
       title: 考点 · 分布式任务调度（Airflow）
       summary: 这一章里的内容会怎么被问到。
@@ -1667,6 +1772,8 @@ nodes:
       title: 解答 · 通知系统（支持单发与群发，百万级每秒）
       summary: 被报告 78 次。
       requires:
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
       - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
     - id: sd.problem-breakdowns.notification-system.exam
@@ -1701,6 +1808,8 @@ nodes:
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
       - qb.sd.online-chess-platform.pre-sd-core-concepts-consistent-hashing
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-dynamodb
     - id: qb.sd.web-crawler-restricted-communication.answer
       title: 解答 · 节点不能通信的网络爬虫
       summary: 节点不能通信的网络爬虫：完整解答。
@@ -1743,11 +1852,16 @@ nodes:
       title: 解答 · 指标监控与告警平台
       summary: 被报告 44 次。
       requires:
+      - qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
     - id: qb.sd.metrics-aggregator.answer
       title: 解答 · 指标聚合系统
       summary: 指标聚合系统：完整解答。
+      requires:
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+      - qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases
     - id: sd.problem-breakdowns.metrics-monitoring.exam
       title: 考点 · 指标监控（Datadog）
       summary: 这一章里的内容会怎么被问到。
@@ -1783,6 +1897,9 @@ nodes:
       title: 解答 · 新闻聚合信息流
       summary: 被报告 109 次。
       requires:
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-dynamodb
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
     - id: sd.problem-breakdowns.google-news.exam
       title: 考点 · 新闻聚合（Google News）
@@ -1845,6 +1962,7 @@ nodes:
       title: 解答 · 在线判题与编程竞赛平台（LeetCode）
       summary: 被报告 11 次。
       requires:
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
       - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
@@ -1879,6 +1997,8 @@ nodes:
       summary: 被报告 155 次。
       requires:
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
     - id: sd.problem-breakdowns.online-chess.exam
       title: 考点 · 在线国际象棋
       summary: 这一章里的内容会怎么被问到。
@@ -1934,6 +2054,7 @@ nodes:
       title: 解答 · 在线游戏排行榜
       summary: 在线游戏排行榜：完整解答。
       requires:
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
     - id: qb.sd.realtime-game-leaderboard.points
@@ -2215,6 +2336,7 @@ nodes:
       requires:
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
     - id: qb.sd.book-seller-platform.points
       title: 要点 · 图书比价代购平台
       summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -2230,6 +2352,7 @@ nodes:
       summary: 被报告 70 次。
       requires:
       - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
     - id: qb.sd.donations-website-charities.points
       title: 要点 · 限时慈善捐款网站
@@ -2237,6 +2360,9 @@ nodes:
     - id: links.donations-website-charities
       title: 限时捐款网站
       summary: 这道设计题会下钻到哪些八股。
+    - id: qb.sd.donations-website-charities.mock
+      title: 模拟面试 · 限时慈善捐款网站
+      summary: 按面试的真实进程一问一答：每一步说什么、白板画到哪。
   - id: q.food-item-reviews
     title: 带打赏的菜品评价系统
     summary: 带打赏的菜品评价系统
@@ -2247,6 +2373,7 @@ nodes:
       requires:
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
       - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
     - id: qb.sd.food-item-reviews.points
       title: 要点 · 带打赏的菜品评价系统
@@ -2284,6 +2411,8 @@ nodes:
       requires:
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-dynamodb
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
     - id: qb.sd.like-unlike-system.points
       title: 要点 · 点赞与取消点赞系统
       summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -2296,6 +2425,8 @@ nodes:
       summary: 被报告 11 次。
       requires:
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+      - qb.sd.hotel-booking-system.pre-sd-deep-dives-elasticsearch
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
     - id: qb.sd.merchant-product-listings.points
       title: 要点 · 商家商品上架与更新系统
@@ -2309,6 +2440,7 @@ nodes:
       summary: 被报告 10 次。
       requires:
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
       - qb.sd.notification-system-scale.pre-sd-deep-dives-cassandra
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
     - id: qb.sd.disposable-email.points
@@ -2322,8 +2454,11 @@ nodes:
       title: 解答 · 股票价格提醒系统
       summary: 被报告 9 次。
       requires:
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-dynamodb
     - id: qb.sd.stock-price-alerts.points
       title: 要点 · 股票价格提醒系统
       summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -2335,6 +2470,7 @@ nodes:
       title: 解答 · 限时众筹购股系统
       summary: 被报告 8 次。
       requires:
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
       - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
@@ -2349,6 +2485,7 @@ nodes:
       title: 解答 · 视频内容审核系统
       summary: 被报告 4 次。
       requires:
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
       - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-temporal
     - id: qb.sd.video-moderation-system.points
@@ -2366,6 +2503,7 @@ nodes:
       summary: 被报告 4 次。
       requires:
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
       - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
     - id: qb.sd.flight-search-system.points
       title: 要点 · 机票搜索系统（按调用计费的多供应商聚合）
@@ -2382,6 +2520,7 @@ nodes:
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
       - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
+      - qb.sd.messenger-chat-system.pre-sd-deep-dives-dynamodb
     - id: qb.sd.photo-storage-sharing.points
       title: 要点 · 照片存储与分享系统（Google Photos）
       summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -2392,6 +2531,8 @@ nodes:
     - id: qb.sd.github-cicd-workflow.answer
       title: 解答 · CI/CD 流水线平台（GitHub Actions）
       summary: CI/CD 流水线平台（GitHub Actions）：完整解答。
+      requires:
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
     - id: qb.sd.github-cicd-workflow.points
       title: 要点 · CI/CD 流水线平台（GitHub Actions）
       summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -2407,6 +2548,7 @@ nodes:
       summary: 分布式黑名单封禁系统：完整解答。
       requires:
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+      - qb.sd.distributed-rate-limiter.pre-sd-deep-dives-api-gateway
     - id: qb.sd.global-ip-blocking.points
       title: 要点 · 分布式黑名单封禁系统
       summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -2420,6 +2562,9 @@ nodes:
     - id: qb.sd.driver-heatmap-backend.answer
       title: 解答 · 司机实时热力图
       summary: 司机实时热力图：完整解答。
+      requires:
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+      - qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases
     - id: qb.sd.driver-heatmap-backend.points
       title: 要点 · 司机实时热力图
       summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -2446,6 +2591,7 @@ nodes:
       summary: 外卖平台（Uber Eats）：完整解答。
       requires:
       - qb.sd.driver-heatmap-backend.pre-sd-deep-dives-proximity-search
+      - qb.sd.hotel-booking-system.pre-sd-deep-dives-elasticsearch
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
     - id: qb.sd.nearby-restaurants-app.points
       title: 要点 · 外卖平台（Uber Eats）
@@ -2476,6 +2622,7 @@ nodes:
       requires:
       - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
       - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+      - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
     - id: qb.sd.typeahead-search-system.points
       title: 要点 · 搜索联想（Typeahead）
       summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -2720,6 +2867,9 @@ nodes:
     title: 卡支付生命周期
     summary: 卡支付生命周期
     children:
+    - id: ov.pay-card-lifecycle
+      title: 通览 · 卡支付生命周期
+      summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
     - id: card-lifecycle
       title: 卡支付生命周期
       summary: 一笔卡交易从授权到结算：授权、请款、清算、结算、退款与撤销、交换费与定价、3DS 与强客户认证、令牌化。
@@ -2762,6 +2912,9 @@ nodes:
     title: 账务与资金
     summary: 账务与资金
     children:
+    - id: ov.pay-ledger
+      title: 通览 · 账务与资金
+      summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
     - id: ledger
       title: 账务与资金
       summary: 支付系统的「真相」：复式记账账本、账户与分录、余额与冻结、不可变与冲正、多币种账务。
@@ -2800,6 +2953,9 @@ nodes:
     title: 正确性工程
     summary: 正确性工程
     children:
+    - id: ov.pay-correctness
+      title: 通览 · 正确性工程
+      summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
     - id: correctness
       title: 正确性工程
       summary: 钱不能多也不能少：金额表示、幂等、状态机、未知结果、分布式事务、回调与事件的去重和顺序。
@@ -2835,6 +2991,9 @@ nodes:
     title: 对账、结算与资金管理
     summary: 对账、结算与资金管理
     children:
+    - id: ov.pay-reconciliation
+      title: 通览 · 对账、结算与资金管理
+      summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
     - id: reconciliation
       title: 对账、结算与资金管理
       summary: 确认每一分钱都对得上：内部与渠道对账、结算文件、匹配算法、差错处理、资金在途与头寸。
@@ -2917,6 +3076,9 @@ nodes:
     title: 风控与合规
     summary: 风控与合规
     children:
+    - id: ov.pay-risk-compliance
+      title: 通览 · 风控与合规
+      summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
     - id: risk-compliance
       title: 风控与合规
       summary: 交易风控与欺诈、拒付与争议、反洗钱与制裁筛查、PCI DSS、数据驻留。
@@ -2945,6 +3107,9 @@ nodes:
     title: 支付平台架构
     summary: 支付平台架构
     children:
+    - id: ov.pay-platform
+      title: 通览 · 支付平台架构
+      summary: 这一篇的整体框架：有哪几块、常见做法、什么时候用。
     - id: platform
       title: 支付平台架构
       summary: 把以上拼成一个平台：支付网关与路由、多渠道容灾、支付方式管理、订阅计费、可用性、可观测性与测试。
@@ -3002,6 +3167,9 @@ nodes:
       - id: lld.in-a-hurry.introduction.beyond
         title: 拓展 · 低层设计速成：总览
         summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+      title: 先修 · 答题框架（Delivery Framework）
+      summary: 多地点饮品自助售卖系统 用到的概念。
     - id: lld.in-a-hurry.delivery
       title: 答题框架（Delivery Framework）
       summary: Hello Interview：Low Level Design Interview Delivery Framework。
@@ -3015,6 +3183,9 @@ nodes:
       - id: lld.in-a-hurry.delivery.beyond
         title: 拓展 · 答题框架（Delivery Framework）
         summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+      title: 先修 · 设计原则
+      summary: 可配置淘汰策略的内存键值存储 用到的概念。
     - id: lld.in-a-hurry.design-principles
       title: 设计原则
       summary: Hello Interview：Design Principles。
@@ -3028,6 +3199,9 @@ nodes:
       - id: lld.in-a-hurry.design-principles.beyond
         title: 拓展 · 设计原则
         summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+      title: 先修 · 面向对象概念
+      summary: 可配置淘汰策略的内存键值存储 用到的概念。
     - id: lld.in-a-hurry.oop-concepts
       title: 面向对象概念
       summary: Hello Interview：OOP Concepts。
@@ -3041,6 +3215,9 @@ nodes:
       - id: lld.in-a-hurry.oop-concepts.beyond
         title: 拓展 · 面向对象概念
         summary: 这一章没讲、但 senior 面试会追问的内容。
+    - id: qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+      title: 先修 · 设计模式
+      summary: 可配置淘汰策略的内存键值存储 用到的概念。
     - id: lld.in-a-hurry.patterns
       title: 设计模式
       summary: Hello Interview：Design Patterns。
@@ -3321,6 +3498,9 @@ nodes:
         title: 解答 · 多地点饮品自助售卖系统
         summary: 被报告 2 次。
         requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
       - id: qb.lld.beverage-vending-system.points
         title: 要点 · 多地点饮品自助售卖系统
@@ -3337,7 +3517,10 @@ nodes:
         title: 解答 · 限流器（单机类设计）
         summary: 被报告 2 次。
         requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
       - id: qb.lld.rate-limiter-system.points
         title: 要点 · 限流器（单机类设计）
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -3353,6 +3536,9 @@ nodes:
         title: 解答 · 电梯系统
         summary: 被报告 2 次。
         requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
       - id: qb.lld.elevator-design.points
         title: 要点 · 电梯系统
@@ -3369,7 +3555,9 @@ nodes:
         title: 解答 · 活动票务预订后端（防超卖的 REST 服务）
         summary: 被报告 2 次。
         requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
         - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
       - id: qb.lld.event-ticket-booking.points
         title: 要点 · 活动票务预订后端（防超卖的 REST 服务）
@@ -3386,6 +3574,9 @@ nodes:
         title: 解答 · 生鲜订阅转订单服务
         summary: 被报告 2 次。
         requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
       - id: qb.lld.grocery-subscription-orders.points
         title: 要点 · 生鲜订阅转订单服务
@@ -3401,6 +3592,11 @@ nodes:
       - id: qb.lld.date-time-management.answer
         title: 解答 · 日期时间库
         summary: 被报告 1 次。
+        requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
       - id: qb.lld.date-time-management.points
         title: 要点 · 日期时间库
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -3416,6 +3612,9 @@ nodes:
         title: 解答 · 矢量图形编辑器的绘图 API（类 Figma）
         summary: 被报告 1 次。
         requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
       - id: qb.lld.figma-draw-api.points
         title: 要点 · 矢量图形编辑器的绘图 API（类 Figma）
@@ -3434,6 +3633,8 @@ nodes:
         requires:
         - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
       - id: qb.lld.twitter-clone-feed.points
         title: 要点 · 微博客与个性化信息流
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -3449,7 +3650,9 @@ nodes:
         title: 解答 · 任务调度器
         summary: 被报告 1 次。
         requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
         - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-temporal
       - id: qb.lld.scheduler-system-design.points
         title: 要点 · 任务调度器
@@ -3466,6 +3669,10 @@ nodes:
         title: 解答 · 停车场管理系统
         summary: 被报告 1 次。
         requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
       - id: qb.lld.parking-lot-system.points
         title: 要点 · 停车场管理系统
@@ -3482,7 +3689,10 @@ nodes:
         title: 解答 · 熔断器
         summary: 被报告 1 次。
         requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
       - id: qb.lld.api-circuit-breaker.points
         title: 要点 · 熔断器
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -3498,6 +3708,8 @@ nodes:
         title: 解答 · 最近浏览记录
         summary: 被报告 1 次。
         requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
         - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
       - id: qb.lld.recently-viewed-items.points
@@ -3515,6 +3727,10 @@ nodes:
         title: 解答 · 招聘信息平台（Job Board）
         summary: 被报告 1 次。
         requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
       - id: qb.lld.job-board-platform.points
         title: 要点 · 招聘信息平台（Job Board）
@@ -3532,6 +3748,8 @@ nodes:
         summary: 被报告 1 次。
         requires:
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
       - id: qb.lld.multithreaded-logging-framework.points
         title: 要点 · 多线程日志框架
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -3547,6 +3765,9 @@ nodes:
         title: 解答 · 电子表格引擎
         summary: 电子表格引擎：完整解答。
         requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
       - id: qb.lld.spreadsheet-engine.points
         title: 要点 · 电子表格引擎
@@ -3562,6 +3783,11 @@ nodes:
       - id: qb.lld.battleship-game-design.answer
         title: 解答 · 海战棋（Battleship）
         summary: 海战棋（Battleship）：完整解答。
+        requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
       - id: qb.lld.battleship-game-design.points
         title: 要点 · 海战棋（Battleship）
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -3577,6 +3803,9 @@ nodes:
         title: 解答 · 餐厅候位 API
         summary: 餐厅候位 API：完整解答。
         requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
       - id: qb.lld.restaurant-waitlist-api.points
         title: 要点 · 餐厅候位 API
@@ -3593,6 +3822,9 @@ nodes:
         title: 解答 · 配送员结算（按配送事件计算报酬）
         summary: 配送员结算（按配送事件计算报酬）：完整解答。
         requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
       - id: qb.lld.dasher-payout.points
         title: 要点 · 配送员结算（按配送事件计算报酬）
@@ -3609,6 +3841,8 @@ nodes:
         title: 解答 · 图片变换流水线
         summary: 图片变换流水线：完整解答。
         requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
       - id: qb.lld.image-transform-pipeline.points
         title: 要点 · 图片变换流水线
@@ -3625,6 +3859,9 @@ nodes:
         title: 解答 · 用户额度与令牌余额服务
         summary: 用户额度与令牌余额服务：完整解答。
         requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
       - id: qb.lld.credit-token-balance.points
         title: 要点 · 用户额度与令牌余额服务
@@ -3659,6 +3896,8 @@ nodes:
         summary: TikTok 高级岗报告 · 钱包团队方向
         requires:
         - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
         - qb.sd.distributed-rate-limiter.pre-sd-core-concepts-cap-theorem
       - id: tt.sd.tt-live-gift-coin-settlement.points
@@ -3698,6 +3937,7 @@ nodes:
         requires:
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
       - id: tt.sd.tt-payment-reconciliation.points
         title: 要点 · 支付对账系统
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -3713,6 +3953,7 @@ nodes:
         summary: 支付追问：异步结算与回调丢失、重复
         requires:
         - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
       - id: tt.sd.tt-merchant-webhook-delivery.points
         title: 要点 · 商户回调（Webhook）投递系统
@@ -3730,6 +3971,9 @@ nodes:
         requires:
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
         - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
+        - qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases
     - id: tt.sd.video-moderation-system
       title: 内容 / 视频审核系统
       summary: TikTok 报告 7 次
@@ -3738,6 +3982,7 @@ nodes:
         title: 解答 · 内容 / 视频审核系统
         summary: TikTok 报告 7 次
         requires:
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
         - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-temporal
     - id: tt.sd.tt-flash-sale-ticketing
@@ -3748,6 +3993,7 @@ nodes:
         title: 解答 · 秒杀抢票（排队、限流、防超卖）
         summary: TikTok 报告 2 次
         requires:
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
         - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
       - id: tt.sd.tt-flash-sale-ticketing.points
         title: 要点 · 秒杀抢票（排队、限流、防超卖）
@@ -3764,6 +4010,8 @@ nodes:
         summary: TikTok 报告 2 次
         requires:
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
         - qb.sd.online-chess-platform.pre-sd-core-concepts-consistent-hashing
         - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
       - id: tt.sd.tt-realtime-auction-bidding.points
@@ -3782,6 +4030,8 @@ nodes:
         requires:
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
         - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-temporal
     - id: tt.sd.metrics-monitoring-alerts
       title: 监控告警 / 指标聚合
@@ -3791,6 +4041,8 @@ nodes:
         title: 解答 · 监控告警 / 指标聚合
         summary: TikTok 报告 3 次
         requires:
+        - qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
     - id: tt.sd.tt-for-you-feed
@@ -3802,7 +4054,10 @@ nodes:
         summary: TikTok 报告 3 次
         requires:
         - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+        - qb.sd.chatbot-design.pre-sd-deep-dives-vector-databases
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
       - id: tt.sd.tt-for-you-feed.points
         title: 要点 · 短视频推荐信息流（For You）
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -3818,6 +4073,8 @@ nodes:
         summary: TikTok 报告 2–3 次
         requires:
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-networking-essentials
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-dynamodb
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
     - id: tt.sd.tt-cache-consistency-hot-keys
@@ -3829,6 +4086,7 @@ nodes:
         summary: TikTok 设计轮常见追问
         requires:
         - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
         - qb.sd.online-chess-platform.pre-sd-core-concepts-consistent-hashing
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
       - id: tt.sd.tt-cache-consistency-hot-keys.points
@@ -3848,6 +4106,7 @@ nodes:
         - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
         - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
         - qb.sd.online-chess-platform.pre-sd-core-concepts-consistent-hashing
     - id: tt.sd.distributed-rate-limiter
       title: 全局 API 限流器
@@ -3857,8 +4116,10 @@ nodes:
         title: 解答 · 全局 API 限流器
         summary: TikTok 报告
         requires:
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-sharding
         - qb.sd.online-chess-platform.pre-sd-core-concepts-consistent-hashing
+        - qb.sd.distributed-rate-limiter.pre-sd-deep-dives-api-gateway
         - qb.sd.distributed-rate-limiter.pre-sd-core-concepts-cap-theorem
     - id: tt.sd.notification-system-scale
       title: 通知推送（百万设备扇出）
@@ -3868,6 +4129,8 @@ nodes:
         title: 解答 · 通知推送（百万设备扇出）
         summary: TikTok 报告
         requires:
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
         - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
         - qb.sd.notification-system-scale.pre-sd-deep-dives-cassandra
@@ -3878,6 +4141,9 @@ nodes:
       - id: tt.sd.metrics-aggregator.answer
         title: 解答 · 指标聚合系统
         summary: 指标聚合系统：完整解答。
+        requires:
+        - qb.sd.job-scheduler-cron-history.pre-sd-deep-dives-kafka
+        - qb.sd.top-k-counts.pre-sd-deep-dives-time-series-databases
     - id: tt.sd.tiktok-meeting-room-booking
       title: 会议室预订系统
       summary: 会议室预订系统：完整解答。
@@ -3899,6 +4165,8 @@ nodes:
         title: 解答 · 条件解析与内存表查询（SQL 风格）
         summary: 重点题 · 解析器 + 内存表 · 60 分钟内
         requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
       - id: tt.lld.tt-query-condition-parser.points
         title: 要点 · 条件解析与内存表查询（SQL 风格）
@@ -3911,6 +4179,9 @@ nodes:
         title: 解答 · 计费 / 计税引擎
         summary: 支付类设计练习
         requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
       - id: tt.lld.tt-billing-tax-engine.points
         title: 要点 · 计费 / 计税引擎
@@ -3923,6 +4194,8 @@ nodes:
         title: 解答 · 复式账本（类设计）
         summary: 支付类设计练习
         requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
       - id: tt.lld.tt-double-entry-ledger.points
@@ -3937,6 +4210,8 @@ nodes:
         summary: 支付类设计练习
         requires:
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
         - qb.sd.messenger-chat-system.pre-sd-core-concepts-data-modeling
       - id: tt.lld.tt-idempotent-transfer.points
         title: 要点 · 幂等转账服务
@@ -3948,6 +4223,11 @@ nodes:
       - id: tt.lld.tt-installment-plan.answer
         title: 解答 · 分期计划生成器
         summary: 支付类设计练习 · PayLater
+        requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
       - id: tt.lld.tt-installment-plan.points
         title: 要点 · 分期计划生成器
         summary: 从完整解答拆出的单个知识点，每张注明出自哪一部分；可以单独随机复习。
@@ -3959,7 +4239,9 @@ nodes:
         title: 解答 · 按商户限流
         summary: 支付类设计练习
         requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+        - qb.sd.messenger-chat-system.pre-sd-deep-dives-redis
         - qb.sd.news-aggregator-feed.pre-sd-core-concepts-caching
       - id: tt.lld.tt-per-merchant-rate-limit.points
         title: 要点 · 按商户限流
@@ -3972,7 +4254,10 @@ nodes:
         title: 解答 · 限流器（单机类设计）
         summary: 通用
         requires:
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-patterns
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-design-principles
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
     - id: tt.lld.event-ticket-booking
       title: 活动票务预订（防超卖）
       summary: 与秒杀抢票对应的类设计
@@ -3981,7 +4266,9 @@ nodes:
         title: 解答 · 活动票务预订（防超卖）
         summary: 与秒杀抢票对应的类设计
         requires:
+        - qb.lld.beverage-vending-system.pre-lld-in-a-hurry-delivery
         - qb.lld.kv-store-eviction.pre-lld-concurrency-intro
+        - qb.lld.kv-store-eviction.pre-lld-in-a-hurry-oop-concepts
         - qb.sd.book-seller-platform.pre-sd-core-concepts-api-design
   - id: tt.lc
     title: TikTok 算法题

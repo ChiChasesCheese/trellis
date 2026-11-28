@@ -299,7 +299,8 @@ def project_skeleton(data: dict, node_cards: dict[str, set[str]], tracked: set[s
 
     node_cards: node id -> the vault folders (as in `vault:` / `include:`) holding a card of that node, for tracked
     and untracked cards alike, with tracked ones marked by the folder name itself and untracked ones as `!<folder>`.
-    A node stays when its own or any descendant's cards include a tracked one; its title and summary must not match
+    A node goes only when cards exist under it and none is tracked (local material); a node with no cards stays, as a
+    gap the map shows. Its title and summary must not match
     the private-term pattern (a match drops the whole subtree). `requires` pointing at a dropped node are removed.
     """
     dropped_by: dict[str, int] = {}
@@ -312,6 +313,14 @@ def project_skeleton(data: dict, node_cards: dict[str, set[str]], tracked: set[s
         if any(not f.startswith("!") for f in node_cards.get(node["id"], ())):
             return True
         return any(has_tracked(c) for c in node.get("children") or [])
+
+    def only_untracked(node: dict) -> bool:
+        """Cards exist under this node and none of them is tracked: the node is someone's local material. A node with
+        no cards at all is not: it is a gap in the map and is shown as one (Chi, 2026-11-28)."""
+        def has_untracked(n: dict) -> bool:
+            return any(f.startswith("!") for f in node_cards.get(n["id"], ())) or \
+                any(has_untracked(c) for c in n.get("children") or [])
+        return not has_tracked(node) and has_untracked(node)
 
     def private_hit(node: dict) -> bool:
         return bool(private and (private.search(str(node.get("title", ""))) or private.search(str(node.get("summary", "")))))
@@ -329,7 +338,7 @@ def project_skeleton(data: dict, node_cards: dict[str, set[str]], tracked: set[s
         if private_hit(node):
             count_subtree(node, lambda n: "private term")
             return None
-        if not has_tracked(node):
+        if only_untracked(node):
             count_subtree(node, reason)
             return None
         children = [k for k in (walk(c) for c in node.get("children") or []) if k is not None]
@@ -351,6 +360,11 @@ def project_skeleton(data: dict, node_cards: dict[str, set[str]], tracked: set[s
         return node
 
     nodes = [finish(r) for r in roots]
+    # A skeleton wants an `order` on every top-level node or on none; a kept branch the source left unnumbered would
+    # break that, so a mixed set is renumbered in its current sequence.
+    if any("order" in n for n in nodes) and not all("order" in n for n in nodes):
+        for i, n in enumerate(nodes):
+            n["order"] = i
     out = {k: data[k] for k in _PROJECTION_KEYS if k in data and k != "include"}
     include = [f for f in data.get("include") or [] if any(p.startswith(f"vault/{f}/") for p in tracked)]
     if include:

@@ -19,11 +19,23 @@ domains:            # Chi's whitelist of 2026-11-28; nothing else is published
   - pl
   - hft
   - leetcode-tree     # the 0x3F tree
+  # added the same day: maintained, not studied yet (Chi); Stripe stays out
+  - code-core
+  - snowflake
+  - k8s
+  - markets
+  - quant-infra
+  - ai-dev
+  - ai-industry
+  - tech-comm
+  - career
 
 exclude:            # subtrees that are personal or company prep without a company word in their id
-  sysdesign: [s08]                # the TikTok branch (its leaves also carry the alias `tt`)
+  sysdesign: [s08, fix]           # the TikTok branch; Chi's mock-interview fixes
+  code-core: [transfer]           # how the coding core transfers to named companies' assessments
 
 allow:              # company words that are the subject itself
+  - snowflake                                            # the domain is Snowflake internals
   - low-level-design:problems.machines.amazon-locker     # a standard LLD problem, asked everywhere
 
 strip_tags:         # tag prefixes removed from published cards

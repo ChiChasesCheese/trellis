@@ -473,3 +473,11 @@ def test_export_prefers_the_projection_over_the_local_skeleton(repo):
     tracked -= {projection_path("alpha")}
     published, notes = load_published(repo, scope, tracked)
     assert published["alpha"].skeleton.title == "Alpha" and any("not tracked" in n for n in notes)
+
+
+def test_projection_keeps_a_node_with_no_cards_at_all():
+    src = dict(PROJ_SRC, nodes=PROJ_SRC["nodes"] + [{"id": "d", "title": "Empty", "children": [{"id": "d.leaf", "title": "Leaf"}]}])
+    proj = project_skeleton(src, PROJ_CARDS, PROJ_TRACKED, None)
+    ids = [n["id"] for n in proj.data["nodes"]]
+    assert "d" in ids                                               # a gap the map shows, not local material
+    assert [c["id"] for c in proj.data["nodes"][ids.index("d")]["children"]] == ["d.leaf"]

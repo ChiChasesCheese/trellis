@@ -31,6 +31,7 @@ def validate(
     clippings: dict | None = None,
     cases: list[Reading] | None = None,
     case_errors: list[str] | None = None,
+    also_nodes: frozenset[str] | set[str] = frozenset(),
 ) -> Report:
     report = Report(
         errors=list(card_errors) + list(reading_errors or []) + list(drill_errors or [])
@@ -59,7 +60,7 @@ def validate(
             seen[card.id] = card
 
         node = skeleton.by_id.get(card.node)
-        if node is None:
+        if node is None and card.node not in also_nodes:
             report.errors.append(f"{card.path}: node {card.node!r} not in skeleton")
         # A card on a node that has children is that branch's overview: met before the detail below it (sequence),
         # and filed where the skeleton's `own_decks` says, or else in the branch's own deck.
