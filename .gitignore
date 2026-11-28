@@ -93,3 +93,7 @@ vault/nojo.md
 
 # The Atlas data contract (`trellis export`), rebuilt by CI
 atlas-data/
+
+# Personal documents dropped at the vault root (transcripts, letters, screenshots): local only (Chi, 2026-11-28)
+/vault/*.pdf
+/vault/Pasted image *
