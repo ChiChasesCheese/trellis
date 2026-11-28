@@ -84,3 +84,7 @@ vault/system_design_mocks/
 # the LeetCode knowledge tree built from 0x3F (灵茶山艾府) posts: derived from his text, local only
 skeleton/leetcode-tree.yaml
 vault/interviews/core/leetcode/tree/
+
+# Obsidian daily notes (vault/日记/) and personal job notes: local only, synced by Obsidian Sync, never git (Chi, 2026-11-28)
+vault/日记/
+vault/nojo.md
