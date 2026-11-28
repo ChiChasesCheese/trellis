@@ -234,6 +234,35 @@ point, and never on a leaf whose Graft is still settling. A grown card is
 tagged so the next Brief can say whether the Graft took.
 _Avoid_: generate, populate, backfill, fill in, repair (for the act of writing)
 
+### The Atlas
+
+What the trellis shows the world. The loop above runs on one machine and acts; the Atlas only shows, and
+everything it shows is derived from the skeletons, the cards and a Snapshot, never authored for it.
+
+**Atlas**:
+The public, read-only site built from the skeletons, the cards that may be published and the latest Snapshot.
+It reads the Snapshot, never a Trace, and offers nothing that changes the collection; that is the Workbench.
+_Avoid_: dashboard, portfolio, website, showcase
+
+**View**:
+One way the Atlas draws a domain's skeleton: the map view (a mind map) or the directory view (an outline).
+Both draw the same tree from the same data; a View never holds content of its own.
+_Avoid_: mode, page, layout
+
+**Reach**:
+The share of a node's cards that have been studied at least once. A card is studied once it has been
+reviewed, or once the test question built on it has been, since a test question's back is the card itself.
+It only grows: forgetting a card later does not take it back. The Atlas shows it as five shades: grey at
+none, then four greens, the deepest only when every card is studied. Distinct from Hold, which measures
+whether what was studied is retained.
+_Avoid_: mastery, progress, completion, coverage (that is Card coverage)
+
+**Snapshot**:
+Where every published node stands on one date: its Reach, its Hold, and whether it is a Weakness, uncovered
+or sealed, together with how many cards were studied that day. Aggregated per node and dated to the day,
+it is what leaves the machine; the Traces it is computed from stay local.
+_Avoid_: export, dump, stats, report
+
 ### Ingesting a codebase
 
 **Codebase**:

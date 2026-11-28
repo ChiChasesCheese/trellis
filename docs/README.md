@@ -38,5 +38,7 @@ overview: [../README.md](../README.md). Agent rules and repository map: [../AGEN
 | [0010](adr/0010-the-vault-decides-the-order-and-the-mix-anki-deals.md) | The vault decides the order and the mix Anki deals |
 | [0011](adr/0011-learning-area-and-research-area.md) | Learning area and research area |
 | [0012](adr/0012-naming-and-layout-for-new-content.md) | Naming and layout for new content |
+| [0013](adr/0013-a-branchs-own-cards-are-its-overview.md) | A branch's own cards are its overview |
+| [0014](adr/0014-the-atlas-reads-a-snapshot-and-traces-stay-local.md) | The Atlas reads a Snapshot; Traces stay local |
 
 - [The study system (Trellis 1.0)](explanation/study-system.md): one source per thing, daily decks, sprint decks, scheduled tasks, Anki full-sync rules, privacy.

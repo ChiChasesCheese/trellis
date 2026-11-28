@@ -1,5 +1,8 @@
 # Traces are pulled into a file the repo owns
 
+> The third reason below is superseded by ADR 0014: `traces/` stays on the machine that pulls it, and the
+> committed Snapshot history is the dated record. The file is still the seam every command reads.
+
 Anki holds the review history, and it is the only thing that does. The
 obvious way to use it is for the Brief, the Feed and anything else that
 needs to know how well a topic is held to ask AnkiConnect at the moment
