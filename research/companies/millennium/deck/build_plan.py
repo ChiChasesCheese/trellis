@@ -92,6 +92,50 @@ def _anki_ids(query: str, limit: int) -> list[str]:
     return out
 
 
+SIBLINGS = 8   # same-pattern problems per leaf: 19 problems open about a hundred
+
+
+def lc_plan(targets: list[str]) -> list[dict]:
+    """One sub-deck per pattern (tree leaf), in the order its first target is listed: the leaf's learning card, the
+    targets' own tree cards, then the recognition questions of the targets and of up to SIBLINGS more problems of the
+    same leaf (most asked first). A recognition question's back carries the problem's whole tree card."""
+    import daily_quiz as dq
+    import lc_tree
+    tree = dq.tree_cards()
+    have = {c["slug"] for c in tree.values()}
+    num = {c["slug"]: n for n, c in tree.items()}
+    recog = {}
+    for q in dq.jsonl("recog.jsonl"):
+        recog.setdefault(dq.lc_number(q.get("title", "")), q)
+    leaf_of, info = {}, {}
+    for lst in lc_tree.build()["lists"]:
+        for path, leaf in lc_tree.leaves(lst):
+            for s in leaf["problems"]:
+                if s not in leaf_of:
+                    leaf_of[s] = leaf["id"]
+                    info.setdefault(leaf["id"], (path, [x for x in leaf["problems"] if x in have]))
+    learn = {p.stem for p in (ROOT / "vault/interviews/core/leetcode/tree/cards").rglob("lct-learn-*.md")}
+    groups: dict[str, list[str]] = {}
+    for s in targets:
+        if s in leaf_of:
+            groups.setdefault(leaf_of[s], []).append(s)
+    plan, tag = [], []
+    for k, (lid, ts) in enumerate(groups.items(), 1):
+        path, probs = info[lid]
+        sibs = [p for p in probs if p not in ts][:SIBLINGS]
+        qs = [recog[num[p]] for p in ts + sibs if num.get(p) in recog]
+        tag += [(int(q["note"]), q["id"]) for q in qs]
+        ids = ([lc_tree.card_id(lid)] if lc_tree.card_id(lid) in learn else []) + [f"lct-{s}" for s in ts] + [q["id"] for q in qs]
+        generic = {"综合应用", "其他", "基础", "进阶", "求最小", "求最大"}   # a leaf name that needs its parent to say anything
+        name = " · ".join(path[-2:]) if path[-1] in generic or path[-1].startswith("其他") else path[-1]
+        if path[-1] == "基础":
+            name = " · ".join(path[-3:-1])
+        plan.append({"label": f"{k:02d} {name}", "ids": ids})
+    for nid, qid in tag:   # recognition notes carry recog::id:: tags; the sprint deck borrows by id::
+        call("addTags", notes=[nid], tags=f"id::{qid}")
+    return plan
+
+
 def main() -> int:
     bt = ROOT / "vault/private/braintree/cards"
     bt_ids = [fm(f)["id"] for s in BT_SLUGS for f in sorted((bt / s).glob("*.md"))] if bt.exists() else []
@@ -113,9 +157,7 @@ def main() -> int:
         {"label": "11 谈判", "ids": anki_ids('"deck:职业发展与谈判::05 Compensation anatomy"', 99)
          + anki_ids('"deck:职业发展与谈判::06 Negotiation"', 99)},
     ]
-    tagged = anki_ids('"tag:公司::Millennium"', 99)
-    seen = [f"lct-{s}" for s in LC_SEEN]
-    lc = [{"label": "01 面试里报过的题", "ids": seen}, {"label": "02 公司题单里的其他题", "ids": [i for i in tagged if i not in seen]}]
+    lc = lc_plan([s for s in LC_SEEN] + [i[4:] for i in anki_ids('"tag:公司::Millennium"', 99) if i[4:] not in LC_SEEN])
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "plan.json").write_text(json.dumps(plan, ensure_ascii=False, indent=1), encoding="utf-8")
     (OUT / "lc_plan.json").write_text(json.dumps(lc, ensure_ascii=False, indent=1), encoding="utf-8")
