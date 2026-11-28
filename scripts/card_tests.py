@@ -44,14 +44,18 @@ AI = '("tag:ai-literacy::*" OR "tag:llm-inference::*" OR "tag:ml-system-design::
 SETS = {
     "lld": {"deck": "3 低层设计测验", "tag": "tlld", "preset": "低层设计测验", "crumb": "低层设计", "per_day": 20,
             "sources": [("", '"deck:低层设计（LLD）"')]},
-    # AI: the reading order of 「AI 从零开始」 in the Cerebras deck comes first (basics before everything), then the rest
-    "ai": {"deck": "AI 测验", "tag": "tai", "preset": "AI 测验", "crumb": "AI", "per_day": 20,
-           "sources": [("1 AI 从零开始", f'"deck:6 Cerebras::04 AI 从零开始" {AI}'), ("2 机器学习基础", f'"deck:6 Cerebras::05 机器学习基础" {AI}'),
-                       ("3 LLM 推理", f'"deck:6 Cerebras::08 LLM 推理" {AI}'), ("4 加速器与编译器", f'"deck:6 Cerebras::09 加速器与编译器" {AI}'),
-                       ("5 AI 应用工程", '"deck:AI 应用工程"'), ("6 ML 与 LLM 系统设计", f'"deck:6 Cerebras::10 ML 与 LLM 系统设计" {AI}'),
-                       ("7 生成式 AI 与经典 ML 设计题", f'"deck:6 Cerebras::16 生成式 AI 与经典 ML 设计题" {AI}'),
-                       ("8 AI 通识 · 扩展", f'"deck:6 Cerebras::18 AI 通识 · 扩展" {AI}'), ("9 其他", AI)]},
+    # AI: the groups were the reading order of the Cerebras sprint deck (basics first). That deck was released on
+    # 2026-11-27, so the grouping is a snapshot (quiz/ai-groups.json: group -> source ids); new AI cards fall into 9 其他.
+    "ai": {"deck": "AI 测验", "tag": "tai", "preset": "AI 测验", "crumb": "AI", "per_day": 20, "sources": []},
 }
+def _ai_sources() -> list[tuple[str, str]]:
+    snap = HOME / "ai-groups.json"
+    groups = json.loads(snap.read_text(encoding="utf-8")) if snap.exists() else {}
+    out = [(g, "(" + " OR ".join(f'"tag:id::{i}"' for i in ids) + ")") for g, ids in groups.items() if g != "9 其他" and ids]
+    return out + [("9 其他", AI)]
+
+
+SETS["ai"]["sources"] = _ai_sources()
 for _name, _cfg in SETS.items():   # settle and score in daily_quiz.py work on these sets too
     dq.SETS[_name] = {**_cfg, "questions": f"{_name}.jsonl", "results": f"{_name}-results.jsonl", "models": MODELS}
 

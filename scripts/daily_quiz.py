@@ -67,7 +67,7 @@ FULL_CSS = """
 """
 STATEMENT = '<div style="font-size:.86em;opacity:.8;margin:.35em 0 .55em">{}</div>'
 RECAP = "考察题"
-DAILY_DECKS = ("1 每日测验", "2 今日算法", "3 今日低层设计", "4 碎片速刷", "5 系统设计高频题", "6 Cerebras", "7 Cerebras 力扣", "8 LC Project")
+DAILY_DECKS = ("1 每日测验", "2 今日算法", "3 今日低层设计", "4 碎片速刷", "5 系统设计高频题", "6 Millennium", "7 Millennium 力扣", "8 LC Project")
 LIMITS = {"question": 90, "option": 34, "why": 90, "title": 44, "statement": 100}   # characters; a test card is read in seconds
 
 

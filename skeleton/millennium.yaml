@@ -1,0 +1,172 @@
+# Millennium · Software Engineer – Learning Engineering and Data (LEaD) Program, Miami: the company-specific cards that
+# have no general home. General knowledge (Python, algorithms, system design, finance, negotiation) stays in its own
+# domain and is borrowed by the sprint deck `6 Millennium` (plan: research/companies/millennium/deck/plan.json).
+# Study order is top to bottom: the recruiter call, the company, the coding round, the hiring manager and behavioural
+# questions, the project deep dive, the design round, the finance a data engineer at a fund is expected to know.
+domain: millennium
+title: Millennium
+deck: "📦 其他::Millennium"
+lang: zh
+vault: interviews/companies/millennium/deck
+study:
+  order: core-first
+  mix: new-first
+  new_per_day: 30
+  reviews_per_day: 200
+nodes:
+- id: call
+  order: 1
+  core: true
+  title: 招聘方电话：30 分钟要达成什么
+  summary: 团队轮之前的招聘方电话：近况与动机、地点与时间线、薪资期望怎么答、要问清团队轮的形式。
+  children:
+  - id: call.flow
+    title: 这通电话怎么走、对方想确认什么
+    summary: 招聘方在团队轮前要确认的几件事：还有没有兴趣、时间线、地点、身份、薪资区间；你要拿到团队轮的形式和面试官。
+  - id: call.pitch
+    title: 自我介绍与近况
+    summary: 60 秒的英文自我介绍；从第一轮到现在在做什么、为什么还在看机会、手上其他流程到哪一步。
+  - id: call.logistics
+    title: 地点、开始时间、身份与其他流程
+    summary: 搬去 Miami、可以开始的日期、工作身份、正在进行的其他面试，每一项的英文答法。
+  - id: call.comp
+    title: 薪资期望怎么答
+    summary: 先不报数、把问题推回区间；必须给数时给一个有依据的区间；轮岗项目的薪资结构要问清楚。
+  - id: call.ask
+    title: 要问招聘方的问题
+    summary: 团队轮几轮、每轮多长、考什么、面试官是谁、用什么工具、决定多久出来。
+- id: company
+  order: 2
+  core: true
+  title: 公司与岗位：Millennium 和 LEaD 项目
+  summary: 多策略对冲基金怎么赚钱、pod 模式和风控、技术组织，LEaD 轮岗项目是什么，岗位要求和你的匹配，为什么是这里。
+  children:
+  - id: company.business
+    title: Millennium 是什么、怎么赚钱
+    summary: 多策略对冲基金、交易团队（pod）独立运作、集中风控、按业绩分成；对工程的含义：数据、速度、可靠性。
+  - id: company.tech
+    title: 技术组织与工程文化
+    summary: 技术部门怎么分、工程师服务谁、用什么技术栈，和互联网公司的工程有什么不同。
+  - id: company.lead
+    title: LEaD 项目：轮岗、cohort、之后去哪
+    summary: 12–18 个月轮岗、按批次入职、轮完进入一个技术分部；项目想培养什么样的人。
+    requires: [company.tech]
+  - id: company.role
+    title: 岗位要求与你的匹配
+    summary: 岗位描述的每一条对应你的哪段经历；还缺什么、怎么说。
+    requires: [company.lead]
+  - id: company.why
+    title: Why Millennium、Why LEaD、Why Miami
+    summary: 三个为什么的英文答法，每个都挂在具体事实和你的经历上。
+    requires: [company.role]
+  - id: company.ask
+    title: 团队轮要问面试官的问题
+    summary: 问工程师、问经理、问项目负责人各问什么，各想听出什么；哪些不问。
+- id: coding
+  order: 3
+  core: true
+  title: 编程轮：Millennium 报过的实用型编程题
+  summary: 45 分钟一题、贴近工作的 Python 编程：数据聚合、异步拉取、装饰器、数据结构设计、价格数据、SQL；外加几道力扣中等题。
+  children:
+  - id: coding.pc01
+    title: 百万行分组聚合
+    summary: CSV 或 DataFrame 按键分组求和，数据大到内存放不下时分块，以及多线程还是多进程。
+  - id: coding.pc02
+    title: 异步分页拉取接口
+    summary: asyncio 翻页拉取、并发上限、重试与退避，排查异步流程里丢失的输出。
+  - id: coding.pc03
+    title: 装饰器：计时、缓存、重试、限流
+    summary: 带参数的装饰器、functools.wraps、闭包里的状态。
+  - id: coding.pc04
+    title: 字符串大数运算
+    summary: 两个数字字符串相加，再到减法、乘法和进制转换。
+  - id: coding.pc05
+    title: 子数组和能被 K 整除
+    summary: 前缀和加余数计数（LC 974），再到和为 K（LC 560）和最长子数组。
+  - id: coding.pc06
+    title: 接雨水与盛水最多的容器
+    summary: LC 42 和 LC 11 同一轮出现：双指针各自为什么成立。
+  - id: coding.pc07
+    title: 按字母异位词分组的存储
+    summary: 设计一个按异位词分组的数据结构，键怎么选、增删查的复杂度；热身题括号匹配。
+  - id: coding.pc08
+    title: 带过期时间的 LRU 缓存与数据流中位数
+    summary: 哈希表加双向链表、过期的惰性清理；两个堆维护中位数。
+  - id: coding.pc09
+    title: 价格数据存储
+    summary: 写入、最新价、某时刻的价格（as-of）、区间聚合、多币种换算。
+  - id: coding.pc10
+    title: SQL 小题
+    summary: 分组、窗口函数、join 加汇率、连续区间（gaps and islands）、NULL 陷阱。
+- id: data
+  order: 8
+  title: 数据处理：pandas 与 SQL
+  summary: 编程轮和工作里最常用的数据操作：pandas 的分组、合并、透视与时间序列，SQL 的窗口函数、连续区间和 NULL。
+  children:
+  - id: data.pandas
+    title: pandas 常用操作
+    summary: groupby 与聚合、merge 的几种连接、pivot、按时间重采样与滚动窗口、向量化代替逐行循环。
+  - id: data.sql
+    title: SQL 分析查询
+    summary: GROUP BY 与 HAVING、窗口函数排名与累计、连续区间、as-of 关联、NULL 的三值逻辑。
+- id: hm
+  order: 4
+  core: true
+  title: 经理面与行为面
+  summary: 经理和团队轮会问的行为题，每题对应一个故事和一段英文口头答案；Millennium 看重的四点：抽象推理、主人翁、协作、边写边讲。
+  children:
+  - id: hm.motivation
+    title: 自我介绍、动机与职业方向
+    summary: 为什么从支付转到金融数据工程、为什么要轮岗项目、三年后想做什么。
+  - id: hm.ownership
+    title: 主人翁与主动推进
+    summary: 没人要求时你主动做成的事；从发现问题到推动解决。
+  - id: hm.teamwork
+    title: 协作、分歧与影响别人
+    summary: 和同事或上级意见不同、跨团队推动、帮助别人。
+  - id: hm.learning
+    title: 快速学习与新领域
+    summary: 短时间学会一个陌生系统或领域；怎么知道一个陌生系统里什么是真的。
+  - id: hm.failure
+    title: 失败、事故与压力
+    summary: 犯过的错、生产事故的处理和复盘、截止时间压力下的取舍。
+- id: deepdive
+  order: 5
+  core: true
+  title: 项目深挖：讲清你做过的系统
+  summary: 第一轮和团队轮都会挖简历上的项目：架构、你的部分、难点、数字、取舍、做错了什么。
+  children:
+  - id: deepdive.pitch
+    title: 项目怎么讲：60 秒版和 5 分钟版
+    summary: 每个主力项目的一句话、架构图、你的角色和结果，按追问逐层展开。
+  - id: deepdive.design
+    title: 架构与取舍追问
+    summary: 为什么这样设计、换一种会怎样、数据量和延迟、扩展到十倍怎么办。
+  - id: deepdive.incidents
+    title: 事故、排查与数据正确性
+    summary: 线上出过什么问题、怎么发现、怎么定位、怎么防止再犯。
+  - id: deepdive.impact
+    title: 影响、指标与反思
+    summary: 用数字说结果、你本人的贡献边界、重做一次会改什么。
+- id: design
+  order: 6
+  title: 设计轮：行情与价格数据服务
+  summary: Millennium 报过的设计题：采集、存储、某时刻查询、下游订阅；对应编程题里价格数据存储的系统版。
+  children:
+  - id: design.sd01
+    title: 行情与价格数据服务
+    summary: 需求与规模、数据模型、写入路径、as-of 查询、订阅推送、回补与纠错。
+- id: finance
+  order: 7
+  title: 金融常识：和面试官聊业务够用的词
+  summary: 对冲基金的业务、交易和行情数据、研究与数据流程里的常用词，每个讲清是什么、工程上意味着什么。
+  children:
+  - id: finance.fund
+    title: 基金与交易团队
+    summary: 多策略、pod、PnL、风险限额、alpha 与 beta、杠杆、回撤。
+  - id: finance.markets
+    title: 市场、订单与行情数据
+    summary: 资产类别、交易所与交易时段、订单类型、买卖价差、行情数据的层级与时间戳。
+  - id: finance.data
+    title: 研究数据与数据工程
+    summary: 时间序列、as-of 与前视偏差、公司行为调整、参考数据、回测与数据质量。
